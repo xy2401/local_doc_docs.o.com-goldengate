@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>About Checkpoints</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-09-07T14:17:29Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81607-07" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="commit-sequence-number.htm" title="Previous" type="text/html" />
+<link rel="alternate" href="GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-52E9EEEE-FF27-48BC-8F9F-1A638576C7AA"></a> <span id="PAGE" style="display:none;">30/30</span> <!-- End Header -->
+<a id="GWUAD1019"></a><a id="GWUAD965"></a>
+<h1 id="GWUAD-GUID-52E9EEEE-FF27-48BC-8F9F-1A638576C7AA" class="sect1"><span class="enumeration_chapter">E</span> About Checkpoints</h1>
+<div>
+<div class="section">
+<p>This appendix provides information about checkpoints.&nbsp;When working with Oracle GoldenGate, you might need to refer to the checkpoints that are made by a process.&nbsp;Checkpoints save the state of the process for recovery purposes.&nbsp;Extract and Replicat use checkpoints.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<a id="GWUAD967"></a><a id="GWUAD966"></a>
+<div class="props_rev_3"><a id="GUID-6C0526D0-A823-4630-9EF3-12CD837BF6E8"></a>
+<h2 id="GWUAD-GUID-6C0526D0-A823-4630-9EF3-12CD837BF6E8" class="sect2"><span class="enumeration_section">E.1</span> Extract Checkpoints</h2>
+<div>
+<div class="section">
+<p>Extract checkpoint positions are composed of read checkpoints in the data source and write checkpoints in the trail. The following is a sampling of checkpoint information displayed with the <code class="codeph">INFO EXTRACT</code> command with the <code class="codeph">SHOWCH</code> option. In this case, the data source is an Oracle RAC database cluster, so there is thread information included in the output. You can view past checkpoints by specifying the number of them that you want to view after the <code class="codeph">SHOWCH</code> argument.</p>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-6C0526D0-A823-4630-9EF3-12CD837BF6E8__GUID-DDDB66FD-2F79-45C3-AA3C-CB6FD8460920">
+<p class="titleinexample">Example E-1 INFO EXTRACT with SHOWCH</p>
+<pre dir="ltr">
+EXTRACT    JC108XT Last Started 2011-01-01 14:15   Status ABENDED
+Checkpoint Lag       00:00:00 (updated 00:00:01 ago)
+Log Read Checkpoint  File /orarac/oradata/racq/redo01.log
+            2011-01-01 14:16:45  Thread 1, Seqno 47, RBA 68748800
+Log Read Checkpoint  File /orarac/oradata/racq/redo04.log
+            2011-01-01 14:16:19  Thread 2, Seqno 24, RBA 65657408
+
+Current Checkpoint Detail:
+
+Read Checkpoint #1
+
+    Oracle RAC Redo Log
+    Startup Checkpoint (starting position in data source):
+        Thread #: 1
+        Sequence #: 47
+        RBA: 68548112
+        Timestamp: 2011-01-01 13:37:51.000000
+        SCN: 0.8439720
+        Redo File: /orarac/oradata/racq/redo01.log
+    
+Recovery Checkpoint (position of oldest unprocessed transaction in data source):
+        Thread #: 1
+        Sequence #: 47
+        RBA: 68748304
+        Timestamp: 2011-01-01 14:16:45.000000
+        SCN: 0.8440969
+        Redo File: /orarac/oradata/racq/redo01.log
+
+    Current Checkpoint (position of last record read in the data source):
+        Thread #: 1
+        Sequence #: 47
+        RBA: 68748800
+        Timestamp: 2011-01-01 14:16:45.000000
+        SCN: 0.8440969
+        Redo File: /orarac/oradata/racq/redo01.log
+
+Read Checkpoint #2
+
+    Oracle RAC Redo Log
+
+    Startup Checkpoint(starting position in data source):
+        Sequence #: 24
+        RBA: 60607504
+        Timestamp: 2011-01-01 13:37:50.000000
+        SCN: 0.8439719
+        Redo File: /orarac/oradata/racq/redo04.log
+
+Recovery Checkpoint (position of oldest unprocessed transaction in data source):
+        Thread #: 2
+        Sequence #: 24
+        RBA: 65657408
+        Timestamp: 2011-01-01 14:16:19.000000
+        SCN: 0.8440613
+        Redo File: /orarac/oradata/racq/redo04.log
+
+    Current Checkpoint (position of last record read in the data source):
+        Thread #: 2
+        Sequence #: 24
+        RBA: 65657408
+        Timestamp: 2011-01-01 14:16:19.000000
+        SCN: 0.8440613
+        Redo File: /orarac/oradata/racq/redo04.log
+
+Write Checkpoint #1
+
+    GGS Log Trail
+
+    Current Checkpoint (current write position):
+
+        Sequence #: 2
+        RBA: 2142224
+        Timestamp: 2011-01-01 14:16:50.567638
+        Extract Trail: ./dirdat/eh
+
+    Header:
+        Version = 2
+        Record Source = A
+        Type = 6
+        # Input Checkpoints = 2
+        # Output Checkpoints = 1
+
+    File Information:
+        Block Size = 2048
+        Max Blocks = 100
+        Record Length = 2048
+        Current Offset = 0
+
+    Configuration:
+        Data Source = 3
+        Transaction Integrity = 1
+        Task Type = 0
+
+    Status:
+        Start Time = 2011-01-01 14:15:14
+        Last Update Time = 2011-01-01 14:16:50
+        Stop Status = A
+        Last Result = 400
+</pre></div>
+<!-- class="example" -->
+<div class="section">
+<p>See <a href="checkpoints.htm#GUID-18D8EAA5-2FFF-4EA9-9777-56B8C2B8BA2A">Internal Checkpoint Information</a>for information about the internal information that starts with the <code class="codeph">Header</code> entry in the <code class="codeph">SHOWCH</code> output.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GWUAD968"></a>
+<div class="props_rev_3"><a id="GUID-DC1106E1-CDFF-4945-84AD-AB3550575397"></a>
+<h3 id="GWUAD-GUID-DC1106E1-CDFF-4945-84AD-AB3550575397" class="sect3"><span class="enumeration_section">E.1.1</span> About Extract read checkpoints</h3>
+<div>
+<div class="section">
+<p>Extract places read checkpoints in the data source.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GWUAD969"></a>
+<div class="props_rev_3"><a id="GUID-4A4E54E8-EC3D-4490-9B69-784826810381"></a>
+<h4 id="GWUAD-GUID-4A4E54E8-EC3D-4490-9B69-784826810381" class="sect4"><span class="enumeration_section">E.1.1.1</span> Startup Checkpoint</h4>
+<div>
+<div class="section">
+<p>The startup checkpoint is the first checkpoint that is made in the data source when the process starts. This statistic is composed of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">Thread #</code>: The number of the Extract thread that made the checkpoint, if Oracle GoldenGate is running in an Oracle RAC environment. Otherwise, this statistic is not displayed.</p>
+</li>
+<li>
+<p><code class="codeph">Sequence #</code>: The sequence number of the transaction log where the checkpoint was made.</p>
+</li>
+<li>
+<p><code class="codeph">RBA</code>: The relative byte address of the record at which the checkpoint was made.</p>
+</li>
+<li>
+<p><code class="codeph">Timestamp</code>: The timestamp of the record at which the checkpoint was made.</p>
+</li>
+<li>
+<p><code class="codeph">SCN</code>: The system change number of the record at which the checkpoint was made.</p>
+</li>
+<li>
+<p><code class="codeph">Redo File</code>: The path name of the transaction log containing the record where the checkpoint was made.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD970"></a>
+<div class="props_rev_3"><a id="GUID-19A9F81B-8E42-4B1D-A88C-87554DB4F841"></a>
+<h4 id="GWUAD-GUID-19A9F81B-8E42-4B1D-A88C-87554DB4F841" class="sect4"><span class="enumeration_section">E.1.1.2</span> Recovery Checkpoint</h4>
+<div>
+<div class="section">
+<p>The recovery checkpoint is the position in the data source of the record containing the oldest transaction not yet processed by Extract. The fields for this statistic are the same as those of the other read checkpoint types.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD971"></a>
+<div class="props_rev_3"><a id="GUID-B486CCA7-DC77-4C04-A3BF-A266F73DD6A3"></a>
+<h4 id="GWUAD-GUID-B486CCA7-DC77-4C04-A3BF-A266F73DD6A3" class="sect4"><span class="enumeration_section">E.1.1.3</span> Current Checkpoint</h4>
+<div>
+<div class="section">
+<p>The current checkpoint is the position of the last record read by Extract in the data source. This should match the <code class="codeph">Log Read Checkpoint</code> statistic shown in the summary and in the basic <code class="codeph">INFO EXTRACT</code> command without options. The fields for this statistic are the same as those of the other read checkpoint types.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GWUAD972"></a>
+<div class="props_rev_3"><a id="GUID-F9EC6D27-3040-4030-A63F-0535F9E7BC7A"></a>
+<h3 id="GWUAD-GUID-F9EC6D27-3040-4030-A63F-0535F9E7BC7A" class="sect3"><span class="enumeration_section">E.1.2</span> About Extract Write Checkpoints</h3>
+<div>
+<div class="section">
+<p>Extract places a write checkpoint, known as the current checkpoint, in the trail. The current checkpoint is the position in the trail where Extract is currently writing. This statistic is composed of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">Sequence #</code>: The sequence number of the trail file where the checkpoint was written.</p>
+</li>
+<li>
+<p><code class="codeph">RBA</code>: The relative byte address of the record in the trail file at which the checkpoint was made.</p>
+</li>
+<li>
+<p><code class="codeph">Timestamp</code>: The timestamp of the record at which the checkpoint was made.</p>
+</li>
+<li>
+<p><code class="codeph">Extract trail</code>: The relative path name of the trail.</p>
+</li>
+<li>
+<p><code class="codeph">Trail Type</code>: Identifies the trail type. <code class="codeph">EXTTRAIL</code> identifies the trail as a local trail, which means that it is directly accessible by Oracle GoldenGate processes through the host filesystem. <code class="codeph">RMTTRAIL</code> identifies the trail as a remote trail, which means it is not directly accessible by Oracle GoldenGate processes through the host filesystem. A trail stored on a shared network device and accessible through NFS-like services are considered local because they are accessible transparently through the host filesystem.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GWUAD974"></a><a id="GWUAD973"></a>
+<div class="props_rev_3"><a id="GUID-ADC12675-C311-4200-BAE9-2C9E3192B222"></a>
+<h2 id="GWUAD-GUID-ADC12675-C311-4200-BAE9-2C9E3192B222" class="sect2"><span class="enumeration_section">E.2</span> Replicat Checkpoints</h2>
+<div>
+<div class="section">
+<p>Replicat makes checkpoints in the trail file to mark its last read position. To view process checkpoints, use the <code class="codeph">INFO REPLICAT</code> command with the <code class="codeph">SHOWCH</code> option. The basic command shows current checkpoints. To view a specific number of previous checkpoints, type the value after the <code class="codeph">SHOWCH</code> argument.</p>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-ADC12675-C311-4200-BAE9-2C9E3192B222__GUID-2AAB2EA3-C671-42DC-BEBC-05FCF75E0F69">
+<p class="titleinexample">Example E-2 INFO REPLICAT, SHOWCH</p>
+<pre dir="ltr">
+REPLICAT   JC108RP   Last Started 2011-01-12 13:10   Status RUNNING
+Checkpoint Lag       00:00:00 (updated 111:46:54 ago)
+Log Read Checkpoint  File ./dirdat/eh000000000
+                     First Record  RBA 3702915
+Current Checkpoint Detail:
+    Read Checkpoint #1
+    GGS Log Trail
+    Startup Checkpoint(starting position in data source):
+    Sequence #: 0
+    RBA: 3702915
+    Timestamp: Not Available
+    Extract Trail: ./dirdat/eh
+    Current Checkpoint (position of last record read in the data source):
+    Sequence #: 0
+    RBA: 3702915
+    Timestamp: Not Available
+    Extract Trail: ./dirdat/eh
+    Header:
+    Version = 2
+    Record Source = A
+    Type = 1
+    # Input Checkpoints = 1
+    # Output Checkpoints = 0
+    File Information:
+    Block Size = 2048
+    Max Blocks = 100
+    Record Length = 2048
+    Current Offset = 0
+    Configuration:
+    Data Source = 0
+    Transaction Integrity = -1
+    Task Type = 0
+    Status:
+    Start Time = 2011-01-12 13:10:13
+    Last Update Time = 2011-01-12 21:23:31
+    Stop Status = A
+    Last Result = 400
+</pre>
+<p>See <a href="checkpoints.htm#GUID-18D8EAA5-2FFF-4EA9-9777-56B8C2B8BA2A">Internal Checkpoint Information</a> for information about the internal information that starts with the <code class="codeph">Header</code> entry in the <code class="codeph">SHOWCH</code> output.</p>
+</div>
+<!-- class="example" --></div>
+<a id="GWUAD975"></a>
+<div class="props_rev_3"><a id="GUID-35FA03D7-91B2-4B88-9E2E-7F461915C731"></a>
+<h3 id="GWUAD-GUID-35FA03D7-91B2-4B88-9E2E-7F461915C731" class="sect3"><span class="enumeration_section">E.2.1</span> About Replicat Checkpoints</h3>
+<div>
+<div class="section">
+<p>The following describes the detail of the Replicat checkpoints in the trail.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GWUAD976"></a>
+<div class="props_rev_3"><a id="GUID-9C8ABCE1-B76E-4436-A800-3BE31B1EB3AB"></a>
+<h4 id="GWUAD-GUID-9C8ABCE1-B76E-4436-A800-3BE31B1EB3AB" class="sect4"><span class="enumeration_section">E.2.1.1</span> Startup Checkpoint</h4>
+<div>
+<div class="section">
+<p>The <span class="italic"><code class="codeph">startup checkpoint</code></span> is the first checkpoint made in the trail when the process starts. Comprising this statistic are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">Sequence #:</code> The sequence number of the trail file where the checkpoint was written.</p>
+</li>
+<li>
+<p><code class="codeph">RBA:</code> The relative byte address of the record at which the checkpoint was made.</p>
+</li>
+<li>
+<p><code class="codeph">Timestamp:</code> The timestamp of the record at which the checkpoint was made.</p>
+</li>
+<li>
+<p><code class="codeph">Extract Trail:</code> The relative path name of the trail.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD977"></a>
+<div class="props_rev_3"><a id="GUID-DA5E3371-3C81-4EC1-8B9C-41FCF4EE4236"></a>
+<h4 id="GWUAD-GUID-DA5E3371-3C81-4EC1-8B9C-41FCF4EE4236" class="sect4"><span class="enumeration_section">E.2.1.2</span> Current Checkpoint</h4>
+<div>
+<div class="section">
+<p>The <span class="italic"><code class="codeph">current checkpoint</code></span> is the position of the last record read by Replicat in the trail. This should match the <code class="codeph">Log Read Checkpoint</code> statistic shown in the summary and in the basic <code class="codeph">INFO REPLICAT</code> command without options. The fields for this statistic are the same as those of the <code class="codeph">Startup Checkpoint</code>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+</div>
+<a id="GWUAD1158"></a>
+<div class="props_rev_3"><a id="GUID-18D8EAA5-2FFF-4EA9-9777-56B8C2B8BA2A"></a>
+<h2 id="GWUAD-GUID-18D8EAA5-2FFF-4EA9-9777-56B8C2B8BA2A" class="sect2"><span class="enumeration_section">E.3</span> Internal Checkpoint Information</h2>
+<div>
+<div class="section">
+<p>The <code class="codeph">INFO</code> command with the <code class="codeph">SHOWCH</code> option not only displays current checkpoint entries, but it also displays metadata information about the record itself. This information is not documented and is for use by the Oracle GoldenGate processes and by support personnel when resolving a support case. The metadata is contained in the following entries in the <code class="codeph">SHOWCH</code> output.</p>
+<pre dir="ltr">
+    Header:
+    Version = 2
+    Record Source = A
+    Type = 1
+    # Input Checkpoints = 1
+    # Output Checkpoints = 0
+    File Information:
+    Block Size = 2048
+    Max Blocks = 100
+    Record Length = 2048
+    Current Offset = 0
+    Configuration:
+    Data Source = 0
+    Transaction Integrity = -1
+    Task Type = 0
+    Status:
+    Start Time = 2011-01-12 13:10:13
+    Last Update Time = 2011-01-12 21:23:31
+    Stop Status = A
+    Last Result = 400
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD1021"></a><a id="GWUAD1089"></a><a id="GWUAD1020"></a>
+<div class="props_rev_3"><a id="GUID-D1ED9CCF-C81C-4CE2-8EAB-E4C8C7BDF58C"></a>
+<h2 id="GWUAD-GUID-D1ED9CCF-C81C-4CE2-8EAB-E4C8C7BDF58C" class="sect2"><span class="enumeration_section">E.4</span> Oracle GoldenGate Checkpoint Tables</h2>
+<div>
+<div class="section">
+<p>When database checkpoints are being used, Oracle GoldenGate creates a checkpoint table with a user-defined name in the database upon execution of the <code class="codeph">ADD CHECKPOINTTABLE</code> command, or a user can create the table by using the <code class="codeph">chkpt_</code><span class="italic"><code class="codeph">db</code></span><code class="codeph">_create.sql</code> script (where <span class="italic"><code class="codeph">db</code></span> is an abbreviation of the type of database that the script supports).</p>
+<p>There are two tables: the main checkpoint table and an auxiliary checkpoint table that is created automatically. The auxiliary table, known as the <span class="italic">transaction table</span>, bears the name of the primary checkpoint table appended with <code class="codeph">_lox</code>. Each Replicat, or each thread of a coordinated Replicat, uses one row in the checkpoint table to store its progress information.</p>
+<p>At checkpoint time, there typically are some number of transactions (among the total <span class="italic">n</span> transactions) that were applied, and the rest are still in process. For example, if Replicat is processing a group of <span class="italic">n</span> transactions ranging from CSN1 to CSN3. CSN1 is the high watermark and CSN3 is the low watermark. Any transaction with a CSN higher than the high watermark has not been processed, and any transaction with a CSN lower than the low watermark has already been processed. Completed transactions are stored in the <code class="codeph">LOG_CMPLT_XID</code> column of the checkpoint table. Any overflow of these transactions is stored in the transaction table (auxiliary checkpoint table) in the <code class="codeph">LOG_CMPLT_XID</code> column of that table.</p>
+<p>Currently, Replicat (or each Replicat thread of a coordinated Replicat) applies transactions serially (not in parallel); therefore, the high watermark (the <code class="codeph">LOG_CSN</code> value in the table) is always the same as the low watermark (the <code class="codeph">LOG_CMPLT_CSN</code> value in the table), and there typically is only one transaction ID in the <code class="codeph">LOG_CMPLT_XID</code> column. The only exception is when there are multiple transactions sharing the same CSN.</p>
+<p>Do not change the names or attributes of the columns in these tables. You can change table storage attributes as needed.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformal" id="GUID-D1ED9CCF-C81C-4CE2-8EAB-E4C8C7BDF58C__GUID-886B8800-FA1E-4C9D-83DD-56E689D286D5">
+<p class="titleintable">Table E-1 Checkpoint table definition</p>
+<table class="cellalignment46" title="Checkpoint table definition" summary="This two-column table lists and defines the checkpoint table data.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment74" id="d97247e484">Column</th>
+<th class="cellalignment75" id="d97247e487">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e492" headers="d97247e484">
+<p><code class="codeph">GROUP_NAME (primary key)</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e492 d97247e487">
+<p>The name of a Replicat group using this table for checkpoints. There can be multiple Replicat groups using the same table. This column is part of the primary key.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e500" headers="d97247e484">
+<p><code class="codeph">GROUP_KEY (primary key)</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e500 d97247e487">
+<p>A unique identifier that, together with <code class="codeph">GROUPNAME</code>, uniquely identifies a checkpoint regardless of how many Replicat groups are writing to the same table. This column is part of the primary key.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e511" headers="d97247e484">
+<p><code class="codeph">SEQNO</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e511 d97247e487">
+<p>The sequence number of the input trail that Replicat was reading at the time of the checkpoint.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e519" headers="d97247e484">
+<p><code class="codeph">RBA</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e519 d97247e487">
+<p>The relative byte address that Replicat reached in the trail identified by <code class="codeph">SEQNO</code>. <code class="codeph">RBA</code> + <code class="codeph">SEQNO</code> provide an absolute position in the trail that identifies the progress of Replicat at the time of checkpoint.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e536" headers="d97247e484">
+<p><code class="codeph">AUDIT_TS</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e536 d97247e487">
+<p>The timestamp of the commit of the source transaction.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e544" headers="d97247e484">
+<p><code class="codeph">CREATE_TS</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e544 d97247e487">
+<p>The date and time when the checkpoint table was created.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e552" headers="d97247e484">
+<p><code class="codeph">LAST_UPDATE_TS</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e552 d97247e487">
+<p>The date and time when the checkpoint table was last updated.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e560" headers="d97247e484">
+<p><code class="codeph">CURRENT_DIR</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e560 d97247e487">
+<p>The current Oracle GoldenGate home directory or folder.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e568" headers="d97247e484">
+<p><code class="codeph">LOG_CSN</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e568 d97247e487">
+<p>Stores the high watermark, or the upper boundary, of the CSNs. Any transaction with a CSN higher than this value has not been processed.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e576" headers="d97247e484">
+<p><code class="codeph">LOG_XID</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e576 d97247e487">
+<p>Not used. Retained for backward compatibility.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e584" headers="d97247e484">
+<p><code class="codeph">LOG_CMPLT_CSN</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e584 d97247e487">
+<p>Stores the low watermark, or the lower boundary, of the CSNs. Any transaction with a lower CSN than this value has already been processed.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e593" headers="d97247e484">
+<p><code class="codeph">LOG_CMPLT_XIDS</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e593 d97247e487">
+<p>Stores the transactions between the high and low watermarks that are already applied.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e601" headers="d97247e484">
+<p><code class="codeph">VERSION</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e601 d97247e487">
+<p>The version of the checkpoint table format. Enables future enhancements to be identified as version numbers of the table.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="tblformal" id="GUID-D1ED9CCF-C81C-4CE2-8EAB-E4C8C7BDF58C__GUID-3B66FE38-029D-47C0-9AB7-97C36DB3B11E">
+<p class="titleintable">Table E-2 Transaction table definition</p>
+<table class="cellalignment46" title="Transaction table definition" summary="This two-column table describes the columns of the transaction table, which is an auxiliary checkpoint table.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment74" id="d97247e618">Column</th>
+<th class="cellalignment75" id="d97247e621">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e626" headers="d97247e618">
+<p><code class="codeph">GROUP_NAME</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e626 d97247e621">
+<p>The name of a Replicat group using this table for checkpoints. There can be multiple Replicat groups using the same table. This column is part of the primary key of the transaction table.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e634" headers="d97247e618">
+<p><code class="codeph">GROUP_KEY</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e634 d97247e621">
+<p>A unique identifier that, together with <code class="codeph">GROUPNAME</code>, uniquely identifies a checkpoint regardless of how many Replicat groups are writing to the same table. This column is part of the primary key of the transaction table.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e645" headers="d97247e618">
+<p><code class="codeph">LOG_CMPLT_CSN</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e645 d97247e621">
+<p>The foreign key that references the checkpoint table. This column is part of the primary key of the transaction table.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e653" headers="d97247e618">
+<p><code class="codeph">LOG_CMPLT_XIDS_SEQ</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e653 d97247e621">
+<p>Creates unique rows in the event there are so many overflow transactions that multiple rows are required to store them all. This column is part of the primary key of the transaction table.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d97247e661" headers="d97247e618">
+<p><code class="codeph">LOG_CMPLT_XIDS</code></p>
+</td>
+<td class="cellalignment77" headers="d97247e661 d97247e621">
+<p>Stores the overflow of transactions between the high and low watermarks that are already applied.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8">
+<table class="cellalignment58">
+<tr>
+<td class="cellalignment5"><a href="commit-sequence-number.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

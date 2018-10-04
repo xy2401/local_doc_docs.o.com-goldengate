@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Creating the Oracle GoldenGate Veridata Repository Schema</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1071" />
+<meta name="description" content="This chapter describes how to create the Veridata Repository database schemas using the Repository Creation Utility (RCU)." />
+<meta name="dcterms.created" content="2015-10-12T16:49:42Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Installing and Configuring Oracle GoldenGate Veridata" />
+<meta name="dcterms.identifier" content="E60969-01" />
+<meta name="dcterms.isVersionOf" content="GVDIS" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="install_using_oui.htm" title="Previous" type="text/html" />
+<link rel="Next" href="configure_domain.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E60969-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="E60969-01.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="E60969-01.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><span id="PAGE" style="display:none;">7/15</span> <!-- End Header -->
+<div id="GVDIS860" class="chapter"><a id="BCFDIFIH"></a>
+<h1 class="chapter"><span class="secnum">4</span> Creating the Oracle GoldenGate Veridata Repository Schema</h1>
+<p><a id="GVDIS861"></a>This chapter describes how to create the Veridata Repository database schemas using the Repository Creation Utility (RCU).</p>
+<p>This step is required before any domain is configured for your Oracle GoldenGate Veridata instance.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#BCFHEGFG">Section 4.1, "Configuring a Certified Database"</a></p>
+</li>
+<li>
+<p><a href="#A1002253253">Section 4.2, "Starting Repository Creation Utility"</a></p>
+</li>
+<li>
+<p><a href="#A1002253381">Section 4.3, "Navigating the RCU Screens to Create the Schema"</a></p>
+</li>
+</ul>
+<a id="BCFHEGFG"></a>
+<div id="GVDIS862" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.1</span> Configuring a Certified Database</h2>
+<p>Before you begin, make sure you have installed and configured a certified database. For more information about the supported database, see the certification matrix at <code dir="ltr"><a href="http://support.oracle.com">http://support.oracle.com</a></code>.</p>
+<p>For more information, see <a href="system_requirements.htm#CIHIBGAC">Section 2.2.3, "Install a Certified Database for Configuring Veridata Repository"</a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A1002253253"></a>
+<div id="GVDIS863" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.2</span> Starting Repository Creation Utility</h2>
+<p>Navigate to the <code dir="ltr"><span class="codeinlineitalic">ORACLE_HOME</span></code><code dir="ltr">/oracle_common/bin</code> directory and start RCU.</p>
+<ol>
+<li>
+<p>Set the <code dir="ltr"><span class="codeinlineitalic">JAVA_HOME</span></code> environment variable to your JDK location.</p>
+<p>On UNIX operating systems:</p>
+<pre dir="ltr">
+setenv JAVA_HOME/home/Oracle/Java/jdk<span class="italic">version</span>
+</pre>
+<p>On Windows operating systems, right-click on the desktop, then select <span class="bold">My Computer</span>, then select <span class="bold">Properties</span>. Click <span class="bold">Advanced System Settings</span> in the left column, then click <span class="bold">Environment Variables</span> in the System Properties window.</p>
+<p>In the Environment Variables window, set <code dir="ltr"><span class="codeinlineitalic">JAVA_HOME</span></code> to your JDK location.</p>
+</li>
+<li>
+<p>Navigate to the <code dir="ltr"><span class="codeinlineitalic">ORACLE_HOME</span></code><code dir="ltr">/oracle_common/bin</code> directory.</p>
+</li>
+<li>
+<p>Start RCU.</p>
+<p>On UNIX operating systems:</p>
+<pre dir="ltr">
+./rcu
+</pre>
+<p>On Windows operating systems:</p>
+<pre dir="ltr">
+rcu.bat
+</pre></li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="A1002253381"></a>
+<div id="GVDIS864" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.3</span> Navigating the RCU Screens to Create the Schema</h2>
+<p>Follow the instructions on this section to complete schema creation for Oracle GoldenGate Veridata.</p>
+<p>Refer to <a class="olink RCUUG353" href="http://www.oracle.com/pls/topic/lookup?ctx=E63732-01&amp;id=RCUUG353">"Understanding Repository Creation Screens"</a> in <span class="italic">Creating Schemas with the Repository Creation Utility</span> for more information about any of the screens mentioned in this section.</p>
+<ul>
+<li>
+<p><a href="#BCFCBFHE">Task 1, "Introducing RCU"</a></p>
+</li>
+<li>
+<p><a href="#BCFFCJAH">Task 2, "Selecting a Repository Creation Method"</a></p>
+</li>
+<li>
+<p><a href="#BCFIHCJF">Task 3, "Providing Database Connection Details"</a></p>
+</li>
+<li>
+<p><a href="#BCFIIJCB">Task 4, "Selecting Components"</a></p>
+</li>
+<li>
+<p><a href="#BCFEIHBE">Task 5, "Specifying Schema Passwords"</a></p>
+</li>
+<li>
+<p><a href="#BCFHDHJE">Task 6, "Map Tablespaces"</a></p>
+</li>
+<li>
+<p><a href="#BCFHFCFD">Task 7, "Completing Schema Creation"</a></p>
+</li>
+</ul>
+<dl>
+<dd><a id="GVDIS865"></a><a id="BCFCBFHE"></a></dd>
+<dt class="seghead">Task 1&nbsp;&nbsp;&nbsp;Introducing RCU</dt>
+<dd>
+<p>Click <span class="bold">Next</span>.</p>
+</dd>
+<dd><a id="GVDIS866"></a><a id="BCFFCJAH"></a></dd>
+<dt class="seghead">Task 2&nbsp;&nbsp;&nbsp;Selecting a Repository Creation Method</dt>
+<dd>
+<p>If you have the necessary permission and privileges to perform DBA activities on your database, select <span class="bold">System Load and Product Load Concurrently</span>. This procedure assumes that you have the necessary privileges.</p>
+<p>For Oracle database, if you do not have the necessary permission or privileges to perform DBA activities in the database, you must select <span class="bold">Prepare Scripts for System Load</span> on this screen. This option will generate a SQL script, which can be provided to your database administrator. See <a class="olink RCUUG307" href="http://www.oracle.com/pls/topic/lookup?ctx=E63732-01&amp;id=RCUUG307">"Understanding System Load and Product Load"</a> in <span class="italic">Creating Schemas with the Repository Creation Utility</span>.</p>
+</dd>
+<dd><a id="GVDIS867"></a><a id="BCFIHCJF"></a></dd>
+<dt class="seghead">Task 3&nbsp;&nbsp;&nbsp;Providing Database Connection Details</dt>
+<dd>
+<p>Provide the database connection details for RCU to connect to your database.</p>
+<p>Click <span class="bold">Next</span> to proceed, then click <span class="bold">OK</span> on the dialog window confirming that connection to the database was successful.</p>
+</dd>
+<dd><a id="GVDIS868"></a><a id="BCFIIJCB"></a></dd>
+<dt class="seghead">Task 4&nbsp;&nbsp;&nbsp;Selecting Components</dt>
+<dd>
+<p>Select <span class="bold">Create new prefix</span>, specify a custom prefix, then select the Oracle GoldenGate Veridata Repository schema.</p>
+<p>The custom prefix is used to logically group these schemas together for use in this domain only; you must create a unique set of schemas for each domain as schema sharing across domains is not supported.</p>
+<p>Ensure that the Oracle Platform Security Services (OPSS) schema is selected in addition to the Veridata Repository schema as shown below:</p>
+<img width="797" height="487" src="img/rcu_select_components_jee.gif" alt="Description of rcu_select_components_jee.gif follows" /><br />
+<a id="sthref27" href="img_text/rcu_select_components_jee.htm">Description of the illustration ''rcu_select_components_jee.gif''</a><br />
+<br />
+<p>For more information about custom prefixes, see <a class="olink RCUUG308" href="http://www.oracle.com/pls/topic/lookup?ctx=E63732-01&amp;id=RCUUG308">"Understanding Custom Prefixes"</a> in <span class="italic">Creating Schemas with the Repository Creation Utility</span>.</p>
+<p>For more information about how to organize your schemas in a multi-domain environment, see <a class="olink RCUUG120" href="http://www.oracle.com/pls/topic/lookup?ctx=E63732-01&amp;id=RCUUG120">"Planning Your Schema Creation"</a> in <span class="italic">Creating Schemas with the Repository Creation Utility</span>.</p>
+<div class="infoboxnotealso">
+<p class="notep1">Tip:</p>
+You must make a note of the custom prefix you choose to enter here; you will need this later on during the domain creation process.</div>
+<p>Click <span class="bold">Next</span> to proceed, then click <span class="bold">OK</span> on the dialog window confirming that prerequisite checking for schema creation was successful.</p>
+</dd>
+<dd><a id="GVDIS869"></a><a id="BCFEIHBE"></a></dd>
+<dt class="seghead">Task 5&nbsp;&nbsp;&nbsp;Specifying Schema Passwords</dt>
+<dd>
+<p>Specify how you want to set the schema passwords on your database, then specify and confirm your passwords.</p>
+<div class="infoboxnotealso">
+<p class="notep1">Tip:</p>
+You must make a note of the passwords you set on this screen; you will need them later on during the domain creation process.</div>
+<img width="796" height="328" src="img/rcu_custom_variable.gif" alt="Description of rcu_custom_variable.gif follows" /><br />
+<a id="sthref28" href="img_text/rcu_custom_variable.htm">Description of the illustration ''rcu_custom_variable.gif''</a><br />
+<br /></dd>
+<dd><a id="GVDIS870"></a><a id="BCFHDHJE"></a></dd>
+<dt class="seghead">Task 6&nbsp;&nbsp;&nbsp;Map Tablespaces</dt>
+<dd>
+<p>Specify the Tablespaces for the Oracle GoldenGate Veridata Repository.</p>
+<div class="infoboxnotealso">
+<p class="notep1">Tip:</p>
+More information about the fields on this screen can be found in <span class="italic">Creating Schemas with the Repository Creation Utility</span>.</div>
+</dd>
+<dd><a id="GVDIS871"></a><a id="BCFHFCFD"></a></dd>
+<dt class="seghead">Task 7&nbsp;&nbsp;&nbsp;Completing Schema Creation</dt>
+<dd>
+<p>Navigate through the remainder of the RCU screens to complete schema creation. When you reach the Completion Summary screen, click <span class="bold">Close</span> to dismiss RCU.</p>
+</dd>
+</dl>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment46">
+<tr>
+<td class="cellalignment53">
+<table class="cellalignment51">
+<tr>
+<td class="cellalignment50"><a href="install_using_oui.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment50"><a href="configure_domain.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment55">
+<table class="cellalignment49">
+<tr>
+<td class="cellalignment50"><a href="../../index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment50"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment50"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

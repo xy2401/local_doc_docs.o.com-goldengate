@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Moving from a Test to a Production Environment</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1054" />
+<meta name="description" content="This chapter describes the procedures for moving Oracle GoldenGate Monitor Server from a test environment to a production environment (" />
+<meta name="dcterms.created" content="2015-04-15T13:16:57Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Installing and Configuring Oracle GoldenGate Monitor" />
+<meta name="dcterms.identifier" content="E50582-05" />
+<meta name="dcterms.isVersionOf" content="GMINS" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="uninstall.htm" title="Previous" type="text/html" />
+<link rel="Next" href="install_screens.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GMINS.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="GMINS.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="GMINS.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">10/11</span> <!-- End Header -->
+<div id="GMINS230" class="chapter"><a id="sthref45"></a>
+<h1 class="chapter"><span class="secnum">7</span> Moving from a Test to a Production Environment</h1>
+<p><a id="GMINS231"></a>This chapter describes the procedures for moving Oracle GoldenGate Monitor Server from a test environment to a production environment ("T2P"). It contains the following sections:</p>
+<ul>
+<li>
+<p><a href="#CHDCHGJD">Section 7.1, "Prerequisites"</a></p>
+</li>
+<li>
+<p><a href="#CHDCFFGF">Section 7.2, "Preparing the Test Environment"</a></p>
+</li>
+<li>
+<p><a href="#CHDJCBAB">Section 7.3, "Preparing the Production Environment"</a></p>
+</li>
+<li>
+<p><a href="#CHDCDJEA">Section 7.4, "Verifying the Move"</a></p>
+</li>
+<li>
+<p><a href="#CHDIAIDD">Section 7.5, "Additional Information"</a></p>
+</li>
+</ul>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Oracle GoldenGate Monitor does not support test-to-production for compact domains because these types of domains are not intended for production environments. Expanded Domains are used for Oracle databases; compact domains are used for non-oracle databases; for example, MySQL and SQL Server.</div>
+<a id="CHDCHGJD"></a>
+<div id="GMINS232" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">7.1</span> Prerequisites</h2>
+<p>Before moving Oracle GoldenGate Monitor Server from a test to a production environment, ensure that Oracle GoldenGate is installed and is configured on both the source and target environments for enabling Oracle GoldenGate monitoring using Oracle GoldenGate agent.</p>
+</div>
+<!-- class="sect1" -->
+<a id="CHDCFFGF"></a>
+<div id="GMINS233" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">7.2</span> Preparing the Test Environment</h2>
+<p>To prepare the test environment, install the Oracle WebLogic Server infrastructure and then do the following:</p>
+<ol>
+<li>
+<p>Create a database instance by using the Repository Creation Utility (RCU). For instructions, see <a href="inst_mon_svr_oui.htm#BABDHECF">Section 3.2, "Creating a Repository"</a>.</p>
+</li>
+<li>
+<p>Install and configure Oracle GoldenGate Monitor 12<span class="italic">c</span> (12.1.3), in this order:</p>
+<ol>
+<li>
+<p>Oracle GoldenGate Monitor Server</p>
+</li>
+<li>
+<p>Oracle GoldenGate agent</p>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="CHDJCBAB"></a>
+<div id="GMINS234" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">7.3</span> Preparing the Production Environment</h2>
+<p>This section contains information on how to prepare the production, or "target" environment.</p>
+<div id="GMINS237" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref46"></a>
+<h3 class="sect2"><span class="secnum">7.3.1</span> Before You Begin</h3>
+<p>Your target environment must meet the following prerequisites:</p>
+<ul>
+<li>
+<p>You must use the <code dir="ltr">cloningclient.jar</code> file and the <code dir="ltr">pasteBinary</code> script file that are compatible with the version of the ORACLE_HOME and components that you want to copy. The procedures in this chapter presume that you are using the current version of the cloningclient.jar file and movement scripts.</p>
+</li>
+<li>
+<p>The target environment must be on the same operating system as the source environment. Also, the operating system architecture must be the same in both environments. For example, both environments must be running 32-bit operating systems or 64-bit operating systems.</p>
+</li>
+<li>
+<p>The host must have JDK 1.6.04 or higher installed. In addition, ensure that the <code dir="ltr">PATH</code>, <code dir="ltr">CLASSPATH</code>, and J<code dir="ltr">AVA_HOME</code> environment variables point to the JDK. When you execute the scripts, you must specify a matching Java home. That is, if the Oracle homes are 64 bit, you must specify a 64-bit Java home. If the Oracle homes are 32 bit, you must specify a 32-bit Java home.</p>
+</li>
+<li>
+<p>The target environment must have the same superuser or administrative user as the user at the source environment. After you complete the movement of the installation, you can modify the user on the target environment.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<div id="GMINS238" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref47"></a>
+<h3 class="sect2"><span class="secnum">7.3.2</span> Preparing the Environment</h3>
+<p>To prepare the production environment for an Oracle Database, do the following:</p>
+<ol>
+<li>
+<p>Create new database Instance using by RCU, as described in <a href="inst_mon_svr_oui.htm#BABDHECF">Section 3.2, "Creating a Repository"</a>.</p>
+<p>Note that the database in the target environment must be the same type and version of database as in the source environment; for example, if the database in the source environment is an Oracle database, the database in the target environment must also be an Oracle database.</p>
+</li>
+<li>
+<p>Copy and paste WLS_JRF binary files to the target environment by using the T2P scripts <code dir="ltr">copyBinary.sh</code> (<code dir="ltr">.cmd</code> on Windows) and <code dir="ltr">pasteBinary.sh</code>; (<code dir="ltr">.cmd</code>) for example:</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The scripts used in the following examples&mdash;called movement scripts&mdash;are located in <code dir="ltr">ORACLE_HOME/oracle_common/bin/</code> (<code dir="ltr">ORACLE_HOME\oracle_common\bin\</code> on Windows). For more information on the Move scripts, see <a class="olink ASADM11899" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1213&amp;id=ASADM11899">"Movement Scripts and Move Plans"</a> in <span class="italic">Administering Oracle Fusion Middleware</span>.</div>
+<p><span class="bold">To copy:</span></p>
+<p>On Linux:</p>
+<pre dir="ltr">
+./<span class="bold">copyBinary.sh</span> -javaHome /usr/local/packages/jdk7 
+                -archiveLoc /scratch/<span class="italic">myuser</span>/T2P/oh_copy.jar
+                -sourceOracleHomeLoc /scratch/<span class="italic">myuser</span>/WLS_12.1.3_HOME
+</pre>
+<p>On Windows:</p>
+<pre dir="ltr">
+&gt;<span class="bold">copyBinary.cmd</span> -javaHome C:\Program Files\Java\jdk1.7.0_51 
+                -archiveLoc <span class="italic">userhome</span>\T2P\oh_copy.jar 
+                -sourceOracleHomeLoc <span class="italic">userhome</span>\WLS_12.1.3_HOME
+</pre>
+<p><span class="bold">To paste:</span></p>
+<p>First, copy the <code dir="ltr">pasteBinary</code> script and the <code dir="ltr">cloningclient.jar</code> file to the target system and ensure that they have execute permission. <code dir="ltr">cloningClient.jar</code> is located in <code dir="ltr">ORACLE_COMMON_HOME/jlib/cloningclient.jar</code> (Linux) or <code dir="ltr">ORACLE_</code><code dir="ltr">COMMON_HOME\jlib\cloningclient.jar</code> (Windows).</p>
+<p>Then, depending on your O/S, do one of the following:</p>
+<p>On Linux:</p>
+<pre dir="ltr">
+./<span class="bold">pasteBinary.sh</span> -javaHome /usr/local/packages/jdk7 
+                 -archiveLoc  /scratch/<span class="italic">myuser</span>/T2P/oh_copy.jar
+                 -targetOracleHomeLoc /scratch/<span class="italic">myuser</span>/WLS_1213_COPY_HOME
+                 -targetOracleHomeName WLS_1213_COPY_HOME_1
+</pre>
+<p>On Windows:</p>
+<pre dir="ltr">
+&gt;<span class="bold">pasteBinary.cmd</span> -javaHome C:\Program Files\Java\jdk1.7.0_51 
+                 -archiveLoc  <span class="italic">userhome</span>\T2P\oh_copy.jar 
+                 -targetOracleHomeLoc <span class="italic">userhome</span>\WLS_1213_COPY_HOME
+                 -targetOracleHomeName WLS_1213_COPY_HOME_1
+</pre></li>
+<li>
+<p>Using any text editor, create a new text file called <code dir="ltr">adminuser_password.txt</code> and enter a password for the Oracle WebLogic Server administrative user (for example, <code dir="ltr">weblogic</code>) in the file and save it. This file will be used in next step.</p>
+</li>
+<li>
+<p>Use the <code dir="ltr">copyConfig</code> script to copy the Oracle GoldenGate Monitor Weblogic domain configuration to the target environment; for example:</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Before you execute the <code dir="ltr">copyConfig.sh</code> script in a WebLogic Server domain, make sure that the Administration Server and Managed Servers are running.</div>
+<p>On Linux:</p>
+<pre dir="ltr">
+./<span class="bold">copyConfig.sh</span> -javaHome /usr/local/packages/jdk7 
+                -archiveLoc /scratch/<span class="italic">myuser</span>/T2P/oggmon_domain.jar
+                -sourceDomainLoc /scratch/myuser/OGGMON_INSTALLS/oggmon_domain
+                -sourceOracleHomeLoc /scratch/myuser/WLS_12.1.3_HOME
+                -domainHostName myhost.example.com 
+                -domainPortNum 7001 
+                -domainAdminUserName weblogic 
+                -domainAdminPasswordFile /scratch/myuser/T2P/adminuser_password.txt
+</pre>
+<p>On Windows:</p>
+<pre dir="ltr">
+&gt;<span class="bold">copyConfig.cmd</span> -javaHome C:\Program Files\Java\jdk1.7.0_51 
+                -archiveLoc <span class="italic">userhome</span>\T2P/oggmon_domain.jar 
+                -sourceDomainLoc <span class="italic">userhome</span>\OGGMON_INSTALLS\oggmon_domain
+                -sourceOracleHomeLoc <span class="italic">userhome</span>\WLS_12.1.3_HOME -domainHostName myhost.example.com 
+                -domainPortNum 7001 -domainAdminUserName weblogic 
+                -domainAdminPasswordFile <span class="italic">userhome</span>\T2P\adminuser_password.txt
+</pre></li>
+<li>
+<p>Use the <code dir="ltr">extractMovePlan</code>. script to extract the move plan from the domain configuration jar file (<code dir="ltr">oggmon_domain.jar</code>) so you can make required updates to the target environment; for example:</p>
+<p>On Linux:</p>
+<pre dir="ltr">
+<span class="bold">./extractMovePlan.sh</span> -javaHome /usr/local/packages/jdk7 
+                     -archiveLoc /scratch/<span class="italic">myuser</span>/T2P/oggmon_domain.jar
+                     -planDirLoc /scratch/myuser/T2P/extract_plans
+</pre>
+<p>On Windows:</p>
+<pre dir="ltr">
+<span class="bold">&gt;extractMovePlan.cmd</span> -javaHome C:\Program Files\Java\jdk1.7.0_51 
+                     -archiveLoc <span class="italic">userhome</span>\T2P\oggmon_domain.jar 
+                     -planDirLoc <span class="italic">userhome</span>/T2P\extract_plans
+</pre>
+<p>For information about the properties in the move plans, and which properties you should edit, see <a class="olink ASADM11459" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1213&amp;id=ASADM11459">"Modifying Move Plans"</a> in <span class="italic">Administering Oracle Fusion Middleware</span>.</p>
+</li>
+<li>
+<p>Use the <code dir="ltr">pasteConfig</code> script to paste the generated configuration into the target environment; for example:</p>
+<p>On Linux:</p>
+<pre dir="ltr">
+<span class="bold">./pasteConfig.sh</span> -javaHome /usr/local/packages/jdk7 
+                 -archiveLoc /scratch/<span class="italic">myuser</span>/T2P/oggmon_domain.jar
+                 -targetDomainLoc /scratch/<span class="italic">myuser</span>/OGGMON_INSTALLS/oggmon_domain_copy 
+                 -targetOracleHomeLoc /scratch/<span class="italic">myuser</span>/WLS_1213_COPY_HOME
+                 -movePlanLoc /scratch/<span class="italic">myuser</span>/T2P/extract_plans/moveplan.xml
+                 -domainAdminPasswordFile /scratch/myuser/T2P/adminuser_password.txt 
+                 -logDirLoc /scratch/<span class="italic">myuser</span>/T2P/log
+</pre>
+<p>On Windows:</p>
+<pre dir="ltr">
+<span class="bold">&gt;pasteConfig.cmd</span> -javaHome C:\Program Files\Java\jdk1.7.0_51 
+                 -archiveLoc <span class="italic">userhome</span>\T2P\oggmon_domain.jar 
+                 -targetDomainLoc <span class="italic">userhome</span>\OGGMON_INSTALLS\oggmon_domain_copy
+                 -targetOracleHomeLoc <span class="italic">userhome</span>\WLS_1213_COPY_HOME 
+                 -movePlanLoc <span class="italic">userhome</span>\T2P\extract_plans\moveplan.xml
+                 -domainAdminPasswordFile <span class="italic">userhome</span>\T2P\adminuser_password.txt
+                 -logDirLoc <span class="italic">userhome</span>\T2P\log
+</pre></li>
+<li>
+<p>Update the Oracle GoldenGate Monitor Server configuration by doing the following:</p>
+<ul>
+<li>
+<p>Update these Oracle GoldenGate Monitor Server configuration files:</p>
+<ul>
+<li>
+<p><code dir="ltr">monitor.properties</code></p>
+</li>
+<li>
+<p><code dir="ltr">SNMPJMXMapping.xml</code></p>
+</li>
+<li>
+<p><code dir="ltr">CommandLineHandlers.xml</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Move the SSL certificates manually to the target environment. For information about using SSL with Oracle GoldenGate Monitor, see <a class="olink GMNAD312" href="../GMNAD/mon_adm_ssl.htm#GMNAD312">"Using SSL Communication"</a> in <span class="italic">Administering Oracle GoldenGate Monitor</span>.</p>
+</li>
+<li>
+<p>Using the WebLogic Scripting Tool (WLST), update Oracle GoldenGate Monitor Server-related passwords for target environment. For more information on using WLST, see <a class="olink WLSTG" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1213&amp;id=WLSTG"><span class="italic">Understanding the WebLogic Scripting Tool</span></a>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Install and configure Oracle GoldenGate agent software on the target machine. For instructions, see <a class="olink GGAIN" href="../GGAIN/toc.htm"><span class="italic">Installing and Configuring Oracle GoldenGate Monitor Agent</span></a>.</p>
+</li>
+</ol>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+T2P scripts are not available for standalone products, like Oracle GoldenGate agent.</div>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CHDCDJEA"></a>
+<div id="GMINS235" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">7.4</span> Verifying the Move</h2>
+<p>Verify that the T2P move was successful by doing the following:</p>
+<ol>
+<li>
+<p>Start the administration server, as described in <a href="configuring_monitor_server.htm#BGBEJFJA">Section 4.4.1, "Start the WebLogic Administration Server"</a> and managed server, as described in <a href="configuring_monitor_server.htm#BGBCFEGC">Section 4.4.3, "Start the WebLogic Managed Server"</a>.</p>
+</li>
+<li>
+<p><a id="GMINS122"></a>Go to Oracle GoldenGate Core GGSCI terminal and start Oracle GoldenGate Monitor Agent by executing the start jagent command:</p>
+<pre dir="ltr">
+GGSCI&gt;start jagent
+</pre></li>
+</ol>
+<p>If everything starts successfully, the T2P process is complete.</p>
+</div>
+<!-- class="sect1" -->
+<a id="CHDIAIDD"></a>
+<div id="GMINS239" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">7.5</span> Additional Information</h2>
+<p>For more information on moving from a test to a production environment, see the following chapters in <a class="olink ASADM" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1213&amp;id=ASADM"><span class="italic">Administering Oracle Fusion Middleware</span></a>:</p>
+<ul>
+<li>
+<p><a class="olink ASADM339" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1213&amp;id=ASADM339">"Moving from a Test to a Production Environment"</a></p>
+</li>
+<li>
+<p><a class="olink ASADM11899" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1213&amp;id=ASADM11899">"Movement Scripts and Move Plans"</a></p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment10">
+<tr>
+<td class="cellalignment19">
+<table class="cellalignment22">
+<tr>
+<td class="cellalignment14"><a href="uninstall.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment14"><a href="install_screens.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment21">
+<table class="cellalignment13">
+<tr>
+<td class="cellalignment14"><a href="../../index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment14"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment14"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

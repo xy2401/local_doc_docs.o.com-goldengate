@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using DDL Replication</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Learn how to install, use, configure, and remove DDL replication." />
+<meta name="dcterms.created" content="2018-09-07T08:20:49Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Heterogeneous Databases" />
+<meta name="dcterms.identifier" content="E88786-08" />
+<meta name="dcterms.isVersionOf" content="GGHDB" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="preparing-and-configuring-system-oracle-goldengate.htm" title="Previous" type="text/html" />
+<link rel="Next" href="18.1using-oracle-goldengate-sql-server.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGHDB.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-8AE2F268-0C6C-4806-875F-7C5A1F23C08F"></a> <span id="PAGE" style="display:none;">22/37</span> <!-- End Header -->
+<h1 id="GGHDB-GUID-8AE2F268-0C6C-4806-875F-7C5A1F23C08F" class="sect1"><span class="enumeration_chapter">14</span> Using DDL Replication</h1>
+<div>
+<div><span>Learn how to install, use, configure, and remove DDL replication.</span></div>
+<p><span class="bold">Data Definition Language (DDL)</span> statements (operations) are used to define MySQL database structures or schema. You can use these DDL statements for data replication between MySQL source and target databases. MySQL DDL specifics are found in the MySQL documentation at <a href="https://dev.mysql.com/doc/" target="_blank">https://dev.mysql.com/doc/</a>.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-ddl-replication.htm#GUID-FDBF3ED9-BFC3-4FA4-883D-C350E6DF5443">DDL Configuration Prerequisites and Considerations</a><br /></li>
+<li class="ulchildlink"><a href="using-ddl-replication.htm#GUID-B7A3B3AF-B5DE-47B3-8B0F-C6D5FCB5388C">Installing DDL Replication</a><br /></li>
+<li class="ulchildlink"><a href="using-ddl-replication.htm#GUID-69C14880-EE07-4968-B553-CCC8471707B9">Using the Metadata Server</a><br /></li>
+<li class="ulchildlink"><a href="using-ddl-replication.htm#GUID-C80382D7-A0D6-4C89-BAC8-B03023F9A313">Using DDL Filtering for Replication</a><br /></li>
+<li class="ulchildlink"><a href="using-ddl-replication.htm#GUID-320B9F49-D32A-4888-921B-B485EA05764D">Troubleshooting DDL Replication</a><br /></li>
+<li class="ulchildlink"><a href="using-ddl-replication.htm#GUID-3BF2C6AB-9695-4F6D-977F-BE094D012C23">Uninstalling DDL Replication</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-oracle-goldengate-mysql.htm" title="Oracle GoldenGate for MySQL supports replication from a MySQL source database to a MySQL target database or to a supported database of another type to perform an initial load or change data replication.">Using Oracle GoldenGate with MySQL</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-FDBF3ED9-BFC3-4FA4-883D-C350E6DF5443"></a>
+<h2 id="GGHDB-GUID-FDBF3ED9-BFC3-4FA4-883D-C350E6DF5443" class="sect2"><span class="enumeration_section">14.1</span> DDL Configuration Prerequisites and Considerations</h2>
+<div>
+<div class="section">
+<p>The prerequisites for configuring DDL replication are as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>DDL replication is supported for MySQL 5.7.10 and greater.</p>
+</li>
+<li>
+<p>Bidirectional filtering for DDL replication is not supported.</p>
+</li>
+<li>
+<p>Remote capture implementation doesn&rsquo;t support DDL replication.</p>
+</li>
+<li>
+<p>Oracle GoldenGate DDL replication uses two plug-ins as a shared library, <code class="codeph">ddl_rewriter</code> and <code class="codeph">ddl_metadata</code>, which must be installed on your MySQL server before Oracle GoldenGate replication starts.</p>
+</li>
+<li>
+<p>The standalone application, Oracle GoldenGate <code class="codeph">metadata_server</code>, must be running to capture the DDL metadata.</p>
+</li>
+<li>
+<p>The <code class="codeph">history</code> table under the new <code class="codeph">oggddl</code> database (<code class="codeph">oggddl.history</code>). This metadata history table is used to store and retrieve the DDL metadata history. The history table records must be ignored from being logged into the binary log so you must specify&nbsp; <code class="codeph">binlog-ignore-db=oggddl</code> in the <code class="codeph">my.cnf</code> file.</p>
+</li>
+<li>
+<p>You should not manually drop the <code class="codeph">oggddl</code> database or the <code class="codeph">history</code> table because all DDL statements that run after this event will be lost.</p>
+</li>
+<li>
+<p>You should not stop the <code class="codeph">metadata_server</code> during DDL capture as all the DDL statements that run after this event will be lost.</p>
+</li>
+<li>
+<p>You should not manually remove the <code class="codeph">ddl_rewriter</code> and the <code class="codeph">ddl_metadata</code> plugins during DDL capture because all DDL statements that run after this event will be lost.</p>
+</li>
+<li>
+<p>DDL executed within the stored procedure is <span class="italic">not</span> supported. For example , a DDL executed as in the following is <span class="italic">not</span> supported.&nbsp;</p>
+<pre dir="ltr">
+CREATE PROCEDURE atssrc.generate_data() 
+BEGIN 
+DECLARE i INT DEFAULT 0; 
+WHILE i &lt; 800 DO 
+SET i = i + 1; 
+IF (i = 100) then 
+alter table atssrc.`ddl6` add col2 DATE after id; 
+ELSEIF (i = 200) then 
+alter table atssrc.`ddl6` add col3 DATETIME after datetime; 
+ELSEIF (i = 300) then 
+alter table atssrc.`ddl6` add `col4` timestamp NULL DEFAULT NULL after 
+channel; 
+ELSEIF (i = 400) then 
+alter table atssrc.`ddl6` add col5 YEAR after value; 
+END IF; 
+END WHILE; 
+END$$ 
+DELIMITER ; 
+call atssrc.generate_data();
+</pre></li>
+</ul>
+<ul style="list-style-type: disc;">
+<li>
+<p>By design, the heartbeat DDLs are ignored by the capture and you should create the heartbeat tables manually at the target.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-ddl-replication.htm#GUID-8AE2F268-0C6C-4806-875F-7C5A1F23C08F" title="Learn how to install, use, configure, and remove DDL replication.">Using DDL Replication</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-B7A3B3AF-B5DE-47B3-8B0F-C6D5FCB5388C"></a>
+<h2 id="GGHDB-GUID-B7A3B3AF-B5DE-47B3-8B0F-C6D5FCB5388C" class="sect2"><span class="enumeration_section">14.2</span> Installing DDL Replication</h2>
+<div>
+<div class="section">
+<p>To install DDL replication, you run the installation script that is provided with Oracle GoldenGate as the replication user. This user must have <code class="codeph">Create</code>, <code class="codeph">Insert</code>,<code class="codeph">Select</code>, <code class="codeph">Delete</code>, <code class="codeph">Drop</code>, and <code class="codeph">Truncate</code> database privileges. Additionally, this user must have write permission to copy the Oracle GoldenGate plugin in the MySQL plugin directory. For example, the MySQL plugin are typically in <code class="codeph">/usr/lib64/mysql/plugin/</code>.</p>
+<p>The installation script options are <code class="codeph">install</code>, <code class="codeph">uninstall</code>, <code class="codeph">start</code>, <code class="codeph">stop</code>, and <code class="codeph">restart</code>.</p>
+<p>The command to install DDL replication uses the install option, user id, password, and port number respectively:</p>
+<pre dir="ltr">
+bash-3.2$ ./ddl_install.sh <span class="italic">install-option</span> <span class="italic">user-id</span> <span class="italic">password</span> <span class="italic">port-number</span>
+</pre>
+<p>For example:</p>
+<pre dir="ltr">
+bash-3.2$ ./ddl_install.sh install root welcome 3306
+</pre>
+<p>The DDL replication installation script completes the following tasks:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li><span>Ensures that you have a supported MySQL server version installed. DDL replication is supported for MySQL 5.7.10 and greater.</span></li>
+<li><span>Locates the MySQL plugin directory.</span></li>
+<li><span>Ensures that the <code class="codeph">ddl_rewriter</code>, <code class="codeph">ddl_metadata</code> plugins and the <code class="codeph">metadata_server</code> files exist. If these files are not found, then an error message appears and the installation exits.</span></li>
+<li><span>Ensures that the plugins are already installed. If installed, the script exits with a message requesting you to uninstall first and then reinstall.</span></li>
+<li><span>Stops the <code class="codeph">metadata_server</code> if it is running.</span></li>
+<li><span>Deletes the <code class="codeph">oggddl.history</code> table if it exists.</span></li>
+<li><span>Starts the <code class="codeph">metadata_server</code> as a daemon process.</span></li>
+<li><span>Installs the <code class="codeph">ddl_rewriter</code> and <code class="codeph">ddl_metadata</code> plugins.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-ddl-replication.htm#GUID-8AE2F268-0C6C-4806-875F-7C5A1F23C08F" title="Learn how to install, use, configure, and remove DDL replication.">Using DDL Replication</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-69C14880-EE07-4968-B553-CCC8471707B9"></a>
+<h2 id="GGHDB-GUID-69C14880-EE07-4968-B553-CCC8471707B9" class="sect2"><span class="enumeration_section">14.3</span> Using the Metadata Server</h2>
+<div>
+<div class="section">
+<p>You can use the following options with the metadata server:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>You must have the Oracle GoldenGate <code class="codeph">metadata_server</code> running to capture the DDL metadata.</p>
+</li>
+<li>
+<p>Run the install script with <code class="codeph">start</code> option to start the metadata server.</p>
+</li>
+<li>
+<p>Run the install script with <code class="codeph">stop</code> option to stop the metadata server.</p>
+</li>
+<li>
+<p>Run the install script with <code class="codeph">restart</code> option to stop the running metadata server and start again.</p>
+</li>
+<li>
+<p>Oracle GoldenGate DDL replication uses two plugins as a shared library, <code class="codeph">ddl_rewriter</code> and <code class="codeph">ddl_metadata</code>, both of which must be installed on your MySQL server before Oracle GoldenGate replication starts.</p>
+</li>
+<li>
+<p>The <code class="codeph">oggddl.history</code> metadata history table is used to store and retrieve the DDL metadata history.</p>
+</li>
+</ul>
+<p>There is a single history table and metadata server for each MySQL server. If you want to issue and capture DDLs from multiple instances of an Extract process on the same database server at the same time, there is a possibility of conflict between accessing and populating the metadata history table. Oracle recommends that you do not run and capture DDLs using multiple Extract instances on the same MySQL server.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-ddl-replication.htm#GUID-8AE2F268-0C6C-4806-875F-7C5A1F23C08F" title="Learn how to install, use, configure, and remove DDL replication.">Using DDL Replication</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-C80382D7-A0D6-4C89-BAC8-B03023F9A313"></a>
+<h2 id="GGHDB-GUID-C80382D7-A0D6-4C89-BAC8-B03023F9A313" class="sect2"><span class="enumeration_section">14.4</span> Using DDL Filtering for Replication</h2>
+<div>
+<div class="section">
+<p>The following options are supported for MySQL DDL replication:</p>
+<div class="tblformal" id="GUID-C80382D7-A0D6-4C89-BAC8-B03023F9A313__GUID-8AC0F0CF-3DDC-4DFC-AD89-BE5FE6A48A92">
+<table class="cellalignment163" summary="Two column table describing the options that are supported for DDL replication.">
+<thead>
+<tr class="cellalignment115">
+<th class="cellalignment164" id="d23468e432">Option</th>
+<th class="cellalignment164" id="d23468e435">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment115">
+<td class="cellalignment165" id="d23468e440" headers="d23468e432">
+<p><code class="codeph">DDL INCLUDE OPTYPE CREATE OBJTYPE TABLE;</code></p>
+</td>
+<td class="cellalignment165" headers="d23468e440 d23468e435">
+<p>Include create table.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment165" id="d23468e448" headers="d23468e432">
+<p><code class="codeph">DDL INCLUDE OBJNAME ggvam.*</code></p>
+</td>
+<td class="cellalignment165" headers="d23468e448 d23468e435">
+<p>Include tables under the <code class="codeph">ggvam</code>database.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment165" id="d23468e459" headers="d23468e432">
+<p><code class="codeph">DDL EXCLUDE OBJNAME ggvam.emp*;</code></p>
+</td>
+<td class="cellalignment165" headers="d23468e459 d23468e435">
+<p>Exclude all the tables under the <code class="codeph">ggvam</code> database and table name starting with the <code class="codeph">emp</code>wildcard.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment165" id="d23468e473" headers="d23468e432">
+<p><code class="codeph">DDL INCLUDE INSTR &lsquo;XYZ&rsquo;</code></p>
+</td>
+<td class="cellalignment165" headers="d23468e473 d23468e435">
+<p>Include DDL that contains this string.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment165" id="d23468e481" headers="d23468e432">
+<p><code class="codeph">DDL EXCLUDE INSTR &lsquo;WHY&rsquo;</code></p>
+</td>
+<td class="cellalignment165" headers="d23468e481 d23468e435">
+<p>Excludes DDL that contains this string.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment165" id="d23468e489" headers="d23468e432">
+<p><code class="codeph">DDL INCLUDE MAPPED</code></p>
+</td>
+<td class="cellalignment165" headers="d23468e489 d23468e435">
+<p>MySQL DDL uses this option and should be used as the default for Oracle GoldenGate MySQL DDL replication. <code class="codeph">DDL INCLUDE ALL</code> and <code class="codeph">DDL</code> are not supported.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment165" id="d23468e503" headers="d23468e432">
+<p><code class="codeph">DDL EXCLUDE ALL</code></p>
+</td>
+<td class="cellalignment165" headers="d23468e503 d23468e435">
+<p>Default option.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>For a full list of options, see <a class="olink GWURF-GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED" target="_blank" href="../GWURF/ddl.htm#GWURF-GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED">DDL</a> in <cite><span id="GUID-C80382D7-A0D6-4C89-BAC8-B03023F9A313__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></cite>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Using DDL Statements and Options</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">INCLUDE</code> (default) means include all objects that fit the rest of the description. <code class="codeph">EXCLUDE</code> means to omit items that fit the description. Exclude rules take precedence over include rules.</p>
+</li>
+<li>
+<p><code class="codeph">OPTYPE</code> specifies the types of operations to be included or excluded. You can use <code class="codeph">CREATE</code> and <code class="codeph">ALTER</code>. Multiple <code class="codeph">OPTYPE</code> can be specified using parentheses. For example, <code class="codeph">optype (create, alter)</code>. The asterisk (*) wildcard can be specified to indicate all operation types, and this is the default.</p>
+</li>
+<li>
+<p><code class="codeph">OBJTYPE</code> specifies the <code class="codeph">TABLE</code> operations to include or exclude. The wildcard can be specified to indicate all object types, and this is the default.</p>
+</li>
+<li>
+<p><code class="codeph">OBJNAME</code> specifies the actual object names to include or exclude. For example, <code class="codeph">eric.*</code>. Wildcards are specified as in other cases where multiple tables are specified. The default is <code class="codeph">*</code>.</p>
+</li>
+<li>
+<p><code class="codeph">String</code> indicates that the rule is true if any of the strings in <code class="codeph">stringspec</code> are present (or false if <code class="codeph">excludestring</code> is specified and the <code class="codeph">stringspec</code> is present). If multiple <code class="codeph">string</code> entries are made, at least one entry in each <code class="codeph">stringspec</code> must be present to make the rule evaluate true.</p>
+<div class="p">For example:
+<pre dir="ltr">
+ddlops string (&ldquo;a&rdquo;, &ldquo;b&rdquo;), string (&ldquo;c&rdquo;) evaluates true if string &ldquo;a&rdquo; OR &ldquo;b&rdquo; is present, AND string &ldquo;c&rdquo; is present
+</pre></div>
+</li>
+<li>
+<p><code class="codeph">local</code> is specified if you want the rule to apply only to the current Extract trail (the Extract trail to which the rule applies must precede this <code class="codeph">ddlops</code> specification).</p>
+</li>
+<li>
+<p>The semicolon is required to terminate the parameter entry.</p>
+<p>For example:</p>
+<pre dir="ltr">
+ddl optype (create, drop), objname (eric.*);
+ddl exclude objname (eric.tab*);
+exttrail a;
+exttrail b;
+ddl optype (create), objname (joe.*), string (&ldquo;abc&rdquo;, &ldquo;xyz&rdquo;) local;
+ddl optype (alter), objtype (index);
+</pre>
+<p>In this preceding example, the <code class="codeph">exttrail a</code> gets creates and drops for all objects that belong to <code class="codeph">eric</code>, except for objects that start with <code class="codeph">tab</code>, <code class="codeph">exttrail a</code> also gets all alter index statements, unless the index name begins with <code class="codeph">tab</code> (the rule is global even though it&rsquo;s included in <code class="codeph">exttrail b</code>). <code class="codeph">exttrail b</code> gets the same objects as <code class="codeph">a</code>, and it also gets all creates for objects that belong to <code class="codeph">joe</code> when the string <code class="codeph">abc</code>or <code class="codeph">xyz</code> is present in the DDL text. The <code class="codeph">ddlops.c</code> module stores all DDL operation parameters and executes related rules.</p>
+</li>
+</ul>
+<p>Additionally, you can use the <code class="codeph">DDLOPTIONS</code> parameter to configure aspects of DDL processing other than filtering and string substitution. You can use multiple <code class="codeph">DDLOPTIONS</code> statements and Oracle recommends using one. If you are using multiple <code class="codeph">DDLOPTIONS</code> statements, then make each of them unique so that one does not override the other. Multiple <code class="codeph">DDLOPTIONS</code> statements are executed in the order listed in the parameter file.</p>
+<p>See <a class="olink GWURF-GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED" target="_blank" href="../GWURF/ddl.htm#GWURF-GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED">DDL</a> and <a class="olink GWURF-GUID-E316EFCB-862D-4055-8B8E-C48EC82F2DDE" target="_blank" href="../GWURF/ddloptions.htm#GWURF-GUID-E316EFCB-862D-4055-8B8E-C48EC82F2DDE">DDLOPTIONS</a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-ddl-replication.htm#GUID-8AE2F268-0C6C-4806-875F-7C5A1F23C08F" title="Learn how to install, use, configure, and remove DDL replication.">Using DDL Replication</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-320B9F49-D32A-4888-921B-B485EA05764D"></a>
+<h2 id="GGHDB-GUID-320B9F49-D32A-4888-921B-B485EA05764D" class="sect2"><span class="enumeration_section">14.5</span> Troubleshooting DDL Replication</h2>
+<div>
+<div class="section">
+<p>DDL replication relies on a metadata history table and the metadata plugin and server. To troubleshoot when DDL replication is enabled, the history table contents and the metadata plugin server logs are required.</p>
+<p>You can use the <code class="codeph">mysqldump</code> command to generate the history table dump using one of the following examples:</p>
+<pre dir="ltr">
+mysqldump [<span class="italic">options</span>] database [<span class="italic">tables</span>]
+mysqldump [<span class="italic">options</span>] --databases [<span class="italic">options</span>] <span class="italic">DB1</span> [<span class="italic">DB2</span> <span class="italic">DB3</span>...]
+mysqldump [<span class="italic">options</span>] --all-databases [<span class="italic">options</span>]
+</pre>
+<p>For example, <code class="codeph">bash-3.2$ mysqldump -uroot -pwelcome oggddl history &gt; outfile</code></p>
+<p>The metadata plugins and server logs are located in the MySQL and Oracle GoldenGate installation directories respectively.</p>
+<p>If you find an error in the log files, you need to ensure that the metadata server is running.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-ddl-replication.htm#GUID-8AE2F268-0C6C-4806-875F-7C5A1F23C08F" title="Learn how to install, use, configure, and remove DDL replication.">Using DDL Replication</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-3BF2C6AB-9695-4F6D-977F-BE094D012C23"></a>
+<h2 id="GGHDB-GUID-3BF2C6AB-9695-4F6D-977F-BE094D012C23" class="sect2"><span class="enumeration_section">14.6</span> Uninstalling DDL Replication</h2>
+<div>
+<div class="section">
+<p>If you no longer want to capture the DDL events, then you can use the same install script and select the <code class="codeph">uninstall</code> option to disable the DDL setup. Also, any Extract with DDL parameters should be removed or disabled. If you want to capture the DDL again, you can run the install script again. You should take care when multiple instances of the capture process is running on the same instance of your MySQL server. The DDL setup should <span class="italic">not</span> be disturbed or uninstalled when multiple capture processes are running and when at most one capture is designed to capture the DDL statement.</p>
+<p>Use the installation script with the <code class="codeph">uninstall</code> option to uninstall DDL Replication. For example:</p>
+<pre dir="ltr">
+bash-3.2$ ./ddl_install.sh uninstall root welcome 3306
+</pre>
+<p>The script performs the following tasks:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li><span>Uninstalls the <code class="codeph">ddl_rewriter</code> and <code class="codeph">ddl_metadata</code> plugins.</span></li>
+<li><span>Deletes the <code class="codeph">oggddl.history</code> table if exists.</span></li>
+<li><span>Removes the plugins from MySQL plugin directory.</span></li>
+<li><span>Stops the <code class="codeph">metadata_server</code> if it is running.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-ddl-replication.htm#GUID-8AE2F268-0C6C-4806-875F-7C5A1F23C08F" title="Learn how to install, use, configure, and remove DDL replication.">Using DDL Replication</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment114">
+<tr>
+<td class="cellalignment121">
+<table class="cellalignment119">
+<tr>
+<td class="cellalignment118"><a href="preparing-and-configuring-system-oracle-goldengate.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment118"><a href="18.1using-oracle-goldengate-sql-server.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment123">
+<table class="cellalignment117">
+<tr>
+<td class="cellalignment118"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment118"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment118"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

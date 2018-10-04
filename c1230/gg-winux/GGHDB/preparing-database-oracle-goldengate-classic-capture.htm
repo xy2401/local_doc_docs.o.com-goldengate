@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Preparing the Database for Oracle GoldenGate &mdash; Classic Capture</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This section contains information that helps you configure database settings and supplemental logging to support Classic Capture of source transaction data by Oracle GoldenGate." />
+<meta name="dcterms.created" content="2018-09-07T08:20:49Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Heterogeneous Databases" />
+<meta name="dcterms.identifier" content="E88786-08" />
+<meta name="dcterms.isVersionOf" content="GGHDB" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="sql-server-preparing-system-oracle-goldengate.htm" title="Previous" type="text/html" />
+<link rel="Next" href="preparing-database-oracle-goldengate-cdc-capture.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGHDB.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-6B7E91D7-21D3-48D5-B881-FA8D992A8D92"></a> <span id="PAGE" style="display:none;">26/37</span> <!-- End Header -->
+<h1 id="GGHDB-GUID-6B7E91D7-21D3-48D5-B881-FA8D992A8D92" class="sect1"><span class="enumeration_chapter">17</span> Preparing the Database for <span>Oracle GoldenGate</span> &mdash; Classic Capture</h1>
+<div>
+<div><span>This section contains information that helps you configure database settings and supplemental logging to support Classic Capture of source transaction data by <span>Oracle GoldenGate</span>.</span></div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-50D2C2F7-8361-4CA4-ABD2-74AB4AB26444">Setting the Database to Full Recovery Model</a><br /></li>
+<li class="ulchildlink"><a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-AAC8387B-7D13-43F8-8D2E-FFA0A2BCA8C1">Backing Up the Transaction Log</a><br /></li>
+<li class="ulchildlink"><a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-978BB506-C7A3-49A2-99B5-1C2565EDBA2C">Enabling Supplemental Logging</a><br /></li>
+<li class="ulchildlink"><a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-EBC93855-8E7D-4EDA-886E-B7FA6CDDA6EF">Managing the Secondary Truncation Point</a><br /></li>
+<li class="ulchildlink"><a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-15017332-3F22-4AE8-9582-32FC31DFC0DD">Retaining the Log Backups and Backup History</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="18.1using-oracle-goldengate-sql-server.htm" title="With Oracle GoldenGate for SQL Server, you can capture transactional data from user tables of supported SQL Server versions and replicate the data to a SQL Server database or other supported Oracle GoldenGate targets, such as an Oracle Database or Big Data target.">Using Oracle GoldenGate with SQL Server</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-50D2C2F7-8361-4CA4-ABD2-74AB4AB26444"></a>
+<h2 id="GGHDB-GUID-50D2C2F7-8361-4CA4-ABD2-74AB4AB26444" class="sect2"><span class="enumeration_section">17.1</span> Setting the Database to Full Recovery Model</h2>
+<div>
+<div class="section">
+<p><span>Oracle GoldenGate</span> requires that you set a SQL Server source database to the Full recovery model and that a full database backup exists.</p>
+<p>To verify or set the recovery model:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li><span>Connect to the SQL Server instance with SQL Server Management Studio for SQL Server.</span></li>
+<li><span>Expand the Databases folder.</span></li>
+<li><span>Right-click the source database, and then select <span class="bold">Properties</span>.</span></li>
+<li><span>Select the <span class="bold">Options</span> tab.</span></li>
+<li><span>Under Recovery, set the model to <span class="bold">Full</span>, if it is not already set.</span></li>
+<li><span>If the database was in simple recovery or never had a full database backup, take a full database backup before positioning Extract.</span></li>
+<li><span>Click <span class="bold">OK</span>.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-6B7E91D7-21D3-48D5-B881-FA8D992A8D92" title="This section contains information that helps you configure database settings and supplemental logging to support Classic Capture of source transaction data by Oracle GoldenGate.">Preparing the Database for Oracle GoldenGate &mdash; Classic Capture</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-AAC8387B-7D13-43F8-8D2E-FFA0A2BCA8C1"></a>
+<h2 id="GGHDB-GUID-AAC8387B-7D13-43F8-8D2E-FFA0A2BCA8C1" class="sect2"><span class="enumeration_section">17.2</span> Backing Up the Transaction Log</h2>
+<div>
+<p>Oracle GoldenGate Capture for SQL Server can run in two modes: real-time capture mode and archived log only mode.</p>
+<p>In archived log only mode, Extract reads only from transaction log backups.</p>
+<p>In real-time capture mode, the Extract process may occasionally require information from a log backup depending on how you configure the management of the secondary truncation point. This requirement occurs when log records have been flushed to log backups and are no longer available in the online log.</p>
+<p>In either mode, <span>Oracle GoldenGate</span> Capture for SQL Server requires that the log backup files meet the following conditions:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The log backup is a native SQL Server log backup made by issuing the <code class="codeph">BACKUP LOG</code> command (or the corresponding GUI command). Third-party log backups are not supported.</p>
+</li>
+<li>
+<p>The log backup can be compressed using native SQL Server compression features.</p>
+</li>
+<li>
+<p>The log backup is made to a DISK device. Valid examples include:</p>
+<pre dir="ltr">
+BACKUP LOG dbname TO DISK = "c:\folder\logbackup.trn"
+BACKUP LOG dbname TO DISK = "\\server\share\logbackup.trn"
+</pre></li>
+</ul>
+<p>Additional recommendations:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Do not overwrite existing log backups.</p>
+</li>
+<li>
+<p>Striped log backups are not supported.</p>
+</li>
+<li>
+<p>Appending log backups to the same file is not recommended.</p>
+</li>
+<li>
+<p>Mixing compressed and uncompressed log backups to the same device or file is not supported.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-6B7E91D7-21D3-48D5-B881-FA8D992A8D92" title="This section contains information that helps you configure database settings and supplemental logging to support Classic Capture of source transaction data by Oracle GoldenGate.">Preparing the Database for Oracle GoldenGate &mdash; Classic Capture</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-978BB506-C7A3-49A2-99B5-1C2565EDBA2C"></a>
+<h2 id="GGHDB-GUID-978BB506-C7A3-49A2-99B5-1C2565EDBA2C" class="sect2"><span class="enumeration_section">17.3</span> Enabling Supplemental Logging</h2>
+<div>
+<p>These instructions apply to source installations of Oracle GoldenGate for all supported versions of SQL Server .</p>
+<p>When you enable supplemental logging with the <code class="codeph">ADD TRANDATA</code> command, Extract can capture the information that is required to reconstruct transactions. By default, SQL Server logs only some of this information.</p>
+<p><code class="codeph">ADD TRANDATA</code> must be issued for all tables that are to be captured by <span>Oracle GoldenGate</span>. <code class="codeph">ADD TRANDATA</code> uses different features of SQL Server, depending on the edition of SQL Server.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>In Enterprise Edition, Change Data Capture (CDC) for SQL Server creates a minimal Change Data Capture object on the specified table.</p>
+</li>
+<li>
+<p>In Standard Edition, a SQL Server transactional publication is created, as well as an article for each table that is enabled with <code class="codeph">TRANDATA</code></p>
+.</li>
+</ul>
+<p><span class="bold">Enterprise Edition</span></p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Enables the database for SQL Server Change Data Capture by running <code class="codeph">EXECUTE sys.sp_cdc_enable_db</code>.</p>
+</li>
+<li>
+<p>Creates a Change Data Capture table for each base table enabled with supplemental logging by running <code class="codeph">EXECUTE sys.sp_cdc_enable_table</code>.</p>
+</li>
+<li>
+<p><span>Oracle GoldenGate</span> does not use CDC tables except as necessary to enable supplemental logging.</p>
+</li>
+<li>
+<p>When SQL Server enables CDC, SQL Server creates two jobs per database:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">cdc.dbname_capture</code></p>
+</li>
+<li>
+<p><code class="codeph">cdc.dbname_cleanup</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Make sure to review the information on <code class="codeph">TRANLOGOPTIONS</code> options in <a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-EBC93855-8E7D-4EDA-886E-B7FA6CDDA6EF">Managing the Secondary Truncation Point</a> for a complete understanding of this required parameter and the interaction it has with the secondary truncation point and these SQL Server jobs.</p>
+</li>
+</ul>
+<p><span class="bold">Standard Edition</span></p>
+<ul style="list-style-type: disc;">
+<li>
+<p>To enable <code class="codeph">TRANDATA</code> for tables of a SQL Server Standard Edition database, SQL Server Replication features must be installed, a Distributor must be configured, and a distribution database must be created.</p>
+</li>
+<li>
+<p>An <span>Oracle GoldenGate</span> transactional publication is created for the database, and an article for each table is created in the database's publication. The articles are set to not replicate the data to a distribution database. However, they are needed to enable supplemental logging for SQL Server Standard Edition.</p>
+</li>
+<li>
+<p>When a transactional publication is created, a SQL Server Log Reader Agent job is created for the database.&nbsp;The Log Reader Agent job has a naming convention of <code class="codeph"><span class="codeinlineitalic">instancename-dbname-#</span></code> and job category of REPL-LogReader.</p>
+</li>
+<li>
+<p>Make sure to review the information on <code class="codeph">TRANLOGOPTIONS</code> options in <a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-EBC93855-8E7D-4EDA-886E-B7FA6CDDA6EF">Managing the Secondary Truncation Point</a> for a complete understanding of this required parameter and the interaction it has with the secondary truncation point and these SQL Server jobs.</p>
+</li>
+</ul>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-60BA7F23-5545-4639-9DA3-7FB53EE1B107">To Enable Supplemental Logging</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-6B7E91D7-21D3-48D5-B881-FA8D992A8D92" title="This section contains information that helps you configure database settings and supplemental logging to support Classic Capture of source transaction data by Oracle GoldenGate.">Preparing the Database for Oracle GoldenGate &mdash; Classic Capture</a></p>
+</div>
+</div>
+</div>
+<div class="sect3"><a id="GUID-60BA7F23-5545-4639-9DA3-7FB53EE1B107"></a>
+<h3 id="GGHDB-GUID-60BA7F23-5545-4639-9DA3-7FB53EE1B107" class="sect3"><span class="enumeration_section">17.3.1</span> To Enable Supplemental Logging</h3>
+<div>
+<p>This procedure requires a database user who is a member of the SQL Server System Administrators (<code class="codeph">sysadmin</code>) role.</p>
+<p><span class="bold">1.</span> On the source system, run GGSCI.</p>
+<p><span class="bold">2.</span> Issue the following command to log into the database:</p>
+<p><code class="codeph">DBLOGIN SOURCEDB <span class="codeinlineitalic">DSN</span>[, {USERID <span class="codeinlineitalic">user</span>, PASSWORD <span class="codeinlineitalic">password</span> | USERIDALIAS <span class="codeinlineitalic">alias</span>}]</code></p>
+<p>In this command:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">SOURCEDB <span class="codeinlineitalic">DSN</span></code> is the name of the SQL Server data source.</p>
+</li>
+<li>
+<p><code class="codeph">USERID <span class="codeinlineitalic">user</span></code> is the database login and <code class="codeph">PASSWORD <span class="codeinlineitalic">password</span></code> that is required if the data source connects via SQL Server authentication. If the credentials are stored in a credential store, <code class="codeph">USERIDALIAS <span class="codeinlineitalic">alias</span></code> is the alias for the credentials. If you are using <code class="codeph">DBLOGIN</code> with a DSN that is using Integrated Windows authentication, the connection to the database for the GGSCI session is that of the user running GGSCI. In order to issue&nbsp;<code class="codeph">ADD TRANDATA</code> or <code class="codeph">DELETE TRANDATA</code>, this user must be a member of the SQL Server&nbsp;<code class="codeph">sysadmin</code> server role.</p>
+</li>
+</ul>
+<p><span class="bold">3.</span> In GGSCI, issue the following command for each table that is, or will be, in the Extract configuration. You can use a wildcard to specify multiple table names.</p>
+<p><code class="codeph">ADD TRANDATA <span class="codeinlineitalic">owner.table</span></code></p>
+<p><code class="codeph">ADD TRANDATA <span class="codeinlineitalic">owner</span>.*</code></p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-978BB506-C7A3-49A2-99B5-1C2565EDBA2C">Enabling Supplemental Logging</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-EBC93855-8E7D-4EDA-886E-B7FA6CDDA6EF"></a>
+<h2 id="GGHDB-GUID-EBC93855-8E7D-4EDA-886E-B7FA6CDDA6EF" class="sect2"><span class="enumeration_section">17.4</span> Managing the Secondary Truncation Point</h2>
+<div>
+<p>When you enable supplemental logging with the <code class="codeph">ADD TRANDATA</code> command for at least one table in a source SQL Server database, a secondary truncation point is created in the transaction log that has to be moved for log space to be released as needed, following subsequent log backups. Use the <code class="codeph">TRANLOGOPTIONS</code> parameter to control how the secondary truncation point is managed. <code class="codeph">TRANLOGOPTIONS</code> is a required parameter for a SQL Server Extract and has these available options for managing the secondary truncation point, one of which must be chosen:</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-A8FBD204-75F5-4D59-912C-4B3D267FF838">Oracle GoldenGate Manages the Secondary Truncation Point</a><br /></li>
+<li class="ulchildlink"><a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-5F640591-931C-4FB1-8639-69CD015EF426">SQL Server Manages the Secondary Truncation Point</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-6B7E91D7-21D3-48D5-B881-FA8D992A8D92" title="This section contains information that helps you configure database settings and supplemental logging to support Classic Capture of source transaction data by Oracle GoldenGate.">Preparing the Database for Oracle GoldenGate &mdash; Classic Capture</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-A8FBD204-75F5-4D59-912C-4B3D267FF838"></a>
+<h3 id="GGHDB-GUID-A8FBD204-75F5-4D59-912C-4B3D267FF838" class="sect3"><span class="enumeration_section">17.4.1</span> <span>Oracle GoldenGate</span> Manages the Secondary Truncation Point</h3>
+<div>
+<p>Two <code class="codeph">TRANLOGOPTIONS</code> options instruct the <span>Oracle GoldenGate</span> Extract process to manage the secondary truncation point: <code class="codeph">ACTIVESECONDARYTRUNCATIONPOINT</code> and <code class="codeph">MANAGESECONDARYTRUNCATIONPOINT</code>. You can use either of these options if you have the following situations:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Extract <span class="italic">is not</span> running concurrently (for the same source database) with SQL Server transactional replication.</p>
+</li>
+<li>
+<p>SQL Server Change Data Capture (CDC) that is configured by applications other than <span>Oracle GoldenGate</span>.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-A8FBD204-75F5-4D59-912C-4B3D267FF838__GUID-666E12AD-70C0-4F67-BBE9-71A0A73CABA7">
+<p class="notep1">Note:</p>
+<p>Using <code class="codeph">TRANLOGOPTIONS</code> <code class="codeph">ACTIVESECONDARYTRUNCATIONPOINT</code> or <code class="codeph">MANAGESECONDARYTRUNCATIONPOINT</code> for Extract when either SQL Server transactional replication and/or CDC configured by applications other than <span>Oracle GoldenGate</span> are running at the same time causes the SQL Server Log Reader Agent or CDC capture job to fail.</p>
+</div>
+<p>The <code class="codeph">TRANLOGOPTIONS</code>option and the <code class="codeph">ACTIVESECONDARYTRUNCATIONPOINT</code>option has different characteristics that are described in this section.</p>
+<div class="section">
+<p class="subhead3">The <code class="codeph">ACTIVESECONDARYTRUNCATIONPOINT</code> option has the following characteristics:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Extract sets the secondary truncation point in the transaction log only for those transactions that it has captured.</p>
+</li>
+<li>
+<p><code class="codeph">ACTIVESECONDARYTRUNCATIONPOINT</code> prevents the truncation of the transactions until Extract has captured them from the online transaction log.</p>
+</li>
+<li>
+<p>Because no online data can be truncated before Extract captures it, Extract is never required to read from log backups. The advantage of this method is that you can use third-party transaction log backup software without concern that Extract may need to access the log backups to retrieve unprocessed transaction data.</p>
+</li>
+<li>
+<p>Using option <code class="codeph">ACTIVESECONDARYTRUNCATIONPOINT</code> may result in larger log files if Extract has significant lag. Therefore, you may need to adjust your storage parameters to accommodate the larger logs. Larger logs occur because transaction log backups cannot immediately truncate the transaction log. Truncation occurs only after Extract has finished capturing the data.</p>
+</li>
+<li>
+<p>Using this option requires that you allow only one Extract to capture from the source database.</p>
+</li>
+<li>
+<p>This option is not valid for an Extract that is running in archived log mode.</p>
+</li>
+<li>
+<p>If you are using SQL Server Enterprise Edition, when the Extract starts, it stops and deletes the CDC capture job for the database, preventing data from being loaded to any CDC tables. If any transactions for the tables occurs between the time that supplemental logging is added and Extract starts, the corresponding CDC tables may have data in them. This data is not used by <span>Oracle GoldenGate</span> and can be manually deleted or truncated from the CDC tables. Additionally, the CDC cleanup job for the source database can be disabled or deleted. It no longer functions once the CDC capture job has been removed.</p>
+</li>
+<li>
+<p>If you are using SQL Server Standard Edition, you must manually stop and disable the SQL Server Log Reader Agent job for the source database, before you position the Extract.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">The <code class="codeph">MANAGESECONDARYTRUNCATIONPOINT</code> option has the following characteristics:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Extract commonly sets the truncation point in the transaction log at preset interval, by setting a high water mark for the truncation point at that point in the log.</p>
+</li>
+<li>
+<p>As subsequent transaction log backups are made, transactions before the truncation point can be removed from the online transaction log, which frees space in the online log. If Extract has not captured a transaction from the online log before it is flushed to a log backup, it switches to the log backup and reads the transaction from the backup. This ability requires the logs to be backed up only with a native SQL Server backup utility. Third-party backup software cannot be used in this scenario.</p>
+</li>
+<li>
+<p>Using this option lets multiple Extracts capture from the same source database. Configure Extract with this option if there are multiple Extracts for a single source database.</p>
+</li>
+<li>
+<p>If you are using SQL Server Enterprise Edition starts, it stop and deletes the CDC capture job for the database, preventing data from being loaded to any CDC tables. If any transactions for the tables occurs between the time that supplemental logging is added and Extract starts, the corresponding CDC tables may have data in them. This data is not used by Oracle GoldenGate and can be manually deleted or truncated from the CDC tables. Additionally, the CDC cleanup job for the source database can be disabled or deleted. It no longer functions once the CDC capture job has been removed.</p>
+</li>
+<li>
+<p>If you are using SQL Server Standard Edition, you must manually stop and disable the SQL Server Log Reader Agent job for the source database.</p>
+</li>
+</ul>
+<p>When you use either of these options, if Extract is stopped or down for a longer period of time than the log backup frequency, the secondary truncation point does not move and transactions are not removed from the transaction log after subsequent log backups. This may cause the log file to grow to its maximum size. If this occurs, contact Oracle Support for information about manually moving the secondary truncation point.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-EBC93855-8E7D-4EDA-886E-B7FA6CDDA6EF">Managing the Secondary Truncation Point</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-5F640591-931C-4FB1-8639-69CD015EF426"></a>
+<h3 id="GGHDB-GUID-5F640591-931C-4FB1-8639-69CD015EF426" class="sect3"><span class="enumeration_section">17.4.2</span> SQL Server Manages the Secondary Truncation Point</h3>
+<div>
+<p>Use <code class="codeph">TRANLOGOPTIONS</code> with the <code class="codeph">NOMANAGESECONDARYTRUNCATIONPOINT</code> option if Extract will run concurrently (for the same source database) with SQL Server transactional replication and/or SQL Server CDC that is configured by applications other than <span>Oracle GoldenGate</span>. SQL Server will manage the secondary truncation point.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-EBC93855-8E7D-4EDA-886E-B7FA6CDDA6EF">Managing the Secondary Truncation Point</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-15017332-3F22-4AE8-9582-32FC31DFC0DD"></a>
+<h2 id="GGHDB-GUID-15017332-3F22-4AE8-9582-32FC31DFC0DD" class="sect2"><span class="enumeration_section">17.5</span> Retaining the Log Backups and Backup History</h2>
+<div>
+<p>Retain enough log backups and backup history (in the msdb database) so that if you stop Extract or there is an unplanned outage, Extract can start again from its checkpoints. Extract must have access to the data in the transaction log or a log backup that contains the start of the oldest uncommitted unit of work, and all log backups thereafter.</p>
+<p>If data that Extract needs during processing is not retained, either in online logs or in the backups, one of the following corrective actions might be required:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Alter Extract to capture from a later point in time for which log data is available (and accept possible data loss on the target).</p>
+</li>
+<li>
+<p>Resynchronize the source and target tables, and then start the Oracle GoldenGate environment over again.</p>
+</li>
+</ul>
+<p>To determine where the Extract checkpoints are, use the <code class="codeph">INFO EXTRACT SHOWCH</code> command. For more information, see <a class="olink GWUAD-GUID-ADC12675-C311-4200-BAE9-2C9E3192B222" target="_blank" href="../GWUAD/checkpoints.htm#GWUAD-GUID-ADC12675-C311-4200-BAE9-2C9E3192B222">Replicat Checkpoints</a> in <span class="italic">Oracle Fusion Middleware Administering Oracle GoldenGate for Windows and UNIX Guide</span>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="preparing-database-oracle-goldengate-classic-capture.htm#GUID-6B7E91D7-21D3-48D5-B881-FA8D992A8D92" title="This section contains information that helps you configure database settings and supplemental logging to support Classic Capture of source transaction data by Oracle GoldenGate.">Preparing the Database for Oracle GoldenGate &mdash; Classic Capture</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment114">
+<tr>
+<td class="cellalignment121">
+<table class="cellalignment119">
+<tr>
+<td class="cellalignment118"><a href="sql-server-preparing-system-oracle-goldengate.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment118"><a href="preparing-database-oracle-goldengate-cdc-capture.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment123">
+<table class="cellalignment117">
+<tr>
+<td class="cellalignment118"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment118"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment118"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

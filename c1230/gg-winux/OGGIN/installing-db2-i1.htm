@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Installing with DB2 for i Databases</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Learn about the requirements and how to install Oracle GoldenGate with a DB2 for i database." />
+<meta name="dcterms.created" content="2018-08-07T08:20:58Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Installing Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E85215-06" />
+<meta name="dcterms.isVersionOf" content="OGGIN" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2017, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="installing-db2-luw.htm" title="Previous" type="text/html" />
+<link rel="Next" href="installing-db2-z-os1.htm" title="Next" type="text/html" />
+<link rel="alternate" href="OGGIN.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-AD2555A5-F07F-422F-9171-678E1FAAEB68"></a> <span id="PAGE" style="display:none;">14/43</span> <!-- End Header -->
+<h1 id="OGGIN-GUID-AD2555A5-F07F-422F-9171-678E1FAAEB68" class="sect1"><span class="enumeration_chapter">7</span> Installing with DB2 for i Databases</h1>
+<div>
+<div><span>Learn about the requirements and how to install <span>Oracle GoldenGate</span> with a DB2 for i database.</span></div>
+<p>With Oracle GoldenGate for IBM DB2 for i, you can replicate data to and from similar or dissimilar supported DB2 for i versions, or you can replicate data between a DB2 for i database and a database of another type. Oracle GoldenGate for DB2 for i supports the filtering, mapping, and transformation of data unless otherwise noted in this documentation.</p>
+<p>Oracle GoldenGate for DB2 for i runs directly on a DB2 for i source system to capture data from the transaction journals for replication to a target system. To apply data to a target DB2 for i database, Oracle GoldenGate can run directly on the DB2 for i target system or on a remote Windows or Linux system. If installed on a remote system, Replicat delivers the data by means of an ODBC connection, and no Oracle GoldenGate software is installed on the DB2 for i target.</p>
+<div class="infobox-note" id="GUID-AD2555A5-F07F-422F-9171-678E1FAAEB68__GUID-B04AEC97-EE01-4BB1-9BAD-451A64797462">
+<p class="notep1">Note:</p>
+<p>The DB2 for i platform uses one or more <span class="bold">journals</span> to keep a record of transaction change data. For consistency of terminology in the supporting administrative and reference Oracle GoldenGate documentation, the terms <span class="bold">log</span> or <span class="bold">transaction log</span> may be used interchangeably with the term journal where the use of the term journal is not explicitly required.</p>
+</div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="installing-db2-i1.htm#GUID-91238924-E1D3-4F92-B170-768577520323">Disk Requirements</a><br /></li>
+<li class="ulchildlink"><a href="installing-db2-i1.htm#GUID-43BDC719-63C6-490B-8AAE-F05FB63CBE2C">Memory Requirements</a><br /></li>
+<li class="ulchildlink"><a href="installing-db2-i1.htm#GUID-4AC0263D-A13A-4EEE-8392-8D93C9B46FAB">Oracle GoldenGate Security Privileges</a><br /></li>
+<li class="ulchildlink"><a href="installing-db2-i1.htm#GUID-AB9CFDCD-780F-4241-A60E-C1FC3CF9108D">General Requirements</a><br /></li>
+<li class="ulchildlink"><a href="installing-db2-i1.htm#GUID-0564C18E-D22B-4548-A11C-A359F0B5F64A">Installing on DB2 for i</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="installing-oracle-goldengate-oracle-heterogenous-database.htm" title="This part explains how to install Oracle GoldenGate Classic Architecture with the various supported heterogeneous databases.">Installing Oracle GoldenGate Classic Architecture with Heterogeneous Databases</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-91238924-E1D3-4F92-B170-768577520323"></a>
+<h2 id="OGGIN-GUID-91238924-E1D3-4F92-B170-768577520323" class="sect2"><span class="enumeration_section">7.1</span> Disk Requirements</h2>
+<div>
+<p>This section outlines the disk requirements for Oracle GoldenGate.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>To determine the size of the Oracle GoldenGate download file, view the Size column before downloading your selected build from Oracle Software Delivery Cloud. The value shown is the size of the files in compressed form. The size of the expanded Oracle GoldenGate installation directory will be significantly larger on disk.</p>
+</li>
+<li>
+<p>Allow sufficient disk space for virtual memory. The default set by the Oracle GoldenGate cache manager is 64 GB on 64-bit systems. See <a href="installing-db2-i1.htm#GUID-43BDC719-63C6-490B-8AAE-F05FB63CBE2C">Memory Requirements</a> for additional information about memory management.</p>
+</li>
+<li>
+<p>An additional 1 GB of disk space on any system that hosts Oracle GoldenGate trails, which are files that contain the working data. You may need more or less than this amount, because the space that is consumed by the trails depends on the volume of data that will be processed. See the guidelines for sizing trails in <a class="olink GWUAD532" target="_blank" href="../GWUAD/configuring-online-change-synchronization.htm#GWUAD532"><span class="italic"><span id="GUID-91238924-E1D3-4F92-B170-768577520323__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></span></a>.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="installing-db2-i1.htm#GUID-AD2555A5-F07F-422F-9171-678E1FAAEB68" title="Learn about the requirements and how to install Oracle GoldenGate with a DB2 for i database.">Installing with DB2 for i Databases</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-43BDC719-63C6-490B-8AAE-F05FB63CBE2C"></a>
+<h2 id="OGGIN-GUID-43BDC719-63C6-490B-8AAE-F05FB63CBE2C" class="sect2"><span class="enumeration_section">7.2</span> Memory Requirements</h2>
+<div>
+<p>The amount of memory that is required for Oracle GoldenGate depends on the amount of data being processed, the number of Oracle GoldenGate processes running, the amount of main storage (RAM, or physical memory) available to Oracle GoldenGate, and the amount of auxiliary storage (disk space, available as shared memory segments) that is available to Oracle GoldenGate for caching transaction data that exceeds available physical memory.</p>
+<p>The amount of main storage that is used by Oracle GoldenGate is controlled by the operating system, not the Oracle GoldenGate processes. The Oracle GoldenGate cache manager takes advantage of the memory management functions of the operating system to ensure that the Oracle GoldenGate processes work in a sustained and efficient manner.</p>
+<p>On the DB2 for i platform, to provide enough shared memory segments to the Oracle GoldenGate cache manager, the recommended setting for the <code class="codeph">PASE_MAXSHR64</code> environment variable is a value of 513 (128GB) or higher. If you use the DB2 for i native Oracle GoldenGate commands, <code class="codeph">PASE_MAXSHR64</code> is set to provide 128GB of shared memory segments to the cache manager automatically. If not using the DB2 for i native commands, you can set this environment variable before starting the DB2 for i PASE session. For more information about evaluating Oracle GoldenGate memory requirements, see the <code class="codeph">CACHEMGR</code> parameter in <a class="olink GWURF413" target="_blank" href="../GWURF/cachemgr.htm#GWURF413"><span class="italic"><span id="GUID-43BDC719-63C6-490B-8AAE-F05FB63CBE2C__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a>.</p>
+<div class="infobox-note" id="GUID-43BDC719-63C6-490B-8AAE-F05FB63CBE2C__GUID-63EC95CD-BA4F-40E5-999E-BCD61667BAC7">
+<p class="notep1">Note:</p>
+<p>If <code class="codeph">PASE_MAXSHR64</code> is not set, you may encounter a warning message stating that the virtual memory is less than the recommended amount. Unless you have very large long-running transactions or a very large number of concurrent transactions, you may ignore this message.</p>
+</div>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="installing-db2-i1.htm#GUID-AD2555A5-F07F-422F-9171-678E1FAAEB68" title="Learn about the requirements and how to install Oracle GoldenGate with a DB2 for i database.">Installing with DB2 for i Databases</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-4AC0263D-A13A-4EEE-8392-8D93C9B46FAB"></a>
+<h2 id="OGGIN-GUID-4AC0263D-A13A-4EEE-8392-8D93C9B46FAB" class="sect2"><span class="enumeration_section">7.3</span> Oracle GoldenGate Security Privileges</h2>
+<div>
+<p>This section outlines the security privileges that Oracle GoldenGate requires on a source DB2 for i system and on a Windows or Linux target system.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="installing-db2-i1.htm#GUID-8E18173F-15EF-4CD0-A279-24CE11483B0F">Oracle GoldenGate Security Privileges</a><br /></li>
+<li class="ulchildlink"><a href="installing-db2-i1.htm#GUID-271E7564-8FC4-46E0-BF55-7E1F56C16479">Oracle GoldenGate Security Privileges on a DB2 for i Source System</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="installing-db2-i1.htm#GUID-AD2555A5-F07F-422F-9171-678E1FAAEB68" title="Learn about the requirements and how to install Oracle GoldenGate with a DB2 for i database.">Installing with DB2 for i Databases</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-8E18173F-15EF-4CD0-A279-24CE11483B0F"></a>
+<h3 id="OGGIN-GUID-8E18173F-15EF-4CD0-A279-24CE11483B0F" class="sect3"><span class="enumeration_section">7.3.1</span> Oracle GoldenGate Security Privileges</h3>
+<div>
+<p>The person who installs Oracle GoldenGate must have read and write privileges on the Oracle GoldenGate installation directory, because steps will be performed to create some sub-folders and run some programs. On a Windows systen, the person who installs Oracle GoldenGate must log in as Administrator.</p>
+<p>Manager, Replicat, and Collector (program name is <code class="codeph">server</code>) are active. Manager controls the other processes and interacts with Collector to receive incoming data, while Replicat applies data to the target DB2 for i database through ODBC.</p>
+<p>Oracle GoldenGate processes must be assigned a user account that is dedicated to Oracle GoldenGate and cannot be used by any other program. One user account can be used by all of the Oracle GoldenGate processes. This account must have privileges to read, write, and delete files and directories within the Oracle GoldenGate installation directory.</p>
+<p>If the Extract user profile does not have the required authority, Extract will log the following errors and stop.</p>
+<pre dir="ltr">
+[SC=-1224:SQL1224N A database agent could not be started to service a request, or was terminated as a result of a database system shutdown or a force command.SQL STATE 55032: The CONNECT statement is invalid, because the database manager was stopped after this application was started]
+</pre>
+<p>The user profile must be specified with the <code class="codeph">USERID</code> parameter when you configure the parameter files and in the <code class="codeph">DBLOGIN</code> command prior to issuing any GGSCI commands that interact with the database.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="installing-db2-i1.htm#GUID-4AC0263D-A13A-4EEE-8392-8D93C9B46FAB">Oracle GoldenGate Security Privileges</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-271E7564-8FC4-46E0-BF55-7E1F56C16479"></a>
+<h3 id="OGGIN-GUID-271E7564-8FC4-46E0-BF55-7E1F56C16479" class="sect3"><span class="enumeration_section">7.3.2</span> Oracle GoldenGate Security Privileges on a DB2 for i Source System</h3>
+<div>
+<p>The person who installs Oracle GoldenGate must have read and write privileges on the Oracle GoldenGate installation directory, because steps will be performed to create some sub-folders and run some programs. This person also must have authority to the <code class="codeph">RSTOBJ</code> command, plus the ability to create a library if desired. For ease of installation, it is recommended that the user installing the product has <code class="codeph">*ALLOBJ</code> authority</p>
+<p>On an DB2 for i source system, the Manager and Extract processes are active. The <code class="codeph">DEFGEN</code> utility also may be active if you are replicating data to a dissimilar target system. On an DB2 for i target system, the Replicat process is active unless you install Replicat on a remote Windows or Linux system. All processes run on both systems in a bidirectional configuration.</p>
+<p>The Oracle GoldenGate processes must be assigned a user profile account that is dedicated to Oracle GoldenGate and cannot be used by any other program. One user profile can be used by all of the Oracle GoldenGate processes. This profile need only be granted permission to the objects that Oracle GoldenGate will be operating upon. If specific change data is not to be seen by Oracle GoldenGate, do not include it in any of the journals that the Oracle GoldenGate user profile is allowed to access. All Oracle GoldenGate processes must have privileges to read, write, and delete files and directories within the Oracle GoldenGate installation directory.</p>
+<p>The Manager process must have privileges to control all other Oracle GoldenGate processes (DB2 for i <code class="codeph">*JOBCTL</code> authority).</p>
+<p>Assign <code class="codeph">*USE</code> authority to all objects on the system that the Extract user profile must have access to. Assign <code class="codeph">*CHANGE</code> authority to all objects on the system that the Replicat user profile must have access to. This can be accomplished by either granting <code class="codeph">*ALLOBJ</code> authority to the user, or by setting the individual authority to the objects (<code class="codeph">FILE</code>, <code class="codeph">LIBRARY</code> and <code class="codeph">JOURNAL</code> objects) that the user must access. This includes the objects in the <code class="codeph">QSYS2</code> library where the SQL catalog resides. These authorities must be granted through the native DB2 for i interface through a 5250 terminal session or through the DB2 for i Operations Navigator product available from IBM.</p>
+<p>The Extract and Replicat database user profiles must be specified with the <code class="codeph">USERID</code> parameter when you configure the parameter files and in the <code class="codeph">DBLOGIN</code> command prior to issuing any GGSCI commands that interact with the database.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="installing-db2-i1.htm#GUID-4AC0263D-A13A-4EEE-8392-8D93C9B46FAB">Oracle GoldenGate Security Privileges</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-AB9CFDCD-780F-4241-A60E-C1FC3CF9108D"></a>
+<h2 id="OGGIN-GUID-AB9CFDCD-780F-4241-A60E-C1FC3CF9108D" class="sect2"><span class="enumeration_section">7.4</span> General Requirements</h2>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Portable Application Solution Environment (PASE) must be installed on the system.</p>
+</li>
+<li>
+<p>OpenSSH is recommended to be installed on the system. OpenSSH is part of the IBM Portable Utilities licensed program and allows SSH terminal access to the system in the same manner as other Linux system.</p>
+</li>
+<li>
+<p>The IBM DB2 for i Program temporary fixes (PTFs) that are required by release for Oracle GoldenGate are detailed in the following tables:</p>
+<div class="tblformal" id="GUID-AB9CFDCD-780F-4241-A60E-C1FC3CF9108D__GUID-D200E0F3-3391-47DC-98AE-BD8E85658492">
+<table class="cellalignment568" summary="Four column table describing the IBM i6.1 PTFs">
+<thead>
+<tr class="cellalignment559">
+<th class="cellalignment569" id="d6322e390">IBM i6.1 Group PTF</th>
+<th class="cellalignment569" id="d6322e393">Level</th>
+<th class="cellalignment569" id="d6322e396">Name</th>
+<th class="cellalignment570" id="d6322e399">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e404" headers="d6322e390">
+<p>SF99610</p>
+</td>
+<td class="cellalignment571" headers="d6322e404 d6322e393">
+<p>13058</p>
+</td>
+<td class="cellalignment571" headers="d6322e404 d6322e396">
+<p>Cumulative PTF</p>
+</td>
+<td class="cellalignment572" headers="d6322e404 d6322e399">
+<p>Other required PTF: 5761SS1, SI51061</p>
+<p>Check with command: <code class="codeph">DSPPTF LICPGM(5761SS1) SELECT(SI51061)</code></p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e421" headers="d6322e390">
+<p>SF99601</p>
+</td>
+<td class="cellalignment571" headers="d6322e421 d6322e393">
+<p>30</p>
+</td>
+<td class="cellalignment571" headers="d6322e421 d6322e396">
+<p>DB2 for i</p>
+</td>
+<td class="cellalignment572" headers="d6322e421 d6322e399">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e434" headers="d6322e390">
+<p>SF99609</p>
+</td>
+<td class="cellalignment571" headers="d6322e434 d6322e393">
+<p>153</p>
+</td>
+<td class="cellalignment571" headers="d6322e434 d6322e396">
+<p>Group HIPER</p>
+</td>
+<td class="cellalignment572" headers="d6322e434 d6322e399">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e447" headers="d6322e390">
+<p>SF99354</p>
+</td>
+<td class="cellalignment571" headers="d6322e447 d6322e393">
+<p>15</p>
+</td>
+<td class="cellalignment571" headers="d6322e447 d6322e396">
+<p>TCP/IP</p>
+</td>
+<td class="cellalignment572" headers="d6322e447 d6322e399">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e460" headers="d6322e390">
+<p>SF99562</p>
+</td>
+<td class="cellalignment571" headers="d6322e460 d6322e393">
+<p>24</p>
+</td>
+<td class="cellalignment571" headers="d6322e460 d6322e396">
+<p>JAVA</p>
+</td>
+<td class="cellalignment572" headers="d6322e460 d6322e399">
+<p>Java agent requires product 5761JV1 option 12 (Java SE 6 64-bit)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="tblformal" id="GUID-AB9CFDCD-780F-4241-A60E-C1FC3CF9108D__GUID-79F93863-049D-4DCE-A127-B1BAC7066334">
+<table class="cellalignment568" summary="Four column table describing the IBM i7.1 PTFs">
+<thead>
+<tr class="cellalignment559">
+<th class="cellalignment569" id="d6322e482">IBM i7.1 Group PTF</th>
+<th class="cellalignment569" id="d6322e485">Level</th>
+<th class="cellalignment569" id="d6322e488">Name</th>
+<th class="cellalignment570" id="d6322e491">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e496" headers="d6322e482">
+<p>SF99710</p>
+</td>
+<td class="cellalignment571" headers="d6322e496 d6322e485">
+<p>15142</p>
+</td>
+<td class="cellalignment571" headers="d6322e496 d6322e488">
+<p>Cumulative PTF</p>
+</td>
+<td class="cellalignment572" headers="d6322e496 d6322e491">
+<p>Other required PTF: 5770SS1, SI51060</p>
+<p>Check with command: <code class="codeph">DSPPTF LICPGM(5770SS1) SELECT(SI51060)</code></p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e513" headers="d6322e482">SF99707</td>
+<td class="cellalignment571" headers="d6322e513 d6322e485">11</td>
+<td class="cellalignment571" headers="d6322e513 d6322e488">Technology refresh</td>
+<td class="cellalignment572" headers="d6322e513 d6322e491">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e523" headers="d6322e482">
+<p>SF99701</p>
+</td>
+<td class="cellalignment571" headers="d6322e523 d6322e485">
+<p>26</p>
+</td>
+<td class="cellalignment571" headers="d6322e523 d6322e488">
+<p>DB2 for i</p>
+</td>
+<td class="cellalignment572" headers="d6322e523 d6322e491">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e536" headers="d6322e482">
+<p>SF99709</p>
+</td>
+<td class="cellalignment571" headers="d6322e536 d6322e485">
+<p>99</p>
+</td>
+<td class="cellalignment571" headers="d6322e536 d6322e488">
+<p>Group HIPER</p>
+</td>
+<td class="cellalignment572" headers="d6322e536 d6322e491">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e549" headers="d6322e482">
+<p>SF99367</p>
+</td>
+<td class="cellalignment571" headers="d6322e549 d6322e485">
+<p>7</p>
+</td>
+<td class="cellalignment571" headers="d6322e549 d6322e488">
+<p>TCP/IP</p>
+</td>
+<td class="cellalignment572" headers="d6322e549 d6322e491">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e562" headers="d6322e482">
+<p>SF99572</p>
+</td>
+<td class="cellalignment571" headers="d6322e562 d6322e485">
+<p>12</p>
+</td>
+<td class="cellalignment571" headers="d6322e562 d6322e488">
+<p>JAVA</p>
+</td>
+<td class="cellalignment572" headers="d6322e562 d6322e491">
+<p>Java agent requires product 5761JV1 option 12 (Java SE 6 64-bit)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="tblformal" id="GUID-AB9CFDCD-780F-4241-A60E-C1FC3CF9108D__GUID-4083BC38-5AD2-4A82-8E7D-2F13D509B2F5">
+<table class="cellalignment568" summary="Four column table describing the IBM i7.2 PTFs">
+<thead>
+<tr class="cellalignment559">
+<th class="cellalignment569" id="d6322e584">IBM i7.2 Group PTF</th>
+<th class="cellalignment569" id="d6322e587">Level</th>
+<th class="cellalignment569" id="d6322e590">Name</th>
+<th class="cellalignment570" id="d6322e593">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e598" headers="d6322e584">
+<p>SF99720</p>
+</td>
+<td class="cellalignment571" headers="d6322e598 d6322e587">
+<p>16127</p>
+</td>
+<td class="cellalignment571" headers="d6322e598 d6322e590">
+<p>Cumulative PTF</p>
+</td>
+<td class="cellalignment572" headers="d6322e598 d6322e593">
+<p>Other required PTF: 5761SS1, SI51061Check with command: <code class="codeph">DSPPTF LICPGM(5761SS1) SELECT(SI51061)</code></p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e613" headers="d6322e584">
+<p>SF99717</p>
+</td>
+<td class="cellalignment571" headers="d6322e613 d6322e587">
+<p>4</p>
+</td>
+<td class="cellalignment571" headers="d6322e613 d6322e590">
+<p>Technology refresh</p>
+</td>
+<td class="cellalignment572" headers="d6322e613 d6322e593">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e626" headers="d6322e584">
+<p>SF99702</p>
+</td>
+<td class="cellalignment571" headers="d6322e626 d6322e587">
+<p>12</p>
+</td>
+<td class="cellalignment571" headers="d6322e626 d6322e590">
+<p>DB2 for i</p>
+</td>
+<td class="cellalignment572" headers="d6322e626 d6322e593">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e639" headers="d6322e584">SF99719</td>
+<td class="cellalignment571" headers="d6322e639 d6322e587">67</td>
+<td class="cellalignment571" headers="d6322e639 d6322e590">Group HIPER</td>
+<td class="cellalignment572" headers="d6322e639 d6322e593">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e649" headers="d6322e584">
+<p>SF99767</p>
+</td>
+<td class="cellalignment571" headers="d6322e649 d6322e587">
+<p>2</p>
+</td>
+<td class="cellalignment571" headers="d6322e649 d6322e590">
+<p>TCP/IP</p>
+</td>
+<td class="cellalignment572" headers="d6322e649 d6322e593">
+<p>.</p>
+</td>
+</tr>
+<tr class="cellalignment559">
+<td class="cellalignment571" id="d6322e662" headers="d6322e584">
+<p>SF99716</p>
+</td>
+<td class="cellalignment571" headers="d6322e662 d6322e587">
+<p>9</p>
+</td>
+<td class="cellalignment571" headers="d6322e662 d6322e590">
+<p>JAVA</p>
+</td>
+<td class="cellalignment572" headers="d6322e662 d6322e593">
+<p>Java agent requires product 5761JV1 option 12 (Java SE 6 64-bit)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>These required PTFs are the levels at which Oracle GoldenGate has been tested against for the 12<span class="italic">c</span> releases. In order to check the group PTF levels, you must use the <code class="codeph">WRKPTFGRP</code> command from a 5250 terminal session and check for the specific PTFs with the commands shown in the preceding tables. The specific extra PTFs must be at least temporarily applied.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="installing-db2-i1.htm#GUID-AD2555A5-F07F-422F-9171-678E1FAAEB68" title="Learn about the requirements and how to install Oracle GoldenGate with a DB2 for i database.">Installing with DB2 for i Databases</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-0564C18E-D22B-4548-A11C-A359F0B5F64A"></a>
+<h2 id="OGGIN-GUID-0564C18E-D22B-4548-A11C-A359F0B5F64A" class="sect2"><span class="enumeration_section">7.5</span> Installing on DB2 for i</h2>
+<div>
+<div class="section">
+<p>Follow these steps to install Oracle GoldenGate on an DB2 for i system.</p>
+<div class="infobox-note" id="GUID-0564C18E-D22B-4548-A11C-A359F0B5F64A__GUID-23C7BDCE-76BB-4D41-82EA-BD58B829DB6A">
+<p class="notep1">Note:</p>
+<p>The user profile running the install must have authority to the <code class="codeph">RSTOBJ</code> command.</p>
+</div>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>On the system where Oracle GoldenGate is to be installed, create a directory for Oracle GoldenGate.</span>
+<div>
+<pre dir="ltr">
+- MKDIR DIR('/GoldenGate')
+</pre></div>
+</li>
+<li class="stepexpand"><span>You can create a library for Oracle GoldenGate on the installation system, or you can create it through the installation script that you will run later in these steps.</span>
+<div>
+<pre dir="ltr">
+- CRTLIB LIB(goldengate) TEXT('Oracle GoldenGate Product Library') ASP(1)
+</pre></div>
+</li>
+<li class="stepexpand"><span>Unzip the downloaded file on your system.</span></li>
+<li class="stepexpand"><span>FTP the resulting tar file from that system to the folder that you created on the DB2 for i installation system.</span>
+<div>
+<pre dir="ltr">
+ftp <span class="italic">IBMi_IP_address</span> 
+.
+User (system:(none)):<span class="italic">userid</span> 
+. 
+331 Enter password. 
+. Password: <span class="italic">password</span> . 
+230 <span class="italic">userid</span> logged on. . 
+ftp&gt; bin 
+. 
+ftp&gt; cd <span class="italic">goldengate</span> 
+. 
+ftp&gt; put <span class="italic">install_file</span> 
+. 
+ftp&gt; quit 
+</pre></div>
+</li>
+<li class="stepexpand"><span>(If you created a library) From a 5250 terminal session, change your current library to the Oracle GoldenGate library.</span>
+<div>
+<pre dir="ltr">
+CHGCURLIB <span class="italic">Oracle_GoldenGate_</span> library
+</pre></div>
+</li>
+<li class="stepexpand"><span>Run a QP2TERM terminal session.</span>
+<div>
+<pre dir="ltr">
+- CALL QP2TERM
+</pre></div>
+</li>
+<li class="stepexpand"><span>Extract the installation objects from the tar file.</span>
+<div>
+<pre dir="ltr">
+tar -xf <span class="italic">tar_file</span> 
+</pre></div>
+</li>
+<li class="stepexpand"><span>In the Oracle GoldenGate directory, run the shell script <code class="codeph">ggos400install</code>.</span>
+<div>
+<pre dir="ltr">
+ggos400install goldengate
+</pre>
+<p>The default is to install the required objects into the current library (set in the preceding steps), but you can create a library by using the <code class="codeph">-c</code> option. Additional options are available.</p>
+<div class="infobox-note" id="GUID-0564C18E-D22B-4548-A11C-A359F0B5F64A__GUID-E71B436A-7E6F-4C84-ACB7-C4146083226B">
+<p class="notep1">Note:</p>
+<p>There must be a separate Oracle GoldenGate library for each Oracle GoldenGate directory. The install script checks for this condition and will prevent installation to the same library that another installation is using. The reason for this is to prevent mismatches between the Oracle GoldenGate installation and the <code class="codeph">OGGPRCJRN</code> <code class="codeph">*SRVPGM</code> object.</p>
+</div>
+<pre dir="ltr">
+</pre>
+<p>Syntax:</p>
+<pre dir="ltr">
+./ggos400install [-h] [-f] [-u userid] [[-a aspname] | [-n aspnum]] [-c|-l library name]
+ 
+</pre>
+<p>Options:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">-h</code> shows this usage help.</p>
+</li>
+<li>
+<p><code class="codeph">-f</code> forces a change to a new installation library. This argument only affects an existing installation.</p>
+</li>
+<li>
+<p><code class="codeph">-u userid</code> specifies the userid that will own the installation.</p>
+</li>
+<li>
+<p><code class="codeph">-a aspname</code> specifies the name of the ASP where objects will be restored. If no <code class="codeph">aspname</code> is provided, the system asp is assumed. This option cannot be used with <code class="codeph">-n</code>.</p>
+</li>
+<li>
+<p><code class="codeph">-n aspnum</code> specifies the number of the user asp where the objects will be restored. This option cannot be used with <code class="codeph">-a</code>.</p>
+</li>
+<li>
+<p><code class="codeph">-c library</code> specifies the name of the library where the objects will be restored. The library will be created.</p>
+</li>
+<li>
+<p><code class="codeph">-l library</code> specifies the name of the library where the objects will be restored. The library must exist. If a library is not specified for a new installation, the installer will attempt to use the current library of the user that is running the installer. If a library is not specified for an existing installation, the installer will attempt to use the library that is set in the <code class="codeph">oggprcjrn.srvpgm</code> link.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-0564C18E-D22B-4548-A11C-A359F0B5F64A__GUID-9ABD8A68-FC9B-4D1C-A8BC-3642AA759E69">
+<p class="notep1">Note:</p>
+<p>If Oracle GoldenGate is reinstalled, you must run <code class="codeph">ggos400install</code> again. On a reinstall, <code class="codeph">ggos400install</code> will recognize the prior configuration, so no arguments are needed. If the <code class="codeph">oggprcjrn.srvpgm</code> link is changed or removed, <code class="codeph">ggos400install</code> must be run again with the Oracle GoldenGate installation library specified by the link.</p>
+</div>
+</div>
+</li>
+<li class="stepexpand"><span>Exit QP2TERM.</span>
+<div>
+<pre dir="ltr">
+- F3
+</pre>
+<div class="infobox-note" id="GUID-0564C18E-D22B-4548-A11C-A359F0B5F64A__GUID-1D91AC58-EDBE-4D33-BB77-8759B82914D7">
+<p class="notep1">Note:</p>
+<p>On an DB2 for i system, it is not necessary to create any working directories in the Oracle GoldenGate installation directory. The <code class="codeph">ggos400install</code> script performs this task.</p>
+</div>
+</div>
+</li>
+<li class="stepexpand"><span>Install Oracle GoldenGate on the DB2 for i database server, see <a href="installing-heterogeneous-databases.htm#GUID-34C77BEC-5AC1-4CC4-8D7F-85B56DAE07D4">Installing on all Platforms</a>.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="installing-db2-i1.htm#GUID-AD2555A5-F07F-422F-9171-678E1FAAEB68" title="Learn about the requirements and how to install Oracle GoldenGate with a DB2 for i database.">Installing with DB2 for i Databases</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment558">
+<tr>
+<td class="cellalignment565">
+<table class="cellalignment563">
+<tr>
+<td class="cellalignment562"><a href="installing-db2-luw.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment562"><a href="installing-db2-z-os1.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2017, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment567">
+<table class="cellalignment561">
+<tr>
+<td class="cellalignment562"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment562"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment562"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

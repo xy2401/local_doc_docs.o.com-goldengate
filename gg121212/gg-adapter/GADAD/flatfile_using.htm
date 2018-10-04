@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>6 Using the Flat File Adapter</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1023">
+<meta name="description" content="This chapter discusses how to manage on-going operation of your system by managing file rollover, gathering statistics on your Oracle GoldenGate adapter instance to help you tune your system, managing the processes, and handling errors.">
+<meta name="dcterms.created" content="2015-04-08T9:18:57Z">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="robots" content="all">
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Application Adapters Administering Oracle GoldenGate Adapters">
+<meta name="dcterms.identifier" content="E61853-01">
+<meta name="partno" content="E64636-01">
+
+<meta name="dcterms.isVersionOf" content="GADAD">
+<link rel="Start" href="../../index.htm" title="Home" type="text/html">
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html">
+
+<script type="application/javascript" src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript" src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html">
+<link rel="Prev" href="flatfile_config.htm" title="Previous" type="text/html">
+<link rel="Next" href="flatfile_templates.htm" title="Next" type="text/html">
+<link rel="alternate" href="../GADAD.pdf" title="PDF version" type="application/pdf">
+<link rel="alternate" href="../GADAD.epub" title="ePub version" type="application/epub+zip">
+<link rel="alternate" href="../GADAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook">
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="application/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53addf516e0e58a5"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate Adapters</a>
+</div>
+
+<span id="PAGE" style="display:none;">11/28</span>
+<!-- End Header -->
+<div id="GADAD432" class="chapter"><a id="CACFEAGD"></a>
+<h1 class="chapter"><span class="secnum">6</span> Using the Flat File Adapter</h1>
+<p><a id="GADAD433"></a>This chapter discusses how to manage on-going operation of your system by managing file rollover, gathering statistics on your Oracle GoldenGate adapter instance to help you tune your system, managing the processes, and handling errors.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#BABHFEHH">Working with Control Files</a></p>
+</li>
+<li>
+<p><a href="#BABHHIAC">Working with Statistical Summaries</a></p>
+</li>
+<li>
+<p><a href="#BABJFAAJ">Managing Oracle GoldenGate processes</a></p>
+</li>
+<li>
+<p><a href="#BABEAAII">Trail Recovery Mode</a></p>
+</li>
+<li>
+<p><a href="#BABBEAAD">Locating Error Messages</a></p>
+</li>
+</ul>
+<a id="BABHFEHH"></a>
+<div id="GADAD434" class="sect1">
+<h2 class="sect1"><span class="secnum">6.1</span> Working with Control Files</h2>
+<p>Control files store information on which data files have rolled over. If the control file exists, it will be appended to; if it does not exist it will be created. For writers that output all data to one file, a single control file will be created. If the writer is outputting to one file per table or operation type, a control file will also be created per table or operation type.</p>
+<p>The generation of a control file, its output directory, prefix, and extension are controlled by the properties defined in <a href="flatfile_properties.htm#i1016630">Section 8.2.2, "Output File Properties."</a></p>
+<p>Each control file contains a comma-delimited list of data files that have been rolled over since the control file was created. The files are listed in the order they were rolled over. This allows data integration tools to ensure that data files are read in the correct order and that they have all been consumed.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABHHIAC"></a>
+<div id="GADAD435" class="sect1">
+<h2 class="sect1"><span class="secnum">6.2</span> Working with Statistical Summaries</h2>
+<p>Summary statistics about the data production process can be collected. This statistical summary information can be written to the Oracle GoldenGate report file or individual summary files.</p>
+<p>When writing to the report file, the user can decide if this information should be written when files are rolled over, or periodically based on a time period. Information written to the report file is output in a standard fashion, and contains total records, totals for each database operation type, deltas since the last report, rate information, and detail information for each table.</p>
+<p>When writing to individual summary files, a file is created for each rolled-over file. The statistical information for the rolled-over file is listed separated by a delimiter. The extension of the summary file, the data to be output, data delimiter, and line delimiter can all be controlled.</p>
+<p><a href="flatfile_properties.htm#i1007379">Section 8.2.7, "Statistics and Reporting,"</a> contains detailed property information about statistics and summary files.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABJFAAJ"></a>
+<div id="GADAD436" class="sect1">
+<h2 class="sect1"><span class="secnum">6.3</span> Managing Oracle GoldenGate processes</h2>
+<p>The processes involved in a typical data integration solution include:</p>
+<ul>
+<li>
+<p>A primary Extract process, capturing transactional data from the source database</p>
+</li>
+<li>
+<p>A <code>PASSTHRU</code> data pump Extract moving the captured transactional data across the network from the source database machine to the data integration machine</p>
+</li>
+<li>
+<p>A delivery data pump Extract configured to run the user exit</p>
+</li>
+</ul>
+<p>Typically, the original capture and <code>PASSTHRU</code> data pump are part of one Oracle GoldenGate installation and the delivery data pump is part of a second installation. Both of these installations will also need to have an Oracle GoldenGate Manager process running.</p>
+<p>Processes within these installations are managed through the Oracle GoldenGate GGSCI command line with simple commands like start and stop. Full details of managing these processes and their configuration can be found in the <span class="italic">Oracle GoldenGate Administrator's Guide</span>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABEAAII"></a>
+<div id="GADAD437" class="sect1">
+<h2 class="sect1"><span class="secnum">6.4</span> Trail Recovery Mode</h2>
+<p>The <code>RECOVERYOPTIONS</code> Extract parameter determines the restart behavior of an Extract that abends while writing to a trail. <code>APPENDMODE</code> is the default for release 10 trails and later. When an abended Extract restarts in append mode, it writes a recovery marker to the trail followed by the entire transaction that was interrupted.</p>
+<p>When the Oracle GoldenGate Flat File Adapter file writer reads this trail, it receives the partial transaction followed by the recovery marker indicating the partial transaction should be discarded. The file writer then repositions itself in the output file to the beginning of the partial transaction and overwrites it with the next transaction from the trail file.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABBEAAD"></a>
+<div id="GADAD438" class="sect1">
+<h2 class="sect1"><span class="secnum">6.5</span> Locating Error Messages</h2>
+<p>There are three types of errors that may occur in the operation of the Oracle GoldenGate for Flat File:</p>
+<ol>
+<li>
+<p>The Extract process running the user exit does not start</p>
+</li>
+<li>
+<p>The process starts, but abends at some point later</p>
+</li>
+<li>
+<p>The process runs successfully, but the data is incorrect or non-existent</p>
+</li>
+</ol>
+<p>In the first two cases, there are a number of places to look for error messages:</p>
+<ul>
+<li>
+<p>The standard ggserr.log file, which contains basic information about Oracle GoldenGate processes, their run history and a brief error message if any error occurred.</p>
+</li>
+<li>
+<p>The Oracle GoldenGate report file for the Extract process running the user exit, found in the <code>dirrpt</code> subdirectory. For example, if the process name is <code>ffwriter</code>, the report file would be ffwriter.rpt. This may contain more detailed information about the error, especially if it is a problem in the Oracle GoldenGate core product rather than the user exit.</p>
+</li>
+<li>
+<p>In the user exits log file, the name of which depends on the <code>log.logname</code> property. If this file does not exist, the user exit most likely did not start up and the report file should help isolate that problem.</p>
+</li>
+</ul>
+<p><a href="troubleshoot_flatfile.htm#CACCJGIH">Chapter 17, "Troubleshooting the Flat File Adapter"</a> contains more information on error handling.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr>
+<table class="cellalignment12">
+<tr>
+<td class="cellalignment19"><table class="cellalignment17">
+<tr>
+<td class="cellalignment16"><a href="flatfile_config.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page"><br>
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment16"><a href="flatfile_templates.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page"><br>
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle"><br>
+Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br>
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment21">
+<table class="cellalignment15">
+<tr>
+<td class="cellalignment16"><a href="../../index.htm"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home"><br>
+<span class="icon">Home</span></a></td>
+<td class="cellalignment16"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents"><br>
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment16"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page"><br>
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

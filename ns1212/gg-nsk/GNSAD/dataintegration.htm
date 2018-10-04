@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Integrating Data</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.24" />
+<meta name="description" content="This chapter describes how you can integrate just the data you need into your target using parameters, clauses, column mapping, and functions." />
+<meta name="dcterms.created" content="2014-08-06T9:43:50Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate for Mainframe Administering Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E28904-01" />
+<meta name="dcterms.isVersionOf" content="GNSAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="customops.htm" title="Previous" type="text/html" />
+<link rel="Next" href="manageandmonitor.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E28904-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">12/17</span> <!-- End Header --><a id="i934296"></a><a id="GNSAD368"></a>
+<h1 class="chapter"><span class="secnum">9</span> Integrating Data</h1>
+<p><a id="GNSAD369"></a>This chapter describes how you can integrate just the data you need into your target using parameters, clauses, column mapping, and functions.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#i934315">Section 9.1, "Selecting Records"</a></p>
+</li>
+<li>
+<p><a href="#i934389">Section 9.2, "Column Mapping"</a></p>
+</li>
+<li>
+<p><a href="#i958289">Section 9.3, "Field Conversion Functions"</a></p>
+</li>
+</ul>
+<a id="i934315"></a><a id="GNSAD370"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">9.1</span> Selecting Records</h2>
+<p>You can select specific records to extract or replicate using the <code>FILTER</code> and <code>WHERE</code> clauses of the <code>TABLE</code> or <code>MAP</code> parameters. <code>FILTER</code> is the more powerful tool, letting you filter records on a variety of criteria. You may specify multiple filters in one <code>FILE</code>, <code>TABLE</code>, or <code>MAP</code> statement. However, <code>WHERE</code> is a quick, simple way to select a record that matches a single criteria. You may only have one <code>WHERE</code> clause per statement.</p>
+<a id="GNSAD371"></a>
+<div class="sect2"><a id="sthref187"></a>
+<h3 class="sect2"><span class="secnum">9.1.1</span> Selecting Records with FILTER</h3>
+<p>Use the <code>FILTER</code> clause of <code>FILE</code>, <code>TABLE</code>, or <code>MAP</code> to select specific records within a file or table for Extract or Replicat. <code>FILTER</code> uses the Oracle GoldenGate field conversion functions to evaluate whether to process a record. For example, the following statement extracts records in which the price multiplied by the amount exceeds <code>10000</code>:</p>
+<pre>
+TABLE $DATA.MASTER.CUSTOMER, FILTER ((PRODUCT_PRICE*PRODUCT_AMOUNT)&gt;10000);
+</pre>
+<p>In another example, the following extracts records containing a string <code>JOE</code>:</p>
+<pre>
+TABLE $DATA.MASTER.CUSTOMER, FILTER (@STRFIND(NAME, "JOE")&gt;0);
+</pre></div>
+<!-- class="sect2" -->
+<a id="GNSAD372"></a>
+<div class="sect2"><a id="sthref188"></a>
+<h3 class="sect2"><span class="secnum">9.1.2</span> Selecting Records with WHERE</h3>
+<p>Use the <code>WHERE</code> clause in <code>TABLE</code> or <code>MAP</code> to select specific records within a table to be extracted or replicated.</p>
+<p>The <code>WHERE</code> clause consists of the following elements and must be enclosed in parentheses.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" summary="This table lists the elements of the WHERE clause." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t2">Element</th>
+<th class="cellalignment33" id="r1c2-t2">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t2" headers="r1c1-t2">
+<p>Columns from the row</p>
+</td>
+<td class="cellalignment34" headers="r2c1-t2 r1c2-t2">
+<p><code>PRODUCT_AMT</code></p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t2" headers="r1c1-t2">
+<p>Numeric values</p>
+</td>
+<td class="cellalignment34" headers="r3c1-t2 r1c2-t2">
+<pre>
+-123, 5500.123
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t2" headers="r1c1-t2">
+<p>Literal strings enclosed in quotation marks</p>
+</td>
+<td class="cellalignment34" headers="r4c1-t2 r1c2-t2">
+<pre>
+ "AUTO", "Ca"
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t2" headers="r1c1-t2">
+<p>Column tests</p>
+</td>
+<td class="cellalignment34" headers="r5c1-t2 r1c2-t2">
+<p><code>@NULL</code>, <code>@PRESENT</code>, <code>@ABSENT</code> (column is null, present or absent in the record)</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r6c1-t2" headers="r1c1-t2">
+<p>Comparison operators</p>
+</td>
+<td class="cellalignment34" headers="r6c1-t2 r1c2-t2">
+<pre>
+ =, &lt;&gt;, &gt;, &lt;, &gt;=, &lt;=
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r7c1-t2" headers="r1c1-t2">
+<p>Conjunctive operators</p>
+</td>
+<td class="cellalignment34" headers="r7c1-t2 r1c2-t2">
+<pre>
+AND, OR
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r8c1-t2" headers="r1c1-t2">
+<p>Grouping parentheses</p>
+</td>
+<td class="cellalignment34" headers="r8c1-t2 r1c2-t2">
+<p>open and close parentheses <code>()</code> for logical grouping</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>Arithmetic operators and floating point data types are not supported. To perform more complex selection conditions, use <code>FILTER</code>.</p>
+<a id="GNSAD373"></a>
+<div class="sect3"><a id="sthref189"></a>
+<h4 class="sect3"><span class="secnum">9.1.2.1</span> Comparing Fields</h4>
+<p>Ensure that the variable and value you specify in a comparison match appropriately. Compare:</p>
+<ul>
+<li>
+<p>Characters with literal string</p>
+</li>
+<li>
+<p>Numeric fields with numeric values, which can include a sign and decimal point</p>
+</li>
+<li>
+<p>SQL datetime types to literal strings, using the format in which the field is retrieved by a program</p>
+</li>
+</ul>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD374"></a>
+<div class="sect3"><a id="sthref190"></a>
+<h4 class="sect3"><span class="secnum">9.1.2.2</span> Compressed Update Considerations</h4>
+<p>When a compressed update record is encountered for a table, only part of the record image is available for the condition evaluation. By default, when a column required by the condition evaluation is missing, the record is ignored and output to the discard file, and a warning is issued.</p>
+<ul>
+<li>
+<p>Use only columns that appear in the primary key of the record, since key fields are always present in compressed records.</p>
+</li>
+<li>
+<p>Test for a column's presence first, then for the column's value.</p>
+</li>
+</ul>
+<p>To test for a column's presence, use the following syntax:</p>
+<pre>
+<span class="variable">field</span> [= | &lt;&gt;] [@PRESENT | @ABSENT]
+</pre>
+<p>The following example returns all records when the <code>AMOUNT</code> field is over <code>10000</code> and does not cause a record to be discarded when <code>AMOUNT</code> is absent.</p>
+<pre>
+WHERE (AMOUNT = @PRESENT AND AMOUNT &gt; 10000)
+</pre></div>
+<!-- class="sect3" -->
+<a id="GNSAD375"></a>
+<div class="sect3"><a id="sthref191"></a>
+<h4 class="sect3"><span class="secnum">9.1.2.3</span> Testing for NULL Values</h4>
+<p>Evaluate SQL columns for <code>NULL</code> values with the <code>@NULL</code> clause.</p>
+<p>The following test returns <code>TRUE</code> if the column is <code>NULL</code>, and <code>FALSE</code> for all other cases (including a column missing from the record).</p>
+<pre>
+WHERE (AMOUNT = @NULL)
+</pre>
+<p>The following test returns <code>TRUE</code> only if the column is present in the record and not <code>NULL</code>.</p>
+<pre>
+WHERE (AMOUNT = @PRESENT AND AMOUNT &lt;&gt; @NULL)
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="i934389"></a><a id="GNSAD376"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">9.2</span> Column Mapping</h2>
+<p>Oracle GoldenGate provides the capability to transform data between two dissimilarly structured database tables or files. These features are implemented with the <code>COLMAP</code> clause in the <code>TABLE</code> or <code>MAP</code> parameters described in this chapter.</p>
+<a id="GNSAD377"></a>
+<div class="sect2"><a id="sthref192"></a>
+<h3 class="sect2"><span class="secnum">9.2.1</span> Mapping Between Different Database Structures</h3>
+<p>Using Oracle GoldenGate, you can transform data to accommodate differences in source and target database structures.</p>
+<p>For example:</p>
+<ul>
+<li>
+<p>The source is a NonStop Enscribe file (<code>ACCTFL</code>), while the target is a SQL table (<code>ACCTTAB</code>).</p>
+</li>
+<li>
+<p>75 fields exist in <code>ACCTFL</code>, while <code>ACCTTAB</code> contains only nine columns.</p>
+</li>
+<li>
+<p>Five columns in <code>ACCTTAB</code> have corresponding field names in the <code>ACCTFL</code> (<code>ADDRESS</code>, <code>CITY</code>, <code>STATE</code>, <code>ZIPCODE</code>, <code>SOCIAL_SECURITY_NO</code>).</p>
+</li>
+<li>
+<p>A ten digit phone number field in <code>ACCTFL</code> corresponds to separate area code, prefix, and phone number columns in <code>ACCTTAB</code>.</p>
+</li>
+<li>
+<p>A date column in <code>ACCTTAB</code> is computed from year, month and day fields in <code>ACCTFL</code>.</p>
+</li>
+</ul>
+<p>In this scenario, you can design a column map in a Replicat parameter file <code>MAP</code> statement on NonStop. For example:</p>
+<pre>
+MAP $DATA.MASTER.ACCTFL, DEF ACCOUNT-REC,
+TARGET $DATA.MASTER.ACCTTAB,
+COLMAP (
+   USEDEFAULTS,
+   NAME = CUST-NAME,
+   TRANSACTION_DATE = @DATE ("YYYY-MM-DD",
+                      "YY", TRDATE.YEAR,
+                      "MM", TRDATE.MONTH,
+                      "DD", TRDATE.DAY),
+   AREA_CODE = @STREXT (PHONE, 1, 3),
+   PHONE_PREFIX = @STREXT (PHONE, 4, 6),
+   PHONE_NUMBER = @STREXT (PHONE, 7, 10)
+);
+</pre>
+<p class="orderedlisttitle">This statement is composed of the following elements:&nbsp;</p>
+<ol>
+<li>
+<p>The source file (<code>ACCTFL</code>) and corresponding DDL definition for <code>ACCOUNT-REC</code>.</p>
+</li>
+<li>
+<p>The target table name (<code>ACCTTAB</code>). No definition is required for the SQL table since it is retrieved automatically from a catalog.</p>
+</li>
+<li>
+<p>The <code>COLMAP</code> parameter.</p>
+</li>
+<li>
+<p><code>USEDEFAULTS</code>, which directs Replicat to move all fields in <code>ACCTFL</code> that have matching columns in <code>ACCTTAB</code> into the <code>ACCTTAB</code> table. Data translation between different data types is automatic.</p>
+</li>
+<li>
+<p>An explicit assignment of the <code>CUST-NAME</code> field to the <code>NAME</code> column. This is required because the names are different.</p>
+</li>
+<li>
+<p>A date calculation for <code>TRANSACTION_DATE</code> based on three fields in <code>ACCTFL</code>.</p>
+</li>
+<li>
+<p>Extracting parts of <code>PHONE-NO</code> into <code>AREA_CODE</code>, <code>PHONE_PREFIX</code> and <code>PHONE_NUMBER</code>.</p>
+</li>
+</ol>
+<a id="GNSAD378"></a>
+<div class="sect3"><a id="sthref194"></a>
+<h4 class="sect3"><span class="secnum">9.2.1.1</span> Data Type Conversions</h4>
+<p>Numeric fields are converted from one type and scale to match the type and scale of the target. If the scale of the source is larger than that of the target, the number is truncated on the right. If the target scale is larger than the source, the number is padded with zeros.</p>
+<p>Varchar and character columns can accept other character, varchar, group, and datetime columns, or string literals enclosed in quotation marks. If the target character column is smaller than that of the source, the character column is truncated on the right.</p>
+<p>Date-time fields can accept datetime and character columns, as well as string literals. If you attempt to map a character into a datetime column, make sure it conforms to the Oracle GoldenGate external SQL format (<code>YYYY-MM-DD:HH:MI:SS.FFFFFF</code>). Required precision varies according to data type and target platform. Datetime columns are truncated on the right as necessary. If the source column is not as long as the target, the column is extended on the right with the values for the current date and time.</p>
+</div>
+<!-- class="sect3" -->
+<a id="i934442"></a><a id="GNSAD379"></a>
+<div class="sect3">
+<h4 class="sect3"><span class="secnum">9.2.1.2</span> Oracle GoldenGate User Tokens</h4>
+<p>Oracle GoldenGate user tokens let you capture data and values for use in data integration. User tokens are composed of alphanumeric data from your source system, database, transactions, and/or records. They can also transfer values into other user tokens generated by queries, procedures, or other called functions.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>The user token area is limited to 2000 bytes of information. Token names, data length, and the data itself are all used to calculate the user token area size.</p>
+</div>
+<p>User tokens are stored in each record's trail header, and retrieved by the appropriate Oracle GoldenGate component.</p>
+<p>The following tables outline types of data that appear in user tokens.</p>
+<div class="tblhruleformal">
+<p class="titleintable"><a id="GNSAD380"></a><a id="sthref195"></a><a id="sthref196"></a>Table 9-1 Sample Environmental Data for User Tokens</p>
+<table class="cellalignment32" title="Sample Environmental Data for User Tokens " summary="This table summarizes the sample environmental data and their description for user tokens." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t4">Environmental Detail</th>
+<th class="cellalignment33" id="r1c2-t4">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t4" headers="r1c1-t4">
+<pre>
+GROUPNAME
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t4 r1c2-t4">
+<p>Extract or Replicat group name.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t4" headers="r1c1-t4">
+<pre>
+HOSTNAME
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t4 r1c2-t4">
+<p>Host name running the Extract or Replicat.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t4" headers="r1c1-t4">
+<pre>
+OSUSERNAME
+</pre></td>
+<td class="cellalignment34" headers="r4c1-t4 r1c2-t4">
+<p>The user name that started Extract or Replicat.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<div class="tblhruleformal">
+<p class="titleintable"><a id="GNSAD381"></a><a id="sthref197"></a><a id="sthref198"></a>Table 9-2 Sample Header Details and Their Description</p>
+<table class="cellalignment32" title="Sample Header Details and Their Description " summary="This table summarizes the sample header details and their descriptions." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t5">Header Detail</th>
+<th class="cellalignment33" id="r1c2-t5">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t5" headers="r1c1-t5">
+<pre>
+BEFOREAFTERINDICATOR
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t5 r1c2-t5">
+<p>Before/after indicator</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t5" headers="r1c1-t5">
+<pre>
+COMMITTIMESTAMP
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t5 r1c2-t5">
+<p>Commit timestamp</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t5" headers="r1c1-t5">
+<pre>
+LOGPOSITION
+</pre></td>
+<td class="cellalignment34" headers="r4c1-t5 r1c2-t5">
+<p>Log position</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t5" headers="r1c1-t5">
+<pre>
+LOGRBA
+</pre></td>
+<td class="cellalignment34" headers="r5c1-t5 r1c2-t5">
+<p>Log RBA</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r6c1-t5" headers="r1c1-t5">
+<pre>
+TABLENAME
+</pre></td>
+<td class="cellalignment34" headers="r6c1-t5 r1c2-t5">
+<p>Table name</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r7c1-t5" headers="r1c1-t5">
+<pre>
+OPTYPE
+</pre></td>
+<td class="cellalignment34" headers="r7c1-t5 r1c2-t5">
+<p>Operation type</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r8c1-t5" headers="r1c1-t5">
+<pre>
+RECORDLENGTH
+</pre></td>
+<td class="cellalignment34" headers="r8c1-t5 r1c2-t5">
+<p>Record length</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r9c1-t5" headers="r1c1-t5">
+<pre>
+TRANSACTIONINDICATOR
+</pre></td>
+<td class="cellalignment34" headers="r9c1-t5 r1c2-t5">
+<p>Transaction indicator</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="sect3" -->
+<a id="GNSAD382"></a>
+<div class="sect3"><a id="sthref199"></a>
+<h4 class="sect3"><span class="secnum">9.2.1.3</span> Populating User Tokens in the Trail Header</h4>
+<p>To populate user tokens in the trail header, you must include a <code>TOKEN</code> clause on the <code>FILE</code> or <code>TABLE</code> parameter in the Extract parameter file. To do so, complete the following procedure:</p>
+<ol>
+<li>
+<p>Edit the Extract parameter file.</p>
+<pre>
+GGSCI&gt; TEDIT PARAMS EXTDEMO
+</pre></li>
+<li>
+<p>Specify a table name</p>
+<pre>
+TABLE $DATA.MASTER.PRODUCT,
+</pre></li>
+<li>
+<p>Enter the desired tokens. The <code>@GETENV</code> function, quotation marks and comma delimiter are required.</p>
+<pre>
+TOKENS
+  (
+   TKN-GROUP-NAME   =@GETENV ("GGENVIRONMENT", "GROUPNAME"),
+   TKN-HOST-NAME    =@GETENV ("GGENVIRONMENT", "HOSTNAME"),
+   TKN-OS-USER      =@GETENV ("GGENVIRONMENT", "OSUSERNAME"),
+   TKN-BA           =@GETENV ("GGHEADER", "BEFOREAFTERINDICATOR"),
+   TKN-COMMIT-TS    =@GETENV ("GGHEADER", "COMMITTIMESTAMP"),
+   TKN-LOG-POSITION =@GETENV ("GGHEADER", "LOGPOSITION"),
+   TKN-LOG-RBA      =@GETENV ("GGHEADER", "LOGRBA"),
+   TKN-TABLE        =@GETENV ("GGHEADER", "TABLENAME"),
+   TKN-OP-TYPE      =@GETENV ("GGHEADER", "OPTYPE"),
+   TKN-REC-LEN      =@GETENV ("GGHEADER", "RECORDLENGTH"),
+   TKN-TRNS-IND     =@GETENV ("GGHEADER", "TRANSACTION INDICATOR"),
+  );
+</pre></li>
+<li>
+<p>Exit the parameter file.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD383"></a>
+<div class="sect3"><a id="sthref200"></a>
+<h4 class="sect3"><span class="secnum">9.2.1.4</span> Retrieving Values</h4>
+<p>To retrieve values, you must include a <code>MAP</code> parameter and a <code>COLMAP</code> clause in the Replicat parameter file, then use the <code>@TOKEN</code> function to specify the values to retrieve.</p>
+<pre>
+MAP $DATA.MASTER.PRODUCT, TARGET $DATA.MASTER.PRODUCT_CHANGES,
+  COLMAP (USEDEFAULTS,
+          SOURCE_GROUP      =@TOKEN ("TKN-GROUP-NAME"),
+          SOURCE_HOST       =@TOKEN ("TKN-HOST-NAME"),
+          SOURCE_USER       =@TOKEN ("TKN-OS-USER"),
+          BEFORE_AFTER_IND  =@TOKEN ("TKN-BA"),
+          TIMESTAMP         =@TOKEN ("TKN-COMMIT-TS"),
+          SOURCE_TABLE      =@TOKEN ("TKN-TABLE"),
+          IO_TYPE           =@TOKEN ("TKN-OP-TYPE"));
+</pre>
+<p>The <code>@TOKEN</code> function requires quotation marks.</p>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD384"></a>
+<div class="sect3"><a id="sthref201"></a>
+<h4 class="sect3"><span class="secnum">9.2.1.5</span> Default Mapping</h4>
+<p>When you specify <code>COLMAP USEDEFAULTS</code>, Extract maps columns in the source table to columns in the target with the same name. At startup, Extract outputs column names that match and will map to each other.</p>
+<p>The <code>USEDEFAULTS</code> parameter allows matching columns to be mapped, plus additional columns. This can be useful when the source and target definitions are similar but not identical.</p>
+<p>If you set up global column mapping rules with <code>COLMATCH</code> parameters, you can map columns with different names to each other using default mapping. See the Extract and Replicat <code>COLMATCH</code> parameter for more details.</p>
+<p>When unspecified or no match is found in a default map, a target field defaults to one of the following:</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" summary="This table lists the columns names and their values used by the USEDEFAULTS parameter." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t6">Column</th>
+<th class="cellalignment33" id="r1c2-t6">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t6" headers="r1c1-t6">
+<p>Numeric</p>
+</td>
+<td class="cellalignment34" headers="r2c1-t6 r1c2-t6">
+<p>Zero</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t6" headers="r1c1-t6">
+<p>Character or varchar</p>
+</td>
+<td class="cellalignment34" headers="r3c1-t6 r1c2-t6">
+<p>Spaces</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t6" headers="r1c1-t6">
+<p>Datetime</p>
+</td>
+<td class="cellalignment34" headers="r4c1-t6 r1c2-t6">
+<p>Current date and time</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t6" headers="r1c1-t6">
+<p>Columns that can take a <code>NULL</code> value</p>
+</td>
+<td class="cellalignment34" headers="r5c1-t6 r1c2-t6">
+<p><code>NULL</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>If the target table contains names corresponding to the transactional columns described above, the special column values are mapped to the target record format.</p>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD385"></a>
+<div class="sect3"><a id="sthref202"></a>
+<h4 class="sect3"><span class="secnum">9.2.1.6</span> Mapping Examples</h4>
+<p>The following is the source Enscribe DDL for the examples in this section.</p>
+<pre>
+RECORD PRODUCT-REC.
+FILE IS PRODDAT KEY-SEQUENCED AUDIT.
+05 PROD-KEY.
+   10 CODE1 PIC X(2).
+   10 CODE2 PIC 9(2).
+05 PROD-INDEX1.
+   10 PRICE PIC 9(7)V9(2) COMP.
+   10 CODE1 PIC X(2).
+   10 CODE2 PIC 9(2).
+05 PROD-INDEX2.
+   10 INVENTORY PIC 9(5).
+   10 CODE1 PIC X(2).
+   10 CODE2 PIC 9(2).
+05 DESC     PIC X(40).
+KEY IS PROD-KEY.
+END.
+</pre>
+<p>The following is the target SQL DDL for the examples in this section.</p>
+<pre>
+Target SQL DDL
+CREATE TABLE PRODTAB
+(
+CODE CHAR(4) NOT NULL
+, PRICE NUMERIC (8,2) NOT NULL
+, INVENTORY DECIMAL (6)
+, MANAGER CHAR (20) NOT NULL
+, DESC VARCHAR (30)
+, UPDATE_TIME DATETIME YEAR TO SECOND NOT NULL
+, PRIMARY KEY (CODE)
+);
+</pre></div>
+<!-- class="sect3" -->
+<a id="GNSAD386"></a>
+<div class="sect3"><a id="sthref203"></a>
+<h4 class="sect3"><span class="secnum">9.2.1.7</span> Legal Column Mapping</h4>
+<p>Note that one can move a group level (<code>PROD-KEY</code>) to a character field. This is feasible since <code>CODE2</code> is a <code>DISPLAY</code> field, not a <code>COMP</code>. Also, the user does not have to qualify <code>PRICE</code>, <code>INVENTORY</code> or <code>DESC</code> since they are all unique in the source definition. <code>UPDATE_TIME</code> will default to the time at which <code>EXTRACT</code> processes the record. <code>PRICE</code> may be truncated since it has one more significant digit in the source field than in the target.</p>
+<pre>
+FILE $DAT11.OLDAPP.PRODFL,
+DEF PRODUCT-REC,
+TARGET $DATA6.NEWAPP.PRODTAB,
+COLMAP
+  (CODE      = PROD-KEY,
+   PRICE     = PROD-INDEX1.PRICE,
+   INVENTORY = INVENTORY,
+   MANAGER   = "Jack Smith",
+   DESC      = DESC);
+</pre></div>
+<!-- class="sect3" -->
+<a id="GNSAD387"></a>
+<div class="sect3"><a id="sthref204"></a>
+<h4 class="sect3"><span class="secnum">9.2.1.8</span> Dangerous Mapping if AUDITCOMPRESS Used on Source File</h4>
+<p>Since this mapping takes the primary key value from a non-primary key source, it discards the result whenever a source record is updated without updating the price. In the following example, even if <code>AUDITCOMPRESS</code> is used, updates can be delivered since the primary key is always present.</p>
+<pre>
+FILE $DAT11.OLDAPP.PRODFL,
+DEF PRODUCT-REC,
+TARGET $DATA6.NEWAPP.PRODTAB,
+COLMAP
+  (CODE      = PROD-INDEX1.CD1,
+   PRICE     = PROD-INDEX1.PRICE,
+   INVENTORY = INVENTORY,
+   MANAGER   = "Unknown",
+   DESC      = DESC);
+</pre></div>
+<!-- class="sect3" -->
+<a id="GNSAD388"></a>
+<div class="sect3"><a id="sthref205"></a>
+<h4 class="sect3"><span class="secnum">9.2.1.9</span> Using Constants, Taking Default Values.</h4>
+<p>This mapping sets <code>PRICE</code> to zero and Manager to spaces since they are not null fields, and sets <code>INVENTORY</code> and <code>DESC</code> to <code>NULL</code> since they can take null values.</p>
+<pre>
+TABLE $DAT11.OLDAPP.PRODFL,
+DEF PRODUCT-REC,
+TARGET $DATA6.NEWAPP.PRODTAB,
+COLMAP
+  (CODE = PROD-KEY,
+   UPDATE_TIME = "2009-01-01:08:00:00");
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="i958289"></a><a id="GNSAD389"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">9.3</span> Field Conversion Functions</h2>
+<p>Using field conversion functions, you can manipulate numbers, strings and source column or field values into the appropriate format for target columns.</p>
+<p>See <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> for more information about column conversion functions.</p>
+<a id="GNSAD390"></a>
+<div class="sect2"><a id="sthref206"></a>
+<h3 class="sect2"><span class="secnum">9.3.1</span> Function Arguments</h3>
+<p>Column conversion functions can take one or more of the following parameters.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" summary="This table summarizes the parameters accepted by coumn conversion functions." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t7">Parameter</th>
+<th class="cellalignment33" id="r1c2-t7">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t7" headers="r1c1-t7">
+<p>A numeric constant</p>
+</td>
+<td class="cellalignment34" headers="r2c1-t7 r1c2-t7">
+<pre>
+ 123
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t7" headers="r1c1-t7">
+<p>A string constant</p>
+</td>
+<td class="cellalignment34" headers="r3c1-t7 r1c2-t7">
+<pre>
+"ABCD"
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t7" headers="r1c1-t7">
+<p>A column or field from the source table or file</p>
+</td>
+<td class="cellalignment34" headers="r4c1-t7 r1c2-t7">
+<pre>
+PHONE-NO.AREA-CODE or COLUMN_3
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t7" headers="r1c1-t7">
+<p>An arithmetic expression</p>
+</td>
+<td class="cellalignment34" headers="r5c1-t7 r1c2-t7">
+<pre>
+COL2 * 100
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r6c1-t7" headers="r1c1-t7">
+<p>A comparison expression</p>
+</td>
+<td class="cellalignment34" headers="r6c1-t7 r1c2-t7">
+<pre>
+COL3 &gt; 100 AND COL4 &gt; 0
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r7c1-t7" headers="r1c1-t7">
+<p>A field conversion function</p>
+</td>
+<td class="cellalignment34" headers="r7c1-t7 r1c2-t7">
+<p>its own parameters</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Argument checking at run-time is not always strict and errors in argument passing are sometimes not detected until records are processed.</p>
+</div>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD391"></a>
+<div class="sect2"><a id="sthref207"></a>
+<h3 class="sect2"><span class="secnum">9.3.2</span> Arithmetic Expressions</h3>
+<p>Arithmetic expressions can be combinations of the following elements.</p>
+<ul>
+<li>
+<p>Numbers</p>
+</li>
+<li>
+<p>Columns that contain numbers</p>
+</li>
+<li>
+<p>Functions that return numbers</p>
+</li>
+<li>
+<p>Arithmetic operators: <code>+</code> (plus), - (minus), * (multiply), <code>/</code> (divide), \&nbsp;(remainder)</p>
+</li>
+<li>
+<p>Comparison operators: <code>&gt;</code> (greater than), <code>&gt;=</code> (greater than or equal), <code>&lt;</code> (less than), <code>&lt;=</code> (less than or equal), <code>=</code> (equal), <code>&lt;&gt;</code> (not equal)</p>
+</li>
+<li>
+<p>Parentheses (for grouping results in the expression)</p>
+</li>
+<li>
+<p>Conjunction operators: <code>AND, OR</code></p>
+</li>
+</ul>
+<p>To return the result of an arithmetic expression to a column, use the <code>COMPUTE</code> function.</p>
+<p>The <code>COMPUTE</code> function is not required when an expression is passed as an argument, as in <code>@STRNUM (AMOUNT1 + AMOUNT2, RIGHT)</code>.</p>
+<p><code>@STRNUM (@COMPUTE(AMOUNT1 + AMOUNT2), RIGHT)</code> would return the same result.</p>
+<p>Arithmetic results derived from comparisons are zero (indicating <code>FALSE</code>) or non-zero (indicating <code>TRUE</code>).</p>
+<p>When conjunction operators are involved in an expression, only the necessary part of the expression is evaluated. Once a statement is <code>FALSE</code>, the rest of the expression is ignored. This can be valuable when evaluating fields that may be missing or null.</p>
+<p>For example, assume the value of <code>COL1</code> is <code>25</code> and the value of <code>COL2</code> is <code>10</code>:</p>
+<pre>
+@COMPUTE (COL1 &gt; 0 AND COL2 &lt; 3) returns 0
+@COMPUTE (COL1 &lt; 0 AND COL2 &lt; 3) returns 0 (and COL2 &lt; 3 is never evaluated)
+@COMPUTE ((COL1 + COL2)/5) returns 7
+</pre>
+<p>See <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> for details about the functions.</p>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD392"></a>
+<div class="sect2"><a id="sthref208"></a>
+<h3 class="sect2"><span class="secnum">9.3.3</span> Null, Invalid, and Missing Columns and Fields</h3>
+<p>One problem encountered when calculating column values is that some data may be missing from the expression.</p>
+<p><a href="#BABIEIEA">Table 9-3</a> summarizes the status conditions that the source columns or fields may assume.</p>
+<div class="tblhruleformal">
+<p class="titleintable"><a id="GNSAD393"></a><a id="sthref209"></a><a id="BABIEIEA"></a>Table 9-3 Explanation of Null, Invalid, and Missing Columns and field</p>
+<table class="cellalignment32" title="Explanation of Null, Invalid, and Missing Columns and field" summary="This table provides an explanation of Null, Invalid, and Missing columns and fields." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t9">Column Status</th>
+<th class="cellalignment33" id="r1c2-t9">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t9" headers="r1c1-t9">
+<p><code>Missing</code></p>
+</td>
+<td class="cellalignment34" headers="r2c1-t9 r1c2-t9">
+<p>Frequently, data is missing in compressed update records. Compressed update records contain only those source columns that changed, plus the key of the source file or table.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t9" headers="r1c1-t9">
+<p><code>Null</code></p>
+</td>
+<td class="cellalignment34" headers="r3c1-t9 r1c2-t9">
+<p>A source column may contain a null value, which makes a calculation difficult.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t9" headers="r1c1-t9">
+<p><code>Invalid</code></p>
+</td>
+<td class="cellalignment34" headers="r4c1-t9 r1c2-t9">
+<p>The source data is invalid.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>When one of these conditions occurs, by default the condition is returned as the result of the function.</p>
+<p>For example, if <code>BALANCE</code> is <code>1000</code>, but <code>AMOUNT</code> is <code>NULL</code>, the following expression returns <code>NULL</code>.</p>
+<pre>
+NEW_BALANCE = @COMPUTE (BALANCE + AMOUNT)
+</pre>
+<p>As another example, the <code>AMOUNT</code> field is defined as <code>PIC 9(5)V99</code> in an Enscribe record definition, but contains spaces. In that case, the above expression returns <code>INVALID</code>, and the record is discarded.</p>
+<p>If <code>AMOUNT</code>, but not <code>BALANCE</code>, is present in the update record, the field is not mapped.</p>
+<a id="GNSAD394"></a>
+<div class="sect3"><a id="sthref210"></a>
+<h4 class="sect3"><span class="secnum">9.3.3.1</span> Overriding Exceptional Conditions</h4>
+<p>The <code>IF</code>, <code>COLSTAT</code> and <code>COLTEST</code> functions recognize null, invalid, or missing columns and can compute alternative values.</p>
+<p>For example:</p>
+<pre>
+NEW_BALANCE = @IF (@COLTEST (BALANCE, NULL, INVALID) OR
+                   @COLTEST (AMOUNT, NULL, INVALID),
+                   @COLSTAT (NULL),
+                   BALANCE + AMOUNT)
+</pre>
+<p>This returns one of the following:</p>
+<ul>
+<li>
+<p><code>NULL</code> when <code>BALANCE</code> or <code>AMOUNT</code> is <code>NULL</code> or <code>INVALID</code></p>
+</li>
+<li>
+<p><code>MISSING</code> when either column is missing</p>
+</li>
+<li>
+<p>The sum of the columns</p>
+</li>
+</ul>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment25">
+<tr>
+<td class="cellalignment34">
+<table class="cellalignment30">
+<tr>
+<td class="cellalignment29"><a href="customops.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment29"><a href="manageandmonitor.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment36">
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment29"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment29"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

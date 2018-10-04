@@ -1,0 +1,437 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>16 Developing Custom Filters, Formatters, and Handlers</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1023">
+<meta name="description" content="This chapter discusses writing Java code to implement an event filter, a custom formatter for a built-in handler, or a custom event handler. Specifying custom formatting through a Velocity template is also covered.">
+<meta name="dcterms.created" content="2015-04-08T9:18:57Z">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="robots" content="all">
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Application Adapters Administering Oracle GoldenGate Adapters">
+<meta name="dcterms.identifier" content="E61853-01">
+<meta name="partno" content="E64636-01">
+
+<meta name="dcterms.isVersionOf" content="GADAD">
+<link rel="Start" href="../../index.htm" title="Home" type="text/html">
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html">
+
+<script type="application/javascript" src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript" src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html">
+<link rel="Prev" href="java_msgdel_properties.htm" title="Previous" type="text/html">
+<link rel="Next" href="troubleshoot_part.htm" title="Next" type="text/html">
+<link rel="alternate" href="../GADAD.pdf" title="PDF version" type="application/pdf">
+<link rel="alternate" href="../GADAD.epub" title="ePub version" type="application/epub+zip">
+<link rel="alternate" href="../GADAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook">
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="application/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53addf516e0e58a5"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate Adapters</a>
+</div>
+
+<span id="PAGE" style="display:none;">23/28</span>
+<!-- End Header -->
+<div id="GADAD326" class="chapter"><a id="BABCICDE"></a> <a id="i1001961"></a>
+<h1 class="chapter"><span class="secnum">16</span> Developing Custom Filters, Formatters, and Handlers</h1>
+<p><a id="GADAD550"></a>This chapter discusses writing Java code to implement an event filter, a custom formatter for a built-in handler, or a custom event handler. Specifying custom formatting through a Velocity template is also covered.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#i1002124">Filtering Events</a></p>
+</li>
+<li>
+<p><a href="#i1003479">Custom Formatting</a></p>
+</li>
+<li>
+<p><a href="#i1003358">Coding a Custom Handler in Java</a></p>
+</li>
+<li>
+<p><a href="#A1000740">Additional Resources</a></p>
+</li>
+</ul>
+<a id="i1002124"></a>
+<div id="GADAD327" class="sect1">
+<h2 class="sect1"><span class="secnum">16.1</span> Filtering Events</h2>
+<p>By default, all transactions, operations and metadata events are passed to the <code>DataSourceListener</code> event handlers. An event filter can be implemented to filter the events sent to the handlers. The filter could select certain operations on certain tables containing certain column values, for example</p>
+<p>Filters are additive: if more than one filter is set for a handler, then all filters must return true in order for the event to be passed to the handler.</p>
+<p>You can configure filters using the Java application properties file:</p>
+<pre>
+# handler "foo" only receives certain events
+gg.handler.one.type=jms
+gg.handler.one.format=mytemplate.vm
+gg.handler.one.filter=com.mycompany.MyFilter
+</pre>
+<p>To activate the filter, you write the filter and set it on the handler; no additional logic needs to be added to specific handlers.</p>
+</div>
+<!-- class="sect1" -->
+<a id="i1003479"></a>
+<div id="GADAD328" class="sect1">
+<h2 class="sect1"><span class="secnum">16.2</span> Custom Formatting</h2>
+<p>You can customize the output format of a built-in handler by:</p>
+<ul>
+<li>
+<p>Writing a custom formatter in Java or</p>
+</li>
+<li>
+<p>Using a Velocity template</p>
+</li>
+</ul>
+<div id="GADAD329" class="sect2"><a id="sthref366"></a>
+<h3 class="sect2"><span class="secnum">16.2.1</span> Coding a Custom Formatter in Java</h3>
+<p>The earlier examples show a JMS handler and a file output handler using the same formatter (<code>com.mycompany.MyFormatter</code>). The following is an example of how this formatter may be implemented.</p>
+<div id="GADAD330" class="example"><p class="titleinexample"><a id="sthref367"></a>Example 16-1 Custom Formatting Implementation</p>
+<pre>
+package com.mycompany.MyFormatter;
+import com.goldengate.atg.datasource.DsOperation;
+import com.goldengate.atg.datasource.DsTransaction;
+import com.goldengate.atg.datasource.format.DsFormatterAdapter;
+import com.goldengate.atg.datasource.meta.ColumnMetaData;
+import com.goldengate.atg.datasource.meta.DsMetaData;
+import com.goldengate.atg.datasource.meta.TableMetaData;
+import java.io.PrintWriter;
+public class MyFormatter extends DsFormatterAdapter {
+</pre>
+<pre>
+        public MyFormatter() { }
+        @Override
+        public void formatTx(DsTransaction tx,
+</pre>
+<pre>
+DsMetaData meta,
+PrintWriter out)
+</pre>
+<pre>
+        {
+</pre>
+<pre>
+            out.print("Transaction: " );
+            out.print("numOps=\'" + tx.getSize() + "\' " );
+            out.println("ts=\'" + tx.getStartTxTimeAsString() + "\'");
+            for(DsOperation op: tx.getOperations()) {
+TableName currTable = op.getTableName();
+TableMetaData tMeta = dbMeta.getTableMetaData(currTable);
+String opType = op.getOperationType().toString();
+String table = tMeta.getTableName().getFullName();
+out.println(opType + " on table \"" + table + "\":" );
+int colNum = 0;
+for(DsColumn col: op.getColumns())
+{
+</pre>
+<pre>
+ColumnMetaData cMeta = tMeta.getColumnMetaData( colNum++ );
+out.println(
+cMeta.getColumnName() + " = " + col.getAfterValue() );
+}
+</pre>
+<pre>
+        }
+        @Override
+        public void formatOp(DsTransaction tx,
+</pre>
+<pre>
+DsOperation op,
+TableMetaData tMeta,
+PrintWriter out)
+</pre>
+<pre>
+        {
+</pre>
+<pre>
+            // not used...
+</pre>
+<pre>
+        }
+</pre>
+<pre>
+}
+</pre>
+<p>The formatter defines methods for either formatting complete transactions (after they are committed) or individual operations (as they are received, before the commit). If the formatter is in operation mode, then <code>formatOp</code>(...) is called; otherwise, <code>formatTx</code>(...) is called at transaction commit.</p>
+<p>To compile and use this custom formatter, include the Oracle GoldenGate for Java jars in the classpath and place the compiled .class files in g<code><span class="codeinlineitalic">g_install_dir</span></code>/<code>dirprm</code>:</p>
+<pre>
+javac -d <span class="codeinlineitalic">gg_install_dir/</span>dirprm
+-classpath ggjava/ggjava.jar MyFormatter.java
+</pre>
+<p>The resulting class files are located in <code>resources/classes</code> (in correct package structure):</p>
+<pre>
+<span class="codeinlineitalic">gg_install_dir</span>/dirprm/com/mycompany/MyFormatter.class
+</pre>
+<p>Alternatively, the custom classes can be put into a jar; in this case, either include the jar file in the JVM class path via the user exit properties (using <code>java.class.path</code> in the j<code>vm.bootoptions</code> property), or by setting the Java application properties file to include your custom jar:</p>
+<pre>
+# set properties on 'one'
+gg.handler.one.type=file
+gg.handler.one.format=com.mycompany.MyFormatter
+gg.handler.one.file=output.xml
+gg.classpath=/path/to/my.jar,/path/to/directory/of/jars/*
+</pre></div>
+<!-- class="example" --></div>
+<!-- class="sect2" -->
+<div id="GADAD331" class="sect2"><a id="sthref368"></a>
+<h3 class="sect2"><span class="secnum">16.2.2</span> Using a Velocity Template</h3>
+<p>As an alternative to writing Java code for custom formatting, Velocity templates can be a good alternative to quickly prototype formatters. For example, the following template could be specified as the format of a JMS or file handler:</p>
+<pre>
+Transaction: numOps='$tx.size' ts='$tx.timestamp'
+#for each( $op in $tx )
+operation: $op.sqlType, on table "$op.tableName":
+#for each( $col in $op )
+$op.tableName, $col.meta.columnName = $col.value
+#end
+#end
+</pre>
+<p>If the template were named sample.vm, it could be placed in the classpath, for example:</p>
+<pre>
+<span class="codeinlineitalic">gg_install_dir</span>/dirprm/sample.vm
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If using Velocity templates, the file name must end with the suffix .vm; otherwise the formatter is presumed to be a Java class.</div>
+<p>Update the Java application properties file to use the template:</p>
+<pre>
+# set properties on 'one'
+gg.handler.one.type=file
+gg.handler.one.format=sample.vm
+gg.handler.one.file=output.xml
+</pre>
+<p>When modifying templates, there is no need to recompile any Java source; simply save the template and re-run the Java application. When the application is run, the following output would be generated (assuming a table named <code>SCHEMA.SOMETABLE</code>, with columns <code>TESTCOLA</code> and <code>TESTCOLB</code>):</p>
+<pre>
+Transaction: numOps='3' ts='2008-12-31 12:34:56.000'
+operation: UPDATE, on table "SCHEMA.SOMETABLE":
+SCHEMA.SOMETABLE, TESTCOLA = value 123
+SCHEMA.SOMETABLE, TESTCOLB = value abc
+operation: UPDATE, on table "SCHEMA.SOMETABLE":
+SCHEMA.SOMETABLE, TESTCOLA = value 456
+SCHEMA.SOMETABLE, TESTCOLB = value def
+operation: UPDATE, on table "SCHEMA.SOMETABLE":
+SCHEMA.SOMETABLE, TESTCOLA = value 789
+SCHEMA.SOMETABLE, TESTCOLB = value ghi
+</pre></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="i1003358"></a>
+<div id="GADAD332" class="sect1">
+<h2 class="sect1"><span class="secnum">16.3</span> Coding a Custom Handler in Java</h2>
+<p>A custom handler can be implemented by extending <code>AbstractHandler</code>:</p>
+<pre>
+import com.goldengate.atg.datasource.*;
+import static com.goldengate.atg.datasource.GGDataSource.Status;
+public class SampleHandler extends AbstractHandler {
+        @Override
+        public void init(DsConfiguration conf, DsMetaData metaData) {
+            super.init(conf, metaData);
+            // ... do additional config...
+        }
+        @Override
+        public Status operationAdded(DsEvent e, DsTransaction tx, DsOperation op) { ... }
+        @Override
+        public Status transactionCommit(DsEvent e, DsTransaction tx) { ... }
+        @Override
+        public Status metaDataChanged(DsEvent e, DsMetaData meta) { .... }
+        @Override
+        public void destroy() { /* ... do cleanup ... */ }
+        @Override
+        public String reportStatus() { return "status report..."; }
+}
+</pre>
+<p>When a transaction is processed from the Extract, the order of calls into the handler is as follows:</p>
+<ol>
+<li>
+<p>Initialization:</p>
+<ul>
+<li>
+<p>First, the handler is constructed.</p>
+</li>
+<li>
+<p>Next, all the "setters" are called on the instance with values from the property file.</p>
+</li>
+<li>
+<p>Finally, the handler is initialized; the <code>init(...)</code> method is called before any transactions are received. It is important that the <code>init(...)</code> method call <code>super.init(...)</code> to properly initialize the base class.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Metadata is received. If the user exit is processing an operation on a table not yet seen during this run, a metadata event is fired, and the <code>metadataChanged(...)</code> method is called. Typically, there is no need to implement this method. The <code>DsMetaData</code> is automatically updated with new data source metadata as it is received.</p>
+</li>
+<li>
+<p>A transaction is started. A transaction event is fired, causing the <code>transactionBegin(...)</code> method on the handler to be invoked (not shown). This is typically not used, since the transaction has zero operations at this point.</p>
+</li>
+<li>
+<p>Operations are added to the transaction, one after another. This causes the <code>operationAdded(...)</code> method to be called on the handler for each operation added. The containing transaction is also passed into the method, along with the data source metadata (containing all table metadata seen thus far). Note that the transaction has not yet been committed, and could be aborted before the commit is received.</p>
+<p>Each operation contains the column values from the transaction (possibly just the changed values, if Extract is processing with compressed updates.) The column values may contain both before and after values.</p>
+</li>
+<li>
+<p>The transaction is committed. This causes the <code>transactionCommit(...)</code> method to be called.</p>
+</li>
+<li>
+<p>Periodically, <code>reportStatus</code> may be called; it is also called at process shutdown. Typically, this displays the statistics from processing (number of operations/transactions processed, etc).</p>
+</li>
+</ol>
+<p>Below is a complete example of a simple printer handler, which just prints out very basic event information for transactions, operations and metadata. Note that the handler also has a property <code>myoutput</code> for setting the output file name; this can be set in the Java application properties file as follows:</p>
+<pre>
+gg.handlerlist=sample
+# set properties on 'sample'
+gg.handler.sample.type=sample.SampleHandler
+gg.handler.sample.myoutput=out.txt
+</pre>
+<p>To use the custom handler,</p>
+<ol>
+<li>
+<p>Compile the class</p>
+</li>
+<li>
+<p>Include the class in the application classpath,</p>
+</li>
+<li>
+<p>Add the handler to the list of active handlers in the Java application properties file.</p>
+</li>
+</ol>
+<p>To compile the handler, include the Oracle GoldenGate for Java jars in the classpath and place the compiled .class files in <code><span class="codeinlineitalic">gg_install_dir</span></code>/<code>javaue/resources/classes</code>:</p>
+<pre>
+javac -d <span class="codeinlineitalic">gg_install_dir</span>/dirprm
+-classpath ggjava/ggjava.jar SampleHandler.java
+</pre>
+<p>The resulting class files would be located in <code>resources/classes</code>, in correct package structure, such as:</p>
+<pre>
+<span class="codeinlineitalic">gg_install_dir</span>/dirprm/sample/SampleHandler.class
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+For any Java application development beyond "hello world" examples, either Ant or Maven would be used to compile, test and package the application. The examples showing javac are for illustration purposes only.</div>
+<p>Alternatively, custom classes can be put into a jar and included in the class path. Either include the custom jar file(s) in the JVM class path via the user exit properties (using <code>java.class.path</code> in the <code>jvm.bootoptions</code> property), or by setting the Java application properties file to include your custom jar:</p>
+<pre>
+# set properties on 'one'
+gg.handler.one.type=sample.SampleHandler
+gg.handler.one.myoutput=out.txt
+gg.classpath=/path/to/my.jar,/path/to/directory/of/jars/*
+</pre>
+<p>The classpath property can be set on any handler to include additional individual jars, a directory (which would contain resources or unjarred class files) or a whole directory of jars. To include a whole directory of jars, use the Java 6 style syntax:</p>
+<pre>
+c:/path/to/directory/* (or on Unix: /path/to/directory/* )
+</pre>
+<p>Only the wildcard * can be specified; a file pattern cannot be used. This automatically matches all files in the directory ending with the <code>.jar</code> suffix. To include multiple jars or multiple directories, you can use the system-specific path separator (on Unix, the colon and on Windows the semicolon) or you can use platform-independent commas, as shown above.</p>
+<p>If the handler requires many properties to be set, just include the property in the parameter file, and your handler's corresponding "setter" will be called. For example:</p>
+<pre>
+gg.handler.one.type=com.mycompany.MyHandler
+gg.handler.one.myOutput=out.txt
+gg.handler.one.myCustomProperty=12345
+</pre>
+<p>The above example would invoke the following methods in the custom handler:</p>
+<pre>
+public void setMyOutput(String s) {
+</pre>
+<pre>
+        // use the string...
+</pre>
+<pre>
+} public void setMyCustomProperty(int j) {
+</pre>
+<pre>
+        // use the int...
+</pre>
+<pre>
+}
+</pre>
+<p>Any standard Java type may be used, such as int, long, String, boolean, etc. For custom types, you may create a custom property editor to convert the String to your custom type.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A1000740"></a>
+<div id="GADAD333" class="sect1">
+<h2 class="sect1"><span class="secnum">16.4</span> Additional Resources</h2>
+<p>There is Javadoc available for the Java API. The Javadoc has been intentionally reduced to a set of core packages, classes and interfaces in order to only distribute the relevant interfaces and classes useful for customizing and extension.</p>
+<p>In each package, some classes have been intentionally omitted for clarity. The important classes are:</p>
+<ul>
+<li>
+<p><code>com.goldengate.atg.datasource.DsTransaction</code>: represents a database transaction. A transaction contains zero or more operations.</p>
+</li>
+<li>
+<p><code>com.goldengate.atg.datasource.DsOperation</code>: represents a database operation (insert, update, delete). An operation contains zero or more column values representing the data-change event. Columns indexes are offset by zero in the Java API.</p>
+</li>
+<li>
+<p><code>com.goldengate.atg.datasource.DsColumn</code>: represents a column value. A column value is a composite of a before and an after value. A column value may be 'present' (having a value or be null) or 'missing' (is not included in the source trail).</p>
+<ul>
+<li>
+<p><code>com.goldengate.atg.datasource.DsColumnComposite</code> is the composite</p>
+</li>
+<li>
+<p><code>com.goldengate.atg.datasource.DsColumnBeforeValue</code> is the column value before the operation (this is optional, and may not be included in the operation)</p>
+</li>
+<li>
+<p><code>com.goldengate.atg.datasource.DsColumnAfterValue</code> is the value after the operation</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>com.goldengate.atg.datasource.meta.DsMetaData</code>: represents all database metadata seen; initially, the object is empty. DsMetaData contains a hash map of zero or more instances of TableMetaData, using the TableName as a key.</p>
+</li>
+<li>
+<p><code>com.goldengate.atg.datasource.meta.TableMetaData</code>: represents all metadata for a single table; contains zero or more <code>ColumnMetaData</code>.</p>
+</li>
+<li>
+<p><code>com.goldengate.atg.datasource.meta.ColumnMetaData</code>: contains column names and data types, as defined in the database and/or in the Oracle GoldenGate source definitions file.</p>
+</li>
+</ul>
+<p>See the Javadoc for additional details.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr>
+<table class="cellalignment12">
+<tr>
+<td class="cellalignment19"><table class="cellalignment17">
+<tr>
+<td class="cellalignment16"><a href="java_msgdel_properties.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page"><br>
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment16"><a href="troubleshoot_part.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page"><br>
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle"><br>
+Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br>
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment21">
+<table class="cellalignment15">
+<tr>
+<td class="cellalignment16"><a href="../../index.htm"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home"><br>
+<span class="icon">Home</span></a></td>
+<td class="cellalignment16"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents"><br>
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment16"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page"><br>
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

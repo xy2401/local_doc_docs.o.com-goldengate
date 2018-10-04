@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the Elasticsearch Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2017-09-08T08:33:14Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Integrating Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E89478-02" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-cassandra-handler.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-flume-handler.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-72F95421-4AE0-44C7-98DF-F4EFA3A5690A"></a> <span id="PAGE" style="display:none;">6/24</span> <!-- End Header -->
+<h1 id="GADBD-GUID-72F95421-4AE0-44C7-98DF-F4EFA3A5690A" class="sect1"><span class="enumeration_chapter">3</span> Using the Elasticsearch Handler</h1>
+<div>
+<p>This chapter explains the Elasticsearch Handler and includes examples so that you can understand this functionality.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-3999E705-62E1-4B85-A7D1-5269CEF45D54">Overview</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-E8016FD9-22B3-44DE-8FE1-5ADE585B66CB">Detailed Functionality</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-92EDCB4D-02D7-4978-9746-DC8E17F3DA96">Setting Up and Running the Elasticsearch Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-B92DC60E-B2E6-46EB-96AD-2F0938EB7915">Elasticsearch Performance Consideration</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-08BA1E00-B186-49A9-9231-1A06A1EAD42F">Elasticsearch Plug-in Support</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-43763B26-0149-46A1-87A7-D8D2D6A266B3">Elasticsearch DDL Handling</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-AC0BAAC8-F3F7-49ED-918D-66CBF0AEECAC">Elasticsearch Operation Mode</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-ADE80990-449C-431F-ADF7-3E8EB578F35F">Troubleshooting</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-E8969B96-08CD-4365-8C63-92CF3360C5A8">Logging</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-80D7C2B3-8A07-4C68-9EA3-1DFBAF1502D2">Known Issues in Elasticsearch Handler</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-3999E705-62E1-4B85-A7D1-5269CEF45D54"></a>
+<h2 id="GADBD-GUID-3999E705-62E1-4B85-A7D1-5269CEF45D54" class="sect2"><span class="enumeration_section">3.1</span> Overview</h2>
+<div>
+<div class="section">
+<p>Elasticsearch is a highly scalable open-source full-text search and analytics engine. Elasticsearch allows you to store, search, and analyze large volumes of data quickly and in near real time. It is generally used as the underlying engine or technology that drives applications with complex search features.</p>
+<p>The Elasticsearch Handler uses the Elasticsearch Java client to connect and receive data into Elasticsearch node. See the Elasticsearch website for more information:</p>
+<p><a href="https://www.elastic.co" target="_blank">https://www.elastic.co</a></p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-E8016FD9-22B3-44DE-8FE1-5ADE585B66CB"></a>
+<h2 id="GADBD-GUID-E8016FD9-22B3-44DE-8FE1-5ADE585B66CB" class="sect2"><span class="enumeration_section">3.2</span> Detailed Functionality</h2>
+<div>
+<div class="section">
+<p class="subhead2"></p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-20CE8187-725F-4A15-82F8-E306EB8837A3">Elasticsearch Version</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-6C3FA7D5-3E38-4532-A443-28D5F1CBB91B">Elasticsearch Index and Type</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-EA29F279-C835-4438-B490-F8D0B8B1489A">Elasticsearch Document</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-099815B1-BB3D-4F44-8517-77B82D92EDDB">Elasticsearch Primary Key Update</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-FC77005E-ABD0-4607-BA02-FE2F7CBBC974">Elasticsearch Data Types</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-9CF587EF-A637-4192-BD39-CF4A656A62AA">Elasticsearch Operation Support</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-9C196A45-05F3-4033-A545-B04D8FCB7489">Elasticsearch Connection</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-20CE8187-725F-4A15-82F8-E306EB8837A3"></a>
+<h3 id="GADBD-GUID-20CE8187-725F-4A15-82F8-E306EB8837A3" class="sect3"><span class="enumeration_section">3.2.1</span> Elasticsearch Version</h3>
+<div>
+<div class="section">
+<p>The Elasticsearch Handler property <code class="codeph">gg.handler.<span class="variable">name</span>.version</code> should be set according to the version of the Elasticsearch cluster. The Elasticsearch Handler uses a Java Transport client, which must have the same major version (such as, 2.<span class="italic">x</span>, or 5.<span class="italic">x</span>) as the nodes in the cluster. The Elasticsearch Handler can connect to clusters that have a different minor version (such as, 2.3.<span class="italic">x</span>) though new functionality may not be supported.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-6C3FA7D5-3E38-4532-A443-28D5F1CBB91B"></a>
+<h3 id="GADBD-GUID-6C3FA7D5-3E38-4532-A443-28D5F1CBB91B" class="sect3"><span class="enumeration_section">3.2.2</span> Elasticsearch Index and Type</h3>
+<div>
+<div class="section">
+<p>An Elasticsearch <span class="bold">index</span> is a collection of documents with similar characteristics. An index can only be created in lowercase. An Elasticsearch <span class="bold">type</span> is a logical group within an index. All the documents within an index or type should have same number and type of fields.</p>
+<p>The Elasticsearch Handler maps the source trail schema concatenated with source trail table name to construct the index. For three-part table names in source trail, the index is constructed by concatenating source catalog, schema, and table name.</p>
+<p>The Elasticsearch Handler maps the source table name to the Elasticsearch type. The type name is case-sensitive.</p>
+<div class="tblformal" id="GUID-6C3FA7D5-3E38-4532-A443-28D5F1CBB91B__GUID-08E4D00F-AF69-4675-9F6D-84A6D96E4253">
+<p class="titleintable">Table 3-1 Elasticsearch Mapping</p>
+<table class="cellalignment84" title="Elasticsearch Mapping" summary="This three column table explains the Elasticsearch mapping.">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment78" id="d10297e248">Source Trail</th>
+<th class="cellalignment78" id="d10297e251">Elasticsearch Index</th>
+<th class="cellalignment78" id="d10297e254">Elasticsearch Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d10297e259" headers="d10297e248">
+<p><code class="codeph">schema.tablename</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e259 d10297e251">
+<p><code class="codeph">schema_tablename</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e259 d10297e254">
+<p><code class="codeph">tablename</code></p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d10297e272" headers="d10297e248">
+<p><code class="codeph">catalog.schema.tablename</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e272 d10297e251">
+<p><code class="codeph">catalog_schema_tablename</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e272 d10297e254">
+<p><code class="codeph">tablename</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>If an index does not already exist in the Elasticsearch cluster, a new index is created when Elasticsearch Handler receives (<code class="codeph">INSERT</code> or <code class="codeph">UPDATE</code> operation in source trail) data.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-EA29F279-C835-4438-B490-F8D0B8B1489A"></a>
+<h3 id="GADBD-GUID-EA29F279-C835-4438-B490-F8D0B8B1489A" class="sect3"><span class="enumeration_section">3.2.3</span> Elasticsearch Document</h3>
+<div>
+<div class="section">
+<p>An Elasticsearch document is a basic unit of information that can be indexed. Within an index or type, you can store as many documents as you want. Each document has an unique identifier based on the <code class="codeph">_id</code> field.</p>
+<p>The Elasticsearch Handler maps the source trail primary key column value as the document identifier.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-099815B1-BB3D-4F44-8517-77B82D92EDDB"></a>
+<h3 id="GADBD-GUID-099815B1-BB3D-4F44-8517-77B82D92EDDB" class="sect3"><span class="enumeration_section">3.2.4</span> Elasticsearch Primary Key Update</h3>
+<div>
+<div class="section">
+<p>The Elasticsearch document identifier is created based on the source table's primary key column value. The document identifier cannot be modified. The Elasticsearch handler processes a source primary key's update operation by performing a <code class="codeph">DELETE</code> followed by an <code class="codeph">INSERT</code>. While performing the <code class="codeph">INSERT</code>, there is a possibility that the new document may contain fewer fields than required. For the <code class="codeph">INSERT</code> operation to contain all the fields in the source table, enable trail Extract to capture the full data before images for update operations or use <code class="codeph">GETBEFORECOLS</code> to write the required column&rsquo;s before images.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-FC77005E-ABD0-4607-BA02-FE2F7CBBC974"></a>
+<h3 id="GADBD-GUID-FC77005E-ABD0-4607-BA02-FE2F7CBBC974" class="sect3"><span class="enumeration_section">3.2.5</span> Elasticsearch Data Types</h3>
+<div>
+<div class="section">
+<p>Elasticsearch supports the following data types:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">32-bit integer</code></p>
+</li>
+<li>
+<p><code class="codeph">64-bit integer</code></p>
+</li>
+<li>
+<p><code class="codeph">Double</code></p>
+</li>
+<li>
+<p><code class="codeph">Date</code></p>
+</li>
+<li>
+<p><code class="codeph">String</code></p>
+</li>
+<li>
+<p><code class="codeph">Binary</code></p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-9CF587EF-A637-4192-BD39-CF4A656A62AA"></a>
+<h3 id="GADBD-GUID-9CF587EF-A637-4192-BD39-CF4A656A62AA" class="sect3"><span class="enumeration_section">3.2.6</span> Elasticsearch Operation Support</h3>
+<div>
+<div class="section">
+<p>For three-part table names in source trail, the index is constructed by concatenating source catalog, schema, and table name.</p>
+<p>The Elasticsearch Handler maps the source table name to the Elasticsearch type. The type name is case-sensitive.</p>
+<div class="tblformal" id="GUID-9CF587EF-A637-4192-BD39-CF4A656A62AA__GUID-08E4D00F-AF69-4675-9F6D-84A6D96E4253">
+<p class="titleintable">Table 3-2 Elasticsearch Operations</p>
+<table class="cellalignment77" title="Elasticsearch Operations" summary="This two column table explains the Elasticsearch operations.">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment85" id="d10297e422">Operation</th>
+<th class="cellalignment85" id="d10297e425">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment86" id="d10297e430" headers="d10297e422">
+<p><code class="codeph">INSERT</code></p>
+</td>
+<td class="cellalignment86" headers="d10297e430 d10297e425">
+<p>The Elasticsearch Handler creates a new index if the index does not exist, and then inserts a new document.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment86" id="d10297e438" headers="d10297e422">
+<p><code class="codeph">UPDATE</code></p>
+</td>
+<td class="cellalignment86" headers="d10297e438 d10297e425">
+<p>If an Elasticsearch index or document exists, the document is updated. If an Elasticsearch index or document does not exist, a new index is created and the column values in the <code class="codeph">UPDATE</code> operation are inserted as a new document.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment86" id="d10297e449" headers="d10297e422">
+<p><code class="codeph">DELETE</code></p>
+</td>
+<td class="cellalignment86" headers="d10297e449 d10297e425">
+<p>If an Elasticsearch index or document exists, the document is deleted. If Elasticsearch index or document does not exist, a new index is created with zero fields.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="infobox-note" id="GUID-9CF587EF-A637-4192-BD39-CF4A656A62AA__GUID-CAD4A4A1-6AF4-4D8E-8D10-B085F60D0209">
+<p class="notep1">Note:</p>
+The <code class="codeph">TRUNCATE</code> operation is not supported.</div>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-9C196A45-05F3-4033-A545-B04D8FCB7489"></a>
+<h3 id="GADBD-GUID-9C196A45-05F3-4033-A545-B04D8FCB7489" class="sect3"><span class="enumeration_section">3.2.7</span> Elasticsearch Connection</h3>
+<div>
+<div class="section">
+<p>A <span class="bold">cluster</span> is a collection of one or more nodes (servers) that holds the entire data. It provides federated indexing and search capabilities across all nodes.</p>
+<p>A <span class="bold">node</span> is a single server that is part of the cluster, stores the data, and participates in the cluster&rsquo;s indexing and searching.</p>
+<p>The Elasticsearch Handler property <code class="codeph">gg.handler.<span class="variable">name</span>.ServerAddressList</code> can be set to point to the nodes available in the cluster.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-92EDCB4D-02D7-4978-9746-DC8E17F3DA96"></a>
+<h2 id="GADBD-GUID-92EDCB4D-02D7-4978-9746-DC8E17F3DA96" class="sect2"><span class="enumeration_section">3.3</span> Setting Up and Running the Elasticsearch Handler</h2>
+<div>
+<div class="section">
+<p>You must ensure that the Elasticsearch cluster is setup correctly and the cluster is up and running, see <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html</a>. Alternatively, you can use Kibana to verify the setup.</p>
+<p><span class="bold">Set the Classpath</span></p>
+<p>The property <code class="codeph">gg.classpath</code> must include all the jars required by the Java transport client. For a listing of the required client JAR files by version, see <a href="elasticsearch-handler-client-dependencies.htm#GUID-1CBD8E91-298E-4CF4-98E0-EE5D4596388D">Elasticsearch Handler Client Dependencies</a>.</p>
+<pre dir="ltr">
+Default location of 2.X JARs:
+
+        <span class="italic">Elasticsearch_Home</span>/lib/*
+        <span class="italic">Elasticsearch_Home</span>/plugins/shield/*
+</pre>
+<pre dir="ltr">
+Default location of 5.X JARs:
+
+  <span class="italic">Elasticsearch_Home</span>/lib/*
+        <span class="italic">Elasticsearch_Home</span>/plugins/x-pack/*
+        <span class="italic">Elasticsearch_Home</span>/modules/transport-netty3/*       
+        <span class="italic">Elasticsearch_Home</span>/modules/transport-netty4/*
+        <span class="italic">Elasticsearch_Home</span>/modules/reindex/*                
+</pre>
+<p>The inclusion of the * wildcard in the path can include the * wildcard character in order to include all of the JAR files in that directory in the associated classpath. Do not use <code class="codeph">*.jar</code>.</p>
+<p>The following is an example of the correctly configured classpath:</p>
+<pre dir="ltr">
+     gg.classpath=<span class="italic">Elasticsearch_Home</span>/lib/*
+</pre>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-CB27FFA3-2345-4CC0-8873-8E11E27B367D">Elasticsearch Handler Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-8AC875B8-0F25-4C6A-86A9-0E3F2A207D1B">Elasticsearch Transport Client Settings Properties File</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-CB27FFA3-2345-4CC0-8873-8E11E27B367D"></a>
+<h3 id="GADBD-GUID-CB27FFA3-2345-4CC0-8873-8E11E27B367D" class="sect3"><span class="enumeration_section">3.3.1</span> Elasticsearch Handler Configuration</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the Elasticsearch handler. These properties are located in the Java Adapter properties file (not in the Replicat properties file).</p>
+<div class="tblformal" id="GUID-CB27FFA3-2345-4CC0-8873-8E11E27B367D__GUID-D9A8DB8F-BB51-4D27-9343-035157B21077">
+<p class="titleintable">Table 3-3 Elasticsearch Handler Configuration Properties</p>
+<table class="cellalignment77" title="Elasticsearch Handler Configuration Properties" summary="Five column table describing Elasticsearch Handler Configuration Properties.">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment78" id="d10297e615">Properties</th>
+<th class="cellalignment78" id="d10297e618">Required/ Optional</th>
+<th class="cellalignment78" id="d10297e621">Legal Values</th>
+<th class="cellalignment78" id="d10297e624">Default</th>
+<th class="cellalignment78" id="d10297e627">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d10297e632" headers="d10297e615"><code class="codeph">gg.handlerlist</code></td>
+<td class="cellalignment62" headers="d10297e632 d10297e618">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d10297e632 d10297e621">
+<p>Name (any name of your choice)</p>
+</td>
+<td class="cellalignment62" headers="d10297e632 d10297e624">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d10297e632 d10297e627">
+<p>The list of handlers to be used.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d10297e648" headers="d10297e615"><code class="codeph">gg.handler.<span class="variable">name</span>.type</code></td>
+<td class="cellalignment62" headers="d10297e648 d10297e618">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d10297e648 d10297e621"><code class="codeph">elasticsearch</code></td>
+<td class="cellalignment62" headers="d10297e648 d10297e624">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d10297e648 d10297e627">
+<p>Type of handler to use. For example, Elasticsearch, Kafka, Flume, or HDFS.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d10297e667" headers="d10297e615"><code class="codeph">gg.handler.<span class="variable">name</span>.ServerAddressList</code></td>
+<td class="cellalignment62" headers="d10297e667 d10297e618">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d10297e667 d10297e621">
+<p><code class="codeph"><span class="codeinlineitalic">Server</span>:<span class="codeinlineitalic">Port</span>[, <span class="codeinlineitalic">Server</span>:<span class="codeinlineitalic">Port</span>]</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e667 d10297e624">
+<p><code class="codeph">localhost:9300</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e667 d10297e627">
+<p>Comma separated list of contact points of the nodes to connect to the Elasticsearch cluster.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d10297e699" headers="d10297e615"><code class="codeph">gg.handler.<span class="variable">name</span>.clientSettingsFile</code></td>
+<td class="cellalignment62" headers="d10297e699 d10297e618">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d10297e699 d10297e621">
+<p>Transport client properties file.</p>
+</td>
+<td class="cellalignment62" headers="d10297e699 d10297e624">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d10297e699 d10297e627">
+<p>The filename in classpath that holds Elasticsearch transport client properties used by the Elasticsearch Handler.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d10297e718" headers="d10297e615"><code class="codeph">gg.handler.<span class="variable">name</span>.version</code></td>
+<td class="cellalignment62" headers="d10297e718 d10297e618">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d10297e718 d10297e621">
+<p><code class="codeph">2.x</code> | <code class="codeph">5.x</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e718 d10297e624">
+<p><code class="codeph">2.x</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e718 d10297e627">
+<p>The version of the transport client used by the Elasticsearch Handler, this should be compatible with the Elasticsearch cluster.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d10297e742" headers="d10297e615"><code class="codeph">gg.handler.name.bulkWrite</code></td>
+<td class="cellalignment62" headers="d10297e742 d10297e618">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d10297e742 d10297e621">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e742 d10297e624">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e742 d10297e627">
+<p>When this property is <code class="codeph">true</code>, the Elasticsearch Handler uses the bulk write API to ingest data into Elasticsearch cluster. The batch size of bulk write can be controlled using the <code class="codeph">MAXTRANSOPS</code> Replicat parameter.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d10297e769" headers="d10297e615"><code class="codeph">gg.handler.<span class="variable">name</span>.numberAsString</code></td>
+<td class="cellalignment62" headers="d10297e769 d10297e618">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d10297e769 d10297e621">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e769 d10297e624">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e769 d10297e627">
+<p>When this property is <code class="codeph">true</code>, the Elasticsearch Handler would receive all the number column values (Long, Integer, or Double) in the source trail as strings &nbsp;into the Elasticsearch cluster.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d10297e796" headers="d10297e615"><code class="codeph">gg.handler.elasticsearch.upsert</code></td>
+<td class="cellalignment62" headers="d10297e796 d10297e618">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d10297e796 d10297e621">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e796 d10297e624">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment62" headers="d10297e796 d10297e627">
+<p>When this property is <code class="codeph">true</code>, a new document is inserted if the document does not already exist when performing an <code class="codeph">UPDATE</code> operation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" -->
+<div class="example" id="GUID-CB27FFA3-2345-4CC0-8873-8E11E27B367D__GUID-1D7E5C5F-31F0-4457-BB64-9500B2669463">
+<p class="titleinexample">Example 3-1 Sample Handler Properties file:</p>
+<p><span class="bold">For 2.<span class="italic">x</span> Elasticsearch cluster:</span></p>
+<pre dir="ltr">
+gg.handlerlist=elasticsearch
+gg.handler.elasticsearch.type=elasticsearch
+gg.handler.elasticsearch.ServerAddressList=localhost:9300
+gg.handler.elasticsearch.clientSettingsFile=client.properties
+gg.handler.elasticsearch.version=2.x
+gg.classpath=/path/to/elastic/lib/*
+</pre>
+<p><span class="bold">For 2.<span class="italic">x</span> Elasticsearch cluster with Shield:</span></p>
+<pre dir="ltr">
+gg.handlerlist=elasticsearch
+gg.handler.elasticsearch.type=elasticsearch
+gg.handler.elasticsearch.ServerAddressList=localhost:9300
+gg.handler.elasticsearch.clientSettingsFile=client.properties
+gg.handler.elasticsearch.version=2.x
+gg.classpath=/path/to/elastic/lib/*:/path/to/elastic/plugins/shield/*
+</pre>
+<p><span class="bold">For 5.<span class="italic">x</span> Elasticsearch cluster:</span></p>
+<pre dir="ltr">
+gg.handlerlist=elasticsearch
+gg.handler.elasticsearch.type=elasticsearch
+gg.handler.elasticsearch.ServerAddressList=localhost:9300
+gg.handler.elasticsearch.clientSettingsFile=client.properties
+gg.handler.elasticsearch.version=5.x
+gg.classpath=/path/to/elastic/lib/*:/path/to/elastic/modules/transport-netty4/*:/path/to/elastic/modules/reindex/*
+</pre>
+<p><span class="bold">For 5.<span class="italic">x</span> Elasticsearch cluster with x-pack:</span></p>
+<pre dir="ltr">
+gg.handlerlist=elasticsearch
+gg.handler.elasticsearch.type=elasticsearch
+gg.handler.elasticsearch.ServerAddressList=localhost:9300
+gg.handler.elasticsearch.clientSettingsFile=client.properties
+gg.handler.elasticsearch.version=5.x
+gg.classpath=/path/to/elastic/lib/*:/path/to/elastic/plugins/x-pack/*:/path/to/elastic/modules/transport-netty4/*:/path/to/elastic/modules/reindex/*
+</pre>
+<p>Sample Replicat configuration and a Java Adapter Properties files can be found at the following directory:</p>
+<code class="codeph"><span class="codeinlineitalic">GoldenGate_install_directory</span>/AdapterExamples/big-data/elasticsearch</code></div>
+<!-- class="example" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-8AC875B8-0F25-4C6A-86A9-0E3F2A207D1B"></a>
+<h3 id="GADBD-GUID-8AC875B8-0F25-4C6A-86A9-0E3F2A207D1B" class="sect3"><span class="enumeration_section">3.3.2</span> Elasticsearch Transport Client Settings Properties File</h3>
+<div>
+<div class="section">
+<p>The Elasticsearch Handler uses a Java Transport client to interact with Elasticsearch cluster. The Elasticsearch cluster may have addional plug-ins like shield or x-pack, which may require additional configuration.</p>
+<p>The <code class="codeph">gg.handler.<span class="variable">name</span>.clientSettingsFile</code> property should point to a file that has additional client settings based on the version of Elasticsearch cluster. The Elasticsearch Handler attempts to locate and load the client settings file using the Java classpath. Te Java classpath must include the directory containing the properties file.</p>
+<p>The client properties file for Elasticsearch 2.<span class="italic">x</span>(without any plug-in) is:</p>
+<code class="codeph">cluster.name=<span class="codeinlineitalic">Elasticsearch_cluster_name</span></code>
+<p>The client properties file for Elasticsearch 2.X with Shield plug-in:</p>
+<pre dir="ltr">
+cluster.name=<span class="italic">Elasticsearch_cluster_name</span>
+shield.user=<span class="italic">shield_username</span>:<span class="italic">shield_password</span>
+</pre>
+<p>Shield plug-in also supports additional capabilities like SSL and IP filtering. The properties can be set in the <code>client.properties</code> file, see <a href="https://www.elastic.co/guide/en/elasticsearch/client/java-api/2.4/transport-client.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/client/java-api/2.4/transport-client.html</a> and <a href="https://www.elastic.co/guide/en/shield/current/_using_elasticsearch_java_clients_with_shield.html" target="_blank">https://www.elastic.co/guide/en/shield/current/_using_elasticsearch_java_clients_with_shield.html</a>.</p>
+<p>The <code>client.properties</code> file for Elasticsearch 5.<span class="italic">x</span> with the X-Pack plug-in is:</p>
+<pre dir="ltr">
+cluster.name=<span class="italic">Elasticsearch_cluster_name</span>
+xpack.security.user=<span class="italic">x-pack_username</span>:<span class="italic">x-pack-password</span>
+</pre>
+<p>The X-Pack plug-in also supports additional capabilities. The properties can be set in the <code>client.properties</code> file, see <a href="https://www.elastic.co/guide/en/elasticsearch/client/java-api/5.1/transport-client.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/client/java-api/5.1/transport-client.html</a> and <a href="https://www.elastic.co/guide/en/x-pack/current/java-clients.html" target="_blank">https://www.elastic.co/guide/en/x-pack/current/java-clients.html</a>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-B92DC60E-B2E6-46EB-96AD-2F0938EB7915"></a>
+<h2 id="GADBD-GUID-B92DC60E-B2E6-46EB-96AD-2F0938EB7915" class="sect2"><span class="enumeration_section">3.4</span> Elasticsearch Performance Consideration</h2>
+<div>
+<div class="section">
+<p>The Elasticsearch Handler <code class="codeph">gg.handler.<span class="variable">name</span>.bulkWrite</code> property is used to determine whether the source trail records should be pushed to the Elasticsearch cluster one at a time or in bulk using the bulk write API. When this property is <span class="bold">true</span>, the source trail operations are pushed to the Elasticsearch cluster in batches whose size can be controlled by the <code class="codeph">MAXTRANSOPS</code> parameter in the generic Replicat parameter file. Using the bulk write API provides better performance.</p>
+<p>Elasticsearch uses different thread pools to improve how memory consumption of threads are managed within a node. Many of these pools also have queues associated with them, which allow pending requests to be held instead of discarded.</p>
+<p>For bulk operations, the default queue size is 50 (in version 5.2) and 200 (in version 5.3).</p>
+<p>To avoid bulk API errors, you must set the Replicat <code class="codeph">MAXTRANSOPS</code> size to match the bulk thread pool queue size at a minimum. The configuration <code class="codeph">thread_pool.bulk.queue_size</code> property can be modified in the <code class="codeph">elasticsearch.yaml</code> file.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-08BA1E00-B186-49A9-9231-1A06A1EAD42F"></a>
+<h2 id="GADBD-GUID-08BA1E00-B186-49A9-9231-1A06A1EAD42F" class="sect2"><span class="enumeration_section">3.5</span> Elasticsearch Plug-in Support</h2>
+<div>
+<div class="section">
+<p>Elasticsearch versions 2.<span class="italic">x</span> supports a Shield plug-in which provides basic authentication, SSL and IP filtering. Similar capabilities exists in the X-Pack plug-in for Elasticsearch 5.<span class="italic">x</span>. The additional transport client settings can be configured in the Elasticsearch Handler using the <code class="codeph">gg.handler.<span class="variable">name</span>.clientSettingsFile</code> property.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-43763B26-0149-46A1-87A7-D8D2D6A266B3"></a>
+<h2 id="GADBD-GUID-43763B26-0149-46A1-87A7-D8D2D6A266B3" class="sect2"><span class="enumeration_section">3.6</span> Elasticsearch DDL Handling</h2>
+<div>
+<div class="section">
+<p>The Elasticsearch Handler does not react to any DDL records in the source trail. Any data manipulation records for a new source table results in auto-creation of index or type in the Elasticsearch cluster.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-AC0BAAC8-F3F7-49ED-918D-66CBF0AEECAC"></a>
+<h2 id="GADBD-GUID-AC0BAAC8-F3F7-49ED-918D-66CBF0AEECAC" class="sect2"><span class="enumeration_section">3.7</span> Elasticsearch Operation Mode</h2>
+<div>
+<div class="section">
+<p>The Elasticsearch Handler uses the operation mode for better performance. The <code class="codeph">gg.handler.<span class="variable">name</span>.mode</code> property is not used by the handler.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-ADE80990-449C-431F-ADF7-3E8EB578F35F"></a>
+<h2 id="GADBD-GUID-ADE80990-449C-431F-ADF7-3E8EB578F35F" class="sect2"><span class="enumeration_section">3.8</span> Troubleshooting</h2>
+<div>
+<div class="section">
+<p>This section contains information to help you troubleshoot various issues.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-436BAEF1-E552-41EB-9021-9E630528AE08">Incorrect Java Classpath</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-36189F6B-7B2A-44C2-8AA1-BF5F8A3FF38B">Elasticsearch Version Mismatch</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-E6F0B840-8E08-4FF2-B58E-2994A1AA3FF3">Elasticsearch Transport Client Properties File Not Found</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-C878159C-17D7-498C-9179-A60573944F08">Elasticsearch Cluster Connection Problem</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-D8B49C4E-063A-4474-AA5A-40A314C5307B">Elasticsearch Unsupported TRUNCATE Operation</a><br /></li>
+<li class="ulchildlink"><a href="using-elasticsearch-handler.htm#GUID-B5EF3C14-0746-4AA0-990B-BAD16F1EC023">Elasticsearch Bulk Execute Errors</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-436BAEF1-E552-41EB-9021-9E630528AE08"></a>
+<h3 id="GADBD-GUID-436BAEF1-E552-41EB-9021-9E630528AE08" class="sect3"><span class="enumeration_section">3.8.1</span> Incorrect Java Classpath</h3>
+<div>
+<div class="section">
+<p>The most common initial error is an incorrect classpath to include all the required client libraries and creates a <code class="codeph">ClassNotFound</code> exception in the <code class="codeph">log4j</code> log file.</p>
+<p>Also, it may be due to an error resolving the classpath if there is a typographic error in the <code class="codeph">gg.classpath</code> variable.</p>
+<p>The Elasticsearch transport client libraries do not ship with the Oracle GoldenGate for Big Data product. You should properly configure the <code class="codeph">gg.classpath</code> property in the Java Adapter Properties file to correctly resolve the client libraries, see <a href="using-elasticsearch-handler.htm#GUID-92EDCB4D-02D7-4978-9746-DC8E17F3DA96">Setting Up and Running the Elasticsearch Handler</a>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-36189F6B-7B2A-44C2-8AA1-BF5F8A3FF38B"></a>
+<h3 id="GADBD-GUID-36189F6B-7B2A-44C2-8AA1-BF5F8A3FF38B" class="sect3"><span class="enumeration_section">3.8.2</span> Elasticsearch Version Mismatch</h3>
+<div>
+<div class="section">
+<p>The Elasticsearch Handler <code class="codeph">gg.handler.<span class="variable">name</span>.version</code> property must be set to 2.<span class="italic">x</span> or 5.<span class="italic">x</span> to match the major version number of the Elasticsearch cluster.</p>
+<p>The following errors may occur when there is a wrong version configuration:</p>
+<pre dir="ltr">
+Error: NoNodeAvailableException[None of the configured nodes are available:]
+
+ERROR 2017-01-30 22:35:07,240 [main] Unable to establish connection. Check handler properties and client settings configuration.
+
+java.lang.IllegalArgumentException: unknown setting [shield.user] 
+</pre>
+<p>Ensure that all required plug-ins are installed and review documentation changes for any removed settings.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-E6F0B840-8E08-4FF2-B58E-2994A1AA3FF3"></a>
+<h3 id="GADBD-GUID-E6F0B840-8E08-4FF2-B58E-2994A1AA3FF3" class="sect3"><span class="enumeration_section">3.8.3</span> Elasticsearch Transport Client Properties File Not Found</h3>
+<div>
+<div class="section">
+<p>To resolve this exception:</p>
+<pre dir="ltr">
+ERROR 2017-01-30 22:33:10,058 [main] Unable to establish connection. Check handler properties and client settings configuration.
+</pre>
+<p>Verify that the <code class="codeph">gg.handler.<span class="variable">name</span>.clientSettingsFile</code> configuration property is correctly setting the Elasticsearch transport client settings file name. Verify that the <code class="codeph">gg.classpath</code> variable includes the path to the correct file name and that the path to the properties file does not contain an asterisk (*) wildcard at the end.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-C878159C-17D7-498C-9179-A60573944F08"></a>
+<h3 id="GADBD-GUID-C878159C-17D7-498C-9179-A60573944F08" class="sect3"><span class="enumeration_section">3.8.4</span> Elasticsearch Cluster Connection Problem</h3>
+<div>
+<div class="section">
+<p>This error occurs when the Elasticsearch Handler is unable to connect to the Elasticsearch cluster:</p>
+<pre dir="ltr">
+Error: NoNodeAvailableException[None of the configured nodes are available:]
+</pre>
+<p>Use the following steps to debug the issue:</p>
+<ol>
+<li>
+<p>Ensure that the Elasticsearch server process is running.</p>
+</li>
+<li>
+<p>Validate the <code class="codeph">cluster.name</code> property in the client properties configuration file.</p>
+</li>
+<li>
+<p>Validate the authentication credentials for the x-Pack or Shield plug-in in the client properties file.</p>
+</li>
+<li>
+<p>Validate the <code class="codeph">gg.handler.<span class="variable">name</span>.ServerAddressList</code> handler property.</p>
+</li>
+</ol>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-D8B49C4E-063A-4474-AA5A-40A314C5307B"></a>
+<h3 id="GADBD-GUID-D8B49C4E-063A-4474-AA5A-40A314C5307B" class="sect3"><span class="enumeration_section">3.8.5</span> Elasticsearch Unsupported <code class="codeph">TRUNCATE</code> Operation</h3>
+<div>
+<div class="section">
+<p>The following error occurs when the Elasticsearch Handler finds a <code class="codeph">TRUNCATE</code> operation in the source trail:</p>
+<pre dir="ltr">
+oracle.goldengate.util.GGException: Elasticsearch Handler does not support the operation: TRUNCATE
+</pre>
+<p>This exception error message is written to the handler log file before the RAeplicat process abends. Removing the <code class="codeph">GETTRUNCATES</code> parameter from the Replicat parameter file resolves this error.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-B5EF3C14-0746-4AA0-990B-BAD16F1EC023"></a>
+<h3 id="GADBD-GUID-B5EF3C14-0746-4AA0-990B-BAD16F1EC023" class="sect3"><span class="enumeration_section">3.8.6</span> Elasticsearch Bulk Execute Errors</h3>
+<div>
+<div class="section">
+<p>The following error may occur when the handler is processing operations using bulk API (<code class="codeph">bulkWrite=true</code>).</p>
+<span class="q">"DEBUG [main] (ElasticSearch5DOTX.java:130) - Bulk execute status: failures:[true] buildFailureMessage:[failure in bulk execution: [0]: index [cs2cat_s1sch_n1tab], type [N1TAB], id [83], message [RemoteTransportException[[UOvac8l][127.0.0.1:9300][indices:data/write/bulk[s][p]]]; nested: EsRejectedExecutionException[rejected execution of org.elasticsearch.transport.TransportService$7@43eddfb2 on EsThreadPoolExecutor[bulk, queue capacity = 50, org.elasticsearch.common.util.concurrent.EsThreadPoolExecutor@5ef5f412[Running, pool size = 4, active threads = 4, queued tasks = 50, completed tasks = 84]]];]"</span>
+<p>It may be due to the Elasticsearch running out of resources to process the operation. You can limit the Replicat batch size using <code class="codeph">MAXTRANSOPS</code> to match the value of the <code class="codeph">thread_pool.bulk.queue_size</code> Elasticsearch configuration parameter.</p>
+<div class="infobox-note" id="GUID-B5EF3C14-0746-4AA0-990B-BAD16F1EC023__GUID-A5069FEB-C2CC-480C-821F-4645B2BFBB19">
+<p class="notep1">Note:</p>
+Changes to the Elasticsearch parameter, <code class="codeph">thread_pool.bulk.queue_size</code>, are effective only after the Elasticsearch node is restarted.</div>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-E8969B96-08CD-4365-8C63-92CF3360C5A8"></a>
+<h2 id="GADBD-GUID-E8969B96-08CD-4365-8C63-92CF3360C5A8" class="sect2"><span class="enumeration_section">3.9</span> Logging</h2>
+<div>
+<div class="section">
+<p>The following log messages appear in the handler log file on successful connection:</p>
+<p>Connection to 2.<span class="italic">x</span> Elasticsearch cluster:</p>
+<pre dir="ltr">
+INFO 2017-01-31 01:43:38,814 [main] **BEGIN Elasticsearch client settings**
+INFO 2017-01-31 01:43:38,860 [main]     key[cluster.name] value[elasticsearch-user1-myhost]
+INFO 2017-01-31 01:43:38,860 [main]      key[request.headers.X-Found-Cluster] value[elasticsearch-user1-myhost]
+INFO 2017-01-31 01:43:38,860 [main]     key[shield.user] value[es_admin:user1]
+INFO 2017-01-31 01:43:39,715 [main] Connecting to Server[myhost.us.example.com] Port[9300]
+INFO 2017-01-31 01:43:39,715 [main] Client node name:  Smith
+INFO 2017-01-31 01:43:39,715 [main] Connected nodes: [{node-myhost}{vqtHikpGQP-IXieHsgqXjw}{10.196.38.196}{198.51.100.1:9300}]
+INFO 2017-01-31 01:43:39,715 [main] Filtered nodes: []
+INFO 2017-01-31 01:43:39,715 [main] **END Elasticsearch client settings**
+</pre>
+<p>Connection to a 5.<span class="italic">x</span> Elasticsearch cluster:</p>
+<pre dir="ltr">
+INFO [main] (Elasticsearch5DOTX.java:38) - **BEGIN Elasticsearch client settings**
+INFO [main] (Elasticsearch5DOTX.java:39) - {xpack.security.user=user1:user1_kibana, cluster.name=elasticsearch-user1-myhost, request.headers.X-Found-Cluster=elasticsearch-user1-myhost}
+INFO [main] (Elasticsearch5DOTX.java:52) - Connecting to Server[myhost.us.example.com] Port[9300]
+INFO [main] (Elasticsearch5DOTX.java:64) - Client node name:  _client_
+INFO [main] (Elasticsearch5DOTX.java:65) - Connected nodes: [{node-myhost}{w9N25BrOSZeGsnUsogFn1A}{bIiIultVRjm0Ze57I3KChg}{myhost}{198.51.100.1:9300}]
+INFO [main] (Elasticsearch5DOTX.java:66) - Filtered nodes: []
+INFO [main] (Elasticsearch5DOTX.java:68) - **END Elasticsearch client settings**
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-80D7C2B3-8A07-4C68-9EA3-1DFBAF1502D2"></a>
+<h2 id="GADBD-GUID-80D7C2B3-8A07-4C68-9EA3-1DFBAF1502D2" class="sect2"><span class="enumeration_section">3.10</span> Known Issues in Elasticsearch Handler</h2>
+<div>
+<div class="section">
+<p class="subhead2">Elasticsearch: Trying to input very large number</p>
+<p>Very large numbers result in inaccurate values with Elasticsearch document. For example, 9223372036854775807, -9223372036854775808. This is an issue with the Elasticsearch server and not a limitation of the Elasticsearch Handler.</p>
+<p>The workaround for this issue is to ingest all the number values as strings using the <code class="codeph">gg.handler.name.numberAsString=true</code> property.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Elasticsearch: Issue with index</p>
+<p>The Elasticsearch Handler is not able to input data into the same index if there are more than one table with similar column names and different column data types.</p>
+<p>Index names are always lowercase though the <code class="codeph">catalog/schema/tablename</code> in the trail may be case-sensitive.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment61">
+<tr>
+<td class="cellalignment79">
+<table class="cellalignment66">
+<tr>
+<td class="cellalignment65"><a href="using-cassandra-handler.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment65"><a href="using-flume-handler.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment81">
+<table class="cellalignment64">
+<tr>
+<td class="cellalignment65"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment65"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

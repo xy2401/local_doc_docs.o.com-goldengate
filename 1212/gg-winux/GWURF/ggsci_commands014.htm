@@ -1,0 +1,693 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>SEND EXTRACT</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="Contains instructions for using Oracle GoldenGate commands, parameters, and functions." />
+<meta name="dcterms.created" content="2015-06-05T16:33:39Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E29392-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="ggsci_commands013.htm" title="Previous" type="text/html" />
+<link rel="Next" href="ggsci_commands015.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GWURF.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GWURF.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">18/413</span>
+<!-- End Header --><a id="i1432262"></a>
+<div id="GWURF163" class="refsect1">
+<h1 class="refsect1">SEND EXTRACT</h1>
+<p>Use <code dir="ltr">SEND EXTRACT</code> to communicate with a running Extract process. The request is processed as soon as Extract is ready to accept commands from users.</p>
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="sthref107"></a>Syntax</p>
+<pre dir="ltr">
+SEND EXTRACT <span class="codeinlineitalic">group_name</span>, {
+BR {BRINTERVAL <span class="italic">interval</span> | 
+   BRSTART | 
+   BRSTOP | 
+   BRCHECKPOINT {IMMEDIATE | IN <span class="codeinlineitalic">n</span>{M|H} | AT <span class="codeinlineitalic">yyyy-mm-dd hh:mm</span>[<span class="codeinlineitalic">:ss</span>]]}} |
+BR BRFSOPTION { MS_SYNC | MS_ASYNC }
+CACHEMGR {CACHESTATS | CACHEQUEUES | CACHEPOOL <span class="codeinlineitalic">n</span>} |
+CACHEMGR CACHEFSOPTION { MS_SYNC | MS_ASYNC } |
+FORCESTOP |
+FORCETRANS <span class="italic">transaction_ID</span> [THREAD <span class="italic">n</span>] [FORCE] |
+GETLAG |
+GETTCPSTATS |
+LOGEND |
+LOGSTATS |
+REPORT |
+RESUME |
+ROLLOVER |
+SHOWTRANS [<span class="italic">transaction_ID</span>] [THREAD <span class="italic">n</span>] [COUNT <span class="italic">n</span>]
+    [DURATION <span class="codeinlineitalic">duration</span> <span class="italic">unit</span>] [TABULAR]
+    [FILE <span class="italic">file_name</span> [DETAIL]] |
+SKIPTRANS <span class="italic">transaction_ID</span> [THREAD <span class="italic">n</span>] [FORCE] |
+STATUS |
+STOP |
+TRACE[2] <span class="italic">file_name</span> |
+TRACE[2] OFF |
+TRACE OFF <span class="italic">file_name</span> |
+TRACEINIT |
+TRANLOGOPTIONS {PREPAREFORUPGRADETOIE | NOPREPAREFORUPGRADETOIE} |TRANLOGOPTIONS {PURGEORPHANEDTRANSACTIONS | NOPURGEORPHANEDTRANSACTIONS} |
+TRANLOGOPTIONS TRANSCLEANUPFREQUENCY <span class="italic">minutes</span> |
+VAMMESSAGE '<span class="italic">Teradata_command</span>' |
+VAMMESSAGE {'ARSTATS' | 'INCLUDELIST [<span class="codeinlineitalic">filter</span>]' | 'FILELIST [<span class="codeinlineitalic">filter</span>]'| 'EXCLUDELIST [<span class="codeinlineitalic">filter</span>]'} |
+VAMMESSAGE 'OPENTRANS'
+}
+</pre>
+<dl>
+<dt><code dir="ltr"><span class="codeinlineitalic">group_name</span></code></dt>
+<dd>
+<p>The name of the Extract group or a wildcard (*) to specify multiple groups. For example, T* sends the command to all Extract processes whose group names start with T. If an Extract is not running, an error is returned.</p>
+</dd>
+<dt><code dir="ltr">BR {BRINTERVAL</code> <code dir="ltr"><span class="codeinlineitalic">interval</span></code> <code dir="ltr">| BRSTART | BRSTOP |</code></dt>
+<dt><code dir="ltr">BRCHECKPOINT {IMMEDIATE | IN</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code> {<code dir="ltr">H|M</code>} | <code dir="ltr">AT</code> <code dir="ltr">yyyy-mm-dd[ hh:mm[:ss]]</code>}}</dt>
+<dd>
+<p>Sends commands that affect the Bounded Recovery mode of Extract.</p>
+<dl>
+<dt><code dir="ltr">BRINTERVAL</code> <code dir="ltr"><span class="codeinlineitalic">interval</span></code></dt>
+<dd>
+<p>Sets the time between Bounded Recovery checkpoints. Valid values are from 20 minutes to 96 hours specified as <code dir="ltr">M</code> for minutes or <code dir="ltr">H</code> for hours, for example <code dir="ltr">20M</code> or <code dir="ltr">2H</code>. The default interval is 4 hours.</p>
+</dd>
+<dt><code dir="ltr">BRSTART</code></dt>
+<dd>
+<p>Starts Bounded Recovery. This command should only be used under direction of Oracle Support.</p>
+</dd>
+<dt><code dir="ltr">BRSTOP</code></dt>
+<dd>
+<p>Stops Bounded Recovery for the run and for recovery. Consult Oracle Support before using this option. In most circumstances, when there is a problem with Bounded Recovery, it turns itself off.</p>
+</dd>
+<dt><code dir="ltr">BRCHECKPOINT {IMMEDIATE | IN</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code>{<code dir="ltr">H</code>|<code dir="ltr">M</code>} | <code dir="ltr">AT</code> <code dir="ltr"><span class="codeinlineitalic">yyyy-mm-dd[ hh:mm</span></code>[:<code dir="ltr"><span class="codeinlineitalic">ss</span></code>]]}}</dt>
+<dd>
+<p>Sets the point at which a bounded recovery checkpoint is made. <code dir="ltr">IMMEDIATE</code> issues the checkpoint immediately when <code dir="ltr">SEND EXTRACT</code> is issued. <code dir="ltr">IN</code> issues the checkpoint in the specified number of hours or minutes from when <code dir="ltr">SEND EXTRACT</code> is issued. <code dir="ltr">AT</code> issues the checkpoint at exactly the specified time.</p>
+</dd>
+</dl>
+</dd>
+<dt><code dir="ltr">BR BRFSOPTION {MS_SYNC | MS_ASYNC}</code></dt>
+<dd>
+<p>Performs synchronous/asynchronous writes of the mapped data in Bounded Recovery.</p>
+<dl>
+<dt><code dir="ltr">MS_SYNC</code></dt>
+<dd>
+<p>Bounded Recovery writes of mapped data are synchronized for I/O data integrity completion.</p>
+</dd>
+<dt><code dir="ltr">MS_ASYNC</code></dt>
+<dd>
+<p>Bounded Recovery writes of mapped data are initiated or queued for servicing.</p>
+</dd>
+</dl>
+</dd>
+<dt><code dir="ltr">CACHEMGR {CACHESTATS | CACHEQUEUES | CACHEPOOL</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code><code dir="ltr">}</code></dt>
+<dd>
+<p>Returns statistics about the Oracle GoldenGate memory cache manager. <code dir="ltr">CACHESTATS</code> should only be used as explicitly directed by Oracle Support.</p>
+<dl>
+<dt><code dir="ltr">CACHESTATS</code></dt>
+<dd>
+<p>Returns statistics for virtual memory usage and file caching.</p>
+</dd>
+<dt><code dir="ltr">CACHEQUEUES</code></dt>
+<dd>
+<p>Returns statistics for the free queues only.</p>
+</dd>
+<dt><code dir="ltr">CACHEPOOL</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code></dt>
+<dd>
+<p>Returns statistics for the specified object pool only.</p>
+</dd>
+</dl>
+</dd>
+<dt><code dir="ltr">CACHEMGR CACHEFSOPTION {MS_SYNC | MS_ASYNC}</code></dt>
+<dd>
+<p>Performs synchronous or asynchronous writes of the mapped data in the Oracle GoldenGate memory cache manager.</p>
+</dd>
+<dt><code dir="ltr">FORCESTOP</code></dt>
+<dd>
+<p>Forces Extract to stop, bypassing any notifications. This command will stop the process immediately.</p>
+</dd>
+<dt><code dir="ltr">FORCETRANS</code> <code dir="ltr"><span class="codeinlineitalic">transaction_ID</span></code> <code dir="ltr">[THREAD</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code><code dir="ltr">] [FORCE]</code></dt>
+<dd>
+<p>Valid for MySQL, Oracle, SQL/MX, SQL Server, Sybase.</p>
+<p>Forces Extract to write a transaction specified by its transaction ID number to the trail as a committed transaction. <code dir="ltr">FORCETRANS</code> does not commit the transaction to the source database. It only forces the existing data to the trail so that it is processed (with an implicit commit) by Replicat. You can repeat <code dir="ltr">FORCETRANS</code> for other transactions in order of their age. Note that forcing a transaction to commit to the trail (and therefore the target database) may cause data discrepancies if the transaction is rolled back by the source user applications.</p>
+<p>After using <code dir="ltr">FORCETRANS</code>, wait at least five minutes if you intend to issue <code dir="ltr">SEND EXTRACT</code> with <code dir="ltr">FORCESTOP</code>. Otherwise, the transaction will still be present.</p>
+<p>If <code dir="ltr">FORCETRANS</code> is used immediately after Extract starts, you might receive an error message that asks you to wait and then try the command again. This means that no other transactions have been processed yet by Extract. Once another transaction is processed, you will be able to force the transaction to trail.</p>
+<dl>
+<dt><code dir="ltr"><span class="codeinlineitalic">transaction_ID</span></code></dt>
+<dd>
+<p>The ID of the transaction. Get the transaction ID number with <code dir="ltr">SHOWTRANS</code> or from an Extract runtime message. Extract ignores any data added to the transaction after this command is issued. A confirmation prompt must be answered unless <code dir="ltr">FORCE</code> is used. To use <code dir="ltr">FORCETRANS</code>, the specified transaction must be the oldest one in the list of transactions shown with <code dir="ltr">SHOWTRANS</code> with the exception of SQL/MX. For SQL/MX, the transaction does not have to be the oldest outstanding.</p>
+</dd>
+<dt><code dir="ltr">THREAD</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code></dt>
+<dd>
+<p>Valid only for Oracle.</p>
+<p>Use <code dir="ltr">THREAD</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code> to specify which thread generated the transaction in an Oracle RAC environment if there are duplicate transaction IDs across threads.</p>
+</dd>
+<dt><code dir="ltr">FORCE</code></dt>
+<dd>
+<p>Valid for Oracle, SQL/MX, SQL Server, Sybase. Not valid for MySQL.</p>
+<p>Use <code dir="ltr">FORCE</code> to bypass the confirmation prompt.</p>
+</dd>
+</dl>
+</dd>
+<dt><code dir="ltr">GETLAG</code></dt>
+<dd>
+<p>Determines a true lag time between Extract and the data source. Returns the same results as <code dir="ltr">LAG EXTRACT (see</code> <a href="ggsci_commands012.htm#i934663">"LAG EXTRACT"</a>).</p>
+</dd>
+<dt><code dir="ltr">GETTCPSTATS</code></dt>
+<dd>
+<p>Displays statistics about network activity between Extract and the target system. The statistics include:</p>
+<ul>
+<li>
+<p>Local and remote IP addresses.</p>
+</li>
+<li>
+<p>Inbound and outbound messages, in bytes and bytes per second.</p>
+</li>
+<li>
+<p>Number of receives (inbound) and sends (outbound). There will be at least two receives per inbound message: one for the length and one or more for the data.</p>
+</li>
+<li>
+<p>Average bytes per send and receive.</p>
+</li>
+<li>
+<p>Send and receive wait time: Send wait time is how long it takes for the write to TCP to complete. The lower the send wait time, the better the performance over the network. Receive wait time is how long it takes for a read to complete. Together, the send and receive wait times provide a rough estimate of network round trip time. These are expressed in microseconds.</p>
+</li>
+<li>
+<p>Status of data compression (enabled or not).</p>
+</li>
+<li>
+<p>Uncompressed bytes and compressed bytes: When compared (uncompressed to compressed), these comprise the compression ratio, meaning how many bytes there were before and after compression. You can compare the compression ratio with the bytes that are being compressed per second to determine if the compression rate is worth the cost in terms of resource and network consumption.</p>
+</li>
+</ul>
+<p>The <code dir="ltr">TCPBUFSIZE</code> option of <code dir="ltr">RMTHOST</code> and <code dir="ltr">RMTHOSTOPTIONS</code> controls the size of the TCP buffer for uncompressed data. What actually enters the network will be less than this size if compression is enabled. <code dir="ltr">GETTCPSTATS</code> shows post-compression throughput.</p>
+</dd>
+<dt><code dir="ltr">LOGEND</code></dt>
+<dd>
+<p>Confirms whether or not Extract has processed all of the records in the data source.</p>
+</dd>
+<dt><code dir="ltr">LOGSTATS</code></dt>
+<dd>
+<p>Valid only for Oracle.</p>
+<p>Instructs Extract to issue a report about the statistics that are related to the processing of data from the Oracle redo log files. Extract uses an asynchronous log reader that reads ahead of the current record that Extract is processing, so that the data is available without additional I/O on the log files. The processing is done through a series of read/write queues. Data is parsed by a producer thread at the same time that additional data is being read from the log file by a reader thread. Thus, the reason for the term "read-ahead" in the statistics.</p>
+<p>The statistics are:</p>
+<ul>
+<li>
+<p><code dir="ltr">AsyncReader.Buffers</code><code dir="ltr"><span class="codeinlineitalic">n</span></code>: There is a field like this for each buffer queue that contains captured redo data. It shows the size, the number of records in it, and how long the wait time is before the data is processed. These statistics are given for write operations and read operations on the queue.</p>
+</li>
+<li>
+<p><code dir="ltr">REDO read ahead buffers</code>: The number of buffers that are being used to read ahead asynchronously.</p>
+</li>
+<li>
+<p><code dir="ltr">REDO read ahead buffer size</code>: The size of each buffer.</p>
+</li>
+<li>
+<p><code dir="ltr">REDO bytes read ahead for current redo</code>: Whether read-ahead mode is on or off for the current redo log file (value of <code dir="ltr">ON</code> or <code dir="ltr">OFF</code>).</p>
+</li>
+<li>
+<p><code dir="ltr">REDO bytes read</code>: The number of bytes read from all redo log files that are associated with this instance of Extract.</p>
+</li>
+<li>
+<p><code dir="ltr">REDO bytes read ahead</code>: The number of bytes that were processed by the read-ahead mechanism.</p>
+</li>
+<li>
+<p><code dir="ltr">REDO bytes unused</code>: The number of read-ahead bytes that were subsequently dropped as the result of Extract position changes or stale reads.</p>
+</li>
+<li>
+<p><code dir="ltr">REDO bytes parsed</code>: The number of bytes that were processed as valid log data.</p>
+</li>
+<li>
+<p><code dir="ltr">REDO bytes output</code>: The number of bytes that were written to the trail file (not including internal Oracle GoldenGate overhead).</p>
+</li>
+</ul>
+</dd>
+<dt><code dir="ltr">REPORT</code></dt>
+<dd>
+<p>Generates an interim statistical report to the Extract report file. The statistics that are displayed depend upon the configuration of the <code dir="ltr">STATOPTIONS</code> parameter when used with the <code dir="ltr">RESETREPORTSTATS</code> | <code dir="ltr">NORESETREPORTSTATS</code> option. See <a href="gg_parameters158.htm#i1056178">"STATOPTIONS"</a>.</p>
+</dd>
+<dt><code dir="ltr">RESUME</code></dt>
+<dd>
+<p>Resumes (makes active) a process that was suspended by an <code dir="ltr">EVENTACTIONS SUSPEND</code> event. The process resumes normal processing from the point at which it was suspended.</p>
+</dd>
+<dt><code dir="ltr">ROLLOVER</code></dt>
+<dd>
+<p>Causes Extract to increment to the next file in the trail when restarting. For example, if the current file is <code dir="ltr">ET000002</code>, the current file will be <code dir="ltr">ET000003</code> after the command executes. A trail can be incremented from <code dir="ltr">000001</code> through <code dir="ltr">999999</code>, and then the sequence numbering starts over at <code dir="ltr">000000</code>.</p>
+</dd>
+<dt><code dir="ltr">SHOWTRANS [</code><code dir="ltr"><span class="codeinlineitalic">transaction_ID</span></code><code dir="ltr">] [THREAD</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code><code dir="ltr">] [COUNT</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code><code dir="ltr">]</code></dt>
+<dt><code dir="ltr">[DURATION</code> <code dir="ltr"><span class="codeinlineitalic">duration unit</span></code><code dir="ltr">] [TABULAR] | [FILE</code> <code dir="ltr"><span class="codeinlineitalic">file_name</span></code> <code dir="ltr">[DETAIL]]</code></dt>
+<dd>
+<p>Valid for MySQL, Oracle, SQL/MX, SQL Server, Sybase.</p>
+<p>Displays information about open transactions. <code dir="ltr">SHOWTRANS</code> shows any of the following, depending on the database type:</p>
+<ul>
+<li>
+<p>Process checkpoint (indicating the oldest log needed to continue processing the transaction in case of an Extract restart). See <a class="olink GWUAD752" href="../../gg-winux/GWUAD/wu_csn.htm#GWUAD752"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for more information about checkpoints.</p>
+</li>
+<li>
+<p>Transaction ID</p>
+</li>
+<li>
+<p>Extract group name</p>
+</li>
+<li>
+<p>Redo thread number</p>
+</li>
+<li>
+<p>Timestamp of the first operation that Oracle GoldenGate extracts from a transaction (not the actual start time of the transaction)</p>
+</li>
+<li>
+<p>System change number (SCN)</p>
+</li>
+<li>
+<p>Redo log number and RBA</p>
+</li>
+<li>
+<p>Status (<code dir="ltr">Pending COMMIT</code> or <code dir="ltr">Running</code>). <code dir="ltr">Pending COMMIT</code> is displayed while a transaction is being written after a <code dir="ltr">FORCETRANS</code> was issued.</p>
+</li>
+</ul>
+<p>Without options, <code dir="ltr">SHOWTRANS</code> displays all open transactions that will fit into the available buffer. See <a href="#CHDBIDFA">Example 1-0</a> for sample output of <code dir="ltr">SHOWTRANS</code>. To further control output, see the following options.</p>
+<dl>
+<dt><code dir="ltr"><span class="codeinlineitalic">transaction_ID</span></code></dt>
+<dd>
+<p>Limits the command output to a specific transaction.</p>
+</dd>
+<dt><code dir="ltr">THREAD</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code></dt>
+<dd>
+<p>Valid only for Oracle.</p>
+<p>Constrains the output to open transactions against a specific Oracle RAC thread. For <code dir="ltr"><span class="codeinlineitalic">n</span></code>, use a RAC thread number that is recognized by Extract.</p>
+</dd>
+<dt><code dir="ltr">COUNT</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code></dt>
+<dd>
+<p>Constrains the output to the specified number of open transactions, starting with the oldest one. Valid values are <code dir="ltr">1</code> to <code dir="ltr">1000</code>.</p>
+</dd>
+<dt><code dir="ltr">DURATION</code> <code dir="ltr"><span class="codeinlineitalic">duration unit</span></code></dt>
+<dd>
+<p>Restricts the output to transactions that have been open longer than the specified time, where:</p>
+<p><code dir="ltr"><span class="codeinlineitalic">duration</span></code> is the length of time expressed as a whole number.</p>
+<p><code dir="ltr"><span class="codeinlineitalic">unit</span></code> is one of the following to express <code dir="ltr">seconds</code>, <code dir="ltr">minutes</code>, <code dir="ltr">hours</code>, or <code dir="ltr">days</code>:</p>
+<pre dir="ltr">
+S|SEC|SECS|SECOND|SECONDS
+M|MIN|MINS|MINUTE|MINUTES
+H|HOUR|HOURS
+D|DAY|DAYS
+</pre>
+<p>For Sybase, which does not put a timestamp on each record, the duration is not always precise and depends on the time information that is stored in the transaction log for the <code dir="ltr">BEGIN</code> and <code dir="ltr">COMMIT</code> records.</p>
+</dd>
+<dt><code dir="ltr">TABULAR</code></dt>
+<dd>
+<p>Valid only for Oracle.</p>
+<p>Generates output in tabular format similar to the default table printout from SQL*Plus. The default is field-per-row.</p>
+</dd>
+<dt><code dir="ltr">FILE</code> <code dir="ltr"><span class="codeinlineitalic">file_name</span></code> <code dir="ltr">[DETAIL]</code></dt>
+<dd>
+<p>Valid only for Oracle and SQL Server. Not valid for MySQL, SQL/MX, Sybase.</p>
+<p>Forces Extract to write the transaction information to the specified file. There is no output to the console.</p>
+<p>For Oracle, you can write a hex and plain-character dump of the data by using <code dir="ltr">FILE</code> with <code dir="ltr">DETAIL</code>. This dumps the entire transaction from memory to the file. Viewing the data may help you decide whether to skip the transaction or force it to the trail.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Basic detail information is automatically written to the report file at intervals specified by the <code dir="ltr">WARNLONGTRANS CHECKINTERVAL</code> parameter.</div>
+</dd>
+</dl>
+</dd>
+<dt><code dir="ltr">SKIPTRANS</code> <code dir="ltr"><span class="codeinlineitalic">transaction_ID</span></code> <code dir="ltr">[THREAD</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code><code dir="ltr">] [FORCE]</code></dt>
+<dd>
+<p>Valid for MySQL, Oracle, SQL/MX, SQL Server, Sybase.</p>
+<p>Forces Extract to skip the specified transaction, thereby removing any current data from memory and ignoring any subsequent data. A confirmation prompt must be answered unless <code dir="ltr">FORCE</code> is used. After using <code dir="ltr">SKIPTRANS</code>, wait at least five minutes if you intend to issue <code dir="ltr">SEND EXTRACT</code> with <code dir="ltr">FORCESTOP</code>. Otherwise, the transaction will still be present. Note that skipping a transaction may cause data loss in the target database.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+To use <code dir="ltr">SKIPTRANS</code>, the specified transaction must be the oldest one in the list of transactions shown with <code dir="ltr">SHOWTRANS</code> with the exception of SQL/MX. For SQL/MX, the transaction does not have to be the oldest outstanding. You can repeat the command for other transactions in order of their age.</div>
+<dl>
+<dt><code dir="ltr"><span class="codeinlineitalic">transaction_ID</span></code></dt>
+<dd>
+<p>The transaction ID number. Get the ID number with <code dir="ltr">SHOWTRANS</code> or from an Extract runtime message.</p>
+</dd>
+<dt><code dir="ltr">THREAD</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code></dt>
+<dd>
+<p>Valid only for Oracle.</p>
+<p>Use <code dir="ltr">THREAD</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code> to specify which thread generated the transaction in an Oracle RAC environment if there are duplicate transaction IDs. <code dir="ltr">SKIPTRANS</code> specifies the checkpoint index number, not the actual thread number. To specify the correct thread, issue the <code dir="ltr">INFO EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">group_name</span></code> <code dir="ltr">SHOWCH</code> command, and then specify the <code dir="ltr">READ</code> checkpoint index number that corresponds to the thread number that you want to skip. See the examples for details. See <a class="olink GWUAD752" href="../../gg-winux/GWUAD/wu_csn.htm#GWUAD752"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for more information about checkpoints.</p>
+</dd>
+<dt><code dir="ltr">FORCE</code></dt>
+<dd>
+<p>Valid for Oracle, SQL/MX, SQL Server, Sybase. Not valid for MySQL</p>
+<p>Use <code dir="ltr">FORCE</code> to bypass the prompt that confirms your intent to skip the transaction.</p>
+</dd>
+</dl>
+</dd>
+<dt><code dir="ltr">STATUS</code></dt>
+<dd>
+<p>Returns a detailed status of the processing state, including current position and activity. Possible processing status messages on the <code dir="ltr">Current status</code> line are:</p>
+<ul>
+<li>
+<p><code dir="ltr">Delaying</code> &ndash; waiting for more data</p>
+</li>
+<li>
+<p><code dir="ltr">Suspended</code> &ndash; waiting to be resumed</p>
+</li>
+<li>
+<p><code dir="ltr">Processing data</code> &ndash; processing data</p>
+</li>
+<li>
+<p><code dir="ltr">Starting initial load</code> &ndash; starting an initial load task</p>
+</li>
+<li>
+<p><code dir="ltr">Processing source tables</code> &ndash; processing data for initial load task</p>
+</li>
+<li>
+<p><code dir="ltr">Reading from data source</code> &ndash; reading from the data source, such as a source table or transaction log</p>
+</li>
+<li>
+<p><code dir="ltr">Adding record to transaction list</code> &ndash; adding a record to the file memory transaction list</p>
+</li>
+<li>
+<p><code dir="ltr">At EOF (end of file)</code> &ndash; no more records to process</p>
+</li>
+</ul>
+<p>In addition to the preceding statuses, the following status notations appear during an Extract recovery after an abend event. You can follow the progress as Extract continually changes its log read position over the course of the recovery.</p>
+<ul>
+<li>
+<p><code dir="ltr">In recovery[1]</code> &ndash; Extract is recovering to its checkpoint in the transaction log.</p>
+</li>
+<li>
+<p><code dir="ltr">In recovery[2]</code> &ndash; Extract is recovering from its checkpoint to the end of the trail.</p>
+</li>
+<li>
+<p><code dir="ltr">Recovery complete</code> &ndash; The recovery is finished, and normal processing will resume.</p>
+</li>
+</ul>
+</dd>
+<dt><code dir="ltr">STOP</code></dt>
+<dd>
+<p>Stops Extract. If there are any long-running transactions (based on the <code dir="ltr">WARNLONGTRANS</code> parameter), the following message will be displayed:</p>
+<pre dir="ltr">
+Sending STOP request to EXTRACT JC108XT...
+There are open, long-running transactions. Before you stop Extract, make the archives containing data for those transactions available for when Extract restarts. To force Extract to stop, use the SEND EXTRACT <span class="italic">group</span>, FORCESTOP command.
+Oldest redo log file necessary to restart Extract is:
+Redo Thread 1, Redo Log Sequence Number 150, SCN 31248005, RBA 2912272.
+</pre></dd>
+<dt><code dir="ltr">TRACE[2] {</code><code dir="ltr"><span class="codeinlineitalic">file_name</span></code> <code dir="ltr">| OFF}</code></dt>
+<dd>
+<p>Turns tracing on and off. Tracing captures information to the specified file to reveal processing bottlenecks. Contact Oracle Support for assistance if the trace reveals significant processing bottlenecks.</p>
+<dl>
+<dt><code dir="ltr">TRACE</code></dt>
+<dd>
+<p>Captures step-by-step processing information.</p>
+</dd>
+<dt><code dir="ltr">TRACE2</code></dt>
+<dd>
+<p>Identifies code segments rather than specific steps.</p>
+</dd>
+<dt><code dir="ltr"><span class="codeinlineitalic">file_name</span></code></dt>
+<dd>
+<p>Specifies the name of the file to which the trace information is written. If a trace is already running when <code dir="ltr">SEND EXTRACT</code> is issued with <code dir="ltr">TRACE</code>, the existing trace file is closed and the trace is resumed to the new file specified with <code dir="ltr"><span class="codeinlineitalic">file_name</span></code>.</p>
+</dd>
+<dt><code dir="ltr">OFF</code></dt>
+<dd>
+<p>Turns off tracing.</p>
+</dd>
+</dl>
+</dd>
+<dt><code dir="ltr">TRACE OFF</code> <code dir="ltr"><span class="codeinlineitalic">file_name</span></code></dt>
+<dd>
+<p>Turns tracing off only for the specified trace file.</p>
+</dd>
+<dt><code dir="ltr">TRACEINIT</code></dt>
+<dd>
+<p>Resets tracing statistics back to 0 and then starts accumulating statistics again. Use this option to track the current behavior of processing, as opposed to historical.</p>
+</dd>
+<dt>TRANLOGOPTIONS {<code dir="ltr">PREPAREFORUPGRADETOIE</code> | <code dir="ltr">NOPREPAREFORUPGRADETOIE</code>}</dt>
+<dd>
+<p>(Oracle) Valid when upgrading from Classic to Integrated Extract on Oracle RAC.</p>
+<p>When upgrading on Oracle RAC from Classic to Integrated Extract, you must set the <code dir="ltr">PREPAREFORUPGRADETOIE</code> option before stopping Classic Extract for the upgrade then wait for the information message in the report file that indicates that the parameter has taken effect before proceeding with the upgrade. For detailed upgrade instructions, see <a class="olink GWUUP" href="../../gg-winux/GWUUP/toc.htm"><span class="italic">Upgrading Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<dl>
+<dt><code dir="ltr">PREPAREFORUPGRADETOIE</code></dt>
+<dd>
+<p>Set <code dir="ltr">PREPAREFORUPGRADETOIE</code> in the Extract parameter file, which requires a restart of Extract, or you can set it dynamically for a running extract from GGSCI using this command:</p>
+<p><code dir="ltr">SEND EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">extract_name</span></code> <code dir="ltr">TRANLOGOPTIONS PREPAREFORUPGRADETOIE</code></p>
+</dd>
+<dt><code dir="ltr">NOPREPAREFORUPGRADETOIE</code></dt>
+<dd>
+<p>Dynamically turns off the <code dir="ltr">PREPAREFORUPGRADETOIE</code> option if necessary. The default is <code dir="ltr">NOPREPAREFORUPGRADETOIE</code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><code dir="ltr">TRANLOGOPTIONS {PURGEORPHANEDTRANSACTIONS | NOPURGEORPHANEDTRANSACTIONS}</code></dt>
+<dd>
+<p>Valid for Oracle RAC. Enables or disables purging of orphaned transactions that occur when a node fails and Extract cannot capture the rollback. See <a href="gg_parameters174.htm#i2788621">"TRANLOGOPTIONS"</a> for descriptions.</p>
+</dd>
+<dt><code dir="ltr">TRANLOGOPTIONS TRANSCLEANUPFREQUENCY</code> <code dir="ltr"><span class="codeinlineitalic">minutes</span></code></dt>
+<dd>
+<p>Valid for Oracle RAC. Specifies the interval, in minutes, after which Oracle GoldenGate scans for orphaned transactions and then re-scans to confirm and delete them. Valid values are from 1 to 43200 minutes. Default is 10 minutes. See <a href="gg_parameters174.htm#i2788621">"TRANLOGOPTIONS"</a>.</p>
+</dd>
+<dt><code dir="ltr">VAMMESSAGE '</code><code dir="ltr"><span class="codeinlineitalic">Teradata_command</span></code><code dir="ltr">'</code></dt>
+<dt><code dir="ltr">VAMMESSAGE { 'ARSTATS' | 'INCLUDELIST [</code><code dir="ltr"><span class="codeinlineitalic">filter</span></code><code dir="ltr">]' | 'EXCLUDELIST [</code><code dir="ltr"><span class="codeinlineitalic">filter</span></code>]<code dir="ltr">' }</code></dt>
+<dt><code dir="ltr">VAMMESSAGE 'OPENTRANS'</code></dt>
+<dd>
+<p>Sends a command to the capture API that is used by Extract.</p>
+<p>A Teradata command can be any of the following:</p>
+<dl>
+<dt><code dir="ltr">'control:terminate'</code></dt>
+<dd>
+<p>Stops a replication group. Required before dropping or altering a replication group in Teradata.</p>
+</dd>
+<dt><code dir="ltr">'control:suspend'</code></dt>
+<dd>
+<p>Suspends a replication group. Can be used when upgrading Oracle GoldenGate.</p>
+</dd>
+<dt><code dir="ltr">'control:resume'</code></dt>
+<dd>
+<p>Resumes a replication group after it has been suspended.</p>
+</dd>
+<dt><code dir="ltr">'control:copy</code> <code dir="ltr"><span class="codeinlineitalic">database.table'</span></code></dt>
+<dd>
+<p>Copies a table from the source database to the target database.</p>
+</dd>
+</dl>
+<p>A SQL/MX command can be any of the following. The module returns a response to GGSCI. The response can be either <code dir="ltr">ERROR</code> or <code dir="ltr">OK</code> along with a response message.</p>
+<dl>
+<dt><code dir="ltr">'ARSTATS'</code></dt>
+<dd>
+<p>Displays TMF audit reading statistics.</p>
+</dd>
+<dt><code dir="ltr">'FILELIST [</code><code dir="ltr"><span class="codeinlineitalic">filter</span></code><code dir="ltr">]'</code></dt>
+<dd>
+<p>Displays the list of tables for which Extract has encountered data records in the audit trail that match the selection criteria in the <code dir="ltr">TABLE</code> parameters. The <code dir="ltr"><span class="codeinlineitalic">filter</span></code> option allows use of a wildcard pattern to filter the list of tables returned. <code dir="ltr">GETFILELIST</code> can also be used in the same manner.</p>
+</dd>
+<dt><code dir="ltr">'EXCLUDELIST [</code><code dir="ltr"><span class="codeinlineitalic">filter</span></code><code dir="ltr">]'</code></dt>
+<dd>
+<p>Displays the list of tables for which Extract has encountered data records in the audit trail that do not match the selection criteria in the <code dir="ltr">TABLE</code> parameters. The <code dir="ltr"><span class="codeinlineitalic">filter</span></code> option allows use of a wildcard pattern to filter the list of tables returned. Certain system tables that are implicitly excluded will always be present in the list of excluded tables.</p>
+</dd>
+</dl>
+<p>A SQL Server command can be the following:</p>
+<dl>
+<dt><code dir="ltr">'OPENTRANS'</code></dt>
+<dd>
+<p>Prints a list of open transactions with their transaction ID, start time, first LSN, and the number of operations they contain.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="sthref108"></a>Examples</p>
+<dl>
+<dd><a id="GWURF164"></a><a id="sthref109"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+SEND EXTRACT finance, ROLLOVER
+</pre></dd>
+<dd><a id="GWURF165"></a><a id="sthref110"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+SEND EXTRACT finance, STOP
+</pre></dd>
+<dd><a id="GWURF166"></a><a id="sthref111"></a></dd>
+<dt class="seghead">Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+SEND EXTRACT finance, VAMMESSAGE 'control:suspend'
+</pre></dd>
+<dd><a id="GWURF167"></a><a id="sthref112"></a></dd>
+<dt class="seghead">Example 4&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+SEND EXTRACT finance, TRANLOGOPTIONS TRANSCLEANUPFREQUENCY 20
+</pre></dd>
+<dd><a id="GWURF168"></a><a id="sthref113"></a></dd>
+<dt class="seghead">Example 5&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>This example explains <code dir="ltr">SKIPTRANS</code>. Start with the following <code dir="ltr">SHOWCH</code> output, which shows that thread 2 is at <code dir="ltr">Read Checkpoint #3</code>. See <a class="olink GWUAD752" href="../../gg-winux/GWUAD/wu_csn.htm#GWUAD752"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for more information about checkpoints.</p>
+<pre dir="ltr">
+INFO <span class="codeinlineitalic">extract</span> SHOWCH
+Read Checkpoint #3
+Oracle RAC Redo Log
+Startup Checkpoint (starting position in the data source):
+Thread #: 2
+Sequence #: 17560
+RBA: 65070096
+Timestamp: 2011-07-30 20:04:47.000000
+SCN: 1461.3499051750 (6278446271206)
+Redo File: RAC4REDO/sss11g/onlinelog/group_4.292.716481937
+</pre>
+<p>Therefore, <code dir="ltr">SKIPTRANS</code> should be: <code dir="ltr">SKIPTRANS</code> <code dir="ltr"><span class="codeinlineitalic">xid</span></code> <code dir="ltr">THREAD 3</code>.</p>
+</dd>
+<dd><a id="GWURF169"></a><a id="sthref114"></a></dd>
+<dt class="seghead">Example 6&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+SEND EXTRACT finance, SHOWTRANS COUNT 2
+</pre></dd>
+<dd><a id="GWURF170"></a><a id="CHDBIDFA"></a></dd>
+<dt class="seghead">Example 7&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following shows the default output of <code dir="ltr">SHOWTRANS.</code></p>
+<pre dir="ltr">
+Oldest redo log file necessary to restart Extract is:
+Redo Thread 1, Redo Log Sequence Number 148, SCN 30816254, RBA 17319664
+------------------------------------------------------------
+XID                 : 5.15.52582
+Items               : 30000
+Extract             : JC108XT
+Redo Thread         : 1
+Start Time          : 2011-01-18:12:51:27
+SCN                 : 20634955
+Redo Seq            : 103
+Redo RBA            : 18616848
+Status              : Running
+------------------------------------------------------------
+XID                 : 7.14.48657
+Items               : 30000
+Extract             : JC108XT
+Redo Thread         : 1
+Start Time          : 2011-01-18:12:52:14
+SCN                 : 20635145
+Redo Seq            : 103
+Redo RBA            : 26499088
+Status              : Running
+</pre></dd>
+<dd><a id="GWURF171"></a><a id="sthref115"></a></dd>
+<dt class="seghead">Example 8&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following shows <code dir="ltr">SHOWTRANS</code> output with <code dir="ltr">TABULAR</code> in effect (view is truncated on right)</p>
+</dd>
+</dl>
+<pre dir="ltr">
+XID         Items  Extract   Redo Thread  Start Time
+5.15.52582  30000  JC108XT       1            2011-01-18:12:52:14
+
+Dumping transaction memory at 2011-01-21 13:36:54.
+Record #1:
+Header (140 bytes):
+       0: 0000 0A4A 0000 FFFF 0000 0000 0057 6C10        ...J.........Wl.
+      16: 02FF 3F50 FF38 7C40 0303 4141 414E 5A77        ..?P.8|@..AAANZw
+      32: 4141 4641 4141 4B6F 4941 4144 0041 4141        AAFAAAKoIAAD.AAA
+      48: 4E5A 7741 4146 4141 414B 6F49 4141 4400        NZwAAFAAAKoIAAD.
+      64: 4141 414E 5A77 414A 2F41 4142 7A31 7741        AAANZwAJ/AABz1wA
+      80: 4141 0041 4141 4141 4141 4141 4141 4141        AA.AAAAAAAAAAAAA
+      96: 4141 4141 4100 0000 0140 FF08 0003 0000        AAAAA....@......
+     112: 0000 0000 0000 70FF 0108 FFFF 0001 4A53        ......p.......JS
+     128: 554E 2E54 4355 5354 4D45 5200                  UN.TCUSTMER.
+
+Data (93 bytes):
+       0: 2C00 0400 0400 0000 0100 0200 0300 0000        ,...............
+      16: 0000 0000 0800 0000 1800 0000 2000 0400        ............ ...
+      32: 1000 0600 0200 0000 284A 414E 456C 6C6F        ........(JANEllo
+      48: 6352 4F43 4B59 2046 4C59 4552 2049 4E43        cROCKY FLYER INC
+      64: 2E44 454E 5645 5220 6E43 4F20 7365 7400        .DENVER nCO set.
+      80: 0000 0000 0000 0C00 0000 0000 00              ..............
+</pre>
+<p>When analyzing the summary output of <code dir="ltr">SHOWTRANS</code>, understand that it shows all currently running transactions on the database (as many as will fit into a predefined buffer). Extract must track every open transaction, not just those that contain operations on tables configured for Oracle GoldenGate, because it is not known whether operations on configured tables will be added to a transaction at some point in the future.</p>
+<p>The <code dir="ltr">Items</code> field of the <code dir="ltr">SHOWTRANS</code> output shows the number of operations in the transaction that have been captured by Oracle GoldenGate so far, not the total number of operations in the transaction. If none of the operations are for configured tables, or if only some of them are, then <code dir="ltr">Items</code> could be 0 or any value less than the total number of operations.</p>
+<p>The <code dir="ltr">Start Time</code> field shows the timestamp of the first operation that Oracle GoldenGate extracts from a transaction, not the actual start time of the transaction itself.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Command output may vary somewhat from the examples shown due ongoing enhancements of the Oracle GoldenGate software.</div>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment135">
+<tr>
+<td class="cellalignment142"><table class="cellalignment140">
+<tr>
+<td class="cellalignment139"><a href="ggsci_commands013.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment139"><a href="ggsci_commands015.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment144">
+<table class="cellalignment138">
+<tr>
+<td class="cellalignment139"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment139"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment139"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

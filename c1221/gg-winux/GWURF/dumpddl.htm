@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>DUMPDDL</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="encrypt-password.htm" title="Previous" type="text/html" />
+<link rel="Next" href="flush-sequence.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-D6D4161E-BDE9-4B42-BB25-D5C4672A24C8"></a> <span id="PAGE" style="display:none;">72/459</span> <!-- End Header -->
+<a id="GWURF299"></a><a id="GWURF298"></a>
+<h1 id="GWURF-GUID-D6D4161E-BDE9-4B42-BB25-D5C4672A24C8" class="sect1"><span class="enumeration_section">1.64</span> DUMPDDL</h1>
+<div>
+<div class="section">
+<p>Use the <code class="codeph">DUMPDDL</code> command to view the data in the Oracle GoldenGate DDL history table if the trigger-based DDL capture is in use. This information is the same information that is used by the Extract process. It is stored in proprietary format, but can be exported in human-readable form to the screen or to a series of SQL tables that can be queried by using regular SQL.</p>
+<p><code class="codeph">DUMPDDL</code> always dumps all of the records in the DDL history table. Use SQL queries or search redirected standard output to view information about particular objects and the operations you are interested in. Because the history table contains large amounts of data, only the first 4000 bytes (approximately) of a DDL statement are displayed in order to maintain efficient performance. The format of the metadata is string based. It is fully escaped and supports table and column names in their native character set.</p>
+<p>Because the information is historical data that is provided by the DDL <span class="italic">before</span> trigger, it reflects the state of an object before a DDL change. Consequently, there will not be any data for <code class="codeph">CREATE</code> operations.</p>
+<div class="infobox-note" id="GUID-D6D4161E-BDE9-4B42-BB25-D5C4672A24C8__GUID-51D48CBC-878F-43A6-B359-44EA89FF7120">
+<p class="notep1">Note:</p>
+<p>The default name of the before trigger is <code class="codeph">GGS_DDL_TRIGGER_BEFORE</code>.</p>
+</div>
+<p>Before using <code class="codeph">DUMPDDL</code>, log into the database as the owner of the history table by using the <code class="codeph">DBLOGIN</code> command.</p>
+<p>The basic <code class="codeph">DUMPDDL</code> command outputs metadata to the following tables.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformal" id="GUID-D6D4161E-BDE9-4B42-BB25-D5C4672A24C8__GUID-2A2A962E-90AC-45A7-8F2E-FC73D6338B20">
+<p class="titleintable">Table 1-18 DUMPDDL Tables</p>
+<table class="cellalignment463" title="DUMPDDL Tables" summary="This table describes the basic DUMPDDL command outputs.">
+<thead>
+<tr class="cellalignment454">
+<th class="cellalignment483" id="d33720e62">Table</th>
+<th class="cellalignment484" id="d33720e65">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment454">
+<td class="cellalignment485" id="d33720e70" headers="d33720e62">
+<p><code class="codeph">GGS_DDL_OBJECTS</code></p>
+</td>
+<td class="cellalignment486" headers="d33720e70 d33720e65">
+<p>Information about the objects for which DDL operations are being synchronized. <code class="codeph">SEQNO</code> is the primary key. All of the other tables listed here contain a <code class="codeph">SEQNO</code> column that is the foreign key to <code class="codeph">GGS_DDL_OBJECTS</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment485" id="d33720e87" headers="d33720e62">
+<p><code class="codeph">GGS_DDL_COLUMNS</code></p>
+</td>
+<td class="cellalignment486" headers="d33720e87 d33720e65">
+<p>Information about the columns of the objects involved in DDL synchronization.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment485" id="d33720e95" headers="d33720e62">
+<p><code class="codeph">GGS_DDL_LOG_GROUPS</code></p>
+</td>
+<td class="cellalignment486" headers="d33720e95 d33720e65">
+<p>Information about the supplemental log groups involved in DDL synchronization.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment485" id="d33720e103" headers="d33720e62">
+<p><code class="codeph">GGS_DDL_PARTITIONS</code></p>
+</td>
+<td class="cellalignment486" headers="d33720e103 d33720e65">
+<p>Information about the partitions for objects involved in DDL synchronization.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment485" id="d33720e111" headers="d33720e62">
+<p><code class="codeph">GGS_DDL_PRIMARY_KEYS</code></p>
+</td>
+<td class="cellalignment486" headers="d33720e111 d33720e65">
+<p>Information about the primary keys of the objects involved in DDL synchronization.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="section">
+<p>The <code class="codeph">SEQNO</code> column is the DDL sequence number that is listed in the Extract and Replicat report files. It also can be obtained by querying the DDL history table (default name is <code class="codeph">GGS_DDL_HIST</code>).</p>
+<p>All of these tables are owned by the schema that was designated as the Oracle GoldenGate DDL schema during the installation of the DDL objects. To view the structure of these tables, use the <code class="codeph">DESC</code> command in SQL*Plus.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+DUMPDDL [SHOW]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-D6D4161E-BDE9-4B42-BB25-D5C4672A24C8__GUID-2A8BFA3E-1818-482C-A2CE-41A4805AB5AC"><!-- --></a><code class="codeph">SHOW</code></dt>
+<dd>
+<p>Dumps the information contained in the history table to the screen in standard output format. No output tables are produced. All records in the DDL history table are shown.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="encrypt-password.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="flush-sequence.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

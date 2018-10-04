@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Working with Users</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1071" />
+<meta name="description" content="This section describe how to set up and work with Oracle GoldenGate Monitor users. These topics are:" />
+<meta name="dcterms.created" content="2015-10-12T17:58:1Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Using Oracle GoldenGate Monitor" />
+<meta name="dcterms.identifier" content="E60967-01" />
+<meta name="dcterms.isVersionOf" content="GMNCH" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="monitoring_tools.htm" title="Previous" type="text/html" />
+<link rel="Next" href="alerts.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GMNCH.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="GMNCH.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="GMNCH.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><span id="PAGE" style="display:none;">7/11</span> <!-- End Header -->
+<div id="GMNCH163" class="chapter"><a id="sthref13"></a>
+<h1 class="chapter"><span class="secnum">4</span> Working with Users</h1>
+<p><a id="GMNCH164"></a>This section describe how to set up and work with Oracle GoldenGate Monitor users. These topics are:</p>
+<ul>
+<li>
+<p><a href="#BGBHEDFE">Section 4.1, "Understanding User Security Roles"</a></p>
+</li>
+<li>
+<p><a href="#BGBHJEHE">Section 4.2, "Managing Users"</a></p>
+</li>
+<li>
+<p><a href="#BGBHGIGJ">Section 4.3, "Adding, Changing, and Removing Users"</a></p>
+</li>
+<li>
+<p><a href="#BGBIAEIF">Section 4.4, "Assigning Instances to a User"</a></p>
+</li>
+<li>
+<p><a href="#BGBIFIEJ">Section 4.5, "Managing Your User Profile"</a></p>
+</li>
+</ul>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Only users granted Super Administrator and Administrator roles can access the User Management tab. If you log in as an Operator or Power Operator, the User Management tab will not appear in the Oracle GoldenGate Monitor UI.</div>
+<a id="BGBHEDFE"></a>
+<div id="GMNCH165" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.1</span> Understanding User Security Roles</h2>
+<p>Each person who uses Oracle GoldenGate Monitor must be granted a security role. This role controls which functions of the interface that user can perform. There are three security roles in Oracle GoldenGate Monitor, as described in <a href="#BGBJBEJG">Table 4-1</a>:</p>
+<div id="GMNCH166" class="tblhruleformal">
+<p class="titleintable"><a id="sthref14"></a><a id="BGBJBEJG"></a>Table 4-1 Oracle GoldenGate Monitor Security Roles</p>
+<table class="cellalignment55" title="Oracle GoldenGate Monitor Security Roles" summary="This is a three column table. The left column lists the role, the middle column identifies which functions that roll can perform, and the right column describes the role.">
+<thead>
+<tr class="cellalignment44">
+<th class="cellalignment56" id="r1c1-t3">Role</th>
+<th class="cellalignment56" id="r1c2-t3">Functions this user can perform</th>
+<th class="cellalignment56" id="r1c3-t3">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment44">
+<td class="cellalignment51" id="r2c1-t3" headers="r1c1-t3">
+<p>Super Administrator (SuperAdmin)</p>
+</td>
+<td class="cellalignment51" headers="r2c1-t3 r1c2-t3">
+<p>All</p>
+</td>
+<td class="cellalignment51" headers="r2c1-t3 r1c3-t3">
+<p>The Super Administrator is the highest-priority role in Oracle GoldenGate Monitor. The Super Administrator can assign instances to Administrators, Operators, and Power Operators. There is always one Super Administrator.</p>
+<p>The Super Administrator can edit user information, such as the first and last name and email details on the Edit User screen of the logged in user (SA), and for other users like Administrator, Power Operator and Operator</p>
+</td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51" id="r3c1-t3" headers="r1c1-t3">
+<p>Administrator</p>
+</td>
+<td class="cellalignment51" headers="r3c1-t3 r1c2-t3">
+<p>All</p>
+</td>
+<td class="cellalignment51" headers="r3c1-t3 r1c3-t3">
+<p>The Administrator can perform all of the Oracle GoldenGate Monitor functions.</p>
+<p>The Administrator can map and un-map the instances (that is, instances that are accessible by the current logged in Administrator) for only Operator and Power Operator. the Administrator is not authorized to make any changes on the instances mapped to Super Administrator and other Administrators. Furthermore, the Administrator cannot edit the details for Super Administrator or other Administrators.</p>
+<p>The Administrator can edit the user information such as the first and last name and email details by using the Edit User screen of the logged-in user (Administrator) and for other users, such as a Power Operator or Operator.</p>
+</td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51" id="r4c1-t3" headers="r1c1-t3">
+<p>Power Operator</p>
+</td>
+<td class="cellalignment51" headers="r4c1-t3 r1c2-t3">
+<p>All but User Management</p>
+</td>
+<td class="cellalignment51" headers="r4c1-t3 r1c3-t3">
+<p>The Power Operator can perform all of the Oracle GoldenGate Monitor functions except managing users. The Power Operator cannot see the User Management tab.</p>
+</td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51" id="r5c1-t3" headers="r1c1-t3">
+<p>Operator</p>
+</td>
+<td class="cellalignment51" headers="r5c1-t3 r1c2-t3">
+<p>Metrics and Alerts</p>
+<p>History</p>
+<p>User Profile</p>
+</td>
+<td class="cellalignment51" headers="r5c1-t3 r1c3-t3">
+<p>The Operator can only manage his or her user profile, and can only view the monitoring tabs. The Operator cannot see the following tabs:</p>
+<ul>
+<li>
+<p>View Management</p>
+</li>
+<li>
+<p>Alert Management</p>
+</li>
+<li>
+<p>User Management</p>
+</li>
+<li>
+<p>Discard subtab of the Logs subtab on Metrics and Alerts</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="related-topics"><a id="GMNCH311"></a>Related Topics</p>
+<p><a href="#BGBHJEHE">Managing Users</a></p>
+<p><a href="#BGBIFIEJ">Managing Your User Profile</a></p>
+<p><a href="monitoring_tools.htm#CIHDHEHE">Overview of the Monitoring Workspace</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="BGBHJEHE"></a>
+<div id="GMNCH168" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.2</span> Managing Users</h2>
+<p>Managing users refers to editing a user's profile and administering Oracle GoldenGate instance access. If you are an Oracle GoldenGate Monitor Super Administrator (SuperAdmin) or an Administrator, you can use the User Management tab to view and manage information about the Oracle GoldenGate Monitor users. This tab displays the existing users, with columns that show the login name, the actual name of the person who owns that login name, that person's email address, and that person's security role within Oracle GoldenGate Monitor. It also displays the instances assigned to the users.</p>
+<p>While you can use the User Management tab to edit user information, such as name and email address, and to assign instances, you can only add and delete users, assign and change their passwords, and assign them to groups from the Oracle WebLogic Server Administration Console.</p>
+<p>This section describes how to:</p>
+<ul>
+<li>
+<p>Add a user; see <a href="#BGBCDDFC">To add a user:</a></p>
+</li>
+<li>
+<p>Add a user to a group; see <a href="#BGBEDIEH">To add a user to a group:</a></p>
+</li>
+<li>
+<p>Edit user information; see <a href="#BGBEJFHH">To change user properties:</a></p>
+</li>
+<li>
+<p>Delete a user; see <a href="#BGBIDIJJ">To remove a user:</a></p>
+</li>
+</ul>
+<p class="related-topics"><a id="GMNCH326"></a>Related Topics</p>
+<p><a href="#BGBHEDFE">Understanding User Security Roles</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="BGBHGIGJ"></a>
+<div id="GMNCH170" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.3</span> Adding, Changing, and Removing Users</h2>
+<p>Weblogic administrators can use the Oracle WebLogic Server Administration Console to do the following:</p>
+<ul>
+<li>
+<p>Create new users.</p>
+</li>
+<li>
+<p>Delete existing users.</p>
+</li>
+<li>
+<p>Update the user names and passwords</p>
+</li>
+</ul>
+<p>An Oracle GoldenGate Monitor Super Administrator or Administrator can edit user information by using User Management tab in Oracle GoldenGate Monitor Server Console.</p>
+<p class="subhead2"><a id="BGBCDDFC"></a><a id="GMNCH171"></a>To add a user:</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+As of Oracle GoldenGate Monitor 12<span class="italic">c</span> (12.2.1), you can only add a user by using the WebLogic Administration Console. The following procedure requires that you access that console before you begin.</div>
+<ol>
+<li>
+<p>Log into the Oracle WebLogic Server Administration Console.</p>
+</li>
+<li>
+<p>In the Domain Structure panel (left side of console), select Security Realms.</p>
+<img width="310" height="311" src="img/wls_dom_strct.gif" alt="Description of wls_dom_strct.gif follows" /><br />
+<a id="sthref15" href="img_text/wls_dom_strct.htm">Description of the illustration ''wls_dom_strct.gif''</a><br />
+<br /></li>
+<li>
+<p>On the Summary of Security Realms page select the name of the realm (for example, myrealm).</p>
+<img width="681" height="223" src="img/wls_realms.gif" alt="Description of wls_realms.gif follows" /><br />
+<a id="sthref16" href="img_text/wls_realms.htm">Description of the illustration ''wls_realms.gif''</a><br />
+<br /></li>
+<li>
+<p>On the Settings for Realm Name page select <span class="bold">Users and Groups</span> then <span class="bold">Users</span>.</p>
+<p>The User table displays the names of all users defined in the Authentication provider.</p>
+</li>
+<li>
+<p>Click <span class="bold">New</span>.</p>
+<p>The Create New User screen appears.</p>
+<img width="734" height="682" src="img/wls_crt_nu_usr.gif" alt="Description of wls_crt_nu_usr.gif follows" /><br />
+<a id="sthref17" href="img_text/wls_crt_nu_usr.htm">Description of the illustration ''wls_crt_nu_usr.gif''</a><br />
+<br /></li>
+<li>
+<p>In the Name field of the Create New User page enter the name of the user.</p>
+<p>User names must be unique. For the WebLogic Authentication provider (<code dir="ltr">DefaultAuthenticator</code>), user names are case insensitive. User names must not include tabs or any of the following characters:</p>
+<ul>
+<li>
+<p>Semicolons: ;</p>
+</li>
+<li>
+<p>Commas: ,</p>
+</li>
+<li>
+<p>Plus signs: +</p>
+</li>
+<li>
+<p>Equal signs:=</p>
+</li>
+<li>
+<p>Single backslash character: \ (note that two consecutive backslashes may be used; for example smith\\)</p>
+</li>
+</ul>
+<p>In addition, user names must not begin with either of the following characters:</p>
+<ul>
+<li>
+<p>Pound sign: #</p>
+</li>
+<li>
+<p>Double quotations: "</p>
+</li>
+</ul>
+<div class="infobox-note">
+<p class="notep1">Important:</p>
+If a user is created with any of the preceding invalid characters, the WebLogic domain can become corrupted.</div>
+</li>
+<li>
+<p>(Optional) In the Description field, enter a description. The description might be the user's full name.</p>
+</li>
+<li>
+<p>In the Provider drop-down list, select the Authentication provider for the user.</p>
+<p>If multiple Authentication providers are configured in the security realm, they will appear in the list. Select the Authentication provider that corresponds to the database in which the information for the new user is to be stored.</p>
+</li>
+<li>
+<p>In the Password field, enter a password for the user.</p>
+<p>The minimum password length for a user defined in the WebLogic Authentication provider is 8 characters. Do not use the username/password combination weblogic/welcome1 in production.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Oracle recommends that you configure the Password Validation provider in the security realm after you create a domain. The Password Validation provider can be configured to impose additional password composition rules. For more information, see Configure the Password Validation provider.</div>
+</li>
+<li>
+<p>Re-enter the password for the user in the Confirm Password field.</p>
+</li>
+<li>
+<p>Click <span class="bold">OK</span> to save your changes.</p>
+<p>The user name appears in the User table. You can now add this user to a group.</p>
+</li>
+</ol>
+<p class="subhead2"><a id="BGBEDIEH"></a><a id="GMNCH284"></a>To add a user to a group:</p>
+<ol>
+<li>
+<p>In the Users table select the user you want to add to a group.</p>
+</li>
+<li>
+<p>On the Settings for User Name page select <span class="bold">Groups</span>.</p>
+<p>The Groups tab appears:</p>
+<img width="438" height="417" src="img/cons_groups.gif" alt="Description of cons_groups.gif follows" /><br />
+<a id="sthref18" href="img_text/cons_groups.htm">Description of the illustration ''cons_groups.gif''</a><br />
+<br /></li>
+<li>
+<p>Select a group or groups from the Available list box:</p>
+<ul>
+<li>
+<p>To select multiple groups, Ctrl-click each group and then click the double right arrow to move the selection to the Chosen list box.</p>
+</li>
+<li>
+<p>To add a user to a group, click the right arrow to move the selection to the Chosen list box.</p>
+</li>
+<li>
+<p>To remove a user from a group, select the group in the Chosen list box and click the left arrow. You can remove multiple groups by selecting them and clicking the double left arrow.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Click <span class="bold">Save</span>.</p>
+</li>
+</ol>
+<p class="subhead2"><a id="BGBEJFHH"></a><a id="GMNCH172"></a>To change user properties:</p>
+<ol>
+<li>
+<p>In the Manage Users list of the User Management tab, click the name of the user that you want to change. The Edit User screen appears.</p>
+<img width="641" height="408" src="img/edit_user.gif" alt="Description of edit_user.gif follows" /><br />
+<a id="sthref19" href="img_text/edit_user.htm">Description of the illustration ''edit_user.gif''</a><br />
+<br /></li>
+<li>
+<p>Change the properties as needed. You can change the following properties:</p>
+<ul>
+<li>
+<p>User's proper name (first and/or last)</p>
+</li>
+<li>
+<p>User's email address.</p>
+</li>
+<li>
+<p>The instances to which the user has access (see <a href="#BGBIAEIF">Assigning Instances to a User</a>).</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Click <span class="bold">Submit</span>.</p>
+</li>
+</ol>
+<p class="subhead2"><a id="BGBIDIJJ"></a><a id="GMNCH173"></a>To remove a user:</p>
+<ol>
+<li>
+<p>Log in (or remain logged in) to the Oracle WebLogic Server Administration Console.</p>
+</li>
+<li>
+<p>In the left pane select Security Realms.</p>
+</li>
+<li>
+<p>On the Summary of Security Realms page select the name of the realm (for example, myrealm).</p>
+</li>
+<li>
+<p>On the Settings for Realm Name page select Users and Groups then Users.</p>
+</li>
+<li>
+<p>In the Users table select the check box next to each user name you want to delete.</p>
+<p>If you have a large number of users, use the <span class="bold">Customize this table</span> link to retrieve and list only the users that match your search criteria. The Filter By field uses the asterisk (*) as the wild card character.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The Administration Console displays a maximum of 1000 users. If the number of users that are defined exceeds 1000, you can apply a search filter to limit the display.</div>
+</li>
+<li>
+<p>Click <span class="bold">Delete</span>.</p>
+</li>
+<li>
+<p>Click <span class="bold">Yes</span> to confirm.</p>
+</li>
+</ol>
+<p class="related-topics"><a id="GMNCH312"></a>Related Topics</p>
+<p><a href="#BGBHJEHE">Managing Users</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="BGBIAEIF"></a>
+<div id="GMNCH285" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.4</span> Assigning Instances to a User</h2>
+<p>As described in <a href="#BGBHEDFE">Understanding User Security Roles</a>, all Oracle GoldenGate Monitor users are granted a security role. The Super Administrator or Administrator can assign or un-assign the instances to other users on the Edit Users screen, accessed from the User Management tab. This is referred to as "instance level security" and allows one to restrict the access different users have to different hosts/instances. Before attempting this procedure, you should familiarize yourself with how instance level security is managed. See <a class="olink GMNAD403" href="../GMNAD/mon_adm_ins_lvl_sec.htm#GMNAD403">Chapter 6, "Understanding Instance Level Security"</a> in <span class="italic">Administering Oracle GoldenGate Monitor</span>.</p>
+<p class="subhead2"><a id="GMNCH313"></a>To assign instances to a user:</p>
+<ol>
+<li>
+<p>In the Manage Users list of the User Management tab, click the name of the user that you want to change. The Edit User screen appears. The instances to which that user can be assigned will appear in the Instances list box. Note that <span class="bold">Role</span> is a non-editable column in the Edit Users screen for all the users.</p>
+</li>
+<li>
+<p>Select the check box next to each instance you want to assign to t hat user. If you want to assign all available instances, select All.</p>
+</li>
+<li>
+<p>Click <span class="bold">Submit</span>.</p>
+</li>
+</ol>
+<p>To delete an instance assignment, deselect the specific instance(s) or All and click <span class="bold">Submit</span>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BGBIFIEJ"></a>
+<div id="GMNCH175" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.5</span> Managing Your User Profile</h2>
+<p>Use the User Profile to change your log-in password and select the kinds of notifications that you want to receive.</p>
+<p class="subhead2"><a id="GMNCH176"></a>To manage your User Profile:</p>
+<ol>
+<li>
+<p>In the Utility Bar, click <span class="bold">User Profile</span>. The User Profile dialog box appears.</p>
+<img width="605" height="480" src="img/user_profile.gif" alt="Description of user_profile.gif follows" /><br />
+<a id="sthref20" href="img_text/user_profile.htm">Description of the illustration ''user_profile.gif''</a><br />
+<br /></li>
+<li>
+<p>Under <span class="bold">Notification Type for different Alert Severities</span>, specify the notification method that you want to use for each level of alert severity. This option is visible only if alerts are enabled by an administrator. An alert can have a severity of either Warning or Error, depending on how it was defined. You might want to receive Error alerts by email, SNMP, and CLI (only options that were enabled by an administrator are shown). Conversely, you might only need to receive Warning alerts by email, depending on your business protocols. The following status indicators appear in the status bar and workspaces for triggered alerts. See <a href="interface_overview.htm#CJAIIGCB">About the Status Indicators</a>.</p>
+<div class="inftblsimple">
+<table class="cellalignment50" summary="This is a two-column list table. The left column shows an icon while the right column shows the name of the icon.">
+<tbody>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="25" height="26" src="img/alert-moderate.gif" alt="Moderate alert icon" /></td>
+<td class="cellalignment51"><span class="bold">Warning-level alert</span></td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="25" height="26" src="img/alert-error.gif" alt="Error Alert icon" /></td>
+<td class="cellalignment51"><span class="bold">Error-level alert</span></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblsimple" --></li>
+<li>
+<p>For <span class="bold">Accessibility Mode</span>, set the accessibility mode for users with disabilities.</p>
+<ul>
+<li>
+<p><span class="bold">None</span>: Accessibility features are excluded.</p>
+</li>
+<li>
+<p><span class="bold">Standard Accessibility</span>: Supports standard accessibility features provided by supported browsers.</p>
+</li>
+<li>
+<p><span class="bold">Screen Reader Optimized</span>: Enables accessibility features that improve usability with a screen reader, but may affect other users negatively.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Submit: Click to save the changes that you made to your profile, or click Reset to cancel any changes that you made to your profile.</p>
+</li>
+</ol>
+<p class="related-topics"><a id="GMNCH314"></a>Related Topics</p>
+<p><a href="alerts.htm#BABHDEDE">Working with Alerts</a></p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment43">
+<tr>
+<td class="cellalignment51">
+<table class="cellalignment48">
+<tr>
+<td class="cellalignment47"><a href="monitoring_tools.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment47"><a href="alerts.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment53">
+<table class="cellalignment46">
+<tr>
+<td class="cellalignment47"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment47"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

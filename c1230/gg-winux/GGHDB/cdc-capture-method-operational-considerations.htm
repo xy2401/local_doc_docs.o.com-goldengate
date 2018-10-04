@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>CDC Capture Method Operational Considerations</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This section provides information about the SQL Server CDC Capture options, features, and recommended settings." />
+<meta name="dcterms.created" content="2018-09-07T08:20:49Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Heterogeneous Databases" />
+<meta name="dcterms.identifier" content="E88786-08" />
+<meta name="dcterms.isVersionOf" content="GGHDB" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="oracle-goldengate-classic-extract-sql-server-standard-edition-capture.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-oracle-goldengate-teradata.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGHDB.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-DBC124C8-AB2B-400B-9CC0-B4CE6817759C"></a> <span id="PAGE" style="display:none;">31/37</span> <!-- End Header -->
+<h1 id="GGHDB-GUID-DBC124C8-AB2B-400B-9CC0-B4CE6817759C" class="sect1"><span class="enumeration_chapter">22</span> CDC Capture Method Operational Considerations</h1>
+<div>
+<p>This section provides information about the SQL Server CDC Capture options, features, and recommended settings.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="cdc-capture-method-operational-considerations.htm#GUID-9710C0B8-2B0F-49F5-9A9C-60F8AC103A65">Tuning the SQL Server Change Data Capture Job</a><br /></li>
+<li class="ulchildlink"><a href="cdc-capture-method-operational-considerations.htm#GUID-7A2D740A-E65A-4A7C-87F5-386394F3B912">Valid and Invalid Parameters for SQL Server Change Data Capture</a><br /></li>
+<li class="ulchildlink"><a href="cdc-capture-method-operational-considerations.htm#GUID-FB5C5A54-95A3-4ACC-8C52-D018D5BD8414">Details of the Oracle GoldenGate CDC Cleanup Process</a><br /></li>
+<li class="ulchildlink"><a href="cdc-capture-method-operational-considerations.htm#GUID-AB437C70-3586-4A08-9180-96D78E3F7080">Changing from Classic Extract to a CDC Extract</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="18.1using-oracle-goldengate-sql-server.htm" title="With Oracle GoldenGate for SQL Server, you can capture transactional data from user tables of supported SQL Server versions and replicate the data to a SQL Server database or other supported Oracle GoldenGate targets, such as an Oracle Database or Big Data target.">Using Oracle GoldenGate with SQL Server</a></p>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-9710C0B8-2B0F-49F5-9A9C-60F8AC103A65"></a>
+<h2 id="GGHDB-GUID-9710C0B8-2B0F-49F5-9A9C-60F8AC103A65" class="sect2"><span class="enumeration_section">22.1</span> Tuning the SQL Server Change Data Capture Job</h2>
+<div>
+<p>The SQL Server Change Data Capture job collects data from the SQL Server transaction log and loads it into the CDC staging tables within the database.</p>
+<p>As part of the job that is created, there are several available tuning parameters that can be used, and information on how to best tune the job can be found in the following article:<a href="https://technet.microsoft.com/en-us/library/dd266396(v=sql.100).aspx" target="_blank">https://technet.microsoft.com/en-us/library/dd266396(v=sql.100).aspx</a></p>
+<p>As a general recommendation, you should change the SQL Server Change Data Capture Job polling interval from the default of 5 seconds, to 1 second.</p>
+<p>To change the default polling interval of the CDC Capture job, execute the following queries against the database:</p>
+<p><code class="codeph">EXEC [sys].[sp_cdc_change_job]</code></p>
+<p><code class="codeph">@job_type = N'capture&rsquo; ,</code></p>
+<p><code class="codeph">@pollinginterval = 1,</code></p>
+<p><code class="codeph">GO</code></p>
+<p><code class="codeph">&mdash;stops cdc job</code></p>
+<p><code class="codeph">EXEC [sys].[sp_cdc_stop_job]</code></p>
+<p><code class="codeph">@job_type = N'capture&rsquo;</code></p>
+<p><code class="codeph">GO</code></p>
+<p><code class="codeph">&mdash;restarts cdc job for new polling interval to take affect</code></p>
+<p><code class="codeph">EXEC [sys].[sp_cdc_start_job]</code></p>
+<p><code class="codeph">@job_type = N'capture&rsquo;</code></p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cdc-capture-method-operational-considerations.htm#GUID-DBC124C8-AB2B-400B-9CC0-B4CE6817759C" title="This section provides information about the SQL Server CDC Capture options, features, and recommended settings.">CDC Capture Method Operational Considerations</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-7A2D740A-E65A-4A7C-87F5-386394F3B912"></a>
+<h2 id="GGHDB-GUID-7A2D740A-E65A-4A7C-87F5-386394F3B912" class="sect2"><span class="enumeration_section">22.2</span> Valid and Invalid Parameters for SQL Server Change Data Capture</h2>
+<div>
+<p>This section describes parameters used for the CDC Capture method. For more information about supported and unsupported parameters for the CDC Capture method, review <cite>Reference for Oracle GoldenGate fpr Windows and UNIX</cite>.</p>
+<div class="section">
+<p class="subhead2"><code class="codeph">TRANLOGOPTIONS LOB_CHUNK_SIZE</code></p>
+<p>The Extract parameter&nbsp;<code class="codeph">LOB_CHUNK_SIZE</code>&nbsp;is added for the CDC Capture method to support large objects. If you have huge LOB data sizes, then you can adjust the&nbsp;<code class="codeph">LOB_CHUNK_SIZE</code>&nbsp;from the default of 4000 bytes, to a higher value up to 65535 bytes, so that the fetch size is increased, reducing the trips needed to fetch the entire LOB.</p>
+<p>Example: <code class="codeph">TRANLOGOPTIONS LOB_CHUNK_SIZE 8000</code></p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2"><code class="codeph">TRANLOGOPTIONS MANAGECDCCLEANUP/NOMANAGECDCCLEANUP</code></p>
+<p>The Extract parameter <code class="codeph">MANAGECDCCLEANUP/NOMANAGECDCCLEANUP</code> is used by the CDC Capture method to instruct the Extract on whether or not to maintain recovery checkpoint data in the Oracle GoldenGate CDC Cleanup job. The default value is <code class="codeph">MANAGECDCCLEANUP</code> and it doesn&rsquo;t have to be explicitly listed in the Extract. However, it does require creating the Oracle GoldenGate CDC Cleanup job prior to starting the Extract. <code class="codeph">MANAGECDCCLEANUP</code> should be used for all production environments, where <code class="codeph">NOMANAGECDCCLEANUP</code> may be used for temporary and testing implementations as needed.</p>
+<p>Example: <code class="codeph">TRANLOGOPTIONS MANAGECDCCLEANUP</code></p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2"><code class="codeph">TRANLOGOPTIONS EXCLUDEUSER/EXCLUDETRANS</code></p>
+<p>The SQL Server CDC Capture job does not capture user information or transaction names associated with a transaction, and as this information is not logged in the CDC staging tables, Extract has no method of excluding DML from a specific user or DML of a specific transaction name. The <code class="codeph">EXCLUDEUSER</code> and <code class="codeph">EXCLUDETRANS</code> parameters are therefore not valid for the CDC Capture process.</p>
+<p><code class="codeph">TRANLOGOPTIONS MANAGESECONDARYTRUNCATIONPOINT/NOMANAGESECONDARYTRUNCATIONPOINT/ACTIVESECONDARYTRUNCATIONPOINT</code></p>
+<p>The SQL Server Change Data Capture job is the only process that captures data from the transaction log when using the Oracle GoldenGate CDC Capture method. Therefore secondary truncation point management is not handled by the Extract, and for the Change Data Capture Extract, these parameters are not valid.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cdc-capture-method-operational-considerations.htm#GUID-DBC124C8-AB2B-400B-9CC0-B4CE6817759C" title="This section provides information about the SQL Server CDC Capture options, features, and recommended settings.">CDC Capture Method Operational Considerations</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-FB5C5A54-95A3-4ACC-8C52-D018D5BD8414"></a>
+<h2 id="GGHDB-GUID-FB5C5A54-95A3-4ACC-8C52-D018D5BD8414" class="sect2"><span class="enumeration_section">22.3</span> Details of the Oracle GoldenGate CDC Cleanup Process</h2>
+<div>
+<p>The Oracle GoldenGate CDC Cleanup job is required for a CDC Extract by default, since Extract defaults to <code class="codeph">TRANLOGOPTIONS MANAGECDCCLEANUP</code>, and is installed from a Windows batch file (<code class="codeph">ogg_cdc_cleanup_setup.bat</code>), which uses <code class="codeph">sqlcmd</code> to connect to the source SQL Server database and create the necessary objects and job.</p>
+<p>There should be one job for each database enabled for CDC Capture, and you must create the job and objects following the steps mentioned in the <a href="preparing-database-oracle-goldengate-cdc-capture.htm#GUID-E95F8C25-7A3B-41B1-A524-9DB08482CEA7" title="Process to configure database settings and supplemental logging to support CDC Capture.">Preparing the Database for Oracle GoldenGate &mdash; CDC Capture</a> section of this document.</p>
+<p>There are other options to the utility as well, and those will be discussed below.</p>
+<p>The steps below require a SQL Server authenticated database user who is a member of the SQL Server System Administrators (<code class="codeph">sysadmin</code> ) role. Windows authentication is not supported for the .bat binary.</p>
+<div class="section">
+<p class="subhead2">Removing an Extract from the Database</p>
+<p>When the Oracle GoldenGate CDC Cleanup object tables exist, each CDC Extract that is started against that database will create an entry in the <code class="codeph">OracleGGExtractCheckpoint</code> table. This entry tracks a particular Extract&rsquo;s point in time recovery checkpoint, which is used as the cutoff LSN for the Oracle GoldenGate CDC cleanup tasks. If there are multiple Extracts running, each logging more recent recovery checkpoints in the table, but one Extract has been removed from the system without removing its entry into the <code class="codeph">OracleGGExtractCheckpoint</code> table, then no data will be purged newer than that deleted Extract&rsquo;s old recovery checkpoint for all of the CDC staging tables. So when deleting an Extract from the database, follow the steps below to remove the Extract from the <code class="codeph">OracleGGExtractCheckpoint</code> table if more than one Extract is running against the database.</p>
+<p><span class="bold">1.</span> Ensure that the Extract has been deleted via <code class="codeph">GGSCI: DELETE EXTRACT &lt;extname&gt;</code></p>
+<p><span class="bold">2.</span> On the source system, open a command prompt and change to the Oracle GoldenGate installation folder.</p>
+<p><span class="bold">3.</span> Run the <code class="codeph">ogg_cdc_cleanup_setup.bat</code> file, providing the following variable values:</p>
+<p><code class="codeph">ogg_cdc_cleanup_setup.bat deleteExtCheckpoint &lt;userid&gt; &lt;password&gt; &lt;databasename&gt; &lt;servername\instancename&gt; &lt;schema&gt;</code></p>
+<p>Example: <code class="codeph">ogg_cdc_cleanup_setup.bat deleteExtCheckoint ggsuser ggspword db1 server1\inst1 ogg</code></p>
+<p><span class="bold">4.</span> You will be prompted to enter the name of the Extract that is to be removed, and once entered, press the Enter/Return key to continue.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2"><span class="bold">Modifying the Oracle GoldenGate CDC Cleanup Job</span></p>
+<p>The default schedule, retention period and operation batch size for the Oracle GoldenGate CDC Cleanup job of a database is to run every 10 minutes, with a data retention policy of 72 hours (listed as 4320 minutes), purging in batches of 500 records per transaction until the retention policy is meet, not to exceed the recovery checkpoint data of the Extract.</p>
+<p>For variations in customer environments, or change data table data retention requirements, it may be necessary to adjust these properties to increase the purge batch size or to adjust retention policies and the job run-time schedule.</p>
+<p>To adjust the job execution frequency, manually modify the schedule for the <code class="codeph">OracleGGCleanup_dbname_Job</code> job within SQL Server Agent. If you need to adjust the retention period or purge batch size, you must manually edit the job step for the <code class="codeph">OracleGGCleanup_dbname_Job</code> job within SQL Server Agent. The job step passes two parameters to the cleanup stored procedure, and you can modify the value for <code class="codeph">@retention_minutes</code> to adjust the data retention policy as needed, or modify the <code class="codeph">@threshold</code> value to increase or decrease the purge batch size. In high transactional environments, it may be necessary to increase the <code class="codeph">@threshold</code> value to a number such as 10000. Monitoring the amount of time that it takes for the job to run within each cycle can be used to determine effective <code class="codeph">@threshold</code> values.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Deleting the Oracle GoldenGate CDC Cleanup Job</p>
+<p>If you no longer require the Oracle GoldenGate CDC Cleanup job and associated objects and need to remove them, perform the following steps:</p>
+<p><span class="bold">1.</span> Open a command prompt and change to the Oracle GoldenGate installation folder.</p>
+<p><span class="bold">2.</span> Run the <code class="codeph">ogg_cdc_cleanup_setup.bat</code> file, providing the following variable values:</p>
+<p><code class="codeph">ogg_cdc_cleanup_setup.bat dropJob &lt;userid&gt; &lt;password&gt; &lt;databasename&gt; &lt;servername\instancename&gt; &lt;schema&gt;</code></p>
+<p>Example: <code class="codeph">ogg_cdc_cleanup_setup.bat dropJob ggsuser ggspword db1 server1\inst1 ogg</code></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cdc-capture-method-operational-considerations.htm#GUID-DBC124C8-AB2B-400B-9CC0-B4CE6817759C" title="This section provides information about the SQL Server CDC Capture options, features, and recommended settings.">CDC Capture Method Operational Considerations</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-AB437C70-3586-4A08-9180-96D78E3F7080"></a>
+<h2 id="GGHDB-GUID-AB437C70-3586-4A08-9180-96D78E3F7080" class="sect2"><span class="enumeration_section">22.4</span> Changing from Classic Extract to a CDC Extract</h2>
+<div>
+<p>If you plan to change from using a Classic Extract from Oracle GoldenGate 12.3 or earlier, to a CDC Extract, then you must remove the supplemental logging that was implemented using the Classic Extract installation method, and re-enable supplemental logging using the CDC Extract installation binaries, as the calls to enable <code class="codeph">TRANDATA</code> are different between the two versions, and the implementation of <code class="codeph">TRANDATA</code> for Classic Extract is not supported by the CDC Extract.</p>
+<p>Follow these general guidelines to remove, and re-enable supplemental logging. Special consideration and planning should be involved if migrating from Classic to CDC Extract in a production system, and the information provide here does not cover all requirements and is only offered as general requirements regarding supplemental logging:</p>
+<p><span class="bold">1.</span> Ensure that the Classic Extract has processed all remaining data in the logs and can be gracefully stopped.</p>
+<div class="p"><span class="bold">2.</span> Do one of the following, depending on how Extract was running in relation to other replication or CDC components:
+<ul style="list-style-type: disc;">
+<li>
+<p>1. If Extract was&nbsp;<span class="italic">not</span>&nbsp;running concurrently with SQL Server transactional replication or a non-Oracle CDC configuration on the same database, open a query session in Management Studio and issue the following statement against the source database to disable and delete any CDC or replication components, and to clear the secondary truncation point.</p>
+<p><code class="codeph">EXEC sys.sp_cdc_disable_db</code></p>
+</li>
+<li>
+<p>2. If Extract was running&nbsp;<span class="italic">concurrently</span>&nbsp;with SQL Server transactional replication or a non-Oracle CDC configuration on the same database, run GGSCI from the Classic Extract&rsquo;s installation folder, login to the source database with the <code class="codeph">DBLOGIN</code>, and then issue the following command for each table that is in the Extract configuration.&nbsp;You can use a wildcard to specify multiple table names</p>
+<div class="p">
+<pre dir="ltr">
+DELETE TRANDATA <span class="italic">owner.table</span>
+DELETE TRANDATA <span class="italic">owner.*</span>
+</pre></div>
+</li>
+</ul>
+</div>
+<p>3. Delete any heartbeat table entries if one was installed.</p>
+<p><code class="codeph">DELETE HEARTBEATTABLE</code></p>
+<p>4. Using the Oracle GoldenGate CDC Extract installation binaries, follow the steps listed in <a href="preparing-database-oracle-goldengate-cdc-capture.htm#GUID-E95F8C25-7A3B-41B1-A524-9DB08482CEA7" title="Process to configure database settings and supplemental logging to support CDC Capture.">Preparing the Database for Oracle GoldenGate &mdash; CDC Capture</a> to re-enable supplemental logging and other necessary components, and re-add the heartbeat table.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cdc-capture-method-operational-considerations.htm#GUID-DBC124C8-AB2B-400B-9CC0-B4CE6817759C" title="This section provides information about the SQL Server CDC Capture options, features, and recommended settings.">CDC Capture Method Operational Considerations</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment114">
+<tr>
+<td class="cellalignment121">
+<table class="cellalignment119">
+<tr>
+<td class="cellalignment118"><a href="oracle-goldengate-classic-extract-sql-server-standard-edition-capture.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment118"><a href="using-oracle-goldengate-teradata.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment123">
+<table class="cellalignment117">
+<tr>
+<td class="cellalignment118"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment118"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment118"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

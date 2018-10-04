@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using Target System Connection Initiation</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Learn how to initiate passive and alias connections between your source and target systems." />
+<meta name="dcterms.created" content="2018-05-10T07:33:56Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Securing the Oracle GoldenGate Environment" />
+<meta name="dcterms.identifier" content="E91326-01" />
+<meta name="dcterms.isVersionOf" content="OGGSE" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="configuring-ggsci-command-security.htm" title="Previous" type="text/html" />
+<link rel="Next" href="securing-manager.htm" title="Next" type="text/html" />
+<link rel="alternate" href="OGGSE.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-71F45FDD-6406-4153-9638-F13891C39AE7"></a> <span id="PAGE" style="display:none;">23/24</span> <!-- End Header -->
+<h1 id="OGGSE-GUID-71F45FDD-6406-4153-9638-F13891C39AE7" class="sect1"><span class="enumeration_chapter">14</span> Using Target System Connection Initiation</h1>
+<div>
+<p>Learn how to initiate passive and alias connections between your source and target systems.</p>
+<div class="section">
+<p>When a target system resides inside a trusted intranet zone, initiating connections from the source system (the standard <span>Oracle GoldenGate</span> method) may violate security policies if the source system is in a less trusted zone. It also may violate security policies if a system in a less trusted zone contains information about the ports or IP address of a system in the trusted zone, such as that normally found in an <span>Oracle GoldenGate</span> Extract parameter file.</p>
+<p>In this kind of intranet configuration, you can use a <span class="bold">passive-alias Extract</span> configuration. Connections are initiated from the target system inside the trusted zone by an <span class="bold">alias Extract</span> group, which acts as an alias for a regular Extract group on the source system, known in this case as the <span class="bold">passive Extract</span>. Once a connection between the two systems is established, data is processed and transferred across the network by the passive Extract group in the usual way.</p>
+<div class="figure" id="GUID-71F45FDD-6406-4153-9638-F13891C39AE7__GUID-4BA5A262-8D98-47D2-94B7-54D6F7418E6C"><img width="662" height="297" src="img/oggse_pb_001a.png" alt="Description of oggse_pb_001a.png follows" title="Description of oggse_pb_001a.png follows" /><br />
+<a href="img_text/oggse_pb_001a.htm">Description of the illustration oggse_pb_001a.png</a></div>
+<!-- class="figure" --></div>
+<!-- class="section" -->
+<ol>
+<li><span>An <span>Oracle GoldenGate</span> user starts the alias Extract on the trusted system, or an <code class="codeph">AUTOSTART</code> or <code class="codeph">AUTORESTART</code> parameter causes it to start.</span></li>
+<li><span>GGSCI on the trusted system sends a message to Manager on the less trusted system to start the associated passive Extract. The host name or IP address and port number of the Manager on the trusted system are sent to the less trusted system.</span></li>
+<li><span>On the less trusted system, Manager starts the passive Extract, and the passive Extract finds an open port (according to rules in the <code class="codeph">DYNAMICPORTLIST</code> Manager parameter) and listens on that port.</span></li>
+<li><span>The Manager on the less trusted system returns that port to GGSCI on the trusted system.</span></li>
+<li><span>GGSCI on the trusted system sends a request to the Manager on that system to start a Collector process on that system.</span></li>
+<li><span>The target Manager starts the Collector process and passes it the port number where Extract is listening on the less trusted system.</span></li>
+<li><span>Collector on the trusted system opens a connection to the passive Extract on the less trusted system.</span></li>
+<li><span>Data is sent across the network from the passive Extract to the Collector on the target and is written to the trail in the usual manner for processing by Replicat.</span></li>
+</ol>
+<div class="section">
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-target-system-connection-initiation.htm#GUID-9793FE6C-74DA-42D7-8EA1-D5B55FB43720">Configuring the Passive Extract Group</a><br /></li>
+<li class="ulchildlink"><a href="using-target-system-connection-initiation.htm#GUID-475B05BF-C3C4-47CF-8148-279EC2A1C946">Configuring the Alias Extract Group</a><br /></li>
+<li class="ulchildlink"><a href="using-target-system-connection-initiation.htm#GUID-6421310E-CFEB-47E7-B27E-556B339BCFD8">Starting and Stopping the Passive and Alias Processes</a><br /></li>
+<li class="ulchildlink"><a href="using-target-system-connection-initiation.htm#GUID-CBB8D233-3BBD-42E7-B88C-CE1FB4400686">Managing Extraction Activities</a><br /></li>
+<li class="ulchildlink"><a href="using-target-system-connection-initiation.htm#GUID-5C7E4DA3-B785-4AFD-8951-045A503663AA">Other Considerations when using Passive-Alias Extract</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="securing-oracle-goldengate.htm" title="Use this part to secure your CA and MA environments.">Securing Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-9793FE6C-74DA-42D7-8EA1-D5B55FB43720"></a>
+<h2 id="OGGSE-GUID-9793FE6C-74DA-42D7-8EA1-D5B55FB43720" class="sect2"><span class="enumeration_section">14.1</span> Configuring the Passive Extract Group</h2>
+<div>
+<div class="section">
+<p>The passive Extract group on the less trusted source system will be one of the following, depending on which one is responsible for sending data across the network:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>A solo Extract group that reads the transaction logs and also sends the data to the target, or:</p>
+</li>
+<li>
+<p>A data pump Extract group that reads a local trail supplied by a primary Extract and then sends the data to the target. In this case, there are no special configuration requirements for the primary Extract, just the data pump.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-9793FE6C-74DA-42D7-8EA1-D5B55FB43720__GUID-9962B73F-E1D9-4D93-A17E-2BC837357763">
+<p class="notep1">Note:</p>
+<p>The passive Extract group is only available in the <span>Oracle GoldenGate</span> <span>CA</span>.</p>
+</div>
+<p>To create an Extract group in passive mode, use the standard <code class="codeph">ADD EXTRACT</code> command and options, but add the <code class="codeph">PASSIVE</code> keyword in any location relative to other command options. Examples:</p>
+<pre dir="ltr">
+ADD EXTRACT fin, TRANLOG, BEGIN NOW, PASSIVE, DESC 'passive Extract'
+ADD EXTRACT fin, PASSIVE, TRANLOG, BEGIN NOW, DESC 'passive Extract'
+</pre>
+<p>To configure parameters for the passive Extract group, create a parameter file in the normal manner, except:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic">Exclude</span> the <code class="codeph">RMTHOST</code> parameter, which normally would specify the host and port information for the target Manager.</p>
+</li>
+<li>
+<p>Use the optional <code class="codeph">RMTHOSTOPTIONS</code> parameter to specify any compression and encryption rules. For information about the <code class="codeph">RMTHOSTOPTIONS</code> options, see <a class="olink GWURF-GUID-4675F779-D83C-4AF6-9B0A-C811CC715F15" target="_blank" href="../GWURF/rmthost.htm#GWURF-GUID-4675F779-D83C-4AF6-9B0A-C811CC715F15"><span id="GUID-9793FE6C-74DA-42D7-8EA1-D5B55FB43720__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></a>.</p>
+</li>
+</ul>
+<p>For more information about configuring an Extract group, see <a class="olink GWUAD-GUID-3388C553-994A-4ECD-95C8-A54FC7446E67" target="_blank" href="../GWUAD/configuring-online-change-synchronization.htm#GWUAD-GUID-3388C553-994A-4ECD-95C8-A54FC7446E67"><span id="GUID-9793FE6C-74DA-42D7-8EA1-D5B55FB43720__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-target-system-connection-initiation.htm#GUID-71F45FDD-6406-4153-9638-F13891C39AE7" title="Learn how to initiate passive and alias connections between your source and target systems.">Using Target System Connection Initiation</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-475B05BF-C3C4-47CF-8148-279EC2A1C946"></a>
+<h2 id="OGGSE-GUID-475B05BF-C3C4-47CF-8148-279EC2A1C946" class="sect2"><span class="enumeration_section">14.2</span> Configuring the Alias Extract Group</h2>
+<div>
+<div class="section">
+<p>The alias Extract group on the trusted target does not perform any data processing activities. Its sole purpose is to initiate and terminate connections to the less trusted source. In this capacity, the alias Extract group does not use a parameter file nor does it write processing checkpoints. A checkpoint file is used only to determine whether the passive Extract group is running or not and to record information required for the remote connection.</p>
+<div class="infobox-note" id="GUID-475B05BF-C3C4-47CF-8148-279EC2A1C946__GUID-9962B73F-E1D9-4D93-A17E-2BC837357763">
+<p class="notep1">Note:</p>
+<p>The alias Extract group is only available in the <span>Oracle GoldenGate</span> <span>CA</span>.</p>
+</div>
+<p>To create an Extract group in alias mode, use the <code class="codeph">ADD EXTRACT</code> command without any other options except the following:</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">group</span>
+, RMTHOST {<span class="italic">host_name</span> | <span class="italic">IP_address</span>}
+, MGRPORT <span class="italic">port</span>
+[, RMTNAME <span class="italic">name</span>]
+[, DESC '<span class="italic">description</span>']
+</pre>
+<p>The <code class="codeph">RMTHOST</code> specification identifies this group as an alias Extract, and the information is written to the checkpoint file. The <span class="italic"><code class="codeph">host_name</code></span> and <span class="italic"><code class="codeph">IP_address</code></span> options specify the name or IP address of the source system. <code class="codeph">MGRPORT</code> specifies the port on the source system where Manager is running.</p>
+<p>The alias Extract name can be the same as that of the passive Extract, or it can be different. If the names are different, use the optional <code class="codeph">RMTNAME</code> specification to specify the name of the passive Extract. If <code class="codeph">RMTNAME</code> is not used, Oracle GoldenGate expects the names to be identical and writes the name to the checkpoint file of the alias Extract for use when establishing the connection.</p>
+<p>Error handling for TCP/IP connections is guided by the <code class="codeph">TCPERRS</code> file on the target system. It is recommended that you set the response values for the errors in this file to <code class="codeph">RETRY</code>. The default is <code class="codeph">ABEND</code>. This file also provides options for setting the number of retries and the delay between attempts. For more information about error handling for TCP/IP and the <code class="codeph">TCPERRS</code> file, see <a class="olink GWUAD-GUID-9780396C-4BB4-4E49-8BA1-733B9A636D99" target="_blank" href="../GWUAD/handling-processing-errors.htm#GWUAD-GUID-9780396C-4BB4-4E49-8BA1-733B9A636D99"><span id="GUID-475B05BF-C3C4-47CF-8148-279EC2A1C946__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-target-system-connection-initiation.htm#GUID-71F45FDD-6406-4153-9638-F13891C39AE7" title="Learn how to initiate passive and alias connections between your source and target systems.">Using Target System Connection Initiation</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-6421310E-CFEB-47E7-B27E-556B339BCFD8"></a>
+<h2 id="OGGSE-GUID-6421310E-CFEB-47E7-B27E-556B339BCFD8" class="sect2"><span class="enumeration_section">14.3</span> Starting and Stopping the Passive and Alias Processes</h2>
+<div>
+<div class="section">
+<p>To start or stop Oracle GoldenGate extraction in the passive-alias Extract configuration, you must start or stop the alias Extract group from GGSCI on the target.</p>
+<pre dir="ltr">
+START EXTRACT <span class="italic">alias_group_name</span>
+</pre>
+<p>or,</p>
+<pre dir="ltr">
+STOP EXTRACT <span class="italic">alias_group_name</span>
+</pre>
+<p>The command is sent to the source system to start or stop the passive Extract group. Do not issue these commands directly against the passive Extract group. You can issue a <code class="codeph">KILL EXTRACT</code> command directly for the passive Extract group.</p>
+<p>When using the Manager parameters <code class="codeph">AUTOSTART</code> and <code class="codeph">AUTORESTART</code> to automatically start or restart processes, use them on the target system, not the source system. The alias Extract is started first and then the start command is sent to the passive Extract.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-target-system-connection-initiation.htm#GUID-71F45FDD-6406-4153-9638-F13891C39AE7" title="Learn how to initiate passive and alias connections between your source and target systems.">Using Target System Connection Initiation</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-CBB8D233-3BBD-42E7-B88C-CE1FB4400686"></a>
+<h2 id="OGGSE-GUID-CBB8D233-3BBD-42E7-B88C-CE1FB4400686" class="sect2"><span class="enumeration_section">14.4</span> Managing Extraction Activities</h2>
+<div>
+<div class="section">
+<p>Once extraction processing has been started, you can manage and monitor it in the usual manner by issuing commands against the passive Extract group from GGSCI on the source system. The standard GGSCI monitoring commands, such as <code class="codeph">INFO</code> and <code class="codeph">VIEW REPORT</code>, can be issued from either the source or target systems. If a monitoring command is issued for the alias Extract group, it is forwarded to the passive Extract group. The alias Extract group name is replaced in the command with the passive Extract group name. For example, <code class="codeph">INFO EXTRACT</code> <span class="italic"><code class="codeph">alias</code></span> becomes <code class="codeph">INFO EXTRACT</code> <span class="italic"><code class="codeph">passive.</code></span> The results of the command are displayed on the system where the command was issued.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-target-system-connection-initiation.htm#GUID-71F45FDD-6406-4153-9638-F13891C39AE7" title="Learn how to initiate passive and alias connections between your source and target systems.">Using Target System Connection Initiation</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-5C7E4DA3-B785-4AFD-8951-045A503663AA"></a>
+<h2 id="OGGSE-GUID-5C7E4DA3-B785-4AFD-8951-045A503663AA" class="sect2"><span class="enumeration_section">14.5</span> Other Considerations when using Passive-Alias Extract</h2>
+<div>
+<p>When using a passive-alias Extract configuration, these rules apply:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>In this configuration, Extract can only write to one target system.</p>
+</li>
+<li>
+<p>This configuration can be used in an Oracle RAC installation by creating the Extract group in the normal manner (using the <code class="codeph">THREADS</code> option to specify the number of redo threads).</p>
+</li>
+<li>
+<p>The <code class="codeph">ALTER EXTRACT</code> command cannot be used for the alias Extract, because that group does not do data processing.</p>
+</li>
+<li>
+<p>To use the <code class="codeph">DELETE EXTRACT</code> command for a passive or alias Extract group, issue the command from the local GGSCI.</p>
+</li>
+<li>
+<p>Remote tasks, specified with <code class="codeph">RMTTASK</code> in the Extract parameter file and used for some initial load methods, are not supported in this configuration. A remote task requires the connection to be initiated from the source system and uses a direct connection between Extract and Replicat.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-target-system-connection-initiation.htm#GUID-71F45FDD-6406-4153-9638-F13891C39AE7" title="Learn how to initiate passive and alias connections between your source and target systems.">Using Target System Connection Initiation</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment238">
+<tr>
+<td class="cellalignment249">
+<table class="cellalignment243">
+<tr>
+<td class="cellalignment242"><a href="configuring-ggsci-command-security.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment242"><a href="securing-manager.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment251">
+<table class="cellalignment241">
+<tr>
+<td class="cellalignment242"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment242"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment242"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Configuring GGSCI Command Security</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="You can establish command security for Oracle GoldenGate to control which users have access to which Oracle GoldenGate functions." />
+<meta name="dcterms.created" content="2018-05-10T07:33:56Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Securing the Oracle GoldenGate Environment" />
+<meta name="dcterms.identifier" content="E91326-01" />
+<meta name="dcterms.isVersionOf" content="OGGSE" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="populating-enckeys-file-encryption-keys.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-target-system-connection-initiation.htm" title="Next" type="text/html" />
+<link rel="alternate" href="OGGSE.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-5FFB4B77-D316-4339-954D-AB7A3FBB1DA5"></a> <span id="PAGE" style="display:none;">22/24</span> <!-- End Header -->
+<h1 id="OGGSE-GUID-5FFB4B77-D316-4339-954D-AB7A3FBB1DA5" class="sect1"><span class="enumeration_chapter">13</span> Configuring GGSCI Command Security</h1>
+<div>
+<p>You can establish command security for <span>Oracle GoldenGate</span> to control which users have access to which <span>Oracle GoldenGate</span> functions.</p>
+<div class="section">
+<div class="infobox-note" id="GUID-5FFB4B77-D316-4339-954D-AB7A3FBB1DA5__GUID-9962B73F-E1D9-4D93-A17E-2BC837357763">
+<p class="notep1">Note:</p>
+<p>The <code class="codeph">GGSCI</code> program is only available in the <span>Oracle GoldenGate</span> <span>CA</span>.</p>
+</div>
+<p>For example, you can allow certain users to issue <code class="codeph">INFO</code> and <code class="codeph">STATUS</code> commands, while preventing their use of <code class="codeph">START</code> and <code class="codeph">STOP</code> commands. Security levels are defined by the operating system's user groups.</p>
+<p>To implement security for <span>Oracle GoldenGate</span> commands, you create a <code class="codeph">CMDSEC</code> file in the <span>Oracle GoldenGate</span> directory. Without this file, access to all <span>Oracle GoldenGate</span> commands is granted to all users.</p>
+<div class="infobox-note" id="GUID-5FFB4B77-D316-4339-954D-AB7A3FBB1DA5__GUID-F42499B0-57B7-4FBE-B069-7D54B4447FB5">
+<p class="notep1">Note:</p>
+<p>The security of the <code class="codeph">GGSCI</code> program is controlled by the security controls of the operating system.</p>
+</div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-ggsci-command-security.htm#GUID-4F1606A3-B09B-471B-ABDA-A44600DA8FC4">Setting Up Command Security</a><br /></li>
+<li class="ulchildlink"><a href="configuring-ggsci-command-security.htm#GUID-2E8B8CD6-B32D-463D-9EB4-359767EA0128">Securing the CMDSEC File</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="securing-oracle-goldengate.htm" title="Use this part to secure your CA and MA environments.">Securing Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-4F1606A3-B09B-471B-ABDA-A44600DA8FC4"></a>
+<h2 id="OGGSE-GUID-4F1606A3-B09B-471B-ABDA-A44600DA8FC4" class="sect2"><span class="enumeration_section">13.1</span> Setting Up Command Security</h2>
+<div>
+<ol>
+<li class="stepexpand"><span>Open a new ASCII text file.</span></li>
+<li class="stepexpand"><span>Referring to the following syntax and the example on , create one or more security rules for each command that you want to restrict, one rule per line. List the rules in order from the most specific (those with no wildcards) to the least specific. Security rules are processed from the top of the <code class="codeph">CMDSEC</code> file downward. The first rule satisfied is the one that determines whether or not access is allowed.</span>
+<div>
+<p>Separate each of the following components with spaces or tabs.</p>
+<pre dir="ltr">
+<span class="italic">command_name</span> <span class="italic">command_object</span> <span class="italic">OS_group</span> <span class="italic">OS_user</span> {YES | NO}
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">command_name</code></span> is a GGSCI command name or a wildcard, for example <code class="codeph">START</code> or <code class="codeph">STOP</code> or *.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">command_object</code></span> is any GGSCI command object or a wildcard, for example <code class="codeph">EXTRACT</code> or <code class="codeph">REPLICAT</code> or <code class="codeph">MANAGER</code>.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">OS_group</code></span> is the name of a Windows or UNIX user group. On a UNIX system, you can specify a numeric group ID instead of the group name. You can use a wildcard to specify all groups.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">OS_user</code></span> is the name of a Windows or UNIX user. On a UNIX system, you can specify a numeric user ID instead of the user name. You can use a wildcard to specify all users.</p>
+</li>
+<li>
+<p><code class="codeph">YES | NO</code> specifies whether access to the command is granted or prohibited.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Save the file as <code class="codeph">CMDSEC</code> (using upper case letters on a UNIX system) in the Oracle GoldenGate home directory.</span></li>
+</ol>
+<div class="section">
+<p>The following example illustrates the correct implementation of a <code class="codeph">CMDSEC</code> file on a UNIX system.</p>
+<div class="tblformal" id="GUID-4F1606A3-B09B-471B-ABDA-A44600DA8FC4__G1077966">
+<p class="titleintable">Table 13-1 Sample CMDSEC File with Explanations</p>
+<table class="cellalignment259" title="Sample CMDSEC File with Explanations" summary="This table shows a sample CMDSEC file. It lists the file contents and explains each one.">
+<thead>
+<tr class="cellalignment239">
+<th class="cellalignment266" id="d11763e219">File Contents</th>
+<th class="cellalignment267" id="d11763e222">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment239">
+<td class="cellalignment268" id="d11763e227" headers="d11763e219">
+<pre dir="ltr">
+#GG command security
+</pre></td>
+<td class="cellalignment269" headers="d11763e227 d11763e222">
+<p>Comment line</p>
+</td>
+</tr>
+<tr class="cellalignment239">
+<td class="cellalignment268" id="d11763e234" headers="d11763e219">
+<pre dir="ltr">
+STATUS REPLICAT * Smith NO
+</pre></td>
+<td class="cellalignment269" headers="d11763e234 d11763e222">
+<p><code class="codeph">STATUS REPLICAT</code> is denied to user <code class="codeph">Smith</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment239">
+<td class="cellalignment268" id="d11763e249" headers="d11763e219">
+<pre dir="ltr">
+STATUS * dpt1 * YES
+</pre></td>
+<td class="cellalignment269" headers="d11763e249 d11763e222">
+<p>Except for the preceding rule, all users in <code class="codeph">dpt1</code> are granted all <code class="codeph">STATUS</code> commands.</p>
+</td>
+</tr>
+<tr class="cellalignment239">
+<td class="cellalignment268" id="d11763e262" headers="d11763e219">
+<pre dir="ltr">
+START REPLICAT root * YES
+</pre></td>
+<td class="cellalignment269" headers="d11763e262 d11763e222">
+<p><code class="codeph">START REPLICAT</code> is granted to all members of the <code class="codeph">root</code> group.</p>
+</td>
+</tr>
+<tr class="cellalignment239">
+<td class="cellalignment268" id="d11763e274" headers="d11763e219">
+<pre dir="ltr">
+START REPLICAT * * NO
+</pre></td>
+<td class="cellalignment269" headers="d11763e274 d11763e222">
+<p>Except for the preceding rule, <code class="codeph">START REPLICAT</code> is denied to all users.</p>
+</td>
+</tr>
+<tr class="cellalignment239">
+<td class="cellalignment268" id="d11763e284" headers="d11763e219">
+<pre dir="ltr">
+* EXTRACT 200 * NO
+</pre></td>
+<td class="cellalignment269" headers="d11763e284 d11763e222">
+<p>All <code class="codeph">EXTRACT</code> commands are denied to all groups with ID of 200.</p>
+</td>
+</tr>
+<tr class="cellalignment239">
+<td class="cellalignment268" id="d11763e294" headers="d11763e219">
+<pre dir="ltr">
+* * root root YES
+</pre></td>
+<td class="cellalignment269" headers="d11763e294 d11763e222">
+<p>Grants the <code class="codeph">root</code> user any command.</p>
+</td>
+</tr>
+<tr class="cellalignment239">
+<td class="cellalignment268" id="d11763e304" headers="d11763e219">
+<pre dir="ltr">
+* * * * NO
+</pre></td>
+<td class="cellalignment269" headers="d11763e304 d11763e222">
+<p>Denies all commands to all users. This line covers security for any other users that were not explicitly granted or denied access by preceding rules. Without it, all commands would be granted to all users except for preceding explicit grants or denials.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>The following <span class="italic">incorrect</span> example illustrates what to avoid when creating a <code class="codeph">CMDSEC</code> file.</p>
+<div class="tblformal" id="GUID-4F1606A3-B09B-471B-ABDA-A44600DA8FC4__G1077997">
+<p class="titleintable">Table 13-2 Incorrect CMDSEC Entries</p>
+<table class="cellalignment259" title="Incorrect CMDSEC Entries" summary="This table offers an incorrect example to illustrate what to avoid when creating a CMDSEC file. It lists and describes the file contents.">
+<thead>
+<tr class="cellalignment239">
+<th class="cellalignment266" id="d11763e328">File Contents</th>
+<th class="cellalignment267" id="d11763e331">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment239">
+<td class="cellalignment268" id="d11763e336" headers="d11763e328">
+<pre dir="ltr">
+STOP * dpt2 * NO
+</pre></td>
+<td class="cellalignment269" headers="d11763e336 d11763e331">
+<p>All <code class="codeph">STOP</code> commands are denied to everyone in group <code class="codeph">dpt2</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment239">
+<td class="cellalignment268" id="d11763e349" headers="d11763e328">
+<pre dir="ltr">
+STOP * * Chen YES
+</pre></td>
+<td class="cellalignment269" headers="d11763e349 d11763e331">
+<p>All <code class="codeph">STOP</code> commands are granted to <code class="codeph">Chen</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>The order of the entries in <a href="configuring-ggsci-command-security.htm#GUID-4F1606A3-B09B-471B-ABDA-A44600DA8FC4__G1077997" title="This table offers an incorrect example to illustrate what to avoid when creating a CMDSEC file. It lists and describes the file contents.">Table 13-2</a> causes a logical error. The first rule (line 1) denies all <code class="codeph">STOP</code> commands to all members of group <code class="codeph">dpt2</code>. The second rule (line 2) grants all <code class="codeph">STOP</code> commands to user <code class="codeph">Chen</code>. However, because Chen is a member of the <code class="codeph">dpt2</code> group, he has been denied access to all <code class="codeph">STOP</code> commands by the second rule, even though he is supposed to have permission to issue them.</p>
+<p>The proper way to configure this security rule is to set the user-specific rule before the more general rule(s). Thus, to correct the error, you would reverse the order of the two <code class="codeph">STOP</code> rules.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-ggsci-command-security.htm#GUID-5FFB4B77-D316-4339-954D-AB7A3FBB1DA5" title="You can establish command security for Oracle GoldenGate to control which users have access to which Oracle GoldenGate functions.">Configuring GGSCI Command Security</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-2E8B8CD6-B32D-463D-9EB4-359767EA0128"></a>
+<h2 id="OGGSE-GUID-2E8B8CD6-B32D-463D-9EB4-359767EA0128" class="sect2"><span class="enumeration_section">13.2</span> Securing the CMDSEC File</h2>
+<div>
+<div class="section">
+<p>The security of the GGSCI program and that of the CMDSEC file is controlled by the security controls of the operating system. Because the <code class="codeph">CMDSEC</code> file is a source of security, it must be secured. You can grant read access as needed, but Oracle GoldenGate recommends denying write and delete access to everyone but Oracle GoldenGate Administrators.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-ggsci-command-security.htm#GUID-5FFB4B77-D316-4339-954D-AB7A3FBB1DA5" title="You can establish command security for Oracle GoldenGate to control which users have access to which Oracle GoldenGate functions.">Configuring GGSCI Command Security</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment238">
+<tr>
+<td class="cellalignment249">
+<table class="cellalignment243">
+<tr>
+<td class="cellalignment242"><a href="populating-enckeys-file-encryption-keys.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment242"><a href="using-target-system-connection-initiation.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment251">
+<table class="cellalignment241">
+<tr>
+<td class="cellalignment242"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment242"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment242"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

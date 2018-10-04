@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>DECOMPRESS_RECORD</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-09-07T12:04:07Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81608-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="compress_record.htm" title="Previous" type="text/html" />
+<link rel="Next" href="get_base_object_name.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45"></a> <span id="PAGE" style="display:none;">314/356</span> <!-- End Header -->
+<a id="GWURF846"></a>
+<h1 id="GWURF-GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45" class="sect1"><span class="enumeration_section">8.9</span> DECOMPRESS_RECORD</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract and Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">DECOMPRESS_RECORD</code> function when you want to retrieve or manipulate an entire update record with the <code class="codeph">GET_RECORD_BUFFER</code> (see <span class="q">"<a href="get_record_buffer.htm#GUID-84839415-D897-454B-9E62-2F2F7B0E4F19">GET_RECORD_BUFFER</a>"</span>) or <code class="codeph">SET_RECORD_BUFFER</code> function (see <span class="q">"<a href="set_record_buffer.htm#GUID-D7ABA314-632F-43CB-AF6B-893E5B98A3F6">SET_RECORD_BUFFER</a>"</span>) and the record is compressed. <code class="codeph">DECOMPRESS_RECORD</code> makes compressed records easier to process and map by putting the record into its logical column layout. The columns that are present will be in the expected positions without the index and length indicators (see <span class="q">"<a href="decompress_record.htm#GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45__I1110026">Compressed Record Format</a>"</span>). The missing columns will be represented as zeroes. When used, <code class="codeph">DECOMPRESS_RECORD</code> should be invoked before any manipulation occurs. After the user exit processing is completed, use the <code class="codeph">COMPRESS_RECORD</code> function (see <span class="q">"<a href="compress_record.htm#GUID-8F3AB19E-0828-4A09-B412-30289687F8C8">COMPRESS_RECORD</a>"</span>) to re-compress the record before returning it to the Oracle GoldenGate process.</p>
+<p>This function is valid for processing <code class="codeph">UPDATE</code> operations only. Deletes, inserts and updates appear in the buffer as full record images.</p>
+<p>The content of the record buffer is not converted to or from the character set of the user exit. It is passed as-is.</p>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45__I1110026">
+<p class="subhead1">Compressed Record Format</p>
+<p>Compressed SQL updates have the following format:</p>
+<pre dir="ltr">
+<span class="italic">index</span> <span class="italic">length</span> <span class="italic">value</span> [<span class="italic">index</span> <span class="italic">length</span> <span class="italic">value</span> ][...]
+</pre>
+<p>where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">index</code></span> is a two-byte index into the list of columns of the table (first column is zero).</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">length</code></span> is the two-byte length of the table.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">value</code></span> is the actual column value, including one of the following two-byte null indicators when applicable. <code class="codeph">0</code> is not null. <code class="codeph">-1</code> is null.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+#include "usrdecs.h"
+short result_code;
+compressed_rec_def compressed_rec;
+ERCALLBACK (DECOMPRESS_RECORD, &amp;compressed_rec, &amp;result_code);
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Buffer</p>
+<pre dir="ltr">
+typedef struct
+{
+char *compressed_rec;
+long compressed_len;
+char *decompressed_rec;
+long decompressed_len;
+short *columns_present;
+short source_or_target;
+char requesting_before_after_ind;
+} compressed_rec_def;
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Input</p>
+<dl>
+<dt class="dlterm"><a id="GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45__GUID-A587E701-E739-419E-B65D-7F21FF1639AE"><!-- --></a><code class="codeph">compressed_rec</code></dt>
+<dd>
+<p>A pointer to the record in compressed format. Use the <code class="codeph">GET_RECORD_BUFFER</code> function to obtain this value (see <span class="q">"<a href="get_record_buffer.htm#GUID-84839415-D897-454B-9E62-2F2F7B0E4F19">GET_RECORD_BUFFER</a>"</span>).</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45__GUID-7DD0F13B-5F3C-42F9-965D-9BC0D3F4FC9E"><!-- --></a><code class="codeph">compressed_len</code></dt>
+<dd>
+<p>The length of the compressed record. Use the <code class="codeph">GET_RECORD_BUFFER</code> (see <span class="q">"<a href="get_record_buffer.htm#GUID-84839415-D897-454B-9E62-2F2F7B0E4F19">GET_RECORD_BUFFER</a>"</span>) or <code class="codeph">GET_RECORD_LENGTH</code> (see <span class="q">"<a href="get_record_length.htm#GUID-6D130013-6BDC-45B4-88C1-D50DF4B80506">GET_RECORD_LENGTH</a>"</span>) function to get this value.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45__GUID-2E0210C8-CF49-4046-B985-561AB9AF63D6"><!-- --></a><code class="codeph">source_or_target</code></dt>
+<dd>
+<p>One of the following to indicate whether the source or target record is being decompressed.</p>
+<pre dir="ltr">
+EXIT_FN_SOURCE_VAL
+EXIT_FN_TARGET_VAL
+</pre></dd>
+<dt class="dlterm"><a id="GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45__GUID-4FE73361-04DC-42F6-BC56-2289C188C782"><!-- --></a><code class="codeph">requesting_before_after_ind</code></dt>
+<dd>
+<p>Used as internal input. Does not need to be set. If set, it will be ignored.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Output</p>
+<dl>
+<dt class="dlterm"><a id="GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45__GUID-ABC93992-11A3-4635-BC0E-D1A7C715A5F5"><!-- --></a><code class="codeph">decompressed_rec</code></dt>
+<dd>
+<p>A pointer to the record returned in decompressed format. The record is assumed to be in the Oracle GoldenGate internal canonical format. The caller must ensure that the appropriate amount of memory is allocated to <code class="codeph">decompressed_rec</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45__GUID-13F5C40E-90D4-470E-8C4F-0EF54F543059"><!-- --></a><code class="codeph">decompressed_len</code></dt>
+<dd>
+<p>The returned length of the decompressed record.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A74A4D84-78C5-4DB1-AD98-ED056C3C5A45__GUID-4B39924B-FFA0-4EA2-8F31-F006CBA41FA7"><!-- --></a><code class="codeph">columns_present</code></dt>
+<dd>
+<p>An array of values that indicate the columns present in the compressed record. For example, if the first, third and sixth columns exist in the compressed record, and the total number of columns in the table is seven, the array should contain:</p>
+<pre dir="ltr">
+1, 0, 1, 0, 0, 1, 0
+</pre>
+<p>This array helps mapping functions determine when and whether a compressed column should be mapped.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Return Values</p>
+<pre dir="ltr">
+EXIT_FN_RET_INVALID_CONTEXT
+EXIT_FN_RET_OK
+EXIT_FN_RET_INVALID_PARAM
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment350">
+<tr>
+<td class="cellalignment357">
+<table class="cellalignment355">
+<tr>
+<td class="cellalignment354"><a href="compress_record.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment354"><a href="get_base_object_name.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment359">
+<table class="cellalignment353">
+<tr>
+<td class="cellalignment354"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment354"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment354"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

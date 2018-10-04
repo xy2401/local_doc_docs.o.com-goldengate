@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Configuring the Manager and Collector</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.24" />
+<meta name="description" content="Two Oracle GoldenGate components facilitate day-to-day data management: the Manager and the Collector. This chapter introduces procedures and techniques for running both components." />
+<meta name="dcterms.created" content="2014-08-06T9:43:49Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate for Mainframe Administering Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E28904-01" />
+<meta name="dcterms.isVersionOf" content="GNSAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="security.htm" title="Previous" type="text/html" />
+<link rel="Next" href="changesync.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E28904-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">9/17</span> <!-- End Header --><a id="CHDFADDF"></a><a id="GNSAD275"></a>
+<h1 class="chapter"><span class="secnum">6</span> Configuring the Manager and Collector</h1>
+<p><a id="GNSAD276"></a>Two Oracle GoldenGate components facilitate day-to-day data management: the Manager and the Collector. This chapter introduces procedures and techniques for running both components.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#i934504">Section 6.1, "Introducing Manager"</a></p>
+</li>
+<li>
+<p><a href="#i934527">Section 6.2, "Configuring and Starting Manager"</a></p>
+</li>
+<li>
+<p><a href="#i934627">Section 6.3, "Configuring and Running the Collector"</a></p>
+</li>
+<li>
+<p><a href="#i934710">Section 6.4, "Collecting Between Open Systems and NonStop"</a></p>
+</li>
+</ul>
+<a id="i934504"></a><a id="GNSAD277"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">6.1</span> Introducing Manager</h2>
+<p>Manager runs as a NonStop process, ensuring that Oracle GoldenGate for NonStop components run and restart if a CPU failure or operator error occurs. Manager spawns a copy of itself so that tasks that take longer, such as duplicating a TMF audit trail, do not interfere with real-time tasks. Tasks are divided between the Manager and its child process accordingly. Manager tasks on NonStop include:</p>
+<ul>
+<li>
+<p>Starting Logger, Extract, Replicat and Syncfile</p>
+</li>
+<li>
+<p>Monitoring and reporting status of Oracle GoldenGate processing</p>
+</li>
+<li>
+<p>Starting the dynamic Collector process on the target</p>
+</li>
+<li>
+<p>Automatically restarting critical processes</p>
+</li>
+<li>
+<p>Threshold reporting, such as when Extract falls behind the TMF-audit trail</p>
+</li>
+<li>
+<p>Managing resources for the TMF audit trail, such as maintaining copies of audit trails on backup volumes</p>
+</li>
+<li>
+<p>Purging trails when Extract and Replicat has finished with them</p>
+</li>
+<li>
+<p>Pre-allocating log trail space for Logger processing</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="i934527"></a><a id="GNSAD278"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">6.2</span> Configuring and Starting Manager</h2>
+<p>Now that you have your GGSCI prompt, you are ready to configure and start Manager. To configure Manager, create an appropriate parameter file. To control an Oracle GoldenGate Manager process, use the following commands.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" title="Oracle GoldenGate Manager Commands" summary="This table describes commands to control an Oracle GoldenGate Manager process." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t2">Command</th>
+<th class="cellalignment33" id="r1c2-t2">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t2" headers="r1c1-t2">
+<pre>
+START MANAGER
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t2 r1c2-t2">
+<p>Starts Manager.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t2" headers="r1c1-t2">
+<pre>
+STOP MANAGER
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t2 r1c2-t2">
+<p>Stops Manager. You can stop Manager gracefully, or forcefully with the <code>!</code> option.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<a id="i960677"></a><a id="GNSAD279"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">6.2.1</span> Creating and Configuring the Manager Parameter File</h3>
+<p>Enter Manager parameters in the <code>MGRPARM</code> file. If no <code>MGRPARM</code> file exists, default management parameters are taken. To add parameters, edit this file using the <code>EDIT PARAMS MGRPARM</code> command.</p>
+<p>Manager retrieves parameters as established by GGSCI <code>ATCONFIG</code> commands. These parameters affect audit trail resource management.</p>
+<p>See <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> for more information about Manager parameters.</p>
+<a id="i934562"></a><a id="GNSAD280"></a>
+<div class="sect3">
+<h4 class="sect3"><span class="secnum">6.2.1.1</span> A Sample Manager Parameter File</h4>
+<p>A Manager parameter file would be similar to this sample.</p>
+<div class="example">
+<p class="titleinexample"><a id="GNSAD281"></a><a id="sthref117"></a>Example 6-1 Sample Manager Parameter File</p>
+<pre>
+TCPIPPROCESSNAME $ZTC2
+PORT 7844
+DYNAMICPORTLIST 7850 - 7880, 7895
+CHECKMINUTES 30
+PURGEOLDEXTRACTS $DATA1.GGSDAT.*, USECHECKPOINTS, MINKEEPDAYS 2
+THRESHOLD 30
+LAGREPORTMINUTES 60
+LAGINFOMINUTES 10
+LAGCRITICALMINUTES 10
+LOGFILESBEHIND 2
+LOGFILESBEHINDINFO 10
+DOWNCRITICAL
+DOWNREPORTHOURS 1
+</pre></div>
+<!-- class="example" -->
+<p class="itemizedlisttitle">In this sample Manager parameter file&nbsp;</p>
+<ul>
+<li>
+<p><code>TCPIPPROCESSNAME</code> specifies the TCP/IP process. The default process is $ZTC0. Use the <code>TCPIPPROCESSNAME</code> parameter to specify a process other than the default.</p>
+</li>
+<li>
+<p>Specify the <code>PORT</code> parameter so Manager can create a dynamic Collector process.</p>
+</li>
+<li>
+<p><code>DYNAMICPORTLIST</code> specifies up to 256 entries for ports to be dynamically assigned to processes started by Manager. If no dynamic ports are specified, Manager will start with 7840 and increment until it finds an available port.</p>
+</li>
+<li>
+<p><code>CHECKMINUTES 30</code> directs Manager to perform maintenance activities every 30 minutes. The default is 10 minutes.</p>
+</li>
+<li>
+<p>Use the <code>PURGEOLDEXTRACTS</code> parameter when multiple Replicat processes are reading a set of trails. For this sample, <code>PURGEOLDEXTRACTS</code> directs manager to purge old files from the trail <code>$DATA1.GGSDAT.*</code>. The options:</p>
+<ul>
+<li>
+<p><code>USECHECKPOINTS</code> specifies that Replicat checkpoints are to be used to determine when Replicat has finished processing.</p>
+</li>
+<li>
+<p><code>MINKEEPDAYS 2</code> purges files only after they have been closed for 2 days.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>THRESHOLD 30</code> directs Manager to generate an event message when the number of audit files remaining to be processed falls below 30%.</p>
+</li>
+<li>
+<p><code>LAGREPORTMINUTES 60</code> specifies that Manager check lag every 60 minutes.</p>
+</li>
+<li>
+<p><code>LAGINFOMINUTES 10</code> specifies that Manager report lag information to the event log every 10 minutes.</p>
+</li>
+<li>
+<p><code>LAGCRITICALMINUTES 10</code> specifies that Manager write a critical message to the event log when there is 10 minute lag.</p>
+</li>
+<li>
+<p><code>LOGFILESBEHIND 2</code> sends a critical message whenever a process lags a specified number of files behind the current log trail file.</p>
+</li>
+<li>
+<p><code>LOGFILESBEHINDINFO 10</code> sends an informational message whenever the process falls the specified number of files behind.</p>
+</li>
+<li>
+<p><code>DOWNCRITICAL</code> sends a critical message whenever Extract or Replicat abends.</p>
+</li>
+<li>
+<p><code>DOWNREPORTHOURS</code> sends reports of Extract and Replicat abending.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="i934612"></a><a id="GNSAD282"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">6.2.2</span> Starting and Stopping Manager</h3>
+<p>You must start Manager before you can configure and run other Oracle GoldenGate components. The following example starts Manager in <code>CPU 3</code>. Manager selects a CPU in which to run a backup process for fault-tolerance.</p>
+<pre>
+GGSCI&gt; START Manager, CPU 3, PRI 170
+</pre>
+<p>If Manager encounters a TCP/IP error, for example if it attempts to bind to a port that is in use, it retries the error every 60 seconds and does not abend after a set number of attempts. Unlike other Oracle GoldenGate processes, it does not use the <code>TCPERRS</code> file to set the delay and the number of retries.</p>
+<p>Manager runs indefinitely, or until you enter the GGSCI <code>STOP MANAGER</code> command. You might stop Manager if you need to stop the Extract and Replicat groups it manages or if you to want to activate a change to a Manager parameter.</p>
+<p>See <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> for more information about GGSCI commands for Manager.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="i934627"></a><a id="GNSAD283"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">6.3</span> Configuring and Running the Collector</h2>
+<p>The Collector collects data from Extract and writes data to files on the target system. Extract requests Manager to start a collector process when it sees data must transmit over TCP/IP to a remote trail. Once started, the Collector waits for and performs requests to write, open, and close files in the Oracle GoldenGate trail during Extract processing.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>You do not need to run collector if data transmits over an Expand connection.</p>
+</div>
+<a id="i934633"></a><a id="GNSAD284"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">6.3.1</span> Configuring Collector</h3>
+<p>To configure a Collector, you must know the port the Collector will use, the host name or IP address where the remote trail resides, and edit your Manager and Extract parameter files. You may also specify a variety of operating options, described in the <a href="#i954119">"Configuration Examples"</a>.</p>
+<p class="orderedlisttitle">To configure and start Collector:&nbsp;</p>
+<ol>
+<li>
+<p>In the Manager parameter file, specify the port parameter, such as: <code>PORT</code> <code>7809</code>.</p>
+</li>
+<li>
+<p>In the Extract parameter file, specify the <code>RMTHOST</code> parameter as follows:</p>
+<pre>
+RMTHOST <span class="variable">host</span>, [MGRPORT <span class="variable">port_number</span>] [, <span class="variable">option</span>] [, . . .]
+</pre>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" title="Oracle GoldenGate Collector Parameters and Options" summary="This table describes parameters and options to configure a Collector." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t4">Argument</th>
+<th class="cellalignment33" id="r1c2-t4">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t4" headers="r1c1-t4">
+<pre>
+<span class="variable">host</span>
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t4 r1c2-t4">
+<p>Either a remote system name or an IP address, such as: <code>RMTHOST eastnode</code> or <code>RMTHOST 192.0.2.20</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t4" headers="r1c1-t4">
+<pre>
+MGRPORT <span class="variable">port_number</span>
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t4 r1c2-t4">
+<p>Specify the port that is defined in the Manager parameter file.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t4" headers="r1c1-t4">
+<pre>
+<span class="variable">options</span>
+</pre></td>
+<td class="cellalignment34" headers="r4c1-t4 r1c2-t4">
+<p>You can specify a variety of options, including Collector parameters. See <a href="#i960677">"Creating and Configuring the Manager Parameter File"</a> for information on these options. See <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> for information about other <code>RMTHOST</code> options.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></li>
+<li>
+<p>The remote system must be the same system on which Collector was started, and the port number must match the port number in the Collector startup command. See <a href="#i954119">"Configuration Examples"</a> for more information.</p>
+</li>
+<li>
+<p>If you specify a remote system name in the <code>RMTHOST</code> parameter, you must also enter the remote system name in the TCP/IP hosts file on the target system, or on the names server for your network. For example, if you specify: <code>RMTHOST eastnode</code>, you must make an entry similar to: <code>192.0.2.20 eastnode</code> in the <code>HOSTS</code> file.</p>
+<p>If you specify the remote system IP address in the <code>RMTHOST</code> parameter, there is no need to make a corresponding <code>HOSTS</code> file entry.</p>
+</li>
+</ol>
+<a id="i954119"></a><a id="GNSAD285"></a>
+<div class="sect3">
+<h4 class="sect3"><span class="secnum">6.3.1.1</span> Configuration Examples</h4>
+<p>Following are the examples for configuration:</p>
+<p class="orderedlisttitle">To configure Collector for port <code>5432</code> on remote system named <code>eastnode</code>:&nbsp;</p>
+<ol>
+<li>
+<p>In the Manager parameter file, specify: <code>PORT</code> <code>5432</code></p>
+</li>
+<li>
+<p>In the Extract parameter file, specify: <code>RMTHOST eastnode, MGRPORT 5432,</code> and options if desired.</p>
+</li>
+<li>
+<p>In the TCP/IP <code>HOSTS</code> file, enter: <code>192.0.2.20 eastnode</code></p>
+</li>
+</ol>
+<p class="orderedlisttitle">To configure Collector for the default port on remote system address <code>192.0.2.20</code>:&nbsp;</p>
+<ol>
+<li>
+<p>In the Manager parameter file, specify: <code>PORT 7809</code></p>
+</li>
+<li>
+<p>In the Extract parameter file, specify: <code>RMTHOST 192.0.2.20,</code> and options if desired.</p>
+</li>
+<li>
+<p>No TCP/IP hosts file entry is required.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="GNSAD286"></a>
+<div class="sect2"><a id="sthref122"></a>
+<h3 class="sect2"><span class="secnum">6.3.2</span> The TCP/IP Port</h3>
+<p>There are two ways to use Collector and your TCP/IP port: dynamically and explicitly. The dynamic method lets Extract request Manager to start Collector as needed. However, a user can explicitly start the Collector and let it run in the background, ready to transmit data as needed. This method is called the <span class="italic">explicit method</span>.</p>
+<a id="GNSAD287"></a>
+<div class="sect3"><a id="sthref123"></a>
+<h4 class="sect3"><span class="secnum">6.3.2.1</span> Dynamic Method</h4>
+<p><span class="italic">Dynamic method</span> is the default way to use Collector. The examples above illustrate how this is configured: a port is specified in the Manager parameter file, a remote trail is specified in the Extract parameter file, and, if required, the IP address is added to your hosts file.</p>
+</div>
+<!-- class="sect3" -->
+<a id="i934684"></a><a id="GNSAD288"></a>
+<div class="sect3">
+<h4 class="sect3"><span class="secnum">6.3.2.2</span> Explicit Method</h4>
+<p>When capturing data over TCP/IP to remote systems that do not support dynamic Collectors, you must explicitly start a Collector on the target system before starting Extract. Each Extract must explicitly name the port to which it is writing, using the <code>RMTHOST</code> parameter.</p>
+<p>To explicitly configure your Collector, start GGSCI and enter the following:</p>
+<pre>
+TACL &gt; ASSIGN STDERR, <span class="variable">event_message_collector</span>
+TACL &gt; RUN SERVER /NOWAIT/ [-P <span class="variable">port_number</span>]
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Your <span class="italic">event_message_collector</span> may be the standard system log, $0, or a virtual process, such as $VHS.</p>
+</div>
+<div class="example">
+<p class="titleinexample"><a id="GNSAD289"></a><a id="sthref124"></a>Example 6-2 Explicit Method</p>
+<pre>
+TACL &gt; ASSIGN STDERR, $0
+TACL &gt; RUN SERVER /NOWAIT, NAME $COLL/ -P 12345
+</pre></div>
+<!-- class="example" -->
+<p>In the above example, the Collector listens on port <code>12345.</code> When you start the Collector, it references a default TCP/IP process <code>($ZTC0)</code>. You can change this to the process of your choice by running a <code>DEFINE</code> statement before you start your collector.</p>
+<pre>
+TACL &gt; ASSIGN STDERR, $0
+TACL&gt; DEFINE =TCPIP^PROCESS^NAME, FILE $ZTC8
+TACL &gt; RUN SERVER /NOWAIT, NAME $COLL/ -P 12345
+</pre>
+<p>See <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> for details about the Collector parameters.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="GNSAD290"></a>
+<div class="sect2"><a id="sthref125"></a>
+<h3 class="sect2"><span class="secnum">6.3.3</span> Monitoring Collector</h3>
+<p>Collector event messages are output to the <code>ggserr.log</code> file. You can view this file using the GGSCI <code>VIEW GGSEVT</code> command.</p>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD291"></a>
+<div class="sect2"><a id="sthref126"></a>
+<h3 class="sect2"><span class="secnum">6.3.4</span> Security Considerations</h3>
+<p>The user ID under which the Collector is started determines whether target files can be written and purged. Ensure that the ID has the proper system access to the files and locations written by the Collector.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="i934710"></a><a id="GNSAD292"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">6.4</span> Collecting Between Open Systems and NonStop</h2>
+<p>Event messages created by the Collector and Replicat on Windows and UNIX systems can be extracted and sent back to EMS on NonStop systems. This feature enables centralized viewing of Oracle GoldenGate messages across platforms.</p>
+<p class="orderedlisttitle">To collect events from other systems:&nbsp;</p>
+<ol>
+<li>
+<p>Run Collector on NonStop to collect and distribute EMS messages. For each EMSCLNT process, run one Collector process.</p>
+<p>The following example runs Collector and outputs its messages to $0.</p>
+<pre>
+TACL&gt; ASSIGN STDERR, $0
+TACL&gt; RUN SERVER /NOWAIT/ &ndash;p 7880
+</pre></li>
+<li>
+<p>Run the EMSCLNT utility on the remote target. EMSCLNT reads a designated error log and runs indefinitely, waiting for more messages to send. When EMSCLNT receives a message, it sends the message to a collector process on NonStop.</p>
+<p>See the examples for running EMSCLNT on open systems for syntax information.</p>
+<p>This UNIX example reads the file <code>ggslog.err</code> for error messages. Error messages are sent to the collector to the NonStop at IP address <code>192.0.2.2</code> listening on port <code>7850</code>. The Collector on NonStop writes formatted messages to EMS Collector <code>$0.</code></p>
+</li>
+</ol>
+<div class="example">
+<p class="titleinexample"><a id="GNSAD293"></a><a id="sthref128"></a>Example 6-3 Running EMSCLNT on Open Systems</p>
+<pre>
+&gt; $emsclnt &ndash;h 192.0.2.2 &ndash;p 7850 &ndash;f ggserr.log &ndash;c $0
+</pre></div>
+<!-- class="example" -->
+<p>The Windows example below (from the DOS prompt) reads the file <code>d:\ggserrs\log.txt</code> for error messages. Error messages are sent to the collector on host <code>ggs2</code> listening on port <code>9876</code>. The Collector on NonStop writes formatted messages to EMS Collector $P0.</p>
+<pre>
+&gt; emsclnt &ndash;h ggs2 &ndash;p 9876 &ndash;f d:\ggserrs\log.txt &ndash;c $P0
+</pre>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" title="EMSCLNT Arguments" summary="This table summarizes arguments uses to run EMSCLIENT." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t6">Argument</th>
+<th class="cellalignment33" id="r1c2-t6">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t6" headers="r1c1-t6">
+<pre>
+&ndash;h ggs2
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t6 r1c2-t6">
+<p>The node on which the collector is being run. Can be a name or IP address. This is a required parameter.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t6" headers="r1c1-t6">
+<pre>
+&ndash;p 9876
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t6 r1c2-t6">
+<p>The port where the collector is listening for messages. This is a required parameter.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t6" headers="r1c1-t6">
+<pre>
+&ndash;f d:\ggserrs\log.txt
+</pre></td>
+<td class="cellalignment34" headers="r4c1-t6 r1c2-t6">
+<p>The error file where EMSCLNT retrieves error messages. This is a required parameter.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t6" headers="r1c1-t6">
+<pre>
+&ndash;c $P0
+</pre></td>
+<td class="cellalignment34" headers="r5c1-t6 r1c2-t6">
+<p>The collector where EMS messages should be written on the NonStop (default is $0).</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment25">
+<tr>
+<td class="cellalignment34">
+<table class="cellalignment30">
+<tr>
+<td class="cellalignment29"><a href="security.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment29"><a href="changesync.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment36">
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment29"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment29"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

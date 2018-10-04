@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Upgrading Oracle GoldenGate Monitor Agent</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1071" />
+<meta name="description" content="This chapter describes the tasks you perform to install and upgrade Oracle GoldenGate Monitor Agent from 11g to 12c or when upgrading the original JAgent that was delivered with 12c." />
+<meta name="dcterms.created" content="2015-10-12T16:33:39Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Installing, Configuring, and Upgrading Oracle GoldenGate Monitor Agent" />
+<meta name="dcterms.identifier" content="E60961-01" />
+<meta name="dcterms.isVersionOf" content="GGAIN" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="inst_zos.htm" title="Previous" type="text/html" />
+<link rel="Next" href="installation_screens.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGAIN.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="GGAIN.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="GGAIN.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><span id="PAGE" style="display:none;">7/8</span> <!-- End Header -->
+<div id="GGAIN146" class="chapter"><a id="sthref15"></a>
+<h1 class="chapter"><span class="secnum">4</span> Upgrading Oracle GoldenGate Monitor Agent</h1>
+<p><a id="GGAIN147"></a>This chapter describes the tasks you perform to install and upgrade Oracle GoldenGate Monitor Agent from 11<span class="italic">g</span> to 12<span class="italic">c</span> or when upgrading the original JAgent that was delivered with 12<span class="italic">c</span>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Do <span class="italic">not</span> follow the instructions in this chapter if you have installed Oracle GoldenGate Monitor Agent 12<span class="italic">c</span> for the first time; the upgrade occurs automatically.</div>
+<p>Use the following tasks to upgrade your existing Oracle GoldenGate Monitor Agent(<code dir="ltr">$OGG_HOME/dirjar</code>) 11<span class="italic">g</span> to 12<span class="italic">c</span>:</p>
+<ul>
+<li>
+<p><a href="#BABGHBAD">Task 1, "Obtain Oracle GoldenGate Monitor Agent"</a></p>
+</li>
+<li>
+<p><a href="#BABBBFCC">Task 2, "Backup the Existing Oracle GoldenGate Monitor Agent"</a></p>
+</li>
+<li>
+<p><a href="#BABBJIIF">Task 3, "Configuring the JRE"</a></p>
+</li>
+<li>
+<p><a href="#BABDAEBF">Task 4, "Installing Oracle GoldenGate Monitor Agent"</a></p>
+</li>
+<li>
+<p><a href="#BABDDHBA">Task 5, "Stopping JAgent"</a></p>
+</li>
+<li>
+<p><a href="#BABIIBCG">Task 6, "Copying Files to the New Agent Directories"</a></p>
+</li>
+<li>
+<p><a href="#BABDBAFH">Task 7, "Creating the Instance"</a></p>
+</li>
+<li>
+<p><a href="#BABDIJGG">Task 8, "Starting the Agent"</a></p>
+</li>
+<li>
+<p><a href="#BABIJIJC">Task 9, "Removing the Previous Oracle GoldenGate Monitor Agent Software"</a></p>
+</li>
+</ul>
+<dl>
+<dd><a id="GGAIN148"></a><a id="BABGHBAD"></a></dd>
+<dt class="seghead">Task 1&nbsp;&nbsp;&nbsp;Obtain Oracle GoldenGate Monitor Agent</dt>
+<dd>
+<p>Obtain the product distribution by following the instructions in <a href="about.htm#CIHJHAEJ">Section 1.4, "Downloading Oracle GoldenGate Monitor Agent."</a></p>
+</dd>
+<dd><a id="GGAIN149"></a><a id="BABBBFCC"></a></dd>
+<dt class="seghead">Task 2&nbsp;&nbsp;&nbsp;Backup the Existing Oracle GoldenGate Monitor Agent</dt>
+<dd>
+<p>Create a backup copy of your entire pre-upgrade Oracle GoldenGate Monitor Agent environment before you upgrade by copying the following to a backup location:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">OGG_HOME</span></code><code dir="ltr">/cfg</code> folder</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">OGG_HOME</span></code><code dir="ltr">/dirjar</code> folder</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">OGG_HOME</span></code><code dir="ltr">/pw_agent_util.*</code> files</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">OGG_HOME</span></code><code dir="ltr">/jagent.*</code> files</p>
+</li>
+<li>
+<p><code dir="ltr">OGG_HOME/dirwlt</code> directory</p>
+</li>
+</ul>
+</dd>
+<dd><a id="GGAIN150"></a><a id="BABBJIIF"></a></dd>
+<dt class="seghead">Task 3&nbsp;&nbsp;&nbsp;Configuring the JRE</dt>
+<dd>
+<p>Configure your JRE as follows:</p>
+<ol>
+<li>
+<p>Set your <code dir="ltr">$JAVA_HOME</code> environment variable to use your installed JRE.</p>
+</li>
+<li>
+<p>Set <code dir="ltr">$JAVA_HOME/bin</code> <span class="italic">first</span> in your <code dir="ltr">$PATH</code> environment variable.</p>
+</li>
+<li>
+<p>Verify that <code dir="ltr">$JAVA_HOME</code> and <code dir="ltr">$JAVA_HOME/bin</code> are setup correctly by running the following command:</p>
+<p><code dir="ltr"><span class="codeinlinebold">java -version</span></code></p>
+<p>The Java version is displayed and should be similar to the following:</p>
+<pre dir="ltr">
+java version "1.8.0_40"
+Java(TM) SE Runtime Environment (build 1.8.0_40-b19)
+Java HotSpot(TM) 64-Bit Server VM (build 24.60-b09, mixed mode)
+</pre></li>
+</ol>
+</dd>
+<dd><a id="GGAIN151"></a><a id="BABDAEBF"></a></dd>
+<dt class="seghead">Task 4&nbsp;&nbsp;&nbsp;Installing Oracle GoldenGate Monitor Agent</dt>
+<dd>
+<p>Install Oracle GoldenGate Monitor Agent in a separate, standalone location using the instructions in one of the following dependent on your database:</p>
+<p>For non-z/OS platforms, use <a href="inst_all.htm#CHDIAEHC">Chapter 2, "Installing and Configuring Oracle GoldenGate Monitor Agent"</a>.</p>
+<p>For z/OS platforms, use <a href="inst_zos.htm#CHDJEEGG">Chapter 3, "Installing and Configuring Oracle GoldenGate Monitor Agent for z/OS"</a>.</p>
+</dd>
+<dd><a id="GGAIN152"></a><a id="BABDDHBA"></a></dd>
+<dt class="seghead">Task 5&nbsp;&nbsp;&nbsp;Stopping JAgent</dt>
+<dd>
+<p>Go to the Oracle GoldenGate Core GGSCI terminal and stop the Oracle GoldenGate Monitor Agent by executing the <code dir="ltr">stop</code> <code dir="ltr">jagent</code> command:</p>
+<pre dir="ltr">
+GGSCI&gt;<span class="bold">stop jagent</span>
+</pre>
+<p>Verify that there are no remaining <code dir="ltr">jagent</code> processes after by running the following command:</p>
+<pre dir="ltr">
+<span class="bold">ps -ef |grep jagent</span>
+</pre>
+<p>Use the <code dir="ltr">kill -9</code> command to stop if any stray <code dir="ltr">jagent</code> processes.</p>
+</dd>
+<dd><a id="GGAIN154"></a><a id="BABIIBCG"></a></dd>
+<dt class="seghead">Task 6&nbsp;&nbsp;&nbsp;Copying Files to the New Agent Directories</dt>
+<dd>
+<p>Copy the existing <code dir="ltr"><span class="codeinlineitalic">$Monitor_Server_Domain</span></code><code dir="ltr">/config/monitorserver/cfg</code> directory, including all content, to the new Agent directory, <code dir="ltr"><span class="codeinlineitalic">$AGENT_HOME</span></code><code dir="ltr">/cfg_templates</code>.</p>
+</dd>
+<dd><a id="GGAIN177"></a><a id="BABDBAFH"></a></dd>
+<dt class="seghead">Task 7&nbsp;&nbsp;&nbsp;Creating the Instance</dt>
+<dd>
+<p>Use one of the following subsections to either create or upgrade your Monitor instance:</p>
+<p><span class="bold">11g Upgrades: Creating a New Instance</span></p>
+<p>Create a new instance using the instructions in one of the following dependent on your operating system:</p>
+<p>For non-z/OS platforms, use <a href="inst_all.htm#CHDIFJHE">Section 2.2.1, "Create the Instance."</a></p>
+<p>For z/OS platforms, use <a href="inst_zos.htm#CHDBFBID">Section 3.3.1, "Create the Instance."</a></p>
+<p>This modifies the <code dir="ltr">$OGG_HOME/dirprm/jagent.prm</code> file as in the following example:</p>
+<pre dir="ltr">
+COMMAND java -Dconfig.dir=/home/oracle/oggmon_agent/oggmon/cfg -Djava.util.logging.config.class=oracle.core.ojdl.logging.LoggingConfiguration -Doracle.core.ojdl.logging.config.file=/home/oracle/oggmon_
+agent/oggmon/cfg/logging-config.xml -Doracle.core.ojdl.logging.componentId=JAGENT -jar -Xms512m -Xmx1024m /home/oracle/oggmon_agent/oggmon/ogg_agent/dirjar/jagent.jar
+</pre>
+<p>In this example, the <code dir="ltr">jagent</code> that will now be used is in <code dir="ltr">/home/oracle/oggmon_agent/oggmon/ogg_agent/dirjar/jagent.jar</code> and its configuration file is in the <code dir="ltr">/home/oracle/oggmon_agent/oggmon/cfg</code> directory.</p>
+<p><a id="BABCACHF"></a><span class="bold">12c Upgrades: Upgrading the Existing Instance</span></p>
+<p>Run the Monitor Agent upgrade utility by entering the following command:</p>
+<ol>
+<li>
+<p>Go to the <code dir="ltr"><span class="codeinlineitalic">$AGENT_HOME</span></code> directory. For example:</p>
+<pre dir="ltr">
+cd /u01/app/oracle/product/wls/oggmon/ogg_agent
+</pre></li>
+<li>
+<p>Run the upgrade script:</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment39" summary="Two-column table that lists, in the left-hand column, an operating system and in the right-hand column, the command you would use to launch the installer for the associated operating system.">
+<thead>
+<tr class="cellalignment30">
+<th class="cellalignment40" id="r1c1-t3">For this Operating System</th>
+<th class="cellalignment40" id="r1c2-t3">Use this command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r2c1-t3" headers="r1c1-t3">Unix</td>
+<td class="cellalignment36" headers="r2c1-t3 r1c2-t3">
+<pre dir="ltr">
+$ ./upgradeToMonitorAgent1221.sh
+</pre></td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r3c1-t3" headers="r1c1-t3">Windows</td>
+<td class="cellalignment36" headers="r3c1-t3 r1c2-t3">
+<pre dir="ltr">
+C:\ upgradeToMonitorAgent1221.bat
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>The system responds:</p>
+<pre dir="ltr">
+Please enter absolute path of Oracle GoldenGate home directory: 
+</pre></li>
+<li>
+<p>Enter the absolute path to your Oracle GoldenGate home directory. For example, <code dir="ltr">/u01/ogg/replication/oggcore1</code>.</p>
+<p>The system responds:</p>
+<pre dir="ltr">
+Please enter absolute path of OGG Agent instance : 
+</pre></li>
+<li>
+<p>Enter the directory that contains your Oracle GoldenGate Monitor Agent instance, which can be an existing directory. For example, <code dir="ltr">/u01/ogg/agents/oggmon/agent1</code>. This directory should be different than the Oracle GoldenGate home directory to avoid overwriting your Oracle GoldenGate Monitor Agent JAR and configuration files the next time you install or patch Oracle GoldenGate.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+For Windows, you must ensure that you provide the absolute JDK8 directory path explicitly or the Monitor Agent cannot connect to the Monitor server. This directory path can also be defined in the <code dir="ltr">jagent.prm</code> file.</div>
+<p>The Oracle GoldenGate Monitor Agent Instance directory can be an existing folder location. In that case, you are prompted:</p>
+<pre dir="ltr">
+OGG Agent instance directory already exists, do you want to overwrite the contents (yes | no)". 
+</pre>
+<p>If you choose <code dir="ltr">yes</code>, the execution of the script will continue and all the contents related to Oracle GoldenGate Monitor Agent will be overwritten on that location. If you choose <code dir="ltr">no</code>, the execution of the script will stop.</p>
+<p>The system responds:</p>
+<pre dir="ltr">
+Please enter unique name to replace timestamp in startMonitorAgent script.
+</pre></li>
+<li>
+<p>Enter the unique name that you want to replace the timestamp in the <code dir="ltr">startMonitorAgent.sh</code> script file.</p>
+</li>
+</ol>
+<p>Once the Monitor Agent upgrade completes successfully, the Monitor Agent wallet credentials are also updated.</p>
+</dd>
+<dd><a id="GGAIN155"></a><a id="BABDIJGG"></a></dd>
+<dt class="seghead">Task 8&nbsp;&nbsp;&nbsp;Starting the Agent</dt>
+<dd>
+<p>Go to the Oracle GoldenGate Core GGSCI terminal and restart the Oracle GoldenGate Monitor Agent by executing the following commands:</p>
+<pre dir="ltr">
+<span class="bold">stop manager</span>
+start manager
+start jagent
+</pre>
+<p>Monitor the new Agent log file, <code dir="ltr">$AGENT_HOME/logs/ogg_agent.log</code> and resolve any issues.</p>
+<p>If you are using the Oracle GoldenGate EM Plug-in, after <code dir="ltr">jagent</code> starts correctly you must restart the Oracle Enterprise Manager (OEM) Agent then login to the OEM 12c console to ensure that the out of sync status issues for Oracle GoldenGate registered targets are resolved.</p>
+</dd>
+<dd><a id="GGAIN156"></a><a id="BABIJIJC"></a></dd>
+<dt class="seghead">Task 9&nbsp;&nbsp;&nbsp;Removing the Previous Oracle GoldenGate Monitor Agent Software</dt>
+<dd>
+<p>Remove the previous Oracle GoldenGate Monitor Agent software that was bundled with Oracle GoldenGate Software by deleting the following:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">OGG_HOME</span></code><code dir="ltr">/cfg</code> folder</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">OGG_HOME</span></code><code dir="ltr">/dirjar</code> folder</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">OGG_HOME</span></code><code dir="ltr">/pw_agent_util.*</code> files</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">OGG_HOME</span></code><code dir="ltr">/jagent.*</code> files</p>
+</li>
+<li>
+<p>(Optional) If you do <span class="italic">not</span> store anything related to Oracle GoldenGate Instance in Oracle Wallet, then delete the <code dir="ltr">OGG_HOME/dirwlt</code> directory.</p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment29">
+<tr>
+<td class="cellalignment36">
+<table class="cellalignment34">
+<tr>
+<td class="cellalignment33"><a href="inst_zos.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment33"><a href="installation_screens.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp; 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment38">
+<table class="cellalignment32">
+<tr>
+<td class="cellalignment33"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment33"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

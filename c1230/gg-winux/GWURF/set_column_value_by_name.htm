@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>SET_COLUMN_VALUE_BY_NAME</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-09-07T12:04:07Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81608-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="set_column_value_by_index.htm" title="Previous" type="text/html" />
+<link rel="Next" href="set_operation_type.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465"></a> <span id="PAGE" style="display:none;">353/356</span> <!-- End Header -->
+<a id="GWURF879"></a>
+<h1 id="GWURF-GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465" class="sect1"><span class="enumeration_section">8.48</span> SET_COLUMN_VALUE_BY_NAME</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract and Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">SET_COLUMN_VALUE_BY_NAME</code> or <code class="codeph">SET_COLUMN_VALUE_BY_INDEX</code> function to modify a single column value without manipulating the entire data record.</p>
+<p>If the character session of the user exit is set with <code class="codeph">SET_SESSION_CHARSET</code> to a value other than the default character set of the operating system, as defined in <code class="codeph">ULIB_CS_DEFAULT</code> in the <code class="codeph">ucharset.h</code> file, the character data that is exchanged between the user exit and the process is interpreted in the session character set.</p>
+<p>A column value is set to the session character set only if the following is true:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The column value is a SQL character type (<code class="codeph">CHAR/VARCHAR2/CLOB</code>, <code class="codeph">NCHAR/NVARCHAR2/NCLOB</code>), a SQL date/timestamp/interval/number type)</p>
+</li>
+<li>
+<p>The <code class="codeph">column_value_mode</code> indicator is set to <code class="codeph">EXIT_FN_CNVTED_SESS_CHAR_FORMAT</code>.</p>
+</li>
+</ul>
+<p>If the database is case-sensitive, object names must be specified in the same letter case as they are defined in the hosting database; otherwise, the case does not matter.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+#include "usrdecs.h"
+short result_code;
+column_def column;
+ERCALLBACK (SET_COLUMN_VALUE_BY_NAME, &amp;column, &amp;result_code);
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Buffer</p>
+<pre dir="ltr">
+typedef struct
+{
+char *column_value;
+unsigned short max_value_length;
+unsigned short actual_value_length;
+short null_value;
+short remove_column;
+short value_truncated;
+short column_index;
+char *column_name;
+/* Version 3 CALLBACK_STRUCT_VERSION */
+short column_value_mode;
+short source_or_target;
+/* Version 2 CALLBACK_STRUCT_VERSION */
+char requesting_before_after_ind;
+char more_lob_data;
+/* Version 3 CALLBACK_STRUCT_VERSION  */
+ULibCharSet column_charset;
+} column_def;
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Input</p>
+<dl>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-EEA2ACB1-F385-4045-A33A-4B8FDF073EC8"><!-- --></a><code class="codeph">column_value</code></dt>
+<dd>
+<p>A pointer to a buffer representing the new column value.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-45E5D0A9-33B1-404D-B093-403055E355C5"><!-- --></a><code class="codeph">actual_value_length</code></dt>
+<dd>
+<p>The length of the new column value, in bytes. The actual length should not include the null terminator if the new column value is in ASCII format.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-3E9F567A-0087-490D-996A-74DA956AC648"><!-- --></a><code class="codeph">null_value</code></dt>
+<dd>
+<p>A flag (<code class="codeph">0</code> or <code class="codeph">1</code>) indicating whether the new column value is null. If the <code class="codeph">null_value</code> flag is set to <code class="codeph">1</code>, the column value in the data record is set to null.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-89A26A90-D0F9-494E-98F1-6EFE5DCD5830"><!-- --></a><code class="codeph">remove_column</code></dt>
+<dd>
+<p>A flag (<code class="codeph">0</code> or <code class="codeph">1</code>) indicating whether to remove the column from a compressed update if it exists. A compressed update is one where only the changed column values are logged, not all of the column values. This flag should only be set if the operation type for the record is <code class="codeph">UPDATE_COMP_SQL_VAL</code> or <code class="codeph">PK_UPDATE_SQL_VAL</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-2897141D-29E0-4A53-9D0B-E2414F826271"><!-- --></a><code class="codeph">column_name</code></dt>
+<dd>
+<p>The name of the column that corresponds to the new column value to be copied into the data record buffer.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-74369543-D39A-4197-9D16-5F0A713234FB"><!-- --></a><code class="codeph">column_value_mode</code></dt>
+<dd>
+<p>Indicates the format of the column value.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-8DD26231-F4DF-41A3-8F94-2ECAF98D7CC4"><!-- --></a><code class="codeph">EXIT_FN_CHAR_FORMAT</code></dt>
+<dd>
+<p>ASCII format: The value is a null-terminated ASCII (or EBCDIC) string (with a known exception for the sub-data type <code class="codeph">UTF16_BE</code>, which is converted to UTF8.)</p>
+<div class="infobox-note" id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-4C732F6E-4127-4A7D-8642-F426641453FF">
+<p class="notep1">Note:</p>
+<p>A column value might be truncated when presented to a user exit, because the value is interpreted as an ASCII string and is supposed to be null-terminated. The first value of <code class="codeph">0</code> becomes the string terminator.</p>
+</div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Dates are in the format <code class="codeph">CCYY-MM-DD HH:MI:SS.FFFFFF</code>, in which the fractional time is database-dependent.</p>
+</li>
+<li>
+<p>Numeric values are in their string format. For example, <code class="codeph">123.45</code> is represented as <code class="codeph">'123.45'</code>.</p>
+</li>
+<li>
+<p>Non-printable characters or binary values are converted to hexadecimal notation.</p>
+</li>
+<li>
+<p>Floating point types are output as null-terminated strings, to the first 14 significant digits.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-47EDBE5E-7D25-411A-8F4A-EA6229959D46"><!-- --></a><code class="codeph">EXIT_FN_RAW_FORMAT</code></dt>
+<dd>
+<p>Internal Oracle GoldenGate canonical format: This format includes a two-byte null indicator and a two-byte variable data length when applicable. No character-set conversion is performed by Oracle GoldenGate for this format for any character data type.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-F8D43EBB-C2D2-4B04-AC0A-D2478823E11A"><!-- --></a><code class="codeph">EXIT_FN_CNVTED_SESS_CHAR_FORMAT</code></dt>
+<dd>
+<p>User exit character set: This only applies if the column data type is:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>a character-based type, single or multi-byte</p>
+</li>
+<li>
+<p>a numeric type with a string representation</p>
+</li>
+</ul>
+<p>This format is not null-terminated.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-501596B9-29B3-43B5-8145-9867156CD489"><!-- --></a><code class="codeph">source_or_target</code></dt>
+<dd>
+<p>One of the following indicating whether the source or the target data record is being modified.</p>
+<pre dir="ltr">
+EXIT_FN_SOURCE_VAL
+EXIT_FN_TARGET_VAL
+</pre></dd>
+<dt class="dlterm"><a id="GUID-856BCBD0-7464-4D3A-936B-CAFEE3240465__GUID-24CE286B-A541-4368-88F3-E38C1907F3FB"><!-- --></a><code class="codeph">requesting_before_after_ind</code></dt>
+<dd>
+<p>Set when setting a column value on a record <code class="codeph">io_type</code> of <code class="codeph">UPDATE_COMP_PK_SQL_VAL</code> (primary key update). Use one of the following to indicate which portion of the primary key update is to be accessed. The default is <code class="codeph">AFTER_IMAGE_VAL</code>.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">BEFORE_IMAGE_VAL</code></p>
+</li>
+<li>
+<p><code class="codeph">AFTER_IMAGE_VAL</code></p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Output</p>
+<p>None</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Return Values</p>
+<pre dir="ltr">
+EXIT_FN_RET_BAD_COLUMN_DATA
+EXIT_FN_RET_INVALID_COLUMN
+EXIT_FN_RET_INVALID_CONTEXT
+EXIT_FN_RET_INVALID_PARAM
+EXIT_FN_RET_OK
+EXIT_FN_RET_NOT_SUPPORTED
+EXIT_FN_RET_INVALID_COLUMN_TYPE
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment350">
+<tr>
+<td class="cellalignment357">
+<table class="cellalignment355">
+<tr>
+<td class="cellalignment354"><a href="set_column_value_by_index.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment354"><a href="set_operation_type.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment359">
+<table class="cellalignment353">
+<tr>
+<td class="cellalignment354"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment354"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment354"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

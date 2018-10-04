@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Cloning Your Production Environment for Testing</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Create a copy of your actual production environment, upgrade the cloned environment, verify that the upgraded components work as expected, and then (and only then) upgrade your production environment." />
+<meta name="dcterms.created" content="2017-11-28T05:04:47Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Upgrading to Oracle GoldenGate Monitor 12.2.1.2" />
+<meta name="dcterms.identifier" content="E85754-02" />
+<meta name="dcterms.isVersionOf" content="GMUPG" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="creating-complete-backup-required.htm" title="Previous" type="text/html" />
+<link rel="Next" href="verifying-certification-and-system-requirements.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GMUPG.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-3D6363F3-AE2C-40B5-902F-126E75394749"></a> <span id="PAGE" style="display:none;">7/15</span> <!-- End Header -->
+<h1 id="GMUPG-GUID-3D6363F3-AE2C-40B5-902F-126E75394749" class="sect1"><span class="enumeration_chapter">4</span> Cloning Your Production Environment for Testing</h1>
+<div>
+<p>Create a copy of your actual production environment, upgrade the cloned environment, verify that the upgraded components work as expected, and then (and only then) upgrade your production environment.</p>
+<div class="section">
+<p>Cloning your production environment for testing is recommended, but not required.</p>
+<div class="p">Upgrades cannot be reversed. In most cases, if an error occurs, you must stop the upgrade and restore the entire environment from backup and begin the upgrade process from the beginning. Identifying potential upgrade issues in a development environment can eliminate unnecessary downtime.
+<div class="infobox-note" id="GUID-3D6363F3-AE2C-40B5-902F-126E75394749__GUID-1EB03093-ACDC-47D5-AFDD-61FA83845821">
+<p class="notep1">Note:</p>
+It is beyond the scope of this document to describe the cloning procedures for all components and operating systems. Cloning procedures are component and operating system-specific. At a high level, you install the pre-upgrade version of your component domain on a test machine, create the required schemas using the Repository Creation Utility (RCU), and perform the upgrade.</div>
+</div>
+<div class="p">Additional benefits of running an upgrade in a cloned production environment include the following:
+<ul style="list-style-type: disc;">
+<li>
+<p>Uncover and correct any upgrade issues.</p>
+</li>
+<li>
+<p>Practice completing an end-to-end upgrade.</p>
+</li>
+<li>
+<p>Understand the upgrade performance and how purge scripts can help.</p>
+</li>
+<li>
+<p>Understand the time required to complete the upgrade.</p>
+</li>
+<li>
+<p>Understand the database resource usage (such as temporary tablespace; PGA, and so on).</p>
+</li>
+</ul>
+</div>
+<div class="infobox-note" id="GUID-3D6363F3-AE2C-40B5-902F-126E75394749__YOUCANRUNTHEPRE-UPGRADEREADINESSCHE-53859570">
+<p class="notep1">Note:</p>
+You can run the pre-upgrade Readiness Check on the cloned production environment to help identify potential upgrade issues with your data, but you must perform a complete test upgrade on a cloned environment to ensure a successful upgrade.</div>
+</div>
+<!-- class="section" --></div>
+<div class="sect2"><a id="GUID-3A51C0E1-3887-4500-8AFD-66FF8A69E122"></a>
+<h2 id="GMUPG-GUID-3A51C0E1-3887-4500-8AFD-66FF8A69E122" class="sect2">Cloning an <span>Oracle GoldenGate Monitor</span> Production Environment for Testing</h2>
+<div>
+<p>Cloning an <span>Oracle GoldenGate Monitor</span> production environment is a two-part process.</p>
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>Task 1: Clone (or copy) the existing production environment &mdash; referred to as <span class="bold">A</span> in the example below.</p>
+</li>
+<li>
+<p>Task 2: Run the full upgrade on the cloned environment &mdash; referred to as <span class="bold">B</span> in the example below.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="p"><span class="bold">Task 1: Clone existing production environment (A) for upgrade validation.</span></div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Install <span>Oracle GoldenGate Monitor</span> 11<span class="italic">g</span> or 12<span class="italic">c</span> version that matches the production <span>Oracle GoldenGate Monitor</span> instance version on the test machine.</span>
+<ol>
+<li><span>If your pre-upgrade environment is <span>Oracle GoldenGate Monitor</span> 11<span class="italic">g</span> Release 1, see the <a href="https://docs.oracle.com/cd/E29542_01/install.1111/e16453/install.htm#ODING124" target="_blank">Installing Oracle Data Integrator</a> in the <span class="italic">Fusion Middleware Installation Guide for Oracle Data Integrator Guide</span>.</span></li>
+</ol>
+</li>
+<li class="stepexpand"><span>Run the Repository Creation Utility (RCU) from the production version you just installed, and create new <span>Oracle GoldenGate Monitor</span> repository schemas (B). You will want to perform testing on non-production schemas.</span>
+<div>
+<div class="infobox-note" id="GUID-3A51C0E1-3887-4500-8AFD-66FF8A69E122__GUID-B1045021-130F-4420-8C05-4B8115FB0057">
+<p class="notep1">Note:</p>
+If you are cloning an <span>Oracle GoldenGate Monitor</span> 11<span class="italic">g</span> production environment:
+<p>When you create a new repository using the RCU, you are required to enter a repository ID for both Master and Work. The defaults are 0=Master and 1=Work. Make sure that the new IDs are different that those used in the existing production repository to avoid ID conflicts during repository import in Step 6.</p>
+<p>This is not required if you are cloning an <span>Oracle GoldenGate Monitor</span> 12<span class="italic">c</span> production environment.</p>
+</div>
+</div>
+</li>
+<li class="stepexpand"><span>If there are multiple work repositories, then you must create the other work repositories to match the production environment. See <a class="olink ODIAD159" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E79548-01&amp;id=ODIAD159">Creating a Work Repository</a> in <span>Oracle GoldenGate Monitor</span> installation guide for your instance release.</span></li>
+<li class="stepexpand"><span>Purge the execution logs to avoid exporting and importing excessive data as part of work repository export/import in the following step. See <a class="olink ODIAD662" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E79548-01&amp;id=ODIAD662">Purging the Logs</a>.</span></li>
+<li class="stepexpand"><span>Export <span>Oracle GoldenGate Monitor</span> master and work repository from the production system using <span>Oracle GoldenGate Monitor</span> export functionality. See <a class="olink ODIDG601" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E79548-01&amp;id=ODIDG601">Exporting and Importing the Master Repository</a> in <span id="GUID-3A51C0E1-3887-4500-8AFD-66FF8A69E122__ODIDG"><cite>Developing Integration Projects with Oracle Data Integrator</cite></span>.</span></li>
+<li class="stepexpand"><span>Import the <span>Oracle GoldenGate Monitor</span> master and work repository exports into the newly created <span>Oracle GoldenGate Monitor</span> schemas.</span></li>
+</ol>
+<div class="section">Your test environment should now be a clone of your production <span>Oracle GoldenGate Monitor</span> environment.</div>
+<!-- class="section" -->
+<div class="section">
+<p><span class="bold">Task 2: Upgrade the cloned environment (B) to test the upgrade</span></p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ol>
+<li>
+<p>Review the <a href="upgrade-checklist.htm#GUID-47E53006-BA02-40F4-97EE-E8F1E7800C0C" title="The Pre-Upgrade Checklist identifies tasks that can be performed before you begin your upgrade to ensure you have a successful upgrade and limited downtime.">Pre-Upgrade Checklist</a> to ensure that you have met all of the pre-upgrade requirements.</p>
+</li>
+<li>
+<p>Install <span>Oracle GoldenGate Monitor</span> <span>12<span class="italic">c</span> (12.2.1.3.0)</span> and any other product distributions into a new Oracle home on the test machine. See <a class="olink ODING-GUID-D5AFD830-8A7D-42CC-8C22-CE68C452CF4A" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E79548-01&amp;id=ODING-GUID-D5AFD830-8A7D-42CC-8C22-CE68C452CF4A">Installing the Oracle Data Integrator Software</a> in <span id="GUID-3A51C0E1-3887-4500-8AFD-66FF8A69E122__ODING"><cite>Installing and Configuring Oracle Data Integrator</cite></span>.</p>
+</li>
+<li>
+<p>Follow the standard upgrade procedures for your environment. Make sure that you select the appropriate upgrade procedures for your environment. See <a class="olink ODIUG-GUID-4D318C5D-5F88-44AF-955D-B81F2615A2D7" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E79548-01&amp;id=ODIUG-GUID-4D318C5D-5F88-44AF-955D-B81F2615A2D7">Introduction to Upgrading Oracle Data Integrator to 12c (12.2.1.3.0)</a>.</p>
+</li>
+<li>
+<p>Complete all post-upgrade configuration tasks and verify that the upgraded components work as expected.</p>
+</li>
+</ol>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment68">
+<tr>
+<td class="cellalignment75">
+<table class="cellalignment73">
+<tr>
+<td class="cellalignment72"><a href="creating-complete-backup-required.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment72"><a href="verifying-certification-and-system-requirements.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment77">
+<table class="cellalignment71">
+<tr>
+<td class="cellalignment72"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment72"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

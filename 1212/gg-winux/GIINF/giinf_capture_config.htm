@@ -1,0 +1,418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>4 Configuring Oracle GoldenGate for Capture</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This chapter contains instructions for configuring the Oracle GoldenGate Extract (capture) process to capture data from an Informix source. The Extract process captures change data from the Informix transaction log and processes that data for replication before writing it to a trail for temporary storage." />
+<meta name="dcterms.created" content="2015-05-21T11:41:6Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Informix" />
+<meta name="dcterms.identifier" content="E50195-06" />
+<meta name="dcterms.isVersionOf" content="GIINF" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="giinf_setup_preparation.htm" title="Previous" type="text/html" />
+<link rel="Next" href="giinf_apply_config.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIINF.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIINF.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIINF.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">7/11</span>
+<!-- End Header -->
+<div id="GIINF277" class="chapter"><a id="BABJJGDH"></a>
+<h1 class="chapter"><span class="secnum">4</span> Configuring Oracle GoldenGate for Capture</h1>
+<p><a id="GIINF278"></a>This chapter contains instructions for configuring the Oracle GoldenGate Extract (capture) process to capture data from an Informix source. The Extract process captures change data from the Informix transaction log and processes that data for replication before writing it to a trail for temporary storage. For more information about the Extract process, see <a class="olink GWUAD127" href="../../gg-winux/GWUAD/wu_about_gg.htm#GWUAD127"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#A4627659">Section 4.1, "Prerequisites for Configuring Capture"</a></p>
+</li>
+<li>
+<p><a href="#A4627673">Section 4.2, "What to Expect from these Instructions"</a></p>
+</li>
+<li>
+<p><a href="#A4627685">Section 4.3, "Configuring the Primary Extract"</a></p>
+</li>
+<li>
+<p><a href="#A4627737">Section 4.4, "Configuring the Data Pump Extract"</a></p>
+</li>
+<li>
+<p><a href="#A4627794">Section 4.5, "Next Steps"</a></p>
+</li>
+</ul>
+<a id="A4627659"></a>
+<div id="GIINF279" class="sect1">
+<h2 class="sect1"><span class="secnum">4.1</span> Prerequisites for Configuring Capture</h2>
+<p>The guidelines in the following sections should be satisfied before configuring Extract.</p>
+<ol>
+<li>
+<p><a href="giinf_system_requirements.htm#BABCGIEG">Section 1, "System Requirements and Preinstallation Instructions"</a></p>
+</li>
+<li>
+<p><a href="giinf_install.htm#CIHEBDAJ">Section 2, "Installing Oracle GoldenGate"</a></p>
+</li>
+<li>
+<p><a href="giinf_setup_preparation.htm#CJHFGHGI">Section 3, "Preparing the System for Oracle GoldenGate"</a></p>
+</li>
+<li>
+<p>Create the Oracle GoldenGate instance on the source system by configuring the Manager process. See <a class="olink GWUAD138" href="../../gg-winux/GWUAD/wu_manager.htm#GWUAD138"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Additionally, review the guidelines in <a class="olink GWUAD153" href="../../gg-winux/GWUAD/wu_gettingstarted.htm#GWUAD153"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="A4627673"></a>
+<div id="GIINF280" class="sect1">
+<h2 class="sect1"><span class="secnum">4.2</span> What to Expect from these Instructions</h2>
+<p>These instructions show you how to configure the following:</p>
+<ul>
+<li>
+<p>A basic Extract parameter (configuration) file for the primary Extract, which captures transaction data from the Informix transaction log.</p>
+</li>
+<li>
+<p>A data-pump Extract, which propagates captured data that is stored locally in a trail from the source system to the target system.</p>
+</li>
+</ul>
+<p>Your business requirements probably will require a more complex topology, but this procedure forms a basis for the rest of your configuration steps. For more information about Oracle GoldenGate architecture, see <a class="olink GWUAD110" href="../../gg-winux/GWUAD/wu_about_gg.htm#GWUAD110"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>By performing these steps, you can:</p>
+<ul>
+<li>
+<p>get the basic configuration files established.</p>
+</li>
+<li>
+<p>build upon them later by adding more parameters as you make decisions about features or requirements that apply to your environment.</p>
+</li>
+<li>
+<p>use copies of them to make the creation of additional parameter files faster than starting from scratch.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="A4627685"></a>
+<div id="GIINF281" class="sect1">
+<h2 class="sect1"><span class="secnum">4.3</span> Configuring the Primary Extract</h2>
+<p>These steps configure Extract to capture transaction data from the Oracle GoldenGate API.</p>
+<ol>
+<li>
+<p>In GGSCI on the source system, create the Extract parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">name</span>
+</pre>
+<p>Where: <code dir="ltr"><span class="codeinlineitalic">name</span></code> is the name of the primary Extract.</p>
+</li>
+<li>
+<p>Enter the Extract parameters in the order shown, starting a new line for each parameter statement. See <a href="#BABDDBIB">Table 4-1</a> for more information and parameter descriptions.</p>
+<p><span class="bold">Basic parameters for the primary Extract</span></p>
+<pre dir="ltr">
+EXTRACT finance
+SOURCEDB syscdcv1 USERIDALIAS tiger1 
+LOGALLSUPCOLS
+ENCRYPTTRAIL AES192
+EXTTRAIL /ggs/dirdat/lt
+TABLE mydatabase.*.*;
+</pre>
+<div id="GIINF282" class="tblhruleformalwide"><p class="titleintable"><a id="sthref24"></a><a id="BABDDBIB"></a>Table 4-1 Basic Parameters for Primary Extract in Classic Capture Mode</p>
+<table class="cellalignment41" title="Basic Parameters for Primary Extract in Classic Capture Mode" summary="This table describes the basic parameters for primary Extract in classic capture mode.">
+<thead>
+<tr class="cellalignment30">
+<th class="cellalignment42" id="r1c1-t2">Parameter</th>
+<th class="cellalignment42" id="r1c2-t2">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r2c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+EXTRACT <span class="codeinlineitalic">group</span>
+</pre></td>
+<td class="cellalignment36" headers="r2c1-t2 r1c2-t2">
+<p><code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the Extract group. For more information, see <a class="olink GWURF487" href="../../gg-winux/GWURF/gg_parameters060.htm#GWURF487"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r3c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+SOURCEDB <span class="codeinlineitalic">DSN</span> USERIDALIAS <span class="codeinlineitalic">alias</span>
+</pre></td>
+<td class="cellalignment36" headers="r3c1-t2 r1c2-t2">
+<p>Specifies the ODBC data source (DSN) of the source database and the alias of the database login credential of the user that is assigned to Extract. The DSN must point to the <code dir="ltr">syscdcv1</code> database. The <code dir="ltr">USERIDALIAS</code> credential must exist in the Oracle GoldenGate credential store. It is recommended that you use the credential store as a best practice. For more information about security options, see <a class="olink GWUAD354" href="../../gg-winux/GWUAD/wu_security.htm#GWUAD354"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p><span class="bold">Note:</span> This specification is required by Oracle GoldenGate. When specified here, you do not need to specify the login credentials in the <code dir="ltr">odbc.ini</code> file (thus avoiding a security risk).</p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r4c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">LOGALLSUPCOLS</code></p>
+</td>
+<td class="cellalignment36" headers="r4c1-t2 r1c2-t2">
+<p>Writes all supplementally logged columns to the trail, including those required for conflict detection and resolution. (Scheduling columns are primary key, unique index, and foreign key columns.) You configure the database to log these columns with GGSCI commands. See <a href="giinf_setup_preparation.htm#BABJDDGG">Section 3.3.2, "Configuring Logging Properties."</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r5c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+ENCRYPTTRAIL <span class="codeinlineitalic">algorithm</span>
+</pre></td>
+<td class="cellalignment36" headers="r5c1-t2 r1c2-t2">
+<p>Encrypts the local trail. For more information about Oracle GoldenGate trail encryption options, see <a class="olink GWUAD354" href="../../gg-winux/GWUAD/wu_security.htm#GWUAD354"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r6c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+EXTTRAIL <span class="codeinlineitalic">pathname</span> [FORMAT RELEASE <span class="codeinlineitalic">release</span>]
+</pre></td>
+<td class="cellalignment36" headers="r6c1-t2 r1c2-t2">
+<p>Specifies the path name of the local trail to which the primary Extract writes captured data.</p>
+<p>If a version 12.x Extract is sending data to a downstream process that is an 11<span class="italic">g</span> or earlier version, the <code dir="ltr">FORMAT</code> option must be used to write the object names to the trail in the proper format. Earlier versions of Oracle GoldenGate do not support three-part naming conventions (<code dir="ltr"><span class="codeinlineitalic">database.schema.table</span></code>). The <code dir="ltr">FORMAT</code> option directs Extract to write the two-part names to the trail.</p>
+<p>For more information, see <a class="olink GWURF488" href="../../gg-winux/GWURF/gg_parameters061.htm#GWURF488"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX.</span></a></p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r7c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+TABLE <span class="codeinlineitalic">database.schema.object</span>
+[, FETCHCOLS (<span class="codeinlineitalic">LOB_column</span>[, <span class="codeinlineitalic">LOB_column</span>[, ...])]
+;
+</pre></td>
+<td class="cellalignment36" headers="r7c1-t2 r1c2-t2">
+<p>Specifies the database object for which to capture data.</p>
+<ul>
+<li>
+<p><code dir="ltr">TABLE</code> s is a required keyword.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">database</span></code> specifies the Informix database that contains the objects to be captured. No wildcard is allowed for this component.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">schema</span></code> is the schema name or a wildcarded set of schemas.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">object</span></code> is the table or sequence name, or a wildcarded set of those objects.</p>
+</li>
+<li>
+<p><code dir="ltr">FETCHCOLS</code> specifies one or more LOB columns to fetch for the specified table.</p>
+</li>
+</ul>
+<p>See <a class="olink GWUAD192" href="../../gg-winux/GWUAD/wu_gettingstarted.htm#GWUAD192"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for information about how to specify object names with and without wildcards.</p>
+<p>Terminate the parameter statement with a semi-colon (<code dir="ltr">;</code>).</p>
+<p>To exclude tables from a wildcard specification, use the <code dir="ltr">TABLEEXCLUDE</code> parameter. See <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information about usage and syntax.</p>
+<p>For more information and for additional <code dir="ltr">TABLE</code> options that control data filtering, mapping, and manipulation, see <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any optional Extract parameters that are recommended for your configuration. You can edit this file at any point before starting processing by using the <code dir="ltr">EDIT PARAMS</code> command in GGSCI. For more information about optional parameters that control error handling, performance, and other aspects of processing, see <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>. For broader task-based information about how to configure Oracle GoldenGate, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a></p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="A4627737"></a>
+<div id="GIINF283" class="sect1">
+<h2 class="sect1"><span class="secnum">4.4</span> Configuring the Data Pump Extract</h2>
+<p>These steps configure the data pump that reads a local trail and sends the data across the network to a remote trail. For more information about data pumps, see <a class="olink GWUAD118" href="../../gg-winux/GWUAD/wu_about_gg.htm#GWUAD118"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<ol>
+<li>
+<p>In GGSCI on the source system, create the data-pump parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">name</span>
+</pre>
+<p>Where <code dir="ltr"><span class="codeinlineitalic">name</span></code> is the name of the data pump Extract.</p>
+</li>
+<li>
+<p>Enter the data-pump parameters in the order shown, starting a new line for each parameter statement. Your input variables will be different. See <a href="#BABJFJEC">Table 4-2</a> for descriptions.</p>
+<p><span class="bold">Basic parameters for the data-pump Extract group:</span></p>
+<pre dir="ltr">
+EXTRACT extpump
+RMTHOST fin1, MGRPORT 7809 ENCRYPT AES192, KEYNAME securekey2
+RMTTRAIL /ggs/dirdat/rt
+TABLE mydatabase.*.*;
+</pre>
+<div id="GIINF284" class="tblhruleformalwide"><p class="titleintable"><a id="sthref25"></a><a id="BABJFJEC"></a>Table 4-2 Basic Parameters for a Data-pump Extract</p>
+<table class="cellalignment41" title="Basic Parameters for a Data-pump Extract" summary="This table describes the basic parameters for a data-pump Extract.">
+<thead>
+<tr class="cellalignment30">
+<th class="cellalignment42" id="r1c1-t3">Parameter</th>
+<th class="cellalignment42" id="r1c2-t3">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r2c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+EXTRACT <span class="codeinlineitalic">group</span>
+</pre></td>
+<td class="cellalignment36" headers="r2c1-t3 r1c2-t3">
+<p><code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the data pump Extract. For more information, see <a class="olink GWURF487" href="../../gg-winux/GWURF/gg_parameters060.htm#GWURF487"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r3c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+RMTHOST <span class="codeinlineitalic">hostname</span>, MGRPORT <span class="codeinlineitalic">portnumber</span>,[, ENCRYPT <span class="codeinlineitalic">algorithm</span> KEYNAME <span class="codeinlineitalic">keyname</span>]
+</pre></td>
+<td class="cellalignment36" headers="r3c1-t3 r1c2-t3">
+<ul>
+<li>
+<p><code dir="ltr">RMTHOST</code> specifies the name or IP address of the target system.</p>
+</li>
+<li>
+<p><code dir="ltr">MGRPORT</code> specifies the port number where Manager is running on the target.</p>
+</li>
+<li>
+<p><code dir="ltr">ENCRYPT</code> specifies optional encryption of data across TCP/IP.</p>
+</li>
+</ul>
+<p>For additional options and encryption details, see <a class="olink GWURF631" href="../../gg-winux/GWURF/gg_parameters136.htm#GWURF631"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r4c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+RMTTRAIL <span class="codeinlineitalic">pathname</span> [FORMAT RELEASE <span class="codeinlineitalic">release</span>]
+</pre></td>
+<td class="cellalignment36" headers="r4c1-t3 r1c2-t3">
+<p>Specifies the path name of the remote trail to which the data-pump Extract writes captured data</p>
+<p>If a version 12.x Extract is sending data to a downstream process that is an 11<span class="italic">g</span> or earlier version, the <code dir="ltr">FORMAT</code> option must be used to write the object names to the trail in the proper format. Earlier versions of Oracle GoldenGate do not support three-part naming conventions (<code dir="ltr"><span class="codeinlineitalic">database.schema.table</span></code>). The <code dir="ltr">FORMAT</code> option directs Extract to write the two-part names to the trail.</p>
+<p>For more information, see <a class="olink GWURF488" href="../../gg-winux/GWURF/gg_parameters061.htm#GWURF488"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r5c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+TABLE <span class="codeinlineitalic">database.schema.object</span>;
+</pre></td>
+<td class="cellalignment36" headers="r5c1-t3 r1c2-t3">
+<p>Specifies the database object for which to capture data.</p>
+<ul>
+<li>
+<p><code dir="ltr">TABLE</code> s is a required keyword.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">database</span></code> specifies the same Informix database that is specified for the primary Extract.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">schema</span></code> is the schema name or a wildcarded set of schemas.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">object</span></code> is the table or sequence name, or a wildcarded set of those objects.</p>
+</li>
+</ul>
+<p>See <a class="olink GWUAD192" href="../../gg-winux/GWUAD/wu_gettingstarted.htm#GWUAD192"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for information about how to specify object names with and without wildcards.</p>
+<p>Terminate the parameter statement with a semi-colon (<code dir="ltr">;</code>).</p>
+<p>To exclude tables from a wildcard specification, use the <code dir="ltr">TABLEEXCLUDE</code> parameter. See <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information about usage and syntax.</p>
+<p>For more information and for additional <code dir="ltr">TABLE</code> options that control data filtering, mapping, and manipulation, see <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any optional Extract parameters that are recommended for your configuration. You can edit this file at any point before starting processing by using the <code dir="ltr">EDIT PARAMS</code> command in GGSCI. For more information, see <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="A4627794"></a>
+<div id="GIINF285" class="sect1">
+<h2 class="sect1"><span class="secnum">4.5</span> Next Steps</h2>
+<p>To configure the Replicat (apply) process, see <a href="giinf_apply_config.htm#BHCDFAHC">Chapter 5, "Configuring Oracle GoldenGate for Apply."</a></p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment29">
+<tr>
+<td class="cellalignment36"><table class="cellalignment40">
+<tr>
+<td class="cellalignment33"><a href="giinf_setup_preparation.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment33"><a href="giinf_apply_config.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment38">
+<table class="cellalignment39">
+<tr>
+<td class="cellalignment33"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment33"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment33"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

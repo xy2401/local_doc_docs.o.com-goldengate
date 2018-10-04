@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>DBLOGIN</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="getparaminfo.htm" title="Previous" type="text/html" />
+<link rel="Next" href="encrypt-password.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9"></a> <span id="PAGE" style="display:none;">70/459</span> <!-- End Header -->
+<a id="GWURF964"></a><a id="GWURF965"></a><a id="GWURF252"></a><a id="GWURF1051"></a><a id="GWURF1052"></a><a id="GWURF1053"></a><a id="GWURF1056"></a><a id="GWURF1096"></a><a id="GWURF1233"></a><a id="GWURF1234"></a><a id="GWURF1235"></a><a id="GWURF251"></a>
+<h1 id="GWURF-GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9" class="sect1"><span class="enumeration_section">1.62</span> DBLOGIN</h1>
+<div>
+<div class="section">
+<p>Use <code class="codeph">DBLOGIN</code> to establish a database connection through GGSCI in preparation to issue other Oracle GoldenGate commands that affect the database. The user who issues <code class="codeph">DBLOGIN</code> should have the appropriate database privileges to perform the functions that are enacted by those commands. Any other special privileges that are required for a GGSCI command are listed with the reference documentation for that command.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Requirements When Configuring Extract or Replicat in Integrated Mode (Oracle)</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>If using <code class="codeph">DBLOGIN</code> to issue <code class="codeph">ADD EXTRACT</code>, <code class="codeph">ALTER EXTRACT</code>, or <code class="codeph">REGISTER EXTRACT</code> to initiate integrated capture or <code class="codeph">ADD REPLICAT</code>, <code class="codeph">ALTER REPLICAT</code>, or <code class="codeph">REGISTER REPLICAT</code> to initiate integrated Replicat against an Oracle database, the user who issues <code class="codeph">DBLOGIN</code> must:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Have privileges granted through the Oracle <code class="codeph">dbms_goldengate_auth.grant_admin_privilege</code> procedure.</p>
+</li>
+<li>
+<p>Not be changed while Extract or Replicat is in integrated mode.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Special Database Privileges to Use Log Retention in Classic Capture Mode</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>When in classic capture mode for an Oracle database, Extract supports the log-retention feature, whereby the database retains the logs that Extract needs. (See <a class="olink GIORA-GUID-6D3A40A4-BA62-4704-8C4D-07EBDBDB1B22" target="_blank" href="../GIORA/choosing-capture-and-apply-modes.htm#GIORA-GUID-6D3A40A4-BA62-4704-8C4D-07EBDBDB1B22">Installing and Configuring Oracle GoldenGate for Oracle Database</a> for more information about classic capture.) To enable the log-retention feature, <code class="codeph">DBLOGIN</code> must be issued with special privileges before using <code class="codeph">REGISTER EXTRACT</code> with the <code class="codeph">LOGRETENTION</code> option. For simplicity, you can log in as the Extract database user if the correct privileges were granted to that user when Oracle GoldenGate was installed. Otherwise, log in as a user with the privileges shown in <a href="dblogin.htm#GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__CHDBGGIB" title="This table lists Oracle EE 10.2 and later privileges for TRANLOG options.">Table 1-17</a>.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformal" id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__CHDBGGIB">
+<p class="titleintable">Table 1-17 Oracle Privileges for Log Retention</p>
+<table class="cellalignment463" title="Oracle Privileges for Log Retention" summary="This table lists Oracle EE 10.2 and later privileges for TRANLOG options.">
+<thead>
+<tr class="cellalignment454">
+<th class="cellalignment472" id="d32450e110">Oracle EE version</th>
+<th class="cellalignment473" id="d32450e113">How to Grant Privileges</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment454">
+<td class="cellalignment474" id="d32450e118" headers="d32450e110">
+<p>11.1 and 11.2.0.1</p>
+</td>
+<td class="cellalignment475" headers="d32450e118 d32450e113">
+<ol>
+<li>
+<p>Run package to grant Oracle GoldenGate admin privilege.</p>
+<pre dir="ltr">
+exec dbms_streams_auth.grant_admin_privilege('<span class="italic">user</span>')
+</pre></li>
+<li>
+<p>Grant the '<code class="codeph">become user</code>' privilege.</p>
+<pre dir="ltr">
+grant become user to <span class="italic">user</span>;
+</pre></li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment474" id="d32450e143" headers="d32450e110">
+<p>11.2.0.2 and later</p>
+</td>
+<td class="cellalignment475" headers="d32450e143 d32450e113">
+<p>Run package to grant Oracle GoldenGate admin privilege.</p>
+<pre dir="ltr">
+exec dbms_goldengate_auth.grant_admin_privilege('<span class="italic">user</span>')
+</pre></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+DBLOGIN {
+[SOURCEDB <span class="italic">data_source</span>] |
+[, <span class="italic">database</span>@<span class="italic">host</span>:<span class="italic">port</span>] |
+USERID {/ | <span class="italic">userid</span>}[, PASSWORD <span class="italic">password</span>]
+   [<span class="italic">algorithm</span> ENCRYPTKEY {<span class="italic">keyname</span> | DEFAULT}] |
+USERIDALIAS <span class="italic">alias</span> [DOMAIN <span class="italic">domain</span>] |
+[SYSDBA | SQLID <span class="italic">sqlid</span>]
+[SESSIONCHARSET <span class="italic">character_set</span>]
+}
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-8F4FA805-65C7-40B9-8736-958373195699"><!-- --></a><code class="codeph">SOURCEDB</code> <span class="italic"><code class="codeph">data_source</code></span></dt>
+<dd>
+<p><code class="codeph">SOURCEDB</code> specifies a data source name. This option is required to identify one of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The source or target login database for Sybase, MySQL, and databases that use ODBC</p>
+</li>
+<li>
+<p>The source or target SQL/MX catalog</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-B9E9F3E4-73C2-42DF-9F52-E4DC7EB88198"><!-- --></a><span class="italic"><code class="codeph">database@host:port</code></span></dt>
+<dd>
+<p>(MySQL) Specifies a connection string that contains the database name, host name, and database port number. Can be used to specify a port other than the default that is specified in the database configuration.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-384D8704-C014-4801-B6B7-46D06C2B8875"><!-- --></a><code class="codeph">USERID</code></dt>
+<dd>
+<p>Supplies a database login credential, if required. Can be used if an Oracle GoldenGate credential store is not in use. (See the <code class="codeph">USERIDALIAS</code> option.) Input varies, depending on the database, as follows:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-A13BA58E-127B-4D60-8308-B69F9A6F520F"><!-- --></a><span class="italic"><code class="codeph">userid</code></span></dt>
+<dd>
+<p>Specifies the name of a database user or a schema, depending on the database configuration. For Oracle, a SQL*Net connect string can be used. To log into a pluggable database in an Oracle multitenant container database, specify <span class="italic"><code class="codeph">userid</code></span> as a connect string, such as <code class="codeph">OGGUSER@FINANCE</code>. To log into the root container, specify <span class="italic"><code class="codeph">userid</code></span> as a common user, including the C## prefix, such as <code class="codeph">C##GGADMIN@FINANCE</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-0E31A48E-3E4A-4150-9FC3-42EFA3B24F28"><!-- --></a><code class="codeph">/</code></dt>
+<dd>
+<p>(Oracle) Directs Oracle GoldenGate to use an operating-system login for Oracle, not a database user login. Use this argument only if the database allows authentication at the operating-system level. To use this option, the correct user name must exist in the database, in relation to the value of the Oracle <code class="codeph">OS_AUTHENT_PREFIX</code> initialization parameter. For more information, see the <code class="codeph"><a href="userid-nouserid.htm#GUID-1943C6E4-5188-4B6A-B60C-7983B8811EEC">USERID | NOUSERID</a></code> parameter.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-5AEEB3FA-2057-4DCE-B0C9-7601ED444EA1"><!-- --></a><code class="codeph">PASSWORD</code> <span class="italic"><code class="codeph">password</code></span></dt>
+<dd>
+<p>Use when authentication is required to specify the password for the database user. If the password was encrypted by means of the <code class="codeph">ENCRYPT PASSWORD</code> command, supply the encrypted password; otherwise, supply the clear-text password. If the password is case-sensitive, type it that way.</p>
+<p>If the <code class="codeph">PASSWORD</code> clause is omitted, you are prompted for a password, and the password is not echoed.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-94C6CF31-9315-44F3-96E1-D5E45477DD3C"><!-- --></a><span class="italic"><code class="codeph">algorithm</code></span></dt>
+<dd>
+<p>If the password was encrypted with the <code class="codeph">ENCRYPT PASSWORD</code> command, specify the encryption algorithm that was used:</p>
+<p><code class="codeph">AES128</code></p>
+<p><code class="codeph">AES192</code></p>
+<p><code class="codeph">AES256</code></p>
+<p><code class="codeph">BLOWFISH</code></p>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-A252251D-7A97-4F3B-9DF3-06731078688B"><!-- --></a><code class="codeph">ENCRYPTKEY {</code><span class="italic"><code class="codeph">keyname</code></span> <code class="codeph">| DEFAULT}</code></dt>
+<dd>
+<p>Specifies the encryption key that was specified with <code class="codeph">the ENCRYPT PASSWORD command</code>. Use one of the following:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-248C1B24-111E-4138-B415-D47047F38331"><!-- --></a><code class="codeph">ENCRYPTKEY</code> <span class="italic"><code class="codeph">keyname</code></span></dt>
+<dd>
+<p>Specifies the logical name of a user-created encryption key in the <code class="codeph">ENCKEYS</code> lookup file. Use if <code class="codeph">ENCRYPT PASSWORD</code> was used with the <code class="codeph">KEYNAME</code> <span class="italic"><code class="codeph">keyname</code></span> option.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-6BEB9FBC-5D23-4615-8759-0F22780F1740"><!-- --></a><code class="codeph">ENCRYPTKEY DEFAULT</code></dt>
+<dd>
+<p>Directs Oracle GoldenGate to generate a Blowfish key. Use if the <code class="codeph">ENCRYPT PASSWORD</code> command was used with the <code class="codeph">KEYNAME DEFAULT</code> option.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-9734632F-87F4-488B-BFE6-D9EF79E785E5"><!-- --></a><code class="codeph">USERIDALIAS</code> <span class="italic"><code class="codeph">alias</code></span> <code class="codeph">[DOMAIN</code> <span class="italic"><code class="codeph">domain</code></span><code class="codeph">]</code></dt>
+<dd>
+<p>Supplies a database login credential, if required. Can be used instead of the <code class="codeph">USERID</code> option if there is a local Oracle GoldenGate credential store that contains a credential with the required privileges for this <code class="codeph">DBLOGIN</code> command. For more information about using a credential store, see <a class="olink GWUAD354" target="_blank" href="../GWUAD/configuring-oracle-goldengate-security.htm#GWUAD354"><span class="italic"><span id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GWUAD"><cite>Administering Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-6517D684-B801-4F8E-A870-DAE29D7C3423"><!-- --></a><span class="italic"><code class="codeph">alias</code></span></dt>
+<dd>
+<p>Specifies the alias of a database user credential that is stored in the Oracle GoldenGate credential store. To log into a pluggable database in an Oracle multitenant container database, the user must be stored as a connect string, such as <code class="codeph">OGGUSER@FINANCE</code>. To log into the root container, the user must be stored as a common user, including the C## prefix, such as <code class="codeph">C##GGADMIN@FINANCE</code>. For more information about configuring Oracle GoldenGate for a CDB, see <a class="olink GIORA-GUID-B890041C-1474-4422-A7A0-C14D1182D8EF" target="_blank" href="../GIORA/configuring-oracle-goldengate-multitenant-container-database.htm#GIORA-GUID-B890041C-1474-4422-A7A0-C14D1182D8EF">Installing and Configuring Oracle GoldenGate for Oracle Database</a>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-51A761D2-8188-49D6-B3CA-F64C16AC20F2"><!-- --></a><code class="codeph">DOMAIN</code> <span class="italic"><code class="codeph">domain</code></span></dt>
+<dd>
+<p>Specifies the credential store domain for the specified alias. A valid domain entry must exist in the credential store for the specified alias.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-294FF645-FA07-4FD7-8E20-259DE9EED390"><!-- --></a><code class="codeph">SYSDBA</code></dt>
+<dd>
+<p>(Oracle) Specifies that the user logs in as <code class="codeph">sysdba</code>. This option can be used for <code class="codeph">USERID</code> and <code class="codeph">USERIDALIAS</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-44C5C4BA-EF85-4605-8A17-881107B0766D"><!-- --></a><code class="codeph">SQLID</code> <span class="italic"><code class="codeph">sqlid</code></span></dt>
+<dd>
+<p>(DB2 on z/OS) Issues the SQL command <code class="codeph">SET CURRENT SQLID = 'sqlid'</code> after the <code class="codeph">USERID</code> login (with <code class="codeph">PASSWORD</code>, if applicable) is completed. If the <code class="codeph">SET</code> command fails, the entire <code class="codeph">DBLOGIN</code> command fails as a unit.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-28BE2E46-0F9F-4764-87AF-8E396F32967C"><!-- --></a><code class="codeph">SESSIONCHARSET</code> <span class="italic"><code class="codeph">character_set</code></span></dt>
+<dd>
+<p>(Sybase, Teradata and MySQL) Sets a database session character set for the GGSCI connection to the database. All subsequent commands will use the specified session character set. This command option overrides any <code class="codeph">SESSIONCHARSET</code> that is specified in the <code class="codeph">GLOBALS</code> file.</p>
+<p>(Sybase) To display the language information in the process report file when using this option for a Sybase database, make certain that <code class="codeph">locale.dat</code> is set properly in the Sybase installation directory. If the character set is not found in the supported Sybase database character set, then it is validated against the Oracle GoldenGate supported character set list. The character-set information is displayed with the <code class="codeph">LOCALE INFORMATION</code> entry in the report output. When issuing the <code class="codeph">DBLOGIN</code> command, the Sybase environment variable is examined to see if the language (<code class="codeph">LANG</code>) is set. If the language is not set, Oracle GoldenGate automatically sets it to US English.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-72B96459-5000-4B71-9B42-1D24A938D176"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;(Oracle)</dt>
+<dd>
+<pre dir="ltr">
+DBLOGIN USERIDALIAS alias1
+</pre></dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-602D0F42-0FDC-4B06-B51E-10A55EB77355"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;(Oracle with non-default domain)</dt>
+<dd>
+<pre dir="ltr">
+DBLOGIN USERIDALIAS alias1 DOMAIN domain1
+</pre></dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-A1928F23-60E2-440A-A65E-0865F60C2CAA"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;(Oracle with SYSDBA)</dt>
+<dd>
+<pre dir="ltr">
+DBLOGIN USERID ogguser@pdb1 SYSDBA password AACAAAAAAAAAAAJAUEUGODSCVGJEEIUGKJDJTFNDKEJFFFTC AES128, ENCRYPTKEY securekey1
+</pre></dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-D1B138CD-9D01-4316-9D2B-4BFCCDD9232A"><!-- --></a>Example 4&nbsp;&nbsp;&nbsp;(MySQL)</dt>
+<dd>
+<pre dir="ltr">
+DBLOGIN SOURCEDB mysqldb@host1:3305, USERIDALIAS alias1
+</pre></dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-F7D46E71-7412-4A7F-BF1C-EBE12DBB620B"><!-- --></a>Example 5&nbsp;&nbsp;&nbsp;(MySQL, Sybase)</dt>
+<dd>
+<pre dir="ltr">
+DBLOGIN SOURCEDB database USERIDALIAS alias1
+</pre></dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-D9A4BCE2-B78C-472D-8579-224FE9D25A04"><!-- --></a>Example 6&nbsp;&nbsp;&nbsp;(Sybase with Remote DB)</dt>
+<dd>
+<pre dir="ltr">
+DBLOGIN SOURCEDB USERID ogguser@remotedatabase PASSWORD password
+</pre></dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-C424DD27-61CC-4AC2-97B4-42090D4126D9"><!-- --></a>Example 7&nbsp;&nbsp;&nbsp;(SQL Server with Integrated Windows authentication)</dt>
+<dd>
+<pre dir="ltr">
+DBLOGIN SOURCEDB systemdsn
+</pre></dd>
+<dt class="dlterm"><a id="GUID-2674DB7E-C765-4BDD-BDA7-5B7E5226A9A9__GUID-F8C05BB1-780E-46EF-8F8F-CFD08C9913C5"><!-- --></a>Example 8&nbsp;&nbsp;&nbsp;(Informix, SQL Server)</dt>
+<dd>
+<pre dir="ltr">
+DBLOGIN SOURCEDB systemdsn USERIDALIAS alias1
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="getparaminfo.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="encrypt-password.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

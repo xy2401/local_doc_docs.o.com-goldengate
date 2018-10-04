@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the Kafka Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="The Oracle GoldenGate for Big Data Kafka Handler is designed to stream change capture data from a Oracle GoldenGate trail to a Kafka topic. Additionally, the Kafka Handler provides optional functionality to publish the associated schemas for messages to a separate schema topic. Schema publication is currently only supported for Avro schemas because of the direct dependency of Avro messages upon an Avro schema." />
+<meta name="dcterms.created" content="2016-06-08T07:49:17Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Integrating Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E65148-03" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-F0FA2781-0802-4530-B1F0-5E102B982EC0.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E65148-03.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="E65148-03.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="E65148-03.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr"><a id="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5"></a> <span id="PAGE" style="display:none;">8/15</span> <!-- End Header --><a id="GADBD450"></a><a id="GADBD449"></a>
+<h1 id="GADBD-GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5" class="sect1"><span class="enumeration_chapter">5</span> Using the Kafka Handler</h1>
+<div>
+<div><span>The Oracle GoldenGate for Big Data Kafka Handler is designed to stream change capture data from a Oracle GoldenGate trail to a Kafka topic. Additionally, the Kafka Handler provides optional functionality to publish the associated schemas for messages to a separate schema topic. Schema publication is currently only supported for Avro schemas because of the direct dependency of Avro messages upon an Avro schema.</span></div>
+<p>Apache Kafka is an open source, distributed, partitioned and replicated messaging service. Kafka and its associated documentation are available at www.kafka.apache.org.</p>
+<p>Kafka can be run as a single instance or as a cluster on multiple servers. Each Kafka server instance is called a broker. A Kafka topic is a category or feed name to which messages are published by the producers and retrieved by consumers.</p>
+<p>The Kafka Handler implements a Kafka producer that writes serialized change capture data from multiple tables to one topic.</p>
+<p>This chapter contains the following sections:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><a href="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5.htm#GUID-1A0EC8A5-8710-47D6-BC46-C6946DC4F3EC">Setup and Running</a></p>
+</li>
+<li>
+<p><a href="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5.htm#GUID-E43DB743-4A2A-4C2F-97E8-50BB22CACCE3">Detailed Functionality</a></p>
+</li>
+<li>
+<p><a href="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5.htm#GUID-D6DE6F83-049C-4E97-8535-736F22741D51">Schema Propagation</a></p>
+</li>
+<li>
+<p><a href="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5.htm#GUID-03E08F86-B05A-4504-9F10-AB9022ED8EE3">Troubleshooting</a></p>
+</li>
+<li>
+<p><a href="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5.htm#GUID-F3170919-9C2F-4C3A-8D51-CA5500C3B7FF">Performance Considerations</a></p>
+</li>
+<li>
+<p><a href="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5.htm#GUID-C9C0652E-7B39-4C9A-8360-09121B8B47CD">Security</a></p>
+</li>
+<li>
+<p><a href="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5.htm#GUID-359D654F-4377-4F34-8150-473ADA0E6972">Kafka Handler Certification Matrix</a></p>
+</li>
+<li>
+<p><a href="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5.htm#GUID-B3E28C32-9F7A-469E-9495-AC6D51CD6446">Metadata Change Events</a></p>
+</li>
+<li>
+<p><a href="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5.htm#GUID-042F88D1-24B9-4703-82B4-223433293650">Snappy Considerations</a></p>
+</li>
+</ul>
+</div>
+<a id="GADBD451"></a>
+<div class="props_rev_3"><a id="GUID-1A0EC8A5-8710-47D6-BC46-C6946DC4F3EC"></a>
+<h2 id="GADBD-GUID-1A0EC8A5-8710-47D6-BC46-C6946DC4F3EC" class="sect2"><span class="enumeration_section">5.1</span> Setup and Running</h2>
+<div>
+<p>Instructions for setting up each of the Kafka Handler components and running the handler are described in the following sections.</p>
+</div>
+<a id="GADBD452"></a>
+<div class="props_rev_3"><a id="GUID-1558D5E5-211D-4B81-9A36-052975FBB965"></a>
+<h3 id="GADBD-GUID-1558D5E5-211D-4B81-9A36-052975FBB965" class="sect3"><span class="enumeration_section">5.1.1</span> Runtime Prerequisites</h3>
+<div>
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>Zookeeper, a prerequisite component for Kafka and Kafka broker (or brokers) should be up and running.</p>
+</li>
+<li>
+<p>It is highly recommended and considered a best practice that the data topic and the schema topic (if applicable) are preconfigured on the running Kafka brokers. It is possible to create Kafka topics dynamically; however, this relies on the Kafka brokers being configured to allow dynamic topics.</p>
+</li>
+<li>
+<p>If the Kafka broker is not collocated with the Oracle GoldenGate for Big Data Kafka Handler process, the remote host:port must be reachable from the machine running the Kafka Handler.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD453"></a>
+<div class="props_rev_3"><a id="GUID-AEEC309C-4B0B-44C3-A3A5-0B86635CF93D"></a>
+<h3 id="GADBD-GUID-AEEC309C-4B0B-44C3-A3A5-0B86635CF93D" class="sect3"><span class="enumeration_section">5.1.2</span> Classpath Configuration</h3>
+<div>
+<div class="section">
+<p>Two things must be configured in the gg.classpath configuration variable in order for the Kafka Handler to connect to Kafka and run. The required items are the Kafka Producer Properties file and the Kafka client jars. The Kafka client jars must match the version of Kafka that the Kafka Handler is connecting to. For a listing of the required client JAR files by version, see <a href="GUID-1C21BC19-B3E9-462C-809C-9440CAB3A427.htm#GUID-1C21BC19-B3E9-462C-809C-9440CAB3A427">Kafka Handler Client Dependencies</a>.</p>
+<p>The recommending storage location for the Kafka Producer Properties file is the Oracle GoldenGate <code>dirprm</code> directory.</p>
+<p>The default location of the Kafka client jars is <span class="italic"><code>Kafka_Home</code></span><code>/libs/*.</code></p>
+<p>The <code>gg.classpath</code> must be configured exactly as shown. Pathing to the Kafka Producer Properties file should simply contain the path with no wild card appended. The inclusion of the * wildcard in the path to the Kafka Producer Properties file will cause it not to be picked up. Conversely, pathing to the dependency jars should include the * wild card character in order to include all of the jar files in that directory in the associated classpath. Do not use <code>*.jar.</code> The following is an example of the correctly configured classpath:</p>
+<p><code>gg.classpath=dirprm:/ggwork/kafka/lib/*</code></p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD454"></a>
+<div class="props_rev_3"><a id="GUID-DFF7B077-EB8B-4D18-A110-E57D6EE3461B"></a>
+<h3 id="GADBD-GUID-DFF7B077-EB8B-4D18-A110-E57D6EE3461B" class="sect3"><span class="enumeration_section">5.1.3</span> Pluggable Formatters</h3>
+<div>
+<div class="section">
+<p>The Kafka Handler supports all the big data formatters which includes:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Avro Row</p>
+</li>
+<li>
+<p>Avro Operation</p>
+</li>
+<li>
+<p>JSON</p>
+</li>
+<li>
+<p>XML</p>
+</li>
+<li>
+<p>Delimited Text</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD456"></a><a id="GADBD455"></a>
+<div class="props_rev_3"><a id="GUID-B0B28444-7A93-4DC9-BD46-2F1C7D8058FE"></a>
+<h3 id="GADBD-GUID-B0B28444-7A93-4DC9-BD46-2F1C7D8058FE" class="sect3"><span class="enumeration_section">5.1.4</span> Kafka Handler Configuration</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the Kafka Handler. These properties are located in the <code>Java Adapter</code> properties file and not in the Replicat properties file.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformalwide" id="GUID-B0B28444-7A93-4DC9-BD46-2F1C7D8058FE__GUID-E0BE3B27-B743-4317-845E-F4636AE9027A">
+<p class="titleintable">Table 5-1 Configuration Properties for 12.2.0.1 Kafka Handler</p>
+<table class="cellalignment152" title="Configuration Properties for 12.2.0.1 Kafka Handler" summary="Configuration properties for 12.2.0.1 Kafka Handler">
+<thead align="left">
+<tr>
+<th class="cellalignment181" id="d12562e224">Property Name</th>
+<th class="cellalignment146" id="d12562e227">Property Value</th>
+<th class="cellalignment182" id="d12562e230">Mandatory</th>
+<th class="cellalignment173" id="d12562e233">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment181" id="d12562e238" headers="d12562e224">
+<p><code>gg.handlerlist</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e238 d12562e227">
+<p><span class="italic"><code>kafkahandler</code></span> (choice of any name)</p>
+</td>
+<td class="cellalignment182" headers="d12562e238 d12562e230">
+<p>Yes</p>
+</td>
+<td class="cellalignment173" headers="d12562e238 d12562e233">
+<p>List of handlers to be used.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment181" id="d12562e255" headers="d12562e224">
+<p><code>gg.handler.<span class="codeinlineitalic">kafkahandler</span>.Type</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e255 d12562e227">
+<p><code>kafka</code></p>
+</td>
+<td class="cellalignment182" headers="d12562e255 d12562e230">
+<p>Yes</p>
+</td>
+<td class="cellalignment173" headers="d12562e255 d12562e233">
+<p>Type of handler to use. For example, Kafka, Flume, HDFS.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment181" id="d12562e273" headers="d12562e224">
+<p><code>gg.handler.<span class="codeinlineitalic">kafkahandler</span>.KafkaProducerConfigFile</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e273 d12562e227">
+<p>Any custom file name</p>
+</td>
+<td class="cellalignment182" headers="d12562e273 d12562e230">
+<p>No. Defaults to <code>kafka-producer-default.properties</code></p>
+</td>
+<td class="cellalignment173" headers="d12562e273 d12562e233">
+<p>Filename in classpath that holds Apache Kafka properties to configure the Apache Kafka producer.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment181" id="d12562e293" headers="d12562e224">
+<p><code>gg.handler.<span class="codeinlineitalic">kafkahandler</span>.TopicName</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e293 d12562e227">
+<p>TopicName</p>
+</td>
+<td class="cellalignment182" headers="d12562e293 d12562e230">
+<p>Yes</p>
+</td>
+<td class="cellalignment173" headers="d12562e293 d12562e233">
+<p>Name of the Kafka topic where payload records will be sent.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment181" id="d12562e310" headers="d12562e224">
+<p><code>gg.handler.<span class="codeinlineitalic">kafkahandler</span>.Format</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e310 d12562e227">
+<p>Formatter class or short code</p>
+</td>
+<td class="cellalignment182" headers="d12562e310 d12562e230">
+<p>No. Defaults to <code>delimitedtext</code>.</p>
+</td>
+<td class="cellalignment173" headers="d12562e310 d12562e233">
+<p>Formatter to use to format payload. Can be one of <code>xml</code>, <code>delimitedtext</code>, <code>json</code>, <code>avro_row</code>, <code>avro_op</code></p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment181" id="d12562e344" headers="d12562e224">
+<p><code>gg.handler.<span class="codeinlineitalic">kafkahandler</span>.SchemaTopicName</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e344 d12562e227">
+<p>Name of the schema topic</p>
+</td>
+<td class="cellalignment182" headers="d12562e344 d12562e230">
+<p>Yes, when schema delivery is required.</p>
+</td>
+<td class="cellalignment173" headers="d12562e344 d12562e233">
+<p>Topic name where schema data will be delivered. If this property is not set, schema will not be propagated. Schemas will be propagated only for Avro formatters.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment181" id="d12562e361" headers="d12562e224">
+<p><code>gg.handler.<span class="codeinlineitalic">kafkahandler</span>.SchemaPrClassName</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e361 d12562e227">
+<p>Fully qualified class name of a custom class that implements Oracle GoldenGate for Big Data Kafka Handler's <code>CreateProducerRecord</code> Java Interface</p>
+</td>
+<td class="cellalignment182" headers="d12562e361 d12562e230">
+<p>No. Defaults to provided implementation class: <code>oracle.goldengate.handler.kafka</code>.Default <code>ProducerRecord</code></p>
+</td>
+<td class="cellalignment173" headers="d12562e361 d12562e233">
+<p>Schema is also propagated as a <code>ProducerRecord</code>. The default key here is the fully qualified table name. If this needs to be changed for schema records, the custom implementation of the <code>CreateProducerRecord</code> interface needs to be created and this property needs to be set to point to the fully qualified name of the new class.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment181" id="d12562e392" headers="d12562e224">
+<p><code>gg.handler.<span class="codeinlineitalic">kafkahandler</span>.BlockingSend</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e392 d12562e227">
+<p><code>true</code> | <code>false</code></p>
+</td>
+<td class="cellalignment182" headers="d12562e392 d12562e230">
+<p>No. Defaults to <code>false</code>.</p>
+</td>
+<td class="cellalignment173" headers="d12562e392 d12562e233">
+<p>If this property is set to true, then delivery to Kafka is made to work in a completely synchronous model. The next payload will be sent only after the current payload has been written out to the intended topic and an acknowledgement has been received. In transaction mode, this provides exactly once semantics. If this property is set to false, then delivery to Kafka is made to work in an asynchronous model. Payloads are sent one after the other without waiting for acknowledgements. Kafka internal queues may buffer contents to increase throughput. Checkpoints are made only when acknowledgements are received from Kafka brokers using Java Callbacks.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment181" id="d12562e416" headers="d12562e224">
+<p><code>gg.handler.<span class="codeinlineitalic">kafkahandler</span>.ProducerRecordClass</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e416 d12562e227">
+<p>Fully qualified class name of a custom class that implements Oracle GoldenGate for Big Data Kafka Handler's <code>CreateProducerRecord</code> Java Interface</p>
+</td>
+<td class="cellalignment182" headers="d12562e416 d12562e230">
+<p>No. Defaults to out-of-box provided implementation class:<code>oracle.goldengate.handler.kafka.DefaultProducerRecord</code></p>
+</td>
+<td class="cellalignment173" headers="d12562e416 d12562e233">
+<p>The unit of data in Kafka - a <code>ProducerRecord</code> holds the key field with the value representing the payload. This key is used for partitioning a Kafka Producer record that holds change capture data. By default, the fully qualified table name is used to partition the records. In order to change this key or behavior, the <code>CreateProducerRecord</code> Kafka Handler Interface needs to be implemented and this property needs to be set to point to the fully qualified name of the custom <code>ProducerRecord</code> class.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment181" id="d12562e447" headers="d12562e224">
+<p><code>gg.handler.<span class="codeinlineitalic">kafkahandler</span>.Mode</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e447 d12562e227">
+<p><code>tx</code>/<code>op</code></p>
+</td>
+<td class="cellalignment182" headers="d12562e447 d12562e230">
+<p>No. Defaults to <code>tx</code>.</p>
+</td>
+<td class="cellalignment173" headers="d12562e447 d12562e233">
+<p>With Kafka Handler operation mode, each change capture data record (Insert, Update, Delete etc) payload will be represented as a Kafka Producer Record and will be flushed one at a time. With Kafka Handler in transaction mode, all operations within a source transaction will be represented by as a single Kafka Producer record. This combined byte payload will be flushed on a transaction Commit event.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment181" id="d12562e471" headers="d12562e224">
+<p><code>gg.handler.<span class="codeinlineitalic">kafkahandler.</span>topicPartitioning</code></p>
+</td>
+<td class="cellalignment146" headers="d12562e471 d12562e227">
+<p><code>none&nbsp;|&nbsp;table</code></p>
+</td>
+<td class="cellalignment182" headers="d12562e471 d12562e230">
+<p>None</p>
+</td>
+<td class="cellalignment173" headers="d12562e471 d12562e233">
+<p>Controls whether data published into Kafka should be partitioned by table.</p>
+<p>Set to table, the data for different tables are written to different Kafka topics.</p>
+<p>Set to none, the data from different tables are interlaced in the same topic as configured in <code>topicName</code>property.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<a id="GADBD457"></a>
+<div class="props_rev_3"><a id="GUID-70FC45FB-5C28-4879-8F8C-F808B55F7C10"></a>
+<h3 id="GADBD-GUID-70FC45FB-5C28-4879-8F8C-F808B55F7C10" class="sect3"><span class="enumeration_section">5.1.5</span> Sample Configuration</h3>
+<div>
+<div class="section">
+<p>The properties files are described in the following sections.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GADBD458"></a>
+<div class="props_rev_3"><a id="GUID-81E572E9-C5BE-4D5D-943C-8543AC749EEC"></a>
+<h4 id="GADBD-GUID-81E572E9-C5BE-4D5D-943C-8543AC749EEC" class="sect4"><span class="enumeration_section">5.1.5.1</span> Java Adapter Properties File</h4>
+<div>
+<p>A sample configuration for the Kafka Handler from the Adapter properties file is:</p>
+<pre dir="ltr">
+gg.handlerlist = kafkahandler
+gg.handler.kafkahandler.Type = kafka
+gg.handler.kafkahandler.KafkaProducerConfigFile = custom_kafka_producer.properties
+gg.handler.kafkahandler.TopicName = oggtopic
+gg.handler.kafkahandler.Format = avro_op
+gg.handler.kafkahandler.SchemaTopicName = oggSchemaTopic
+gg.handler.kafkahandler.ProducerRecordClass = com.company.kafka.CustomProducerRecord
+gg.handler.kafkahandler.SchemaPrClassName = com.company.kafkaProdRec.SchemaRecord
+gg.handler.kafkahandler.Mode = tx
+gg.handler.kafkahandler.BlockingSend = true
+</pre>
+<p>A sample Replicat configuration and a Java Adapter Properties file for a Kafka integration can be found at the following directory:</p>
+<p><span class="italic"><code>GoldenGate_install_directory</code></span><code>/AdapterExamples/big-data/kafka</code></p>
+</div>
+</div>
+</div>
+<a id="GADBD459"></a>
+<div class="props_rev_3"><a id="GUID-A5591368-FC03-4BD6-8A09-53DD9D25BDB9"></a>
+<h3 id="GADBD-GUID-A5591368-FC03-4BD6-8A09-53DD9D25BDB9" class="sect3"><span class="enumeration_section">5.1.6</span> Kafka Producer Configuration File</h3>
+<div>
+<div class="section">
+<p>The Kafka Handler must access a Kafka producer configuration file in order publish messages to Kafka. The file name of the Kafka producer configuration file is controlled by the following configuration in the Kafka Handler properties.</p>
+<pre dir="ltr">
+gg.handler.kafkahandler.KafkaProducerConfigFile=<span class="italic">custom_kafka_producer</span>.properties
+</pre>
+<p>The Kafka Handler will attempt to locate and load the Kafka producer configuration file using the Java classpath. Therefore the Java classpath must include the directory containing the Kafka Producer Configuration File.</p>
+<p>The Kafka producer configuration file contains Kafka proprietary properties. The Kafka documentation provides configuration information for the 0.8.2.0 Kafka producer interface properties. The Kafka Handler used these properties to resolve the host and port of the Kafka brokers and properties in the Kafka producer configuration file control the behavior of the interaction between the Kafka producer client and the Kafka brokers.</p>
+<p>A sample of configuration file for the Kafka producer is as follows:</p>
+<pre dir="ltr">
+bootstrap.servers=localhost:9092
+acks = 1
+compression.type = gzip
+reconnect.backoff.ms = 1000
+ 
+value.serializer = org.apache.kafka.common.serialization.ByteArraySerializer
+key.serializer = org.apache.kafka.common.serialization.ByteArraySerializer
+# 100KB per partition
+batch.size = 102400
+linger.ms = 10000
+max.request.size = 5024000 
+send.buffer.bytes = 5024000
+</pre></div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GADBD460"></a>
+<div class="props_rev_3"><a id="GUID-E43DB743-4A2A-4C2F-97E8-50BB22CACCE3"></a>
+<h2 id="GADBD-GUID-E43DB743-4A2A-4C2F-97E8-50BB22CACCE3" class="sect2"><span class="enumeration_section">5.2</span> Detailed Functionality</h2>
+<div>
+<p>This section details the modes of operation of the Kafka Handler.</p>
+</div>
+<a id="GADBD462"></a><a id="GADBD463"></a><a id="GADBD461"></a>
+<div class="props_rev_3"><a id="GUID-AEFB1511-0DE3-479C-A3B4-46110A19C09C"></a>
+<h3 id="GADBD-GUID-AEFB1511-0DE3-479C-A3B4-46110A19C09C" class="sect3"><span class="enumeration_section">5.2.1</span> Transaction versus Operation Mode</h3>
+<div>
+<p>The Kafka Handler sends instances of the Kafka <code>ProducerRecord</code> class to the Kafka producer API which in turn publishes the <code>ProducerRecord</code> to a Kafka topic. The Kafka <code>ProducerRecord</code> effectively is the implementation of a Kafka message. The <code>ProducerRecord</code> has two components, a key and a value. Both the key and value are represented as byte arrays by the Kafka Handler. This section describes how the Kafka Handler publishes data.</p>
+<div class="section">
+<p class="subhead3">Transaction Mode</p>
+</div>
+<!-- class="section" -->
+<p>Transaction mode is indicated by the following configuration of the Kafka Handler:</p>
+<p><code>gg.handler.name.Mode=tx</code></p>
+<p>In Transaction Mode the serialized data for every operation in a transaction from the source Oracle GoldenGate trail files is concatenated. The contents of the concatenated operation data is the value of the Kafka <code>ProducerRecord</code> object. The key of the Kafka <code>ProducerRecord</code> object is NULL. The result is that Kafka messages comprise the data from 1 to N operations, where <code>N</code> is the number of operations in the transaction. In the case of grouped transactions, all of the data for all of the operations for a grouped transaction are concatenated into a single Kafka message. The result can be very large Kafka messages containing a data for a large number of operations.</p>
+<div class="section">
+<p class="subhead3">Operation Mode</p>
+</div>
+<!-- class="section" -->
+<p>Operation mode is indicated by the following configuration of the Kafka Handler:</p>
+<p><code>gg.handler.name.Mode=op</code></p>
+<p>In Operation Mode the serialized data for each operation is placed into an individual <code>ProducerRecord</code> object as the value. The <code>ProducerRecord</code> key is the fully qualified table name of the source operation. The <code>ProducerRecord</code> is immediately sent using the Kafka Producer API. This means there is a 1 to 1 relationship between the incoming operations and the number of Kafka messages produced.</p>
+</div>
+</div>
+<a id="GADBD465"></a><a id="GADBD466"></a><a id="GADBD464"></a>
+<div class="props_rev_3"><a id="GUID-7B2768C9-6C5D-4904-A6B7-15826A08B42C"></a>
+<h3 id="GADBD-GUID-7B2768C9-6C5D-4904-A6B7-15826A08B42C" class="sect3"><span class="enumeration_section">5.2.2</span> Blocking versus Blocking Mode</h3>
+<div>
+<div class="section">
+<p>The Kafka Handler can send messages to Kafka in either Blocking mode (synchronous) or Non-Blocking Mode (asynchronous).</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Blocking Mode</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Blocking mode is set by the following configuration of the Kafka Handler:</p>
+<p><code>gg.handler.name.BlockingSend=true</code></p>
+<p>In this mode messages are delivered to Kafka on a synchronous basis. The Kafka Handler will not send the next message until the current message has been written to the intended topic and an acknowledgement has been received. Blocking mode provides the best guarantee of message delivery; however, its cost is reduced performance.</p>
+<p>You must never set the Kafka Producer linger.ms variable when in blocking mode as this will cause the Kafka producer to wait for the entire timeout period before sending the message to the Kafka broker. In this scenario the Kafka Handler is waiting for acknowledgement that the message has been sent while at the same time the Kafka Producer is buffering messages to be sent to the Kafka brokers. Therefore, these settings are at odds with each other.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Non-Blocking Mode</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Non-Blocking mode is set by the following configuration of the Kafka Handler:</p>
+<p><code>gg.handler.name.BlockingSend=false</code></p>
+<p>In this mode message are delivered to Kafka on an asynchronous basis. Kafka messages are published one after the other without waiting for acknowledgements. The Kafka Producer client may buffer incoming messages in order to increase throughput.</p>
+<p>On each transaction commit, we invoke a blocking call on the Kafka producer to flush all operations that Kafka producer client that may have buffered internally. This allows the Kafka Handler to safely checkpoint ensuring zero data loss. Each transaction commit call will block for a maximum of <code>linger.ms</code> duration in the worst case. It is recommended to use small <code>linger.ms</code> times in the order of millisecond intervals.</p>
+<p>You can control when the Kafka Producer flushes data to the Kafka Broker by a number of configurable properties in the Kafka producer configuration file. In order to enable batch sending of messages by the Kafka Producer both the <code>batch.size</code> and <code>linger.ms</code> Kafka Producer properties must be set in the Kafka producer configuration file. The <code>batch.size</code> controls the maximum number of bytes to buffer before a send to Kafka while the <code>linger.ms</code> variable controls the maximum milliseconds to wait before sending data. Data will be sent to Kafka once the <code>batch.size</code> is reached or the <code>linger.ms</code> period expires, whichever comes first. Setting of the <code>batch.size</code> only variable will cause messages to be sent immediately to Kafka.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="sect3"><a id="GUID-D30A2FFF-F605-4CBF-AA91-AD62C85129EC"></a>
+<h3 id="GADBD-GUID-D30A2FFF-F605-4CBF-AA91-AD62C85129EC" class="sect3"><span class="enumeration_section">5.2.3</span> Publishing to Multiple Topics</h3>
+<div>
+<p>The Kafka Handler allows operation data from the source trail file to be published to separate topics based on the corresponding table name of the operation data. This feature allows sorting of operation data from the source trail file by the source table name. The feature is enabled by setting the following configuration in the Java Adapter properties file as follows:</p>
+<pre dir="ltr">
+gg.handler.kafka.topicPartitioning=table 
+gg.handler.kafka.mode=op 
+</pre>
+<p>The mode <span class="italic">must</span> be set to <code>op</code> and the Kafka topic name used is the fully qualified table name of the source operation.&nbsp;</p>
+<p>You can publish to multiple topics using the Kafka Handler. For example, you could publish one topic per table by setting <code>gg.handler.<span class="codeinlineitalic">kafkahandler.</span>topicPartitioning</code> property to <code>table</code>.</p>
+<p>The topics are automatically created and with the topic name equal to the fully-qualified table name.</p>
+<p><span class="bold">Kafka Broker Settings</span></p>
+<p>To enable the automatic creation of topics, set the <code>auto.create.topics.enable property</code> to <code>true</code> in the Kafka Broker Configuration. The default value for this property is <code>true</code>.</p>
+<p>If the <code>auto.create.topics.enable</code> property is set to <code>false</code> in Kafka Broker configuration, then all the required topics should be created manually before starting the Replicat process.</p>
+<p><span class="bold">Schema Propagation</span></p>
+<p>The schema data for all tables is delivered to the schema topic configured with the <code>schemaTopicName</code> property. For more information , see <a href="GUID-2561CA12-9BAC-454B-A2E3-2D36C5C60EE5.htm#GUID-D6DE6F83-049C-4E97-8535-736F22741D51">Schema Propagation</a></p>
+<p><span class="bold">NOTE:</span> Multiple topics are supported in the <span class="italic">op</span> mode only. For example, when <code>gg.handler.<span class="codeinlineitalic">kafkahandler.</span>topicPartitioning</code> is set to <code>table</code> then <code>gg.handler.kafkahandler.mode</code> should be set to <code>op</code>.</p>
+</div>
+</div>
+</div>
+<a id="GADBD467"></a>
+<div class="props_rev_3"><a id="GUID-D6DE6F83-049C-4E97-8535-736F22741D51"></a>
+<h2 id="GADBD-GUID-D6DE6F83-049C-4E97-8535-736F22741D51" class="sect2"><span class="enumeration_section">5.3</span> Schema Propagation</h2>
+<div>
+<p>The Kafka Handler provides the ability to publish schemas to a schema topic. Currently the Avro Row and Operation formatters are the only formatters which are enabled for schema publishing. If the Kafka Handler <code>schemaTopicName</code> property is set the schema will be published for the following events.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The Avro schema for a specific table will be published the first time an operation for that table is encountered.</p>
+</li>
+<li>
+<p>If the Kafka Handler receives a metadata change event, the schema will be flushed. The regenerated Avro schema for a specific table will be published the next time an operation for that table is encountered.</p>
+</li>
+<li>
+<p>If the Avro wrapping functionality is enabled, the generic wrapper Avro schema will be published the first time any operation is encountered. The generic wrapper Avro schema functionality can be enabled in the Avro formatter configuration. Refer to the Avro Row Formatter or Avro Operation Formatter sections of this document for exact instructions.</p>
+</li>
+</ul>
+<p>The Kafka <code>ProducerRecord</code> value will be the schema and the key will be the fully qualified table name.</p>
+<p>Avro over Kafka can be problematic because of the direct dependency of Avro messages on an Avro schema. Avro messages are binary and therefore are not human readable. In order to deserialize an Avro message the receiver must first have the correct Avro schema. Since each table from the source database results in a separate Avro schema this can be problematic. The receiver of a Kafka message has no way to determine which Avro schema to use to deserialize individual messages when the source Oracle GoldenGate trail file includes operations from multiple tables. In order to solve this problem, the functionality was provided to wrap the specialized Avro messages in a generic Avro message wrapper. This generic Avro wrapper provides the fully qualified table name, the hashcode of the schema string, and the wrapped Avro message. The receiver can use the fully qualified table name and the hashcode of the schema string to resolve the associated schema of the wrapped message and then use that schema to deserialize the wrapped message.</p>
+</div>
+</div>
+<a id="GADBD468"></a>
+<div class="props_rev_3"><a id="GUID-03E08F86-B05A-4504-9F10-AB9022ED8EE3"></a>
+<h2 id="GADBD-GUID-03E08F86-B05A-4504-9F10-AB9022ED8EE3" class="sect2"><span class="enumeration_section">5.4</span> Troubleshooting</h2>
+<div>
+<p>This section details troubleshooting options.</p>
+</div>
+<a id="GADBD469"></a>
+<div class="props_rev_3"><a id="GUID-4792D2B4-5F2A-4108-8DD1-EE803AC2A663"></a>
+<h3 id="GADBD-GUID-4792D2B4-5F2A-4108-8DD1-EE803AC2A663" class="sect3"><span class="enumeration_section">5.4.1</span> Verify Kafka Setup</h3>
+<div>
+<div class="section">
+<p>Command line Kafka producer can be used to write dummy data to a Kafka topic and a Kafka consumer can be used to read this data from the Kafka topic. This can be used to verify the set up and read write permissions to Kafka topics on disk. For further details, refer to the online Kafka documentation at</p>
+<p><a href="http://kafka.apache.org/documentation.html#quickstart" target="_blank"><code>http://kafka.apache.org/documentation.html#quickstart</code></a></p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD470"></a>
+<div class="props_rev_3"><a id="GUID-A48DEA0E-BAE8-42CE-986D-59A8D46B7785"></a>
+<h3 id="GADBD-GUID-A48DEA0E-BAE8-42CE-986D-59A8D46B7785" class="sect3"><span class="enumeration_section">5.4.2</span> Classpath Issues</h3>
+<div>
+<div class="section">
+<p>One of the most common problems is Java classpath problems. This problem typically manifests itself as a <code>ClassNotFoundException</code> in the <code>log4j</code> log file, but also may manifest itself as an error resolving the classpath if there is a typo in the <code>gg.classpath</code> variable. The Kafka client libraries do not ship with the Oracle GoldenGate for Big Data product. The requirement is on you to obtain the correct version of the Kafka client libraries and to properly configure the <code>gg.classpath</code> property in the Java Adapter Properties file to correctly resolve the Java the Kafka client libraries.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD471"></a>
+<div class="props_rev_3"><a id="GUID-34E67463-A86E-42B2-AB8B-BDA115ACC5A0"></a>
+<h3 id="GADBD-GUID-34E67463-A86E-42B2-AB8B-BDA115ACC5A0" class="sect3"><span class="enumeration_section">5.4.3</span> Invalid Kafka Version</h3>
+<div>
+<div class="section">
+<p>The Oracle GoldenGate for Big Data Kafka Handler utilizes the new recommended Kafka producer API introduced in Kafka 0.8.2. Attempting to connect to a version of Kafka older than 0.8.2 will cause a runtime failure. There is no workaround for this issue. Customers must integrate with Kafka 0.8.2 or higher.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD472"></a>
+<div class="props_rev_3"><a id="GUID-EF3E2568-00BE-457A-B7DC-C9A0E8E25715"></a>
+<h3 id="GADBD-GUID-EF3E2568-00BE-457A-B7DC-C9A0E8E25715" class="sect3"><span class="enumeration_section">5.4.4</span> Kafka Producer Properties File Not Found</h3>
+<div>
+<div class="section">
+<p>This problem typically manifests itself in the following exception.</p>
+<pre dir="ltr">
+ERROR 2015-11-11 11:49:08,482 [main] Error loading the kafka producer properties
+</pre>
+<p>The <code>gg.handler.kafkahandler.KafkaProducerConfigFile</code> configuration variable should be verified that the Kafka Producer Configuration file name is correctly set. The <code>gg.classpath</code> variable should also be checked to verify that the classpath includes the path to the Kafka Producer Properties file and that the path to the properties file does not contain a * wildcard at the end.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD473"></a>
+<div class="props_rev_3"><a id="GUID-C9202B10-A376-49A1-92CD-32F35B6E7830"></a>
+<h3 id="GADBD-GUID-C9202B10-A376-49A1-92CD-32F35B6E7830" class="sect3"><span class="enumeration_section">5.4.5</span> Kafka Connection Problem</h3>
+<div>
+<div class="section">
+<p>This problem occurs if the Kafka Handler is unable to connect to Kafka. This problem manifests itself with the following warnings:</p>
+<pre dir="ltr">
+WARN 2015-11-11 11:25:50,784 [kafka-producer-network-thread | producer-1] WARN  (Selector.java:276) - Error in I/O with localhost/127.0.0.1 
+java.net.ConnectException: Connection refused
+</pre>
+<p>Ultimately the connection retry interval will expire and the Kafka Handler process will abend. Check that the Kafka Brokers is running and that the host and port provided in the Kafka Producer Properties file is correct. Network shell commands (such as <code>netstat -l</code>) can be used on the machine hosting the Kafka broker to verify that Kafka is listening on the expected port.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GADBD474"></a>
+<div class="props_rev_3"><a id="GUID-F3170919-9C2F-4C3A-8D51-CA5500C3B7FF"></a>
+<h2 id="GADBD-GUID-F3170919-9C2F-4C3A-8D51-CA5500C3B7FF" class="sect2"><span class="enumeration_section">5.5</span> Performance Considerations</h2>
+<div>
+<div class="section">
+<p>It is advised not to use linger.ms setting in the Kafka producer config file when <code>gg.handler.{name}.BlockingSend=true</code>. This will cause each send to block for at least linger.ms leading to major performance issues. The problem is that the Kafka Handler configuration and the Kafka Producer configuration are in conflict with each other. This configuration results a temporary deadlock scenario where the Kafka Handler is waiting for send acknowledgement while the Kafka producer is waiting for more messages before sending. The deadlock will resolve once the linger.ms period has expired. This scenario will repeat for every message sent.</p>
+<p>For the best performance it is recommended to set the Kafka handler to operate in transaction mode using non-blocking (asynchronous) calls to the Kafka producer. This is achieved by the following configuration in the Java Adapter file.</p>
+<pre dir="ltr">
+gg.handler.{name}.Mode = tx
+gg.handler.{name}.BlockingSend = false
+</pre>
+<p>Additionally the recommendation is to set the batch.size and linger.ms values in the Kafka Producer properties file. The values to set the batch.size and linger.ms values are highly dependent upon the use case scenario. Generally higher values will result in better throughput but latency is increased. Smaller values in these parameters will reduce latency but overall throughput will decrease. If the use case is for high volume of input data from the source trial files, then you is advised to set the <code>batch.size</code> and <code>linger.ms</code> size to as high as is tolerable.</p>
+<p>Use of the <code>Replicat</code> variable <code>GROUPTRANSOPS</code> will also improve performance. The recommended setting for that is <code>10000</code>.</p>
+<p>If it is a requirement of the customer that the serialized operations from the source trail file be delivered in individual Kafka messages, the then Kafka handler must be set to operation mode.</p>
+<p><code>gg.handler.{name}.Mode = op</code></p>
+<p>The result will be many more Kafka messages and performance will be adversely affected.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD475"></a>
+<div class="props_rev_3"><a id="GUID-C9C0652E-7B39-4C9A-8360-09121B8B47CD"></a>
+<h2 id="GADBD-GUID-C9C0652E-7B39-4C9A-8360-09121B8B47CD" class="sect2"><span class="enumeration_section">5.6</span> Security</h2>
+<div>
+<p>Kafka 0.8.2.2 and earlier does not provide support for security. Kafka 0.9.0.0 introduced security through SSL/TLS or Kerberos. The Oracle GoldenGate Kafka Handler can be secured using SSL/TLS or Kerberos. The Kafka producer client libraries provide an abstraction of security functionality from the integrations utilizing those libraries. The Oracle GoldenGate Kafka Handler is effectively abstracted from security functionality. Enabling security requires setting up security for the Kafka cluster, connecting machines, and then configuring the Kafka producer properties file (that the Oracle GoldenGate Kafka Handler uses for processing) with the required security properties. For detailed instructions about securing the Kafka cluster, see the Kafka documentation at</p>
+<p><a href="http://kafka.apache.org/documentation.html#security_configclients" target="_blank">http://kafka.apache.org/documentation.html#security_configclients</a></p>
+</div>
+</div>
+<a id="GADBD476"></a>
+<div class="props_rev_3"><a id="GUID-359D654F-4377-4F34-8150-473ADA0E6972"></a>
+<h2 id="GADBD-GUID-359D654F-4377-4F34-8150-473ADA0E6972" class="sect2"><span class="enumeration_section">5.7</span> Kafka Handler Certification Matrix</h2>
+<div>
+<p>The Oracle GoldenGate for Big Data Kafka Handler implements the new recommended Kafka producer interface introduced in Kafka 0.8.2.0. The Kafka Handler is <span class="italic">not</span> compatible with Kafka version 0.8.1.0 and older.</p>
+<p>The Kafka Handler is compatible with the following versions of Apache Kafka</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>0.9.0.<span class="italic">x</span></p>
+</li>
+<li>
+<p>0.8.2.<span class="italic">x</span></p>
+</li>
+</ul>
+<div class="p">The Kafka Handler is compatible with the following HDP 2.3 (Kafka 0.8.2.0) versions of the Hortonworks Data Platform (HDP):
+<ul style="list-style-type: disc;">
+<li>
+<p>HDP 2.4 (Kafka 0.9.0)</p>
+</li>
+<li>
+<p>HDP 2.3 (Kafka 0.8.2.0)</p>
+</li>
+</ul>
+</div>
+<div class="p">Cloudera (CDH) does not currently include Kafka. Cloudera currently distributes Kafka separately as Cloudera Distribution of Apache Kafka. The Kafka Handler is compatible with the following CDH distributions:
+<ul style="list-style-type: disc;">
+<li>
+<p>Cloudera Distribution of Apache Kafka 2.0.<span class="italic">x</span> (Kafka 0.9.0.0)</p>
+</li>
+<li>
+<p>Cloudera Distribution of Apache Kafka 1.<span class="italic">x</span> (Kafka 0.8.2.0)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<a id="GADBD477"></a>
+<div class="props_rev_3"><a id="GUID-B3E28C32-9F7A-469E-9495-AC6D51CD6446"></a>
+<h2 id="GADBD-GUID-B3E28C32-9F7A-469E-9495-AC6D51CD6446" class="sect2"><span class="enumeration_section">5.8</span> Metadata Change Events</h2>
+<div>
+<div class="section">
+<p>Metadata change events are now handled in the Kafka Handler. However, this is only relevant if you has configured a schema topic and the formatter used supports schema propagation (currently Avro row and Avro Operation formatters). The next time an operation is encountered for a table for which the schema has changed, the updated schema will be published to the schema topic.</p>
+<p>To support metadata change events the Oracle GoldenGate process capturing changes in the source database must support both DDL changes and metadata in trail. GoldenGate does not support DDL replication for all database implementations. You are advised to consult the Oracle GoldenGate documentation for their database implementation to understand if DDL replication is supported.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD478"></a>
+<div class="props_rev_3"><a id="GUID-042F88D1-24B9-4703-82B4-223433293650"></a>
+<h2 id="GADBD-GUID-042F88D1-24B9-4703-82B4-223433293650" class="sect2"><span class="enumeration_section">5.9</span> Snappy Considerations</h2>
+<div>
+<div class="section">
+<p>The Kafka Producer Configuration file supports the use of compression. One of the configurable options is Snappy. Snappy is an open source compression and decompression (codec) library that tends to provide performance than other codec libraries. However, Snappy has a shortcoming in that the Snappy jar does not run on all platforms. Snappy seems to universally work on Linux systems but it can be hit and miss on other Unix and Windows implementations. Customers using snappy compression are advised to test Snappy on all required systems before implementing compression using Snappy. If Snappy does not port to all required systems then Oracle suggests using an alternate codec library.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment135">
+<tr>
+<td class="cellalignment142">
+<table class="cellalignment140">
+<tr>
+<td class="cellalignment139"><a href="GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment139"><a href="GUID-F0FA2781-0802-4530-B1F0-5E102B982EC0.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment144">
+<table class="cellalignment138">
+<tr>
+<td class="cellalignment139"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment139"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

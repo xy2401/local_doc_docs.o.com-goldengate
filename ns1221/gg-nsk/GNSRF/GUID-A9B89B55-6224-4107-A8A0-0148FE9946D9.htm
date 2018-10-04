@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>FILE | TABLE</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="keywords" content="rows, selecting, data, DEF option, WHERE, NOCOLMAP option, FILE, missing files, handling, ALTNAME, query, executing, tokens, user, specifying, environment, referencing with, user tokens, records, trail, header, user tokens, defining" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-781060B0-A814-409F-8B69-324CA08280AB.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9"></a> <span id="PAGE" style="display:none;">102/360</span> <!-- End Header -->
+<a id="GNSRF394"></a><a id="GNSRF393"></a>
+<h1 id="GNSRF-GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9" class="sect1"><span class="enumeration_section">2.76</span> FILE | TABLE</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid for</p>
+<p>Extract</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use <code class="codeph">FILE</code> or <code class="codeph">TABLE</code> to specify the files or tables for which to capture data. You can specify a file name, or a wildcard arguments such as <code class="codeph">$DATA3.*.*.</code> If you are retrieving records from remote locations, you must fully qualify the file name with its node as well as the volume, subvolume, and file. (For simplicity, references to <code class="codeph">FILE</code> in this section also refer to <code class="codeph">TABLE</code> unless explicitly stated otherwise.)</p>
+<p>For Enscribe, unless you specify otherwise, records from every partition of the specified file are retrieved.</p>
+<p>You can invoke <code class="codeph">FILE</code> or <code class="codeph">TABLE</code> more than once in a parameter file, and you can invoke the same <code class="codeph">FILE</code> or <code class="codeph">TABLE</code> argument more than once. This is useful, for example, to split records into different trails according to column values, to put inserts, updates and deletes into separate files, and to segment data for other reasons.</p>
+<div class="infobox-note" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-5C39A86D-590F-4B48-87E6-519485EFF835">
+<p class="notep1">Note:</p>
+<p>At least one <code class="codeph">FILE</code> or <code class="codeph">TABLE</code> statement per parameter file is required.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>
+[, <a id="d53761e135" class="indexterm-anchor"></a>ALTNAME <span class="italic">alternate_file_name</span>]
+[, <a id="d53761e144" class="indexterm-anchor"></a>AUTOTRUNCATE]
+[, <a id="d53761e149" class="indexterm-anchor"></a>COLMAP (<span class="italic">column_map_specification</span>) | NOCOLMAP]
+[, <a id="d53761e159" class="indexterm-anchor"></a>COMPRESSDELETES]
+[, <a id="d53761e166" class="indexterm-anchor"></a>DEF <span class="italic">source_ddl_definition</span>]
+[, EVENTACTIONS (<span class="italic">action_options</span>)
+[, <a id="d53761e179" class="indexterm-anchor"></a>EXITPARAM "<span class="italic">exitparam_string</span>"]
+[, <a id="d53761e189" class="indexterm-anchor"></a>FILTER (<span class="italic">expression</span>)]
+[, <a id="d53761e198" class="indexterm-anchor"></a>KEYCOLS (<span class="italic">key_column_specification</span>)]
+[, <a id="d53761e207" class="indexterm-anchor"></a>PARTITIONS <span class="italic">partition_specification</span>]
+[, <a id="d53761e217" class="indexterm-anchor"></a>RANGE (<span class="italic">range_specification</span>)]
+[, <a id="d53761e226" class="indexterm-anchor"></a>SQLEXEC (<span class="italic">sqlexec_clause</span>)]
+[, <a id="d53761e235" class="indexterm-anchor"></a>SQLNAME <span class="italic">table_alias</span>]
+[, <a id="d53761e245" class="indexterm-anchor"></a>STARTKEY <span class="italic">key_specification</span>, <a id="d53761e254" class="indexterm-anchor"></a>ENDKEY <span class="italic">key_specification</span>]
+[, <a id="d53761e263" class="indexterm-anchor"></a>TARGET <span class="italic">target_file_name</span>]
+[, <a id="d53761e273" class="indexterm-anchor"></a>TARGETDEF <span class="italic">target_ddl_definition</span>]
+[, <a id="d53761e282" class="indexterm-anchor"></a>TARGETNAME target_file_name]
+[, <a id="d53761e287" class="indexterm-anchor"></a>USETARGETDEFLENGTH]
+[, <a id="d53761e292" class="indexterm-anchor"></a>TOKENS (<span class="italic">token_specification</span>)]
+[, <a id="d53761e302" class="indexterm-anchor"></a>WHERE (<span class="italic">where_condition</span>)]
+;
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-26F23E04-B8CE-4EFA-AE62-989886876026"><!-- --></a><span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p>A physical file name or an existing define name of <code class="codeph">CLASS MAP</code> or a wildcard file name. The file can be a SQL table, SQL view or Enscribe file</p>
+</dd>
+</dl>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-B27DBB7A-E144-423D-AF82-FA10137AF39E"><!-- --></a><code class="codeph">ALTNAME</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942145">Handling missing files</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-D5B0654B-1586-4CF7-BC92-8B6DB16D0498"><!-- --></a><code class="codeph">AUTOTRUNCATE</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942140">Purging Records for Initial Load</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-FE7BE23A-4747-4E5C-995F-906D6790C35B"><!-- --></a><code class="codeph">COMPRESSDELETES</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I941931">Compressing Records</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-C4FD0230-02B7-45AF-9C6E-9EE92FB7846C"><!-- --></a><code class="codeph">COLMAP SQLNAME TARGETDEF TARGETNAME USETARGETDEFLENGTH</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942059">Mapping Data</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-9878BFC8-A48C-4F96-9F4A-E349F0A28A86"><!-- --></a><code class="codeph">DEF FILTER PARTITIONS STARTKEY, ENDKEY RANGE WHERE</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I941935">Selecting Records</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-B94387AD-7B3E-484B-B1E2-6ECC638F3DD6"><!-- --></a><code class="codeph">EVENTACTIONS</code> (<span class="italic"><code class="codeph">action_options)</code></span></dt>
+<dd>
+<p>Se <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__CIHIEGDA">Triggering Actions</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-8A439015-03CE-4BF4-9F47-022E1135DC06"><!-- --></a><code class="codeph">EXITPARAMS</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942169">Passing literal strings to user exits</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-B513A794-5667-4321-AB02-42F2BB11CD3A"><!-- --></a><code class="codeph">SQLNAME</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942173">Specifying a table alias</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-F7838119-5A93-49BC-8123-56D78FC767BF"><!-- --></a><code class="codeph">SQLEXEC</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942180">Performing a query</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-1A7828B1-0ED3-4AB0-838E-186DDB39C162"><!-- --></a><code class="codeph">TOKENS</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942295">Using tokens</a>"</span>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I941931">
+<p class="subhead1">Compressing Records</p>
+<p>Use <code class="codeph">COMPRESSDELETES</code> to replicate only the primary keys for deleted<a id="d53761e446" class="indexterm-anchor"></a> records. Without this parameter, all columns are replicated. By sending only the primary key, Oracle GoldenGate has all of the data required to delete the target record, while restricting the amount of data that must be processed.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, COMPRESSDELETES
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I941935">
+<p class="subhead1">Selecting Records</p>
+<p>You can select records by:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Selecting or excluding records using <code class="codeph">FILTER</code>.</p>
+</li>
+<li>
+<p>Selecting based on a conditional statement using <code class="codeph">WHERE</code>.</p>
+</li>
+<li>
+<p>Selecting a subset of records using <code class="codeph">RANGE</code>.</p>
+</li>
+<li>
+<p>Selecting a specific data partition using <code class="codeph">PARTITIONS</code>.</p>
+</li>
+<li>
+<p>Selecting Enscribe records based on a <code class="codeph">STARTKEY</code> and <code class="codeph">ENDKEY</code>.</p>
+<div class="infobox-note" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-383E82AF-D95C-4CDA-B516-3588E3E11961">
+<p class="notep1">Note:</p>
+<p>Using the <code class="codeph">RANGE</code> option of <code class="codeph">FILE</code> or <code class="codeph">MAP</code> provides different capabilities than using the <code class="codeph">@RANGE</code> function within a <code class="codeph">FILTER</code>. And both of these are different than the <code class="codeph">RANGE</code> option of <code class="codeph">ALTINPUT</code>.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Selecting or Excluding Records Using FILTER</p>
+<p>In the <code class="codeph">FILTER</code> <a id="d53761e532" class="indexterm-anchor"></a>expression, records are selected according to a filter clause. Options specify the record types to include or omit when applying the filter. You can combine the filter clause with one or more options, but the <span class="italic"><code class="codeph">filter_clause</code></span> must always be included.</p>
+<p>If you are selecting from an Enscribe file using <code class="codeph">FILTER</code>, you must also specify the <code class="codeph">DEF</code> option.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>,
+FILTER (<span class="italic">filter_clause</span> 
+[, <a id="d53761e562" class="indexterm-anchor"></a>ON INSERT | ON UPDATE| ON DELETE]
+[, <a id="d53761e567" class="indexterm-anchor"></a>IGNORE INSERT | IGNORE UPDATE | IGNORE DELETE])
+[, <a id="d53761e572" class="indexterm-anchor"></a>DEF <span class="italic">source_ddl_definition</span>]
+;
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-683C8BA9-7B77-4006-83D6-98C6113B47F0"><!-- --></a><code class="codeph">ON INSERT | ON UPDATE | ON DELETE</code></dt>
+<dd>
+<p>Include in the filter expression to specifically limit the filter clause to be executed on an insert, update or delete. You can specify more than one option. For example, <code class="codeph">ON UPDATE</code>, <code class="codeph">ON DELETE</code> executes on updates and deletes, but not inserts.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-C3EC8E62-D0D2-4CEA-8323-F09AA5718E4B"><!-- --></a><code class="codeph">IGNORE INSERT | IGNORE UPDATE | IGNORE INSERT</code></dt>
+<dd>
+<p>Ignores the specified operation. You can specify more than one <code class="codeph">IGNORE</code> option.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-6B573D7B-88C5-4F7A-BC5B-29AD24104849"><!-- --></a><code class="codeph">DEF</code> <span class="italic"><code class="codeph">source_ddl_definition</code></span></dt>
+<dd>
+<p>Has meaning only for Enscribe files. Use a <a id="d53761e617" class="indexterm-anchor"></a><a id="d53761e623" class="indexterm-anchor"></a>DDL definition or record within the open dictionary. This definition describes the record that is extracted from the TMF audit trails. You cannot specify more than one definition for any <code class="codeph">FILE</code> statement.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Selecting Based on a Conditional Statement</p>
+<p>With the <code class="codeph">WHERE</code> option, you can select information based on a <a id="d53761e639" class="indexterm-anchor"></a><a id="d53761e643" class="indexterm-anchor"></a>conditional statement. If you are selecting from an Enscribe file using <code class="codeph">WHERE</code>, you must also specify the <code class="codeph">DEF</code> option.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, WHERE (<span class="italic">where_condition</span>) 
+[, DEF <span class="italic">source_ddl_definition</span>];
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-64B14E36-1BB1-425B-8BD6-954739A87DE3"><!-- --></a><span class="italic"><code class="codeph">where_condition</code></span></dt>
+<dd>
+<p>Selects a subset of records from a source file or table, based on a condition, such as <code class="codeph">WHERE (branch = "NY")</code>. For a list of valid operators, see <a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__CIHDFBAH" title="This table lists the allowed WHERE operators and gives an example of each one.">Table 2-32</a>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-D4AAE09C-6B25-4DA3-9EB4-CAFCD8B200FC"><!-- --></a><code class="codeph">DEF</code> <span class="italic"><code class="codeph">source_ddl_definition</code></span></dt>
+<dd>
+<p>Has meaning only for Enscribe files. Use a <a id="d53761e699" class="indexterm-anchor"></a>DDL definition or record within the open dictionary. This definition describes the record that is extracted from the TMF audit trails. You cannot specify more than one definition for any <code class="codeph">FILE</code> statement.</p>
+</dd>
+</dl>
+<div class="tblformal" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__CIHDFBAH">
+<p class="titleintable">Table 2-32 Permissible WHERE operators</p>
+<table class="cellalignment38" title="Permissible WHERE operators" summary="This table lists the allowed WHERE operators and gives an example of each one.">
+<thead>
+<tr class="cellalignment29">
+<th class="cellalignment39" id="d53761e719">Operator</th>
+<th class="cellalignment40" id="d53761e722">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment29">
+<td class="cellalignment41" id="d53761e727" headers="d53761e719">
+<p>Column names</p>
+</td>
+<td class="cellalignment42" headers="d53761e727 d53761e722">
+<pre dir="ltr">
+PRODUCT_AMT
+</pre></td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment41" id="d53761e734" headers="d53761e719">
+<p>Numeric values</p>
+</td>
+<td class="cellalignment42" headers="d53761e734 d53761e722">
+<pre dir="ltr">
+-123, 5500.123
+</pre></td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment41" id="d53761e741" headers="d53761e719">
+<p>Literal strings enclosed in quotes</p>
+</td>
+<td class="cellalignment42" headers="d53761e741 d53761e722">
+<pre dir="ltr">
+ "AUTO", "Ca"
+</pre></td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment41" id="d53761e748" headers="d53761e719">
+<p>Column tests</p>
+</td>
+<td class="cellalignment42" headers="d53761e748 d53761e722">
+<p><code class="codeph">@NULL</code>, <code class="codeph">@PRESENT</code>, <code class="codeph">@ABSENT</code> (column is null, present or absent in the record). These tests are built into Oracle GoldenGate.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment41" id="d53761e763" headers="d53761e719">
+<p>Comparison operators</p>
+</td>
+<td class="cellalignment42" headers="d53761e763 d53761e722">
+<pre dir="ltr">
+ =, &lt;&gt;, &gt;, &lt;, &gt;=, &lt;=
+</pre></td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment41" id="d53761e770" headers="d53761e719">
+<p>Conjunctive operators</p>
+</td>
+<td class="cellalignment42" headers="d53761e770 d53761e722">
+<pre dir="ltr">
+AND, OR
+</pre></td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment41" id="d53761e777" headers="d53761e719">
+<p>Grouping parentheses</p>
+</td>
+<td class="cellalignment42" headers="d53761e777 d53761e722">
+<p>Use open and close parentheses for logical grouping of multiple elements.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Selecting a Subset of Records Using RANGE</p>
+<p>Use the <a id="d53761e788" class="indexterm-anchor"></a><code class="codeph">RANGE</code> clause to select a subset of the records in the source file or table. Unlike <code class="codeph">WHERE</code>, <code class="codeph">RANGE</code> does not require knowledge of the table or file structure.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, RANGE (x [, x, ...] OF y);
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-E6BA6449-8865-4F5E-98EA-10F98451F070"><!-- --></a><code class="codeph">(x [, x,...] OF y)</code></dt>
+<dd>
+<p>Selects a subset of records from a source file or table, based on a condition, such as <code class="codeph">RANGE (3 of 5)</code> or <code class="codeph">RANGE (1, 3 of 5)</code>.</p>
+</dd>
+</dl>
+<p>Duplicate unique index errors are possible when using the <code class="codeph">RANGE</code> option for a file with a unique alternate key. For example, you delete the primary key for a record with primary key A and alternate key B. Then you insert with a different primary key but the same alternate key (e.g. primary key C, alternate key B). <code class="codeph">RANGE</code> separates records based on the primary key, so transaction A and C can be sent to different Replicats and encounter a duplicate unique index on B when the insert is picked up first.</p>
+<p>To avoid this, use the <code class="codeph">FILTER</code> (<code class="codeph">@RANGE</code>) function explained on <span class="q">"<a href="GUID-F2ECA14C-B668-4B19-BB65-95776212C89A.htm#GUID-F2ECA14C-B668-4B19-BB65-95776212C89A">RANGE</a>"</span>and supply the columns that make up the unique alternate key as illustrated in the following example.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Example</p>
+<p>In this example table <code class="codeph">TAB1</code> has three columns. The first two, <code class="codeph">COL1</code> and <code class="codeph">COL2</code>, form the primary key and the third is the unique alternate index named <code class="codeph">U_INDX_COL</code>. The range for the trail files is set up to override the primary key with the unique index column as shown below.</p>
+<pre dir="ltr">
+EXTTRAIL AA
+TABLE TAB1, FILTER (@RANGE (1, 2, U_INDX_COL));
+EXTTRAIL BB
+TABLE TAB1, FILTER (@RANGE (2, 2, U_INDX_COL));
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Selecting a Specific Data Partition</p>
+<p>Use the <code class="codeph">PARTITIONS</code> option to specify which <a id="d53761e872" class="indexterm-anchor"></a>partitions of the file or table to write to the current Oracle GoldenGate trail. Particular partitions can be output to specific files in the trail, or skipped altogether.</p>
+<p>Use <code class="codeph">PARTITIONS</code> only when you have specified <code class="codeph">SOURCEISFILE</code> and either <code class="codeph">FASTUNLOAD</code> or <code class="codeph">FASTUNLOADSHARED</code>. Otherwise, <code class="codeph">PARTITIONS</code> has no effect.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, PARTITIONS (<span class="italic">volume_specification</span>);
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-7690F6E0-412C-482B-952A-1F0EDF101879"><!-- --></a><code class="codeph">volume_specification</code></dt>
+<dd>
+<p>A volume name, a volume number, or a range of volume numbers. Volume numbers begin with zero, and the last volume number can be specified as <code class="codeph">L</code>. You can specify multiple volumes, delimited by commas, as in the following examples:</p>
+<pre dir="ltr">
+TABLE XYZ, PARTITIONS 
+(\LA.$DATA1, $DATA3, \XYZ.$SYSTEM);
+TABLE ABC, PARTITIONS 
+(0, 2 - 5, 10 - L);
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Selecting Enscribe Records Based on Key</p>
+<p><code class="codeph">STARTKEY</code> and <a id="d53761e927" class="indexterm-anchor"></a><code class="codeph">ENDKEY</code> can be used to limit the range of the keys that will be selected if your parameter settings meet the following requirements:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The <code class="codeph">FILE</code> statement must specify an Enscribe file as the source.</p>
+</li>
+<li>
+<p><code class="codeph">SOURCEISFILE</code> must apply.</p>
+</li>
+<li>
+<p>Either <code class="codeph">SOURCEDEFS</code> or both <code class="codeph">DICTIONARY</code> and <code class="codeph">DEF</code> must be present.</p>
+</li>
+<li>
+<p>If <code class="codeph">SOURCEDEFS</code> is used, the access cannot be by <code class="codeph">ALTKEY</code>.</p>
+</li>
+<li>
+<p>The <code class="codeph">PARTITIONS</code> option cannot be used.</p>
+</li>
+<li>
+<p>The <code class="codeph">FASTUNLOAD</code> option cannot be used.</p>
+</li>
+</ul>
+<p>The columns used in the key specification must make up the high order portion of a system key, primary key, or alternate key defined for the Enscribe file. A <code class="codeph">SOURCEDEFS</code> or <code class="codeph">DICTIONARY</code> must be present to define the column name and value.</p>
+<p>Both <code class="codeph">STARTKEY</code> and <code class="codeph">ENDKEY</code> are required and both are evaluated when deciding whether to select the record. Any existing <code class="codeph">FILTER</code> or <code class="codeph">WHERE</code> clauses are processed for records selected based on key range.</p>
+<p><code class="codeph">STARTKEY</code> and <code class="codeph">ENDKEY</code> can be defined for different <code class="codeph">FILE</code> statements in the same parameter file.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>
+[, STARTKEY <span class="italic">key_specification</span>, ENDKEY <span class="italic">key_specification</span>]
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Example</p>
+<pre dir="ltr">
+FILE $NY.ACCT.MASTER, STARTKEY (DIV="A1", ACCTNO=00000),
+                      ENDKEY (DIV="Z9", ACCTNO=49999),
+                      DEF $NY.DDLDEF.ACTDEF;
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942059">
+<p class="subhead1">Mapping Data</p>
+<p>Oracle GoldenGate has the following data mapping capability for the <code class="codeph">FILE</code> or <code class="codeph">TABLE</code> parameters:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Mapping columns.</p>
+</li>
+<li>
+<p>Retrieving data layout during Replicat processing.</p>
+</li>
+<li>
+<p>Invoking a user exit.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Mapping Columns</p>
+<p>Using a <a id="d53761e1059" class="indexterm-anchor"></a><a id="d53761e1063" class="indexterm-anchor"></a><a id="d53761e1067" class="indexterm-anchor"></a><code class="codeph">COLMAP</code> clause, you can extract fields or columns from one record and map them to a differently structured record. This is useful, for example, when delivering data from an Enscribe file to an SQL table with similar, but not identical, fields. <code class="codeph">COLMAP</code> selects, translates, and moves the fields you want into the new structure. When associated records are output, they are identified by the target file rather than the source to reflect the new structure of the record.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>When mapping from an Enscribe file, include either the <code class="codeph">DEF</code> or the <code class="codeph">TARGETDEF</code> option. Use <code class="codeph">DEF</code> when capturing and mapping from the trail. If the target is an Enscribe file, you must associate a DDL definition with the target so that mapping instructions can be interpreted with <code class="codeph">TARGETDEF</code>.</p>
+</li>
+<li>
+<p>When SQL tables are identified as the target, the layout of the target record after mapping is known since the SQL table structure is retrieved from the SQL catalog.</p>
+</li>
+</ul>
+<p>Additionally, you can match the source record length to the target record length. See <span class="q">"<a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm#GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942118">Matching Source and Target Record Lengths</a>"</span>.</p>
+<p><code class="codeph">COLMAP</code> requires the <code class="codeph">TARGET</code> option. A DDL definition for an Enscribe target is required only once in the parameter file, and only when using a <code class="codeph">COLMAP</code> clause.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, 
+COLMAP (<span class="italic">column_map_specification</span>) | NOCOLMAP
+TARGET <span class="italic">target_file_name</span> 
+[, DEF <span class="italic">source_ddl_definition</span> | TARGETDEF <span class="italic">target_ddl_definition</span>]
+;
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-92B7C1F2-E067-4866-9D18-5A4F6AAE544B"><!-- --></a><span class="italic"><code class="codeph">column_map_specification</code></span></dt>
+<dd>
+<p>The column mapping expression, as in:</p>
+<pre dir="ltr">
+(<span class="italic">target_column</span> = <span class="italic">source_expression</span>)
+</pre>
+<p>Explicitly defines a source-target column map where <span class="italic"><code class="codeph">target_column</code></span> is the name of the target column and <span class="italic"><code class="codeph">source_expression</code></span> can be any of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Numeric constant, such as 123</p>
+</li>
+<li>
+<p>String constant enclosed within quotes, such as "ABCD"</p>
+</li>
+<li>
+<p>The name of a source column, such as <code class="codeph">ORD_DATE</code></p>
+</li>
+<li>
+<p>An expression using an Oracle GoldenGate column-conversion function, such as <code class="codeph">@STREXT (COL1, 1, 3)</code></p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-BA96326A-CD91-4DB4-BDDA-3470D731FF66"><!-- --></a><code class="codeph">NOCOLMAP</code></dt>
+<dd>
+<p>Allows the user to specify a <code class="codeph">DEF</code> for filtering purposes, but prevents the column-mapping command from completing. Example:</p>
+<pre dir="ltr">
+MAP \PROD.$DATA06.CER1ATLF.TL*, 
+TARGET \GGS2.$DATA10.GGSLOGS.*, 
+DEF TLF, 
+NOCOLMAP,
+WHERE (TLF.HEAD.REC-TYP &lt;&gt; "00");
+</pre></dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-7591007B-06E1-4D70-A4E1-AD8B8DED54D1"><!-- --></a><code class="codeph">TARGET</code> <span class="italic"><code class="codeph">target_file_name</code></span></dt>
+<dd>
+<p>Names the target file. Must be an existing Enscribe file or SQL table, and can be an active define name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-EBFE8C39-20F8-45E5-A158-6267282C2CEE"><!-- --></a><code class="codeph">DEF</code> <span class="italic"><code class="codeph">source_ddl_definition</code></span></dt>
+<dd>
+<p>Has meaning only for Enscribe files. Use a <a id="d53761e1218" class="indexterm-anchor"></a>DDL definition or record within the open dictionary. This definition describes the record that is extracted from the TMF audit trails. You cannot specify more than one definition for any <code class="codeph">FILE</code> statement.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-7BAAE90A-A98C-4CBF-BDD4-B3033C0A6F24"><!-- --></a><code class="codeph">TARGETDEF</code> <span class="italic"><code class="codeph">target_ddl_definition</code></span></dt>
+<dd>
+<p>Use <code class="codeph">TARGETDEF</code> when invoking column mapping to an Enscribe file structure and the Enscribe file has not yet been specified in the parameter file, or did not have a definition associated with it.</p>
+<p>If you assigned a definition to the target file earlier in the parameter file, you can omit <code class="codeph">TARGETDEF</code>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942118">
+<p class="subhead1">Matching Source and Target Record Lengths</p>
+<p>Use the <code class="codeph">USETARGETDEFLENGTH</code> option to adjust the source <a id="d53761e1255" class="indexterm-anchor"></a>record length to the length of the target record. Precede the <code class="codeph">COLMAP</code> statement with the <code class="codeph">USETARGETDEFLENGTH</code> option.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+USETARGETDEFLENGTH
+USETARGETDEFLENGTH
+COLMAP (USEDEFAULTS,
+CRD-TYP = @STRSUB (CRD-TYP, "VD", "PV"),
+FIID = @STRSUB (FIID, "WA", "SFNB"),
+FIID = @STRSUB (FIID, "ID", "BAID"));
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Retrieving Data Layout during Replicat Processing.</p>
+<p>The table name stored in the remote trail can be different for each record. Using the <code class="codeph">TARGETNAME</code> option, you can specify a different file name<a id="d53761e1282" class="indexterm-anchor"></a> in the header for each record retrieved from the file. Replicat uses the new file name to resolve the file or table layout.</p>
+<p>If the specified file exists at the target node, Replicat can retrieve the layout from a local catalog or dictionary, which can save a significant amount of time.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, TARGETNAME <span class="italic">target_file_name</span>;
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-0839DB44-68F8-4EA5-9449-016DD64FA761"><!-- --></a><span class="italic"><code class="codeph">target_file_name</code></span></dt>
+<dd>
+<p>The name of the target file for which Replicat retrieves the layout.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__CIHIEGDA">
+<p class="subhead1">Triggering Actions</p>
+<p><code class="codeph">EVENTACTIONS</code> can be used to trigger an event based on a file or table receiving a DML record.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">source_file</span>
+EVENTACTIONS ([VERBOSE]
+  [, ROLLOVER]
+  [, IGNORE | DISCARD]
+  [, TACLCMD ("CMD_file_details") | TACLCMD (CMD $1, VAR $1 = value)]
+  [, EMS WARN | INFO]
+  [, CHECKPOINT {BEFORE | AFTER | BOTH}]
+  [, REPORT]
+  [, STOP]
+  [, SUSPEND])
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-5B6E8F27-B175-4FC4-910F-6A484ACB793E"><!-- --></a><code class="codeph">VERBOSE</code></dt>
+<dd>
+<p>Writes details to the report for each event as it is processed</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-FCC87B35-A821-440B-BD01-1C40AF6B468B"><!-- --></a><code class="codeph">ROLLOVER</code></dt>
+<dd>
+<p>Increments the sequence number of the output trail.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-67ED8326-DB2D-4FC0-A8FA-823F0ED83165"><!-- --></a><code class="codeph">IGNORE</code></dt>
+<dd>
+<p>Skips the record. <code class="codeph">IGNORE</code> and <code class="codeph">DISCARD</code> are incompatible, so only one of these options can be used.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-2CAA924B-A0B8-45A7-92EA-AB8F9A406A29"><!-- --></a><code class="codeph">DISCARD</code></dt>
+<dd>
+<p>Discards the record. <code class="codeph">IGNORE</code> and <code class="codeph">DISCARD</code> are incompatible, so only one of these options can be used.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-86F83BDB-D179-43BA-B53E-9626397D6511"><!-- --></a><code class="codeph">TACLCMD</code></dt>
+<dd>
+<p>Executes a user-defined system command. Valid <code class="codeph">TACLCMD</code> file commands are <code class="codeph">PURGE</code>, <code class="codeph">PURGEDATA</code>, <code class="codeph">RUN</code>, <code class="codeph">RENAME</code>, <code class="codeph">OBEY</code>, and <code class="codeph">FUP</code>. Non-file values can be obtained by <code class="codeph">SQLEXEC</code>, <code class="codeph">@GETENV()</code>, or Column Data.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-58A0DA28-74BD-4AF0-94F6-3A03BF4DEA17"><!-- --></a><code class="codeph">EMS</code></dt>
+<dd>
+<p>Writes either <code class="codeph">INFO</code> or <code class="codeph">WARN</code> messages to EMS.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-2D83F347-47D1-40C2-8F11-70EB9A0FB020"><!-- --></a><code class="codeph">CHECKPOINT</code></dt>
+<dd>
+<p>Checkpoints its position <code class="codeph">BEFORE</code> the record is processed, <code class="codeph">AFTER</code> the record is processed or <code class="codeph">BOTH</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-A524B3A1-7715-4360-AB5D-76F34F7D9901"><!-- --></a><code class="codeph">REPORT</code></dt>
+<dd>
+<p>Writes the current statistics to the report file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-9C5CECA7-28C0-491A-86A6-CCE65A09F349"><!-- --></a><code class="codeph">STOP</code></dt>
+<dd>
+<p>Stops the process.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-89E032F5-258B-4BED-91BC-EECF42C6C9A5"><!-- --></a><code class="codeph">SUSPEND</code></dt>
+<dd>
+<p>Suspends the process until it is resumed by a command from GGSCI.</p>
+</dd>
+</dl>
+<pre dir="ltr">
+FILE $DATA.SLS.PLR,
+  EVENTACTIONS (VERBOSE, TACLCMD "RENAME $DATA.SLS.PLR, $DATA.SLS.T4M");
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Example</p>
+<p>The following example writes to the report and executes a <code class="codeph">TACLCMD</code> to rename the file.</p>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942140">
+<p class="subhead1">Purging Records for Initial Load</p>
+<p>When extracting data for an initial load, you can use the <a id="d53761e1470" class="indexterm-anchor"></a><a id="d53761e1474" class="indexterm-anchor"></a><a id="d53761e1478" class="indexterm-anchor"></a><code class="codeph">AUTOTRUNCATE</code> option to send a <code class="codeph">PURGEDATA</code> record to the trail as the first record. The <code class="codeph">PURGEDATA</code> purges the target file before Replicat applies any data, so that the target file is loaded from a clean state.</p>
+<p>Use <code class="codeph">AUTOTRUNCATE</code> with extreme caution, since it causes all existing data to be purged from the target file.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Do not use <code class="codeph">AUTOTRUNCATE</code> if you are performing multiple direct loads to the same target file, such as when using a range function to distribute the processing load.</p>
+</li>
+<li>
+<p><code class="codeph">AUTOTRUNCATE</code> is not suited to a bi-directional configuration. <code class="codeph">PURGEDATA</code> is a DDL statement that is automatically committed and not linked to any transaction, making loop detection difficult. Without effective loop detection, <code class="codeph">AUTOTRUNCATE</code> could cause not only target, but also original source files, to be purged of data. If you use <code class="codeph">AUTOTRUNCATE</code> in a bi-directional configuration, you should use <code class="codeph">IGNOREPURGEDATAS</code> in your online Extract groups.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942145">
+<p class="subhead1">Handling missing files</p>
+<p>Use the <code class="codeph">ALTNAME</code> option to specify an alternate name for a file that may no longer exist. Many applications use daily transaction files; purging the previous file and creating a new transaction file each day. A problem can occur when Extract expects to process data from a purged or renamed file.</p>
+<p>Using <code class="codeph">ALTNAME</code>, you can specify a generic definition for these types of files. This requires that a generic file exist that accurately describes the structure of each of the files in a group. The generic file does not require any data.</p>
+<p>This option applies only when the source is an Oracle GoldenGate or Logger trail.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, ALTNAME <span class="italic">alternate_file_name</span> 
+[, DEF <span class="italic">source_ddl_definition</span>];
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-9EC5D3F0-B1CC-4ED0-9456-D7F66A3FA3AF"><!-- --></a><span class="italic"><code class="codeph">alternate_file_name</code></span></dt>
+<dd>
+<p>The alternate file name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-06537509-96EE-4EBC-8893-5B0CC90D9BA7"><!-- --></a><code class="codeph">DEF</code> <span class="italic"><code class="codeph">source_ddl_definition</code></span></dt>
+<dd>
+<p>Has meaning only for Enscribe files. Use a <a id="d53761e1572" class="indexterm-anchor"></a>DDL definition or record within the open dictionary. This definition describes the record that is extracted from the TMF audit trails. You cannot specify more than one definition for any <code class="codeph">FILE</code> statement.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Example</p>
+<pre dir="ltr">
+FILE $DATA1.DAT.TR*, ALTNAME $DATA1.TEMPLATE.TRANS, DEF TRANS-DEF;
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942169">
+<p class="subhead1">Passing literal strings to user exits</p>
+<p>Use <code class="codeph">EXITPARAM</code> "<span class="italic"><code class="codeph">exitparam_string</code></span>" to pass a literal <a id="d53761e1599" class="indexterm-anchor"></a><a id="d53761e1605" class="indexterm-anchor"></a><a id="d53761e1609" class="indexterm-anchor"></a>string to user exit routines whenever a record from <code class="codeph">FILE</code> is encountered.</p>
+<p>The string must be enclosed in double quotes and an ampersand used if it continues to additional lines. It is unlimited in size, but you must use the new function <code class="codeph">GET_EXIT_PARAM_VALUE</code> to access values over the default of 256 bytes.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, EXITPARAM "<span class="italic">exitparam_string</span>";
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942173">
+<p class="subhead1">Specifying a table alias</p>
+<p>When you specify the <code class="codeph">FORMATASCII</code>, <code class="codeph">FORMATSQL, or FORMATXML</code> parameters, you can use <code class="codeph">SQLNAME</code> to substitute a string for the table name in the output. To preserve lowercase attributes of the string, enclose the string in quotes.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, SQLNAME <span class="italic">table_alias</span>;
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942180">
+<p class="subhead1">Performing a query</p>
+<p>Use <code class="codeph">SQLEXEC</code> to perform a SQL query when processing a record for a SQL/MP table. <code class="codeph">SQLEXEC</code> enables Oracle GoldenGate to communicate directly with the database to perform any query that SQL supports. The database function can be part of the synchronization process, such as retrieving values for column conversion, or it can be independent of extracting or replicating data.</p>
+<div class="infobox-note" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-651D16D5-3BF8-4AE9-9DD8-54BFEB3498C0">
+<p class="notep1">Note:</p>
+<p>This feature is not available for Enscribe files. <code class="codeph">SQLEXEC</code> queries should not be used to change a value in the primary key column. The primary key value is passed from Extract to Replicat, so Replicat can perform further update/delete operations. If Replicat does not know the primary key value, these operations cannot be completed.</p>
+</div>
+<p>By using <code class="codeph">SQLEXEC</code> within multiple <code class="codeph">FILE</code> or <code class="codeph">MAP</code> statements, you can create different rules for different tables; these rules can be as simple or as complex as needed. A query that is executed can accept input parameters from source or target rows and pass output parameters.</p>
+<p>In the following example, <code class="codeph">SQLEXEC</code> runs a select statement, extracting the timestamp from the target table, then filters out records as needed.</p>
+<pre dir="ltr">
+FILE $DATA1.SQLDAT.ORDERS, 
+SQLEXEC (ID check, 
+QUERY " SELECT TIMESTAMP FROM $DATA1.SQLDAT.ORDERS "
+" WHERE PKCOL =?P1 ", PARAMS (P1 = PKCOL), ERROR REPORT);
+</pre>
+<p>A <code class="codeph">SQLEXEC</code> statement expects legal SQL syntax for the database being affected. Refer to the SQL for NonStop reference guide for permissible SQL syntax.</p>
+<div class="infobox-note" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-D8D42DFF-9CD5-4A9A-9167-5477EC9DD35F">
+<p class="notep1">Note:</p>
+<p>If a <code class="codeph">SQLEXEC</code> query fails, the Extract or Replicat process will exit. As such, you must structure your query correctly.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, SQLEXEC (
+<a id="d53761e1718" class="indexterm-anchor"></a>ID <span class="italic">logical_name</span>, 
+<a id="d53761e1727" class="indexterm-anchor"></a>QUERY "<span class="italic">sql_query</span>", 
+{<a id="d53761e1737" class="indexterm-anchor"></a>PARAMS <span class="italic">param_spec</span> | <a id="d53761e1746" class="indexterm-anchor"></a>NOPARAMS}
+[, <a id="d53761e1751" class="indexterm-anchor"></a>AFTERFILTER | <a id="d53761e1756" class="indexterm-anchor"></a>BEFOREFILTER]
+[, <a id="d53761e1761" class="indexterm-anchor"></a>DBOP]
+[, <a id="d53761e1767" class="indexterm-anchor"></a>EXEC <span class="italic">frequency</span>]
+[, <a id="d53761e1776" class="indexterm-anchor"></a>MAXVARCHARLEN <span class="italic">bytes</span>]
+[, <a id="d53761e1785" class="indexterm-anchor"></a>PARAMBUFSIZE <span class="italic">num_bytes</span>]
+[, <a id="d53761e1795" class="indexterm-anchor"></a>TRACE <span class="italic">option</span>]
+[, <a id="d53761e1804" class="indexterm-anchor"></a>ALLPARAMS <span class="italic">option</span>]
+[, <a id="d53761e1813" class="indexterm-anchor"></a>ERROR <span class="italic">action</span>]
+[, ...]
+)
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-8B782034-1968-41FE-8E71-9ADB083BACAD"><!-- --></a><code class="codeph">ID</code> <span class="italic"><code class="codeph">logical_name</code></span></dt>
+<dd>
+<p>Defines a <a id="d53761e1834" class="indexterm-anchor"></a>logical name for the query. A logical name is required in order to extract values from the query results. <code class="codeph">ID</code> <span class="italic"><code class="codeph">logical_name</code></span> references the column values returned by the query.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-577FAE7C-F1E1-48D0-8F82-807A784E9E13"><!-- --></a><code class="codeph">QUERY</code> "<span class="italic"><code class="codeph">sql_query</code></span>"</dt>
+<dd>
+<p>Specifies the SQL query syntax to execute against the database. The query must be valid, standard query statement for the database against which it is being executed. It can either return results with a <code class="codeph">SELECT</code> statement or update the database with an <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, or <code class="codeph">DELETE</code> statement.</p>
+<p>For any query that produces output with a <code class="codeph">SELECT</code> statement, only the first row returned by the <code class="codeph">SELECT</code> is processed. Do not specify an <code class="codeph">"INTO...</code>" clause for any <code class="codeph">SELECT</code> statements.</p>
+<p>Enclose the query within quotes. For a multi-line query, use quotes on each line. To ensure success, place a space after each begin quote and each end quote, or at least before the end quote.</p>
+<p>For example, in the following, there are spaces before the words <code class="codeph">select</code> and <code class="codeph">where</code> and after the words <code class="codeph">ggs_notify</code> and <code class="codeph">?p1</code>."</p>
+<pre dir="ltr">
+SQLEXEC (
+ID ggs, ON UPDATES, ON INSERTS,
+QUERY " select notified from $DATA1.SQLDAT.NOTIFY "
+" where account_no = ?p1 ",
+PARAMS (p1 = account_no)
+)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-0A945AA0-CBE1-4CA5-B8E3-5E40A6881585"><!-- --></a><code class="codeph">PARAMS</code> <span class="italic"><code class="codeph">param_spec</code></span> | <code class="codeph">NOPARAMS</code></dt>
+<dd>
+<p>Defines whether the query accepts <a id="d53761e1917" class="indexterm-anchor"></a>parameters. One of these options must be used.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-9DB17715-404A-4878-AF11-FF6EE1134681"><!-- --></a><code class="codeph">AFTERFILTER | BEFOREFILTER</code></dt>
+<dd>
+<p>Specifies when to execute the query in relation to a <code class="codeph">FILTER</code> clause<a id="d53761e1934" class="indexterm-anchor"></a>. <code class="codeph">AFTERFILTER</code> executes after the filter and enables you to skip the overhead of executing the SQL unless the filter is successful. This is the default. <code class="codeph">BEFOREFILTER</code> executes before the filter and enables you to use the results of the procedure or query in the filter.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-D181A10F-F273-4321-B749-0BF9A4731A53"><!-- --></a><code class="codeph">DBOP</code></dt>
+<dd>
+<p>Commits <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, <code class="codeph">DELETE</code>, and <code class="codeph">SELECT</code> statements executed within the query. Otherwise, they could potentially be rolled back. Oracle GoldenGate issues the <a id="d53761e1964" class="indexterm-anchor"></a>commit within the same transaction boundaries as the source transaction. Use caution: any changes that are committed by the procedure can result in overwriting existing data.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-5AB86582-B51C-484D-B1D3-14BFCBB7457C"><!-- --></a><code class="codeph">EXEC</code> <span class="italic"><code class="codeph">frequency</code></span></dt>
+<dd>
+<p>Controls the frequency with which a query executes and how long the results are considered valid, if extracting output parameters. Takes one of the following arguments:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-FF1E7CFD-9675-44F8-957C-4096B3F88141"><!-- --></a><code class="codeph">MAP</code></dt>
+<dd>
+<p>Executes the query once for each source-target table map for which it is specified. <code class="codeph">MAP</code> renders the results invalid for any subsequent maps that have the same source table. For example, if a source table is being synchronized with more than one target table, the results would only be valid for the first source-target map. <code class="codeph">MAP</code> is the default.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-22672947-DF48-4A46-98FE-7F61E85A6DC4"><!-- --></a><code class="codeph">ONCE</code></dt>
+<dd>
+<p>Executes the query once during the course of an Oracle GoldenGate run, upon the first invocation of the associated <code class="codeph">FILE</code> or <code class="codeph">MAP</code> statement. The results remain valid for as long as the process remains running.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-05D42F7F-EBD2-4884-9330-50F6D8004B9B"><!-- --></a><code class="codeph">TRANSACTION</code></dt>
+<dd>
+<p>Executes the query once per source transaction. The results remain valid for all operations of the transaction.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-1652E443-AB63-44BA-8C99-7975E7F880EC"><!-- --></a><code class="codeph">SOURCEROW</code></dt>
+<dd>
+<p>Executes the query once per source row operation. Use this option when you are synchronizing a source table with more than one target table, so that the results of the procedure or query are invoked for each source-target mapping.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-86BA64F2-0603-482B-8CA5-E315C6AB6048"><!-- --></a><code class="codeph">MAXVARCHARLEN</code> <span class="italic"><code class="codeph">bytes</code></span></dt>
+<dd>
+<p>Specifies the maximum length allocated for any output <a id="d53761e2032" class="indexterm-anchor"></a>parameter in a query. Beyond this maximum, output values are truncated. The default is 255 bytes without an explicit <code class="codeph">MAXVARCHARLEN</code> clause.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-12F4B701-6ACF-41C9-8E21-9B2E6DDC16C2"><!-- --></a><code class="codeph">PARAMBUFSIZE</code> <span class="italic"><code class="codeph">num_bytes</code></span></dt>
+<dd>
+<p>Specifies the maximum size of the memory buffer that stores parameter information, including both input and output parameters. Oracle GoldenGate issues a warning whenever the memory allocated for parameters is within 500 bytes of the maximum. The default is 10,000 bytes without an explicit <code class="codeph">PARAMBUFSIZE</code> clause.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-9910CA07-BE5D-4815-855D-207AD08F6CE6"><!-- --></a><code class="codeph">TRACE</code> <span class="italic"><code class="codeph">option</code></span></dt>
+<dd>
+<p>Takes one of the following arguments:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-32081211-F431-4279-AF13-9780894AE7D5"><!-- --></a><code class="codeph">TRACE ALL</code></dt>
+<dd>
+<p>Writes the input and output parameters of each invocation of a query to the report file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-7FA61C20-94D0-4D6C-B1A2-A1B8A3AD9EFC"><!-- --></a><code class="codeph">TRACE ERROR</code></dt>
+<dd>
+<p>Writes parameters to the report file only if an error occurs.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-F680B6B6-614C-481C-88DC-A81088BA6068"><!-- --></a><code class="codeph">ALLPARAMS</code> <span class="italic"><code class="codeph">option</code></span></dt>
+<dd>
+<p>Takes one of the following arguments:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-5ED041E8-2154-438C-940F-4AC2E73507F9"><!-- --></a><code class="codeph">ALLPARAMS REQUIRED</code></dt>
+<dd>
+<p>Indicates that all parameters must be present for the queries to execute.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-877741EE-C577-468E-B0FB-51668526D554"><!-- --></a><code class="codeph">ALLPARAMS OPTIONAL</code></dt>
+<dd>
+<p>Allows the query to execute without all parameters being present.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-FFEA3FD3-0783-47EA-B8A2-E406E7FF00D8"><!-- --></a><code class="codeph">ERROR</code> <span class="italic"><code class="codeph">action</code></span></dt>
+<dd>
+<p>Requires one of the following arguments:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-5A7E848C-99C0-4566-977E-125A761BD0C3"><!-- --></a><code class="codeph">ERROR IGNORE</code></dt>
+<dd>
+<p>Database <a id="d53761e2127" class="indexterm-anchor"></a>error is ignored and processing continues.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-90F3E652-0FB1-498F-8B03-0C59FB3C79CF"><!-- --></a><code class="codeph">ERROR REPORT</code></dt>
+<dd>
+<p>Database error is written to a report.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-651DF922-7580-43FF-B9EB-449005E0826A"><!-- --></a><code class="codeph">ERROR RAISE</code></dt>
+<dd>
+<p>Database error is handled just as a table replication error.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-A305D182-2E53-42CB-B2BB-659D07B3DE0F"><!-- --></a><code class="codeph">ERROR FINAL</code></dt>
+<dd>
+<p>Database error is handled as a table replication error, but does not process any additional queries.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-82EF1627-97BE-4179-8CB4-9A6BA14DECDC"><!-- --></a><code class="codeph">ERROR FATAL</code></dt>
+<dd>
+<p>Database processing abends.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__I942295">
+<p class="subhead1">Using tokens</p>
+<p>Use <code class="codeph">TOKENS</code> to define a user token and associate it with data. Tokens enable you to extract and store data within the user token area of a trail record header. Token data can be retrieved and used in many ways to customize the delivery of Oracle GoldenGate data. For example, you can use token data in column maps or macros.</p>
+<p>To use the defined token data in target tables, use the <code class="codeph">@TOKEN</code> column-conversion function in the <code class="codeph">COLMAP</code> clause of a Replicat <code class="codeph">MAP</code> statement. The <code class="codeph">@TOKEN</code> function maps the name of a token to a target column.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_name</span>, 
+TOKENS (<span class="italic">token_name</span> = <span class="italic">token_data</span> [, ...])
+;
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-ADF80A19-9A46-4860-9A45-0ADCD1ACCCEA"><!-- --></a><span class="italic"><code class="codeph">token_name</code></span></dt>
+<dd>
+<p>A name of your choice for the token. It can be any number of alphanumeric characters and is not case-sensitive.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9__GUID-053D834E-64D6-4C53-AFCC-AA0CF236FBBB"><!-- --></a><span class="italic"><code class="codeph">token_data</code></span></dt>
+<dd>
+<p>A character string of up to 2000 bytes. The data can be either a constant that is enclosed within double quotes or the result of an Oracle GoldenGate column-conversion function.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Example</p>
+<p>The following creates tokens named <code class="codeph">TK-OSUSER</code>, <code class="codeph">TK-GROUP</code>, and <code class="codeph">TK-HOST</code> and maps them to token data obtained with the <code class="codeph">@GETENV</code> function.</p>
+<pre dir="ltr">
+TABLE $DATA.MASTER.ACCOUNT, TOKENS (
+TK-OSUSER = @GETENV ("GGENVIRONMENT", "OSUSERNAME"),
+TK-GROUP = @GETENV ("GGENVIRONMENT", "GROUPNAME")
+TK-HOST =  @GETENV ("GGENVIRONMENT", "HOSTNAME"));
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-781060B0-A814-409F-8B69-324CA08280AB.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

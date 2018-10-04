@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Configuring Custom Operations</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.24" />
+<meta name="description" content="This chapter describes custom operations that make it possible for you to tailor Oracle GoldenGate to the specific needs of your organization. You can write C or COBOL routines and call them with Oracle GoldenGate user exits." />
+<meta name="dcterms.created" content="2014-08-06T9:43:50Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate for Mainframe Administering Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E28904-01" />
+<meta name="dcterms.isVersionOf" content="GNSAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="changesync.htm" title="Previous" type="text/html" />
+<link rel="Next" href="dataintegration.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E28904-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">11/17</span> <!-- End Header --><a id="i969738"></a><a id="GNSAD335"></a>
+<h1 class="chapter"><span class="secnum">8</span> Configuring Custom Operations</h1>
+<p><a id="GNSAD336"></a>This chapter describes custom operations that make it possible for you to tailor Oracle GoldenGate to the specific needs of your organization. You can write C or COBOL routines and call them with Oracle GoldenGate user exits. You can also save frequently used Oracle GoldenGate routines as macros then call the macros from within Extract or Replicat parameter files. You can use <code>OBEY</code> files to access frequently used Oracle GoldenGate parameters.</p>
+<p>This chapter contains the following sections:</p>
+<ul>
+<li>
+<p><a href="#i934314">Section 8.1, "User Exits"</a></p>
+</li>
+<li>
+<p><a href="#A1001112">Section 8.2, "Using Oracle GoldenGate Macros"</a></p>
+</li>
+<li>
+<p><a href="#i934720">Section 8.3, "Using OBEY Files"</a></p>
+</li>
+<li>
+<p><a href="#A1004530">Section 8.4, "Creating High Pin Processes"</a></p>
+</li>
+</ul>
+<a id="i934314"></a><a id="GNSAD337"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">8.1</span> User Exits</h2>
+<p>User exits allow you to extend and customize the functionality of Extract and Replicat. At different points during Extract and Replicat processing, you can call COBOL, C or TAL routines to perform an unlimited number of functions. You can also easily add functions to the application and respond to database events almost as soon as they occur without altering production programs. For example, user exits can:</p>
+<ul>
+<li>
+<p>Perform arithmetic operations, special date conversions or table lookups while mapping from one file format to another.</p>
+</li>
+<li>
+<p>Implement record archival functions off-line.</p>
+</li>
+<li>
+<p>Respond to unusual database events in custom ways, for example, by sending a formatted e-mail message or paging a supervisor based on some field value.</p>
+</li>
+<li>
+<p>Accumulate totals and gather statistics.</p>
+</li>
+<li>
+<p>Clean up invalid data.</p>
+</li>
+<li>
+<p>Determine the net difference in a record before and after an update.</p>
+</li>
+<li>
+<p>Accept or reject records based on complex criteria.</p>
+</li>
+<li>
+<p>Normalize a database during conversion.</p>
+</li>
+<li>
+<p>Eliminate indexes that exist to identify recently changed records.</p>
+</li>
+</ul>
+<a id="GNSAD338"></a>
+<div class="sect2"><a id="sthref160"></a>
+<h3 class="sect2"><span class="secnum">8.1.1</span> Record Formats for User Exits</h3>
+<p>User exits expect records to have a specific format. For example, user exits expect:</p>
+<ul>
+<li>
+<p>Deletes, inserts, and updates to appear in the buffer as full record images</p>
+</li>
+<li>
+<p>Non-compressed data to have no offset or length preceding data</p>
+</li>
+<li>
+<p>Compressed Enscribe and SQL updates to both have the following format:</p>
+<pre>
+(offset)(length)(value)(offset)(length)(value)(. . .)
+</pre></li>
+</ul>
+<p>where</p>
+<ul>
+<li>
+<p><span class="syntaxinline">(offset)</span> is the offset into the Enscribe record of the data fragment that changed.</p>
+</li>
+<li>
+<p>(length) is the length of the fragment.</p>
+</li>
+<li>
+<p><span class="syntaxinline">(value)</span> is the data. Fragments can span field boundaries, so full fields are not always retrieved (unless compression is off or <code>FETCHCOMPS</code> is used).</p>
+</li>
+<li>
+<p>Enscribe has an I/O type of <code>11</code>; SQL has an I/O type of <code>15</code>. All other I/O types for deletes, inserts, and updates are in non-compressed format.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>The above record formats only apply to data sourced from an HP NonStop system.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD339"></a>
+<div class="sect2"><a id="sthref161"></a>
+<h3 class="sect2"><span class="secnum">8.1.2</span> Creating User Exits</h3>
+<p>Create user by performing the following process.</p>
+<p class="orderedlisttitle">To implement user exits:&nbsp;</p>
+<ol>
+<li>
+<p>Create a user exit shell routine in C, TAL or COBOL. The user shell routine is the communication point between Extract or Replicat and your routines.</p>
+<ul>
+<li>
+<p><span class="bold">C</span> <span class="bold">shell routines.</span> Shell routines written in C must be named <code>CUSEREXIT</code> and must accept the <code>EXIT-CALL-TYPE</code>, <code>EXIT-CALL-RESULT</code>, <code>EXIT-PARAMS</code>, and <code>EXIT-REC-BUF</code> parameters. These parameters are supplied by Oracle GoldenGate in the <code>XLIBC</code> include file.</p>
+</li>
+<li>
+<p><span class="bold">COBOL</span> <span class="bold">shell routines.</span> Shell routines written in COBOL must specify the <code>ENV COMMON</code> directive, and the <code>PROGRAM-ID</code> of one of the modules must be named <code>COBOLUSEREXIT</code>. The <code>COBOLUSEREXIT</code> program must have a linkage section that contains <code>EXIT-CALL-TYPE</code>, <code>EXIT-CALL-RESULT</code>, <code>EXIT-PARAMS</code>, and <code>EXIT-REC-BUF</code> parameters. These parameters are supplied by Oracle GoldenGate in the <code>XLIBCOB</code> copy library.</p>
+</li>
+<li>
+<p><span class="bold">TAL</span> <span class="bold">shell routines.</span> Shell routines written in TAL must be named <code>TALUSEREXIT</code> and must accept the <code>EXIT-CALL-TYPE</code>, <code>EXIT-CALL-RESULT</code>, <code>EXIT-PARAMS</code>, and <code>EXIT-REC-BUF</code> parameters. These parameters are supplied by Oracle GoldenGate in the <code>XLIBTAL</code> include file.</p>
+</li>
+</ul>
+<p>See <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> for details about COBOL and C programming language routines.</p>
+</li>
+<li>
+<p>Include Calling Environment Functions to retrieve information such as record buffers and transaction contexts, if necessary. If the user exit is written in C, you must include the <code>USRDECS</code> file. If the exit is written in COBOL, you must furnish a <code>CONSULT</code> directive to either Extract or Replicat. If the exit is written in TAL, you must source the <code>USRDECT</code> file.</p>
+</li>
+<li>
+<p>In any language, create routines to respond to each type of event generated by Extract and Replicat.</p>
+</li>
+<li>
+<p>Compile and bind the shell routine and the routines that respond to individual events, creating the user exit module.</p>
+</li>
+<li>
+<p>Bind the user exit module with Extract or Replicat by running the BINDEXIT macro and creating a custom Extract or Replicat module with a different name. For further information, see <a href="#i977348">"Binding the User Exit"</a>.</p>
+</li>
+<li>
+<p>Include the <code>CUSEREXIT, COBOLUSEREXIT</code> or <code>TALUSEREXIT</code> parameter in your Extract or Replicat parameter file.</p>
+</li>
+<li>
+<p>Run the custom Extract or Replicat module.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="i977348"></a><a id="GNSAD340"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">8.1.3</span> Binding the User Exit</h3>
+<p><code>BINDEXIT</code> is an interactive macro that creates a new object file to combine Extract or Replicat with user exit routines. <code>BINDEXIT</code> syntax is similar to:</p>
+<pre>
+TACL&gt; RUN $<span class="variable">vol.subvol</span>.BINDEXIT [<span class="variable">option</span>s] [<span class="variable">object_type</span>]
+</pre>
+<pre>
+</pre>
+<p>The following information can be entered as options or <code>BINDEXIT</code> will prompt you for it.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" summary="This table lists the options used for binding the user exit." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t3">Options</th>
+<th class="cellalignment33" id="r1c2-t3">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t3" headers="r1c1-t3">
+<pre>
+USEROBJ
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t3 r1c2-t3">
+<p>The name of the user exit object file.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t3" headers="r1c1-t3">
+<pre>
+NEWOBJ
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t3 r1c2-t3">
+<p>The name of the new object file that will contain the exit routines and the Extract or Replicat module. The file must not yet exist, and will be created in the same subvolume as the Extract/Replicat module.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t3" headers="r1c1-t3">
+<pre>
+GGSUBVOL
+</pre></td>
+<td class="cellalignment34" headers="r4c1-t3 r1c2-t3">
+<p>The fully defined location of the Oracle GoldenGate environment.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t3" headers="r1c1-t3">
+<pre>
+AXCEL | NOAXCEL
+</pre></td>
+<td class="cellalignment34" headers="r5c1-t3 r1c2-t3">
+<p><code>AXCEL</code> runs the NonStop Accelerator program to accelerate the TNS object files. This is the default, but it can be bypassed with <code>NOAXCEL</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r6c1-t3" headers="r1c1-t3">
+<pre>
+CATALOG
+</pre></td>
+<td class="cellalignment34" headers="r6c1-t3 r1c2-t3">
+<p>The SQL Catalog for the SQLCOMP of the program. This information is not required if your database is Enscribe.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r7c1-t3" headers="r1c1-t3">
+<pre>
+SHOWCMD
+</pre></td>
+<td class="cellalignment34" headers="r7c1-t3 r1c2-t3">
+<p>Displays additional information on the <code>BINDEXIT</code> commands during the session.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r8c1-t3" headers="r1c1-t3">
+<pre>
+HELP
+</pre></td>
+<td class="cellalignment34" headers="r8c1-t3 r1c2-t3">
+<p>Display <code>BINDEXIT</code> Help text.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="inftblhruleinformal">
+<table class="cellalignment32" summary="This table lists the arguments used for running BINDEXIT." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t4">Argument</th>
+<th class="cellalignment33" id="r1c2-t4">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t4" headers="r1c1-t4">
+<pre>
+<span class="variable">object_type</span>
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t4 r1c2-t4">
+<p>The type of file to create, either Extract or Replicat.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p><code>BINDEXIT</code> binds your code with the Extract or Replicat code, creating the new object file. <code>BINDEXIT</code> ensures that you included either a <code>CUSEREXIT</code> or <code>COBOLUSEREXIT</code> routine, and that no conflicts exist between your code and the Extract or Replicat module (such as having the same names for different functions). Once the new object file is created, run that file rather than Extract or Replicat.</p>
+<div class="example">
+<p class="titleinexample"><a id="GNSAD341"></a><a id="sthref163"></a>Example 8-1 BINDEXIT Help</p>
+<pre>
+TACL&gt; RUN BINDEXIT Help
+Usage: RUN BINDEXIT [<span class="variable">options </span>...] [<span class="variable">object_type</span>]
+<span class="codeinlineitalic">options</span> are
+USEROBJ NEWOBJ GGSUBVOL AXCEL CATALOG SHOWCMD HELP
+<span class="variable">object_type</span> [EXTRACT | REPLICAT]
+</pre></div>
+<!-- class="example" -->
+<a id="GNSAD342"></a>
+<div class="sect3"><a id="sthref164"></a>
+<h4 class="sect3"><span class="secnum">8.1.3.1</span> Binding User Exits in Native Mode</h4>
+<p>If you are running your NonStop environment in native mode, you must bind your native exits using <code>NLDEXIT</code> instead of <code>BINDEXIT</code>. <code>NLDEXIT</code> runs just as <code>BINDEXIT</code> does, and prompts you for the same and some additional information.</p>
+<pre>
+TACL &gt;RUN <span class="variable">$vol.subvol</span>.NLDEXIT
+[<span class="variable">options</span>] [<span class="variable">object_type</span>]
+</pre>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" summary="This table lists the options used for binding user exits in Native mode." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t5">Options</th>
+<th class="cellalignment33" id="r1c2-t5">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t5" headers="r1c1-t5">
+<pre>
+USEROBJ
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t5 r1c2-t5">
+<p>The name of the user exit object file.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t5" headers="r1c1-t5">
+<pre>
+NEWOBJ
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t5 r1c2-t5">
+<p>The name of the new object file that will contain the exit routines and the Extract or Replicat module. The file must not yet exist, and will be created in the same subvolume as the Extract/Replicat module.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t5" headers="r1c1-t5">
+<pre>
+GGSUBVOL
+</pre></td>
+<td class="cellalignment34" headers="r4c1-t5 r1c2-t5">
+<p>The fully defined location of the Oracle GoldenGate environment.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t5" headers="r1c1-t5">
+<pre>
+CATALOG
+</pre></td>
+<td class="cellalignment34" headers="r5c1-t5 r1c2-t5">
+<p>The SQL Catalog for the SQLCOMP of the program. This information is not required if your database is Enscribe.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r6c1-t5" headers="r1c1-t5">
+<pre>
+C++VERSION
+</pre></td>
+<td class="cellalignment34" headers="r6c1-t5 r1c2-t5">
+<p>If there were any C++ modules used, the version of the C++ compiler; 2 or 3.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r7c1-t5" headers="r1c1-t5">
+<pre>
+CEXITWITHCOBOL
+</pre></td>
+<td class="cellalignment34" headers="r7c1-t5 r1c2-t5">
+<p><code>Y</code> or <code>N</code> to indicate whether any COBOL modules were used.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r8c1-t5" headers="r1c1-t5">
+<pre>
+SHOWCMD
+</pre></td>
+<td class="cellalignment34" headers="r8c1-t5 r1c2-t5">
+<p>Displays additional information on the <code>NLDEXIT</code> commands during the session.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r9c1-t5" headers="r1c1-t5">
+<pre>
+HELP
+</pre></td>
+<td class="cellalignment34" headers="r9c1-t5 r1c2-t5">
+<p>Display <code>NLDEXIT</code> Help text.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="example">
+<p class="titleinexample"><a id="GNSAD343"></a><a id="sthref165"></a>Example 8-2 Some Additional Information Displayed with NLDEXIT and SHOWCMD</p>
+<pre>
+-o $DATA1.GGSSRC.TESTREP
+$DATA2.TSPAK.XSKLCON $DATA2.TEST.REPR
+$DATA2.TSSOBJ.USRESQL
+-nostdfiles
+-allow_duplicate_procs
+-set runnamed on
+-set highpin on
+-set highrequesters on
+-set saveabend on
+-set libname $DATA1.GGSSRC.PRIVLIB
+$system.system.crtlmain
+-obey $system.system.libcobey
+NLD - NATIVE MODE LINKER - T6017D45. . .
+(C)1993 Tandem (C)2004 Hewlett-Packard Development Company, L.P.
+NLD's command line was:
+     \LA.$system.system.nld -stdin
+**** INFORMATIONAL MESSAGE **** [20022]:
+     The SRL name or archive name specified as 'zcresrl' in a -l, -lib, or
+     -import flag was resolved to the SRL named
+     '\LA.$SYSTEM.SYS04.zcresrl'.
+. 
+. 
+. (11 informational messages omitted from this sample)
+NLD reported 0 errors.
+NLD reported 0 warnings.
+NLD reported 12 informational messages.
+NLD created the following type of object file:
+     \TRILL.$DATA1.GGSSRC.TESTREP (ELF, executable)
+NLD Timestamp:  15DEC2010 15:07:30
+Elapsed Time:   00:00:06
+</pre>
+<p>The following example creates a new native user exit in Extract</p>
+</div>
+<!-- class="example" -->
+<div class="example">
+<p class="titleinexample"><a id="GNSAD344"></a><a id="sthref166"></a>Example 8-3 Creating a New Native User Exit</p>
+<pre>
+TACL&gt; RUN $<span class="variable">vol.subvol.</span>NLDEXIT
+Creates a new Native Extract or Replicat object file linked with a USEREXIT module.
+Enter X at any prompt to quit.
+
+Enter type of GGS object to create Extract or Replicat:
+GGS Object type: <span class="variable">extract_name</span>
+Enter $Vol.Subvol for Extract relinkable <span class="variable">installation_location</span>
+Enter location of userexit object: <span class="variable">your_native_compiled_C_object</span>
+Enter name for new object file: <span class="variable">new_native_extract</span>
+
+Does your C User Exit contain C++ modules (Y/N): <span class="variable">Y</span>
+What version compiler was used for C++ (2/3): <span class="variable">number</span>
+Does your C User Exit contain Cobol modules (Y/N)? <span class="variable">Y</span>
+New Extract file $<span class="variable">vol.subvol.</span><span class="variable">extractname</span>.<span class="variable">filename</span> created with user exits.
+
+SQL Catalog for SQLCOMP (or N to avoid SQL compile): <span class="variable">SQL_catalog_subvol</span>
+</pre></div>
+<!-- class="example" --></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="GNSAD345"></a>
+<div class="sect2"><a id="sthref167"></a>
+<h3 class="sect2"><span class="secnum">8.1.4</span> Debugging Replicat User Exits</h3>
+<p>Once you have bound your user exit into Replicat to create a new object, you will want to debug your new code. If your Replicat is in TNS mode, use the following command:</p>
+<pre>
+TACL&gt; RUN <span class="variable">replicat_name</span>/in <span class="variable">$vol.subvol.parameter_name</span>, name $<span class="variable">xxxx</span>, lib/
+</pre>
+<p>This decouples your Replicat from our licensed <code>PRIVLIB</code> and prevents errors.</p>
+<p>If you are running the native form of Replicat, you may debug as usual.</p>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD346"></a>
+<div class="sect2"><a id="sthref168"></a>
+<h3 class="sect2"><span class="secnum">8.1.5</span> Sample User Exits</h3>
+<p>Two sample user exits are supplied with Oracle GoldenGate: <code>DEMOXCOB</code> (written in COBOL) and <code>DEMOXC</code> (written in C programming language). You can use these exits as skeletons for your own routines.</p>
+<p><code>DEMOXCOB</code> illustrates several applications of user exits. <code>DEMOXCOB</code> responds to Extract events and performs several tasks, including:</p>
+<ul>
+<li>
+<p>Mapping data from Enscribe to SQL formats</p>
+</li>
+<li>
+<p>Writing a record to an attention log file under certain conditions</p>
+</li>
+<li>
+<p>Rejecting records with invalid codes</p>
+</li>
+<li>
+<p>Accumulating and outputting order totals</p>
+</li>
+<li>
+<p>Writing archive records when delete records are encountered</p>
+</li>
+</ul>
+<p><code>DEMOXC</code> provides an example of how to write a user exit that responds to Replicat events. <code>DEMOXC</code> maps records from a source to a target layout and creates a summary transaction record for each delivered transaction.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1001112"></a><a id="GNSAD347"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">8.2</span> Using Oracle GoldenGate Macros</h2>
+<p>By using Oracle GoldenGate macros in parameter files you can easily configure and reuse parameters, commands, and functions. You can use macros for a variety of operations, including:</p>
+<ul>
+<li>
+<p>Enabling easier and more efficient building of parameters</p>
+</li>
+<li>
+<p>Writing once and using many times</p>
+</li>
+<li>
+<p>Consolidating multiple statements</p>
+</li>
+<li>
+<p>Eliminating redundant column specifications</p>
+</li>
+<li>
+<p>Calling other macros</p>
+</li>
+<li>
+<p>Creating Macro libraries to share across parameter files.</p>
+</li>
+</ul>
+<p>Oracle GoldenGate macros work with Extract and Replicat parameter files.</p>
+<a id="GNSAD348"></a>
+<div class="sect2"><a id="sthref169"></a>
+<h3 class="sect2"><span class="secnum">8.2.1</span> Creating a Macro</h3>
+<p>Create an Oracle GoldenGate macro with the <code>MACRO</code> statement.</p>
+<pre>
+MACRO #<span class="variable">macro_name</span>
+PARAMS ([<span class="variable">param1]</span> [<span class="variable">, param2</span>] [...])
+BEGIN
+<span class="variable">macro_body</span>
+
+END
+</pre>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" summary="This table summarizes the arguments used to create an Oracle GoldenGate macro with the MACRO statement." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t6">Argument</th>
+<th class="cellalignment33" id="r1c2-t6">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t6" headers="r1c1-t6">
+<pre>
+MACRO #<span class="variable">macro_name</span>
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t6 r1c2-t6">
+<p>Defines an Oracle GoldenGate macro. <span class="variable">macro_name</span> must begin with the # character, as in <span class="variable">#macro1</span>.</p>
+<p>If the # macro character is used elsewhere in the parameter file, such as in a table name, you can change it to something else with the <code>MACROCHAR</code> parameter. See <a href="#i969763">"Changing the Macro Character"</a> for more information. Macro names are not case-sensitive.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t6" headers="r1c1-t6">
+<pre>
+PARAMS ([<span class="variable">param1</span>] [, <span class="variable">param2</span>] [...])
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t6 r1c2-t6">
+<p>Optional. Used to describe parameters to the macro. Each parameter used in the macro must be declared in the <code>PARAMS</code> statement. See <a href="#i969928">"Creating Macro Parameters"</a> for details about this option.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t6" headers="r1c1-t6">
+<pre>
+BEGIN
+</pre></td>
+<td class="cellalignment34" headers="r4c1-t6 r1c2-t6">
+<p>Indicates the beginning of the body of the macro. Must be specified before the macro body.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t6" headers="r1c1-t6">
+<pre>
+<span class="variable">macro_body</span>
+</pre></td>
+<td class="cellalignment34" headers="r5c1-t6 r1c2-t6">
+<p>Represents one or more statements to be used as parameter file input. <span class="variable">macro_body</span> can include simple parameter statements, such as</p>
+<pre>
+COL1 = COL2
+</pre>
+<p>or more complex statements that include parameters, such as</p>
+<pre>
+COL1 = #val2
+</pre>
+<p>In addition, <span class="variable">macro_body</span> may include invocations of other macros. For example:</p>
+<pre>
+#colmap(COL1, #sourcecol)
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r6c1-t6" headers="r1c1-t6">
+<pre>
+END
+</pre></td>
+<td class="cellalignment34" headers="r6c1-t6 r1c2-t6">
+<p>Ends the macro definition.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect2" -->
+<a id="i969928"></a><a id="GNSAD349"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">8.2.2</span> Creating Macro Parameters</h3>
+<p>When you specify the optional <code>PARAMS</code> statement in a macro, the macro processor reads through the macro body looking for instances of the parameter names you defined in the <code>PARAMS</code> statement. For each occurrence of a parameter name, you must specify a corresponding value, which is substituted for the parameter name during invocation.</p>
+<p>For example, to convert a proprietary date format, the following macro defines the <code>#year</code>, <code>#month</code>, and <code>#day</code> parameters.</p>
+<pre>
+MACRO #make_date
+PARAMS (#year, #month, #day)
+BEGIN
+    @DATE("YYYY-MM-DD", "CC", @IF(#year &lt; 50, 20, 19),
+        "YY", #year, "MM", #month, "DD", #day)
+END;
+</pre>
+<p>Parameter values are substituted within the macro body according to the following rules.</p>
+<ol>
+<li>
+<p>Parameter names must begin with the # macro character, such as <span class="variable">#param1</span>. (You can define a different macro character. See <a href="#i969763">"Changing the Macro Character"</a> for details.) When the macro is run, the invocation must include a parameter value for each parameter named in the <code>PARAMS</code> statement. Parameter names are not case-sensitive.</p>
+<p>When the macro processor encounters a parameter with the # prefix that is not in the parameter list, the processor determines whether it is an invocation of another macro. Invocations of other macros also begin with the # character, followed by parentheses enclosing a list of parameter values that are separated by commas.</p>
+</li>
+<li>
+<p>Besides the leading # character, valid parameter characters are alphanumeric and can include the underscore character (_).</p>
+</li>
+<li>
+<p>If a parameter name or macro is encountered within quotation marks, it is treated as text and ignored.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="i969763"></a><a id="GNSAD350"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">8.2.3</span> Changing the Macro Character</h3>
+<p>Anything in the parameter file that begins with the # macro character is assumed to be either a macro or macro parameter. This rule does not apply to text within quotation marks; quoted text is ignored.</p>
+<p>If the macro character conflicts with a specification in the parameter file, such as table names that include the # character, you specify a different macro character with the <code>MACROCHAR</code> parameter. In the following example, $ is defined as the macro character, rather than #.</p>
+<pre>
+MACROCHAR $
+MACRO $mymac
+PARAMS ($p1)
+BEGIN
+col = $p1
+END;
+</pre>
+<p>The <code>MACROCHAR</code> can only be specified once, and must be specified before any macros are defined.</p>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD351"></a>
+<div class="sect2"><a id="sthref170"></a>
+<h3 class="sect2"><span class="secnum">8.2.4</span> Running the Macro</h3>
+<p>To run a macro, place the run statement in the parameter file at every place you want the process to occur.</p>
+<pre>
+[<span class="variable">target</span> =] <span class="variable">#macro_name</span> ([<span class="variable">value1</span>] [<span class="variable">, value2</span>] [, . . .])
+</pre>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" summary="This table summarizes the arguments used for running the Macro." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t7">Argument</th>
+<th class="cellalignment33" id="r1c2-t7">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t7" headers="r1c1-t7">
+<pre>
+<span class="variable">target</span> =
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t7 r1c2-t7">
+<p>An optional target to which the results of the macro processing are assigned, such as:</p>
+<pre>
+DATECOL1 = #make_date(YR1, MO1, DAY1)
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t7" headers="r1c1-t7">
+<pre>
+<span class="variable">#macro_name</span>
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t7 r1c2-t7">
+<p>The name of the macro, such as <code>#assign_date</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t7" headers="r1c1-t7">
+<pre>
+([value1] [, value2] [, . . .])
+</pre></td>
+<td class="cellalignment34" headers="r4c1-t7 r1c2-t7">
+<p>The parameter values to be substituted inside the macro, such as <code>#custdate</code> <code>(#year, #month, #day)</code>. If the optional <code>PARAMS</code> statement is omitted, the parentheses are still required. See the section on invoking macros without parameters on <a href="#i934526">"Invoking a Macro Without Parameters"</a> for more information.</p>
+<p>Valid parameter values include plain text, quoted text, and invocations of other macros. Some examples of valid parameter values are:</p>
+<pre>
+my_col_1
+"your text here"
+#mycalc (col2, 100)
+#custdate (#year, #month, #day)
+#custdate (#getyyyy (#yy), #month, #day)
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect2" -->
+<a id="i934526"></a><a id="GNSAD352"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">8.2.5</span> Invoking a Macro Without Parameters</h3>
+<p>If the macro does not specify parameters, the parameter value list is empty, but the parentheses are still required. For example:</p>
+<pre>
+#no_params_macro ()
+</pre></div>
+<!-- class="sect2" -->
+<a id="GNSAD353"></a>
+<div class="sect2"><a id="sthref171"></a>
+<h3 class="sect2"><span class="secnum">8.2.6</span> Sample Macros</h3>
+<p>This section shows you sample macros for implementing multiple uses of a statement and invoking another macro.</p>
+<a id="GNSAD354"></a>
+<div class="sect3"><a id="sthref172"></a>
+<h4 class="sect3"><span class="secnum">8.2.6.1</span> Implementing Multiple Uses of a Statement</h4>
+<p>You can use macros to implement multiple uses of a statement, and eliminate the need for entering one statement several times.</p>
+<p>The following example illustrates how mapping can be improved with a macro. In this example, a proprietary date format must be converted and the process is used several times. For such a scenario, you could implement a date format conversion in a macro similar to the following:</p>
+<pre>
+MACRO #make_date
+PARAMS (#year, #month, #day)
+BEGIN
+@DATE("YYYY-MM-DD", "CC", @IF(#year &lt; 50, 20, 19),
+"YY", #year, "MM", #month, "DD", #day)
+END;
+</pre>
+<p class="orderedlisttitle">To run the macro&nbsp;</p>
+<ol>
+<li>
+<p>Place the run statements at the appropriate location, similar to:</p>
+<pre>
+MAP $DATA.PROD.ACCOUNT, TARGET $DATA.BACK.ACCOUNT,
+COLMAP (
+TARGCOL1 = SOURCECOL1,
+DATECOL1 = #make_date(YR1,MO1,DAY1),
+DATECOL2 = #make_date(YR2,MO2,DAY2)
+);
+</pre></li>
+<li>
+<p>Upon invocation, the macro expands to:</p>
+<pre>
+MAP $DATA.PROD.ACCOUNT, TARGET $DATA.BACK.ACCOUNT,
+COLMAP(
+TARGCOL1 = SOURCECOL1,
+DATECOL1 = @DATE("YYYY-MM-DD", "CC", @IF(YR1 &lt; 50, 20, 19),
+"YY", YR1, "MM", MO1, "DD", DAY1)
+DATECOL2 = @DATE("YYYY-MM-DD", "CC", @IF(YR2 &lt; 50, 20, 19),
+"YY", YR2, "MM", MO2, "DD", DAY2)
+);
+</pre></li>
+</ol>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD355"></a>
+<div class="sect3"><a id="sthref174"></a>
+<h4 class="sect3"><span class="secnum">8.2.6.2</span> Consolidating Multiple Commands</h4>
+<p>In addition, frequently used sets of commands can be specified in a macro, as in this example of the macro <code>#option_defaults</code>.</p>
+<pre>
+MACRO #option_defaults
+BEGIN
+  GETINSERTS
+  GETUPDATES
+  GETDELETES
+  INSERTDELETES
+END;
+</pre>
+<p>Invoking the macro:</p>
+<pre>
+#option_defaults ()
+IGNOREUPDATES
+MAP $DATA.PROD.TCUSTMER, TARGET $DATA.BACK.TCUSTMER;
+</pre>
+<p>expands to:</p>
+<pre>
+GETINSERTS
+GETUPDATES
+GETDELETES
+INSERTDELETES
+IGNOREUPDATES
+MAP $DATA.PROD.TCUSTMER, TARGET $DATA.BACK.TCUSTMER;
+</pre>
+<p>Invoking the macro:</p>
+<pre>
+#option_defaults ()
+MAP $DATA.PROD.TCUSTORD, TARGET $DATA.BACK.TCUSTORD
+</pre>
+<p>expands to:</p>
+<pre>
+GETINSERTS
+GETUPDATES
+GETDELETES
+INSERTDELETES
+MAP $DATA.PROD.TCUSTORD, TARGET $DATA.BACK.TCUSTORD;
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="GNSAD356"></a>
+<div class="sect2"><a id="sthref175"></a>
+<h3 class="sect2"><span class="secnum">8.2.7</span> Macro Libraries</h3>
+<p>You can create libraries of macros to be included in different parameter files.</p>
+<p class="orderedlisttitle">To create a macro library:&nbsp;</p>
+<ol>
+<li>
+<p>Create the macros using a text editor, saving them to a file name with the format <code>$DATA.GGSMACR.</code><span class="variable">filename</span>, where <span class="variable">filename</span> is the name of the file.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>A macro library file can contain multiple macros.</p>
+</div>
+</li>
+<li>
+<p>Store your macro library files in <code>$DATA.GGSMACR</code>.</p>
+</li>
+<li>
+<p>Specify the <code>INCLUDE</code> parameter in your parameter file to include the macro library.</p>
+</li>
+</ol>
+<a id="GNSAD357"></a>
+<div class="sect3"><a id="sthref177"></a>
+<h4 class="sect3"><span class="secnum">8.2.7.1</span> Sample Macro Libraries</h4>
+<p>These samples show:</p>
+<ol>
+<li>
+<p>The macro library <code>$DATA.GGSMACR.DATELIB</code> that contains <code>#make_date</code> and <code>#assign_date</code> macros for date conversions</p>
+</li>
+<li>
+<p>The <code>$DATA.GGSMACR.MAINLIB</code> macro library containing the macro with multiple commands</p>
+</li>
+<li>
+<p>A sample parameter file calling a macro library that shows the include statement, and invocation statements for one of the macros from the library</p>
+<p>The Extract parameter file is using the <code>DATELIB</code> macro library, and the <code>#assign_date</code> macro.</p>
+</li>
+</ol>
+<div class="example">
+<p class="titleinexample"><a id="GNSAD358"></a><a id="sthref178"></a>Example 8-4 The $DATA.GGSMACR.DATELIB Macro Library</p>
+<pre>
+--
+-- Date macro library
+--
+MACRO #make_date
+PARAMS (#year, #month, #day)
+BEGIN
+@DATE("YYYY-MM-DD", "CC", @IF(#year &lt; 50, 20, 19),
+"YY", #year, "MM", #month, "DD", #day)
+END;
+MACRO #assign_date
+PARAMS (#target_col, #year, #month, #day)
+BEGIN
+#target_col = #make_date (#year, #month, #day)
+END;
+</pre></div>
+<!-- class="example" -->
+<div class="example">
+<p class="titleinexample"><a id="GNSAD359"></a><a id="sthref179"></a>Example 8-5 The $DATA.GGSMACR.MAINLIB Macro Library</p>
+<pre>
+--
+-- Main macro library
+--
+INCLUDE $DATA.GGSMACR.DATELIB
+MACRO #option_defaults
+BEGIN
+GETINSERTS
+GETUPDATES
+GETDELETES
+INSERTDELETES
+END;
+</pre></div>
+<!-- class="example" -->
+<div class="example">
+<p class="titleinexample"><a id="GNSAD360"></a><a id="sthref180"></a>Example 8-6 Sample Extract Parameter File</p>
+<pre>
+-- Parameter file for EXTRACT EXT1
+--
+INCLUDE $DATA.GGSMACR.DATELIB
+EXTRACT EXT1
+...
+MAP $DATA.PROD.ACCOUNT, TARGET $DATA.BACK.ACCOUNT,
+COLMAP (
+TARGCOL1 = SOURCECOL1,
+#assign_date(DATECOL1,YR1,MO1,DAY1),
+#assign_date(DATECOL2,YR1,MO1,DAY1)
+);
+...
+</pre></div>
+<!-- class="example" -->
+<p>The parameter file processes the macro as follows:</p>
+<ul>
+<li>
+<p>The <code>INCLUDE</code> statement pointing to <code>DATELIB</code> is specified at the beginning of the parameter file.</p>
+</li>
+<li>
+<p>The <code>#assign_date</code> macro is called when needed.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD361"></a>
+<div class="sect3"><a id="sthref181"></a>
+<h4 class="sect3"><span class="secnum">8.2.7.2</span> Suppressing Report File Listing</h4>
+<p>When including long, standard macro libraries, you may want to suppress listing each macro in the report file. Listing can be turned off and on by placing the <code>LIST</code> and <code>NOLIST</code> commands anywhere within the parameter file or within the included library.</p>
+<p>For example, in the following, <code>NOLIST</code> suppresses listing each macro in <code>HUGELIB</code>. Specifying <code>LIST</code> after the <code>INCLUDE</code> statement restores listing to the report file.</p>
+<pre>
+NOLIST
+INCLUDE $DATA.GGSMACR.HUGELIB
+LIST
+EXTRACT EXT1
+.
+.
+.
+</pre></div>
+<!-- class="sect3" -->
+<a id="GNSAD362"></a>
+<div class="sect3"><a id="sthref182"></a>
+<h4 class="sect3"><span class="secnum">8.2.7.3</span> Tracing Parameter Expansion</h4>
+<p>You can trace macro expansion with the <code>CMDTRACE</code> parameter. When <code>CMDTRACE</code> is enabled, the macro processor displays macro expansion steps in the process's report file.</p>
+<p>The syntax is:</p>
+<pre>
+CMDTRACE [ON | OFF | DETAIL]
+</pre>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" summary="This table lists the arguments for the CMDTRACE parameter." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t9">Argument</th>
+<th class="cellalignment33" id="r1c2-t9">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t9" headers="r1c1-t9">
+<pre>
+ON
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t9 r1c2-t9">
+<p>Enables tracing.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t9" headers="r1c1-t9">
+<pre>
+OFF
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t9 r1c2-t9">
+<p>Disables tracing. This is the default setting.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>Tracing is enabled before <code>#testmac</code> is called, then disabled after the macro runs, as shown in the following example:</p>
+<pre>
+EXTRACT EXT1
+MACRO #testmac
+BEGIN
+COL1 = COL2,
+COL3 = COL4
+END;
+. 
+. 
+.
+CMDTRACE ON
+MAP $DATA.TEST.TEST1, TARGET $DATA.TEST.TEST2,
+COLMAP
+(
+#testmac
+);
+CMDTRACE OFF
+. 
+. 
+.
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="i934720"></a><a id="GNSAD363"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">8.3</span> Using OBEY Files</h2>
+<p>With <code>OBEY</code> files, you can direct Oracle GoldenGate to parameters stored in a different file, then return processing to the current parameter file. <code>OBEY</code> files are useful for frequently used parameter statements, or parameters that are used by multiple parameter files.</p>
+<pre>
+OBEY <span class="variable">filename</span>
+</pre>
+<p class="orderedlisttitle">To use an OBEY file:&nbsp;</p>
+<ol>
+<li>
+<p>Use the NonStop editor to create a file and enter the desired parameters.</p>
+</li>
+<li>
+<p>Edit the file where you want to place an <code>OBEY</code> parameter.</p>
+</li>
+<li>
+<p>Enter the <code>OBEY</code> parameter, specifying the name of the file as <code><span class="codeinlineitalic">filename</span></code>.</p>
+<pre>
+OBEY <span class="codeinlineitalic">filename</span>
+</pre>
+<p>For example:</p>
+<pre>
+OBEY $DATA03.GGS.FINANCE
+</pre></li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="A1004530"></a><a id="GNSAD364"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">8.4</span> Creating High Pin Processes</h2>
+<p>Use the <code>PCREATE</code> library to intercept the <code>C</code> run-time creation of new processes to create high pin processes.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>The <code>PCREATE</code> intercept is only available for native mode on H06/J06.</p>
+</div>
+<a id="GNSAD365"></a>
+<div class="sect2"><a id="sthref184"></a>
+<h3 class="sect2"><span class="secnum">8.4.1</span> Replicat</h3>
+<p>For Replicat <code>PCREATE</code> must be combined with the relinkable <code>PRIVLIB</code> to build a combined library that will include intercepts to create a high pin TACL.</p>
+<p>The following example combines the <code>PCREATE</code> intercept object, <code>PCREATEO,</code> with the relinkable (<code>R</code>) native mode (<code>N</code>) <code>PRIVLIB</code> to create a new user library named <code>PRIVLIBX</code>.</p>
+<pre>
+eld -ul -o PRIVLIBX PRIVLIBR PCREATEO -set interpose_user_library on
+FUP LICENSE PRIVLIBX
+eld -change libname $DATA.GGS1000.PRIVLIBX REPLICAT
+</pre>
+<p>In the last step the new <code>PRIVLIBX</code> is assigned as Replicat's library. The library name must be fully qualified as shown in the example.</p>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD366"></a>
+<div class="sect2"><a id="sthref185"></a>
+<h3 class="sect2"><span class="secnum">8.4.2</span> Extract and GGSCI</h3>
+<p>Extract and GGSCI can use a combined library, such as created in the above example, or <code>PCREATE</code> can be linked into a user library, such as the <code>PCREATEL</code> in the example below.</p>
+<pre>
+eld -ul -o PCREATEL PCREATEO -set interpose_user_library_on
+</pre></div>
+<!-- class="sect2" -->
+<a id="GNSAD367"></a>
+<div class="sect2"><a id="sthref186"></a>
+<h3 class="sect2"><span class="secnum">8.4.3</span> TACL DEFINE</h3>
+<p>Enter the <code>DEFINE</code> for TACL, <code>=GGS_TACL_PROGRAM,</code> in <code>GLOBALS</code> if it is to be the same for all Extract, Replicat, and GGSCI programs for that Oracle GoldenGate instance. If it is more specific, include it in the Extract or Replicat parameter file. Alternatively it can also be added to <code>TACLLOC</code> or to <code>TACLCSTM</code>.</p>
+<p>The following example <code>DEFINE</code> assumes you first <code>FUP DUP $SYSTEM.SYS</code><span class="variable">nn</span><code>.TACL</code> to <code>$SYSTEM.SYS</code><span class="variable">nn</span><code>.TACLHP</code>, turn <code>HighPin ON</code>, then add the <code>DEFINE</code>.</p>
+<pre>
+ADD DEFINE =GGS_TACL_PROGRAM, CLASS MAP, FILE $SYSTEM.SYS<span class="variable">nn</span>.TACLHP
+</pre></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment25">
+<tr>
+<td class="cellalignment34">
+<table class="cellalignment30">
+<tr>
+<td class="cellalignment29"><a href="changesync.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment29"><a href="dataintegration.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment36">
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment29"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment29"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

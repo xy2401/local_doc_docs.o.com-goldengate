@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Securing the Microservices Architecture</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Use this part to secure your Microservices Architecture (MA) environment." />
+<meta name="dcterms.created" content="2018-05-10T07:33:56Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Securing the Oracle GoldenGate Environment" />
+<meta name="dcterms.identifier" content="E91326-01" />
+<meta name="dcterms.isVersionOf" content="OGGSE" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="introducing-oracle-goldengate-security.htm" title="Previous" type="text/html" />
+<link rel="Next" href="ma-security-features.htm" title="Next" type="text/html" />
+<link rel="alternate" href="OGGSE.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-4F2D2225-BF63-45C4-89B4-6ED6A6DC991E"></a> <span id="PAGE" style="display:none;">8/24</span> <!-- End Header -->
+<h1 id="OGGSE-GUID-4F2D2225-BF63-45C4-89B4-6ED6A6DC991E" class="sect1"><span class="enumeration_part">Part I</span> Securing the <span>Microservices Architecture</span></h1>
+<div>
+<p>Use this part to secure your <span>Microservices Architecture</span> (<span>MA</span>) environment.</p>
+<p>The <span>MA</span> service interfaces use the REST architectural style, within an HTTP environment. As REST is a style that uses HTTP and not a distinct transfer implementation, all the security related concerns and solutions applied to HTTP apply equally to REST interfaces. This includes ensuring general security related to HTTP-based requests, responses, sessions, cookies, headers and content as well as addressing issues such as Cross Site Request Forgery, UI Redressing and delegated authentication. TLS/SSL when enabled, ensures confidentiality and optionally integrity, although typical configurations do not ensure bi-lateral integrity. Negotiating security configurations can further specify identity validation, renegotiation, and revocation requirements as allowed by Oracle security standards.</p>
+<div class="section">
+<p class="subhead1">Communications Transport</p>
+</div>
+<!-- class="section" -->
+<div class="p">All REST Service Interfaces and Data Conveyances may be conducted over the following network transport:
+<ul style="list-style-type: disc;">
+<li>
+<p>TCP is used for network communication.</p>
+</li>
+<li>
+<p>UDT is an additional protocol used for data conveyance. It is a high-performance, UDP-based data transfer protocol, which transfers large datasets over high-speed WAN.</p>
+</li>
+<li>
+<p>WebSockets 2.0 is a not a transport protocol but a pseudo-transport that enables a server to send content to client without client solicitation, thereby enabling bi-directional messaging over a persistent connection. It operates over HTTPS ports simplifying network security management.</p>
+</li>
+</ul>
+</div>
+<div class="section">
+<p class="subhead1">Communications Security</p>
+</div>
+<!-- class="section" -->
+<p>An <span>MA</span> server is the originator of all the response messages sent to the client when a request is sent to the server. An <span>MA</span> server neither serves as a proxy nor supports tunneling of response messages generated by other applications. Secured network communications use Oracle approved TLS (Transport Layer Security) or DTLS (Datagram Transport Layer Security) libraries. <span>MA</span> Oracle platforms uses the Oracle SSL toolkit (NZ), which includes Oracle Wallet integration.</p>
+<p>For non-Oracle platforms, the Oracle SSL toolkit is used where available. Where the Oracle SSL Toolkit is not available, an alternate SSL toolkit is used.</p>
+<p>All <span>MA</span> servers implement client and server authentication. However, client and server authentication is only available when network security is configured and enabled. <span>MA</span> servers can be configured with network security enabled but without using server or client authentication.</p>
+<div class="section">
+<p class="subhead1">Inbound and Outbound Security Configuration</p>
+<p>Security configuration can be inbound or outbound. Inbound configuration implies configuring specific behavior associated with a server. A server receives requests and responds with information or messages. Outbound security configuration assumes that the specific behavior is associated with a client.</p>
+<p>A client issues requests and receives the response information from the server. Only the Distribution Server acts as a client with outbound security requirements. All other servers are server-only. For example, in <span>MA</span>, the Distribution Server accepts service requests from clients through inbound configured secured connections, while it connects and sends trail data to Receiver Server through secure connections with Outbound configuration.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="ma-security-features.htm#GUID-42421888-53EC-4F83-81B1-1210D81E18B6">MA Security Features</a><br />
+Learn about these <span>MA</span> security features:</li>
+<li class="ulchildlink"><a href="network.htm#GUID-D9B70290-F22F-4ACF-AAE1-94B8EC9D8E24">Network</a><br />
+Learn how to secure your network for <span>Oracle GoldenGate</span>.</li>
+<li class="ulchildlink"><a href="authentication-and-authorization.htm#GUID-E2CF0CEA-D970-4737-B797-69BAAFD79387">Authentication and Authorization</a><br />
+The <span>MA</span> security and authorization model declares and defines how communication security (confidentiality and Integrity) and Authorization (authentication and permissions) are configured and implemented.</li>
+<li class="ulchildlink"><a href="communications-security.htm#GUID-26B8334B-15F3-41FD-86A9-BC8222F3E984">Communication Security</a><br />
+Communication security is the confidentiality and integrity of the information sent over communications channels, such as TCP/IP-based networks.</li>
+<li class="ulchildlink"><a href="server-and-deployment-identity.htm#GUID-6135E610-B5AC-4956-A283-A1CBB20B862D">Server and Deployment Identities</a><br />
+You must uniquely identify <span>MA</span> servers and deployments using schemes.</li>
+<li class="ulchildlink"><a href="securing-deployments.htm#GUID-472E5C9C-85FC-4B87-BB90-2CE877F41DC0">Securing Deployments</a><br />
+You can choose to set up a secure or non-secure deployment. A secure deployment involves making RESTful API calls and conveying trail data between the Distribution Server and Receiver Server, over SSL/TLS. You can use your existing wallets and certificates, or you can create new ones.</li>
+</ul>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment238">
+<tr>
+<td class="cellalignment249">
+<table class="cellalignment243">
+<tr>
+<td class="cellalignment242"><a href="introducing-oracle-goldengate-security.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment242"><a href="ma-security-features.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment251">
+<table class="cellalignment241">
+<tr>
+<td class="cellalignment242"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment242"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment242"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

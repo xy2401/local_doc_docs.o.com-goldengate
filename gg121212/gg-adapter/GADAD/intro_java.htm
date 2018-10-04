@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>3 Introducing the Java Adapter</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1023">
+<meta name="description" content="This chapter describes the Oracle GoldenGate Adapter for Java. The Oracle GoldenGate Adapter for Java implements 1) the capture of Java Message Service (JMS) messages to send for processing into Oracle GoldenGate trail data, and 2) the processing of transactional data captured by Oracle GoldenGate to be delivered as JMS messages.">
+<meta name="dcterms.created" content="2015-04-08T9:18:57Z">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="robots" content="all">
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Application Adapters Administering Oracle GoldenGate Adapters">
+<meta name="dcterms.identifier" content="E61853-01">
+<meta name="partno" content="E64636-01">
+
+<meta name="dcterms.isVersionOf" content="GADAD">
+<link rel="Start" href="../../index.htm" title="Home" type="text/html">
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html">
+
+<script type="application/javascript" src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript" src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html">
+<link rel="Prev" href="intro_flatfile.htm" title="Previous" type="text/html">
+<link rel="Next" href="conf_logging.htm" title="Next" type="text/html">
+<link rel="alternate" href="../GADAD.pdf" title="PDF version" type="application/pdf">
+<link rel="alternate" href="../GADAD.epub" title="ePub version" type="application/epub+zip">
+<link rel="alternate" href="../GADAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook">
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="application/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53addf516e0e58a5"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate Adapters</a>
+</div>
+
+<span id="PAGE" style="display:none;">7/28</span>
+<!-- End Header -->
+<div id="GADAD414" class="chapter"><a id="BABJJEFH"></a>
+<h1 class="chapter"><span class="secnum">3</span> Introducing the Java Adapter</h1>
+<p><a id="GADAD415"></a>This chapter describes the Oracle GoldenGate Adapter for Java. The Oracle GoldenGate Adapter for Java implements 1) the capture of Java Message Service (JMS) messages to send for processing into Oracle GoldenGate trail data, and 2) the processing of transactional data captured by Oracle GoldenGate to be delivered as JMS messages.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#BABEFCIE">Oracle GoldenGate VAM Message Capture</a></p>
+</li>
+<li>
+<p><a href="#BABEDBBF">Oracle GoldenGate Java User Exit</a></p>
+</li>
+</ul>
+<a id="BABEFCIE"></a>
+<div id="GADAD106" class="sect1">
+<h2 class="sect1"><span class="secnum">3.1</span> Oracle GoldenGate VAM Message Capture</h2>
+<p>Oracle GoldenGate message capture connects to JMS messaging to parse messages and send them through a VAM interface to an Oracle GoldenGate Extract that builds an Oracle GoldenGate trail of message data. This allows JMS messages to be delivered to an Oracle GoldenGate system running for a target database.</p>
+<p>Using Oracle GoldenGate JMS message capture requires two components:</p>
+<ul>
+<li>
+<p>The dynamically linked shared VAM library that is attached to the Oracle GoldenGate Extract process.</p>
+</li>
+<li>
+<p>A separate utility, Gendef, that uses the message capture properties file and parser-specific data definitions to create an Oracle GoldenGate source definitions file.</p>
+</li>
+</ul>
+<div id="GADAD107" class="sect2"><a id="sthref19"></a>
+<h3 class="sect2"><span class="secnum">3.1.1</span> Message Capture Configuration Options</h3>
+<p>The options for configuring the three parts of message capture are:</p>
+<ul>
+<li>
+<p>Message connectivity: Values in the property file set connection properties such as the Java class path for the JMS client, the JMS source destination name, JNDI connection properties, and security information.</p>
+</li>
+<li>
+<p>Parsing: Values in the property file set parsing rules for fixed width, comma delimited, or XML messages. This includes settings such as the delimiter to be used, values for the beginning and end of transactions and the date format.</p>
+</li>
+<li>
+<p>VAM interface: Parameters that identify the VAM, <code>dll</code>, or <code>so</code> library and a property file are set for the Oracle GoldenGate core Extract process.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<div id="GADAD416" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref20"></a>
+<h3 class="sect2"><span class="secnum">3.1.2</span> Typical Configuration</h3>
+<p>The following diagram shows a typical configuration for capturing JMS messages.</p>
+<p>In this configuration, JMS messages are picked up by the Oracle GoldenGate Adapter JMS Handler and transferred using the adapter's message capture VAM to an Extract process. The Extract writes the data to a trail which is sent over the network by a Data Pump Extract to an Oracle GoldenGate target instance. The target Replicat then uses the trail to update the target database.</p>
+<div id="GADAD108" class="figure"><p class="titleinfigure"><a id="sthref21"></a>Figure 3-1 Configuration for JMS Message Capture</p>
+<img width="660" height="452" src="img/gjaad_capture_004.gif" alt="Description of Figure 3-1 follows"><br>
+<a id="sthref22" href="img_text/gjaad_capture_004.htm">Description of "Figure 3-1 Configuration for JMS Message Capture"</a><br>
+<br></div>
+<!-- class="figure" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABEDBBF"></a>
+<div id="GADAD109" class="sect1">
+<h2 class="sect1"><span class="secnum">3.2</span> Oracle GoldenGate Java User Exit</h2>
+<p>Through the Oracle GoldenGate Java API, transactional data captured by Oracle GoldenGate can be delivered to targets other than a relational database, such as a JMS (Java Message Service), files written to disk, or an integration with a custom application Java API.</p>
+<p>Oracle GoldenGate for Java provides the ability to execute Java code from the Oracle GoldenGate Extract process. Using Oracle GoldenGate for Java requires two components:</p>
+<ul>
+<li>
+<p>A dynamically linked or shared library, implemented in C/C++, integrating as a User Exit (UE) with the Oracle GoldenGate Extract process through a C API.</p>
+</li>
+<li>
+<p>A set of Java libraries (jars), which comprise the Oracle GoldenGate Java API. This Java framework communicates with the user exit through the Java Native Interface (JNI).</p>
+</li>
+</ul>
+<div id="GADAD110" class="figure"><p class="titleinfigure"><a id="sthref23"></a>Figure 3-2 Configuration for Delivering JMS Messages</p>
+<img width="658" height="544" src="img/gjaad_deliver_003.gif" alt="Description of Figure 3-2 follows"><br>
+<a id="sthref24" href="img_text/gjaad_deliver_003.htm">Description of "Figure 3-2 Configuration for Delivering JMS Messages"</a><br>
+<br></div>
+<!-- class="figure" -->
+<div id="GADAD111" class="sect2"><a id="sthref25"></a>
+<h3 class="sect2"><span class="secnum">3.2.1</span> Delivery Configuration Options</h3>
+<p>The dynamically linked library is configurable using a simple properties file. The Java framework is loaded by the user exit and is also initialized by a properties file. Application behavior can be customized by:</p>
+<ul>
+<li>
+<p>Editing the property files; for example to:</p>
+<ul>
+<li>
+<p>Set host names, port numbers, output file names, JMS connection settings;</p>
+</li>
+<li>
+<p>Add/remove targets (such as JMS or files) by listing any number of active handlers to which the transactions should be sent;</p>
+</li>
+<li>
+<p>Turn on/off debug-level logging, etc.</p>
+</li>
+<li>
+<p>Identify which message format should be used.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Customizing the format of messages sent to JMS or files. Message formats can be custom tailored by:</p>
+<ul>
+<li>
+<p>Setting properties for the pre-existing format process (for fixed-length or field-delimited message formats);</p>
+</li>
+<li>
+<p>Customizing message templates, using the Velocity template macro language;</p>
+</li>
+<li>
+<p>(Optional) Writing custom Java code.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>(Optional) Writing custom Java code to provide custom handling of transactions and operations, do filtering, or implementing custom message formats.</p>
+</li>
+</ul>
+<p>There are existing implementations (handlers) for sending messages via JMS and for writing out files to disk. There are several predefined message formats for sending the messages (e.g. XML or field-delimited); or custom formats can be implemented using templates. Each handler has documentation that describes its configuration properties; for example, a file name can be specified for a file writer, and a JMS queue name can be specified for the JMS handler. Some properties apply to more than one handler; for example, the same message format can be used for JMS and files.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr>
+<table class="cellalignment12">
+<tr>
+<td class="cellalignment19"><table class="cellalignment17">
+<tr>
+<td class="cellalignment16"><a href="intro_flatfile.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page"><br>
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment16"><a href="conf_logging.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page"><br>
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle"><br>
+Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br>
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment21">
+<table class="cellalignment15">
+<tr>
+<td class="cellalignment16"><a href="../../index.htm"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home"><br>
+<span class="icon">Home</span></a></td>
+<td class="cellalignment16"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents"><br>
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment16"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page"><br>
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

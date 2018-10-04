@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Running Veridata GoldenGate Parameter Processing</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1071" />
+<meta name="description" content="This chapter explains how to use the Veridata GoldenGate Parameter Processing (VGPP) command line tool to use Oracle GoldenGate parameter files." />
+<meta name="dcterms.created" content="2015-10-12T20:5:0Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Administering Oracle GoldenGate Veridata" />
+<meta name="dcterms.identifier" content="E60970-01" />
+<meta name="dcterms.isVersionOf" content="GVDAD" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="scripting.htm" title="Previous" type="text/html" />
+<link rel="Next" href="configuration_parameters.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E60970-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="E60970-01.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="E60970-01.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><span id="PAGE" style="display:none;">9/13</span> <!-- End Header -->
+<div id="GVDAD1162" class="chapter"><a id="sthref118"></a>
+<h1 class="chapter"><span class="secnum">6</span> Running Veridata GoldenGate Parameter Processing</h1>
+<p><a id="GVDAD1163"></a>This chapter explains how to use the Veridata GoldenGate Parameter Processing (VGPP) command line tool to use Oracle GoldenGate parameter files.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#A998805">Section 6.1, "Overview of the Command Line Interface"</a></p>
+</li>
+<li>
+<p><a href="#A998987">Section 6.2, "Running VGPP"</a></p>
+</li>
+<li>
+<p><a href="#A1050645">Section 6.3, "Parameter Handling"</a></p>
+</li>
+<li>
+<p><a href="#A1050653">Section 6.4, "Map and Table Statement Handling"</a></p>
+</li>
+</ul>
+<a id="A998805"></a>
+<div id="GVDAD1164" class="sect1">
+<h2 class="sect1"><span class="secnum">6.1</span> Overview of the Command Line Interface</h2>
+<p>An Oracle GoldenGate parameter file contains all of the information required to extract or apply replicated data. The data propagated through Oracle GoldenGate replication is controlled by settings in the Extract and/or Replicat parameter files. Typically, the Extract parameter file specifies the tables to be replicated and Replicat parameter file controls the mapping of columns, as well as further restricting the tables. The VGPP command line utility accepts one or two Oracle GoldenGate parameter files as input. One of these parameter files <span class="italic">must</span> be a Replicat parameter file while the other optional file must be an Extract parameter file.</p>
+<p>Oracle GoldenGate replication can capture information about the transaction responsible for changing the data as well as the actual changed data. However, Oracle GoldenGate Veridata can only detect the current state of the source and target databases so it cannot support any Oracle GoldenGate parameters relating to transactional changes. For example, the <code dir="ltr">INSERTDELETES</code> parameter. VGPP uses the <code dir="ltr">MAP</code> statements from a GoldenGate <code dir="ltr">REPLICAT</code> file to generate Veridata compare pairs. Other information in the parameter file is used to determine the relevant <code dir="ltr">MAP</code> statements. Optionally, the <code dir="ltr">TABLE</code> statements from the <code dir="ltr">EXTRACT</code> parameter can be used to restrict the compare pairs that are generated.</p>
+<p>Oracle GoldenGate Veridata only support single column mapping. Thus, the column mapping assumes a one to one mapping between source columns and target columns.</p>
+<p>You can:</p>
+<ul>
+<li>
+<p>Reuse parameter Oracle GoldenGate Replicat and Extract configurations in Oracle GoldenGate Veridata.</p>
+</li>
+<li>
+<p>Avoid creating separate Oracle GoldenGate Veridata Replicat and Extract parameter files.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="A998987"></a>
+<div id="GVDAD1165" class="sect1">
+<h2 class="sect1"><span class="secnum">6.2</span> Running VGPP</h2>
+<p>The VGPP program can be run by anyone who has the correct operating system permissions to run it.</p>
+<ol>
+<li>
+<p>Ensure that the parameter files you want to use are on the system where the Oracle GoldenGate Veridata is installed. If you need to copy the files from another system, these files should be copied as binary files so that the <code dir="ltr">CHARSET</code> parameter remains valid.</p>
+</li>
+<li>
+<p>Run the command shell of the operating system.</p>
+</li>
+<li>
+<p>Navigate to the <code dir="ltr"><span class="codeinlineitalic">VERIDATA_DOMAIN_HOME</span></code><code dir="ltr">/veridata/bin</code> directory.</p>
+</li>
+<li>
+<p>Use the following syntax to run the VGPP program.</p>
+</li>
+</ol>
+<p class="subhead2"><a id="GVDAD1166"></a>Syntax</p>
+<pre dir="ltr">
+veridata_param_process{.bat|.sh} <span class="italic">required_parameter</span> [<span class="italic">optional_parameter</span>] 
+</pre>
+<p class="subhead2"><a id="GVDAD1167"></a>Required Parameters</p>
+<p>The following are required; otherwise an error is returned.</p>
+<pre dir="ltr">
+[-noscripting |
+-create |
+-replace|
+-update ]
+[-wlport <span class="italic">port</span> ] |
+-wluser <span class="italic">user_name</span> |
+[-p &lt;propfile&gt;]
+[-o &lt;outputFile&gt;] 
+[<span class="italic">replicat_param_filename</span>]
+</pre>
+<p>The <code dir="ltr">-wluser</code> specifies the WebLogic Server user name to connect to the WebLogic Server. This WebLogic Server user should have the <code dir="ltr">veridataCommandLineUser</code> privilege to access and execute command-line operations. The user should also have the <code dir="ltr">veridataAdministrator</code> or <code dir="ltr">veridataPowerUser</code> privilege to successfully run jobs and to use the Veridata import and export utilities.</p>
+<p class="subhead2"><a id="GVDAD1168"></a>Optional Parameter</p>
+<p>This is the optional parameter:</p>
+<pre dir="ltr">
+[<span class="italic">extract_param_filename</span>]
+</pre>
+<div id="GVDAD1169" class="tblformal">
+<p class="titleintable"><a id="sthref119"></a><a id="sthref120"></a>Table 6-1 VGPP Runtime Arguments</p>
+<table class="cellalignment11" title="VGPP Runtime Arguments" summary="This two column table lists and describes the valid arguments for running VGPP.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t2">Argument</th>
+<th class="cellalignment12" id="r1c2-t2">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">{ -noscripting | -create | -replace | -update}</code></p>
+</td>
+<td class="cellalignment8" headers="r2c1-t2 r1c2-t2">
+<p>Specifies that <code dir="ltr">veridata_scripting</code> will not be run with the generated configuration file. The <code dir="ltr">-create</code>, <code dir="ltr">-replace</code>, and <code dir="ltr">-update</code> options indicate that <code dir="ltr">veridata_scripting</code> should be run with the generated configuration file. In either case, the generated scripting configuration file can be used as input to the <code dir="ltr">veridata_scripting</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+-wluser
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t2 r1c2-t2">
+<p>Specifies the WebLogic Server user name that authenticates and connects to the server.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+-wlport
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t2 r1c2-t2">
+<p>Specifies the WebLogic Server port number. The default listening port is 8830.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">-p</code></p>
+</td>
+<td class="cellalignment8" headers="r5c1-t2 r1c2-t2">
+<p>Specifies a properties file containing additional information required for the Veridata configuration.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">-o</code></p>
+</td>
+<td class="cellalignment8" headers="r6c1-t2 r1c2-t2">
+<p>Specifies the output file containing the generated Veridata scripting file. The default is <code dir="ltr"><span class="codeinlineitalic">replicat_name</span></code><code dir="ltr">_scripting.xml</code>; <code dir="ltr"><span class="codeinlineitalic">replicat_name</span></code> is the value of the <code dir="ltr">REPLCAT</code> parameter.</p>
+<p>The optional <code dir="ltr"><span class="codeinlineitalic">extract_param_filename</span></code> specifies an <code dir="ltr">EXTRACT</code> parameter file containing source information for the comparison.</p>
+<p>The <code dir="ltr"><span class="codeinlineitalic">replicat_param_filename</span></code>is the <code dir="ltr">REPLICAT</code> parameter containing the target information.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblformal" -->
+<div id="GVDAD1170" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref121"></a>
+<h3 class="sect2"><span class="secnum">6.2.1</span> Using a Property File</h3>
+<p>When the VGPP program is run, an optional property file can be specified. This file contains information that is not available in the Oracle GoldenGate parameter file and is required to generate a valid Veridata comparison configuration. The following are some of properties (information) that you can specify.</p>
+<div class="tblhruleformal">
+<p class="titleintable"><a id="sthref122"></a><a id="sthref123"></a>Table 6-2 Optional Parameters</p>
+<table class="cellalignment13" title="Optional Parameters" summary="Two column table describing optional properties.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t3">Property Name</th>
+<th class="cellalignment12" id="r1c2-t3">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">source.connection.name</code></p>
+</td>
+<td class="cellalignment8" headers="r2c1-t3 r1c2-t3">
+<p>The name of the Veridata agent/manager connection. This may be the name of an existing Veridata connection.</p>
+<p>The default is the Extract name. This is the only source connection property needed to reference an existing connection.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">source.connection.port</code></p>
+</td>
+<td class="cellalignment8" headers="r3c1-t3 r1c2-t3">
+<p>The port for the source agent. This is required when the connection does not already exist.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">source.connection.host</code></p>
+</td>
+<td class="cellalignment8" headers="r4c1-t3 r1c2-t3">
+<p>The host name where the source agent is running. This is required when the connection does not exist.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">source.connection.user</code></p>
+</td>
+<td class="cellalignment8" headers="r5c1-t3 r1c2-t3">
+<p>This defaults to the user information in the extract parameter file. This is required when the connection does not exist.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">source.connection.password</code></p>
+</td>
+<td class="cellalignment8" headers="r6c1-t3 r1c2-t3">
+<p>This defaults to the user information in the extract parameter file. This is required when the connection does not already exist. If property name is specified without a value, the scripting utility will prompt for the value when the scripting configuration is loaded into Veridata.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">source.catalog</code></p>
+</td>
+<td class="cellalignment8" headers="r7c1-t3 r1c2-t3">
+<p>This is valid for Sybase, SQL Server, and Oracle consolidated databases.</p>
+<p>For Sybase and SQL Server, it is the database containing the source tables.</p>
+<p>For Oracle, it specifies the Oracle PDB to use when processing an Extract parameter. Statements not associated with this PDB are ignored. The default value is the first PDB reference in the file. The reference can be a <code dir="ltr">SOURCECATALOG</code> parameter or the first part of a three-part name in a <code dir="ltr">TABLE</code> statement.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r8c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">extract.useansiquotes</code></p>
+</td>
+<td class="cellalignment8" headers="r8c1-t3 r1c2-t3">
+<p>Indicates whether or not the Extract parameter file follows the ANSI quotation specification. This is a Boolean value. The default value is true. This is the same as the GoldenGate core <code dir="ltr">GLOBALS</code> parameters <code dir="ltr">USEANSISQLQUOTES | NOUSEANSISQLQUOTES</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r9c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">extract.charset</code></p>
+</td>
+<td class="cellalignment8" headers="r9c1-t3 r1c2-t3">
+<p>The character set for the extract parameter file. This overrides any charset specified in the extract parameter file.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r10c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">Extract.trail</code></p>
+</td>
+<td class="cellalignment8" headers="r10c1-t3 r1c2-t3">
+<p>The trail file name to use when more than one trail file is specified in an extract parameter file. The default is the first trail file specified in the extract parameter file. When an extract parameter file contains multiple <code dir="ltr">rmttail</code> entries with the same name, Veridata will use the first occurrence.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r11c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">target.connection.name</code></p>
+</td>
+<td class="cellalignment8" headers="r11c1-t3 r1c2-t3">
+<p>The name of the Veridata agent/manager connection. This may be the name of an existing Veridata connection.</p>
+<p>The default is the Replicat name. This is the only target connection property required to reference an existing connection.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r12c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">target.connection.port</code></p>
+</td>
+<td class="cellalignment8" headers="r12c1-t3 r1c2-t3">
+<p>The port for the target agent. This is required when the connection does not already exist.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r13c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">target.connection.host</code></p>
+</td>
+<td class="cellalignment8" headers="r13c1-t3 r1c2-t3">
+<p>The host name where the target agent is running. This is required when the connection does not exist.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r14c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">target.connection.user</code></p>
+</td>
+<td class="cellalignment8" headers="r14c1-t3 r1c2-t3">
+<p>This defaults to the user information in the parameter file</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r15c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">target.connection.password</code></p>
+</td>
+<td class="cellalignment8" headers="r15c1-t3 r1c2-t3">
+<p>This defaults to the user information in the extract parameter file. If property name is specified without a value, the scripting utility prompts for the value when the scripting configuration is loaded into Veridata.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r16c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">Target.catalog</code></p>
+</td>
+<td class="cellalignment8" headers="r16c1-t3 r1c2-t3">
+<p>This is valid for Sybase and SQL Server. It is the database containing the target tables.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r17c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">replicat.useansiquotes</code></p>
+</td>
+<td class="cellalignment8" headers="r17c1-t3 r1c2-t3">
+<p>Indicates whether or not the replicat parameter file follows the ANSI quotation specification. This is Boolean value. The default value is true. This is the same as the GoldenGate core <code dir="ltr">GLOBALS</code> parameters <a href="https://docs.oracle.com/goldengate/1212/gg-winux/GWURF/gg_parameters183.htm#i2772705"><code dir="ltr">USEANSISQLQUOTES | NOUSEANSISQLQUOTES</code>.</a></p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r18c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">replicat.charset</code></p>
+</td>
+<td class="cellalignment8" headers="r18c1-t3 r1c2-t3">
+<p>The character set for the replicat parameter file. This overrides any <code dir="ltr">CHARSET</code> specification in the replicat parameter file.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1050645"></a>
+<div id="GVDAD1172" class="sect1">
+<h2 class="sect1"><span class="secnum">6.3</span> Parameter Handling</h2>
+<p>This section describes the handling of all of the parameters allowed in an Oracle GoldenGate Extract or Replicat parameter file. Each keyword is either supported, unsupported, or ignored. A supported parameter is used to generate the Veridata configuration. An unsupported parameter is something that interferes with the Veridata configuration generation. When an unsupported parameter (<code dir="ltr">INSERTDELETES</code>) is specified, subsequent <code dir="ltr">MAP</code> parameters are ignored. An ignored parameter specifies a feature that is not applicable to Veridata configuration generation.</p>
+<p>The following table contains the known parameters and the expected handling: if a parameter is not listed, it is ignored.</p>
+<div class="tblruleformal">
+<p class="titleintable"><a id="sthref124"></a><a id="sthref125"></a>Table 6-3 Parameter Handling</p>
+<table class="cellalignment13" title="Parameter Handling" summary="Two colunm table describing paramter handling.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t4">GoldenGate Parameters</th>
+<th class="cellalignment12" id="r1c2-t4">Veridata Support</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">CATALOGEXCLUDE</code></p>
+</td>
+<td class="cellalignment8" headers="r2c1-t4 r1c2-t4">
+<p>This parameter is ignored. Veridata only processes items from a single catalog.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">CHARMAP</code></p>
+</td>
+<td class="cellalignment8" headers="r3c1-t4 r1c2-t4">
+<p>Unsupported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">CHARSET</code></p>
+</td>
+<td class="cellalignment8" headers="r4c1-t4 r1c2-t4">
+<p>Supported. This parameter is supported in parameter files and include/obey files. Veridata does not process <code dir="ltr">GLOBALS</code> files.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">COLMATCH</code></p>
+</td>
+<td class="cellalignment8" headers="r5c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">COMMENT | --</code></p>
+</td>
+<td class="cellalignment8" headers="r6c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t4" headers="r1c1-t4">
+<p><a href="https://docs.oracle.com/goldengate/ns1212/gg-nsk/GNSRF/gg_parameters.htm#i940457"><code dir="ltr">DICTIONARY</code></a></p>
+</td>
+<td class="cellalignment8" headers="r7c1-t4 r1c2-t4">
+<p>Supported for NSK extract and replicat.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r8c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">EXPANDDDL</code></p>
+</td>
+<td class="cellalignment8" headers="r8c1-t4 r1c2-t4">
+<p>Supported for NSK extract and replicat.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r9c1-t4" headers="r1c1-t4">
+<p><a href="http://docs.oracle.com/goldengate/1212/gg-winux/GWURF/gg_parameters058.htm"><code dir="ltr">EXCLUDEWILDCARDOBJECTSONLY</code></a></p>
+</td>
+<td class="cellalignment8" headers="r9c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r10c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">EXTRACT</code></p>
+</td>
+<td class="cellalignment8" headers="r10c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r11c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">EXTTRAIL</code></p>
+</td>
+<td class="cellalignment8" headers="r11c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r12c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">FILE | TABLE</code></p>
+</td>
+<td class="cellalignment8" headers="r12c1-t4 r1c2-t4">
+<p>Supported for NSK extract.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r13c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">INCLUDE</code></p>
+</td>
+<td class="cellalignment8" headers="r13c1-t4 r1c2-t4">
+<p>Supported. When the file is not found by the specified path, VGPP will look for the file name in the same directory as the parameter file.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r14c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">INSERTALLRECORDS</code></p>
+</td>
+<td class="cellalignment8" headers="r14c1-t4 r1c2-t4">
+<p>Unsupported. Ignore all subsequent <code dir="ltr">MAP</code> statements.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r15c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">INSERTDELETES | NOINSERTDELETES</code></p>
+</td>
+<td class="cellalignment8" headers="r15c1-t4 r1c2-t4">
+<p>Unsupported | Supported. Ignore all <code dir="ltr">MAP</code> statements following an <code dir="ltr">INSERTDELETES</code> command until a <code dir="ltr">NOINSERTDELETES</code> command is found.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r16c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">INSERTUPDATES | NOINSERTUPDATES</code></p>
+</td>
+<td class="cellalignment8" headers="r16c1-t4 r1c2-t4">
+<p>Unsupported| Supported: Ignore all <code dir="ltr">MAP</code> statements between the <code dir="ltr">INSERTUPDATES</code> and the <code dir="ltr">NOINSERTUPDATES</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r17c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">MACRO</code></p>
+</td>
+<td class="cellalignment8" headers="r17c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r18c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">MACROCHAR</code></p>
+</td>
+<td class="cellalignment8" headers="r18c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r19c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">MAP</code></p>
+</td>
+<td class="cellalignment8" headers="r19c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r20c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">MAPEXCLUDE</code></p>
+</td>
+<td class="cellalignment8" headers="r20c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r21c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">OBEY</code></p>
+</td>
+<td class="cellalignment8" headers="r21c1-t4 r1c2-t4">
+<p>Supported. The same as <code dir="ltr">INCLUDE</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r22c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">REPLICAT</code></p>
+</td>
+<td class="cellalignment8" headers="r22c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r23c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">RMTTRAIL</code></p>
+</td>
+<td class="cellalignment8" headers="r23c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r24c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">SCHEMAEXCLUDE</code></p>
+</td>
+<td class="cellalignment8" headers="r24c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r25c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">SOURCECATALOG</code></p>
+</td>
+<td class="cellalignment8" headers="r25c1-t4 r1c2-t4">
+<p>Supported for Oracle consolidated databases.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r26c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">TABLE | MAP</code></p>
+</td>
+<td class="cellalignment8" headers="r26c1-t4 r1c2-t4">
+<p>Supported. The details are explained in section 3.4.4</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r27c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">TABLEEXCLUDE</code></p>
+</td>
+<td class="cellalignment8" headers="r27c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r28c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">UPDATEDELETES | NOUPDATEDELETES</code></p>
+</td>
+<td class="cellalignment8" headers="r28c1-t4 r1c2-t4">
+<p>Unsupported | Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r29c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">UPDATEINSERTS | NOUPDATEINSERTS</code></p>
+</td>
+<td class="cellalignment8" headers="r29c1-t4 r1c2-t4">
+<p>Unsupported | Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r30c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">USEANSISQLQUOTES | NOUSEANSISQLQUOTES</code></p>
+</td>
+<td class="cellalignment8" headers="r30c1-t4 r1c2-t4">
+<p>Supported.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblruleformal" --></div>
+<!-- class="sect1" -->
+<a id="A1050653"></a>
+<div id="GVDAD1173" class="sect1">
+<h2 class="sect1"><span class="secnum">6.4</span> Map and Table Statement Handling</h2>
+<p>Veridata will generate a compare pair element in the scripting configuration file for each Map statement in the Replicat parameter file. The generated scripting file will list the specific table mappings first, followed by the wildcard mappings, and finally the excluded mappings. This matches the behavior of the Oracle GoldenGate Replicat where specific mappings take precedence over wildcard mappings.</p>
+<p>When the same source and target table specification appears in multiple <code dir="ltr">MAP</code> statements, the first occurrence will be used for the compare pair specification. The multiple occurrences can occur when the <code dir="ltr">MAP</code> statements use thread specifications and range filters.</p>
+<p>The following table lists all of the keywords for the <code dir="ltr">MAP</code> and <code dir="ltr">TABLE</code> statements and support level in VGPP. <code dir="ltr">MAP</code> statements containing unsupported keywords will not generate a Veridata comparison configuration. Items marked with maybe indicate that more information is needed in order to determine the value for Veridata.</p>
+<div id="GVDAD1174" class="tblruleformal">
+<p class="titleintable"><a id="sthref126"></a><a id="sthref127"></a>Table 6-4 Map and Table Statement Handling</p>
+<table class="cellalignment13" title="Map and Table Statement Handling" summary="Two column table describing the handling of map and table statements by VGPP.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t5">Keyword</th>
+<th class="cellalignment12" id="r1c2-t5">Veridata Support</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">TARGET</code></p>
+</td>
+<td class="cellalignment8" headers="r2c1-t5 r1c2-t5">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">COLMAP</code></p>
+</td>
+<td class="cellalignment8" headers="r3c1-t5 r1c2-t5">
+<p>Supported. Only simple source column to target column mapping is supported. Target columns mapped to functions or literals is excluded from the comparison configuration.</p>
+<p>The <code dir="ltr">USEDEFAULTS</code> keyword is supported.</p>
+<p>The <code dir="ltr">BINARYINPUT</code> keyword is ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">COLS</code></p>
+</td>
+<td class="cellalignment8" headers="r4c1-t5 r1c2-t5">
+<p>Supported.Results in an explicit column list in the generated compare pair configuration.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">COLSEXCEPT</code></p>
+</td>
+<td class="cellalignment8" headers="r5c1-t5 r1c2-t5">
+<p>Supported. If an explicit column mapping does not exist, this results in system mapped columns with a list of omitted columns.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">COMPARECOLS</code></p>
+</td>
+<td class="cellalignment8" headers="r6c1-t5 r1c2-t5">&nbsp;</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">COORDINATED</code></p>
+</td>
+<td class="cellalignment8" headers="r7c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r8c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">DICTIONARY</code></p>
+</td>
+<td class="cellalignment8" headers="r8c1-t5 r1c2-t5">
+<p>Supported for NSK.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r9c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">TARGETDICT</code></p>
+</td>
+<td class="cellalignment8" headers="r9c1-t5 r1c2-t5">
+<p>Supported for NSK.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r10c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">DEF</code></p>
+</td>
+<td class="cellalignment8" headers="r10c1-t5 r1c2-t5">
+<p>Supported for NSK.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r11c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">TARGETDEF</code></p>
+</td>
+<td class="cellalignment8" headers="r11c1-t5 r1c2-t5">
+<p>Supported for NSK.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r12c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">EVENTACTIONS</code></p>
+</td>
+<td class="cellalignment8" headers="r12c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r13c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">EXCEPTIONSONLY</code></p>
+</td>
+<td class="cellalignment8" headers="r13c1-t5 r1c2-t5">
+<p>Unsupported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r14c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">EXITPARAM</code></p>
+</td>
+<td class="cellalignment8" headers="r14c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r15c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">FETCHBEFOREFILTER</code></p>
+</td>
+<td class="cellalignment8" headers="r15c1-t5 r1c2-t5">&nbsp;</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r16c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">FETCHCOLS|FETCHCOLSEXCEPT</code></p>
+</td>
+<td class="cellalignment8" headers="r16c1-t5 r1c2-t5">&nbsp;</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r17c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">FETCHMODCOLS|FETCHMODCOLSEXCEPT</code></p>
+</td>
+<td class="cellalignment8" headers="r17c1-t5 r1c2-t5">&nbsp;</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r18c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">FILTER</code></p>
+</td>
+<td class="cellalignment8" headers="r18c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r19c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">GETBEFORECOLS</code></p>
+</td>
+<td class="cellalignment8" headers="r19c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r20c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">HANDLECOLLISIONS | NOHANDLECOLLISIONS</code></p>
+</td>
+<td class="cellalignment8" headers="r20c1-t5 r1c2-t5">&nbsp;</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r21c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">INSERTALLRECORDS</code></p>
+</td>
+<td class="cellalignment8" headers="r21c1-t5 r1c2-t5">
+<p>Unsupported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r22c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">INSERTAPPEND | NOINSERTAPPEND</code></p>
+</td>
+<td class="cellalignment8" headers="r22c1-t5 r1c2-t5">&nbsp;</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r23c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">KEYCOLS</code></p>
+</td>
+<td class="cellalignment8" headers="r23c1-t5 r1c2-t5">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r24c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">MAPEXCEPTION</code></p>
+</td>
+<td class="cellalignment8" headers="r24c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r25c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">REPERROR</code></p>
+</td>
+<td class="cellalignment8" headers="r25c1-t5 r1c2-t5">&nbsp;</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r26c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">RESOLVECONFLICT</code></p>
+</td>
+<td class="cellalignment8" headers="r26c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r27c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">SQLEXEC</code></p>
+</td>
+<td class="cellalignment8" headers="r27c1-t5 r1c2-t5">&nbsp;</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r28c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">SQLPREDICATE</code></p>
+</td>
+<td class="cellalignment8" headers="r28c1-t5 r1c2-t5">&nbsp;</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r29c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">THREAD</code></p>
+</td>
+<td class="cellalignment8" headers="r29c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r30c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">THREADRANGE</code></p>
+</td>
+<td class="cellalignment8" headers="r30c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r31c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">TOKENS</code></p>
+</td>
+<td class="cellalignment8" headers="r31c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r32c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">TRIMSPACES | NOTRIMSPACES</code></p>
+</td>
+<td class="cellalignment8" headers="r32c1-t5 r1c2-t5">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r33c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">TRIMVARSPACES | NOTRIMVARSPACES</code></p>
+</td>
+<td class="cellalignment8" headers="r33c1-t5 r1c2-t5">
+<p>Supported.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r34c1-t5" headers="r1c1-t5">
+<p><code dir="ltr">WHERE</code></p>
+</td>
+<td class="cellalignment8" headers="r34c1-t5 r1c2-t5">
+<p>Ignored.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblruleformal" --></div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8">
+<table class="cellalignment6">
+<tr>
+<td class="cellalignment5"><a href="scripting.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment5"><a href="configuration_parameters.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2005, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="../../index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

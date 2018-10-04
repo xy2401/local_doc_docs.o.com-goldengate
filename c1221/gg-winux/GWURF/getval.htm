@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>GETVAL</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="getenv-01.htm" title="Previous" type="text/html" />
+<link rel="Next" href="hextobin.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-CDBFA2F1-1B66-43CA-A59F-03AC8997D2F9"></a> <span id="PAGE" style="display:none;">383/459</span> <!-- End Header -->
+<a id="GWURF796"></a><a id="GWURF797"></a><a id="GWURF798"></a><a id="GWURF799"></a><a id="GWURF800"></a><a id="GWURF795"></a>
+<h1 id="GWURF-GUID-CDBFA2F1-1B66-43CA-A59F-03AC8997D2F9" class="sect1"><span class="enumeration_section">5.17</span> GETVAL</h1>
+<div>
+<div class="section">
+<p>Use the <code class="codeph">@GETVAL</code> function to extract values from a stored procedure or query so that they can be used as input to a <code class="codeph">FILTER</code> or <code class="codeph">COLMAP</code> clause of a <code class="codeph">MAP</code> or <code class="codeph">TABLE</code> statement.</p>
+<p>Whether or not a parameter value can be extracted with <code class="codeph">@GETVAL</code> depends upon the following:</p>
+<ol>
+<li>
+<p>Whether or not the stored procedure or query executed successfully.</p>
+</li>
+<li>
+<p>Whether or not the stored procedure or query results have expired.</p>
+</li>
+</ol>
+<p>When a value cannot be extracted, the <code class="codeph">@GETVAL</code> function results in a "column missing" condition. Typically, this occurs for update operations if the database only logs values for columns that were changed.</p>
+<p>Usually this means that the column cannot be mapped. To test for missing column values, use the <code class="codeph">@COLTEST</code> function to test the result of <code class="codeph">@GETVAL</code>, and then map an alternative value for the column to compensate for missing values, if desired. Or, to ensure that column values are available, you can use the <code class="codeph">FETCHCOLS</code> or <code class="codeph">FETCHCOLSEXCEPT</code> option of the <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> parameter to fetch the values from the database if they are not present in the log. Enabling supplemental logging for the necessary columns also would work.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@GETVAL (<span class="italic">name</span>.<span class="italic">parameter</span>)
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-CDBFA2F1-1B66-43CA-A59F-03AC8997D2F9__GUID-39928AE0-BC9C-4E88-A18A-68DCCAAD8C51"><!-- --></a><span class="italic"><code class="codeph">name</code></span></dt>
+<dd>
+<p>The name of the stored procedure or query. When using <code class="codeph">SQLEXEC</code> to execute the procedure or query, valid values are as follows:</p>
+<p>For queries, use the logical name specified with the <code class="codeph">ID</code> option of the <code class="codeph">SQLEXEC</code> clause. <code class="codeph">ID</code> is a required <code class="codeph">SQLEXEC</code> argument for queries.</p>
+<p>For stored procedures, use one of the following, depending on how many times the procedure is to be executed within a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For multiple executions, use the logical name defined by the <code class="codeph">ID</code> clause of the <code class="codeph">SQLEXEC</code> statement. <code class="codeph">ID</code> is required for multiple executions of a procedure.</p>
+</li>
+<li>
+<p>For a single execution, use the actual stored procedure name.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-CDBFA2F1-1B66-43CA-A59F-03AC8997D2F9__GUID-36F6EF00-55F4-45AF-BD22-BA1EF8703C46"><!-- --></a><span class="italic"><code class="codeph">parameter</code></span></dt>
+<dd>
+<p>Valid values are one of the following.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The name of the parameter in the stored procedure or query from which the data will be extracted and passed to the column map.</p>
+</li>
+<li>
+<p><code class="codeph">RETURN_VALUE</code>, if extracting values returned by a stored procedure or query.</p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Alternate Syntax</p>
+<p>With <code class="codeph">SQLEXEC</code>, you can capture parameter results without explicitly using the <code class="codeph">@GETVAL</code> keyword. Simply refer to the procedure name (or logical name if using a query or multiple instances of a procedure) and parameter in the following format:</p>
+<pre dir="ltr">
+{<span class="italic">procedure_name</span> | <span class="italic">logical_name</span>}.<span class="italic">parameter</span>
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples, Standard Syntax</p>
+<dl>
+<dt class="dlterm"><a id="GUID-CDBFA2F1-1B66-43CA-A59F-03AC8997D2F9__GUID-5EACBF7C-64B8-4CA2-9812-AC93D2E31162"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following enables each map statement to call the stored procedure <code class="codeph">lookup</code> by referencing the logical names <code class="codeph">lookup1</code> and <code class="codeph">lookup2</code> within the <code class="codeph">@GETVAL</code> function and refer appropriately to each set of results.</p>
+<pre dir="ltr">
+MAP schema.srctab, TARGET schema.targtab,
+SQLEXEC (SPNAME lookup, ID lookup1, PARAMS (param1 = srccol)),
+COLMAP (targcol1 = @GETVAL (lookup1.param2));
+MAP schema.srctab, TARGET schema.targtab2,
+SQLEXEC (SPNAME lookup, ID lookup2, PARAMS (param1 = srccol)),
+COLMAP (targcol2= @GETVAL (lookup2.param2));
+</pre></dd>
+<dt class="dlterm"><a id="GUID-CDBFA2F1-1B66-43CA-A59F-03AC8997D2F9__GUID-24AE1B46-5C2A-4109-AC66-8E4EB0A36A5A"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following shows a single execution of the stored procedure <code class="codeph">lookup</code>. In this case, the actual name of the procedure is used. A logical name is not needed.</p>
+<pre dir="ltr">
+MAP schema.tab1, TARGET schema.tab2,
+SQLEXEC (SPNAME lookup, PARAMS (param1 = srccol)),
+COLMAP (targcol = @GETVAL (lookup.param1));
+</pre></dd>
+<dt class="dlterm"><a id="GUID-CDBFA2F1-1B66-43CA-A59F-03AC8997D2F9__GUID-FD8EE10C-5605-4060-9434-33DC3709E24F"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following shows the execution of a query from which values are mapped with <code class="codeph">@GETVAL</code>.</p>
+<pre dir="ltr">
+MAP sales.account, TARGET sales.newacct,
+SQLEXEC (ID lookup,
+QUERY ' select desc_col into desc_param from lookup_table '
+' where code_col = :code_param ',
+PARAMS (code_param = account_code)),
+COLMAP (newacct_id = account_id, newacct_val = @GETVAL (lookup.desc_param));
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples, Alternate Syntax</p>
+<dl>
+<dt class="dlterm"><a id="GUID-CDBFA2F1-1B66-43CA-A59F-03AC8997D2F9__GUID-EE87A373-205A-4A68-A6E2-011B14D619C9"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>In the following example, <code class="codeph">@GETVAL</code> is called implicitly for the phrase <code class="codeph">proc1.p2</code> without the <code class="codeph">@GETVAL</code> keyword.</p>
+<pre dir="ltr">
+MAP test.tab1, TARGET test.tab2,
+SQLEXEC (SPNAME proc1, ID myproc, PARAMS (p1 = sourcecol1)),
+COLMAP (targcol1 = proc1.p2);
+</pre></dd>
+<dt class="dlterm"><a id="GUID-CDBFA2F1-1B66-43CA-A59F-03AC8997D2F9__GUID-118BC7DE-8D06-4EF7-897F-2BFC1F1C9149"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>In the following example, the <code class="codeph">@GETVAL</code> function is called implicitly for the phrase <code class="codeph">lookup.desc_param</code> without the <code class="codeph">@GETVAL</code> keyword.</p>
+<pre dir="ltr">
+MAP sales.account, TARGET sales.newacct,
+SQLEXEC (ID lookup,
+QUERY ' select desc_col into desc_param from lookup_table '
+' where code_col = :code_param ',
+PARAMS (code_param = account_code)),
+COLMAP (newacct_id = account_id, newacct_val = lookup.desc_param);
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="getenv-01.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="hextobin.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

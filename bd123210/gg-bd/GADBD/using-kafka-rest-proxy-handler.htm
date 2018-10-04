@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the Kafka REST Proxy Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Learn how to use the Kafka REST Proxy Handler to stream messages to the Kafka REST Proxy distributed by Confluent." />
+<meta name="dcterms.created" content="2018-09-04T10:47:42Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E89845-03" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-kafka-connect-handler.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-kinesis-handler.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-E6E51A37-F5D5-4626-9170-E858CFC32E69"></a> <span id="PAGE" style="display:none;">15/33</span> <!-- End Header -->
+<h1 id="GADBD-GUID-E6E51A37-F5D5-4626-9170-E858CFC32E69" class="sect1"><span class="enumeration_chapter">12</span> Using the Kafka REST Proxy Handler</h1>
+<div>
+<p>Learn how to use the Kafka REST Proxy Handler to stream messages to the Kafka REST Proxy distributed by Confluent.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-BBA4BAAC-DE8E-46DC-A521-9BD94C1E494A">Overview</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-AEE3C8BA-13B6-4909-9488-C3CACE397A9F">Setting Up and Starting the Kafka REST Proxy Handler Services</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-17FC5373-17AD-41FD-9E40-A85D3A756216">Consuming the Records</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-31E9DDBB-284E-4AE8-9F7A-10B1F63E5199">Performance Considerations</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-632740A4-3AE2-45C5-A967-02DF32F786FC">Kafka REST Proxy Handler Metacolumns Template Property</a><br /></li>
+</ul>
+</div>
+<div class="sect2"><a id="GUID-BBA4BAAC-DE8E-46DC-A521-9BD94C1E494A"></a>
+<h2 id="GADBD-GUID-BBA4BAAC-DE8E-46DC-A521-9BD94C1E494A" class="sect2"><span class="enumeration_section">12.1</span> Overview</h2>
+<div>
+<p>The Kafka REST Proxy Handler allows Kafka messages to be streamed using an HTTPS protocol. The use case for this functionality is to stream Kafka messages from an <span>Oracle GoldenGate On Premises</span> installation to cloud or alternately from cloud to cloud.</p>
+<p>The Kafka REST proxy provides a RESTful interface to a Kafka cluster. It makes it easy for you to:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>produce and consume messages,</p>
+</li>
+<li>
+<p>view the state of the cluster,</p>
+</li>
+<li>
+<p>and perform administrative actions without using the native Kafka protocol or clients.</p>
+</li>
+</ul>
+<p>Kafka REST Proxy is part of the Confluent Open Source and Confluent Enterprise distributions. It is not available in the Apache Kafka distribution. To access Kafka through the REST proxy, you have to install the Confluent Kafka version see <a href="https://docs.confluent.io/current/kafka-rest/docs/index.html" target="_blank">https://docs.confluent.io/current/kafka-rest/docs/index.html</a>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-E6E51A37-F5D5-4626-9170-E858CFC32E69" title="Learn how to use the Kafka REST Proxy Handler to stream messages to the Kafka REST Proxy distributed by Confluent.">Using the Kafka REST Proxy Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-AEE3C8BA-13B6-4909-9488-C3CACE397A9F"></a>
+<h2 id="GADBD-GUID-AEE3C8BA-13B6-4909-9488-C3CACE397A9F" class="sect2"><span class="enumeration_section">12.2</span> Setting Up and Starting the Kafka REST Proxy Handler Services</h2>
+<div>
+<p>You must download and install the Confluent Open Source or Confluent Enterprise Distribution. You have several installation formats to choose from including ZIP or tar archives, Docker, and Packages.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-6D0BBFAC-9F4B-4C0D-8AB8-9AFC44EA7644">Using the Kafka REST Proxy Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-B8FAE1E2-5329-4C1C-BA0E-B33CF6DE24CA">Kafka REST Proxy Handler Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-5B90F183-B31B-4887-A117-5DAEF320756B">Security</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-8D17E223-D143-4EA1-B050-4F4B30C72084">Generating a Keystore</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-D7CF2B9C-2FE7-429F-B8E2-F1359CE498A8">Using Templates to Resolve the Topic Name and Message Key</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-C938C237-A4B1-40D8-80F3-C624C0E4D332">Kafka REST Proxy Handler Formatter Properties</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-rest-proxy-handler.htm#GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6">Setting Metacolumn Output</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-E6E51A37-F5D5-4626-9170-E858CFC32E69" title="Learn how to use the Kafka REST Proxy Handler to stream messages to the Kafka REST Proxy distributed by Confluent.">Using the Kafka REST Proxy Handler</a></p>
+</div>
+</div>
+</div>
+<div class="sect3"><a id="GUID-6D0BBFAC-9F4B-4C0D-8AB8-9AFC44EA7644"></a>
+<h3 id="GADBD-GUID-6D0BBFAC-9F4B-4C0D-8AB8-9AFC44EA7644" class="sect3"><span class="enumeration_section">12.2.1</span> Using the Kafka REST Proxy Handler</h3>
+<div>
+<p>You must download and install the Confluent Open Source or Confluent Enterprise Distribution because the Kafka REST Proxy is not included in Apache, Cloudera, or Hortonworks. You have several installation formats to choose from including ZIP or TAR archives, Docker, and Packages.</p>
+<p>The Kafka REST Proxy has dependency on ZooKeeper, Kafka, and the Schema Registry</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-AEE3C8BA-13B6-4909-9488-C3CACE397A9F">Setting Up and Starting the Kafka REST Proxy Handler Services</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-B8FAE1E2-5329-4C1C-BA0E-B33CF6DE24CA"></a>
+<h3 id="GADBD-GUID-B8FAE1E2-5329-4C1C-BA0E-B33CF6DE24CA" class="sect3"><span class="enumeration_section">12.2.2</span> Kafka REST Proxy Handler Configuration</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the Kafka REST Proxy Handler. Oracle recommend that you store the Kafka REST Proxy properties file in the Oracle GoldenGate <code class="codeph">dirprm</code> directory.</p>
+<p>To enable the selection of the Kafka REST Proxy Handler, you must first configure the handler type by specifying <code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.type=kafkarestproxy</code> and the other Kafka REST Proxy Handler properties as follows:</p>
+<div class="tblformal" id="GUID-B8FAE1E2-5329-4C1C-BA0E-B33CF6DE24CA__GUID-D9A8DB8F-BB51-4D27-9343-035157B21077">
+<p class="titleintable">Table 12-1 Kafka REST Proxy Handler Configuration Properties</p>
+<table class="cellalignment78" title="Kafka REST Proxy Handler Configuration Properties" summary="Five column table describing the Kafka REST Proxy Handler Configuration Properties">
+<thead>
+<tr class="cellalignment65">
+<th class="cellalignment77" id="d57834e244">Properties</th>
+<th class="cellalignment77" id="d57834e247">Required/ Optional</th>
+<th class="cellalignment77" id="d57834e250">Legal Values</th>
+<th class="cellalignment77" id="d57834e253">Default</th>
+<th class="cellalignment77" id="d57834e256">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e261" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.type</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e261 d57834e247">
+<p>Required</p>
+</td>
+<td class="cellalignment65" headers="d57834e261 d57834e250">
+<p><code class="codeph">kafkarestproxy</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e261 d57834e253">
+<p>None</p>
+</td>
+<td class="cellalignment65" headers="d57834e261 d57834e256">
+<p>The configuration to select the Kafka REST Proxy Handler.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e282" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.topicMappingTemplate</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e282 d57834e247">
+<p>Required</p>
+</td>
+<td class="cellalignment65" headers="d57834e282 d57834e250">
+<p>A template string value to resolve the Kafka topic name at runtime.</p>
+</td>
+<td class="cellalignment65" headers="d57834e282 d57834e253">
+<p>None</p>
+</td>
+<td class="cellalignment65" headers="d57834e282 d57834e256">
+<p>See <a href="using-kafka-connect-handler.htm#GUID-A87CAFFA-DACF-43A0-8C6C-5C64B578D606">Using Templates to Resolve the Topic Name and Message Key</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e305" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.keyMappingTemplate</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e305 d57834e247">
+<p>Required</p>
+</td>
+<td class="cellalignment65" headers="d57834e305 d57834e250">
+<p>A template string value to resolve the Kafka message key at runtime.</p>
+</td>
+<td class="cellalignment65" headers="d57834e305 d57834e253">
+<p>None</p>
+</td>
+<td class="cellalignment65" headers="d57834e305 d57834e256">
+<p>See <a href="using-kafka-connect-handler.htm#GUID-A87CAFFA-DACF-43A0-8C6C-5C64B578D606">Using Templates to Resolve the Topic Name and Message Key</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e328" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.postDataUrl</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e328 d57834e247">
+<p>Required</p>
+</td>
+<td class="cellalignment65" headers="d57834e328 d57834e250">
+<p>The Listener address of the Rest Proxy.</p>
+</td>
+<td class="cellalignment65" headers="d57834e328 d57834e253">
+<p>None</p>
+</td>
+<td class="cellalignment65" headers="d57834e328 d57834e256">
+<p>Set to the URL of the Kafka REST proxy.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e348" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e348 d57834e247">
+<p>Required</p>
+</td>
+<td class="cellalignment65" headers="d57834e348 d57834e250">
+<p><code class="codeph">avro</code> | <code class="codeph">json</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e348 d57834e253">
+<p>None</p>
+</td>
+<td class="cellalignment65" headers="d57834e348 d57834e256">
+<p>Set to the REST proxy payload data format</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e372" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.payloadsize</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e372 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e372 d57834e250">
+<p>A value representing the payload size in mega bytes.</p>
+</td>
+<td class="cellalignment65" headers="d57834e372 d57834e253">
+<p><code class="codeph">5MB</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e372 d57834e256">
+<p>Set to the maximum size of the payload of the HTTP messages.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e393" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.circularRedirectsAllowed</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e393 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e393 d57834e250">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e393 d57834e253">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e393 d57834e256">
+<p>Set to allow or disallow circular redirects.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e418" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.connectionRequestTimeout</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e418 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e418 d57834e250">
+<p>A value representing milliseconds.</p>
+</td>
+<td class="cellalignment65" headers="d57834e418 d57834e253">
+<p><code class="codeph">&mdash;1</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e418 d57834e256">
+<p>Set the maximum time to wait for the connection manager to return a connection. The connection manager may not be able to return a connection if the max number of connections in the pool are used.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e439" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.connectTimeout</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e439 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e439 d57834e250">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e439 d57834e253">
+<p><code class="codeph">-1</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e439 d57834e256">
+<p>Set the timeout in milliseconds until a connection is established.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e464" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.contentCompressionEnabled</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e464 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e464 d57834e250">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e464 d57834e253">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e464 d57834e256">
+<p>Sets content compression to on or off.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e489" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.maxRedirects</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e489 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e489 d57834e250">
+<p>Integer value representing the redirect count.</p>
+</td>
+<td class="cellalignment65" headers="d57834e489 d57834e253">
+<p><code class="codeph">50</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e489 d57834e256">
+<p>Sets the maximum number of redirects.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e511" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.proxy</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e511 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e511 d57834e250">
+<p><code class="codeph">host:port</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e511 d57834e253">
+<p>None</p>
+</td>
+<td class="cellalignment65" headers="d57834e511 d57834e256">
+<p>Sets the proxy.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e532" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.userName</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e532 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e532 d57834e250">
+<p>Any string.</p>
+</td>
+<td class="cellalignment65" headers="d57834e532 d57834e253">
+<p>None</p>
+</td>
+<td class="cellalignment65" headers="d57834e532 d57834e256">
+<p>Sets the username for the proxy authentication.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e552" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.password</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e552 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e552 d57834e250">
+<p>Any string.</p>
+</td>
+<td class="cellalignment65" headers="d57834e552 d57834e253">
+<p>None</p>
+</td>
+<td class="cellalignment65" headers="d57834e552 d57834e256">
+<p>Sets the password for the proxy authentication.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e572" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.redirectsEnabled</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e572 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e572 d57834e250">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e572 d57834e253">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e572 d57834e256">
+<p>Set to check if redirects using relative naming is enabled.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e597" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.relativeRedirectsAllowed</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e597 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e597 d57834e250">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e597 d57834e253">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e597 d57834e256">
+<p>Set to check if redirects is enabled.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e622" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.socketTimeout</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e622 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e622 d57834e250">
+<p>A value representing milliseconds.</p>
+</td>
+<td class="cellalignment65" headers="d57834e622 d57834e253">
+<p><code class="codeph">&mdash;1</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e622 d57834e256">
+<p>Set the maximum time allowable between data packets on a read.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e643" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.httpClientResetInterval</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e643 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e643 d57834e250">
+<p>A value representing milliseconds.</p>
+</td>
+<td class="cellalignment65" headers="d57834e643 d57834e253">
+<p><code class="codeph">0</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e643 d57834e256">
+<p>Sets the wait interval between when the HTTP client is destroyed and when it is recreated.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e664" headers="d57834e244">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.apiVersion</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e664 d57834e247">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e664 d57834e250">
+<p><code class="codeph">v1</code> | <code class="codeph">v2</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e664 d57834e253">
+<p><code class="codeph">v2</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e664 d57834e256">
+<p>Sets the API version to use.</p>
+</td>
+</tr>
+</tbody>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e696">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.mode</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e696">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e696">
+<p><code class="codeph">op</code> | <code class="codeph">tx</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e696">
+<p><code class="codeph">op</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e696">
+<p>Sets how operations are processed. In <code class="codeph">op</code> mode, operations are processed as they are received. In <code class="codeph">tx</code> mode, operations are cached and processed at the transaction commit.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>See <a href="using-kinesis-handler.htm#GUID-851621F3-951D-4BE9-87D5-5026B433E94D">Using Templates to Resolve the Stream Name and Partition Name</a> for more information.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-AEE3C8BA-13B6-4909-9488-C3CACE397A9F">Setting Up and Starting the Kafka REST Proxy Handler Services</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3"><a id="GUID-5B90F183-B31B-4887-A117-5DAEF320756B"></a>
+<h3 id="GADBD-GUID-5B90F183-B31B-4887-A117-5DAEF320756B" class="sect3"><span class="enumeration_section">12.2.3</span> Security</h3>
+<div>
+<p>REST Proxy supports SSL for securing communication between clients and the Kafka REST Proxy Handler. To configure SSL:</p>
+<ol>
+<li>
+<p>Generate a keystore using the keytool for the server. This is also the client-side truststore. Follow the instructions to generate KeyStore in session Procedure to generate KeyStore.</p>
+</li>
+<li>
+<p>Update the Kafka REST Proxy server configuration, <code>kafka-rest.properties</code> file with these properties:</p>
+<pre dir="ltr">
+listeners=https://<span class="italic">server</span>.<span class="italic">domain</span>.com:8082
+ssl.keystore.location= <span class="italic">path_of_serverkeystore.jks file</span>
+ssl.keystore.password=kafkarest
+ssl.key.password=kafkarest
+ssl.client.auth=false
+</pre></li>
+<li>
+<p>Restart your server.</p>
+</li>
+<li>
+<p>Append the client-side boot options, in the handler properties file, with:</p>
+<pre dir="ltr">
+-Djavax.net.ssl.trustStore=<span class="italic">path_of_serverkeystore.jks file</span>
+-Djavax.net.ssl.trustStorePassword=<span class="italic">pwd</span>
+</pre>
+<p>For example, in the <code>krp.properties</code> file:</p>
+<pre dir="ltr">
+javawriter.bootoptions=-Xmx512m-Xms32m    
+-Djava.class.path=.:ggjava/ggjava.jar:./dirprm 
+-Djavax.net.ssl.trustStore=/scratch/sabbabu/view_storage/serverkeystore.jks 
+-Djavax.net.ssl.trustStorePassword=kafkarest  
+</pre></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-AEE3C8BA-13B6-4909-9488-C3CACE397A9F">Setting Up and Starting the Kafka REST Proxy Handler Services</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3"><a id="GUID-8D17E223-D143-4EA1-B050-4F4B30C72084"></a>
+<h3 id="GADBD-GUID-8D17E223-D143-4EA1-B050-4F4B30C72084" class="sect3"><span class="enumeration_section">12.2.4</span> Generating a Keystore</h3>
+<div>
+<p>You generate the <code class="codeph">keystore.jks</code> keystore file by executing this statement from the command line:</p>
+<pre dir="ltr">
+keytool -genkey -keyalg <span class="italic">RSA</span> -alias <span class="italic">fun</span> -keystore serverkeystore.jks -validity 365 -keysize 2048
+</pre>
+<p>The first name and last name should be the server machine name.</p>
+<p>For example:</p>
+<pre dir="ltr">
+$ keytool -genkey -keyalg RSA -alias fun &ndash;keystore ~/serverkeystore.jks -validity 365 -keysize 2048
+Enter keystore password:  
+Re-enter new password: 
+What is your first and last name?
+  [Unknown]:  kkm00cfb.in.oracle.com
+What is the name of your organizational unit?
+  [Unknown]:  goldengate
+What is the name of your organization?
+  [Unknown]:  oracle
+What is the name of your City or Locality?
+  [Unknown]:  bangalore
+What is the name of your State or Province?
+  [Unknown]:  karnataka
+What is the two-letter country code for this unit?
+  [Unknown]:  in
+Is CN=kkm00cfb.in.oracle.com , OU=goldengate, O=oracle, L=bangalore, ST= karnataka, C=in correct?
+  [no]:  yes
+
+Enter key password for fun
+(RETURN if same as keystore password):  
+</pre>
+<p>This creates a file called <code>serverkeystore.jks</code>. There are two passwords that you need to provide. The keystore password and the key password. These passwords can be the same or different.</p>
+<p>You update the Kafka HTTP proxy server configuration file, <code class="codeph">kafka-rest.properties</code>, and then restart your REST server</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-AEE3C8BA-13B6-4909-9488-C3CACE397A9F">Setting Up and Starting the Kafka REST Proxy Handler Services</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-D7CF2B9C-2FE7-429F-B8E2-F1359CE498A8"></a>
+<h3 id="GADBD-GUID-D7CF2B9C-2FE7-429F-B8E2-F1359CE498A8" class="sect3"><span class="enumeration_section">12.2.5</span> Using Templates to Resolve the Topic Name and Message Key</h3>
+<div>
+<div class="section">
+<p>The Kafka REST Proxy Handler provides functionality to resolve the topic name and the message key at runtime using a template configuration value. Templates allow you to configure static values and keywords. Keywords are used to dynamically replace the keyword with the context of the current processing. The templates use the following configuration properties:</p>
+<pre dir="ltr">
+gg.handler.<span class="italic">name</span>.topicMappingTemplate
+gg.handler.<span class="italic">name</span>.keyMappingTemplate
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Template Modes</p>
+<p>The Kafka REST Proxy Handler can be configured to send one message per operation (insert, update, delete). Alternatively, it can be configured to group operations into messages at the transaction level.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Template Keywords</p>
+<p>This table includes a column if the keyword is supported for transaction level messages.</p>
+<div class="tblformal" id="GUID-D7CF2B9C-2FE7-429F-B8E2-F1359CE498A8__GUID-D9A8DB8F-BB51-4D27-9343-035157B21077">
+<table class="cellalignment78" summary="Three column table describing Kafka REST Proxy Handler template keywords.">
+<thead>
+<tr class="cellalignment65">
+<th class="cellalignment77" id="d57834e907">Keyword</th>
+<th class="cellalignment77" id="d57834e910">Explanation</th>
+<th class="cellalignment77" id="d57834e913">Transaction Message Support</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e918" headers="d57834e907">
+<p><code class="codeph">${<span class="codeinlineitalic">fullyQualifiedTableName</span>}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e918 d57834e910">
+<p>Resolves to the fully qualified table name including the period (.) delimiter between the catalog, schema, and table names.</p>
+<p>For example, <code class="codeph">test.dbo.table1</code>.</p>
+</td>
+<td class="cellalignment65" headers="d57834e918 d57834e913">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e937" headers="d57834e907">
+<p><code class="codeph">${<span class="codeinlineitalic">catalogName</span>}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e937 d57834e910">
+<p>Resolves to the catalog name.</p>
+</td>
+<td class="cellalignment65" headers="d57834e937 d57834e913">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e951" headers="d57834e907">
+<p><code class="codeph">${<span class="codeinlineitalic">schemaName</span>}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e951 d57834e910">
+<p>Resolves to the schema name.</p>
+</td>
+<td class="cellalignment65" headers="d57834e951 d57834e913">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e965" headers="d57834e907">
+<p><code class="codeph">${<span class="codeinlineitalic">tableName</span>}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e965 d57834e910">
+<p>Resolves to the short table name.</p>
+</td>
+<td class="cellalignment65" headers="d57834e965 d57834e913">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e979" headers="d57834e907">
+<p><code class="codeph">${opType}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e979 d57834e910">
+<p>Resolves to the type of the operation: (<code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, <code class="codeph">DELETE</code>, or <code class="codeph">TRUNCATE</code>)</p>
+</td>
+<td class="cellalignment65" headers="d57834e979 d57834e913">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1002" headers="d57834e907">
+<p><code class="codeph">${primaryKeys}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1002 d57834e910">
+<p>Resolves to the concatenated primary key values delimited by an underscore (_) character.</p>
+</td>
+<td class="cellalignment65" headers="d57834e1002 d57834e913">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1013" headers="d57834e907">
+<p><code class="codeph">${position}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1013 d57834e910">
+<p>The sequence number of the source trail file followed by the offset (RBA).</p>
+</td>
+<td class="cellalignment65" headers="d57834e1013 d57834e913">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1024" headers="d57834e907">
+<p><code class="codeph">${opTimestamp}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1024 d57834e910">
+<p>The operation timestamp from the source trail file.</p>
+</td>
+<td class="cellalignment65" headers="d57834e1024 d57834e913">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1035" headers="d57834e907">
+<p><code class="codeph">${emptyString}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1035 d57834e910">
+<p>Resolves to &ldquo;&rdquo;.</p>
+</td>
+<td class="cellalignment65" headers="d57834e1035 d57834e913">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1046" headers="d57834e907">
+<p><code class="codeph">${<span class="codeinlineitalic">groupName</span>}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1046 d57834e910">
+<p>Resolves to the name of the Replicat process. If using coordinated delivery, it resolves to the name of the Replicat process with the Replicate thread number appended.</p>
+</td>
+<td class="cellalignment65" headers="d57834e1046 d57834e913">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1060" headers="d57834e907">
+<p><code class="codeph">${staticMap[]}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1060 d57834e910">
+<p>Resolves to a static value where the key is the fully-qualified table name. The keys and values are designated inside of the square brace in the following format:</p>
+<pre dir="ltr">
+${staticMap[dbo.table1=value1,dbo.table2=value2]}
+</pre></td>
+<td class="cellalignment65" headers="d57834e1060 d57834e913">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1074" headers="d57834e907">
+<p><code class="codeph">${columnValue[]}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1074 d57834e910">
+<p>Resolves to a column value where the key is the fully-qualified table name and the value is the column name to be resolved. For example:</p>
+<pre dir="ltr">
+${staticMap[dbo.table1=col1,dbo.table2=col2]}
+</pre></td>
+<td class="cellalignment65" headers="d57834e1074 d57834e913">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1087" headers="d57834e907">
+<p><code class="codeph">${currentTimestamp}</code></p>
+<p>Or</p>
+<p><code class="codeph">${currentTimestamp[]}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1087 d57834e910">
+<p>Resolves to the current timestamp. You can control the format of the current timestamp using the Java based formatting as described in the <code class="codeph">SimpleDateFormat</code> class, see <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html" target="_blank">https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html</a>.</p>
+<p>Examples:</p>
+<pre dir="ltr">
+${currentDate}
+${currentDate[yyyy-mm-dd hh:MM:ss.SSS]}
+</pre></td>
+<td class="cellalignment65" headers="d57834e1087 d57834e913">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1114" headers="d57834e907">
+<p><code class="codeph">${null}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1114 d57834e910">
+<p>Resolves to a NULL string.</p>
+</td>
+<td class="cellalignment65" headers="d57834e1114 d57834e913">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1125" headers="d57834e907">
+<p><code class="codeph">${custom[]}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1125 d57834e910">
+<p>It is possible to write a custom value resolver. If required, contact Oracle Support.</p>
+</td>
+<td class="cellalignment65" headers="d57834e1125 d57834e913">
+<p>Implementation dependent</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Example Templates</p>
+<p>The following describes example template configuration values and the resolved values.</p>
+<div class="tblformal" id="GUID-D7CF2B9C-2FE7-429F-B8E2-F1359CE498A8__GUID-5F1F62DC-D9B8-4609-B8B4-046CD8140201">
+<table class="cellalignment78" summary="A two column table describing example Kafka REST Proxy Handler example templates.">
+<thead>
+<tr class="cellalignment65">
+<th class="cellalignment77" id="d57834e1148">Example Template</th>
+<th class="cellalignment77" id="d57834e1151">Resolved Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1156" headers="d57834e1148">
+<p><code class="codeph">${groupName}_${<span class="codeinlineitalic">fullyQualfiedTableName</span>}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1156 d57834e1151">
+<p><code class="codeph">KAFKA001_dbo.table1</code></p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1168" headers="d57834e1148">
+<p><code class="codeph">prefix_${<span class="codeinlineitalic">schemaName</span>}_${<span class="codeinlineitalic">tableName</span>}_suffix</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1168 d57834e1151">
+<p><code class="codeph">prefix_dbo_table1_suffix</code></p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1183" headers="d57834e1148">
+<p><code class="codeph">${currentDate[yyyy-mm-dd hh:MM:ss.SSS]}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1183 d57834e1151">
+<p><code class="codeph">2017-05-17 11:45:34.254</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-AEE3C8BA-13B6-4909-9488-C3CACE397A9F">Setting Up and Starting the Kafka REST Proxy Handler Services</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-C938C237-A4B1-40D8-80F3-C624C0E4D332"></a>
+<h3 id="GADBD-GUID-C938C237-A4B1-40D8-80F3-C624C0E4D332" class="sect3"><span class="enumeration_section">12.2.6</span> Kafka REST Proxy Handler Formatter Properties</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the Kafka REST Proxy Handler Formatter.</p>
+<div class="tblformal" id="GUID-C938C237-A4B1-40D8-80F3-C624C0E4D332__GUID-D9A8DB8F-BB51-4D27-9343-035157B21077">
+<p class="titleintable">Table 12-2 Kafka REST Proxy Handler Formatter Properties</p>
+<table class="cellalignment78" title="Kafka REST Proxy Handler Formatter Properties" summary="Five column table describing the Kafka REST Proxy Handler Configuration Properties">
+<thead>
+<tr class="cellalignment65">
+<th class="cellalignment77" id="d57834e1231">Properties</th>
+<th class="cellalignment77" id="d57834e1234">Optional/ Optional</th>
+<th class="cellalignment77" id="d57834e1237">Legal Values</th>
+<th class="cellalignment77" id="d57834e1240">Default</th>
+<th class="cellalignment77" id="d57834e1243">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1248" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.includeOpType</code></td>
+<td class="cellalignment65" headers="d57834e1248 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1248 d57834e1237">
+<p><code class="codeph">true | false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1248 d57834e1240">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1248 d57834e1243">
+<p>Set to <code class="codeph">true</code> to create a field in the output messages called <code class="codeph">op_ts</code>. The value is an indicator of the type of source database operation (for example, <code class="codeph">I</code>for insert, <code class="codeph">U</code>for update, <code class="codeph">D</code>for delete).</p>
+<p>Set to <code class="codeph">false</code> to omit this field in the output.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1289" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.includeOpTimestamp</code></td>
+<td class="cellalignment65" headers="d57834e1289 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1289 d57834e1237">
+<p><code class="codeph">true | false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1289 d57834e1240">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1289 d57834e1243">
+<p>Set to <code class="codeph">true</code> to create a field in the output messages called <code class="codeph">op_type</code>. The value is the operation timestamp (commit timestamp) from the source trail file.</p>
+<p>Set to <code class="codeph">false</code> to omit this field in the output.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1321" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.includeCurrentTimestamp</code></td>
+<td class="cellalignment65" headers="d57834e1321 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1321 d57834e1237">
+<p><code class="codeph">true | false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1321 d57834e1240">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1321 d57834e1243">
+<p>Set to <code class="codeph">true</code> to create a field in the output messages called <code class="codeph">current_ts</code>. The value is the current timestamp of when the handler processes the operation.</p>
+<p>Set to <code class="codeph">false</code> to omit this field in the output.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1353" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.includePosition</code></td>
+<td class="cellalignment65" headers="d57834e1353 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1353 d57834e1237">
+<p><code class="codeph">true | false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1353 d57834e1240">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1353 d57834e1243">
+<p>Set to <code class="codeph">true</code> to create a field in the output messages called <code class="codeph">pos</code>. The value is the position (sequence number + offset) of the operation from the source trail file.</p>
+<p>Set to <code class="codeph">false</code> to omit this field in the output.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1385" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.includePrimaryKeys</code></td>
+<td class="cellalignment65" headers="d57834e1385 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1385 d57834e1237">
+<p><code class="codeph">true | false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1385 d57834e1240">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1385 d57834e1243">
+<p>Set to <code class="codeph">true</code> to create a field in the output messages called <code class="codeph">primary_keys</code>. The value is an array of the column names of the primary key columns.</p>
+<p>Set to <code class="codeph">false</code> to omit this field in the output.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1417" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.includeTokens</code></td>
+<td class="cellalignment65" headers="d57834e1417 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1417 d57834e1237">
+<p><code class="codeph">true | false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1417 d57834e1240">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1417 d57834e1243">
+<p>Set to <code class="codeph">true</code> to include a map field in output messages. The key is <code class="codeph">tokens</code> and the value is a map where the keys and values are the token keys and values from the Oracle GoldenGate source trail file.</p>
+<p>Set to <code class="codeph">false</code> to suppress this field.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1449" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.insertOpKey</code></td>
+<td class="cellalignment65" headers="d57834e1449 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1449 d57834e1237">
+<p>Any string.</p>
+</td>
+<td class="cellalignment65" headers="d57834e1449 d57834e1240">
+<p><code class="codeph">I</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1449 d57834e1243">
+<p>The value of the field <code class="codeph">op_type</code> that indicates an insert operation.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1472" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.updateOpKey</code></td>
+<td class="cellalignment65" headers="d57834e1472 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1472 d57834e1237">
+<p>Any string.</p>
+</td>
+<td class="cellalignment65" headers="d57834e1472 d57834e1240">
+<p><code class="codeph">U</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1472 d57834e1243">
+<p>The value of the field <code class="codeph">op_type</code> that indicates an update operation.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1495" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.deleteOpKey</code></td>
+<td class="cellalignment65" headers="d57834e1495 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1495 d57834e1237">
+<p>Any string.</p>
+</td>
+<td class="cellalignment65" headers="d57834e1495 d57834e1240">
+<p><code class="codeph">D</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1495 d57834e1243">
+<p>The value of the field <code class="codeph">op_type</code> that indicates an delete operation.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1518" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.truncateOpKey</code></td>
+<td class="cellalignment65" headers="d57834e1518 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1518 d57834e1237">
+<p>Any string.</p>
+</td>
+<td class="cellalignment65" headers="d57834e1518 d57834e1240">
+<p><code class="codeph">T</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1518 d57834e1243">
+<p>The value of the field <code class="codeph">op_type</code> that indicates an truncate operation.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1541" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.treatAllColumnsAsStrings</code></td>
+<td class="cellalignment65" headers="d57834e1541 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1541 d57834e1237">
+<p><code class="codeph">true | false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1541 d57834e1240">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1541 d57834e1243">
+<p>Set to <code class="codeph">true</code> treat all output fields as strings.</p>
+<p>Set to <code class="codeph">false</code> and the handler maps the corresponding field type from the source trail file to the best corresponding Kafka data type.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1571" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.mapLargeNumbersAsStrings</code></td>
+<td class="cellalignment65" headers="d57834e1571 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1571 d57834e1237">
+<p><code class="codeph">true | false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1571 d57834e1240">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1571 d57834e1243">
+<p>Set to <code class="codeph">true</code> and these fields are mapped as strings to preserve precision. This property is specific to the Avro Formatter; it cannot be used with other formatters.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1595" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.iso8601Format</code></td>
+<td class="cellalignment65" headers="d57834e1595 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1595 d57834e1237">
+<p><code class="codeph">true | false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1595 d57834e1240">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1595 d57834e1243">
+<p>Set to <code class="codeph">true</code> to output the current date in the ISO8601 format.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1619" headers="d57834e1231"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.pkUpdateHandling</code></td>
+<td class="cellalignment65" headers="d57834e1619 d57834e1234">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1619 d57834e1237">
+<p><code class="codeph">abend | update | delete-insert</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1619 d57834e1240">
+<p><code class="codeph">abend</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1619 d57834e1243">
+<p>It is only applicable if you are modeling row messages with the <code class="codeph">.(gg.handler.name.format.messageFormatting=row</code> property. It is not applicable if you are modeling operations messages as the before and after images are propagated to the message with an update.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-AEE3C8BA-13B6-4909-9488-C3CACE397A9F">Setting Up and Starting the Kafka REST Proxy Handler Services</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6"></a>
+<h3 id="GADBD-GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6" class="sect3"><span class="enumeration_section">12.2.7</span> Setting Metacolumn Output</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the Kafka REST Proxy Handler metacolumns template property that controls metacolumn output.</p>
+<div class="tblformal" id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__METACOLUMNSTEMPLATEPROPERTY-63876245">
+<p class="titleintable">Table 12-3 Metacolumns Template Property</p>
+<table class="cellalignment78" title="Metacolumns Template Property" summary="Five column table describing the Metacolumns Template Property">
+<thead>
+<tr class="cellalignment65">
+<th class="cellalignment77" id="d57834e1682">Properties</th>
+<th class="cellalignment77" id="d57834e1685">Required/ Optional</th>
+<th class="cellalignment77" id="d57834e1688">Legal Values</th>
+<th class="cellalignment77" id="d57834e1691">Default</th>
+<th class="cellalignment77" id="d57834e1694">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment65" id="d57834e1699" headers="d57834e1682"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format.metaColumnsTemplate</code></td>
+<td class="cellalignment65" headers="d57834e1699 d57834e1685">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" headers="d57834e1699 d57834e1688">
+<p><code class="codeph">${alltokens} | ${token} | ${env} | ${sys} | ${javaprop} | ${optype} | ${position} | ${timestamp} | ${catalog} | ${schema} | ${table} | ${objectname} | ${csn} | ${xid} | ${currenttimestamp} | ${opseqno} | ${timestampmicro} | ${currenttimestampmicro}</code></p>
+</td>
+<td class="cellalignment65" headers="d57834e1699 d57834e1691">
+<p>None</p>
+</td>
+<td class="cellalignment65" headers="d57834e1699 d57834e1694">
+<p>The current meta column information can be configured in a simple manner and removes the explicit need to use:</p>
+<pre dir="ltr">
+insertOpKey | updateOpKey | deleteOpKey | truncateOpKey | includeTableName | includeOpTimestamp | includeOpType | includePosition | includeCurrentTimestamp, useIso8601Format
+</pre>
+<p>It is a comma-delimited string consisting of one or more templated values that represent the template.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__THISISANEXAMPLETHATWOULDPRODUCEALIS-63877123">This is an example that would produce a list of metacolumns:</p>
+<pre id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__OPTYPETOKEN.ROWIDSYS.USERNAMECURREN-63877460" dir="ltr">
+${optype}, ${token.<span class="italic">ROWID</span>}, ${sys.<span class="italic">username</span>}, ${currenttimestamp}
+</pre>
+<p id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__EXPLANATIONOFTHEMETACOLUMNKEYWORDS-6386CC3D"><span class="bold">Explanation of the Metacolumn Keywords</span></p>
+<dl id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__ALLTOKENSALLOFTHEORACLEGOLDENGATETO-6386AD42">
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-6571B4D2-0BC6-44B6-AF67-FACE1FE4C69E"><!-- --></a><code class="codeph">${alltokens}</code></dt>
+<dd>
+<p>All of the <span>Oracle GoldenGate</span> tokens.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-E91BB9D1-8803-4071-91AB-E3E75FE7DC27"><!-- --></a><code class="codeph">${token}</code></dt>
+<dd>
+<p>The value of a specific <span>Oracle GoldenGate</span> token. The token key should follow token key should follow the token using the period (<code class="codeph">.</code>) operator. For example:</p>
+<pre dir="ltr">
+${token.<span class="italic">MYTOKEN</span>}
+</pre></dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-37D34072-A953-4C2D-AC8C-D7C767668D53"><!-- --></a><code class="codeph">${sys}</code></dt>
+<dd>
+<p>A system environmental variable. The variable name should follow <code class="codeph">sys</code> using the period (<code class="codeph">.</code>) operator. For example:</p>
+<pre dir="ltr">
+${sys.<span class="italic">MYVAR</span>}
+</pre></dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-748F8FC9-8B9E-4BD8-8E4D-7AD3310011F3"><!-- --></a><code class="codeph">${env}</code></dt>
+<dd>
+<p>An <span>Oracle GoldenGate</span> environment variable. The variable name should follow <code class="codeph">env</code> using the period (<code class="codeph">.</code>) operator. For example:</p>
+<pre dir="ltr">
+${env.<span class="italic">someVariable</span>}
+</pre></dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-63CB8E36-EA84-4514-9CA3-957CBE08D5C0"><!-- --></a><code class="codeph">${javaprop}</code></dt>
+<dd>
+<p>A Java JVM variable. The variable name should follow <code class="codeph">javaprop</code> using the period (<code class="codeph">.</code>) operator. For example:</p>
+<pre dir="ltr">
+${javaprop.<span class="italic">MYVAR</span>}
+</pre></dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-EE65207F-1B56-42F5-A22B-AA571CC9D788"><!-- --></a><code class="codeph">${optype}</code></dt>
+<dd>
+<p>Operation Type</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-77AED3A4-E8AB-45A3-85E6-F494F891678F"><!-- --></a><code class="codeph">${position}</code></dt>
+<dd>
+<p>Record Position</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-6F8EE3FC-B418-4858-AD36-C775E9306716"><!-- --></a><code class="codeph">${timestamp}</code></dt>
+<dd>
+<p>Record Timestamp</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-9B84084E-7153-40B2-A93A-6E3785864B89"><!-- --></a><code class="codeph">${catalog}</code></dt>
+<dd>
+<p>Catalog Name</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-C7A4136B-B35B-4146-BA52-7B87A0BA570B"><!-- --></a><code class="codeph">${schema}</code></dt>
+<dd>
+<p>Schema Name</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-5B23C966-40E1-481F-8785-EDA6FA21E8F8"><!-- --></a><code class="codeph">${table}</code></dt>
+<dd>
+<p>Table Name</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-86EBD1C8-5ADF-4F00-925D-6B5920610C37"><!-- --></a><code class="codeph">${objectname}</code></dt>
+<dd>
+<p>The fully qualified table name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-61EBAC0A-54B1-4770-B2CE-88DA37AAD2A3"><!-- --></a><code class="codeph">${csn}</code></dt>
+<dd>
+<p>Source Commit Sequence Number</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-3E807D41-1F41-4490-A819-C921A78C60BB"><!-- --></a><code class="codeph">${xid}</code></dt>
+<dd>
+<p>Source Transaction ID</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-465DE39E-C247-4B42-8821-538605227CB7"><!-- --></a><code class="codeph">${currenttimestamp}</code></dt>
+<dd>
+<p>Current Timestamp</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-CEE2B0DE-48F2-4C96-B6B0-694CB51F43CC"><!-- --></a><code class="codeph">${opseqno}</code></dt>
+<dd>
+<p>Record sequence number within the transaction.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-E1096C2E-BB5C-4DE6-9B4C-D63ADB352075"><!-- --></a><code class="codeph">${timestampmicro}</code></dt>
+<dd>
+<p>Record timestamp (in microseconds after epoch).</p>
+</dd>
+<dt class="dlterm"><a id="GUID-C5F02485-93CD-4CFC-84AF-2E1C47F4E9A6__GUID-BDB8EC1A-771A-423D-8A72-33618D32C6D9"><!-- --></a><code class="codeph">${currenttimestampmicro}</code></dt>
+<dd>
+<p>Current timestamp (in microseconds after epoch).</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Sample Configuration:</p>
+<pre dir="ltr">
+gg.handlerlist=kafkarestproxy
+
+#The handler properties
+gg.handler.kafkarestproxy.type=kafkarestproxy
+gg.handler.kafkarestproxy.mode=tx
+#The following selects the topic name based on the fully qualified table name
+gg.handler.kafkarestproxy.topicMappingTemplate=${fullyQualifiedTableName}
+#The following selects the message key using the concatenated primary keys
+gg.handler.kafkarestproxy.keyMappingTemplate=${primaryKeys}
+gg.handler.kafkarestproxy.postDataUrl=https://kkm00cfb.in.oracle.com:8082
+gg.handler.kafkarestproxy.format=avro
+gg.handler.kafkarestproxy.payloadsize=1
+
+gg.handler.kafkarestproxy.socketTimeout=1000
+gg.handler.kafkarestproxy.connectTimeout=1000
+gg.handler.kafkarestproxy.proxy=host:port
+gg.handler.kafkarestproxy.username=username
+gg.handler.kafkarestproxy.password=pwd 
+
+#The MetaColumnTemplate formatter properties
+gg.handler.kafkarestproxy.format.metaColumnsTemplate=${optype},${timestampmicro},${currenttimestampmicro}
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-AEE3C8BA-13B6-4909-9488-C3CACE397A9F">Setting Up and Starting the Kafka REST Proxy Handler Services</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-17FC5373-17AD-41FD-9E40-A85D3A756216"></a>
+<h2 id="GADBD-GUID-17FC5373-17AD-41FD-9E40-A85D3A756216" class="sect2"><span class="enumeration_section">12.3</span> Consuming the Records</h2>
+<div>
+<p>A simple way to consume data from Kafka topics using the Kafka REST Proxy Handler is Curl.</p>
+<div class="section">
+<p class="subhead2">Consume JSON Data</p>
+<ol>
+<li>
+<p>Create a consumer for JSON data.</p>
+<pre dir="ltr">
+curl -k -X POST -H "Content-Type: application/vnd.kafka.v2+json"  
+
+<a href="https://localhost:8082/consumers/my_json_consumer" target="_blank">https://localhost:8082/consumers/my_json_consumer</a>
+</pre></li>
+<li>
+<p>Subscribe to a topic.</p>
+<pre dir="ltr">
+curl -k -X POST -H "Content-Type: application/vnd.kafka.v2+json"    --data '{"topics":["<span class="italic">topicname</span>"]}' \
+
+<a href="https://localhost:8082/consumers/my_json_consumer/instances/my_consumer_instance/subscription" target="_blank">https://localhost:8082/consumers/my_json_consumer/instances/my_consumer_instance/subscription</a>
+</pre></li>
+<li>
+<p>Consume records.</p>
+<pre dir="ltr">
+curl &ndash;k -X GET -H "Accept: application/vnd.kafka.json.v2+json" \
+
+<a href="https://localhost:8082/consumers/my_json_consumer/instances/my_consumer_instance/records" target="_blank">https://localhost:8082/consumers/my_json_consumer/instances/my_consumer_instance/records</a>
+</pre></li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Consume Avro Data</p>
+<ol>
+<li>
+<p>Create a consumer for Avro data.</p>
+<pre dir="ltr">
+curl -k -X POST  -H "Content-Type: application/vnd.kafka.v2+json" \
+ --data '{"<span class="italic">name</span>": "<span class="italic">my_consumer_instance</span>", "format": "avro", "auto.offset.reset": "earliest"}' \
+
+<a href="https://localhost:8082/consumers/my_avro_consumer" target="_blank">https://localhost:8082/consumers/my_avro_consumer</a>
+</pre></li>
+<li>
+<p>Subscribe to a topic.</p>
+<pre dir="ltr">
+curl &ndash;k -X POST -H "Content-Type: application/vnd.kafka.v2+json"      --data '{"topics":["topicname"]}' \
+
+<a href="https://localhost:8082/consumers/my_avro_consumer/instances/my_consumer_instance/subscription" target="_blank">https://localhost:8082/consumers/my_avro_consumer/instances/my_consumer_instance/subscription</a>
+</pre></li>
+<li>
+<p>Consume records.</p>
+<pre dir="ltr">
+curl -X GET -H "Accept: application/vnd.kafka.avro.v2+json" \
+
+<a href="https://localhost:8082/consumers/my_avro_consumer/instances/my_consumer_instance/records" target="_blank">https://localhost:8082/consumers/my_avro_consumer/instances/my_consumer_instance/records</a>
+</pre></li>
+</ol>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-E6E51A37-F5D5-4626-9170-E858CFC32E69" title="Learn how to use the Kafka REST Proxy Handler to stream messages to the Kafka REST Proxy distributed by Confluent.">Using the Kafka REST Proxy Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-31E9DDBB-284E-4AE8-9F7A-10B1F63E5199"></a>
+<h2 id="GADBD-GUID-31E9DDBB-284E-4AE8-9F7A-10B1F63E5199" class="sect2"><span class="enumeration_section">12.4</span> Performance Considerations</h2>
+<div>
+<p>There are several configuration settings both for the <span>Oracle GoldenGate for Big Data</span> configuration and in the Kafka producer that affects performance.</p>
+<p>The Oracle GoldenGate parameter that has the greatest affect on performance is the Replicat <code class="codeph">GROUPTRANSOPS</code> parameter. It allows Replicat to group multiple source transactions into a single target transaction. At transaction commit, the Kafka REST Proxy Handler <code class="codeph">POST</code>&rsquo;s the data to the Kafka Producer.</p>
+<p>Setting the Replicat <code class="codeph">GROUPTRANSOPS</code> to a larger number allows the Replicat to call the <code class="codeph">POST</code> less frequently improving performance. The default value for <code class="codeph">GROUPTRANSOPS</code> is 1000 and performance can be improved by increasing the value to 2500, 5000, or even 10000.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-E6E51A37-F5D5-4626-9170-E858CFC32E69" title="Learn how to use the Kafka REST Proxy Handler to stream messages to the Kafka REST Proxy distributed by Confluent.">Using the Kafka REST Proxy Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-632740A4-3AE2-45C5-A967-02DF32F786FC"></a>
+<h2 id="GADBD-GUID-632740A4-3AE2-45C5-A967-02DF32F786FC" class="sect2"><span class="enumeration_section">12.5</span> Kafka REST Proxy Handler Metacolumns Template Property</h2>
+<div>
+<div class="section">
+<p class="subhead2">Problems Starting Kafka REST Proxy server</p>
+<p>Sometimes, Flume is set in the classpath, which may stop your REST Proxy server from starting up. Reset the <code class="codeph">CLASSPATH</code> to <code class="codeph">&ldquo;&rdquo;</code> to overcome the problem.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Problems with Consuming Records</p>
+<p>Your proxy could block the calls while consuming the records from Kafka. Disabling the <code class="codeph">http_proxy</code> variable resolves the issue.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-kafka-rest-proxy-handler.htm#GUID-E6E51A37-F5D5-4626-9170-E858CFC32E69" title="Learn how to use the Kafka REST Proxy Handler to stream messages to the Kafka REST Proxy distributed by Confluent.">Using the Kafka REST Proxy Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment64">
+<tr>
+<td class="cellalignment74">
+<table class="cellalignment69">
+<tr>
+<td class="cellalignment68"><a href="using-kafka-connect-handler.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment68"><a href="using-kinesis-handler.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment76">
+<table class="cellalignment67">
+<tr>
+<td class="cellalignment68"><a href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment68"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment68"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Replicat commands</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="keywords" content="start time, initial checkpoint, Replicat, CPU option, ADD REPLICAT, BACKUPCPU option, PRI option, alternate process name, parameter files, alternate name, report files, initial load, Replicat group, adding, tasks, specifying, description of group, user exits, multiple, SAVE option, CLEANUP REPLICAT, reports, Replicat processing, rolling over, WAIT option, STOP REPLICAT, ATEND option, ! option" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-FF18DD13-65C0-4EA7-824E-D4E57270D6D9.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-74F8C46A-9704-4D35-9970-8343A48350BB.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C"></a> <span id="PAGE" style="display:none;">11/360</span> <!-- End Header -->
+<a id="GNSRF135"></a>
+<h1 id="GNSRF-GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C" class="sect1"><span class="enumeration_section">1.3</span> Replicat commands</h1>
+<div>
+<div class="section">
+<p>With Replicat commands, you can establish initial checkpoints so that data can be continuously and accurately processed. After the initial run, these checkpoints provide a starting point for subsequent runs. Replicat commands also provide run history information.</p>
+<p>Replicat process names, parameter files and report files take system assigned default values. To change these default settings, see <a class="olink GNSAD-GUID-2C8DA596-103A-4F3D-B692-C702096480CA" target="_blank" href="../GNSAD/using-oracle-goldengate-utilities.htm#GNSAD-GUID-2C8DA596-103A-4F3D-B692-C702096480CA">Changing Default Component Names</a>.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GNSRF137"></a><a id="GNSRF138"></a><a id="GNSRF136"></a>
+<div class="props_rev_3"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59"></a>
+<h2 id="GNSRF-GUID-DD01D782-2519-426C-B7D8-F54065F6EC59" class="sect2"><span class="enumeration_section">1.3.1</span> ADD REPLICAT</h2>
+<div>
+<div class="section">
+<p>Use <a id="d10317e100" class="indexterm-anchor"></a><a id="d10317e104" class="indexterm-anchor"></a><a id="d10317e108" class="indexterm-anchor"></a><code class="codeph">ADD REPLICAT</code> to add a Replicat group. A Replicat group allows data changes to be processed from run to run without missing records.</p>
+<p>Using <code class="codeph">ADD REPLICAT</code> options you can perform a variety of operations that are summarized in the argument table.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+ADD REPLICAT <span class="italic">group_name</span> 
+{, <a id="d10317e129" class="indexterm-anchor"></a>SPECIALRUN | <a id="d10317e136" class="indexterm-anchor"></a> <span class="italic">trail_name</span> | <a id="d10317e145" class="indexterm-anchor"></a>LOGTRAIL <span class="italic">trail_name</span>}
+[, <a id="d10317e155" class="indexterm-anchor"></a>BEGIN <span class="italic">time</span> |, <a id="d10317e164" class="indexterm-anchor"></a>EXTSEQNO <span class="italic">seq_number</span>, <a id="d10317e173" class="indexterm-anchor"></a>EXTRBA <span class="italic">rba</span>]
+[, <a id="d10317e183" class="indexterm-anchor"></a>CPU <span class="italic">primary_cpu</span>] 
+[, <a id="d10317e192" class="indexterm-anchor"></a>BACKUPCPU <span class="italic">cpu</span>] 
+[, <a id="d10317e201" class="indexterm-anchor"></a>PRI <span class="italic">priority</span>]
+[, <a id="d10317e211" class="indexterm-anchor"></a>PROCESS <span class="italic">process_name</span>]
+[, <a id="d10317e220" class="indexterm-anchor"></a>PARAMS <span class="italic">param_file_name</span>]
+[, <a id="d10317e229" class="indexterm-anchor"></a>REPORT <span class="italic">report_name</span>]
+[, <a id="d10317e239" class="indexterm-anchor"></a>DESC "<span class="italic">text</span>"]
+[, <a id="d10317e248" class="indexterm-anchor"></a>PROGRAM <span class="italic">program_name</span>]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-9398FF5E-5780-45AA-B991-7F7BFF6B4442"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>Required. Up to 7 characters to designate some logical function of this Replicat group. You can use wildcards to specify a set of group names, such as, <code class="codeph">*</code> or <code class="codeph">*FIN*</code>.</p>
+<p>To use a group name of up to 10 characters, you can use the global parameter <code class="codeph">OLDGROUPNAMING</code>. However, Oracle GoldenGate recommends constraining group names to 7 characters.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-618385A5-CE8C-4170-BA0B-59102AE320B3"><!-- --></a><code class="codeph">SPECIALRUN</code> | <span class="italic"><code class="codeph">trail_name</code></span> | <code class="codeph">LOGTRAIL</code> <span class="italic"><code class="codeph">trail_name</code></span></dt>
+<dd>
+<p>Either <code class="codeph">SPECIALRUN</code> or one of the two record sources is required. A warning is issued if the specified record source does not exist.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For <code class="codeph">SPECIALRUN</code> see <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106174">Configuring initial data synchronization or other tasks</a>"</span>.</p>
+</li>
+<li>
+<p>Specify <span class="italic"><code class="codeph">trail_name</code></span> when the source is a local trail.</p>
+</li>
+<li>
+<p>Specify <code class="codeph">LOGTRAIL</code> <span class="italic"><code class="codeph">trail_name</code></span> where the record source is a Logger trail.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-FC54018F-3408-4883-94C4-66638177BB86"><!-- --></a><code class="codeph">BEGIN</code> <span class="italic"><code class="codeph">time</code></span> <code class="codeph">EXTSEQNO</code> <span class="italic"><code class="codeph">seq_num</code></span>, <code class="codeph">EXTRBA</code> <span class="italic"><code class="codeph">rba</code></span></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106095">Specifying a starting point</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-8658ECB7-9235-4669-8370-BC62ACB13C3A"><!-- --></a><code class="codeph">CPU</code> <span class="italic"><code class="codeph">primary_cpu</code></span> <code class="codeph">BACKUPCPU</code> <span class="italic"><code class="codeph">cpu</code></span> <code class="codeph">PRI</code> <span class="italic"><code class="codeph">priority</code></span></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106118">Assigning CPUs</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-67131827-471B-493D-9508-A9C18BA929BA"><!-- --></a><code class="codeph">DESC</code> "<span class="italic"><code class="codeph">text</code></span>"</dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106178">Enter a Replicat group description</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-7E7F3BEF-F5E9-4D55-98A7-6B32BFB1B3BC"><!-- --></a><code class="codeph">PARAMS</code> <span class="italic"><code class="codeph">param_file_name</code></span> <code class="codeph">REPORT</code> <span class="italic"><code class="codeph">report_name</code></span></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106142">Specifying an alternative parameter or report file</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-745D9FC5-4D02-4DE8-9179-D61A84B48177"><!-- --></a><code class="codeph">PROCESS</code> <span class="italic"><code class="codeph">process_name</code></span></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106138">Specifying an alternative Replicat process</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-60EE1818-7BDB-4722-90C2-C97806B879AB"><!-- --></a><code class="codeph">PROGRAM</code> <span class="italic"><code class="codeph">program_name</code></span></dt>
+<dd>
+<p>The object to be run. See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106182">Executing user exits</a>"</span>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<p>This Replicat group reads data from a trail created and stored at <code class="codeph">\NY</code>. It starts processing from the beginning of the <code class="codeph">AA</code> trail and runs on <code class="codeph">CPU</code> <code class="codeph">5</code> at a priority of <code class="codeph">160</code>.</p>
+<pre dir="ltr">
+ADD REPLICAT FINANCE,  \NY.$DATA2.EXTDAT.AA, 
+CPU 5, PRIORITY 160
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106095">
+<p class="subhead2">Specifying a starting point</p>
+<p>Normally, Replicat begins processing at the beginning of the trail. However, you can control when and where Replicat begins processing with one of the following options:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-BA92BB2A-B20F-4036-ADD9-C7A047ACDD00"><!-- --></a><code class="codeph">BEGIN</code> <span class="italic"><code class="codeph">time</code></span></dt>
+<dd>
+<p>Determines when Replicat begins processing data the audit trail. The <span class="italic"><code class="codeph">time</code></span> options are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">NOW</code></p>
+</li>
+<li>
+<p>A date/time in the format <code class="codeph">yyyy-mm-dd [hh:mi:[ss[.cccccc]]]</code></p>
+</li>
+</ul>
+<p><span class="bold">Note:</span> Using <code class="codeph">BEGIN</code> is not recommended, because it causes Replicat to bypass data preceding the specified begin point and can cause the target data to be out of synchronization.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-C20FB490-E75A-4443-BB72-62F4D18C3003"><!-- --></a><code class="codeph">EXTSEQNO</code> <span class="italic"><code class="codeph">seq_number</code></span></dt>
+<dd>
+<p>Identifies a specific sequence number in the local Oracle GoldenGate <a id="d10317e525" class="indexterm-anchor"></a>trail at which to begin extracting data.</p>
+<p>For example, if the is <code class="codeph">$SYSTEM.GGSDAT.ET</code> and <code class="codeph">EXTSEQNO</code> is <code class="codeph">26</code>, processing begins in trail file <code class="codeph">$SYSTEM.GGSDAT.ET000026.</code> Omit this parameter unless special circumstances arise.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-C7D7FE00-AC09-4F32-A155-42FEFA5B21CB"><!-- --></a><code class="codeph">EXTRBA</code> <span class="italic"><code class="codeph">rba</code></span></dt>
+<dd>
+<p>Specifies that processing begin in the local Oracle GoldenGate trail at the specified relative byte address.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-DE4D64A6-B992-4804-8774-2FE1C3F23D70"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+ADD REPLICAT ORDERS,  \NY.$DATA2.EXTDAT.AA, BEGIN NOW, CPU 6, PRI 170
+</pre></dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-AD3C8E2A-F5A9-448B-B671-DFB45168EB7D"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+ADD REPLICAT ORDERS,  $SYSTEM.GGSDAT.ET, EXTSEQNO 26, EXTRBA 1203780
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106118">
+<p class="subhead2">Assigning CPUs</p>
+<p>When you add a Replicat group you can specify CPUs and a process priority. The options are:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-2E12541A-A060-4789-83B1-7C8D5DEA96C9"><!-- --></a><code class="codeph">CPU</code> <span class="italic"><code class="codeph">primary_cpu</code></span></dt>
+<dd>
+<p>The processor on which Replicat will run. The default is the CPU on which Manager runs.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-C34A24CE-2D70-42D1-8274-FC5D56AC13BF"><!-- --></a><code class="codeph">BACKUPCPU</code> <span class="italic"><code class="codeph">cpu</code></span></dt>
+<dd>
+<p>An alternative CPU on which to run Replicat if the primary CPU becomes unavailable.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-C20E6303-CCB5-4565-8104-81A68919548F"><!-- --></a><code class="codeph">PRI</code> <span class="italic"><code class="codeph">priority</code></span></dt>
+<dd>
+<p>The NonStop <a id="d10317e612" class="indexterm-anchor"></a>priority of the process. Refer to the HP NonStop documentation for more information.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106138">
+<p class="subhead2">Specifying an alternative Replicat process</p>
+<p>The default process name is <code class="codeph">$GGRnn</code>, where <code class="codeph">nn</code> represents the sequence of the process. Oracle GoldenGate recommends that you use the default, however, if you must specify an alternative process, you can do so with the <code class="codeph">PROCESS</code> <span class="italic"><code class="codeph">process_name</code></span> option.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<pre dir="ltr">
+ADD REPLICAT FINANCE,  $SYSTEM.GGSDAT.ET, PROCESS $GGR04
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106142">
+<p class="subhead2">Specifying an alternative parameter or report file</p>
+<p>Oracle GoldenGate recommends that you use the default names, however, if you must specify an alternative process, use the options described here. Alternatively, you can change the default names globally from the <code class="codeph">GLOBALS</code> parameter file using <code class="codeph">ADD DEFINE</code>; see <span class="q">"<a href="GUID-4531D9AA-BD8E-4D60-A828-3B22B7A5230C.htm#GUID-BABECA4E-B545-4C3C-ABE2-68C38E33C557">GLOBALS Parameters Summary</a>"</span> for more detail on this parameter. Also see <a class="olink GNSAD-GUID-ADF49456-6567-484F-BD1E-D5C77878DC34" target="_blank" href="../GNSAD/planning-configuration.htm#GNSAD-GUID-ADF49456-6567-484F-BD1E-D5C77878DC34">Changing Default Component Names</a>.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The default parameter file name is <span class="italic"><code class="codeph">GGS_volume</code></span>.<code class="codeph">GGSPARM</code>.<span class="italic"><code class="codeph">group_name</code></span>, where <span class="italic"><code class="codeph">group_name</code></span> represents a Replicat group, such as <code class="codeph">FINANCE.</code></p>
+</li>
+<li>
+<p>The default report file name is <span class="italic"><code class="codeph">GGS_volume</code></span>.<code class="codeph">GGSRPT</code>.<span class="italic"><code class="codeph">report_name</code></span>, where <span class="italic"><code class="codeph">report_name</code></span> represents the report file name, such as <code class="codeph">FINANCE.</code> Oracle GoldenGate creates an entry-sequenced file to hold each Replicat group's run results. By default, the report name is the same as the Replicat group.</p>
+</li>
+</ul>
+<p>To change the default names:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-87FD97B0-9EBF-4973-A7B7-DD70FFAFD99C"><!-- --></a><code class="codeph">PARAMS</code> <span class="italic"><code class="codeph">param_file_name</code></span></dt>
+<dd>
+<p>Supplies an alternative parameter file name. Enter the fully qualified path name for the parameter file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__GUID-68A2BBCA-FAA6-4E0E-AB83-A7268B3C02E7"><!-- --></a><code class="codeph">REPORT</code> <span class="italic"><code class="codeph">report_name</code></span></dt>
+<dd>
+<p>Supplies the new report file name. Enter the fully qualified path name for the parameter file.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<p>This example changes the default parameter file and report names.</p>
+<pre dir="ltr">
+ADD REPLICAT FINANCE, 
+ $SYSTEM.GGSDAT.ET, 
+PARAMS $PARAMS.GGSPARM.FINANCE,
+REPORT $REPORTS.GGSRPT.FINANCE
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106174">
+<p class="subhead2">Configuring initial data synchronization or other tasks</p>
+<p>For initial synchronization or other task processing, you can configure Replicat to run as a task by specifying the <code class="codeph">SPECIALRUN</code> parameter.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<pre dir="ltr">
+ADD REPLICAT <span class="italic">group_name</span>, SPECIALRUN
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106178">
+<p class="subhead2">Enter a Replicat group description</p>
+<p>Use the <code class="codeph">DESC</code> "<span class="italic"><code class="codeph">text</code></span>" option to describe a Replicat group.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<pre dir="ltr">
+ADD REPLICAT T24SEA,  $SYSTEM.GGSDAT.ET, 
+DESC "T24 data pump for ATM transactions to IBM in Seattle"
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-DD01D782-2519-426C-B7D8-F54065F6EC59__I1106182">
+<p class="subhead2">Executing user exits</p>
+<p>You can create and run your own routines by compiling them into an object file and binding this to the Replicat program by using the TACL macro named <code class="codeph">BINDEXIT</code>. For more information, see <a class="olink GNSAD-GUID-7B27EF74-99AE-48F8-81BF-F208B06B5517" target="_blank" href="../GNSAD/configuring-custom-operations.htm#GNSAD-GUID-7B27EF74-99AE-48F8-81BF-F208B06B5517">User Exits</a>.</p>
+<p>When you are ready to call the user exit, launch the Replicat object that has the bound routines with the <code class="codeph">PROGRAM</code> <span class="italic"><code class="codeph">program_name</code></span> option. Manager uses that program when starting the process.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<pre dir="ltr">
+ADD REPLICAT GROUP1, BEGIN NOW, CPU 1, PRI 150, PROGRAM $DATA.GGS.FINEXIT1
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF139"></a>
+<div class="props_rev_3"><a id="GUID-32A7A815-31FD-4ADC-9C2D-86C62B69DA2C"></a>
+<h2 id="GNSRF-GUID-32A7A815-31FD-4ADC-9C2D-86C62B69DA2C" class="sect2"><span class="enumeration_section">1.3.2</span> ALTER REPLICAT</h2>
+<div>
+<div class="section">
+<p>Use <code class="codeph">ALTER REPLICAT</code> to change attributes established in <code class="codeph">ADD REPLICAT</code>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+ALTER REPLICAT <span class="italic">group_name</span> [, <span class="italic">options</span>...]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-32A7A815-31FD-4ADC-9C2D-86C62B69DA2C__GUID-7E9FD9A5-5040-4A4A-9053-1F5693FC6262"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>An existing Replicat group name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-32A7A815-31FD-4ADC-9C2D-86C62B69DA2C__GUID-80F0B6DB-7FA8-4111-98AB-EE86A82F8613"><!-- --></a><span class="italic"><code class="codeph">options</code></span></dt>
+<dd>
+<p>You can specify any <code class="codeph">ADD REPLICAT</code> option here. If no options are specified, the checkpoint is reset to the beginning of the trail. If <code class="codeph">BEGIN</code> is not specified, the first file in the sequence must exist.</p>
+</dd>
+</dl>
+<p>The following example alters the checkpoints for a group of Replicat processes. Use this to skip over data that had not been processed before an unplanned outage.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<pre dir="ltr">
+ALTER REPLICAT REP1AP BEGIN NOW
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF140"></a>
+<div class="props_rev_3"><a id="GUID-1E1C319A-A8CC-480F-B703-2489C5D636E1"></a>
+<h2 id="GNSRF-GUID-1E1C319A-A8CC-480F-B703-2489C5D636E1" class="sect2"><span class="enumeration_section">1.3.3</span> CLEANUP REPLICAT</h2>
+<div>
+<div class="section">
+<p><a id="d10317e888" class="indexterm-anchor"></a><a id="d10317e892" class="indexterm-anchor"></a><a id="d10317e898" class="indexterm-anchor"></a><code class="codeph">CLEANUP REPLICAT</code> deletes old run history records for a group, but keeps the last run record intact, enabling processing to resume from the correct position.</p>
+<p>For example: <code class="codeph">CLEANUP REPLICAT FINANCE</code> deletes run history records for the finance group, and keeps the last run record. You can also specify a quantity of records to save, as in: <code class="codeph">CLEANUP REPLICAT * SAVE 5</code>, saving the last 5 run records.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+CLEANUP REPLICAT <span class="italic">group_name</span> [SAVE <span class="italic">count</span>]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-1E1C319A-A8CC-480F-B703-2489C5D636E1__GUID-4CFD8E1A-0F95-4351-8776-CE70A2F0ECF5"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>The group name. You can use wildcards to specify a set of group names, such as, <code class="codeph">*</code> or <code class="codeph">*FIN*</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1E1C319A-A8CC-480F-B703-2489C5D636E1__GUID-2DADC259-DDAD-4454-A8C2-8DE2C22848BA"><!-- --></a><code class="codeph">SAVE</code> <span class="italic"><code class="codeph">count</code></span></dt>
+<dd>
+<p>Save the last <span class="italic"><code class="codeph">count</code></span> runs.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF141"></a>
+<div class="props_rev_3"><a id="GUID-71883C7E-E5EF-4324-8004-F1F8B0B5B6C4"></a>
+<h2 id="GNSRF-GUID-71883C7E-E5EF-4324-8004-F1F8B0B5B6C4" class="sect2"><span class="enumeration_section">1.3.4</span> DELETE REPLICAT</h2>
+<div>
+<div class="section">
+<p><a id="d10317e976" class="indexterm-anchor"></a><a id="d10317e980" class="indexterm-anchor"></a><a id="d10317e984" class="indexterm-anchor"></a><code class="codeph">DELETE REPLICAT</code> deletes a Replicat group. <code class="codeph">DELETE</code> can have the side effect of freeing up trails for purging by Manager, since associated trail checkpoints are deleted.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+DELETE REPLICAT <span class="italic">group_name</span> [!]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-71883C7E-E5EF-4324-8004-F1F8B0B5B6C4__GUID-B0547BA7-58B9-4CCD-A570-E86E643108A0"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>The group name. You can use wildcards to specify a set of group names, such as, <code class="codeph">*</code> or <code class="codeph">*FIN*</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-71883C7E-E5EF-4324-8004-F1F8B0B5B6C4__GUID-8A1BB4D4-375E-4635-8309-F42B265B4902"><!-- --></a><code class="codeph">!</code></dt>
+<dd>
+<p>(Exclamation point) Deletes each group without prompting the user to confirm the operation.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF142"></a>
+<div class="props_rev_3"><a id="GUID-A99D778B-70E0-4B8B-A058-99017D96BF45"></a>
+<h2 id="GNSRF-GUID-A99D778B-70E0-4B8B-A058-99017D96BF45" class="sect2"><span class="enumeration_section">1.3.5</span> INFO REPLICAT</h2>
+<div>
+<div class="section">
+<p><a id="d10317e1045" class="indexterm-anchor"></a><a id="d10317e1049" class="indexterm-anchor"></a><a id="d10317e1055" class="indexterm-anchor"></a><code class="codeph">INFO REPLICAT</code> retrieves processing history for a Replicat group. You can specify reporting options to obtain:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Status of the process</p>
+</li>
+<li>
+<p>Process run history</p>
+</li>
+<li>
+<p>A lag report</p>
+</li>
+<li>
+<p>Detailed historical checkpoints</p>
+</li>
+<li>
+<p>Only processes that are running, or stopped</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+INFO REPLICAT <span class="italic">group_name</span> 
+[, <a id="d10317e1087" class="indexterm-anchor"></a>BRIEF | <a id="d10317e1092" class="indexterm-anchor"></a>DETAIL]
+[, <a id="d10317e1097" class="indexterm-anchor"></a>LAG <span class="italic">number</span> {SECONDS | MINUTES | HOURS}]
+[, <a id="d10317e1107" class="indexterm-anchor"></a>SHOWCH]
+[, <a id="d10317e1112" class="indexterm-anchor"></a>UP | <a id="d10317e1117" class="indexterm-anchor"></a>DOWN]
+[, <a id="d10317e1122" class="indexterm-anchor"></a>TASKS | <a id="d10317e1127" class="indexterm-anchor"></a>ALLPROCESSES]
+[, <a id="d10317e1132" class="indexterm-anchor"></a>PROGRAM]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A99D778B-70E0-4B8B-A058-99017D96BF45__GUID-6DEDBF83-E24D-4EA3-A79D-5DD02CFBDF93"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>The group name. You can use wildcards to specify a set of group names, such as, <code class="codeph">*</code> or <code class="codeph">*FIN*</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A99D778B-70E0-4B8B-A058-99017D96BF45__GUID-8B76DD87-76A4-4814-99E1-CB5AB3B88E95"><!-- --></a><code class="codeph">BRIEF</code></dt>
+<dd>
+<p>Reports the <a id="d10317e1159" class="indexterm-anchor"></a>status of the Replicat process (<code class="codeph">STARTING, RUNNING, STOPPED</code> or <code class="codeph">ABENDED</code>) and an approximation of the time and byte lag between the associated trail and Replicat processing.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A99D778B-70E0-4B8B-A058-99017D96BF45__GUID-EB911BFD-DB8C-4247-B88E-148490549FD3"><!-- --></a><code class="codeph">DETAIL</code></dt>
+<dd>
+<p>Reports Replicat process run history, which includes starting and stopping points within the trail expressed as a time, and the process parameters established by the <code class="codeph">ADD</code> <code class="codeph">REPLICAT</code> command.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A99D778B-70E0-4B8B-A058-99017D96BF45__GUID-DAEA1572-C679-4C74-A003-3D49962E0169"><!-- --></a><code class="codeph">LAG</code> <span class="italic"><code class="codeph">number</code></span> <code class="codeph">SECONDS</code> | <code class="codeph">MINUTES</code> | <code class="codeph">HOURS</code></dt>
+<dd>
+<p>Restricts the display to groups that are a specified number of seconds, minutes or hours behind. This helps spot critical conditions. The <a id="d10317e1203" class="indexterm-anchor"></a><a id="d10317e1207" class="indexterm-anchor"></a>lag returned by this command is approximate. For precise information, use <code class="codeph">LAG</code> <code class="codeph">REPLICAT</code>. Lag measures both bytes behind and time behind.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A99D778B-70E0-4B8B-A058-99017D96BF45__GUID-803C0A6B-8343-4BD2-9442-648F367C3DFA"><!-- --></a><code class="codeph">SHOWCH</code></dt>
+<dd>
+<p>Shows detailed historical <a id="d10317e1227" class="indexterm-anchor"></a>checkpoints.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A99D778B-70E0-4B8B-A058-99017D96BF45__GUID-F5022D13-61D6-4924-930F-38B5D50B7610"><!-- --></a><code class="codeph">UP | DOWN</code></dt>
+<dd>
+<p>Shows processes that are running (<code class="codeph">UP</code>) or not (<code class="codeph">DOWN</code>).</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A99D778B-70E0-4B8B-A058-99017D96BF45__GUID-B59013EC-99DB-4E88-BC16-030930F06909"><!-- --></a><code class="codeph">TASKS | ALLPROCESSES</code></dt>
+<dd>
+<p>Shows either tasks or all processes that are running. Specify either <code class="codeph">TASKS</code> or <code class="codeph">ALLPROCESSES</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A99D778B-70E0-4B8B-A058-99017D96BF45__GUID-58671283-A33E-420D-B519-DAE83CBE1030"><!-- --></a><code class="codeph">PROGRAM</code></dt>
+<dd>
+<p>Displays the name and location of the object that is running.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF143"></a>
+<div class="props_rev_3"><a id="GUID-123AA2A7-875A-4EF4-AA34-6229317B8900"></a>
+<h2 id="GNSRF-GUID-123AA2A7-875A-4EF4-AA34-6229317B8900" class="sect2"><span class="enumeration_section">1.3.6</span> KILL REPLICAT</h2>
+<div>
+<div class="section">
+<p><code class="codeph">KILL REPLICAT</code> forces a Replicat process to stop immediately. Try <code class="codeph">STOP REPLICAT</code> first because it also performs cleanup. <code class="codeph">STOP</code> and <code class="codeph">KILL</code> are preferred to stopping from TACL. Manager automatically restarts processes that are stopped from TACL.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+KILL REPLICAT <span class="italic">group_name</span>
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-123AA2A7-875A-4EF4-AA34-6229317B8900__GUID-BA56732A-A38C-4EF5-9BEC-1F1E2B7B369A"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>The group name. You can use wildcards to specify a set of group names, such as, <code class="codeph">*</code> or <code class="codeph">*FIN*</code>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF144"></a>
+<div class="props_rev_3"><a id="GUID-2E3A72C3-8CD8-46D8-B2BE-A71C39254D97"></a>
+<h2 id="GNSRF-GUID-2E3A72C3-8CD8-46D8-B2BE-A71C39254D97" class="sect2"><span class="enumeration_section">1.3.7</span> LAG REPLICAT</h2>
+<div>
+<div class="section">
+<p>Instead of reading the current checkpoint position, <a id="d10317e1341" class="indexterm-anchor"></a><a id="d10317e1345" class="indexterm-anchor"></a><a id="d10317e1351" class="indexterm-anchor"></a><code class="codeph">LAG REPLICAT</code> queries Replicat to determine the relative position of the process in the local trail. This command provides a better estimate of Replicat's lag behind the process than <code class="codeph">INFO REPLICAT</code>.</p>
+<p>You can retrieve lag information from remote processes by specifying the Replicat process name instead of group name.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+LAG REPLICAT {<span class="italic">group_name</span> | <span class="italic">process_name</span>}
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-2E3A72C3-8CD8-46D8-B2BE-A71C39254D97__GUID-33C8FB16-7B75-4B78-9414-DF7D9E2D1C21"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>The group name, as in: <code class="codeph">LAG REPLICAT FINANCE</code></p>
+</dd>
+<dt class="dlterm"><a id="GUID-2E3A72C3-8CD8-46D8-B2BE-A71C39254D97__GUID-F48A3DDB-A886-434C-9771-C1DC9C6B561F"><!-- --></a><span class="italic"><code class="codeph">process_name</code></span></dt>
+<dd>
+<p>The Replicat process name, as in: <code class="codeph">LAG REPLICAT $DATA.GGS.$GGR00</code></p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF146"></a><a id="GNSRF147"></a><a id="GNSRF148"></a><a id="GNSRF149"></a><a id="GNSRF145"></a>
+<div class="props_rev_3"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC"></a>
+<h2 id="GNSRF-GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC" class="sect2"><span class="enumeration_section">1.3.8</span> SEND REPLICAT</h2>
+<div>
+<div class="section">
+<p><a id="d10317e1433" class="indexterm-anchor"></a><a id="d10317e1437" class="indexterm-anchor"></a><code class="codeph">SEND REPLICAT</code> communicates with a running Replicat process.</p>
+<p>Using <code class="codeph">SEND REPLICAT</code> options you can perform a variety of operations that are summarized in <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__CHDBBEAE">SEND REPLICAT Options Summary</a>"</span>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+SEND REPLICAT <span class="italic">group_name</span> {
+<a id="d10317e1464" class="indexterm-anchor"></a>STATUS | 
+<a id="d10317e1469" class="indexterm-anchor"></a>REPORT [<span class="italic">time_option</span> [RESET | FILE <span class="italic">name</span> | TABLE <span class="italic">name</span>]]|
+<a id="d10317e1487" class="indexterm-anchor"></a>ROLLREPORT |
+<a id="d10317e1492" class="indexterm-anchor"></a>LAGSTATS <span class="italic">option</span> | 
+<a id="d10317e1503" class="indexterm-anchor"></a>LAGSNAPSHOT | 
+<a id="d10317e1508" class="indexterm-anchor"></a>LAGREPORTON | 
+<a id="d10317e1514" class="indexterm-anchor"></a>LAGREPORTOFF | 
+<a id="d10317e1519" class="indexterm-anchor"></a>LAGOFF | 
+<a id="d10317e1524" class="indexterm-anchor"></a>FORCESTOP | 
+<a id="d10317e1529" class="indexterm-anchor"></a>STOP |
+<a id="d10317e1534" class="indexterm-anchor"></a>HANDLECOLLISIONS <span class="italic">file_name</span> |
+<a id="d10317e1546" class="indexterm-anchor"></a>NOHANDLECOLLISIONS <span class="italic">file_name</span> | 
+<a id="d10317e1557" class="indexterm-anchor"></a>REPORT HANDLECOLLISIONS |
+<a id="d10317e1562" class="indexterm-anchor"></a>CLOSEFILES |
+<a id="d10317e1567" class="indexterm-anchor"></a>GETGROUPTRANSOPS | 
+<a id="d10317e1572" class="indexterm-anchor"></a>SETGROUPTRANSOPS <span class="italic">number</span> |
+<a id="d10317e1582" class="indexterm-anchor"></a>GETMAXTRANSOPS | 
+<a id="d10317e1587" class="indexterm-anchor"></a>SETMAXTRANSOPS <span class="italic">number</span> |
+<a id="d10317e1596" class="indexterm-anchor"></a>GETNETWORKCHECKPOINTS |
+        ROLLDISCARD |
+ROLLSQLDISCARD 
+}
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-5693BB55-AE95-40A2-94AF-5C9940FDB60E"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>A running Replicat group. If the group is not running, an error is returned.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__CHDBBEAE">
+<p class="subhead2">SEND REPLICAT Options Summary</p>
+<dl>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-9C47B7A2-5D44-49A8-8FCF-FA8178524427"><!-- --></a><code class="codeph">FORCESTOP | STOP</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106519">Stopping the process</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-B2B145EC-6331-4168-942D-198E9205A9C9"><!-- --></a><code class="codeph">CLOSEFILES |</code></dt>
+<dd>
+<p>Causes Replicat to close any open Enscribe and SQL/MP tables.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-304C9D61-85A7-4DF6-93AB-D4C769723122"><!-- --></a><code class="codeph">REPORT</code> <code class="codeph">HANDLECOLLISIONS</code> <code class="codeph">GETGROUPTRANSOPS</code> | <code class="codeph">SETGROUPTRANSOPS</code> <span class="italic"><code class="codeph">number</code></span> |</dt>
+<dt class="dlterm"><code class="codeph">GETMAXTRANSOPS</code> | <code class="codeph">SETMAXTRANSOPS</code> <span class="italic"><code class="codeph">number</code></span> | <code class="codeph">GETNETWORKCHECKPOINTS</code> |</dt>
+<dt class="dlterm"><code class="codeph">HANDLECOLLISIONS</code> <span class="italic"><code class="codeph">file_name</code></span> | <code class="codeph">NOHANDLECOLLISIONS</code> <span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106448">Setting and viewing parameters</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-FA2CAF0D-323E-4CF9-B407-164BADE23A60"><!-- --></a><code class="codeph">LAGSTATS</code> <span class="italic"><code class="codeph">option</code></span> | <code class="codeph">LAGSNAPSHOT</code> | <code class="codeph">LAGREPORTON</code> | <code class="codeph">LAGREPORTOFF</code> | <code class="codeph">LAGOFF</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106420">Obtaining lag reports</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-CE60D748-C3E9-4BA0-A8AF-C7769B4B5AB5"><!-- --></a><code class="codeph">ROLLREPORT |</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106417">Opening and Closing Discard and Report files</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-6485C4D2-80B9-4DA0-9438-E3B085BFD992"><!-- --></a><code class="codeph">STATUS | REPORT</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106409">Obtaining process reports</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-A8574F11-46D7-4CCF-9859-698483E03374"><!-- --></a><code class="codeph">ROLLDISCARD</code> | <code class="codeph">ROLLSQLDISCARD</code></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-A2AEC969-AF0B-4A00-B3BD-2CD19A46D78C.htm#GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106417">Opening and Closing Discard and Report files</a>"</span></p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106409">
+<p class="subhead2">Obtaining process reports</p>
+<p>You can specify reports for:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Processing status by specifying the <code class="codeph">STATUS</code> option. <code class="codeph">STATUS</code> returns a detailed status of process state, including current position and activity.</p>
+</li>
+<li>
+<p>Process <a id="d10317e1765" class="indexterm-anchor"></a>statistics by specifying the <code class="codeph">REPORT</code> option. <code class="codeph">REPORT</code> generates an interim Replicat statistical report to the report file, including the number of inserts, updates, and deletes. <code class="codeph">Refer to</code> <span class="q">"<a href="GUID-379FEADE-497A-47F7-BF0B-E9A03C22401A.htm#GUID-266F8F8C-EC0A-4834-8786-17CD69257ECC">SEND REPORT</a>"</span> for detail on <code class="codeph">SEND</code> <code class="codeph">REPORT</code> options.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106417">
+<p class="subhead2">Opening and Closing Discard and Report files</p>
+<p>To close the current report file and open a new one, specify the <code class="codeph">ROLLREPORT</code> option. <code class="codeph">ROLLREPORT</code> renames the current file to <span class="italic"><code class="codeph">report_file1</code></span>, then opens a new report file with the original name. For example, if the original name was <code class="codeph">$DATA.GGSRPT.REPCUST</code>, the <code class="codeph">ROLLREPORT</code> option would rename files: <code class="codeph">$DATA.GGSRPT.REPCUST0</code>, <code class="codeph">$DATA.GGSRPT.REPCUST1</code>, up to <code class="codeph">$DATA.GGSRPT.REPCUST9</code>. The original report name is recycled and the new report would be named: <code class="codeph">$DATA.GGSRPT.REPCUST</code>.</p>
+<p>To close the current discard and open a new one, specify the <code class="codeph">ROLLDISCARD</code> option. To close the current SQL formatted discard file and open a new one, specify the <code class="codeph">ROLLSQLDISCARD</code> option. Like the <code class="codeph">ROLLREPORT</code>, these options rename the current discard file by adding 0 and increment the sequence number of the remaining discard files. If a <span class="italic"><code class="codeph">discard_file9</code></span> exists, it will be deleted to make room for the replacement.</p>
+<div class="infobox-note" id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-FE846478-E45F-4876-A844-A415086AA83B">
+<p class="notep1">Note:</p>
+<p>Discard files that have been created by default cannot be rolled over.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106420">
+<p class="subhead2">Obtaining lag reports</p>
+<p>You can obtain a variety of lag reports with the following options:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-46F4DF3C-06D7-4024-B7C9-ABF70F9D5DDE"><!-- --></a><code class="codeph">LAGSTATS</code> <span class="italic"><code class="codeph">option</code></span></dt>
+<dd>
+<p>Collects and optionally reports lag <a id="d10317e1857" class="indexterm-anchor"></a><a id="d10317e1863" class="indexterm-anchor"></a><a id="d10317e1869" class="indexterm-anchor"></a>statistics. The options are the same as those in the <code class="codeph">LAGSTATS</code> parameter for Replicat. This <code class="codeph">LAGSTATS</code> specification replaces any previous <code class="codeph">LAGSTATS</code> entry.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-0F35FE30-6369-4516-B169-2E449772238B"><!-- --></a><code class="codeph">LAGSNAPSHOT</code></dt>
+<dd>
+<p>Outputs a report regarding current statistics to the screen and to the report file. To generate this report, set up <code class="codeph">LAGSNAPSHOT</code>, either through the parameter file or dynamically using <code class="codeph">SEND</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-C526D4B2-95B7-4608-8358-E417039F856D"><!-- --></a><code class="codeph">LAGREPORTON</code></dt>
+<dd>
+<p>Generates a report for each lag interval.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-7DE2E9A8-D806-45E0-97B7-7A6DD5D38963"><!-- --></a><code class="codeph">LAGREPORTOFF</code></dt>
+<dd>
+<p>Turns off automatic reporting, but continues to collect data.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-8A072ECC-EF7D-413C-ACD0-6BEFD3E8F33D"><!-- --></a><code class="codeph">LAGOFF</code></dt>
+<dd>
+<p>Turns off lag statistics.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106448">
+<p class="subhead2">Setting and viewing parameters</p>
+<p>You can set and view the settings for certain parameters.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-428A60EB-679C-4787-B4C4-80D040FA4D07"><!-- --></a><code class="codeph">GETGROUPTRANSOPS</code></dt>
+<dd>
+<p>Outputs the current number of <a id="d10317e1932" class="indexterm-anchor"></a>operations that are grouped together for processing.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-F2FB2F18-40ED-4274-9F38-EE27A50C6590"><!-- --></a><code class="codeph">SETGROUPTRANSOPS</code> <span class="italic"><code class="codeph">number</code></span></dt>
+<dd>
+<p>Sets the number of <a id="d10317e1950" class="indexterm-anchor"></a>operations that are to be grouped to the <span class="italic"><code class="codeph">number</code></span> value.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-6685BAD5-944C-4BA9-9377-81E36FEA2FA7"><!-- --></a><code class="codeph">GETMAXTRANSOPS</code></dt>
+<dd>
+<p>Outputs the maximum number of operations that are currently allowed for a transaction.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-31A6CA90-9686-43EA-BD9F-15CD2C227325"><!-- --></a><code class="codeph">SETMAXTRANSOPS</code> <span class="italic"><code class="codeph">number</code></span></dt>
+<dd>
+<p>Sets the maximum number of operations that can be in a transaction to the <span class="italic"><code class="codeph">number</code></span> value.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-71985156-0139-412A-9FD2-562F11E6684F"><!-- --></a><code class="codeph">GETNEWWORKCHECKPOINTS</code></dt>
+<dd>
+<p>Outputs the network <a id="d10317e1988" class="indexterm-anchor"></a>checkpoint file locations, date of last update, and status information.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-5C4521EC-CD5A-4FF9-82E8-2C67673D2ACD"><!-- --></a><code class="codeph">HANDLECOLLISIONS</code> <span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p>Directs Replicat to apply <a id="d10317e2004" class="indexterm-anchor"></a><a id="d10317e2008" class="indexterm-anchor"></a><code class="codeph">HANDLECOLLISIONS</code> logic. This can also be specified as a startup parameter in the Replicat parameter file. The <span class="italic"><code class="codeph">file_name</code></span> option can be used with or without wildcards to include one or more files. If no <span class="italic"><code class="codeph">file_name</code></span> is specified, <code class="codeph">HANDLECOLLISIONS</code> will be turned on for all.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-FFA65639-DB4D-4D33-B05B-EBF5F04E710B"><!-- --></a><code class="codeph">NOHANDLECOLLISIONS</code> <span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p>Directs Replicat to stop applying <code class="codeph">HANDLECOLLISIONS</code> logic. The <span class="italic"><code class="codeph">file_name</code></span> option can be used with or without wildcards to specify one or more files. If no <span class="italic"><code class="codeph">file_name</code></span> is specified, <code class="codeph">HANDLECOLLISIONS</code> will be turned off for all.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-132ED38F-0013-41FA-A6E0-982F39E7B050"><!-- --></a><code class="codeph">REPORT HANDLECOLLISIONS</code></dt>
+<dd>
+<p>Outputs the status (<code class="codeph">ON</code> or <code class="codeph">OFF</code>) of the <code class="codeph">HANDLECOLLISIONS</code> flag for each file or table.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-D9036943-F516-4162-A948-13AE62942EFA"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>This example requests the number of operations being grouped for all Replicats.</p>
+<pre dir="ltr">
+SEND REP *, GETGROUPTRANSOPS
+ 
+</pre>
+<p>The Replicats return:</p>
+<pre dir="ltr">
+GGRLOG     GROUPTRANSOPS is 50
+REPSQL     GROUPTRANSOPS is 100
+</pre></dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-5C5F6D6B-DC17-45BC-A8FD-D3DB4307C89B"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>This example sets the maximum number of operations that can be in a transaction to 1000.</p>
+<pre dir="ltr">
+SEND REP REQSQL, SETMAXTRANSOPS 1000
+</pre>
+<p>Replicat returns:</p>
+<pre dir="ltr">
+MAXTRANSOPS was set to 1000
+</pre></dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-41C09D35-DEE2-473D-BFB6-702B42FFE33B"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following command requests information on network checkpoint files.</p>
+<pre dir="ltr">
+SEND REPLICAT REP01 GETNETWORKCHECKPOINTS
+</pre>
+<p>This returns a display similar to:</p>
+<pre dir="ltr">
+Network Checkpoints&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Entries 3, Table Size 16
+Filename &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;Updated &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Fnum &ensp;Err &ensp;State
+----------------------------------- -------------------- ---- ---- -----
+\NY.$DATA01.GGS.REPCTXT &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;2010/01/08 10:43:28&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;2&ensp;&ensp;&ensp;&ensp;0
+\LA.$DATA03.GGS.REPCTXT &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;2010/01/08 10:43:28&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;3&ensp;&ensp;&ensp;&ensp;0
+\SEA.$DATA01.GGS.REPCTXT &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;2010/01/08 10:43:28&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;4&ensp;&ensp;&ensp;&ensp;0
+</pre></dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-E957DE9E-1E00-4EEC-91B8-BF79D1B5B8AF"><!-- --></a>Example 4&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>Sending the first of the following commands turns <code class="codeph">HANDLECOLLISIONS</code> <code class="codeph">ON</code> for <code class="codeph">TCUSTMER</code>. The second requests a report on the settings for <code class="codeph">HANDLECOLLISIONS</code>.</p>
+<pre dir="ltr">
+SEND REQSQL, HANDLECOLLISIONS \NY.$DATA4.GGSTAR.TCUSTMER
+SEND REQSQL, REPORT HANDLECOLLISIONS
+</pre>
+<p>The report will be similar to:</p>
+<pre dir="ltr">
+Reading \NY.$DATA4.GGSDAT.ET000000, Current RBA       2280
+Report at 2010-11-10 09:02:39 (Current settings)
+Table/File                                            HANDLECOLLISIONS
+MAP \LA.$DATA4.GGSSOU.TCUSTMER
+       to \NY.$DATA4.GGSTAR.TCUSTMER &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;On
+MAP \LA.$DATA4.GGSSOU.TCUSTORD
+       to \NY.$DATA4.GGSTAR.TCUSTORD &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Off
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__I1106519">
+<p class="subhead2">Stopping the process</p>
+<p>You can stop the current process using either the <code class="codeph">FORCESTOP</code> or <code class="codeph">STOP</code> option.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-28BB906A-0E2D-4B27-A3D5-BAD7388B1748"><!-- --></a><code class="codeph">FORCESTOP</code></dt>
+<dd>
+<p>Instructs Replicat to rollback the pending transaction and stop the process immediately.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-E0BE9372-B2EC-45D5-BA15-565535C11ABC__GUID-DDBA1DE7-EE8F-45B3-B16D-8157E3E457D3"><!-- --></a><code class="codeph">STOP</code></dt>
+<dd>
+<p>Terminates Replicat gracefully. This command is preferable to stopping Replicat from TACL or other command prompt, which results in an <code class="codeph">ABEND</code> status.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF150"></a>
+<div class="props_rev_3"><a id="GUID-48DF6E40-3980-4765-B8DC-0E91D15ADF85"></a>
+<h2 id="GNSRF-GUID-48DF6E40-3980-4765-B8DC-0E91D15ADF85" class="sect2"><span class="enumeration_section">1.3.9</span> START REPLICAT</h2>
+<div>
+<div class="section">
+<p>Use <a id="d10317e2180" class="indexterm-anchor"></a><a id="d10317e2184" class="indexterm-anchor"></a><code class="codeph">START REPLICAT</code> to begin a Replicat process. Manager receives the request to start and monitor the process.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+START REPLICAT <span class="italic">group_name</span>
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-48DF6E40-3980-4765-B8DC-0E91D15ADF85__GUID-0664A035-9494-40A9-A3EF-F5AA97C91BE4"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>The group name. You can use wildcards to specify a set of group names, such as, <code class="codeph">*</code> or <code class="codeph">*FIN*</code>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF151"></a>
+<div class="props_rev_3"><a id="GUID-B3C74139-826E-4465-8622-5A612F8E1FAF"></a>
+<h2 id="GNSRF-GUID-B3C74139-826E-4465-8622-5A612F8E1FAF" class="sect2"><span class="enumeration_section">1.3.10</span> STATUS REPLICAT</h2>
+<div>
+<div class="section">
+<p>Use <a id="d10317e2236" class="indexterm-anchor"></a><a id="d10317e2240" class="indexterm-anchor"></a><a id="d10317e2244" class="indexterm-anchor"></a><code class="codeph">STATUS REPLICAT</code> to determine whether Replicat processes are running.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+STATUS REPLICAT <span class="italic">group_name</span> [, <a id="d10317e2262" class="indexterm-anchor"></a>DETAIL | <a id="d10317e2267" class="indexterm-anchor"></a>TASKS | <a id="d10317e2272" class="indexterm-anchor"></a>ALLPROCESSES]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-B3C74139-826E-4465-8622-5A612F8E1FAF__GUID-AE5538DB-0BCC-4244-842B-E52E30F363A6"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>The group name. You can use wildcards to specify a set of group names, such as, <code class="codeph">*</code> or <code class="codeph">*FIN*</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-B3C74139-826E-4465-8622-5A612F8E1FAF__GUID-621D1269-4FC1-4AB1-A7A2-E5019DD31284"><!-- --></a><code class="codeph">DETAIL</code></dt>
+<dd>
+<p>If <code class="codeph">DETAIL</code> is specified, (<code class="codeph">STATUS REPLICAT *, DETAIL</code>) the audit trails required by the Replicat group are also displayed. Output consists of the locations of required audit trails, whether they are on disk or tape, and whether they still exist.</p>
+<p><code class="codeph">DETAIL</code> is useful for determining:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Whether audit must be restored from tape before the group is run</p>
+</li>
+<li>
+<p>Which Replicat groups are causing Manager to tie up TMF resources</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-B3C74139-826E-4465-8622-5A612F8E1FAF__GUID-F32023D5-BB0E-4530-8BCF-B4196D105D95"><!-- --></a><code class="codeph">TASKS | ALLPROCESSES</code></dt>
+<dd>
+<p>Provides status on tasks or all processes that are running. Specify either <code class="codeph">TASKS</code> or <code class="codeph">ALLPROCESSES</code>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF152"></a>
+<div class="props_rev_3"><a id="GUID-886A4138-5B6B-43FE-B079-70BE837BD381"></a>
+<h2 id="GNSRF-GUID-886A4138-5B6B-43FE-B079-70BE837BD381" class="sect2"><span class="enumeration_section">1.3.11</span> STOP REPLICAT</h2>
+<div>
+<div class="section">
+<p><a id="d10317e2361" class="indexterm-anchor"></a><a id="d10317e2365" class="indexterm-anchor"></a><a id="d10317e2369" class="indexterm-anchor"></a><code class="codeph">STOP REPLICAT</code> stops a Replicat process gracefully. Using this command lets you make configuration changes without affecting the operation of future runs, and ensures that Manager will not restart the process.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+STOP REPLICAT <span class="italic">group_name</span> [, WAIT [<span class="italic">seconds</span>] | ATEND |!]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-886A4138-5B6B-43FE-B079-70BE837BD381__GUID-8BF072A8-731C-45EB-B4E7-7178050F4BFE"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>The group name. You can use wildcards to specify a set of group names, such as, <code class="codeph">*</code> or <code class="codeph">*FIN*</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-886A4138-5B6B-43FE-B079-70BE837BD381__GUID-61FF6E99-043D-41AA-B627-A39003332F99"><!-- --></a><code class="codeph">WAIT</code> <span class="italic"><code class="codeph">seconds</code></span></dt>
+<dd>
+<p>GGSCI waits for the process to terminate before issuing the next prompt. When a value is specified for <span class="italic"><code class="codeph">seconds</code></span>, GGSCI waits up to that many seconds before returning control to the user. If you do not specify <code class="codeph">WAIT</code>, GGSCI issues the next prompt immediately.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-886A4138-5B6B-43FE-B079-70BE837BD381__GUID-DE6A0A5C-156C-4933-9091-35170CB568CB"><!-- --></a><code class="codeph">ATEND</code></dt>
+<dd>
+<p>Instructs Replicat to terminate when it reaches end-of-file in the last sequence of trails. Replicat also terminates if the trail is no longer available (due to network outage, or other condition). <code class="codeph">ATEND</code> guarantees that all outstanding records have been processed.</p>
+<p>The current transaction is rolled back if the trail contains only part of the last transaction. If the last transaction was part of a grouped transaction (<code class="codeph">GROUPTRANSOPS</code> parameter) and the source trail is available, the individual transactions are replayed up to the point where Replicat is quitting.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-886A4138-5B6B-43FE-B079-70BE837BD381__GUID-998F7420-1B2E-4A28-9F54-66A5AA94F168"><!-- --></a><code class="codeph">!</code></dt>
+<dd>
+<p>Stops Replicat even in the middle of a transaction. Use this option to terminate long running transactions. As with <code class="codeph">ATEND</code>, a grouped transaction is rolled back but the individual transactions are replayed if the trail is available.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-FF18DD13-65C0-4EA7-824E-D4E57270D6D9.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-74F8C46A-9704-4D35-9970-8343A48350BB.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

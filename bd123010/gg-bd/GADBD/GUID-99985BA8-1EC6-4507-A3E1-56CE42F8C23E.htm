@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the Java Database Connectivity Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2016-12-07T16:58:45Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Integrating Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E79598-01" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="../index.htm" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-EE8CD5B5-8749-4906-B50C-EE33E36AC984.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-084CCCD6-8D13-43C0-A6C4-4D2AC8B8FA86.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="GADBD.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="GADBD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E"></a> <span id="PAGE" style="display:none;">10/19</span> <!-- End Header -->
+<script  >
+//<![CDATA[
+window.name='GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E'
+//]]>
+</script> <script  >
+    function footdisplay(footnum,footnote) {
+    var msg = window.open('', 'NewWindow' + footnum,
+        'directories=no,height=120,location=no,menubar=no,resizable=yes,' +
+        'scrollbars=yes,status=no,toolbar=no,width=598');
+    msg.document.open('text/html');
+    msg.document.write('<!DOCTYPE html ');
+    msg.document.write('PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ');
+
+    msg.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
+    msg.document.write('<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>');
+    msg.document.write('Footnote&amp;nbsp; ' + footnum);
+    msg.document.write('<\/title><meta http-equiv="Content-Type" ');
+    msg.document.write('content="text/html; charset=utf-8" />');
+    msg.document.write('');
+    msg.document.write('<style> <![CDATA[ ');
+    msg.document.write('h1 {text-align: center; font-size: 14pt;}');
+    msg.document.write('fieldset {border: none;}');
+    msg.document.write('form {text-align: center;}');
+    msg.document.write(' ]]\u003e <\/style>');
+    msg.document.write('<\/head><body><h1>Footnote&nbsp; ' + footnum + '<\/h1><p>');
+    msg.document.write(footnote);
+    msg.document.write('<\/p><form action="" method="post"><fieldset>');
+    msg.document.write('<input type="button" value="OK" ');
+    msg.document.write('onclick="window.close();" />');
+    msg.document.write('<\/fieldset><\/form><\/body><\/html>');
+    msg.document.close();
+    msg.focus();
+}
+</script><noscript>
+<p>The script content on this page is for navigation purposes only and does not alter the content in any way.</p>
+</noscript>
+<h1 id="GADBD-GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E" class="sect1"><span class="enumeration_chapter">7</span> Using the Java Database Connectivity Handler</h1>
+<div>
+<p>This chapter explains the Java Database Connectivity (JDBC) Handler and includes examples so that you can understand this functionality.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-7B4CB886-A45F-4E11-866B-1E4D955AADD8">Overview</a></strong><br />
+The Generic Java Database Connectivity (JDBC) Handler provides the ability to replicate source transactional data to a target or database using a JDBC interface and is applicable for targets that support JDBC connectivity.</li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-9A6C43F8-3C25-4A23-B23E-BCA267509D6A">Detailed Functionality</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-1A114D58-3CEE-4E1A-99C0-38AEE1DAC682">Setting Up and Running the JDBC Handler</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-380C92F7-E2DA-486E-B69D-1EDDC19803A5">Sample Configurations</a></strong><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-7B4CB886-A45F-4E11-866B-1E4D955AADD8"></a>
+<h2 id="GADBD-GUID-7B4CB886-A45F-4E11-866B-1E4D955AADD8" class="sect2"><span class="enumeration_section">7.1</span> Overview</h2>
+<div>
+<p>The Generic Java Database Connectivity (JDBC) Handler provides the ability to replicate source transactional data to a target or database using a JDBC interface and is applicable for targets that support JDBC connectivity.</p>
+<div class="section">
+<p>Using the JDBC API, you can access virtually any data source, from relational databases to spreadsheets and flat files. JDBC technology also provides a common base on which the JDBC Handler was built. The JDBC handler with the JDBC metadata provider provide additional capability to use Replicat features, such as column mapping and column functions, see <a href="GUID-F90702A9-0FFB-42D2-9261-89E2BB952C65.htm#GUID-F90702A9-0FFB-42D2-9261-89E2BB952C65">Using the Metadata Provider</a></p>
+<p>See the Oracle Java JDBC API Documentation website for more information:</p>
+<p><a href="http://docs.oracle.com/javase/8/docs/technotes/guides/jdbc/index.html" target="_blank">http://docs.oracle.com/javase/8/docs/technotes/guides/jdbc/index.html</a></p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-9A6C43F8-3C25-4A23-B23E-BCA267509D6A"></a>
+<h2 id="GADBD-GUID-9A6C43F8-3C25-4A23-B23E-BCA267509D6A" class="sect2"><span class="enumeration_section">7.2</span> Detailed Functionality</h2>
+<div>
+<div class="section">
+<p>The JDBC Handler replicates source transactional data to a target (or database) using a JDBC interface.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-40642B9B-5759-4CD2-B9D2-6F4AE4986E5B">Single Operation Mode</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-1228FA26-93B5-4158-A52E-349E538D5F99">Oracle Database Data Types</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-92E2572C-995F-4B72-ACAA-D57D1DF89BAC">MySQL Database Data Types</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-7332A860-81A3-4770-A04A-4CFAECCB4024">Netezza Database Data Types</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-3049E0E3-0B50-42A8-AA62-4283AACDFEE3">Redshift Database Data Types</a></strong><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-40642B9B-5759-4CD2-B9D2-6F4AE4986E5B"></a>
+<h3 id="GADBD-GUID-40642B9B-5759-4CD2-B9D2-6F4AE4986E5B" class="sect3"><span class="enumeration_section">7.2.1</span> Single Operation Mode</h3>
+<div>
+<div class="section">
+<p>The JDBC Handler performs SQL operations on every single trail record (row operation) when the trail record is processed by the handler. The JDBC Handler does <span class="italic">not</span> use the <code>BATCHSQL</code> feature of the JDBC API to batch operations.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-1228FA26-93B5-4158-A52E-349E538D5F99"></a>
+<h3 id="GADBD-GUID-1228FA26-93B5-4158-A52E-349E538D5F99" class="sect3"><span class="enumeration_section">7.2.2</span> Oracle Database Data Types</h3>
+<div>
+<div class="section">
+<p>The following column data types are supported for Oracle Database targets:</p>
+<ul class="simple">
+<li><code>NUMBER</code></li>
+<li><code>DECIMAL</code></li>
+<li><code>INTEGER</code></li>
+<li><code>FLOAT</code></li>
+<li><code>REAL</code></li>
+<li><code>DATE</code></li>
+<li><code>TIMESTAMP</code></li>
+<li><code>INTERVAL YEAR TO MONTH</code></li>
+<li><code>INTERVAL DAY TO SECOND</code></li>
+<li><code>CHAR</code></li>
+<li><code>VARCHAR2</code></li>
+<li><code>NCHAR</code></li>
+<li><code>NVARCHAR2</code></li>
+<li><code>RAW</code></li>
+<li><code>CLOB</code></li>
+<li><code>NCLOB</code></li>
+<li><code>BLOB</code></li>
+<li><code>TIMESTAMP WITH TIMEZONE</code><a id="fn_1" href="#fn_1" onclick='footdisplay(1,"Time zone with a two digit hour and a two digit minimum offset. ")'><sup>Foot&nbsp;1</sup></a></li>
+<li><code>TIME WITH TIMEZONE</code><a id="fn_2" href="#fn_2" onclick='footdisplay(2,"Time zone with a two digit hour and a two digit minimum offset. ")'><sup>Foot&nbsp;2</sup></a></li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-92E2572C-995F-4B72-ACAA-D57D1DF89BAC"></a>
+<h3 id="GADBD-GUID-92E2572C-995F-4B72-ACAA-D57D1DF89BAC" class="sect3"><span class="enumeration_section">7.2.3</span> MySQL Database Data Types</h3>
+<div>
+<div class="section">
+<p>The following column data types are supported for MySQL Database targets:</p>
+<ul class="simple">
+<li><code>INT</code></li>
+<li><code>REAL</code></li>
+<li><code>FLOAT</code></li>
+<li><code>DOUBLE</code></li>
+<li><code>NUMERIC</code></li>
+<li><code>DATE</code></li>
+<li><code>DATETIME</code></li>
+<li><code>TIMESTAMP</code></li>
+<li><code>TINYINT</code></li>
+<li><code>BOOLEAN</code></li>
+<li><code>SMALLINT</code></li>
+<li><code>BIGINT</code></li>
+<li><code>MEDIUMINT</code></li>
+<li><code>DECIMAL</code></li>
+<li><code>BIT</code></li>
+<li><code>YEAR</code></li>
+<li><code>ENUM</code></li>
+<li><code>CHAR</code></li>
+<li><code>VARCHAR</code></li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-7332A860-81A3-4770-A04A-4CFAECCB4024"></a>
+<h3 id="GADBD-GUID-7332A860-81A3-4770-A04A-4CFAECCB4024" class="sect3"><span class="enumeration_section">7.2.4</span> Netezza Database Data Types</h3>
+<div>
+<div class="section">
+<p>The following column data types are supported for Netezza database targets:</p>
+<ul class="simple">
+<li><code>byteint</code></li>
+<li><code>smallint</code></li>
+<li><code>integer</code></li>
+<li><code>bigint</code></li>
+<li><code>numeric(p,s)</code></li>
+<li><code>numeric(p)</code></li>
+<li><code>float(p)</code></li>
+<li><code>Real</code></li>
+<li><code>double</code></li>
+<li><code>char</code></li>
+<li><code>varchar</code></li>
+<li><code>nchar</code></li>
+<li><code>nvarchar</code></li>
+<li><code>date</code></li>
+<li><code>time</code></li>
+<li><code>Timestamp</code></li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-3049E0E3-0B50-42A8-AA62-4283AACDFEE3"></a>
+<h3 id="GADBD-GUID-3049E0E3-0B50-42A8-AA62-4283AACDFEE3" class="sect3"><span class="enumeration_section">7.2.5</span> Redshift Database Data Types</h3>
+<div>
+<div class="section">
+<p>The following column data types are supported for Redshift database targets:</p>
+<ul class="simple">
+<li><code>SMALLINT</code>&nbsp;</li>
+<li><code>INTEGER</code></li>
+<li><code>BIGINT</code></li>
+<li><code>DECIMAL</code></li>
+<li><code>REAL</code></li>
+<li><code>DOUBLE</code></li>
+<li><code>CHAR</code></li>
+<li><code>VARCHAR</code></li>
+<li><code>DATE</code></li>
+<li><code>TIMESTAMP</code></li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-1A114D58-3CEE-4E1A-99C0-38AEE1DAC682"></a>
+<h2 id="GADBD-GUID-1A114D58-3CEE-4E1A-99C0-38AEE1DAC682" class="sect2"><span class="enumeration_section">7.3</span> Setting Up and Running the JDBC Handler</h2>
+<div>
+<div class="section">
+<p>Instructions for configuring the JDBC Handler components and running the handler are described in the following sections.</p>
+<div class="infobox-note" id="GUID-1A114D58-3CEE-4E1A-99C0-38AEE1DAC682__GUID-F25E4126-8F97-4600-A700-6EAE0BCFA09A">
+<p class="notep1">Note:</p>
+<p>You should use the JDBC Metadata Provider with the JDBC Handler to obtain better data type mapping, column mapping, and column function features.</p>
+</div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-2FB75B4A-153A-4E6C-803A-7E7A398EF379">Java Classpath</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-7F845603-C3AC-4B7B-8CB1-DEBE1598D60C">Handler Configuration</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-AE088F5A-BD67-45EC-837D-CB4DE03C3E6E">Statement Caching</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-1954E290-341B-4971-94A6-307EA346A117">Setting Up Error Handling</a></strong><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-2FB75B4A-153A-4E6C-803A-7E7A398EF379"></a>
+<h3 id="GADBD-GUID-2FB75B4A-153A-4E6C-803A-7E7A398EF379" class="sect3"><span class="enumeration_section">7.3.1</span> Java Classpath</h3>
+<div>
+<div class="section">
+<p>The JDBC Java Driver location must be included in the class path of the handler using the <code>gg.classpath</code> property.</p>
+<p>For example, the configuration for a MySQL database could be:</p>
+<pre >
+gg.classpath= /path/to/jdbc/driver/jar/mysql-connector-java-5.1.39-bin.jar
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-7F845603-C3AC-4B7B-8CB1-DEBE1598D60C"></a>
+<h3 id="GADBD-GUID-7F845603-C3AC-4B7B-8CB1-DEBE1598D60C" class="sect3"><span class="enumeration_section">7.3.2</span> Handler Configuration</h3>
+<div>
+<div class="section">
+<p>You configure the JDBC Handler operation using the properties file. To enable the selection of the JDBC handler, one must first configure the handler type by specifying <code>gg.handler.<span class="codeinlineitalic">name</span>.type=jdbc</code> and the other JDBC properties as follows:</p>
+<div class="tblformal" id="GUID-7F845603-C3AC-4B7B-8CB1-DEBE1598D60C__GUID-7F937A4C-7E55-4BB6-867A-448842C74CB7">
+<p class="titleintable">Table 7-1 JDBC Handler Configuration Properties</p>
+<table class="cellalignment52" title="JDBC Handler Configuration Properties" summary="Five column table describing the JDBC Handler Configuration.">
+<thead align="left">
+<tr>
+<th class="cellalignment55" id="d19919e603">Properties</th>
+<th class="cellalignment56" id="d19919e606">Required/ Optional</th>
+<th class="cellalignment57" id="d19919e609">Legal Values</th>
+<th class="cellalignment58" id="d19919e612">Default</th>
+<th class="cellalignment59" id="d19919e615">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment55" id="d19919e620" headers="d19919e603">
+<p><code>gg.handler.</code><span class="italic"><code>name.</code></span><code>type</code></p>
+</td>
+<td class="cellalignment56" headers="d19919e620 d19919e606">
+<p>Required</p>
+</td>
+<td class="cellalignment57" headers="d19919e620 d19919e609">
+<p><code>jdbc</code></p>
+</td>
+<td class="cellalignment58" headers="d19919e620 d19919e612">
+<p>None</p>
+</td>
+<td class="cellalignment59" headers="d19919e620 d19919e615">
+<p>Selects the JDBC Handler for streaming change data capture into JDBC.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment55" id="d19919e643" headers="d19919e603">
+<p><code>gg.handler.</code><span class="italic"><code>name.</code></span><code>connectionURL</code></p>
+</td>
+<td class="cellalignment56" headers="d19919e643 d19919e606">
+<p>Required</p>
+</td>
+<td class="cellalignment57" headers="d19919e643 d19919e609">
+<p>A valid JDBC connection URL.</p>
+</td>
+<td class="cellalignment58" headers="d19919e643 d19919e612">
+<p>None</p>
+</td>
+<td class="cellalignment59" headers="d19919e643 d19919e615">
+<p>The target specific JDBC connection URL.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment55" id="d19919e665" headers="d19919e603">
+<p><code>gg.handler.</code><span class="italic"><code>name.</code></span><code>DriverClass</code></p>
+</td>
+<td class="cellalignment56" headers="d19919e665 d19919e606">
+<p>Target database dependent.</p>
+</td>
+<td class="cellalignment57" headers="d19919e665 d19919e609">
+<p>The target specific JDBC driver class name.</p>
+</td>
+<td class="cellalignment58" headers="d19919e665 d19919e612">
+<p>None</p>
+</td>
+<td class="cellalignment59" headers="d19919e665 d19919e615">
+<p>The target specific JDBC driver class name.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment55" id="d19919e687" headers="d19919e603">
+<p><code>gg.handler.</code><span class="italic"><code>name.</code></span><code>userName</code></p>
+</td>
+<td class="cellalignment56" headers="d19919e687 d19919e606">
+<p>Target database dependent.</p>
+</td>
+<td class="cellalignment57" headers="d19919e687 d19919e609">
+<p>A valid user name.</p>
+</td>
+<td class="cellalignment58" headers="d19919e687 d19919e612">
+<p>None</p>
+</td>
+<td class="cellalignment59" headers="d19919e687 d19919e615">
+<p>The user name used for the JDBC connection to the target database.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment55" id="d19919e709" headers="d19919e603">
+<p><code>gg.handler.</code><span class="italic"><code>name.</code></span><code>password</code></p>
+</td>
+<td class="cellalignment56" headers="d19919e709 d19919e606">
+<p>Target database dependent.</p>
+</td>
+<td class="cellalignment57" headers="d19919e709 d19919e609">
+<p>A valid password.</p>
+</td>
+<td class="cellalignment58" headers="d19919e709 d19919e612">
+<p>None</p>
+</td>
+<td class="cellalignment59" headers="d19919e709 d19919e615">
+<p>The password used for the JDBC connection to the target database.</p>
+</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="cellalignment53" id="d19919e738">
+<p><code>gg.handler.</code><span class="italic"><code>name.</code></span><code>maxActiveStatements</code></p>
+</td>
+<td class="cellalignment53" headers="d19919e738">
+<p>Optional</p>
+</td>
+<td class="cellalignment53" headers="d19919e738">
+<p>Unsigned integer.</p>
+</td>
+<td class="cellalignment53" headers="d19919e738">
+<p>Target database dependent</p>
+</td>
+<td class="cellalignment53" headers="d19919e738">
+<p>If this property is not specified, the JDBC Handler queries the target dependent database metadata indicating maximum number of active prepared SQL statements. Some targets do not provide this metadata so then the default value of 256 active SQL statements is used.</p>
+<p>If this property is specified, the JDBC Handler will not query the target database for such metadata and use the property value provided in the configuration.&nbsp;</p>
+<p>In either case, when the JDBC handler finds that the total number of active SQL statements is about to be exceeded, the oldest SQL statement is removed from the cache to add one new SQL statement.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-AE088F5A-BD67-45EC-837D-CB4DE03C3E6E"></a>
+<h3 id="GADBD-GUID-AE088F5A-BD67-45EC-837D-CB4DE03C3E6E" class="sect3"><span class="enumeration_section">7.3.3</span> Statement Caching</h3>
+<div>
+<div class="section">
+<p>Typically, JDBC driver implementations allow multiple statements to be cached in order to speed up the execution of the DML operations. This avoids repreparing the statement for operations that share the same profile or template.</p>
+<p>The JDBC Handler uses statement caching to speed up the process and caches as many statements as supported by the underlying JDBC driver. The cache is implemented by using an <span class="bold">LRU cache</span> where the <span class="bold">key</span> is the profile of the operation (stored internally in the memory as an instance of <code>StatementCacheKey</code> class), and the <span class="bold">value</span> is the <code>PreparedStatement</code> object itself.</p>
+<p>A <code>StatementCacheKey</code> object contains the following information for the various DML profiles that are supported in the JDBC Handler:</p>
+<div class="tblformal" id="GUID-AE088F5A-BD67-45EC-837D-CB4DE03C3E6E__GUID-FD3C191B-5D03-4614-9ABC-A7908A7BBA7A">
+<table class="cellalignment60">
+<thead align="left">
+<tr>
+<th class="cellalignment54" rowspan="1" colspan="1" id="d19919e809">DML operation type</th>
+<th class="cellalignment54" rowspan="1" colspan="1" id="d19919e812">StatementCacheKey contains a tuple of:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment54" rowspan="1" colspan="1" id="d19919e819" headers="d19919e809">
+<p><code>INSERT</code></p>
+</td>
+<td class="cellalignment54" rowspan="1" colspan="1" headers="d19919e819 d19919e812">
+<p>(table name, operation type, ordered after-image column indices)</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment54" rowspan="1" colspan="1" id="d19919e827" headers="d19919e809">
+<p><code>UPDATE</code></p>
+</td>
+<td class="cellalignment54" rowspan="1" colspan="1" headers="d19919e827 d19919e812">
+<p>(table name, operation type, ordered after-image column indices)</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment54" rowspan="1" colspan="1" id="d19919e835" headers="d19919e809">
+<p><code>DELETE</code></p>
+</td>
+<td class="cellalignment54" rowspan="1" colspan="1" headers="d19919e835 d19919e812">
+<p>(table name, operation type)</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment54" rowspan="1" colspan="1" id="d19919e843" headers="d19919e809">
+<p><code>TRUNCATE</code></p>
+</td>
+<td class="cellalignment54" rowspan="1" colspan="1" headers="d19919e843 d19919e812">
+<p>(table name, operation type)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-1954E290-341B-4971-94A6-307EA346A117"></a>
+<h3 id="GADBD-GUID-1954E290-341B-4971-94A6-307EA346A117" class="sect3"><span class="enumeration_section">7.3.4</span> Setting Up Error Handling</h3>
+<div>
+<div class="section">
+<p>The JDBC Handler supports using the <code>REPERROR</code> and <code>HANDLECOLLISIONS</code> Oracle GoldenGate parameters, see <a class="olink GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E79629-01&amp;id=GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB"><span id="GUID-1954E290-341B-4971-94A6-307EA346A117__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></a>.</p>
+<p>Additional configuration is required in the handler properties file to define the mapping of different error codes for the target database as follows:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-1954E290-341B-4971-94A6-307EA346A117__GUID-33E1F0E6-AE08-4C15-81AD-DF4ED80D435F"><!-- --></a><code>gg.error.duplicateErrorCodes</code></dt>
+<dd>
+<p>A comma-separated list of error codes defined in the target database that indicates a duplicate key violation error. Most the JDBC drivers return a valid error code so <code>REPERROR</code> actions can be configured based on the error code configured. For example:</p>
+&nbsp;&nbsp;
+<pre dir="ltr">
+gg.error.duplicateErrorCodes=1062,1088,1092,1291,1330,1331,1332,1333
+</pre></dd>
+<dt class="dlterm"><a id="GUID-1954E290-341B-4971-94A6-307EA346A117__GUID-491AFF20-F58C-4AE9-8CF4-6E2DD3D73499"><!-- --></a><code>gg.error.notFoundErrorCodes</code></dt>
+<dd>
+<p>A comma-separated list of error codes that indicate missed <code>DELETE</code> or <code>UPDATE</code> operations on target database.</p>
+<p>In some cases, the JDBC driver errors when an <code>UPDATE</code> or <code>DELETE</code> operation does not modify any rows in the target database so no additional handling is required by the JDBC Handler.</p>
+<p>Most JDBC drivers do not return an error when a <code>DELETE</code> or <code>UPDATE</code> is affecting zero rows so the JDBC handler automatically detects a missed <code>UPDATE</code> or <code>DELETE</code> operation and triggers an error to indicate a not-found error to the Replicat process. The Replicat process can then execute the specified <code>REPERROR</code> action.</p>
+<p>The default error code used by the handler is&nbsp;the value zero. When you configure this property to a non-zero value, the configured&nbsp;error code value is used when the handler triggers a not found error. For example:</p>
+<pre dir="ltr">
+gg.error.notFoundErrorCodes=1222
+</pre></dd>
+<dt class="dlterm"><a id="GUID-1954E290-341B-4971-94A6-307EA346A117__GUID-13589A55-08A1-4CFE-B6A8-0A089CF0B916"><!-- --></a><code>gg.error.deadlockErrorCodes</code></dt>
+<dd>
+<p>A comma-separated list of error codes that indicate a deadlock error in the target database. For example:</p>
+<pre dir="ltr">
+gg.error.deadlockErrorCodes=1213
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Sample Oracle Database Target Error Codes</p>
+<pre dir="ltr">
+gg.error.duplicateErrorCodes=1 
+gg.error.notFoundErrorCodes=0 
+gg.error.deadlockErrorCodes=60
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Sample MySQL Database Target Error Codes</p>
+<pre dir="ltr">
+gg.error.duplicateErrorCodes=1022,1062 
+gg.error.notFoundErrorCodes=1329 
+gg.error.deadlockErrorCodes=1213,1614
+</pre></div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-380C92F7-E2DA-486E-B69D-1EDDC19803A5"></a>
+<h2 id="GADBD-GUID-380C92F7-E2DA-486E-B69D-1EDDC19803A5" class="sect2"><span class="enumeration_section">7.4</span> Sample Configurations</h2>
+<div>
+<p>The following sections contain sample configurations for the databases supported by the JDBC Handler from the Java Adapter properties file:</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-D96E3DB3-1B0D-42EB-98C9-83206236577D">Sample Oracle Database Target</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-8BF983FF-266D-45B6-9F49-E286D42218DC">Sample Oracle Database Target with JDBC Metadata Provider</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-FCE159AC-1C11-48B7-A7F4-77DE3B99570A">Sample MySQL Database Target</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-99985BA8-1EC6-4507-A3E1-56CE42F8C23E.htm#GUID-17CF56C8-E577-41E7-9B65-ABFE0BB9A9B3">Sample MySQL Database Target with JDBC Metadata Provider</a></strong><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-D96E3DB3-1B0D-42EB-98C9-83206236577D"></a>
+<h3 id="GADBD-GUID-D96E3DB3-1B0D-42EB-98C9-83206236577D" class="sect3"><span class="enumeration_section">7.4.1</span> Sample Oracle Database Target</h3>
+<div>
+<pre dir="ltr">
+gg.handlerlist=jdbcwriter
+gg.handler.jdbcwriter.type=jdbc
+
+#Handler properties for Oracle database target
+gg.handler.jdbcwriter.DriverClass=oracle.jdbc.driver.OracleDriver
+gg.handler.jdbcwriter.connectionURL=jdbc:oracle:thin:@&lt;DBServer address&gt;:1521:&lt;database name&gt;
+gg.handler.jdbcwriter.userName=&lt;dbuser&gt;
+gg.handler.jdbcwriter.password=&lt;dbpassword&gt;
+gg.classpath=/path/to/oracle/jdbc/driver/ojdbc5.jar
+goldengate.userexit.timestamp=utc
+goldengate.userexit.writers=javawriter
+javawriter.stats.display=TRUE
+javawriter.stats.full=TRUE
+gg.log=log4j
+gg.log.level=INFO
+gg.report.time=30sec
+javawriter.bootoptions=-Xmx512m -Xms32m -Djava.class.path=.:ggjava/ggjava.jar:./dirprm
+</pre></div>
+</div>
+<div class="props_rev_3"><a id="GUID-8BF983FF-266D-45B6-9F49-E286D42218DC"></a>
+<h3 id="GADBD-GUID-8BF983FF-266D-45B6-9F49-E286D42218DC" class="sect3"><span class="enumeration_section">7.4.2</span> Sample Oracle Database Target with JDBC Metadata Provider</h3>
+<div>
+<pre dir="ltr">
+gg.handlerlist=jdbcwriter
+gg.handler.jdbcwriter.type=jdbc
+
+#Handler properties for Oracle database target with JDBC Metadata provider
+gg.handler.jdbcwriter.DriverClass=oracle.jdbc.driver.OracleDriver
+gg.handler.jdbcwriter.connectionURL=jdbc:oracle:thin:@&lt;DBServer address&gt;:1521:&lt;database name&gt;
+gg.handler.jdbcwriter.userName=&lt;dbuser&gt;
+gg.handler.jdbcwriter.password=&lt;dbpassword&gt;
+gg.classpath=/path/to/oracle/jdbc/driver/ojdbc5.jar
+#JDBC Metadata provider for Oracle target
+gg.mdp.type=jdbc
+gg.mdp.ConnectionUrl=jdbc:oracle:thin:@&lt;DBServer address&gt;:1521:&lt;database name&gt;
+gg.mdp.DriverClassName=oracle.jdbc.driver.OracleDriver
+gg.mdp.UserName=&lt;dbuser&gt;
+gg.mdp.Password=&lt;dbpassword&gt;
+goldengate.userexit.timestamp=utc
+goldengate.userexit.writers=javawriter
+javawriter.stats.display=TRUE
+javawriter.stats.full=TRUE
+gg.log=log4j
+gg.log.level=INFO
+gg.report.time=30sec
+javawriter.bootoptions=-Xmx512m -Xms32m -Djava.class.path=.:ggjava/ggjava.jar:./dirprm
+</pre></div>
+</div>
+<div class="props_rev_3"><a id="GUID-FCE159AC-1C11-48B7-A7F4-77DE3B99570A"></a>
+<h3 id="GADBD-GUID-FCE159AC-1C11-48B7-A7F4-77DE3B99570A" class="sect3"><span class="enumeration_section">7.4.3</span> Sample MySQL Database Target</h3>
+<div>
+<pre dir="ltr">
+gg.handlerlist=jdbcwriter
+gg.handler.jdbcwriter.type=jdbc
+
+#Handler properties for MySQL database target
+gg.handler.jdbcwriter.DriverClass=com.mysql.jdbc.Driver
+gg.handler.jdbcwriter.connectionURL=jdbc:&lt;a target="_blank" href="mysql://"&gt;mysql://&lt;/a&gt;&lt;DBServer address&gt;:3306/&lt;database name&gt;
+gg.handler.jdbcwriter.userName=&lt;dbuser&gt;
+gg.handler.jdbcwriter.password=&lt;dbpassword&gt;
+gg.classpath=/path/to/mysql/jdbc/driver//mysql-connector-java-5.1.39-bin.jar
+
+goldengate.userexit.timestamp=utc
+goldengate.userexit.writers=javawriter
+javawriter.stats.display=TRUE
+javawriter.stats.full=TRUE
+gg.log=log4j
+gg.log.level=INFO
+gg.report.time=30sec
+javawriter.bootoptions=-Xmx512m -Xms32m -Djava.class.path=.:ggjava/ggjava.jar:./dirprm
+</pre></div>
+</div>
+<div class="props_rev_3"><a id="GUID-17CF56C8-E577-41E7-9B65-ABFE0BB9A9B3"></a>
+<h3 id="GADBD-GUID-17CF56C8-E577-41E7-9B65-ABFE0BB9A9B3" class="sect3"><span class="enumeration_section">7.4.4</span> Sample MySQL Database Target with JDBC Metadata Provider</h3>
+<div>
+<pre dir="ltr">
+gg.handlerlist=jdbcwriter
+gg.handler.jdbcwriter.type=jdbc
+
+#Handler properties for MySQL database target with JDBC Metadata provider
+gg.handler.jdbcwriter.DriverClass=com.mysql.jdbc.Driver
+gg.handler.jdbcwriter.connectionURL=jdbc:&lt;a target="_blank" href="mysql://"&gt;mysql://&lt;/a&gt;&lt;DBServer address&gt;:3306/&lt;database name&gt;
+gg.handler.jdbcwriter.userName=&lt;dbuser&gt;
+gg.handler.jdbcwriter.password=&lt;dbpassword&gt;
+gg.classpath=/path/to/mysql/jdbc/driver//mysql-connector-java-5.1.39-bin.jar
+#JDBC Metadata provider for MySQL target
+gg.mdp.type=jdbc
+gg.mdp.ConnectionUrl=jdbc:&lt;a target="_blank" href="mysql://"&gt;mysql://&lt;/a&gt;&lt;DBServer address&gt;:3306/&lt;database name&gt;
+gg.mdp.DriverClassName=com.mysql.jdbc.Driver
+gg.mdp.UserName=&lt;dbuser&gt;
+gg.mdp.Password=&lt;dbpassword&gt;
+
+goldengate.userexit.timestamp=utc
+goldengate.userexit.writers=javawriter
+javawriter.stats.display=TRUE
+javawriter.stats.full=TRUE
+gg.log=log4j
+gg.log.level=INFO
+gg.report.time=30sec
+javawriter.bootoptions=-Xmx512m -Xms32m -Djava.class.path=.:ggjava/ggjava.jar:./dirprm
+</pre></div>
+</div>
+</div>
+<hr />
+<br />
+<p style="text-decoration:underline">Footnote Legend</p>
+Footnote&nbsp;1:
+<p>Time zone with a two digit hour and a two digit minimum offset.</p>
+<br />
+Footnote&nbsp;2:
+<p>Time zone with a two digit hour and a two digit minimum offset.</p>
+<br /></div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment40">
+<tr>
+<td class="cellalignment47">
+<table class="cellalignment51">
+<tr>
+<td class="cellalignment44"><a href="GUID-EE8CD5B5-8749-4906-B50C-EE33E36AC984.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment44"><a href="GUID-084CCCD6-8D13-43C0-A6C4-4D2AC8B8FA86.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment49">
+<table class="cellalignment43">
+<tr>
+<td class="cellalignment44"><a href="../index.htm"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment44"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment44"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment44"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+</body>
+</html>

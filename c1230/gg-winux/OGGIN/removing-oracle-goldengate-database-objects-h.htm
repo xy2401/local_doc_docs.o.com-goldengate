@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Removing Oracle GoldenGate Database Objects</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-08-07T08:20:58Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Installing Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E85215-06" />
+<meta name="dcterms.isVersionOf" content="OGGIN" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2017, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="stopping-processes-h.htm" title="Previous" type="text/html" />
+<link rel="Next" href="uninstalling-oracle-goldengate-source-db2-i-system-h.htm" title="Next" type="text/html" />
+<link rel="alternate" href="OGGIN.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-13C0121F-87DB-4650-9FF7-4CACF54CACF1"></a> <span id="PAGE" style="display:none;">24/43</span> <!-- End Header -->
+<h1 id="OGGIN-GUID-13C0121F-87DB-4650-9FF7-4CACF54CACF1" class="sect1"><span class="enumeration_section">14.2</span> Removing Oracle GoldenGate Database Objects</h1>
+<div>
+<div class="section">
+<p>Follow these instructions to remove supplemental logging and any Oracle GoldenGate CDC Cleanup objects from the source database in the Oracle GoldenGate capture configuration, and to remove the Replicat checkpoint table in the apply configuration.&nbsp;Specific steps and commands may not apply to your configuration.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">On a Source System:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ol>
+<li>
+<p>Log on as the system administrator or as a user with permission to issue Oracle GoldenGate commands and delete files and directories from the operating system.</p>
+</li>
+<li>
+<p>Run <code class="codeph">GGSCI</code> from the Oracle GoldenGate directory.</p>
+</li>
+<li>
+<p>Stop all Oracle GoldenGate processes if not already done.</p>
+<pre dir="ltr">
+STOP ER *
+</pre></li>
+<li>
+<p>Stop the Manager process.</p>
+<pre dir="ltr">
+STOP MANAGER
+</pre></li>
+<li>
+<p>Issue the following command to log into the source database.</p>
+<pre dir="ltr">
+DBLOGIN SOURCEDB <span class="italic">DSN</span>{, USERID <span class="italic">user</span>, PASSWORD <span class="italic">password</span> | USERIDALIAS <span class="italic">alias</span>}
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">SOURCEDB</code> <span class="italic"><code class="codeph">dsn</code></span> is the name of the SQL Server data source.</p>
+</li>
+<li>
+<p><code class="codeph">USERID</code> <span class="italic"><code class="codeph">user</code></span> is the Extract login and <code class="codeph">PASSWORD</code> <span class="italic"><code class="codeph">password</code></span> is the password that is required if Extract uses SQL Server authentication. Alternatively, <code class="codeph">USERIDALIAS</code> <span class="italic"><code class="codeph">alias</code></span> is the alias for the credentials if they are stored in a credentials store. If using <code class="codeph">DBLOGIN</code> with a DSN that is using Integrated Windows authentication, the connection to the database for the GGSCI session will be that of the user running GGSCI. In order to issue <code class="codeph">DELETE TRANDATA</code> or <code class="codeph">DELETE TRANDATA</code>, this user must be a member of the SQL Server <code class="codeph">sysadmin</code> server role.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Do one of the following, depending on how Extract was running in relation to other replication or CDC components:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">1.</span> If Extract was&nbsp;<span class="italic">not</span>&nbsp;running concurrently with SQL Server transactional replication or a non-Oracle CDC configuration on the same database, open a query session in Management Studio and issue the following statement against the source database to disable and delete any CDC or replication components, and to clear the secondary truncation point.</p>
+<p>For SQL Server Enterprise Edition:</p>
+<pre dir="ltr">
+EXEC sys.sp.cdc_disable_db
+</pre>
+<p>For SQL Server Standar Edition:</p>
+<pre dir="ltr">
+EXEC sp_removedbreplication @dbname='<span class="italic">sourcedbname</span>', @type='tran' EXEC sys.sp_cdc_disable_db
+</pre></li>
+<li>
+<p><span class="bold">2.</span> If Extract was running&nbsp;<span class="italic">concurrently</span>&nbsp;with SQL Server transactional replication or a non-Oracle CDC configuration on the same database, run GGSCI and then issue the following command for each table that is in the Extract configuration.&nbsp;You can use a wildcard to specify multiple table names.</p>
+<pre dir="ltr">
+DELETE TRANDATA <span class="italic">owner.table</span>
+</pre></li>
+</ul>
+</li>
+<li>
+<p>Remove any heartbeat table entries by running the&nbsp;<code class="codeph">DELETE HEARTBEATTABLE</code>&nbsp;command.</p>
+</li>
+<li>
+<p>For a CDC Capture configuration, remove the Oracle GoldenGate CDC Cleanup job and objects if they were created.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">1.</span> Open a command prompt and change to the Oracle GoldenGate installation folder.</p>
+</li>
+<li>
+<div class="p"><span class="bold">2.</span> Run the <code class="codeph">ogg_cdc_cleanup_setup.bat</code> file, providing the following variable values:
+<pre dir="ltr">
+ogg_cdc_cleanup_setup.bat dropJob &lt;userid&gt; &lt;password&gt; &lt;databasename&gt; &lt;servername\instancename&gt; &lt;schema&gt;
+</pre></div>
+<p>In the above, <code class="codeph">&lt;userid&gt; &lt;password&gt;</code> is a valid SQL Server login and password for a <code class="codeph">sysadmin</code> user. <code class="codeph">&lt;databasename&gt; &lt;servername\instancename&gt;</code> are the source database name and instance name. If only server name is listed, then the default instance will be connected to. <code class="codeph">&lt;schema&gt;</code> is the schema name listed in the <code class="codeph">GLOBALS</code>file, with the <code class="codeph">GGSCHEMA</code> parameter. This schema should be the same for all Oracle GoldenGate objects, including supplemental logging, checkpoint tables, heartbeat tables, and the Oracle GoldenGate CDC Cleanup job.</p>
+<p>Example: <code class="codeph">ogg_cdc_cleanup_setup.bat dropJob ggsuser ggspword db1 server1\inst1 ogg</code></p>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">On a Target System:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Stop Replicat.</span>
+<div>
+<pre dir="ltr">
+STOP REPLICAT <span class="italic">group</span>  
+</pre></div>
+</li>
+<li class="stepexpand"><span>Issue the following command to log into the target database.</span>
+<div>
+<pre dir="ltr">
+DBLOGIN SOURCEDB <span class="italic">DSN</span>{USERID <span class="italic">user</span>, PASSWORD <span class="italic">password</span> | USERIDALIAS <span class="italic">alias</span>}
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">SOURCEDB</code> <span class="italic"><code class="codeph">dsn</code></span> is the name of the SQL Server data source.</p>
+</li>
+<li>
+<p><code class="codeph">USERID</code> <span class="italic"><code class="codeph">user</code></span> is the Extract login and <code class="codeph">PASSWORD</code> <span class="italic"><code class="codeph">password</code></span> is the password that is required if Extract uses SQL Server authentication. Alternatively, <code class="codeph">USERIDALIAS</code> <span class="italic"><code class="codeph">alias</code></span> is the alias for the credentials if they are stored in a credentials store. If using <code class="codeph">DBLOGIN</code> with a DSN that is using Integrated Windows authentication, the connection to the database for the GGSCI session will be that of the user running GGSCI. In order to issue <code class="codeph">DELETE CHECKPOINTTABLE</code>, this user must be a member of the SQL Server <code class="codeph">sysadmin</code> server role.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Remove the Replicat checkpoint tables and heartbeat by running the <code class="codeph">DELETE CHECKPOINTTABLE</code> and <code class="codeph">DELETE HEARTBEATTABLE</code>commands.</span>
+<div>
+<pre dir="ltr">
+DELETE CHECKPOINTTABLE <span class="italic">schema.table</span>
+DELETE HEARTBEATTABLE
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="uninstalling-oracle-goldengate-heterogeneous.htm" title="Learn how to uninstall Oracle GoldenGate for heterogeneous databases.">Uninstalling Oracle GoldenGate for Heterogeneous Databases</a></p>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment558">
+<tr>
+<td class="cellalignment565">
+<table class="cellalignment563">
+<tr>
+<td class="cellalignment562"><a href="stopping-processes-h.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment562"><a href="uninstalling-oracle-goldengate-source-db2-i-system-h.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2017, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment567">
+<table class="cellalignment561">
+<tr>
+<td class="cellalignment562"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment562"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment562"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

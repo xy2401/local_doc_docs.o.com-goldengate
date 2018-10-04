@@ -1,0 +1,637 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>21 Undoing Data Changes with the Reverse Utility</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1028" />
+<meta name="description" content="This chapter describes how to undo data changes with the reverse utility." />
+<meta name="dcterms.created" content="2014-11-11T22:58:7Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Administering Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E29388-06" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Index" href="index.htm" title="Index" type="text/html" />
+<link rel="Prev" href="wu_adminops.htm" title="Previous" type="text/html" />
+<link rel="Next" href="wu_charsets.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GWUAD.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GWUAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">24/30</span>
+<!-- End Header -->
+<div id="GWUAD719" class="chapter"><a id="sthref1125"></a>
+<h1 class="chapter"><span class="secnum">21</span> Undoing Data Changes with the Reverse Utility</h1>
+<p><a id="GWUAD720"></a>This chapter describes how to undo data changes with the reverse utility.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#CIHGFJJI">Overview of the Reverse Utility</a></p>
+</li>
+<li>
+<p><a href="#CIHGCGCB">Reverse Utility Restrictions</a></p>
+</li>
+<li>
+<p><a href="#CIHIEHFC">Configuring the Reverse Utility</a></p>
+</li>
+<li>
+<p><a href="#CIHJCEJA">Creating Process Groups and Trails for Reverse Processing</a></p>
+</li>
+<li>
+<p><a href="#CIHDBIDA">Running the Reverse Utility</a></p>
+</li>
+<li>
+<p><a href="#CIHHJHCF">Undoing the Changes Made by the Reverse Utility</a></p>
+</li>
+</ul>
+<a id="CIHGFJJI"></a>
+<div id="GWUAD721" class="sect1">
+<h2 class="sect1"><span class="secnum">21.1</span> Overview of the Reverse Utility</h2>
+<p>The Reverse utility uses before images to undo database changes for specified tables, records, and time periods. It enables you to perform a selective backout, unlike other methods which require restoring the entire database.</p>
+<p>You can use the Reverse utility for the following purposes:</p>
+<ul>
+<li>
+<p>To restore a test database to its original state before the test run. Because the Reverse utility only backs out changes, a test database can be restored in a matter of minutes, much more efficiently than a complete database restore, which can take hours.</p>
+</li>
+<li>
+<p>To reverse errors caused by corrupt data or accidental deletions. For example, if an <code dir="ltr">UPDATE</code> or <code dir="ltr">DELETE</code> command is issued without a <code dir="ltr">WHERE</code> clause, the Reverse utility reverses the operation.</p>
+</li>
+</ul>
+<p>To use the Reverse utility, you do the following:</p>
+<ul>
+<li>
+<p>Run Extract to extract the before data.</p>
+</li>
+<li>
+<p>Run the Reverse utility to perform the reversal of the transactions.</p>
+</li>
+<li>
+<p>Run Replicat to apply the restored data to the target database.</p>
+</li>
+</ul>
+<p>The Reverse utility reverses the forward operations by:</p>
+<ul>
+<li>
+<p>Reversing the ordering of database operations in an extract file, a series of extract files, or a trail so that they can be processed in reverse order, guaranteeing that records with the same key are properly applied.</p>
+</li>
+<li>
+<p>Changing delete operations to inserts.</p>
+</li>
+<li>
+<p>Changing inserts to deletes.</p>
+</li>
+<li>
+<p>Changing update before images to update after images.</p>
+</li>
+<li>
+<p>Reversing the begin and end transaction indicators.</p>
+</li>
+</ul>
+<div id="GWUAD722" class="figure"><p class="titleinfigure"><a id="sthref1126"></a>Figure 21-1 Reverse Utility Architecture</p>
+<img width="1534" height="216" src="img/dynamic_rollback.jpg" alt="Description of Figure 21-1 follows" /><br />
+<a id="sthref1127" href="img_text/dynamic_rollback.htm">Description of "Figure 21-1 Reverse Utility Architecture"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="CIHGCGCB"></a>
+<div id="GWUAD723" class="sect1">
+<h2 class="sect1"><span class="secnum">21.2</span> Reverse Utility Restrictions</h2>
+<p>Observe the following restrictions on the reverse utility:</p>
+<ul>
+<li>
+<p>Commit timestamps are not changed during the reverse procedure, which causes the time sequencing in the trail to be backwards. Because of this, you cannot position Replicat based on a timestamp.</p>
+</li>
+<li>
+<p>Oracle GoldenGate does not store the before images of the following data types, so these types are not supported by the Reverse utility. A before image is required to reverse update and delete operations</p>
+</li>
+</ul>
+<div id="GWUAD724" class="tblhruleformalwide"><p class="titleintable"><a id="sthref1128"></a><a id="sthref1129"></a>Table 21-1 Data types Not Supported by the Reverse Utility</p>
+<table class="cellalignment160" title="Data types Not Supported by the Reverse Utility" summary="This table describes the data types not supported by the reverse utility.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t2">DB2(all supported OS)</th>
+<th class="cellalignment161" id="r1c2-t2">Oracle</th>
+<th class="cellalignment161" id="r1c3-t2">SQL Server</th>
+<th class="cellalignment161" id="r1c4-t2">Sybase</th>
+<th class="cellalignment161" id="r1c5-t2">Teradata</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+BLOB
+CLOB
+DBCLOB
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t2 r1c2-t2">
+<pre dir="ltr">
+CLOB 
+BLOB
+NCLOB
+LONG 
+LONG RAW
+XMLType
+UDT
+Nested Tables
+VARRAY
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t2 r1c3-t2">
+<pre dir="ltr">
+TEXT
+IMAGE
+NTEXT
+VARCHAR (MAX)
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t2 r1c4-t2">
+<pre dir="ltr">
+VARBINARY
+BINARY
+TEXT
+IMAGE
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t2 r1c5-t2">
+<p>None supported. This is because only the after images of a row are captured by the Teradata vendor access module.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></div>
+<!-- class="sect1" -->
+<a id="CIHIEHFC"></a>
+<div id="GWUAD725" class="sect1">
+<h2 class="sect1"><span class="secnum">21.3</span> Configuring the Reverse Utility</h2>
+<p>The reversal process is performed with online Extract and Replicat processes that are created and started through GGSCI. These processes write to standard local or remote trails. Oracle GoldenGate automatically reverses the file order during reverse processing so that transaction sequencing is maintained.</p>
+<p>To configure the Reverse utility, create Extract and Replicat parameter files with the parameters shown in <a href="#g1061134">Table 21-2</a> and <a href="#g1061165">Table 21-3</a>. In addition to these parameters, include any other optional parameters or special <code dir="ltr">MAP</code> statements that are required for your synchronization configuration.</p>
+<div id="GWUAD726" class="tblhruleformalwide"><p class="titleintable"><a id="sthref1130"></a><a id="g1061134"></a>Table 21-2 Extract Parameter File for the Reverse Utility</p>
+<table class="cellalignment160" title="Extract Parameter File for the Reverse Utility" summary="This table describes the extract parameter file for the reverse utility.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t3">Parameter</th>
+<th class="cellalignment161" id="r1c2-t3">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+EXTRACT <span class="codeinlineitalic">group</span>
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t3 r1c2-t3">
+<p><code dir="ltr">EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code> specifies the Extract process. You will create this process in GGSCI.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+END {<span class="codeinlineitalic">time</span> | RUNTIME}
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t3 r1c2-t3">
+<p><code dir="ltr"><span class="codeinlineitalic">time</span></code> causes Extract to terminate when it reaches a record in the data source whose timestamp exceeds the one that is specified with this parameter. The valid format is as follows, based on a 24-hour clock:</p>
+<p><code dir="ltr">yyyy-mm-dd</code><code dir="ltr">[ hh:mi[:ss[.cccccc]]</code></p>
+<p><code dir="ltr">RUNTIME</code> causes Extract to terminate when it reaches a record in the data source whose timestamp exceeds the current date and clock time. All unprocessed records with timestamps up to this point in time are processed. One advantage of using <code dir="ltr">RUNTIME</code> is that you do not have to alter the parameter file to change dates and times from run to run. Instead, you can control the process start time within your batch programming.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+[SOURCEDB <span class="codeinlineitalic">datasource</span>,]
+[USERIDALIAS <span class="codeinlineitalic">alias</span> | USERID <span class="codeinlineitalic">user</span> [, <span class="codeinlineitalic">options</span>]]
+</pre>
+<ul>
+<li>
+<p><code dir="ltr">SOURCEDB</code> specifies a data source name, if required in the connection information.</p>
+</li>
+<li>
+<p><code dir="ltr">USERID</code> and <code dir="ltr">USERIDALIAS</code> specify authentication information.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r4c1-t3 r1c2-t3">
+<p>Specifies database connection information. See <a href="wu_security.htm#e999929">Section 11, "Configuring Oracle GoldenGate Security"</a> for more information.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+NOCOMPRESSDELETES
+</pre></td>
+<td class="cellalignment157" headers="r5c1-t3 r1c2-t3">
+<p>Causes Extract to send all column data to the output, instead of only the primary key. Enables deletes to be converted back to inserts.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+GETUPDATEBEFORES
+</pre></td>
+<td class="cellalignment157" headers="r6c1-t3 r1c2-t3">
+<p>Directs Oracle GoldenGate to extract before images so that updates can be rolled back.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+RMTHOST <span class="italic">hostname</span>
+</pre></td>
+<td class="cellalignment157" headers="r7c1-t3 r1c2-t3">
+<p>The name or IP address of the target system.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r8c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+{EXTTRAIL <span class="codeinlineitalic">input trail</span> |
+RMTTRAIL <span class="codeinlineitalic">input trail</span>}
+</pre></td>
+<td class="cellalignment157" headers="r8c1-t3 r1c2-t3">
+<ul>
+<li>
+<p>Use <code dir="ltr">EXTTRAIL</code> to specify an extract trail on the local system.</p>
+</li>
+<li>
+<p>Use <code dir="ltr">RMTTRAIL</code> to specify a remote trail on a remote system.</p>
+</li>
+</ul>
+<p>Specify the relative or full path name of a trail, including the two-character trail name, for example:</p>
+<pre dir="ltr">
+EXTTRAIL /home/ggs/dirdat/rt
+</pre></td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r9c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+TABLE [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">owner.table</span>;
+</pre></td>
+<td class="cellalignment157" headers="r9c1-t3 r1c2-t3">
+<p>The table or tables that are to be processed, specified with either multiple <code dir="ltr">TABLE</code> statements or a wildcard. Include any special selection and mapping criteria.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" -->
+<p>This example Extract parameter file uses a remote trail.</p>
+<div id="GWUAD727" class="example"><p class="titleinexample"><a id="sthref1131"></a>Example 21-1 Extracting a Parameter File Using a Remote Trail</p>
+<pre dir="ltr">
+EXTRACT ext_1
+END 2011-01-09 14:12:20
+USERIDALIAS ogg
+GETUPDATEBEFORES
+NOCOMPRESSDELETES
+RMTHOST sysb, MGRPORT 8040
+RMTTRAIL /home/ggs/dirdat/in
+TABLE tcustmer;
+TABLE tcustord;
+</pre></div>
+<!-- class="example" -->
+<div id="GWUAD728" class="tblhruleformalwide"><p class="titleintable"><a id="sthref1132"></a><a id="g1061165"></a>Table 21-3 Replicat Parameter File for the Reverse Utility</p>
+<table class="cellalignment160" title="Replicat Parameter File for the Reverse Utility" summary="This table describes the Replicat parameter file for the reverse utility.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t4">Parameter</th>
+<th class="cellalignment161" id="r1c2-t4">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+REPLICAT <span class="codeinlineitalic">group</span>
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t4 r1c2-t4">
+<p><code dir="ltr">REPLICAT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code> specifies the Replicat process to be created in GGSCI.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+END {<span class="codeinlineitalic">time</span> | RUNTIME}
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t4 r1c2-t4">
+<p><code dir="ltr"><span class="codeinlineitalic">time</span></code> causes Extract to terminate when it reaches a record in the data source whose timestamp exceeds the one that is specified with this parameter. The valid format is as follows, based on a 24-hour clock:</p>
+<p><code dir="ltr">yyyy-mm-dd</code><code dir="ltr">[ hh:mi[:ss[.cccccc]]</code></p>
+<p><code dir="ltr">RUNTIME</code> causes Replicat to terminate when it reaches a record in the data source whose timestamp exceeds the current date and clock time. All unprocessed records with timestamps up to this point in time are processed. One advantage of using <code dir="ltr">RUNTIME</code> is that you do not have to alter the parameter file to change dates and times from run to run. Instead, you can control the process start time within your batch programming.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+[TARGETDB <span class="codeinlineitalic">datasource</span>,]
+[USERIDALIAS <span class="codeinlineitalic">alias</span> | USERID <span class="codeinlineitalic">user</span> [, <span class="codeinlineitalic">options</span>]]
+</pre>
+<ul>
+<li>
+<p><code dir="ltr">TARGETDB</code> specifies a data source name, if required in the connection information.</p>
+</li>
+<li>
+<p><code dir="ltr">USERID</code> and <code dir="ltr">USERIDALIAS</code> specify authentication information.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r4c1-t4 r1c2-t4">
+<p>Specifies database connection information. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+{SOURCEDEFS <span class="codeinlineitalic">full_pathname</span>} |
+ASSUMETARGETDEFS
+</pre>
+<ul>
+<li>
+<p>Use <code dir="ltr">SOURCEDEFS</code> if the source and target tables have different definitions. Specify the source-definitions file generated by DEFGEN. for more information about DEFGEN, see <a href="wu_data_definitions.htm#g1086762">Chapter 13, "Associating Replicated Data with Metadata."</a>.</p>
+</li>
+<li>
+<p>Use <code dir="ltr">ASSUMETARGETDEFS</code> if the source and target tables have the same definitions.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r5c1-t4 r1c2-t4">
+<p>Specifies how to interpret data definitions.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+MAP [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">owner.table</span>],
+TARGET owner.table;
+</pre></td>
+<td class="cellalignment157" headers="r6c1-t4 r1c2-t4">
+<p>The table or tables (specified with either multiple <code dir="ltr">MAP</code> statements or a wildcard) to which to post the reversed data. When reversing data from the source database, the source and target <code dir="ltr">TABLE</code> entries are the same. When reversing replicated data from a target database, the source and target of each <code dir="ltr">MAP</code> statement are different.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" -->
+<p>The following is an example Replicat parameter file.</p>
+<div id="GWUAD729" class="example"><p class="titleinexample"><a id="sthref1133"></a>Example 21-2 Replicat Parameter File</p>
+<pre dir="ltr">
+REPLICAT rep_1
+END RUNTIME
+USERIDALIAS ogg
+ASSUMETARGETDEFS
+MAP tcustmer, TARGET tcustmer;
+</pre></div>
+<!-- class="example" --></div>
+<!-- class="sect1" -->
+<a id="CIHJCEJA"></a>
+<div id="GWUAD730" class="sect1">
+<h2 class="sect1"><span class="secnum">21.4</span> Creating Process Groups and Trails for Reverse Processing</h2>
+<p>To create process groups to perform the backout procedure, you create the following:</p>
+<ul>
+<li>
+<p>An online Extract group.</p>
+</li>
+<li>
+<p>A local or remote trail that is linked to the Extract group. Extract captures the data from the database, and writes it to this trail, which serves as the input trail for the Reverse utility.</p>
+</li>
+<li>
+<p>An online Replicat group.</p>
+</li>
+<li>
+<p>Another local or remote trail that is linked to the Replicat group. This is the output trail that is written by the Reverse utility. Replicat reads this trail to apply the reversed data.</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GWUAD1154"></a><span class="bold">To create an Extract group for reverse processing</span></p>
+<pre dir="ltr">
+ADD EXTRACT <span class="codeinlineitalic">group</span>, TRANLOG, BEGIN {NOW | <span class="codeinlineitalic">YYYY-MM-DD HH:MM[:SS[.CCCCCC</span> ]]}
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the Extract group. A group name can contain up to eight characters, and is not case-sensitive.</p>
+</li>
+<li>
+<p><code dir="ltr">TRANLOG</code> specifies the transaction log as the data source.</p>
+</li>
+<li>
+<p><code dir="ltr">BEGIN</code> specifies a starting timestamp at which to begin processing. Use one of the following:</p>
+<ul>
+<li>
+<p><code dir="ltr">NOW</code> to begin extracting changes that are timestamped at the point when the <code dir="ltr">ADD EXTRACT</code> command is executed to create the group.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">YYYY-MM-DD HH:MM[:SS[.CCCCCC</span></code> <code dir="ltr">]]</code> as the format for specifying an exact timestamp as the begin point.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p class="subhead2"><a id="GWUAD1155"></a><span class="bold">To create an input trail that is linked to the Extract group</span></p>
+<pre dir="ltr">
+ADD {EXTTRAIL | RMTTRAIL} <span class="codeinlineitalic">pathname</span>, EXTRACT <span class="codeinlineitalic">group</span>[, MEGABYTES <span class="codeinlineitalic">n</span>]
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr">EXTTRAIL</code> specifies a trail on the local system. <code dir="ltr">RMTTRAIL</code> specifies a trail on a remote system.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">pathname</span></code> is the relative or fully qualified name of the input trail, including a two-character name that can be any two alphanumeric characters, for example <code dir="ltr">c:\ggs\dirdat\rt</code>. It must be the same name that you specified in the Extract parameter file.</p>
+</li>
+<li>
+<p><code dir="ltr">EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code> specifies the name of the Extract group.</p>
+</li>
+<li>
+<p><code dir="ltr">MEGABYTES</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code> is an optional argument with which you can set the size, in megabytes, of each trail file (default is 100).</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GWUAD1156"></a><span class="bold">To create a Replicat group for reverse processing</span></p>
+<pre dir="ltr">
+ADD REPLICAT <span class="codeinlineitalic">group</span>, EXTTRAIL <span class="codeinlineitalic">pathname</span>
+[, BEGIN {NOW | <span class="codeinlineitalic">YYYY-MM-DD HH:MM[:SS[.CCCCCC</span> ]]} | , EXTSEQNO <span class="codeinlineitalic">seqno</span>, EXTRBA <span class="codeinlineitalic">rba</span>]
+[, CHECKPOINTTABLE ]
+[, NODBCHECKPOINT]
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the Replicat group. A group name can contain up to eight characters, and is not case-sensitive.</p>
+</li>
+<li>
+<p><code dir="ltr">EXTTRAIL</code> <code dir="ltr"><span class="codeinlineitalic">pathname</span></code> is the relative or fully qualified name of an output trail that you will be creating for this Replicat with the <code dir="ltr">ADD RMTTRAIL</code> command.</p>
+</li>
+<li>
+<p><code dir="ltr">BEGIN</code> <code dir="ltr">{NOW |</code> <code dir="ltr"><span class="codeinlineitalic">YYYY-MM-DD HH:MM[:SS[.CCCCCC</span></code> <code dir="ltr">]]}</code> defines an online Replicat group by establishing an initial checkpoint and start point for processing. Use one of the following:</p>
+<ul>
+<li>
+<p>Use <code dir="ltr">NOW</code> to begin replicating records that are timestamped at the point when the <code dir="ltr">ADD REPLICAT</code> command is executed to create the group.</p>
+</li>
+<li>
+<p>Use <code dir="ltr"><span class="codeinlineitalic">YYYY-MM-DD HH:MM[:SS[.CCCCCC</span></code> <code dir="ltr">]]</code> as the format for specifying an exact timestamp as the begin point.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p><code dir="ltr">EXTSEQNO</code> <code dir="ltr"><span class="codeinlineitalic">seqno</span></code> specifies the sequence number of a file in the trail in which to start processing. <code dir="ltr">EXTRBA</code> <code dir="ltr"><span class="codeinlineitalic">rba</span></code> specifies a relative byte address as the start point within that file. By default, processing begins at the beginning of a trail unless this option is used. For the sequence number, specify the number, but not any zeroes used for padding. For example, if a trail file is <code dir="ltr">c:\ggs\dirdat\aa000026</code>, you would specify <code dir="ltr">EXTSEQNO 26</code>. Contact Oracle Support before using this option. For more information, go to <code dir="ltr"><a href="http://support.oracle.com">http://support.oracle.com</a></code>.</p>
+</li>
+<li>
+<p><code dir="ltr">CHECKPOINTTABLE</code> specifies the owner and name of a checkpoint table other than the default specified in the <code dir="ltr">GLOBALS</code> file. To use this option, you must add the checkpoint table to the database with the <code dir="ltr">ADD CHECKPOINTTABLE</code> command.</p>
+</li>
+<li>
+<p><code dir="ltr">NODBCHECKPOINT</code> specifies that this Replicat group will not use a checkpoint table.</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GWUAD1157"></a><span class="bold">To create an output trail that is linked to the Replicat group</span></p>
+<pre dir="ltr">
+ADD {EXTTRAIL | RMTTRAIL} <span class="codeinlineitalic">pathname</span>, REPLICAT <span class="codeinlineitalic">group</span>
+[, MEGABYTES <span class="codeinlineitalic">n</span>]
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr">EXTTRAIL</code> specifies a trail on the local system. <code dir="ltr">RMTTRAIL</code> specifies a trail on a remote system.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">pathname</span></code> is the relative or fully qualified name of the output trail, including a two-character name that can be any two alphanumeric characters, for example <code dir="ltr">c:\ggs\dirdat\rt</code>. This must be the trail that was specified with <code dir="ltr">EXTTRAIL</code> in the <code dir="ltr">ADD REPLICAT</code> command.</p>
+</li>
+<li>
+<p><code dir="ltr">REPLICAT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code> specifies the name of the Replicat group.</p>
+</li>
+<li>
+<p><code dir="ltr">MEGABYTES</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code> is an optional argument with which you can set the size, in megabytes, of each trail file (default is 100).</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="CIHDBIDA"></a>
+<div id="GWUAD731" class="sect1">
+<h2 class="sect1"><span class="secnum">21.5</span> Running the Reverse Utility</h2>
+<ol>
+<li>
+<p>From GGSCI, run Extract.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Issue the following command until <code dir="ltr">at EOF</code> is returned, indicating that Extract is finished capturing the specified records.</p>
+<pre dir="ltr">
+SEND EXTRACT <span class="codeinlineitalic">group</span>, STATUS
+</pre></li>
+<li>
+<p>Run the Reverse utility by using the fully qualified path name or by changing directories to the Oracle GoldenGate directory and running reverse from there.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Using a full path name or a path relative to the Oracle GoldenGate directory is especially important on UNIX systems, to prevent confusion with the UNIX <code dir="ltr">reverse</code> command.</div>
+<pre dir="ltr">
+/<span class="codeinlineitalic">GoldenGate_directory</span>/reverse <span class="codeinlineitalic">input_file</span>, <span class="codeinlineitalic">output_file</span>
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">input_file</span></code> is the input file specified with <code dir="ltr">EXTTRAIL</code> or <code dir="ltr">RMTTRAIL</code> in the Extract parameter file.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">output_file</span></code> is the output file specified with <code dir="ltr">EXTTRAIL</code> in the <code dir="ltr">ADD REPLICAT</code> command.</p>
+<pre dir="ltr">
+\home\ggs\reverse input.c:\ggs\dirdat\et, output.c:\ggs\dirdat\rt
+</pre></li>
+</ul>
+</li>
+<li>
+<p>When reverse is finished running, run Replicat to apply the reversed-out data to the database.</p>
+<pre dir="ltr">
+START REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="CIHHJHCF"></a>
+<div id="GWUAD732" class="sect1">
+<h2 class="sect1"><span class="secnum">21.6</span> Undoing the Changes Made by the Reverse Utility</h2>
+<p>If the reverse processing produces unexpected or undesired results, you can reapply the original changes to the database. To do so, edit the Replicat parameter file and specify the input file in place of the output file, then run Replicat again.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment150">
+<tr>
+<td class="cellalignment157"><table class="cellalignment155">
+<tr>
+<td class="cellalignment154"><a href="wu_adminops.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment154"><a href="wu_charsets.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment159">
+<table class="cellalignment153">
+<tr>
+<td class="cellalignment154"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment154"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment154"><a href="index.htm"><img width="24" height="24" src="../../dcommon/gifs/index.gif" alt="Go to Index" /><br />
+<span class="icon">Index</span></a></td>
+<td class="cellalignment154"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

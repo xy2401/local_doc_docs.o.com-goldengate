@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Populating an ENCKEYS File with Encryption Keys</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Learn how to use an ENCKEYS file." />
+<meta name="dcterms.created" content="2018-05-10T07:33:56Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Securing the Oracle GoldenGate Environment" />
+<meta name="dcterms.identifier" content="E91326-01" />
+<meta name="dcterms.isVersionOf" content="OGGSE" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="encrypting-password-command-or-parameter-file.htm" title="Previous" type="text/html" />
+<link rel="Next" href="configuring-ggsci-command-security.htm" title="Next" type="text/html" />
+<link rel="alternate" href="OGGSE.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-1253659E-EB9B-489D-90A3-B049B489B2A2"></a> <span id="PAGE" style="display:none;">21/24</span> <!-- End Header -->
+<h1 id="OGGSE-GUID-1253659E-EB9B-489D-90A3-B049B489B2A2" class="sect1"><span class="enumeration_chapter">12</span> Populating an ENCKEYS File with Encryption Keys</h1>
+<div>
+<p>Learn how to use an <code class="codeph">ENCKEYS</code> file.</p>
+<div class="section">
+<p>You must generate and store encryption keys when using the security features:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">ENCRYPTTRAIL</code> (see <a href="encrypting-data-enckeys-method1.htm#GUID-82DF56DF-456D-4246-BDC2-DA1AC9AA6EEA">Encrypting the Data with the ENCKEYS Method</a>)</p>
+</li>
+<li>
+<p><code class="codeph">ENCRYPT PASSWORD</code> with <code class="codeph">ENCRYPTKEY</code> <span class="italic"><code class="codeph">keyname</code></span> (see <a href="encrypting-password-command-or-parameter-file.htm#GUID-4BC83016-5B11-4700-87DC-E9213B03C129" title="Learn how to encrypt a database password that is to be specified in a command or parameter file.">Encrypting a Password in a Command or Parameter File</a>)</p>
+</li>
+<li>
+<p><code class="codeph">RMTHOST</code> or <code class="codeph">RMTHOSTOPTIONS</code> with <code class="codeph">ENCRYPT</code> (see <a href="encrypting-data-enckeys-method1.htm#GUID-82DF56DF-456D-4246-BDC2-DA1AC9AA6EEA">Encrypting the Data with the ENCKEYS Method</a>)</p>
+</li>
+</ul>
+<p>You can define your own key or run the Oracle GoldenGate <code class="codeph">KEYGEN</code> utility to create a random key.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="populating-enckeys-file-encryption-keys.htm#GUID-EB818BEE-B954-4AFC-8D52-EFF3E02CFCEB">Defining Your Own Key</a><br /></li>
+<li class="ulchildlink"><a href="populating-enckeys-file-encryption-keys.htm#GUID-48F66445-C801-4331-809A-182D9996D1E1">Using KEYGEN to Generate a Key</a><br /></li>
+<li class="ulchildlink"><a href="populating-enckeys-file-encryption-keys.htm#GUID-02E55554-573E-4CFC-ABB6-346F71840EE5">Creating and Populating the ENCKEYS Lookup File</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="securing-oracle-goldengate.htm" title="Use this part to secure your CA and MA environments.">Securing Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-EB818BEE-B954-4AFC-8D52-EFF3E02CFCEB"></a>
+<h2 id="OGGSE-GUID-EB818BEE-B954-4AFC-8D52-EFF3E02CFCEB" class="sect2"><span class="enumeration_section">12.1</span> Defining Your Own Key</h2>
+<div>
+<div class="section">
+<p>Use a tool of your choice. The key value can be up to 256 bits (32 bytes) as either of the following:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>a quoted alphanumeric string (for example <code class="codeph">"Dailykey")</code></p>
+</li>
+<li>
+<p>a hex string with the prefix 0x (for example <code class="codeph">0x420E61BE7002D63560929CCA17A4E1FB</code>)</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="populating-enckeys-file-encryption-keys.htm#GUID-1253659E-EB9B-489D-90A3-B049B489B2A2" title="Learn how to use an ENCKEYS file.">Populating an ENCKEYS File with Encryption Keys</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-48F66445-C801-4331-809A-182D9996D1E1"></a>
+<h2 id="OGGSE-GUID-48F66445-C801-4331-809A-182D9996D1E1" class="sect2"><span class="enumeration_section">12.2</span> Using KEYGEN to Generate a Key</h2>
+<div>
+<div class="section">
+<p>Change directories to the Oracle GoldenGate home directory on the source system, and issue the following shell command. You can create multiple keys, if needed. The key values are returned to your screen. You can copy and paste them into the <code class="codeph">ENCKEYS</code> file.</p>
+<pre dir="ltr">
+KEYGEN <span class="italic">key_length</span> <span class="italic">n</span>
+</pre>
+<p>Where:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">key_length</code></span> is the encryption key length, up to 256 bits (32 bytes).</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">n</code></span> represents the number of keys to generate.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre dir="ltr">
+KEYGEN 128 4
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="populating-enckeys-file-encryption-keys.htm#GUID-1253659E-EB9B-489D-90A3-B049B489B2A2" title="Learn how to use an ENCKEYS file.">Populating an ENCKEYS File with Encryption Keys</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-02E55554-573E-4CFC-ABB6-346F71840EE5"></a>
+<h2 id="OGGSE-GUID-02E55554-573E-4CFC-ABB6-346F71840EE5" class="sect2"><span class="enumeration_section">12.3</span> Creating and Populating the ENCKEYS Lookup File</h2>
+<div>
+<ol>
+<li class="stepexpand"><span>On the source system, open a new ASCII text file.</span></li>
+<li class="stepexpand"><span>For each key value that you generated, enter a logical name of your choosing, followed by the key value itself.</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>The key name can be a string of 1 to 24 alphanumeric characters without spaces or quotes.</p>
+</li>
+<li>
+<p>Place multiple key definitions on separate lines.</p>
+</li>
+<li>
+<p>Do not enclose a key name or value within quotes; otherwise it will be interpreted as text.</p>
+<p>Use the following sample <code class="codeph">ENCKEYS</code> file as a guide.</p>
+<div class="tblformal" id="GUID-02E55554-573E-4CFC-ABB6-346F71840EE5__GUID-B114637A-D8BA-4E55-9E8E-E644E2210C76">
+<table class="cellalignment252" summary="This table shows a sample ENCKEYS file.It gives the encryption key name and encryption key value.">
+<thead>
+<tr class="cellalignment239">
+<th class="cellalignment253" id="d11301e271">Encryption key name</th>
+<th class="cellalignment254" id="d11301e274">Encryption key value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment239">
+<td class="cellalignment255" id="d11301e279" headers="d11301e271">
+<pre dir="ltr">
+## Key name
+superkey
+secretkey
+superkey1
+superkey2
+superkey3
+</pre></td>
+<td class="cellalignment256" headers="d11301e279 d11301e274">
+<pre dir="ltr">
+Key value
+0x420E61BE7002D63560929CCA17A4E1FB
+0x027742185BBF232D7C664A5E1A76B040
+0x42DACD1B0E94539763C6699D3AE8E200
+0x0343AD757A50A08E7F9A17313DBAB045
+0x43AC8DCE660CED861B6DC4C6408C7E8A
+</pre></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Save the file as the name <code class="codeph">ENCKEYS</code> in all upper case letters, <span class="italic">without an extension</span>, in the Oracle GoldenGate installation directory.</span></li>
+<li class="stepexpand"><span>Copy the <code class="codeph">ENCKEYS</code> file to the Oracle GoldenGate installation directory on every system. The key names and values in all of the <code class="codeph">ENCKEYS</code> files must be identical, or else the data exchange will fail and Extract and Collector will abort with the following message:</span>
+<div>
+<pre dir="ltr">
+GGS error 118 &ndash; TCP/IP Server with invalid data.
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="populating-enckeys-file-encryption-keys.htm#GUID-1253659E-EB9B-489D-90A3-B049B489B2A2" title="Learn how to use an ENCKEYS file.">Populating an ENCKEYS File with Encryption Keys</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment238">
+<tr>
+<td class="cellalignment249">
+<table class="cellalignment243">
+<tr>
+<td class="cellalignment242"><a href="encrypting-password-command-or-parameter-file.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment242"><a href="configuring-ggsci-command-security.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment251">
+<table class="cellalignment241">
+<tr>
+<td class="cellalignment242"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment242"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment242"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>F Preparing DBFS for an Active-Active Configuration</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This appendix contains steps to configure Oracle GoldenGate to function within an active-active bidirectional or multi-directional environment where Oracle Database File System (DBFS) is in use on both (or all) systems." />
+<meta name="dcterms.created" content="2015-06-05T14:9:49Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E29644-07" />
+<meta name="dcterms.isVersionOf" content="GIORA" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="xml_workaround.htm" title="Previous" type="text/html" />
+<link rel="Next" href="components.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIORA.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIORA.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIORA.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">26/27</span>
+<!-- End Header -->
+<div id="GIORA515" class="appendix"><a id="BABHBCCF5"></a>
+<h1 class="appendix"><span class="secnum">F</span> Preparing DBFS for an Active-Active Configuration</h1>
+<p><a id="GIORA583"></a>This appendix contains steps to configure Oracle GoldenGate to function within an active-active bidirectional or multi-directional environment where Oracle Database File System (DBFS) is in use on both (or all) systems.</p>
+<p>This appendix includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#A1537269">Supported Operations and Prerequisites</a></p>
+</li>
+<li>
+<p><a href="#A1537352">Applying the Required Patch</a></p>
+</li>
+<li>
+<p><a href="#A1537366">Examples Used in these Procedures</a></p>
+</li>
+<li>
+<p><a href="#A1538005">Partitioning the DBFS Sequence Numbers</a></p>
+</li>
+<li>
+<p><a href="#CIHHIBGH">Configuring the DBFS file system</a></p>
+</li>
+<li>
+<p><a href="#A1541072">Mapping Local and Remote Peers Correctly</a></p>
+</li>
+</ul>
+<a id="A1537269"></a>
+<div id="GIORA516" class="sect1">
+<h2 class="sect1"><span class="secnum">F.1</span> Supported Operations and Prerequisites</h2>
+<p>Oracle GoldenGate for DBFS supports the following:</p>
+<ul>
+<li>
+<p>Supported DDL (like <code dir="ltr">TRUNCATE</code> or <code dir="ltr">ALTER</code>) on DBFS objects except for <code dir="ltr">CREATE</code> statements on the DBFS objects. <code dir="ltr">CREATE</code> on DBFS must be excluded from the configuration, as must any schemas that will hold the created DBFS objects. The reason to exclude <code dir="ltr">CREATES</code> is that the metadata for DBFS must be properly populated in the SYS dictionary tables (which itself is excluded from Oracle GoldenGate capture by default).</p>
+</li>
+<li>
+<p>Capture and replication of DML on the tables that underlie the DBFS file system.</p>
+</li>
+</ul>
+<p>The procedures that follow assume that Oracle GoldenGate is configured properly to support active-active configuration. This means that it must be:</p>
+<ul>
+<li>
+<p>Installed according to the instructions in this guide.</p>
+</li>
+<li>
+<p>Configured according to the instructions in the Oracle GoldenGate Windows and UNIX Administrator's Guide.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="A1537352"></a>
+<div id="GIORA517" class="sect1">
+<h2 class="sect1"><span class="secnum">F.2</span> Applying the Required Patch</h2>
+<p>Apply the Oracle DBFS patch for bug-9651229 on both databases. To determine if the patch is installed, run the following query:</p>
+<pre dir="ltr">
+connect / as sysdba
+select  procedure_name
+from    dba_procedures
+where   object_name = 'DBMS_DBFS_SFS_ADMIN'
+and procedure_name = 'PARTITION_SEQUENCE';
+</pre>
+<p>The query should return a single row. Anything else indicates that the proper patched version of DBFS is not available on your database.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A1537366"></a>
+<div id="GIORA518" class="sect1">
+<h2 class="sect1"><span class="secnum">F.3</span> Examples Used in these Procedures</h2>
+<p>The following procedures assume two systems and configure the environment so that DBFS users on both systems see the same DBFS files, directories, and contents that are kept in synchronization with Oracle GoldenGate. It is possible to extend these concepts to support three or more peer systems.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A1538005"></a>
+<div id="GIORA519" class="sect1">
+<h2 class="sect1"><span class="secnum">F.4</span> Partitioning the DBFS Sequence Numbers</h2>
+<p>DBFS uses an internal sequence-number generator to construct unique names and unique IDs. These steps partition the sequences into distinct ranges to ensure that there are no conflicts across the databases. After this is done, further DBFS operations (both creation of new file systems and subsequent file system operations) can be performed without conflicts of names, primary keys, or IDs during DML propagation.</p>
+<ol>
+<li>
+<p>Connect to each database as sysdba.</p>
+<p>Issue the following query on each database.</p>
+<pre dir="ltr">
+select last_number
+from dba_sequences
+where sequence_owner = 'SYS'
+and sequence_name = 'DBFS_SFS_$FSSEQ'
+</pre></li>
+<li>
+<p>From this query, choose the maximum value of <code dir="ltr">LAST_NUMBER</code> across both systems, or pick a high value that is significantly larger than the current value of the sequence on either system.</p>
+</li>
+<li>
+<p>Substitute this value ("<code dir="ltr">maxval</code>" is used here as a placeholder) in both of the following procedures. These procedures logically index each system as <code dir="ltr">myid=0</code> and <code dir="ltr">myid=1</code>.</p>
+<p><span class="bold">Node1</span></p>
+<pre dir="ltr">
+declare
+begin
+dbms_dbfs_sfs_admin.partition_sequence(nodes =&gt; 2, myid =&gt; 0, newstart =&gt; :<span class="bold">maxval</span>);
+commit;
+end;
+/
+</pre>
+<p><span class="bold">Node 2</span></p>
+<pre dir="ltr">
+declare
+begin
+dbms_dbfs_sfs_admin.partition_sequence( nodes =&gt; 2, myid =&gt; 1, newstart =&gt; :<span class="bold">maxval</span>);
+commit;
+end;
+/
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Notice the difference in the value specified for the <code dir="ltr">myid</code> parameter. These are the different index values.</div>
+<p>For a multi-way configuration among three or more databases, you could make the following alterations:</p>
+<ul>
+<li>
+<p>Adjust the maximum value that is set for <code dir="ltr">maxval</code> upward appropriately, and use that value on all nodes.</p>
+</li>
+<li>
+<p>Vary the value of <code dir="ltr">myid</code> in the procedure from 0 for the first node, 1 for the second node, 2 for the third one, and so on.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>(Recommended) After (and only after) the DBFS sequence generator is partitioned, create a new DBFS file system on each system, and use only these file systems for DML propagation with Oracle GoldenGate. See <a href="#CIHHIBGH">Section F.5, "Configuring the DBFS file system"</a>.</p>
+</li>
+</ol>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+DBFS file systems that were created before the patch for bug-9651229 was applied or before the DBFS sequence number was adjusted can be configured for propagation, but that requires additional steps not described in this document. If you must retain old file systems, open a service request with Oracle Support.</div>
+</div>
+<!-- class="sect1" -->
+<a id="CIHHIBGH"></a>
+<div id="GIORA520" class="sect1">
+<h2 class="sect1"><span class="secnum">F.5</span> Configuring the DBFS file system</h2>
+<p>To replicate DBFS file system operations, use a configuration that is similar to the standard bidirectional configuration for DML.</p>
+<ul>
+<li>
+<p>Use matched pairs of identically structured tables.</p>
+</li>
+<li>
+<p>Allow each database to have write privileges to opposite tables in a set, and set the other one in the set to read-only. For example:</p>
+<ul>
+<li>
+<p>Node1 writes to local table <code dir="ltr">t1</code> and these changes are replicated to <code dir="ltr">t1</code> on Node2.</p>
+</li>
+<li>
+<p>Node2 writes to local table <code dir="ltr">t2</code> and these changes are replicated to <code dir="ltr">t2</code> on Node1.</p>
+</li>
+<li>
+<p>On Node1, <code dir="ltr">t2</code> is read-only. On Node2, <code dir="ltr">t1</code> is read-only.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>DBFS file systems make this kind of table pairing simple because:</p>
+<ul>
+<li>
+<p>The tables that underlie the DBFS file systems have the same structure.</p>
+</li>
+<li>
+<p>These tables are modified by simple, conventional DML during higher-level file system operations.</p>
+</li>
+<li>
+<p>The DBFS ContentAPI provides a way of unifying the namespace of the individual DBFS stores by means of mount points that can be qualified as read-write or read-only.</p>
+</li>
+</ul>
+<p>The following steps create two DBFS file systems (in this case named <code dir="ltr">FS1</code> and <code dir="ltr">FS2</code>) and set them to be read-write or read, as appropriate.</p>
+<ol>
+<li>
+<p>Run the following procedure to create the two file systems. (Substitute your store names for <code dir="ltr">FS1</code> and <code dir="ltr">FS2</code>.)</p>
+<div id="GIORA521" class="example"><p class="titleinexample"><a id="sthref225"></a>Example F-1</p>
+<pre dir="ltr">
+declare
+dbms_dbfs_sfs.createfile system('FS1');
+dbms_dbfs_sfs.createfile system('FS2');
+ 
+dbms_dbfs_content.registerStore('FS1',
+'posix', 'DBMS_DBFS_SFS');
+dbms_dbfs_content.registerStore('FS2',
+'posix', 'DBMS_DBFS_SFS');
+commit;
+end;
+/
+</pre></div>
+<!-- class="example" --></li>
+<li>
+<p>Run the following procedure to give each file system the appropriate access rights. (Substitute your store names for <code dir="ltr">FS1</code> and <code dir="ltr">FS2</code>.)</p>
+<div id="GIORA522" class="example"><p class="titleinexample"><a id="sthref226"></a>Example F-2 Node 1</p>
+<pre dir="ltr">
+declare
+dbms_dbfs_content.mountStore('FS1', 'local');
+dbms_dbfs_content.mountStore('FS2', 'remote',
+read_only =&gt; true);
+commit;
+end;
+/
+</pre></div>
+<!-- class="example" -->
+<div id="GIORA523" class="example"><p class="titleinexample"><a id="sthref227"></a>Example F-3 Node 2</p>
+<pre dir="ltr">
+declare
+dbms_dbfs_content.mountStore('FS1', 'remote',
+read_only =&gt; true);
+dbms_dbfs_content.mountStore('FS2', 'local');
+commit;
+end;
+/
+</pre></div>
+<!-- class="example" -->
+<p>In this example, note that on Node 1, store <code dir="ltr">FS1</code> is read-write and store <code dir="ltr">FS2</code> is read-only, while on Node 2 the converse is true: store <code dir="ltr">FS1</code> is read-only and store <code dir="ltr">FS2</code> is read-write.</p>
+<p>Note also that the read-write store is mounted as <span class="italic">local</span> and the read-only store is mounted as <span class="italic">remote</span>. This provides users on each system with an identical namespace and identical semantics for read and write operations. Local path names can be modified, but remote path names cannot.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="A1541072"></a>
+<div id="GIORA524" class="sect1">
+<h2 class="sect1"><span class="secnum">F.6</span> Mapping Local and Remote Peers Correctly</h2>
+<p>The names of the tables that underlie the DBFS file systems are generated internally and dynamically. Continuing with the preceding example, there are:</p>
+<ul>
+<li>
+<p>Two nodes (Node 1 and Node 2 in the example).</p>
+</li>
+<li>
+<p>Four stores: two on each node (<code dir="ltr">FS1</code> and <code dir="ltr">FS2</code> in the example).</p>
+</li>
+<li>
+<p>Eight underlying tables: two for each store (a table and a ptable). These tables must be identified, specified in Extract <code dir="ltr">TABLE</code> statements, and mapped in Replicat <code dir="ltr">MAP</code> statements.</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>To identify the table names that back each file system, issue the following query. (Substitute your store names for <code dir="ltr">FS1</code> and <code dir="ltr">FS2</code>.)</p>
+<div id="GIORA525" class="example"><p class="titleinexample"><a id="sthref228"></a>Example F-4</p>
+<pre dir="ltr">
+select fs.store_name, tb.table_name, tb.ptable_name
+from table(dbms_dbfs_sfs.listTables) tb,
+table(dbms_dbfs_sfs.listfile systems) fs
+where   fs.schema_name = tb.schema_name
+and fs.table_name = tb.table_name
+and fs.store_name in ('FS1', 'FS2')
+;
+</pre></div>
+<!-- class="example" -->
+<p>The output looks like the following examples.</p>
+<div id="GIORA526" class="example"><p class="titleinexample"><a id="sthref229"></a>Example F-5 Example output: Node 1 (Your Table Names Will Be Different.)</p>
+<pre dir="ltr">
+STORE NAME     TABLE_NAME     PTABLE_NAME
+-------------  -------------  -------------  
+FS1            SFS$_FST_100   SFS$_FSTP_100
+FS2            SFS$_FST_118   SFS$_FSTP_118
+</pre></div>
+<!-- class="example" -->
+<div id="GIORA527" class="example"><p class="titleinexample"><a id="sthref230"></a>Example F-6 Example output: Node 2 (Your Table Names Will Be Different.)</p>
+<pre dir="ltr">
+STORE NAME     TABLE_NAME     PTABLE_NAME
+-------------  -------------  -------------  
+FS1            SFS$_FST_101   SFS$_FSTP_101
+FS2            SFS$_FST_119   SFS$_FSTP_119
+</pre></div>
+<!-- class="example" --></li>
+<li>
+<p>Identify the tables that are <span class="italic">locally read-write</span> to Extract by creating the following <code dir="ltr">TABLE</code> statements in the Extract parameter files. (Substitute your pluggable database names, schema names, and table names as applicable.)</p>
+<div id="GIORA528" class="example"><p class="titleinexample"><a id="sthref231"></a>Example F-7 Node1</p>
+<pre dir="ltr">
+TABLE [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FST_100
+TABLE [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FSTP_100;
+</pre></div>
+<!-- class="example" -->
+<div id="GIORA529" class="example"><p class="titleinexample"><a id="sthref232"></a>Example F-8 Node2</p>
+<pre dir="ltr">
+TABLE [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FST_119
+TABLE [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FSTP_119;
+</pre></div>
+<!-- class="example" --></li>
+<li>
+<p>Link changes on each remote file system to the corresponding local file system by creating the following <code dir="ltr">MAP</code> statements in the Replicat parameter files. (Substitute your pluggable database, schema and table names.)</p>
+<div id="GIORA530" class="example"><p class="titleinexample"><a id="sthref233"></a>Example F-9 Node1</p>
+<pre dir="ltr">
+MAP [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FST_119, TARGET [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FST_118;
+MAP [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FSTP_119, TARGET [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FSTP_118
+</pre></div>
+<!-- class="example" -->
+<div id="GIORA531" class="example"><p class="titleinexample"><a id="sthref234"></a>Example F-10 Node2</p>
+<pre dir="ltr">
+MAP [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FST_100, TARGET [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FST_101;MAP [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FSTP_100, TARGET [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema</span>.SFS$_FSTP_101;
+</pre></div>
+<!-- class="example" -->
+<p>This mapping captures and replicates local read-write <span class="italic">source</span> tables to remote read-only peer tables:</p>
+<ul>
+<li>
+<p>file system changes made to <code dir="ltr">FS1</code> on Node 1 propagate to <code dir="ltr">FS1</code> on Node 2.</p>
+</li>
+<li>
+<p>file system changes made to <code dir="ltr">FS2</code> on Node 2 propagate to <code dir="ltr">FS2</code> on Node1.</p>
+</li>
+</ul>
+<p>Changes to the file systems can be made through the DBFS ContentAPI (package <code dir="ltr">DBMS_DBFS_CONTENT</code>) of the database or through <code dir="ltr">dbfs_client</code> mounts and conventional file systems tools.</p>
+<p>All changes are propagated in both directions.</p>
+<ul>
+<li>
+<p>A user at the virtual root of the DBFS namespace on each system sees identical content.</p>
+</li>
+<li>
+<p>For mutable operations, users use the <code dir="ltr">/local</code> sub-directory on each system.</p>
+</li>
+<li>
+<p>For read operations, users can use either of the <code dir="ltr">/local</code> or <code dir="ltr">/remote</code> sub-directories, depending on whether they want to see local or remote content.</p>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="appendix" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment233">
+<tr>
+<td class="cellalignment240"><table class="cellalignment238">
+<tr>
+<td class="cellalignment237"><a href="xml_workaround.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment237"><a href="components.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment242">
+<table class="cellalignment236">
+<tr>
+<td class="cellalignment237"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment237"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment237"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

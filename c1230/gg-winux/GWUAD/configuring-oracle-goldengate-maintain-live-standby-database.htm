@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Configuring Oracle GoldenGate to Maintain a Live Standby Database</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter describes how to configure Oracle GoldenGate to maintain a live standby database." />
+<meta name="dcterms.created" content="2018-09-07T14:17:29Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81607-07" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="configuring-oracle-goldengate-real-time-data-warehousing.htm" title="Previous" type="text/html" />
+<link rel="Next" href="configuring-oracle-goldengate-active-active-high-availability.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-6CE0810E-A681-4CCA-9BC8-539E8A364FD3"></a> <span id="PAGE" style="display:none;">12/30</span> <!-- End Header -->
+<a id="GWUAD259"></a><a id="GWUAD258"></a>
+<h1 id="GWUAD-GUID-6CE0810E-A681-4CCA-9BC8-539E8A364FD3" class="sect1"><span class="enumeration_chapter">8</span> Configuring Oracle GoldenGate to Maintain a Live Standby Database</h1>
+<div>
+<div><span>This chapter describes how to configure Oracle GoldenGate to maintain a live standby database.</span></div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<a id="GWUAD260"></a>
+<div class="props_rev_3"><a id="GUID-BC0FEBC6-3056-4BA1-8497-AAA85BD0B763"></a>
+<h2 id="GWUAD-GUID-BC0FEBC6-3056-4BA1-8497-AAA85BD0B763" class="sect2"><span class="enumeration_section">8.1</span> Overview of a Live Standby Configuration</h2>
+<div>
+<p>Oracle GoldenGate supports an active-passive bi-directional configuration, where Oracle GoldenGate replicates data from an active primary database to a full replica database on a live standby system that is ready for failover during planned and unplanned outages.</p>
+<div class="figure" id="GUID-BC0FEBC6-3056-4BA1-8497-AAA85BD0B763__GUID-15327667-A681-4235-A94E-BFDF74666471"><img width="766" height="401" src="img/live_standby_overview.jpg" alt="Description of live_standby_overview.jpg follows" title="Description of live_standby_overview.jpg follows" /><br />
+<a href="img_text/live_standby_overview.htm">Description of the illustration live_standby_overview.jpg</a></div>
+<!-- class="figure" -->
+<p>In this configuration, there is an inactive Oracle GoldenGate Extract group and an inactive data pump on the live standby system. Both of those groups remain stopped until just before user applications are switched to the live standby system in a switchover or failover. When user activity moves to the standby, those groups begin capturing transactions to a local trail, where the data is stored on disk until the primary database can be used again.</p>
+<p>In the case of a failure of the primary system, the Oracle GoldenGate Manager and Replicat processes work in conjunction with a database instantiation taken from the standby to restore parity between the two systems after the primary system is recovered. At the appropriate time, users are moved back to the primary system, and Oracle GoldenGate is configured in ready mode again, in preparation for future failovers.</p>
+</div>
+</div>
+<a id="GWUAD261"></a>
+<div class="props_rev_3"><a id="GUID-56EB2CA5-6593-4717-9941-88087EADEB93"></a>
+<h2 id="GWUAD-GUID-56EB2CA5-6593-4717-9941-88087EADEB93" class="sect2"><span class="enumeration_section">8.2</span> Considerations for a Live Standby Configuration</h2>
+<div>
+<p>These sections describe considerations for a live standby configuration.</p>
+</div>
+<a id="GWUAD262"></a>
+<div class="props_rev_3"><a id="GUID-05BDFE57-A81D-4B62-80E8-E90F396B3078"></a>
+<h3 id="GWUAD-GUID-05BDFE57-A81D-4B62-80E8-E90F396B3078" class="sect3"><span class="enumeration_section">8.2.1</span> Trusted Source</h3>
+<div>
+<p>The primary database is the <span class="italic">trusted source</span>. This is the database that is the <span class="italic">active source</span> during normal operating mode, and it is the one from which the other database is derived in the initial synchronization phase and in any subsequent resynchronizations. Maintain frequent backups of the trusted source data.</p>
+</div>
+</div>
+<a id="GWUAD263"></a>
+<div class="props_rev_3"><a id="GUID-AB163743-B5A9-44D6-A1FB-4D844B05F5BA"></a>
+<h3 id="GWUAD-GUID-AB163743-B5A9-44D6-A1FB-4D844B05F5BA" class="sect3"><span class="enumeration_section">8.2.2</span> Duplicate Standby</h3>
+<div>
+<p>In most implementations of a live standby, the source and target databases are identical in content and structure. Data mapping, conversion, and filtering typically are not appropriate practices in this kind of configuration, but Oracle GoldenGate does support such functionality if required by your business model. To support these functions, use the options of the <code class="codeph">TABLE</code> and <code class="codeph">MAP</code> parameters.</p>
+</div>
+</div>
+<a id="GWUAD264"></a>
+<div class="props_rev_3"><a id="GUID-5A0DB329-1CD6-4809-844B-7AD0AC75904D"></a>
+<h3 id="GWUAD-GUID-5A0DB329-1CD6-4809-844B-7AD0AC75904D" class="sect3"><span class="enumeration_section">8.2.3</span> DML on the Standby System</h3>
+<div>
+<p>If your applications permit, you can use the live standby system for reporting and queries, but not DML. If there will be active transactional applications on the live standby system that affect objects in the Oracle GoldenGate configuration, you should configure this as an active-active configuration. See <a href="configuring-oracle-goldengate-active-active-high-availability.htm#GUID-2348ADBE-D528-4BD5-83AE-3BC26FEECADE" title="This chapter describes how to configure Oracle GoldenGate for active-active high availability.">Configuring Oracle GoldenGate for Active-Active High Availability</a> for more information.</p>
+</div>
+</div>
+<a id="GWUAD265"></a>
+<div class="props_rev_3"><a id="GUID-C1800E5F-6A26-4AD1-A7DF-1E257F8DC0D8"></a>
+<h3 id="GWUAD-GUID-C1800E5F-6A26-4AD1-A7DF-1E257F8DC0D8" class="sect3"><span class="enumeration_section">8.2.4</span> Oracle GoldenGate Processes</h3>
+<div>
+<p>During normal operating mode, leave the primary Extract and the data pump on the live standby system stopped, and leave the Replicat on the active source stopped. This prevents any DML that occurs accidentally on the standby system from being propagated to the active source. Only the Extract, data pump, and Replicat that move data from the active source to the standby system can be active.</p>
+</div>
+</div>
+<a id="GWUAD266"></a>
+<div class="props_rev_3"><a id="GUID-B7A41659-AA97-4F92-B299-89C07DA85F11"></a>
+<h3 id="GWUAD-GUID-B7A41659-AA97-4F92-B299-89C07DA85F11" class="sect3"><span class="enumeration_section">8.2.5</span> Backup Files</h3>
+<div>
+<p>Make regular backups of the Oracle GoldenGate working directories on the primary and standby systems. This backup must include all of the files that are installed at the root level of the Oracle GoldenGate installation directory and all of the sub-directories within that directory. Having a backup of the Oracle GoldenGate environment means that you will not have to recreate your process groups and parameter files.</p>
+</div>
+</div>
+<a id="GWUAD267"></a>
+<div class="props_rev_3"><a id="GUID-C4A668AA-EBEC-42CC-8288-C800B24140E9"></a>
+<h3 id="GWUAD-GUID-C4A668AA-EBEC-42CC-8288-C800B24140E9" class="sect3"><span class="enumeration_section">8.2.6</span> Failover Preparedness</h3>
+<div>
+<p>Make certain that the primary and live standby systems are ready for immediate user access in the event of a planned switchover or an unplanned source failure. The following components of a high-availability plan should be made easily available for use on each system:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Scripts that grant insert, update, and delete privileges.</p>
+</li>
+<li>
+<p>Scripts that enable triggers and cascaded delete constraints on the live standby system. (These may have been disabled during the setup procedures that were outlined in the Oracle GoldenGate installation and configuration document for your database type.)</p>
+</li>
+<li>
+<p>Scripts that switch over the application server, start applications, and copy essential files that are not part of the replication environment.</p>
+</li>
+<li>
+<p>A failover procedure for moving users to the live standby if the source system fails.</p>
+</li>
+</ul>
+</div>
+</div>
+<a id="GWUAD268"></a>
+<div class="props_rev_3"><a id="GUID-F84C709B-69EC-4C01-88B8-53842431953E"></a>
+<h3 id="GWUAD-GUID-F84C709B-69EC-4C01-88B8-53842431953E" class="sect3"><span class="enumeration_section">8.2.7</span> Sequential Values that are Generated by the Database</h3>
+<div>
+<p>If database-generated values, such as Oracle sequences, are used as part of a key, the range of values must be different on each system, with no chance of overlap. If the application permits, you can add a location identifier to the value to enforce uniqueness.</p>
+<p>For Oracle databases, Oracle GoldenGate can be configured to replicate sequences in a manner that ensures uniqueness on each database. To replicate sequences, use the <code class="codeph">SEQUENCE</code> and <code class="codeph">MAP</code> parameters. For more information, see <a class="olink GWURF978" target="_blank" href="../GWURF/summary-oracle-goldengate-parameters.htm#GWURF978"><span class="italic"><span id="GUID-F84C709B-69EC-4C01-88B8-53842431953E__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+</div>
+<a id="GWUAD1092"></a>
+<div class="props_rev_3"><a id="GUID-A2A470BF-3377-4B4C-A877-EEFED6CC937F"></a>
+<h3 id="GWUAD-GUID-A2A470BF-3377-4B4C-A877-EEFED6CC937F" class="sect3"><span class="enumeration_section">8.2.8</span> Additional Information</h3>
+<div>
+<div class="section">
+<p>The following documentation provides additional information of relevance to configuring Oracle GoldenGate.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For additional system requirements, process configuration, and database setup requirements, see the Oracle GoldenGate installation and configuration document for your database type. These guides are listed in the <a href="preface.htm#GUID-E5734308-9E77-4F77-ADDF-A32DD58C75F4">Preface</a> of this book.</p>
+</li>
+<li>
+<p>For detailed instructions on configuring Oracle GoldenGate change capture and delivery groups, see <a href="configuring-online-change-synchronization.htm#GUID-3388C553-994A-4ECD-95C8-A54FC7446E67" title="This chapter describes how to configure online change synchronization.">Configuring Online Change Synchronization</a>.</p>
+</li>
+<li>
+<p>For additional tuning options for Oracle GoldenGate, see <a href="tuning-performance-oracle-goldengate.htm#GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" title="This chapter contains suggestions for improving the performance of Oracle GoldenGate components.">Tuning the Performance of Oracle GoldenGate</a>.</p>
+</li>
+<li>
+<p>For complete syntax and descriptions of the Oracle GoldenGate commands and parameters, see <a class="olink GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB" target="_blank" href="../GWURF/oracle-goldengate-parameters.htm#GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB">Reference for Oracle GoldenGate for Windows and UNIX</a>.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GWUAD272"></a><a id="GWUAD271"></a>
+<div class="props_rev_3"><a id="GUID-792F6B1A-F6BE-4422-AF2E-7F7B168781F1"></a>
+<h2 id="GWUAD-GUID-792F6B1A-F6BE-4422-AF2E-7F7B168781F1" class="sect2"><span class="enumeration_section">8.3</span> Creating a Live Standby Configuration</h2>
+<div>
+<div class="section">
+<p>Refer to <a href="configuring-oracle-goldengate-maintain-live-standby-database.htm#GUID-792F6B1A-F6BE-4422-AF2E-7F7B168781F1__I1041175">Figure 8-1</a> for a visual representation of the objects you will be creating.</p>
+<div class="figure" id="GUID-792F6B1A-F6BE-4422-AF2E-7F7B168781F1__I1041175">
+<p class="titleinfigure">Figure 8-1 Oracle GoldenGate configuration elements for live standby</p>
+<img width="766" height="476" src="img/live_standby_config.jpg" alt="Description of Figure 8-1 follows" title="Description of Figure 8-1 follows" /><br />
+<a href="img_text/live_standby_config.htm">Description of "Figure 8-1 Oracle GoldenGate configuration elements for live standby"</a></div>
+<!-- class="figure" --></div>
+<!-- class="section" --></div>
+<a id="GWUAD273"></a>
+<div class="props_rev_3"><a id="GUID-A05692CA-7556-4FCE-A634-C8496FABF596"></a>
+<h3 id="GWUAD-GUID-A05692CA-7556-4FCE-A634-C8496FABF596" class="sect3"><span class="enumeration_section">8.3.1</span> Prerequisites on Both Systems</h3>
+<div>
+<div class="section">
+<p>Perform the following prerequisites on both systems.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li><span>Create a Replicat checkpoint table (unless using Oracle integrated Replicat). For instructions, see <a href="configuring-online-change-synchronization.htm#GUID-8C910642-0080-487C-A162-9633FB11E9E9">Creating a Checkpoint Table</a>.</span></li>
+<li><span>Configure the Manager process according to the instructions in <a href="configuring-manager-and-network-communications.htm#GUID-5005AF6D-76D2-4C72-80E2-AD33C24F0C26" title="This chapter describes how to configure the Manager process and specify ports for local and remote network communications.">Configuring Manager and Network Communications</a>.</span></li>
+</ol>
+</div>
+</div>
+<a id="GWUAD1056"></a><a id="GWUAD1057"></a><a id="GWUAD1058"></a><a id="GWUAD274"></a>
+<div class="props_rev_3"><a id="GUID-2978B0E3-468C-4B01-87DE-5E7FD0DEFE59"></a>
+<h3 id="GWUAD-GUID-2978B0E3-468C-4B01-87DE-5E7FD0DEFE59" class="sect3"><span class="enumeration_section">8.3.2</span> Configuration from Active Source to Standby</h3>
+<div>
+<div class="section">
+<p>These steps configure Oracle GoldenGate to capture data from the primary database and replicate it to the standby database.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To Configure the Primary Extract Group</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Perform these steps on the active source.</p>
+<ol>
+<li>
+<p>On the source, use the <code class="codeph">ADD EXTRACT</code> command to create an Extract group. For documentation purposes, this group is called <span class="italic">ext_1</span>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">ext_1</span>, {TRANLOG | INTEGRATED TRANLOG}, BEGIN <span class="italic">time</span> [<span class="italic">option</span>[, ...]]
+</pre>
+<p>See <a class="olink GWURF122" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF122"><span class="italic"><span id="GUID-2978B0E3-468C-4B01-87DE-5E7FD0DEFE59__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a> for detailed information about these and other <code class="codeph">ADD EXTRACT</code> options that may be required for your installation.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">ADD EXTTRAIL</code> command to add a local trail. For documentation purposes, this trail is called <span class="italic">local_trail_1</span>.</p>
+<pre dir="ltr">
+ADD EXTTRAIL <span class="italic">local_trail_1</span>, EXTRACT <span class="italic">ext_1</span>
+</pre>
+<p>For <code class="codeph">EXTRACT</code>, specify the <span class="italic">ext_1</span> group to write to this trail.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <span class="italic">ext_1</span> group. Include the following parameters plus any others that apply to your database environment. For possible additional required parameters, see the Oracle GoldenGate installation and setup guide for your database.</p>
+<pre dir="ltr">
+-- Identify the Extract group:
+EXTRACT <span class="italic">ext_1</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn_1</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Log all scheduling columns if using integrated Replicat
+LOGALLSUPCOLS
+-- Specify the local trail that this Extract writes to
+-- and the encryption algorithm:
+ENCRYPTTRAIL <span class="italic">algorithm</span>
+EXTTRAIL <span class="italic">local_trail_1</span>
+-- Specify sequences to be captured:
+SEQUENCE [<span class="italic">container</span>.]<span class="italic">owner</span>.<span class="italic">sequence</span>;
+-- Specify tables to be captured:
+TABLE [<span class="italic">container</span>.]<span class="italic">owner</span>.*;
+</pre></li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To Configure the Data Pump</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Perform these steps on the active source.</p>
+<ol>
+<li>
+<p>Use the <code class="codeph">ADD EXTRACT</code> command to create a data pump group. For documentation purposes, this group is called <span class="italic">pump_1</span>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">pump_1</span>, EXTTRAILSOURCE <span class="italic">local_trail_1</span>, BEGIN <span class="italic">time</span>
+</pre>
+<p>For <code class="codeph">EXTTRAILSOURCE</code>, specify <span class="italic">local_trail_1</span> as the data source.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">ADD RMTTRAIL</code> command to specify a remote trail that will be created on the standby system.</p>
+<pre dir="ltr">
+ADD RMTTRAIL <span class="italic">remote_trail_1</span>, EXTRACT <span class="italic">pump_1</span>
+</pre>
+<p>For <code class="codeph">EXTRACT</code>, specify the <span class="italic">pump_1</span> data pump to write to this trail.</p>
+<p>See <a class="olink GWURF227" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF227"><span class="italic"><span><cite>Reference for Oracle GoldenGate</cite></span></span></a> for additional <code class="codeph">ADD RMTTRAIL</code> options.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <span class="italic">pump_1</span> group. Include the following parameters plus any others that apply to your database environment.</p>
+<pre dir="ltr">
+-- Identify the data pump group:
+EXTRACT <span class="italic">pump_1</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn_1</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Decrypt the data only if the data pump must process it.
+-- DECRYPTTRAIL
+-- Specify the name or IP address of the standby system
+-- and optional encryption of data over TCP/IP:
+RMTHOSTOPTIONS <span class="italic">system_2</span>, MGRPORT <span class="italic">port_number</span>, ENCRYPT <span class="italic">encryption_options</span>
+-- Specify the remote trail and encryption algorithm on the standby system:
+ENCRYPTTRAIL <span class="italic">algorithm</span>
+RMTTRAIL <span class="italic">remote_trail_1</span>
+-- Specify sequences to be captured:
+SEQUENCE [<span class="italic">container</span>.]<span class="italic">owner</span>.<span class="italic">sequence</span>;
+-- Specify tables to be captured:
+TABLE [<span class="italic">container</span>.]<span class="italic">owner</span>.*;
+</pre></li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To Configure the Replicat Group</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Perform these steps on the live standby system.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Create a Replicat checkpoint table (unless using Oracle integrated Replicat). See <a href="configuring-online-change-synchronization.htm#GUID-8C910642-0080-487C-A162-9633FB11E9E9">Creating a Checkpoint Table</a> for instructions.</span></li>
+<li class="stepexpand"><span>Use the <code class="codeph">ADD REPLICAT</code> command to create a Replicat group. For documentation purposes, this group is called <span class="italic">rep_1</span>.</span>
+<div>
+<pre dir="ltr">
+ADD REPLICAT <span class="italic">rep_1</span>
+[, INTEGRATED | COORDINATED [MAXTHREADS <span class="italic">number</span>]]
+, EXTTRAIL <span class="italic">remote_trail_1</span>, BEGIN <span class="italic">time</span>
+</pre>
+<p>For <code class="codeph">EXTTRAIL</code>, specify <span class="italic">remote_trail_1</span> as the trail that this Replicat reads.</p>
+<p>See <a class="olink GWURF183" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF183"><span class="italic"><span><cite>Reference for Oracle GoldenGate</cite></span></span></a> for detailed information about these and other options that may be required for your installation.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <span class="italic">rep_1</span> group. Include the following parameters plus any others that apply to your database environment. For possible additional required parameters, see the Oracle GoldenGate installation and setup guide for your database.</span>
+<div>
+<pre dir="ltr">
+-- Identify the Replicat group:
+REPLICAT <span class="italic">rep_1</span>
+-- State that source and target definitions are identical:
+ASSUMETARGETDEFS
+-- Specify database login information as needed for the database:
+[TARGETDB <span class="italic">dsn_2</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Specify error handling rules:
+REPERROR (<span class="italic">error</span>, <span class="italic">response</span>)
+-- Specify tables for delivery and threads if using coordinated Replicat:
+MAP [<span class="italic">container</span>.|<span class="italic">catalog</span>.]<span class="italic">owner</span>.<span class="italic">table</span>, TARGET <span class="italic">owner</span>.<span class="italic">table</span>[, DEF <span class="italic">template</span>]
+[, THREAD (thread_ID)][, THREADRANGE (thread_range[, column_list])]
+;
+</pre></div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<a id="GWUAD1059"></a><a id="GWUAD1060"></a><a id="GWUAD1061"></a><a id="GWUAD275"></a>
+<div class="props_rev_3"><a id="GUID-4177E9BB-07A5-4A9D-87B8-25894ADB9343"></a>
+<h2 id="GWUAD-GUID-4177E9BB-07A5-4A9D-87B8-25894ADB9343" class="sect2"><span class="enumeration_section">8.4</span> Configuration from Standby to Active Source</h2>
+<div>
+<div class="section">
+<p>These steps configure Oracle GoldenGate in passive mode. In this mode, the Oracle GoldenGate processes are ready, but not started, to capture data from the secondary database and replicate it to the primary database after a switchover of transaction activity to the secondary system.</p>
+<div class="infobox-note" id="GUID-4177E9BB-07A5-4A9D-87B8-25894ADB9343__GUID-A705BAD5-C39C-43F2-A989-C17B5B332518">
+<p class="notep1">Note:</p>
+<p>This is a reverse image of the configuration that you just created.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To Configure the Primary Extract Group</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Perform these steps on the live standby system.</p>
+<ol>
+<li>
+<p>On the source, use the <code class="codeph">ADD EXTRACT</code> command to create an Extract group. For documentation purposes, this group is called <span class="italic">ext_2</span>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">ext_2</span>, {TRANLOG | INTEGRATED TRANLOG}, BEGIN <span class="italic">time</span> [<span class="italic">option</span>[, ...]]
+</pre>
+<p>See <a class="olink GWURF122" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF122"><span class="italic"><span id="GUID-4177E9BB-07A5-4A9D-87B8-25894ADB9343__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a> for detailed information about these and other <code class="codeph">ADD EXTRACT</code> options that may be required for your installation.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">ADD EXTTRAIL</code> command to add a local trail. For documentation purposes, this trail is called <span class="italic">local_trail_2</span>.</p>
+<pre dir="ltr">
+ADD EXTTRAIL <span class="italic">local_trail_2</span>, EXTRACT <span class="italic">ext_2</span>
+</pre>
+<p>For <code class="codeph">EXTRACT</code>, specify the <span class="italic">ext_2</span> group to write to this trail.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <span class="italic">ext_2</span> group. Include the following parameters plus any others that apply to your database environment. For possible additional required parameters, see the Oracle GoldenGate installation and setup guide for your database.</p>
+<pre dir="ltr">
+-- Identify the Extract group:
+EXTRACT <span class="italic">ext_2</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn_2</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Log all scheduling columns if using integrated Replicat
+LOGALLSUPCOLS
+-- Specify the local trail this Extract writes to and the encryption algorithm:
+ENCRYPTTRAIL <span class="italic">algorithm</span>
+EXTTRAIL <span class="italic">local_trail_2</span>
+-- Specify sequences to be captured:
+SEQUENCE [<span class="italic">container</span>.]<span class="italic">owner</span>.<span class="italic">sequence</span>;
+-- Specify tables to be captured:
+TABLE [<span class="italic">container</span>.]<span class="italic">owner</span>.*;
+</pre></li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To Configure the Data Pump</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Perform these steps on the live standby system.</p>
+<ol>
+<li>
+<p>Use the <code class="codeph">ADD EXTRACT</code> command to create a data pump group. For documentation purposes, this group is called <span class="italic">pump_2</span>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">pump_2</span>, EXTTRAILSOURCE <span class="italic">local_trail_2</span>, BEGIN <span class="italic">time</span>
+</pre>
+<p>For <code class="codeph">EXTTRAILSOURCE</code>, specify <span class="italic">local_trail_2</span> as the data source.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">ADD RMTTRAIL</code> command to add a remote trail <span class="italic">remote_trail_2</span> that will be created on the active source system.</p>
+<pre dir="ltr">
+ADD RMTTRAIL <span class="italic">remote_trail_2</span>, EXTRACT <span class="italic">pump_2</span>
+</pre>
+<p>For <code class="codeph">EXTRACT</code>, specify the <span class="italic">pump_2</span> data pump to write to this trail.</p>
+<p>See <a class="olink GWURF227" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF227"><span class="italic"><span><cite>Reference for Oracle GoldenGate</cite></span></span></a> for additional <code class="codeph">ADD RMTTRAIL</code> options.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <span class="italic">pump_2</span> group. Include the following parameters plus any others that apply to your database environment.</p>
+<pre dir="ltr">
+-- Identify the data pump group:
+EXTRACT <span class="italic">pump_2</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn_2</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Decrypt the data only if the data pump must process it.
+-- DECRYPTTRAIL
+-- Specify the name or IP address of the active source system
+-- and optional encryption of data over TCP/IP:
+RMTHOSTOPTIONS <span class="italic">system_1</span>, MGRPORT <span class="italic">port_number</span>, ENCRYPT <span class="italic">encryption_options</span>
+-- Specify remote trail and encryption algorithm on active source system:
+ENCRYPTTRAIL <span class="italic">algorithm</span>
+RMTTRAIL <span class="italic">remote_trail_2</span>
+-- Specify sequences to be captured:
+SEQUENCE [<span class="italic">container</span>.]<span class="italic">owner</span>.<span class="italic">sequence</span>;
+-- Specify tables to be captured:
+TABLE [<span class="italic">container</span>.]<span class="italic">owner</span>.*;
+</pre></li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To Configure the Replicat Group</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Perform these steps on the active source.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Use the <code class="codeph">ADD REPLICAT</code> command to create a Replicat group. For documentation purposes, this group is called <span class="italic">rep_2</span>.</span>
+<div>
+<pre dir="ltr">
+ADD REPLICAT <span class="italic">rep_2</span>
+[, INTEGRATED | COORDINATED [MAXTHREADS <span class="italic">number</span>]]
+, EXTTRAIL <span class="italic">remote_trail_1</span>, BEGIN <span class="italic">time</span>
+</pre>
+<p>For <code class="codeph">EXTTRAIL</code>, specify <span class="italic">remote_trail_2</span> as the trail that this Replicat reads.</p>
+<p>See <a class="olink GWURF183" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF183"><span class="italic"><span><cite>Reference for Oracle GoldenGate</cite></span></span></a> for detailed information about these and other options that may be required for your installation.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <span class="italic">rep_2</span> group. Include the following parameters plus any others that apply to your database environment. For possible additional required parameters, see the Oracle GoldenGate installation and setup guide for your database.</span>
+<div>
+<pre dir="ltr">
+-- Identify the Replicat group:
+REPLICAT <span class="italic">rep_2</span>
+-- State that source and target definitions are identical:
+ASSUMETARGETDEFS
+-- Specify database login information as needed for the database:
+[TARGETDB <span class="italic">dsn_1</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Handle collisions between failback data copy and replication:
+HANDLECOLLISIONS
+-- Specify error handling rules:
+REPERROR (<span class="italic">error</span>, <span class="italic">response</span>)
+-- Specify tables for delivery and threads if using coordinated Replicat:
+MAP [<span class="italic">container</span>.|<span class="italic">catalog</span>.]<span class="italic">owner</span>.<span class="italic">table</span>, TARGET <span class="italic">owner</span>.<span class="italic">table</span>[, DEF <span class="italic">template</span>]
+[, THREAD (thread_ID)][, THREADRANGE (thread_range[, column_list])]
+;
+</pre></div>
+</li>
+</ol>
+</div>
+</div>
+<a id="GWUAD276"></a>
+<div class="props_rev_3"><a id="GUID-85C7803E-CD39-4E5B-907E-A8836DBAC0C8"></a>
+<h2 id="GWUAD-GUID-85C7803E-CD39-4E5B-907E-A8836DBAC0C8" class="sect2"><span class="enumeration_section">8.5</span> Moving User Activity in a Planned Switchover</h2>
+<div>
+<div class="section">
+<p>This procedure moves user application activity from a primary database to a live standby system in a planned, graceful manner so that system maintenance and other procedures that do not affect the databases can be performed on the primary system.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GWUAD277"></a>
+<div class="props_rev_3"><a id="GUID-14D773A9-6865-4EB4-B285-EC88A0F0CE7E"></a>
+<h3 id="GWUAD-GUID-14D773A9-6865-4EB4-B285-EC88A0F0CE7E" class="sect3"><span class="enumeration_section">8.5.1</span> Moving User Activity to the Live Standby</h3>
+<div>
+<div class="section">
+<p>To move user activity to the live standby:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>(Optional) If you need to perform system maintenance on the secondary system, you can do so now or at the specified time later in these procedures, after moving users from the secondary system back to the primary system. In either case, be aware of the following risks if you must shut down the secondary system for any length of time:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>The local trail on the primary system could run out of disk space as data accumulates while the standby is offline. This will cause the primary Extract to abend.</p>
+</li>
+<li>
+<p>If the primary system fails while the standby is offline, the data changes will not be available to be applied to the live standby when it is functional again, thereby breaking the synchronized state and requiring a full re-instantiation of the live standby.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, stop the user applications, but leave the primary Extract and the data pump on that system running so that they capture any backlogged transaction data.</span></li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, issue the following command for the primary Extract until it returns <code class="codeph">"At EOF, no more records to process.</code>" This indicates that all transactions are now captured.</span>
+<div>
+<pre dir="ltr">
+LAG EXTRACT <span class="italic">ext_1</span>
+</pre>
+<div class="infobox-note" id="GUID-14D773A9-6865-4EB4-B285-EC88A0F0CE7E__GUID-11845273-01ED-4774-8036-D35300B00668">
+<p class="notep1">Note:</p>
+<p>Since capture continues to read <code class="codeph">REDO</code>, the non-production workload continues to work. In this case, there is possibility that <code class="codeph">At EOF</code> is never returned even though the production workload has already stopped8.5.1..</p>
+</div>
+</div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, stop the primary Extract process</span>
+<div>
+<pre dir="ltr">
+STOP EXTRACT <span class="italic">ext_1</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, issue the following command for the data pump until it returns <code class="codeph">"At EOF, no more records to process.</code>" This indicates that the pump sent all of the captured data to the live standby.</span>
+<div>
+<pre dir="ltr">
+LAG EXTRACT <span class="italic">pump_1</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, stop the data pump.</span>
+<div>
+<pre dir="ltr">
+STOP EXTRACT <span class="italic">pump_1</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, issue the <code class="codeph">STATUS REPLICAT</code> command until it returns <code class="codeph">"At EOF (end of file).</code>" This confirms that Replicat applied all of the data from the trail to the database.</span>
+<div>
+<pre dir="ltr">
+STATUS REPLICAT <span class="italic">rep_1</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, stop Replicat.</span>
+<div>
+<pre dir="ltr">
+STOP REPLICAT <span class="italic">rep_1</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, do the following:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Run the script that grants insert, update, and delete permissions to the users of the business applications.</p>
+</li>
+<li>
+<p>Run the script that enables triggers and cascade delete constraints.</p>
+</li>
+<li>
+<p>Run the scripts that switch over the application server, start applications, and copy essential files that are not part of the replication environment.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, alter the primary Extract to begin capturing data based on the current timestamp. Otherwise, Extract will spend unnecessary time looking for operations that date back to the time that the group was created with the <code class="codeph">ADD EXTRACT</code> command.</span>
+<div>
+<pre dir="ltr">
+ALTER EXTRACT <span class="italic">ext_2</span>, BEGIN NOW
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, start the primary Extract so that it is ready to capture transactional changes.</span>
+<div>
+<pre dir="ltr">
+START EXTRACT <span class="italic">ext_2</span>
+</pre>
+<div class="infobox-note" id="GUID-14D773A9-6865-4EB4-B285-EC88A0F0CE7E__GUID-1F6BC153-D2C5-4F63-86A0-D422FF28F110">
+<p class="notep1">Note:</p>
+<p>Do not start the data pump on the <span class="bold">live standby</span> system, and do not start the Replicat on the <span class="bold">primary</span> system. Data must be stored in the local trail on the live standby until the primary database is ready for user activity again.</p>
+</div>
+</div>
+</li>
+<li class="stepexpand"><span>Switch user activity to the <span class="bold">live standby</span> system.</span></li>
+<li class="stepexpand"><span>On the <span class="bold">primary system</span>, perform the system maintenance.</span></li>
+</ol>
+</div>
+</div>
+<a id="GWUAD278"></a>
+<div class="props_rev_3"><a id="GUID-F3AE9BB0-6B67-4641-B4B6-EF524D54F8DD"></a>
+<h3 id="GWUAD-GUID-F3AE9BB0-6B67-4641-B4B6-EF524D54F8DD" class="sect3"><span class="enumeration_section">8.5.2</span> Moving User Activity Back to the Primary System</h3>
+<div>
+<div class="section">
+<p>To move user activity back to the primary system:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, stop the user applications, but leave the primary Extract running so that it captures any backlogged transaction data.</span></li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, start Replicat in preparation to receive changes from the live standby system.</span>
+<div>
+<pre dir="ltr">
+START REPLICAT <span class="italic">rep_2</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, start the data pump to begin moving the data that is stored in the local trail across TCP/IP to the primary system.</span>
+<div>
+<pre dir="ltr">
+START EXTRACT <span class="italic">pump_2</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, issue the following command for the primary Extract until it returns <code class="codeph">"At EOF, no more records to process.</code>" This indicates that all transactions are now captured.</span>
+<div>
+<pre dir="ltr">
+LAG EXTRACT <span class="italic">ext_2</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, stop the primary Extract.</span>
+<div>
+<pre dir="ltr">
+STOP EXTRACT <span class="italic">ext_2</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, issue the following command for the data pump until it returns <code class="codeph">"At EOF, no more records to process.</code>" This indicates that the pump sent all of the captured data to the primary system.</span>
+<div>
+<pre dir="ltr">
+LAG EXTRACT <span class="italic">pump_2</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, stop the data pump.</span>
+<div>
+<pre dir="ltr">
+STOP EXTRACT <span class="italic">pump_2</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, issue the <code class="codeph">STATUS REPLICAT</code> command until it returns <code class="codeph">"At EOF (end of file).</code>" This confirms that Replicat applied all of the data from the trail to the database.</span>
+<div>
+<pre dir="ltr">
+STATUS REPLICAT <span class="italic">rep_2</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, stop Replicat.</span>
+<div>
+<pre dir="ltr">
+STOP REPLICAT rep_2
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, do the following:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Run the script that grants insert, update, and delete permissions to the users of the business applications.</p>
+</li>
+<li>
+<p>Run the script that enables triggers and cascade delete constraints.</p>
+</li>
+<li>
+<p>Run the scripts that switch over the application server, start applications, and copy essential files that are not part of the replication environment.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, alter the primary Extract to begin capturing data based on the current timestamp. Otherwise, Extract will spend unnecessary time looking for operations that were already captured and replicated while users were working on the standby system.</span>
+<div>
+<pre dir="ltr">
+ALTER EXTRACT <span class="italic">ext_1</span>, BEGIN NOW
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, start the primary Extract so that it is ready to capture transactional changes.</span>
+<div>
+<pre dir="ltr">
+START EXTRACT <span class="italic">ext_1</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Switch user activity to the <span class="bold">primary</span> system.</span></li>
+<li class="stepexpand"><span>(Optional) If system maintenance must be done on the <span class="bold">live standby</span> system, you can do it now, before starting the data pump on the primary system. Note that captured data will be accumulating on the primary system while the standby is offline.</span></li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, start the data pump.</span>
+<div>
+<pre dir="ltr">
+START EXTRACT <span class="italic">pump_1</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">live standby</span> system, start Replicat.</span>
+<div>
+<pre dir="ltr">
+START REPLICAT <span class="italic">rep_1</span>
+</pre></div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<a id="GWUAD279"></a>
+<div class="props_rev_3"><a id="GUID-F281CA44-67D2-4773-A7F9-BEF730CD0206"></a>
+<h2 id="GWUAD-GUID-F281CA44-67D2-4773-A7F9-BEF730CD0206" class="sect2"><span class="enumeration_section">8.6</span> Moving User Activity in an Unplanned Failover</h2>
+<div>
+<div class="section">
+<p>These sections describe how to move user activity in an unplanned failover.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GWUAD1062"></a><a id="GWUAD280"></a>
+<div class="props_rev_3"><a id="GUID-463C9280-AAA8-4D26-8FBD-585DDFFB37BA"></a>
+<h3 id="GWUAD-GUID-463C9280-AAA8-4D26-8FBD-585DDFFB37BA" class="sect3"><span class="enumeration_section">8.6.1</span> Moving User Activity to the Live Standby</h3>
+<div>
+<div class="section">
+<p>This procedure does the following:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>Prepares the live standby for user activity.</p>
+</li>
+<li>
+<p>Ensures that all transactions from the primary system are applied to the live standby.</p>
+</li>
+<li>
+<p>Activates Oracle GoldenGate to capture transactional changes on the live standby.</p>
+</li>
+<li>
+<p>Moves users to the live standby system.</p>
+</li>
+</ul>
+<p>Perform these steps on the live standby system</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To move users to the live standby</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Issue the <code class="codeph">STATUS REPLICAT</code> command until it returns <code class="codeph">"At EOF (end of file)</code>" to confirm that Replicat applied all of the data from the trail to the database.</span>
+<div>
+<pre dir="ltr">
+STATUS REPLICAT <span class="italic">rep_1</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Stop the Replicat process.</span>
+<div>
+<pre dir="ltr">
+STOP REPLICAT <span class="italic">rep_1</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Run the script that grants insert, update, and delete permissions to the users of the business applications.</span></li>
+<li class="stepexpand"><span>Run the script that enables triggers and cascade delete constraints.</span></li>
+<li class="stepexpand"><span>Run the scripts that fail over the application server, start applications, and copy essential files that are not part of the replication environment.</span></li>
+<li class="stepexpand"><span>Start the primary Extract process on the live standby.</span>
+<div>
+<pre dir="ltr">
+START EXTRACT <span class="italic">ext_2</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Move the users to the standby system and let them start working.</span>
+<div>
+<div class="infobox-note" id="GUID-463C9280-AAA8-4D26-8FBD-585DDFFB37BA__GUID-1CDEBC5F-1A9C-4CEC-9674-40F68E32A4E5">
+<p class="notep1">Note:</p>
+<p>Do not start the data pump group on the standby. The user transactions must accumulate there until just before user activity is moved back to the primary system.</p>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<a id="GWUAD1063"></a><a id="GWUAD1064"></a><a id="GWUAD1065"></a><a id="GWUAD1066"></a><a id="GWUAD1067"></a><a id="GWUAD281"></a>
+<div class="props_rev_3"><a id="GUID-0BD83665-ADED-41ED-8744-CCCFA4D571D1"></a>
+<h3 id="GWUAD-GUID-0BD83665-ADED-41ED-8744-CCCFA4D571D1" class="sect3"><span class="enumeration_section">8.6.2</span> Moving User Activity Back to the Primary System</h3>
+<div>
+<div class="section">
+<p>This procedure does the following:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>Recovers the Oracle GoldenGate environment.</p>
+</li>
+<li>
+<p>Makes a copy of the live standby data to the restored primary system.</p>
+</li>
+<li>
+<p>Propagates user transactions that occurred while the copy was being made.</p>
+</li>
+<li>
+<p>Reconciles the results of the copy with the propagated changes.</p>
+</li>
+<li>
+<p>Moves users from the standby system to the restored primary system.</p>
+</li>
+<li>
+<p>Prepares replication to maintain the live standby again.</p>
+</li>
+</ul>
+<p>Perform these steps after the recovery of the primary system is complete.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To Recover the Source Oracle GoldenGate Environment</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ol>
+<li>
+<p>On the <span class="bold">primary</span> system, recover the Oracle GoldenGate directory from your backups.</p>
+</li>
+<li>
+<p>On the <span class="bold">primary</span> system, run GGSCI.</p>
+</li>
+<li>
+<p>On the <span class="bold">primary</span> system, delete the primary Extract group.</p>
+<pre dir="ltr">
+DELETE EXTRACT <span class="italic">ext_1</span>
+</pre></li>
+<li>
+<p>On the <span class="bold">primary</span> system, delete the local trail.</p>
+<pre dir="ltr">
+DELETE EXTTRAIL <span class="italic">local_trail_1</span>
+</pre></li>
+<li>
+<p>On the <span class="bold">primary</span> system, add the primary Extract group again, using the same name so that it matches the parameter file that you restored from backup. For documentation purposes, this group is called <span class="italic">ext_1</span>. This step initializes the Extract checkpoint from its state before the failure to a clean state.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">ext_1</span>, {TRANLOG | INTEGRATED TRANLOG}, BEGIN <span class="italic">time</span>
+[, THREADS <span class="italic">n</span>]
+</pre>
+<ul style="list-style-type: disc;">
+<li>
+<p>For <code class="codeph">TRANLOG</code> and <code class="codeph">INTEGRATED TRANLOG</code>, see <a class="olink GWURF122" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF122"><span class="italic"><span id="GUID-0BD83665-ADED-41ED-8744-CCCFA4D571D1__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a>. <code class="codeph">INTEGRATED TRANLOG</code> enables integrated capture for an Oracle database.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>On the <span class="bold">primary</span> system, add the local trail again, using the same name as before. For documentation purposes, this trail is called <span class="italic">local_trail_1</span>.</p>
+<pre dir="ltr">
+ADD EXTTRAIL <span class="italic">local_trail_1</span>, EXTRACT <span class="italic">ext_1</span>
+</pre>
+<ul style="list-style-type: disc;">
+<li>
+<p>For <code class="codeph">EXTRACT</code>, specify the <span class="italic">ext_1</span> group to write to this trail.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>On the <span class="bold">primary</span> system, start the Manager process.</p>
+<pre dir="ltr">
+START MANAGER
+</pre></li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To Copy the Database from Standby to Primary System</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ol>
+<li>
+<p>On the <span class="bold">primary</span> system, run scripts to disable triggers and cascade delete constraints.</p>
+</li>
+<li>
+<p>On the <span class="bold">standby</span> system, start making a hot copy of the database.</p>
+</li>
+<li>
+<p>On the <span class="bold">standby</span> system, record the time at which the copy finishes.</p>
+</li>
+<li>
+<p>On the <span class="bold">standby system</span>, stop user access to the applications. Allow all open transactions to be completed.</p>
+</li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To Propagate Data Changes Made During the Copy</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ol>
+<li>
+<p>On the <span class="bold">primary</span> system, start Replicat.</p>
+<pre dir="ltr">
+START REPLICAT <span class="italic">rep_2</span>
+</pre></li>
+<li>
+<p>On the <span class="bold">live standby</span> system, start the data pump. This begins transmission of the accumulated user transactions from the standby to the trail on the primary system.</p>
+<pre dir="ltr">
+START EXTRACT <span class="italic">pump_2</span>
+</pre></li>
+<li>
+<p>On the <span class="bold">primary</span> system, issue the <code class="codeph">INFO REPLICAT</code> command until you see that it posted all of the data changes that users generated on the standby system during the initial load. Refer to the time that you recorded previously. For example, if the copy stopped at 12:05, make sure that change replication has posted data up to that point.</p>
+<pre dir="ltr">
+INFO REPLICAT <span class="italic">rep_2</span>
+</pre></li>
+<li>
+<p>On the <span class="bold">primary</span> system, issue the following command to turn off the <code class="codeph">HANDLECOLLISIONS</code> parameter and disable the initial-load error handling.</p>
+<pre dir="ltr">
+SEND REPLICAT <span class="italic">rep_2</span>, NOHANDLECOLLISIONS
+</pre></li>
+<li>
+<p>On the <span class="bold">primary</span> system, issue the <code class="codeph">STATUS REPLICAT</code> command until it returns <code class="codeph">"At EOF (end of file)</code>" to confirm that Replicat applied all of the data from the trail to the database.</p>
+<pre dir="ltr">
+STATUS REPLICAT <span class="italic">rep_2</span>
+</pre></li>
+<li>
+<p>On the <span class="bold">live standby</span> system, stop the data pump. This stops transmission of any user transactions from the standby to the trail on the primary system.</p>
+<pre dir="ltr">
+STOP EXTRACT <span class="italic">pump_2</span>
+</pre></li>
+<li>
+<p>On the <span class="bold">primary</span> system, stop the Replicat process.</p>
+<pre dir="ltr">
+STOP REPLICAT <span class="italic">rep_2</span>
+</pre></li>
+</ol>
+<p>At this point in time, the primary and standby databases should be in a state of synchronization again.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">(Optional) To Verify Synchronization</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ol>
+<li>
+<p>Use a compare tool, such as Oracle GoldenGate Veridata, to compare the source and standby databases for parity.</p>
+</li>
+<li>
+<p>Use a repair tool, such as Oracle GoldenGate Veridata, to repair any out-of-sync conditions.</p>
+</li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To Switch Users to the Primary System</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, run the script that grants insert, update, and delete permissions to the users of the business applications.</span></li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, run the script that enables triggers and cascade delete constraints.</span></li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, run the scripts that fail over the application server, start applications, and copy essential files that are not part of the replication environment.</span></li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, start the primary Extract process.</span>
+<div>
+<pre dir="ltr">
+START EXTRACT <span class="italic">ext_1</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the <span class="bold">primary</span> system, allow users to access the applications.</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8">
+<table class="cellalignment6">
+<tr>
+<td class="cellalignment5"><a href="configuring-oracle-goldengate-real-time-data-warehousing.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment5"><a href="configuring-oracle-goldengate-active-active-high-availability.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

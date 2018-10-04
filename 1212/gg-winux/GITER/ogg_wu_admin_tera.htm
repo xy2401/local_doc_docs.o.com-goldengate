@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>6 Modifying Objects in the Oracle GoldenGate Configuration</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This chapter contains instructions for performing some common maintenance tasks when using the Oracle GoldenGate replication solution. This chapter contains the following sections:" />
+<meta name="dcterms.created" content="2015-05-21T11:4:8Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Teradata" />
+<meta name="dcterms.identifier" content="E29290-02" />
+<meta name="dcterms.isVersionOf" content="GITER" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="ogg_wu_ddl_tera.htm" title="Previous" type="text/html" />
+<link rel="Next" href="ogg_wu_uninstall_tera.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GITER.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GITER.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GITER.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">9/11</span>
+<!-- End Header -->
+<div id="GITER264" class="chapter"><a id="sthref94"></a>
+<h1 class="chapter"><span class="secnum">6</span> Modifying Objects in the Oracle GoldenGate Configuration</h1>
+<p><a id="GITER265"></a>This chapter contains instructions for performing some common maintenance tasks when using the Oracle GoldenGate replication solution. This chapter contains the following sections:</p>
+<ul>
+<li>
+<p><a href="#CFHCDABE">Section 6.1, "Deleting an Extract Group"</a></p>
+</li>
+<li>
+<p><a href="#CFHCHHGH">Section 6.2, "Adding a Table to an Existing Extract Group"</a></p>
+</li>
+<li>
+<p><a href="#CFHFEECI">Section 6.3, "Moving a Table to a New Extract Group"</a></p>
+</li>
+<li>
+<p><a href="#CFHEDCHD">Section 6.4, "Modifying Columns of a Table"</a></p>
+</li>
+</ul>
+<a id="CFHCDABE"></a>
+<div id="GITER266" class="sect1">
+<h2 class="sect1"><span class="secnum">6.1</span> Deleting an Extract Group</h2>
+<p>To delete an Oracle GoldenGate Extract group, the Extract process must be decoupled from the Teradata replication group.</p>
+<ol>
+<li>
+<p>Start GGSCI.</p>
+</li>
+<li>
+<p>While Extract is still running, issue this command:</p>
+<pre dir="ltr">
+SEND EXTRACT <span class="codeinlineitalic">group</span>, VAMMESSAGE "control:terminate"
+</pre></li>
+<li>
+<p>Stop Extract.</p>
+<pre dir="ltr">
+STOP EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Delete the Extract group forcefully.</p>
+<pre dir="ltr">
+DELETE EXTRACT <span class="codeinlineitalic">group</span> !
+</pre></li>
+<li>
+<p>From any Teradata client, issue this command:</p>
+<pre dir="ltr">
+DROP REPLICATION GROUP <span class="codeinlineitalic">replication_group</span>
+</pre></li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="CFHCHHGH"></a>
+<div id="GITER267" class="sect1">
+<h2 class="sect1"><span class="secnum">6.2</span> Adding a Table to an Existing Extract Group</h2>
+<p>To add a table to an existing Extract group:</p>
+<ol>
+<li>
+<p>Suspend activity on the source tables that are linked to Oracle GoldenGate.</p>
+</li>
+<li>
+<p>Start GGSCI.</p>
+</li>
+<li>
+<p>In GGSCI, issue this command:</p>
+<pre dir="ltr">
+INFO EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>On the <code dir="ltr">Checkpoint Lag</code> line, verify whether there is any Extract lag. If needed, continue to issue <code dir="ltr">INFO EXTRACT</code> until lag is zero, which indicates that all of the transaction data so far has been processed.</p>
+</li>
+<li>
+<p>While Extract is still running, issue this command:</p>
+<pre dir="ltr">
+SEND EXTRACT <span class="italic">group</span>, VAMMESSAGE "control:terminate"
+</pre></li>
+<li>
+<p>Stop the Extract group.</p>
+<pre dir="ltr">
+STOP EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>From any Teradata client, issue this command to add the new table:</p>
+<pre dir="ltr">
+ALTER REPLICATION GROUP <span class="codeinlineitalic">group</span> ADD <span class="codeinlineitalic">database</span>.<span class="codeinlineitalic">table</span>
+</pre></li>
+<li>
+<p>From any Teradata client, issue this command to generate a security token.</p>
+<pre dir="ltr">
+ALTER REPLICATION GROUP <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Edit the TAM initialization file and specify the security token with the <code dir="ltr">SecurityToken</code> parameter.</p>
+</li>
+<li>
+<p>Edit the Extract parameter file to add a <code dir="ltr">TABLE</code> parameter that specifies the new table.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Save and close the file.</p>
+</li>
+<li>
+<p>In GGSCI, issue this command to start Extract:</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Allow activity on the source tables that are linked to Oracle GoldenGate.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="CFHFEECI"></a>
+<div id="GITER268" class="sect1">
+<h2 class="sect1"><span class="secnum">6.3</span> Moving a Table to a New Extract Group</h2>
+<p>To move a table to a new Extract group:</p>
+<ol>
+<li>
+<p>Suspend activity on the source database for all tables that are linked to Oracle GoldenGate.</p>
+</li>
+<li>
+<p>Edit the current Teradata Create Group Statement file to remove the table from the <code dir="ltr">CREATE REPLICATION GROUP</code> statement.</p>
+</li>
+<li>
+<p>Start GGSCI.</p>
+</li>
+<li>
+<p>In GGSCI, issue this command for the current Extract group:</p>
+<pre dir="ltr">
+INFO EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>On the <code dir="ltr">Checkpoint Lag</code> line, verify whether there is any Extract lag. If needed, continue to issue <code dir="ltr">INFO EXTRACT</code> until lag is zero, which indicates that all of the transaction data so far has been processed.</p>
+</li>
+<li>
+<p>In GGSCI, issue this command:</p>
+<pre dir="ltr">
+SEND EXTRACT <span class="codeinlineitalic">group</span>, VAMMESSAGE "control:terminate"
+</pre></li>
+<li>
+<p>Stop the current Extract group.</p>
+<pre dir="ltr">
+STOP EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Edit the current Extract parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Remove the <code dir="ltr">TABLE</code> parameter that contains the table.</p>
+</li>
+<li>
+<p>From any Teradata client, issue this command to drop the replication group that contains the table that is being moved:</p>
+<pre dir="ltr">
+ALTER REPLICATION GROUP <span class="codeinlineitalic">group</span> DROP <span class="codeinlineitalic">table</span>
+</pre></li>
+<li>
+<p>In GGSCI, issue this command to start the current Extract group, so that it can continue processing its assigned tables, minus the one that was moved:</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Add a new Extract group that contains a <code dir="ltr">TABLE</code> statement for the moved table, and then add the other processes, trails, and parameter files that are appropriate for the capture method that you are using. See <a href="ogg_wu_config_tera.htm#CFHIIBIC">"Configuring Oracle GoldenGate"</a> for instructions.</p>
+</li>
+<li>
+<p>Create a new <code dir="ltr">tam.ini</code> file and a new Teradata Create Group Statement file that contains the table. See <a href="ogg_wu_setup_tera.htm#CFHBBCFH">"Configuring the TAM Initialization File"</a> and <a href="ogg_wu_setup_tera.htm#BGBFBFGC">"Creating a Teradata Replication Group"</a>.</p>
+</li>
+<li>
+<p>Start the new Extract group and any associated processes.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">new_group</span>
+</pre></li>
+<li>
+<p>Allow user activity to resume on all of the source tables that are linked to Oracle GoldenGate.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="CFHEDCHD"></a>
+<div id="GITER269" class="sect1">
+<h2 class="sect1"><span class="secnum">6.4</span> Modifying Columns of a Table</h2>
+<p>To modify columns of a table:</p>
+<ol>
+<li>
+<p>Suspend activity on the source database for all tables that are linked to Oracle GoldenGate.</p>
+</li>
+<li>
+<p>Start GGSCI.</p>
+</li>
+<li>
+<p>In GGSCI, issue this command for the Extract group:</p>
+<pre dir="ltr">
+INFO EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>On the <code dir="ltr">Checkpoint Lag</code> line, verify whether there is any Extract lag. If needed, continue to issue <code dir="ltr">INFO EXTRACT</code> until lag is zero, which indicates that all of the transaction data so far has been processed.</p>
+</li>
+<li>
+<p>While Extract is still running, issue this command:</p>
+<pre dir="ltr">
+SEND EXTRACT <span class="codeinlineitalic">group</span>, VAMMESSAGE "control:terminate"
+</pre></li>
+<li>
+<p>Stop the Extract group.</p>
+<pre dir="ltr">
+STOP EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>In GGSCI, issue this command for the Replicat group:</p>
+<pre dir="ltr">
+INFO REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>On the <code dir="ltr">Checkpoint Lag</code> line, verify whether there is any Replicat lag. If needed, continue to issue <code dir="ltr">INFO REPLICAT</code> until lag is zero, which indicates that all of the data in the trail has been processed.</p>
+</li>
+<li>
+<p>Stop the Replicat group.</p>
+<pre dir="ltr">
+STOP REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Perform the table modifications on the source and target databases.</p>
+</li>
+<li>
+<p>Start the Extract and Replicat processes.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group</span>
+START REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Allow user activity to resume on all of the source tables that are linked to Oracle GoldenGate.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment248">
+<tr>
+<td class="cellalignment255"><table class="cellalignment261">
+<tr>
+<td class="cellalignment252"><a href="ogg_wu_ddl_tera.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment252"><a href="ogg_wu_uninstall_tera.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment257">
+<table class="cellalignment258">
+<tr>
+<td class="cellalignment252"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment252"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment252"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

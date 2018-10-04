@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>CUSEREXIT</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-09-07T12:04:07Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81608-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="cryptoengine.htm" title="Previous" type="text/html" />
+<link rel="Next" href="dboptions.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520"></a> <span id="PAGE" style="display:none;">105/356</span> <!-- End Header -->
+<a id="GWURF432"></a><a id="GWURF433"></a><a id="GWURF434"></a><a id="GWURF435"></a><a id="GWURF436"></a><a id="GWURF431"></a>
+<h1 id="GWURF-GUID-40AD086D-D391-411C-BF97-0E5570B5C520" class="sect1"><span class="enumeration_section">6.36</span> CUSEREXIT</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract when fetching from a multitenant container database (CDB) and Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">CUSEREXIT</code> parameter to call a custom exit routine written in C programming code from a Windows DLL or UNIX shared object at a defined exit point within Oracle GoldenGate processing. Your user exit routine must be able to accept different events and information from the Extract and Replicat processes, process the information as desired, and then return a response and information to the caller (the Oracle GoldenGate process that called it).</p>
+<p>User exits can be used as an alternative to, or in conjunction with, the data transformation functions that are available within the Oracle GoldenGate solution.</p>
+<div class="infobox-note" id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GUID-ABC4C5F0-840B-4A50-8224-2E38E0069EE3">
+<p class="notep1">Note:</p>
+<p>When using a coordinated Replicat to call a user exit routine, you are responsible for writing the user exits in a thread-safe manner.</p>
+</div>
+<p>For help with creating and implementing user exits, see <a class="olink GWUAD607" target="_blank" href="../GWUAD/customizing-oracle-goldengate-processing.htm#GWUAD607"><span class="italic"><span id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Default</p>
+<p>None</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+CUSEREXIT {<span class="italic">DLL</span> | <span class="italic">shared_object</span>} <span class="italic">routine</span>
+[, INCLUDEUPDATEBEFORES]
+[, PARAMS '<span class="italic">string</span>']
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GUID-302ECD32-8A2D-4328-AF6A-252F3E1B7949"><!-- --></a>{<span class="italic"><code class="codeph">DLL</code></span> | <span class="italic"><code class="codeph">shared_object</code></span>}</dt>
+<dd>
+<p>The name of the Windows DLL or UNIX shared object that contains the user exit function.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GUID-CC50D2B1-26C8-4E43-8110-50E711E33CF8"><!-- --></a><span class="italic"><code class="codeph">routine</code></span></dt>
+<dd>
+<p>The name of the exit routine to be executed.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GUID-57798179-F19C-481C-8F71-AFC54B75770B"><!-- --></a><code class="codeph">INCLUDEUPDATEBEFORES</code></dt>
+<dd>
+<p>Passes the before images of column values to a user exit. When using this parameter, you must explicitly request the before image by setting the <code class="codeph">requesting_before_after_ind</code> flag to <code class="codeph">BEFORE_IMAGE_VAL</code> within a callback function that supports this flag. Otherwise, only the after image is passed to the user exit. By default, Oracle GoldenGate only works with after images.</p>
+<p>When using <code class="codeph">INCLUDEUPDATEBEFORES</code> for a user exit that is called from a data pump or from Replicat, always use the <code class="codeph">GETUPDATEBEFORES</code> parameter for the primary Extract process, so that the before image is captured, written to the trail, and causes a <code class="codeph">process_record</code> event in the user exit. In a case where the primary Extract also has a user exit, <code class="codeph">GETUPDATEBEFORES</code> causes both the before image and the after image to be sent to the user exit as separate <code class="codeph">EXIT_CALL_PROCESS_RECORD</code> events.</p>
+<p>If the user exit is called from a primary Extract (one that reads the transaction log), only <code class="codeph">INCLUDEUPDATEBEFORES</code> is needed for that Extract. <code class="codeph">GETUPDATEBEFORES</code> is not needed in this case, unless other Oracle GoldenGate processes downstream will need the before image to be written to the trail. <code class="codeph">INCLUDEUPDATEBEFORES</code> does not cause before images to be written to the trail.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GUID-9132499D-AED3-46F1-ABB9-9B527270EA0D"><!-- --></a><code class="codeph">PARAMS</code> <span class="italic"><code class="codeph">'string'</code></span></dt>
+<dd>
+<p>Passes the specified string at startup. Can be used to pass a properties file, startup parameters, or other string. Enclose the string within single quote marks.</p>
+<p>Data in the string is passed to the user exit in the <code class="codeph">EXIT_CALL_START</code> <code class="codeph">exit_params_def.function_param</code>. If no quoted string is specified with <code class="codeph">PARAMS</code>, the <code class="codeph">exit_params_def.function_param</code> is <code class="codeph">NULL</code>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GUID-47A30B56-4392-418B-B9EE-A7683A7E70EB"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+CUSEREXIT userexit.dll MyUserExit
+</pre></dd>
+<dt class="dlterm"><a id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GUID-E8481470-9706-48B5-BDA2-4A947A5BD3EC"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+CUSEREXIT userexit.dll MyUserExit, PARAMS 'init.properties'
+</pre></dd>
+<dt class="dlterm"><a id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GUID-27147121-8BC4-44DC-95D6-0D5334896D98"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+CUSEREXIT userexit.dll MyUserExit, INCLUDEUPDATEBEFORES, PARAMS 'init.properties'
+</pre></dd>
+<dt class="dlterm"><a id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GUID-038B96B9-6654-409C-977A-D0BBB40029A6"><!-- --></a>Example 4&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+CUSEREXIT userexit.dll MyUserExit, INCLUDEUPDATEBEFORES, &amp;
+  PARAMS 'init.properties'
+</pre></dd>
+<dt class="dlterm"><a id="GUID-40AD086D-D391-411C-BF97-0E5570B5C520__GUID-E9E36F4D-D478-4F8C-B3EF-72B432CB82EE"><!-- --></a>Example 5&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+CUSEREXIT cuserexit.dll MyUserExit, &amp; 
+  INCLUDEUPDATEBEFORES, PARAMS 'Some text to start with during startup'
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment350">
+<tr>
+<td class="cellalignment357">
+<table class="cellalignment355">
+<tr>
+<td class="cellalignment354"><a href="cryptoengine.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment354"><a href="dboptions.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment359">
+<table class="cellalignment353">
+<tr>
+<td class="cellalignment354"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment354"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment354"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

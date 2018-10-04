@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>COMPUTE</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="coltest.htm" title="Previous" type="text/html" />
+<link rel="Next" href="date.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-A8289189-B581-4C3E-AF3E-501BF990BC11"></a> <span id="PAGE" style="display:none;">376/459</span> <!-- End Header -->
+<a id="GWURF767"></a><a id="GWURF768"></a><a id="GWURF769"></a><a id="GWURF766"></a>
+<h1 id="GWURF-GUID-A8289189-B581-4C3E-AF3E-501BF990BC11" class="sect1"><span class="enumeration_section">5.10</span> COMPUTE</h1>
+<div>
+<div class="section">
+<p>Use the <code class="codeph">@COMPUTE</code> function to return the value of an arithmetic expression to a target column. The value returned from the function is in the form of a string.</p>
+<p>You can omit the <code class="codeph">@COMPUTE</code> phrase when returning the value of an arithmetic expression to another Oracle GoldenGate function, as in:</p>
+<pre dir="ltr">
+@STRNUM ((AMOUNT1 + AMOUNT2), LEFT)
+</pre>
+<p>The preceding returns the same result as:</p>
+<pre dir="ltr">
+@STRNUM ((@COMPUTE (AMOUNT1 + AMOUNT2), LEFT)
+</pre>
+<p>Arithmetic expressions can be combinations of the following elements.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Numbers</p>
+</li>
+<li>
+<p>The names of columns that contain numbers</p>
+</li>
+<li>
+<p>Functions that return numbers</p>
+</li>
+<li>
+<p>Arithmetic operators:</p>
+<p><code class="codeph">+</code> (plus)</p>
+<p><code class="codeph">-</code> (minus)</p>
+<p><code class="codeph">*</code> (multiply)</p>
+<p><code class="codeph">/</code> (divide)</p>
+<p><code class="codeph">\</code>&nbsp;(remainder)</p>
+</li>
+<li>
+<p>Comparison operators:</p>
+<p><code class="codeph">&gt;</code> (greater than)</p>
+<p><code class="codeph">&gt;=</code> (greater than or equal)</p>
+<p><code class="codeph">&lt;</code> (less than)</p>
+<p><code class="codeph">&lt;=</code> (less than or equal)</p>
+<p><code class="codeph">=</code> (equal)</p>
+<p><code class="codeph">&lt;&gt;</code> (not equal)</p>
+<p>Results that are derived from comparisons can be zero (indicating <code class="codeph">FALSE</code>) or non-zero (indicating <code class="codeph">TRUE</code>).</p>
+</li>
+<li>
+<p>Parentheses (for grouping results in the expression)</p>
+</li>
+<li>
+<p>The conjunction operators <code class="codeph">AND</code>, <code class="codeph">OR</code>. Oracle GoldenGate only evaluates the necessary part of a conjunction expression. Once a statement is <code class="codeph">FALSE</code>, the rest of the expression is ignored. This can be valuable when evaluating fields that may be missing or null. For example, if the value of <code class="codeph">COL1</code> is <code class="codeph">25</code> and the value of <code class="codeph">COL2</code> is <code class="codeph">10</code>, then the following are possible:</p>
+<p><code class="codeph">@COMPUTE (COL1 &gt; 0 AND COL2 &lt; 3)</code> returns <code class="codeph">0</code>.</p>
+<p><code class="codeph">@COMPUTE (COL1 &lt; 0 AND COL2 &lt; 3)</code> returns <code class="codeph">0</code>. <code class="codeph">COL2 &lt; 3</code> is never evaluated.</p>
+<p><code class="codeph">@COMPUTE ((COL1 + COL2)/5)</code> returns <code class="codeph">7</code>.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@COMPUTE (<span class="italic">expression</span>)
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A8289189-B581-4C3E-AF3E-501BF990BC11__GUID-60425BB1-80F5-4C65-86DE-15D6D480B95F"><!-- --></a><span class="italic"><code class="codeph">expression</code></span></dt>
+<dd>
+<p>A valid arithmetic expression. The numeric value plus the precision cannot be greater than 17 digits. If this limit is exceeded, <code class="codeph">@COMPUTE</code> returns an error similar to the following.</p>
+<pre dir="ltr">
+2013-08-01 01:54:22  ERROR   OGG-01334  Error mapping data from <span class="italic">column</span> to <span class="italic">column</span> in function COMPUTE.
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-A8289189-B581-4C3E-AF3E-501BF990BC11__GUID-FD698D1E-6753-4008-A5B2-1F61CF90AF34"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+AMOUNT_TOTAL = @COMPUTE (AMT + AMT2)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-A8289189-B581-4C3E-AF3E-501BF990BC11__GUID-F8AF5289-BB5A-4AB2-9215-24F29CFDE3CB"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+AMOUNT_TOTAL = @IF (AMT &gt;= 0, AMT * 100, 0)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-A8289189-B581-4C3E-AF3E-501BF990BC11__GUID-F6169D29-5049-4902-ABA8-288AF1A4D363"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+ANNUAL_SALARY = @COMPUTE (MONTHLY_SALARY * 12)
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="coltest.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="date.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

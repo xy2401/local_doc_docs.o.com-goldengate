@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>GET_DDL_RECORD_PROPERTIES</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-09-07T12:04:07Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81608-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="get_database_metadata.htm" title="Previous" type="text/html" />
+<link rel="Next" href="Chunk293634552.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80"></a> <span id="PAGE" style="display:none;">327/356</span> <!-- End Header -->
+<a id="GWURF856"></a>
+<h1 id="GWURF-GUID-3ADFD099-E653-4425-A612-5D94075ABB80" class="sect1"><span class="enumeration_section">8.22</span> GET_DDL_RECORD_PROPERTIES</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract and Replicat, for databases for which DDL replication is supported</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">GET_DDL_RECORD_PROPERTIES</code> function to return a DDL operation, including information about the object on which the DDL was performed and also the text of the DDL statement itself. The Extract process can only get the source table layout. The Replicat process can get source or target layouts.</p>
+<p>If the character session of the user exit is set with <code class="codeph">SET_SESSION_CHARSET</code> to a value other than the default character set of the operating system, as defined in <code class="codeph">ULIB_CS_DEFAULT</code> in the <code class="codeph">ucharset.h</code> file, the character data that is exchanged between the user exit and the process is interpreted in the session character set. This includes the DDL type, the object type, the two- or three-part object name, the owner name and the DDL text itself.</p>
+<pre dir="ltr">
+#include "usrdecs.h"
+short result_code;
+ddl_record_def ddl_rec;
+ERCALLBACK (GET_DDL_RECORD_PROPERTIES, &amp;ddl_rec, &amp;result_code);
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Buffer</p>
+<pre dir="ltr">
+typedef struct
+{
+char *ddl_type;
+long ddl_type_max_length; /* Maximum Description length PASSED IN BY USER */
+long ddl_type_length; /* Actual length */
+
+char *object_type; 
+long object_type_max_length; /* Maximum Description length PASSED IN BY USER */
+long object_type_length; /* Actual length */
+
+char *object_name; /* Fully qualified name of the object
+  (3-part for CDB, 2-part for non-CDB) */
+long object_max_length; /* Maximum Description length PASSED IN BY USER */
+long object_length; /* Actual length */
+
+char *owner_name;
+long owner_max_length; /* Maximum Description length PASSED IN BY USER */
+long owner_length; /* Actual length */
+
+char *ddl_text;
+long ddl_text_max_length; /* Maximum Description length PASSED IN BY USER */
+long ddl_text_length; /* Actual length */
+
+short ddl_text_truncated; /* Was value truncated? */
+short source_or_target; /* Source or target value? */
+} ddl_record_def;
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Input</p>
+<dl>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-0A024A7B-3223-4855-93CA-99CE9C82621D"><!-- --></a><code class="codeph">ddl_type_length</code></dt>
+<dt class="dlterm"><code class="codeph">object_type_length</code></dt>
+<dt class="dlterm"><code class="codeph">object_length</code></dt>
+<dt class="dlterm"><code class="codeph">owner_length</code></dt>
+<dt class="dlterm"><code class="codeph">ddl_text_length</code></dt>
+<dd>
+<p>A pointer to one buffer for each of these items to accept the returned column values. These items are as follows:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-BB5FA787-0DFB-43EE-9742-146D84DC20F3"><!-- --></a><code class="codeph">ddl_type_length</code></dt>
+<dd>
+<p>Contains the length of the type of DDL operation, for example a <code class="codeph">CREATE</code> or <code class="codeph">ALTER.</code></p>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-52F763FC-9540-44AC-88E3-011C9ACF0A68"><!-- --></a><code class="codeph">object_type_length</code></dt>
+<dd>
+<p>Contains the length of type of database object that is affected by the DDL operation, for example <code class="codeph">TABLE</code> or <code class="codeph">INDEX</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-9A89C46B-8AED-4D8B-BF07-25FF32A1FD26"><!-- --></a><code class="codeph">object_length</code></dt>
+<dd>
+<p>Contains the length of the name of the object.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-D5ECA34C-4A6F-4875-8AD8-A2E82FA312D5"><!-- --></a><code class="codeph">object_length</code></dt>
+<dd>
+<p>Contains the length of the owner of the object (schema or database).</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-F8743DCA-6C0D-4085-8B02-7E1F6E2B0B4E"><!-- --></a><code class="codeph">ddl_text_length</code></dt>
+<dd>
+<p>Contains the length of the actual DDL statement text.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-739EA6FD-54C1-475D-A40B-D97AC2E1C770"><!-- --></a><code class="codeph">ddl_type_max_length</code></dt>
+<dd>
+<p>The maximum length of the DDL operation type that is returned by <code class="codeph">*ddl_type</code>. The DDL type is any DDL command that is valid for the database, such as <code class="codeph">ALTER</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-CBA9AD3B-AB03-4E84-8619-2F358EEC4BD2"><!-- --></a><code class="codeph">object_type_max_length</code></dt>
+<dd>
+<p>The maximum length of the object type that is returned by <code class="codeph">*object_type</code>. The object type is any object that is valid for the database, such as <code class="codeph">TABLE</code>, <code class="codeph">INDEX</code>, and <code class="codeph">TRIGGER</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-27E9D5E6-1B92-459C-92D1-0FD807CBAFCE"><!-- --></a><code class="codeph">object_max_length</code></dt>
+<dd>
+<p>The maximum length of the name of the object that is returned by <code class="codeph">*object_name</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-F19FE5DC-140A-4FCC-AF63-11C58662FE56"><!-- --></a><code class="codeph">owner_max_length</code></dt>
+<dd>
+<p>The maximum length of the name of the owner that is returned by <code class="codeph">*owner_name</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-6EBAC802-2B4B-40C6-B68D-A60AC3C01F7F"><!-- --></a><code class="codeph">ddl_text_max_length</code></dt>
+<dd>
+<p>The maximum length of the text of the DDL statement that is returned by <code class="codeph">*ddl_text</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-2505CCF4-DCE0-4F61-AABD-23B30087E71D"><!-- --></a><code class="codeph">source_or_target</code></dt>
+<dd>
+<p>One of the following indicating whether to return the operation type for the source or the target data record.</p>
+<pre dir="ltr">
+EXIT_FN_SOURCE_VAL
+EXIT_FN_TARGET_VAL
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Output</p>
+<dl>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-B0521F67-B261-4684-843B-6D88EC3FB026"><!-- --></a><code class="codeph">ddl_type_length</code></dt>
+<dt class="dlterm"><code class="codeph">object_type_length</code></dt>
+<dt class="dlterm"><code class="codeph">object_length</code></dt>
+<dt class="dlterm"><code class="codeph">owner_length</code></dt>
+<dt class="dlterm"><code class="codeph">ddl_text_length</code></dt>
+<dd>
+<p>All of these fields return the actual length of the value that was requested. (See the input for descriptions.)</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3ADFD099-E653-4425-A612-5D94075ABB80__GUID-2445AA55-B9C9-454E-B98E-BEA39E30EE9D"><!-- --></a><code class="codeph">ddl_text_truncated</code></dt>
+<dd>
+<p>A flag (<code class="codeph">0</code> or <code class="codeph">1</code>) to indicate whether or not the DDL text was truncated. Truncation occurs if the length of the DDL text plus the null terminator exceeds the maximum buffer length.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Return Values</p>
+<pre dir="ltr">
+EXIT_FN_RET_OK
+EXIT_FN_RET_NOT_SUPPORTED
+EXIT_FN_RET_INVALID_CONTEXT
+EXIT_FN_RET_INCOMPLETE_DDL_REC
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment350">
+<tr>
+<td class="cellalignment357">
+<table class="cellalignment355">
+<tr>
+<td class="cellalignment354"><a href="get_database_metadata.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment354"><a href="Chunk293634552.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment359">
+<table class="cellalignment353">
+<tr>
+<td class="cellalignment354"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment354"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment354"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Tuning the Performance of Oracle GoldenGate</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter contains suggestions for improving the performance of Oracle GoldenGate components." />
+<meta name="dcterms.created" content="2018-07-19T06:21:43Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66357-07" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="monitoring-oracle-goldengate-processing.htm" title="Previous" type="text/html" />
+<link rel="Next" href="performing-administrative-operations.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9"></a> <span id="PAGE" style="display:none;">26/34</span> <!-- End Header -->
+<a id="GWUAD1128"></a><a id="GWUAD659"></a>
+<h1 id="GWUAD-GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" class="sect1"><span class="enumeration_chapter">19</span> Tuning the Performance of Oracle GoldenGate</h1>
+<div>
+<div><span>This chapter contains suggestions for improving the performance of Oracle GoldenGate components.</span></div>
+<p>This chapter includes the following sections:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><a href="tuning-performance-oracle-goldengate.htm#GUID-A216AAB0-1149-408C-9867-DF1ED42330B8">Using Multiple Process Groups</a></p>
+</li>
+<li>
+<p><a href="tuning-performance-oracle-goldengate.htm#GUID-03D8F40F-CCD6-47F1-98C8-15465B49A300">Splitting Large Tables Into Row Ranges Across Process Groups</a></p>
+</li>
+<li>
+<p><a href="tuning-performance-oracle-goldengate.htm#GUID-D0394141-4BA2-42D3-AA43-E094EB9887AB">Configuring Oracle GoldenGate to Use the Network Efficiently</a></p>
+</li>
+<li>
+<p><a href="tuning-performance-oracle-goldengate.htm#GUID-639CBCC5-9B9E-41CE-A6D4-F659164B6577">Eliminating Disk I/O Bottlenecks</a></p>
+</li>
+<li>
+<p><a href="tuning-performance-oracle-goldengate.htm#GUID-DBBD403D-BF90-4112-B383-0B71807D1A8A">Managing Virtual Memory and Paging</a></p>
+</li>
+<li>
+<p><a href="tuning-performance-oracle-goldengate.htm#GUID-5A6B5C6F-B6FC-4B84-99F6-1A93DEC01A3F">Optimizing Data Filtering and Conversion</a></p>
+</li>
+<li>
+<p><a href="tuning-performance-oracle-goldengate.htm#GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D">Tuning Replicat Transactions</a></p>
+</li>
+</ul>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-A216AAB0-1149-408C-9867-DF1ED42330B8">Using Multiple Process Groups</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-03D8F40F-CCD6-47F1-98C8-15465B49A300">Splitting Large Tables Into Row Ranges Across Process Groups</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-D0394141-4BA2-42D3-AA43-E094EB9887AB">Configuring Oracle GoldenGate to Use the Network Efficiently</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-639CBCC5-9B9E-41CE-A6D4-F659164B6577">Eliminating Disk I/O Bottlenecks</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-DBBD403D-BF90-4112-B383-0B71807D1A8A">Managing Virtual Memory and Paging</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-5A6B5C6F-B6FC-4B84-99F6-1A93DEC01A3F">Optimizing Data Filtering and Conversion</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D">Tuning Replicat Transactions</a><br /></li>
+</ul>
+</div>
+<a id="GWUAD1130"></a><a id="GWUAD1129"></a>
+<div class="props_rev_3"><a id="GUID-A216AAB0-1149-408C-9867-DF1ED42330B8"></a>
+<h2 id="GWUAD-GUID-A216AAB0-1149-408C-9867-DF1ED42330B8" class="sect2"><span class="enumeration_section">19.1</span> Using Multiple Process Groups</h2>
+<div>
+<p>Typically, only one Extract group is required to efficiently capture from a database. However, depending on the redo (transactional) values, or the data and operation types, you may find that you are required to add one or more Extract group to the configuration.</p>
+<p>Similarly, only one Replicat group is typically needed to apply data to a target database if using Replicat in coordinated mode. (See <a href="configuring-online-change-synchronization.htm#GUID-36DEDF8E-DD89-4454-98A1-ABD9E80D7BE1">About Coordinated Replicat Mode</a> for more information.) However, even in some cases when using Replicat in coordinated mode, you may be required to use multiple Replicat groups. If you are using Replicat in classic mode and your applications generate a high transaction volume, you probably will need to use parallel Replicat groups.</p>
+<p>Because each <span>Oracle GoldenGate</span> component &mdash; Extract, data pump, trail, Replicat &mdash; is an independent module, you can combine them in ways that suit your needs. You can use multiple trails and parallel Extract and Replicat processes (with or without data pumps) to handle large transaction volume, improve performance, eliminate bottlenecks, reduce latency, or isolate the processing of specific data.</p>
+<p><a href="tuning-performance-oracle-goldengate.htm#GUID-A216AAB0-1149-408C-9867-DF1ED42330B8__CHDEJAFG">Figure 19-1</a> shows some of the ways that you can configure <span>Oracle GoldenGate</span> to improve throughput speed and overcome network bandwidth issues.</p>
+<div class="figure" id="GUID-A216AAB0-1149-408C-9867-DF1ED42330B8__CHDEJAFG">
+<p class="titleinfigure">Figure 19-1 Load-balancing configurations that improve performance</p>
+<img width="639" height="489" src="img/bestpractice.jpg" alt="Load-balancing configurations that improve performance shows some of the ways that you can configure Oracle GoldenGate to improve throughput speed and overcome network bandwidth issues." title="Load-balancing configurations that improve performance shows some of the ways that you can configure Oracle GoldenGate to improve throughput speed and overcome network bandwidth issues." /></div>
+<!-- class="figure" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-BA2F317F-D93F-432B-A31F-802A41E2DE48">Considerations for Using Multiple Process Groups</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-CAA0BC4C-CC0E-4E43-A324-092AFCBB8F0A">Using Parallel Replicat Groups on a Target System</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-58CF9DC2-9F3B-494C-A08D-0A421FD3234A">Using Multiple Extract Groups with Multiple Replicat Groups</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" title="This chapter contains suggestions for improving the performance of Oracle GoldenGate components.">Tuning the Performance of Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD1131"></a>
+<div class="props_rev_3"><a id="GUID-BA2F317F-D93F-432B-A31F-802A41E2DE48"></a>
+<h3 id="GWUAD-GUID-BA2F317F-D93F-432B-A31F-802A41E2DE48" class="sect3"><span class="enumeration_section">19.1.1</span> Considerations for Using Multiple Process Groups</h3>
+<div>
+<p>Before configuring multiple processing groups, review the following considerations to ensure that your configuration produces the desired results and maintains data integrity.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-959A980C-A4F6-420D-A0B5-2ECDD6174E7A">Maintaining Data Integrity</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-89F1663F-5455-49B2-BD05-046E56D50093">Number of Groups</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-94127411-0BEA-486E-B26C-065540CAA4CB">Memory</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-9F66C2A9-4B78-4531-9716-D8433569DA35">Isolating Processing-Intensive Tables</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-A216AAB0-1149-408C-9867-DF1ED42330B8">Using Multiple Process Groups</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD1132"></a>
+<div class="props_rev_3"><a id="GUID-959A980C-A4F6-420D-A0B5-2ECDD6174E7A"></a>
+<h4 id="GWUAD-GUID-959A980C-A4F6-420D-A0B5-2ECDD6174E7A" class="sect4"><span class="enumeration_section">19.1.1.1</span> Maintaining Data Integrity</h4>
+<div>
+<p>Not all workloads can be partitioned across multiple groups and still preserve the original transaction atomicity. You must determine whether the objects in one group will ever have dependencies on objects in any other group, transactional or otherwise. For example, tables for which the workload routinely updates the primary key cannot easily be partitioned in this manner. DDL replication (if supported for the database) is not viable in this mode, nor is the use of some <code class="codeph">SQLEXEC</code> or <code class="codeph">EVENTACTIONS</code> features that base their actions on a specific record.</p>
+<p>If your tables do not have any foreign- key dependencies or updates to primary keys, you may be able to use multiple processes. Keep related DML together in the same process stream to ensure data integrity.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-BA2F317F-D93F-432B-A31F-802A41E2DE48">Considerations for Using Multiple Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD1133"></a>
+<div class="props_rev_3"><a id="GUID-89F1663F-5455-49B2-BD05-046E56D50093"></a>
+<h4 id="GWUAD-GUID-89F1663F-5455-49B2-BD05-046E56D50093" class="sect4"><span class="enumeration_section">19.1.1.2</span> Number of Groups</h4>
+<div>
+<p>The number of concurrent Extract and Replicat process groups that can run on a system depends on how much system memory is available. Each Extract and Replicat process needs approximately 25-55 MB of memory, or more depending on the size of the transactions and the number of concurrent transactions.</p>
+<p>The Oracle GoldenGate GGSCI command interface fully supports up to 5,000 concurrent Extract and Replicat groups per instance of Oracle GoldenGate Manager. At the supported level, all groups can be controlled and viewed in full with GGSCI commands such as the <code class="codeph">INFO</code> and <code class="codeph">STATUS</code> commands. Beyond the supported level, group information is not displayed and errors can occur. Oracle GoldenGate recommends keeping the number of Extract and Replicat groups (combined) at the default level of 300 or below in order to manage your environment effectively. The number of groups is controlled by the <code class="codeph">MAXGROUPS</code> parameter.</p>
+<div class="infobox-note" id="GUID-89F1663F-5455-49B2-BD05-046E56D50093__GUID-484C9F54-43D7-4880-B503-F0222C30090D">
+<p class="notep1">Note:</p>
+<p>When creating the groups, keep tables that have relational constraints to each other in the same group.</p>
+</div>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-BA2F317F-D93F-432B-A31F-802A41E2DE48">Considerations for Using Multiple Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD1134"></a>
+<div class="props_rev_3"><a id="GUID-94127411-0BEA-486E-B26C-065540CAA4CB"></a>
+<h4 id="GWUAD-GUID-94127411-0BEA-486E-B26C-065540CAA4CB" class="sect4"><span class="enumeration_section">19.1.1.3</span> Memory</h4>
+<div>
+<div class="section">
+<p>The system must have sufficient swap space for each <span>Oracle GoldenGate</span> Extract and Replicat process that will be running. To determine the required swap space:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li><span>Start up one Extract or Replicat.</span></li>
+<li><span>Run GGSCI.</span></li>
+<li><span>View the report file and find the line <code class="codeph">PROCESS VM AVAIL FROM OS (min)</code>.</span></li>
+<li><span>Round up the value to the next full gigabyte if needed. For example, round up 1.76GB to 2 GB.</span></li>
+<li><span>Multiply that value by the number of Extract and Replicat processes that will be running. The result is the maximum amount of swap space that could be required</span></li>
+</ol>
+<div class="section">
+<p>See the <code class="codeph">CACHEMGR</code> parameter in <a class="olink GWURF413" target="_blank" href="../GWURF/cachemgr.htm#GWURF413"><span class="italic"><span id="GUID-94127411-0BEA-486E-B26C-065540CAA4CB__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a> for more information about how memory is managed.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-BA2F317F-D93F-432B-A31F-802A41E2DE48">Considerations for Using Multiple Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD1135"></a>
+<div class="props_rev_3"><a id="GUID-9F66C2A9-4B78-4531-9716-D8433569DA35"></a>
+<h4 id="GWUAD-GUID-9F66C2A9-4B78-4531-9716-D8433569DA35" class="sect4"><span class="enumeration_section">19.1.1.4</span> Isolating Processing-Intensive Tables</h4>
+<div>
+<p>You can use multiple process groups to support certain kinds of tables that tend to interfere with normal processing and cause latency to build on the target. For example:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Extract may need to perform a fetch from the database because of the data type of the column, because of parameter specifications, or to perform SQL procedures. When data must be fetched from the database, it affects the performance of Extract. You can get fetch statistics from the <code class="codeph">STATS EXTRACT</code> command if you include the <code class="codeph">STATOPTIONS REPORTFETCH</code> parameter in the Extract parameter file. You can then isolate those tables into their own Extract groups, assuming that transactional integrity can be maintained.</p>
+</li>
+<li>
+<p>In its classic mode, Replicat process can be a source of performance bottlenecks because it is a single-threaded process that applies operations one at a time by using regular SQL. Even with <code class="codeph">BATCHSQL</code> enabled (see <a class="olink GWURF404" target="_blank" href="../GWURF/batchsql.htm#GWURF404"><span class="italic"><span id="GUID-9F66C2A9-4B78-4531-9716-D8433569DA35__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>) Replicat may take longer to process tables that have large or long-running transactions, heavy volume, a very large number of columns that change, and LOB data. You can then isolate those tables into their own Replicat groups, assuming that transactional integrity can be maintained.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-BA2F317F-D93F-432B-A31F-802A41E2DE48">Considerations for Using Multiple Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD1136"></a>
+<div class="props_rev_3"><a id="GUID-CAA0BC4C-CC0E-4E43-A324-092AFCBB8F0A"></a>
+<h3 id="GWUAD-GUID-CAA0BC4C-CC0E-4E43-A324-092AFCBB8F0A" class="sect3"><span class="enumeration_section">19.1.2</span> Using Parallel Replicat Groups on a Target System</h3>
+<div>
+<p>This section contains instructions for creating a configuration that pairs one Extract group with multiple Replicat groups. Although it is possible for multiple Replicat processes to read a single trail (no more than three of them to avoid disk contention) it is recommended that you pair each Replicat with its own trail and corresponding Extract process.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Refer to <a class="olink GWURF-GUID-C2C4C4E5-3D8F-4E61-881D-020D580F0083" target="_blank" href="../GWURF/summary-oracle-goldengate-parameters.htm#GWURF-GUID-C2C4C4E5-3D8F-4E61-881D-020D580F0083">Reference for Oracle GoldenGate for Windows and UNIX</a> for command and parameter syntax.</p>
+</li>
+<li>
+<p>For detailed instructions on configuring change synchronization, see <a href="configuring-online-change-synchronization.htm#GUID-3388C553-994A-4ECD-95C8-A54FC7446E67" title="This chapter describes how to configure online change synchronization.">Configuring Online Change Synchronization</a>.</p>
+</li>
+</ul>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-DA2E00E8-8326-4281-89F6-D5801E7B3575">To Create the Extract Group</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-C302C0CE-1ED7-401D-BD0A-65EEE6AC9DC2">To Create the Replicat Groups</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-A216AAB0-1149-408C-9867-DF1ED42330B8">Using Multiple Process Groups</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD1137"></a>
+<div class="props_rev_3"><a id="GUID-DA2E00E8-8326-4281-89F6-D5801E7B3575"></a>
+<h4 id="GWUAD-GUID-DA2E00E8-8326-4281-89F6-D5801E7B3575" class="sect4"><span class="enumeration_section">19.1.2.1</span> To Create the Extract Group</h4>
+<div>
+<div class="section">
+<div class="infobox-note" id="GUID-DA2E00E8-8326-4281-89F6-D5801E7B3575__GUID-C38907B8-A9B8-4519-838A-951E27421719">
+<p class="notep1">Note:</p>
+<p>This configuration includes Extract data-pumps.</p>
+</div>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>On the source, use the <code class="codeph">ADD EXTRACT</code> command to create a primary Extract group.</span></li>
+<li class="stepexpand"><span>On the source, use the <code class="codeph">ADD EXTTRAIL</code> command to specify as many local trails as the number of Replicat groups that you will be creating. All trails must be associated with the primary Extract group.</span></li>
+<li class="stepexpand"><span>On the source create a data-pump Extract group.</span></li>
+<li class="stepexpand"><span>On the source, use the <code class="codeph">ADD RMTTRAIL</code> command to specify as many remote trails as the number of Replicat groups that you will be creating. All trails must be associated with the data-pump Extract group.</span></li>
+<li class="stepexpand"><span>On the source, use the <code class="codeph">EDIT PARAMS</code> command to create Extract parameter files, one for the primary Extract and one for the data pump, that contain the parameters required for your database environment. When configuring Extract, do the following:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Divide the source tables among different <code class="codeph">TABLE</code> parameters.</p>
+</li>
+<li>
+<p>Link each <code class="codeph">TABLE</code> statement to a different trail. This is done by placing the <code class="codeph">TABLE</code> statements after the <code class="codeph">EXTTRAIL</code> or <code class="codeph">RMTTRAIL</code> parameter that specifies the trail you want those statements to be associated with.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-CAA0BC4C-CC0E-4E43-A324-092AFCBB8F0A">Using Parallel Replicat Groups on a Target System</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD1138"></a>
+<div class="props_rev_3"><a id="GUID-C302C0CE-1ED7-401D-BD0A-65EEE6AC9DC2"></a>
+<h4 id="GWUAD-GUID-C302C0CE-1ED7-401D-BD0A-65EEE6AC9DC2" class="sect4"><span class="enumeration_section">19.1.2.2</span> To Create the Replicat Groups</h4>
+<div>
+<ol>
+<li><span>On the target, create a Replicat checkpoint table. For instructions, see <a href="configuring-online-change-synchronization.htm#GUID-8C910642-0080-487C-A162-9633FB11E9E9">Creating a Checkpoint Table</a>. All Replicat groups can use the same checkpoint table.</span></li>
+<li><span>On the target, use the <code class="codeph">ADD REPLICAT</code> command to create a Replicat group for each trail that you created. Use the <code class="codeph">EXTTRAIL</code> argument of ADD REPLICAT to link the Replicat group to the appropriate trail.</span></li>
+<li><span>On the target, use the <code class="codeph">EDIT PARAMS</code> command to create a Replicat parameter file for each Replicat group that contains the parameters required for your database environment. All <code class="codeph">MAP</code> statements for a given Replicat group must specify the same objects that are contained in the trail that is linked to that group.</span></li>
+<li><span>In the Manager parameter file on the target system, use the <code class="codeph">PURGEOLDEXTRACTS</code> parameter to control the purging of files from the trails.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-CAA0BC4C-CC0E-4E43-A324-092AFCBB8F0A">Using Parallel Replicat Groups on a Target System</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD1139"></a>
+<div class="props_rev_3"><a id="GUID-58CF9DC2-9F3B-494C-A08D-0A421FD3234A"></a>
+<h3 id="GWUAD-GUID-58CF9DC2-9F3B-494C-A08D-0A421FD3234A" class="sect3"><span class="enumeration_section">19.1.3</span> Using Multiple Extract Groups with Multiple Replicat Groups</h3>
+<div>
+<p>Multiple Extract groups write to their own trails. Each trail is read by a dedicated Replicat group.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Refer to <a class="olink GWURF-GUID-C2C4C4E5-3D8F-4E61-881D-020D580F0083" target="_blank" href="../GWURF/summary-oracle-goldengate-parameters.htm#GWURF-GUID-C2C4C4E5-3D8F-4E61-881D-020D580F0083">Reference for Oracle GoldenGate for Windows and UNIX</a> for command and parameter syntax.</p>
+</li>
+<li>
+<p>For detailed instructions on configuring change synchronization, see <a href="configuring-online-change-synchronization.htm#GUID-3388C553-994A-4ECD-95C8-A54FC7446E67" title="This chapter describes how to configure online change synchronization.">Configuring Online Change Synchronization</a>.</p>
+</li>
+</ul>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-4985ACD5-8031-4640-B65D-518E07ACC8EE">To Create the Extract Groups</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-0FA2EEFA-9EFE-472D-B978-2E629EDD5437">To Create the Replicat Groups</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-A216AAB0-1149-408C-9867-DF1ED42330B8">Using Multiple Process Groups</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD1140"></a>
+<div class="props_rev_3"><a id="GUID-4985ACD5-8031-4640-B65D-518E07ACC8EE"></a>
+<h4 id="GWUAD-GUID-4985ACD5-8031-4640-B65D-518E07ACC8EE" class="sect4"><span class="enumeration_section">19.1.3.1</span> To Create the Extract Groups</h4>
+<div>
+<div class="section">
+<div class="infobox-note" id="GUID-4985ACD5-8031-4640-B65D-518E07ACC8EE__GUID-9BCFC7CA-FED6-41BF-8DED-EE9A87FCEEEC">
+<p class="notep1">Note:</p>
+<p>This configuration includes data pumps.</p>
+</div>
+</div>
+<!-- class="section" -->
+<ol>
+<li><span>On the source, use the <code class="codeph">ADD EXTRACT</code> command to create the primary Extract groups.</span></li>
+<li><span>On the source, use the <code class="codeph">ADD EXTTRAIL</code> command to specify a local trail for each of the Extract groups that you created.</span></li>
+<li><span>On the source create a data-pump Extract group to read each local trail that you created.</span></li>
+<li><span>On the source, use the <code class="codeph">ADD RMTTRAIL</code> command to specify a remote trail for each of the data-pumps that you created.</span></li>
+<li><span>On the source, use the <code class="codeph">EDIT PARAMS</code> command to create an Extract parameter file for each primary Extract group and each data-pump Extract group.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-58CF9DC2-9F3B-494C-A08D-0A421FD3234A">Using Multiple Extract Groups with Multiple Replicat Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD1141"></a>
+<div class="props_rev_3"><a id="GUID-0FA2EEFA-9EFE-472D-B978-2E629EDD5437"></a>
+<h4 id="GWUAD-GUID-0FA2EEFA-9EFE-472D-B978-2E629EDD5437" class="sect4"><span class="enumeration_section">19.1.3.2</span> To Create the Replicat Groups</h4>
+<div>
+<ol>
+<li><span>On the target, create a Replicat checkpoint table. For instructions, see <a href="configuring-online-change-synchronization.htm#GUID-8C910642-0080-487C-A162-9633FB11E9E9">Creating a Checkpoint Table</a>. All Replicat groups can use the same checkpoint table.</span></li>
+<li><span>On the target, use the <code class="codeph">ADD REPLICAT</code> command to create a Replicat group for each trail. Use the <code class="codeph">EXTTRAIL</code> argument of <code class="codeph">ADD REPLICAT</code> to link the group to the trail.</span></li>
+<li><span>On the target, use the <code class="codeph">EDIT PARAMS</code> command to create a Replicat parameter file for each Replicat group. All <code class="codeph">MAP</code> statements for a given Replicat group must specify the same objects that are contained in the trail that is linked to the group.</span></li>
+<li><span>In the Manager parameter files on the source system and the target system, use the <code class="codeph">PURGEOLDEXTRACTS</code> parameter to control the purging of files from the trails.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-58CF9DC2-9F3B-494C-A08D-0A421FD3234A">Using Multiple Extract Groups with Multiple Replicat Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD1143"></a><a id="GWUAD1144"></a><a id="GWUAD1142"></a>
+<div class="props_rev_3"><a id="GUID-03D8F40F-CCD6-47F1-98C8-15465B49A300"></a>
+<h2 id="GWUAD-GUID-03D8F40F-CCD6-47F1-98C8-15465B49A300" class="sect2"><span class="enumeration_section">19.2</span> Splitting Large Tables Into Row Ranges Across Process Groups</h2>
+<div>
+<p>You can use the <code class="codeph">@RANGE</code> function to divide the rows of any table across two or more Oracle GoldenGate processes. It can be used to increase the throughput of large and heavily accessed tables and also can be used to divide data into sets for distribution to different destinations. Specify each range in a <code class="codeph">FILTER</code> clause in a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement.</p>
+<p><code class="codeph">@RANGE</code> is safe and scalable. It preserves data integrity by guaranteeing that the same row will always be processed by the same process group.</p>
+<p>It might be more efficient to use the primary Extract or a data pump to calculate the ranges than to use Replicat. To calculate ranges, Replicat must filter through the entire trail to find data that meets the range specification. However, your business case should determine where this filtering is performed.</p>
+<div class="figure" id="GUID-03D8F40F-CCD6-47F1-98C8-15465B49A300__GUID-C4462EAC-4F6B-48E5-80E6-0B5A55760B86">
+<p class="titleinfigure">Figure 19-2 Dividing rows of a table between two Extract groups</p>
+<img width="980" height="329" src="img/at_range_extract.jpg" alt="Description of Figure 19-2 follows" title="Description of Figure 19-2 follows" /><br />
+<a href="img_text/at_range_extract.htm">Description of "Figure 19-2 Dividing rows of a table between two Extract groups"</a></div>
+<!-- class="figure" -->
+<div class="figure" id="GUID-03D8F40F-CCD6-47F1-98C8-15465B49A300__GUID-7F96A6DD-1774-459C-902C-7C8E29197710">
+<p class="titleinfigure">Figure 19-3 Dividing rows of a table between two Replicat groups</p>
+<img width="647" height="251" src="img/at_range_replicat.jpg" alt="Description of Figure 19-3 follows" title="Description of Figure 19-3 follows" /><br />
+<a href="img_text/at_range_replicat.htm">Description of "Figure 19-3 Dividing rows of a table between two Replicat groups"</a></div>
+<!-- class="figure" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" title="This chapter contains suggestions for improving the performance of Oracle GoldenGate components.">Tuning the Performance of Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD681"></a>
+<div class="props_rev_3"><a id="GUID-D0394141-4BA2-42D3-AA43-E094EB9887AB"></a>
+<h2 id="GWUAD-GUID-D0394141-4BA2-42D3-AA43-E094EB9887AB" class="sect2"><span class="enumeration_section">19.3</span> Configuring <span>Oracle GoldenGate</span> to Use the Network Efficiently</h2>
+<div>
+<p>Inefficiencies in the transfer of data across the network can cause lag in the Extract process and latency on the target. If not corrected, it can eventually cause process failures.</p>
+<p>When you first start a new <span>Oracle GoldenGate</span> configuration:</p>
+<ol>
+<li>
+<p>Establish benchmarks for what you consider to be acceptable lag and throughput volume for Extract and for Replicat. Keep in mind that Extract will normally be faster than Replicat because of the kind of tasks that each one performs. Over time you will know whether the difference is normal or one that requires tuning or troubleshooting.</p>
+</li>
+<li>
+<p>Set a regular schedule to monitor those processes for lag and volume, as compared to the benchmarks. Look for lag that remains constant or is growing, as opposed to occasional spikes. Continuous, excess lag indicates a bottleneck somewhere in the <span>Oracle GoldenGate</span> configuration. It is a critical first indicator that <span>Oracle GoldenGate</span> needs tuning or that there is an error condition.</p>
+</li>
+</ol>
+<p>To view volume statistics, use the <code class="codeph">STATS EXTRACT</code> or <code class="codeph">STATS REPLICAT</code> command. To view lag statistics, use the <code class="codeph">LAG EXTRACT</code> or <code class="codeph">LAG REPLICAT</code> command. See <a class="olink GWURF-GUID-C76063D3-CC0B-4BF3-88B3-EA5B93BDB385" target="_blank" href="../GWURF/oracle-goldengate-ggsci-commands.htm#GWURF-GUID-C76063D3-CC0B-4BF3-88B3-EA5B93BDB385">Reference for Oracle GoldenGate for Windows and UNIX</a> for more information.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-A5D23562-271F-4E37-8735-D6D748FC0796">Detecting a Network Bottleneck that is Affecting Oracle GoldenGate</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-22785245-B866-4DC3-B7E9-918A989CB039">Working Around Bandwidth Limitations by Using Data Pumps</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-714FFC4D-CA08-4116-A1BC-B55413C72691">Reducing the Bandwidth Requirements of Oracle GoldenGate</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-CAD3D06E-C08E-4A9C-9089-7C5F69AA13ED">Increasing the TCP/IP Packet Size</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" title="This chapter contains suggestions for improving the performance of Oracle GoldenGate components.">Tuning the Performance of Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD682"></a>
+<div class="props_rev_3"><a id="GUID-A5D23562-271F-4E37-8735-D6D748FC0796"></a>
+<h3 id="GWUAD-GUID-A5D23562-271F-4E37-8735-D6D748FC0796" class="sect3"><span class="enumeration_section">19.3.1</span> Detecting a Network Bottleneck that is Affecting Oracle GoldenGate</h3>
+<div>
+<div class="section">
+<p>To detect a network bottleneck that is affecting the throughput of <span>Oracle GoldenGate</span>, follow these steps.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Issue the following command to view the ten most recent Extract checkpoints. If you are using a data-pump Extract on the source system, issue the command for the primary Extract and also for the data pump.</span>
+<div>
+<pre dir="ltr">
+INFO EXTRACT <span class="italic">group</span>, SHOWCH 10
+</pre></div>
+</li>
+<li class="stepexpand"><span>Look for the <code class="codeph">Write Checkpoint</code> statistic. This is the place where Extract is writing to the trail.</span>
+<div>
+<pre dir="ltr">
+Write Checkpoint #1
+
+GGS Log Trail
+Current Checkpoint (current write position):
+   Sequence #: 2
+   RBA: 2142224
+   Timestamp: 2011-01-09 14:16:50.567638
+   Extract Trail: ./dirdat/eh
+</pre></div>
+</li>
+<li class="stepexpand"><span>For both the primary Extract and data pump:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Determine whether there are more than one or two checkpoints. There can be up to ten.</p>
+</li>
+<li>
+<p>Find the <code class="codeph">Write Checkpoint</code> <span class="italic"><code class="codeph">n</code></span> heading that has the highest increment number (for example, <code class="codeph">Write Checkpoint #8</code>) and make a note of the <code class="codeph">Sequence</code>, <code class="codeph">RBA</code>, and <code class="codeph">Timestamp</code> values. This is the most recent checkpoint.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Refer to the information that you noted, and make the following validation:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Is the primary Extract generating a series of checkpoints, or just the initial checkpoint?</p>
+</li>
+<li>
+<p>If a data pump is in use, is it generating a series of checkpoints, or just one?</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Issue <code class="codeph">INFO EXTRACT</code> for the primary and data pump Extract processes again.</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Has the most recent write checkpoint increased? Look at the most recent <code class="codeph">Sequence</code>, <code class="codeph">RBA</code>, and <code class="codeph">Timestamp</code> values to see if their values were incremented forward since the previous <code class="codeph">INFO EXTRACT</code> command.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Issue the following command to view the status of the Replicat process.</span>
+<div>
+<pre dir="ltr">
+SEND REPLICAT <span class="italic">group</span>, STATUS
+</pre>
+<ul style="list-style-type: disc;">
+<li>
+<p>The status indicates whether Replicat is delaying (waiting for data to process), processing data, or at the end of the trail (EOF).</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+<div class="section">
+<p>There is a network bottleneck if the status of Replicat is either in delay mode or at the end of the trail file and either of the following is true:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>You are only using a primary Extract and its write checkpoint is not increasing or is increasing too slowly. Because this Extract process is responsible for sending data across the network, it will eventually run out of memory to contain the backlog of extracted data and abend.</p>
+</li>
+<li>
+<p>You are using a data pump, and its write checkpoint is not increasing, but the write checkpoint of the primary Extract is increasing. In this case, the primary Extract can write to its local trail, but the data pump cannot write to the remote trail. The data pump will abend when it runs out of memory to contain the backlog of extracted data. The primary Extract will run until it reaches the last file in the trail sequence and will abend because it cannot make a checkpoint.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-A5D23562-271F-4E37-8735-D6D748FC0796__GUID-7E8FF11F-9A5E-4F94-B5C6-2CBC10FE3819">
+<p class="notep1">Note:</p>
+<p>Even when there is a network outage, Replicat will process in a normal manner until it applies all of the remaining data from the trail to the target. Eventually, it will report that it reached the end of the trail file.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-D0394141-4BA2-42D3-AA43-E094EB9887AB">Configuring Oracle GoldenGate to Use the Network Efficiently</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD683"></a>
+<div class="props_rev_3"><a id="GUID-22785245-B866-4DC3-B7E9-918A989CB039"></a>
+<h3 id="GWUAD-GUID-22785245-B866-4DC3-B7E9-918A989CB039" class="sect3"><span class="enumeration_section">19.3.2</span> Working Around Bandwidth Limitations by Using Data Pumps</h3>
+<div>
+<p>Using parallel data pumps may enable you to work around bandwidth limitations that are imposed on a per-process basis in the network configuration. You can use parallel data pumps to send data to the same target system or to different target systems. Data pumps also remove TCP/IP responsibilities from the primary Extract, and their local trails provide fault tolerance.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-D0394141-4BA2-42D3-AA43-E094EB9887AB">Configuring Oracle GoldenGate to Use the Network Efficiently</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD684"></a>
+<div class="props_rev_3"><a id="GUID-714FFC4D-CA08-4116-A1BC-B55413C72691"></a>
+<h3 id="GWUAD-GUID-714FFC4D-CA08-4116-A1BC-B55413C72691" class="sect3"><span class="enumeration_section">19.3.3</span> Reducing the Bandwidth Requirements of Oracle GoldenGate</h3>
+<div>
+<p>Use the compression options of the <code class="codeph">RMTHOST</code> parameter to compress data before it is sent across the network. Weigh the benefits of compression against the CPU resources that are required to perform the compression. See <a class="olink GWURF631" target="_blank" href="../GWURF/rmthost.htm#GWURF631"><span class="italic"><span id="GUID-714FFC4D-CA08-4116-A1BC-B55413C72691__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a> for more information.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-D0394141-4BA2-42D3-AA43-E094EB9887AB">Configuring Oracle GoldenGate to Use the Network Efficiently</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD685"></a>
+<div class="props_rev_3"><a id="GUID-CAD3D06E-C08E-4A9C-9089-7C5F69AA13ED"></a>
+<h3 id="GWUAD-GUID-CAD3D06E-C08E-4A9C-9089-7C5F69AA13ED" class="sect3"><span class="enumeration_section">19.3.4</span> Increasing the TCP/IP Packet Size</h3>
+<div>
+<div class="section">
+<p>Use the <code class="codeph">TCPBUFSIZE</code> option of the <code class="codeph">RMTHOST</code> parameter to control the size of the TCP socket buffer that Extract maintains. By increasing the size of the buffer, you can send larger packets to the target system. See <a class="olink GWURF631" target="_blank" href="../GWURF/rmthost.htm#GWURF631"><span class="italic"><span id="GUID-CAD3D06E-C08E-4A9C-9089-7C5F69AA13ED__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a> for more information.</p>
+<p>Use the following steps as a guideline to determine the optimum buffer size for your network.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Use the <code class="codeph">ping</code> command from the command shell obtain the average round trip time (RTT), shown in the following example:</span>
+<div>
+<pre dir="ltr">
+C:\home\ggs&gt;ping ggsoftware.com
+Pinging ggsoftware.com [192.168.116.171] with 32 bytes of data:
+Reply from 192.168.116.171: bytes=32 time=31ms TTL=56
+Reply from 192.168.116.171: bytes=32 time=61ms TTL=56
+Reply from 192.168.116.171: bytes=32 time=32ms TTL=56
+Reply from 192.168.116.171: bytes=32 time=34ms TTL=56
+Ping statistics for 192.168.116.171:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 31ms, Maximum = 61ms, Average = 39ms
+</pre></div>
+</li>
+<li class="stepexpand"><span>Multiply that value by the network bandwidth. For example, if average RTT is .08 seconds, and the bandwidth is 100 megabits per second, then the optimum buffer size is:</span>
+<div>
+<pre dir="ltr">
+0.08 second * 100 megabits per second = 8 megabits
+</pre></div>
+</li>
+<li class="stepexpand"><span>Divide the result by 8 to determine the number of bytes (8 bits to a byte). For example:</span>
+<div>
+<pre dir="ltr">
+8 megabits / 8 = 1 megabyte per second
+</pre>
+<p>The required unit for <code class="codeph">TCPBUFSIZE</code> is bytes, so you would set it to a value of 1000000.</p>
+</div>
+</li>
+</ol>
+<div class="section">
+<p>The maximum socket buffer size for non-Windows systems is usually limited by default. Ask your system administrator to increase the default value on the source and target systems so that Oracle GoldenGate can increase the buffer size configured with <code class="codeph">TCPBUFSIZE</code>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-D0394141-4BA2-42D3-AA43-E094EB9887AB">Configuring Oracle GoldenGate to Use the Network Efficiently</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD686"></a>
+<div class="props_rev_3"><a id="GUID-639CBCC5-9B9E-41CE-A6D4-F659164B6577"></a>
+<h2 id="GWUAD-GUID-639CBCC5-9B9E-41CE-A6D4-F659164B6577" class="sect2"><span class="enumeration_section">19.4</span> Eliminating Disk I/O Bottlenecks</h2>
+<div>
+<p>I/O activity can cause bottlenecks for both Extract and Replicat.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>A regular Extract generates disk writes to a trail and disk reads from a data source.</p>
+</li>
+<li>
+<p>A data pump and Replicat generate disk reads from a local trail.</p>
+</li>
+<li>
+<p>Each process writes a recovery checkpoint to its checkpoint file on a regular schedule.</p>
+</li>
+</ul>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-F4BDC07F-0776-463C-B842-5DCC08561829">Improving I/O performance Within the System Configuration</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-FBB75631-F9F7-4940-A8BC-B9D6536674F6">Improving I/O Performance Within the Oracle GoldenGate Configuration</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" title="This chapter contains suggestions for improving the performance of Oracle GoldenGate components.">Tuning the Performance of Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD687"></a>
+<div class="props_rev_3"><a id="GUID-F4BDC07F-0776-463C-B842-5DCC08561829"></a>
+<h3 id="GWUAD-GUID-F4BDC07F-0776-463C-B842-5DCC08561829" class="sect3"><span class="enumeration_section">19.4.1</span> Improving I/O performance Within the System Configuration</h3>
+<div>
+<p>If there are I/O waits on the disk subsystems that contain the trail files, put the trails on the fastest disk controller possible.</p>
+<p>Check the RAID configuration. Because <span>Oracle GoldenGate</span> writes data sequentially, RAID 0+1 (striping and mirroring) is a better choice than RAID 5, which uses checksums that slow down I/O and are not necessary for these types of files.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-639CBCC5-9B9E-41CE-A6D4-F659164B6577">Eliminating Disk I/O Bottlenecks</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD688"></a>
+<div class="props_rev_3"><a id="GUID-FBB75631-F9F7-4940-A8BC-B9D6536674F6"></a>
+<h3 id="GWUAD-GUID-FBB75631-F9F7-4940-A8BC-B9D6536674F6" class="sect3"><span class="enumeration_section">19.4.2</span> Improving I/O Performance Within the <span>Oracle GoldenGate</span> Configuration</h3>
+<div>
+<p>You can improve I/O performance by making configurations changes within Oracle GoldenGate. Try increasing the values of the following parameters.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Use the <code class="codeph">CHECKPOINTSECS</code> parameter to control how often Extract and Replicat make their routine checkpoints.</p>
+<div class="infobox-note" id="GUID-FBB75631-F9F7-4940-A8BC-B9D6536674F6__GUID-6FDB4FBB-9268-46B8-978B-D36B9CBF998E">
+<p class="notep1">Note:</p>
+<p><code class="codeph">CHECKPOINTSECS</code> is not valid for an integrated Replicat on an Oracle database system.</p>
+</div>
+</li>
+<li>
+<p>Use the <code class="codeph">GROUPTRANSOPS</code> parameter to control the number of SQL operations that are contained in a Replicat transaction when operating in its normal mode. Increasing the number of operations in a Replicat transaction improves the performance of Oracle GoldenGate by reducing the number of transactions executed by Replicat, and by reducing I/O activity to the checkpoint file and the checkpoint table, if used. Replicat issues a checkpoint whenever it applies a transaction to the target, in addition to its scheduled checkpoints.</p>
+<div class="infobox-note" id="GUID-FBB75631-F9F7-4940-A8BC-B9D6536674F6__GUID-A5E992ED-F992-43BD-A77B-F73B404F952D">
+<p class="notep1">Note:</p>
+<p><code class="codeph">GROUPTRANSOPS</code> is not valid for an integrated Replicat on an Oracle database system, unless the inbound server parameter <code class="codeph">parallelism</code> is set to 1.</p>
+</div>
+</li>
+<li>
+<p>Use the <code class="codeph">EOFDELAY</code> or <code class="codeph">EOFDELAYCSECS</code> parameter to control how often Extract, a data pump, or Replicat checks for new data after it has reached the end of the current data in its data source. You can reduce the system I/O overhead of these reads by increasing the value of this parameter.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-FBB75631-F9F7-4940-A8BC-B9D6536674F6__GUID-8231D567-A37D-4EBF-98D3-73EC05CD0862">
+<p class="notep1">Note:</p>
+<p>Increasing the values of these parameters improves performance, but it also increases the amount of data that must be reprocessed if the process fails. This has an effect on overall latency between source and target. Some testing will help you determine the optimal balance between recovery and performance.</p>
+</div>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-639CBCC5-9B9E-41CE-A6D4-F659164B6577">Eliminating Disk I/O Bottlenecks</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD1159"></a>
+<div class="props_rev_3"><a id="GUID-DBBD403D-BF90-4112-B383-0B71807D1A8A"></a>
+<h2 id="GWUAD-GUID-DBBD403D-BF90-4112-B383-0B71807D1A8A" class="sect2"><span class="enumeration_section">19.5</span> Managing Virtual Memory and Paging</h2>
+<div>
+<p>Because Oracle GoldenGate replicates only committed transactions, it stores the operations of each transaction in a managed virtual-memory pool known as a <span class="italic">cache</span> until it receives either a commit or a rollback for that transaction. One global cache operates as a shared resource of an Extract or Replicat process. The Oracle GoldenGate cache manager takes advantage of the memory management functions of the operating system to ensure that Oracle GoldenGate processes work in a sustained and efficient manner. The <code class="codeph">CACHEMGR</code> parameter controls the amount of virtual memory and temporary disk space that is available for caching uncommitted transaction data that is being processed by <span>Oracle GoldenGate</span>.</p>
+<p>When a process starts, the cache manager checks the availability of resources for virtual memory, as shown in the following example:</p>
+<pre dir="ltr">
+CACHEMGR virtual memory values (may have been adjusted)CACHESIZE: 32GCACHEPAGEOUTSIZE (normal): 8M PROCESS VM AVAIL FROM OS (min): 63.97GCACHESIZEMAX (strict force to disk): 48G
+</pre>
+<p>If the current resources are not sufficient, a message like the following may be returned:</p>
+<pre dir="ltr">
+2013-11-11 14:16:22 WARNING OGG-01842 CACHESIZE PER DYNAMIC DETERMINATION (32G) LESS THAN RECOMMENDED: 64G (64bit system)vm found: 63.97GCheck swap space. Recommended swap/extract: 128G (64bit system).
+</pre>
+<p>If the system exhibits excessive paging and the performance of critical processes is affected, you can reduce the <code class="codeph">CACHESIZE</code> option of the <code class="codeph">CACHEMGR</code>. parameter. You can also control the maximum amount of disk space that can be allocated to the swap directory with the <code class="codeph">CACHEDIRECTORY</code> option. For more information about <code class="codeph">CACHEMGR</code>, see <a class="olink GWURF413" target="_blank" href="../GWURF/cachemgr.htm#GWURF413"><span class="italic"><span id="GUID-DBBD403D-BF90-4112-B383-0B71807D1A8A__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" title="This chapter contains suggestions for improving the performance of Oracle GoldenGate components.">Tuning the Performance of Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD689"></a>
+<div class="props_rev_3"><a id="GUID-5A6B5C6F-B6FC-4B84-99F6-1A93DEC01A3F"></a>
+<h2 id="GWUAD-GUID-5A6B5C6F-B6FC-4B84-99F6-1A93DEC01A3F" class="sect2"><span class="enumeration_section">19.6</span> Optimizing Data Filtering and Conversion</h2>
+<div>
+<p>Heavy amounts of data filtering or data conversion add processing overhead. The following are suggestions for minimizing the impact of this overhead on the other processes on the system.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Avoid using the primary Extract to filter and convert data. Keep it dedicated to data capture. It will perform better and is less vulnerable to any process failures that result from those activities. The objective is to make certain the primary Extract process is running and keeping pace with the transaction volume.</p>
+</li>
+<li>
+<p>Use Replicat or a data-pump to perform filtering and conversion. Consider any of the following configurations:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Use a data pump on the source if the system can tolerate the overhead. This configuration works well when there is a high volume of data to be filtered, because it uses less network bandwidth. Only filtered data gets sent to the target, which also can help with security considerations.</p>
+</li>
+<li>
+<p>Use a data pump on an intermediate system. This configuration keeps the source and target systems free of the overhead, but uses more network bandwidth because unfiltered data is sent from the source to the intermediate system.</p>
+</li>
+<li>
+<p>Use a data pump or Replicat on the target if the system can tolerate the overhead, and if there is adequate network bandwidth for sending large amounts of unfiltered data.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>If you have limited system resources, a least-best option is to divide the filtering and conversion work between Extract and Replicat.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" title="This chapter contains suggestions for improving the performance of Oracle GoldenGate components.">Tuning the Performance of Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD693"></a>
+<div class="props_rev_3"><a id="GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D"></a>
+<h2 id="GWUAD-GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D" class="sect2"><span class="enumeration_section">19.7</span> Tuning Replicat Transactions</h2>
+<div>
+<p>Replicat uses regular SQL, so its performance depends on the performance of the target database and the type of SQL that is being applied (inserts, versus updates or deletes). However, you can take certain steps to maximize Replicat efficiency.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-B01B7E9D-7724-4D1B-97DD-9050B16118D8">Tuning Coordination Performance Against Barrier Transactions</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-D03BBDF0-E7ED-408B-8B42-ABC97D0D7BFC">Applying Similar SQL Statements in Arrays</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-D97F34E0-2565-45EA-9BE9-11E66B6AAFD2">Preventing Full Table Scans in the Absence of Keys</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-C8631DB5-4B39-4209-BAD7-908C65C2EBFC">Splitting Large Transactions</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-C23201EF-BE62-4207-BB72-1295E2CCF29B">Adjusting Open Cursors</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-66EAA8F3-23B9-4652-9803-54D22F4311B5">Improving Update Speed</a><br /></li>
+<li class="ulchildlink"><a href="tuning-performance-oracle-goldengate.htm#GUID-E078D086-5F07-4A9D-838A-6A96C48BD0CD">Set a Replicat Transaction Timeout</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" title="This chapter contains suggestions for improving the performance of Oracle GoldenGate components.">Tuning the Performance of Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD1145"></a>
+<div class="props_rev_3"><a id="GUID-B01B7E9D-7724-4D1B-97DD-9050B16118D8"></a>
+<h3 id="GWUAD-GUID-B01B7E9D-7724-4D1B-97DD-9050B16118D8" class="sect3"><span class="enumeration_section">19.7.1</span> Tuning Coordination Performance Against Barrier Transactions</h3>
+<div>
+<p>In a coordinated Replicat configuration, barrier transactions such as updates to the primary key cause an increased number of commits to the database, and they interrupt the benefit of the <code class="codeph">GROUPTRANSOPS</code> feature of Replicat. When there is a high number of barrier transactions in the overall workload of the coordinated Replicat, using a high number of threads can actually degrade Replicat performance.</p>
+<p>To maintain high performance when large numbers of barrier transactions are expected, you can do the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Reduce the number of active threads in the group. This reduces the overall number of commits that Replicat performs.</p>
+</li>
+<li>
+<p>Move the tables that account for the majority of the barrier transactions, and any tables with which they have dependencies, to a separate coordinated Replicat group that has a small number of threads. Keep the tables that have minimal barrier transactions in the original Replicat group with the higher number of threads, so that parallel performance is maintained without interruption by barrier transactions.</p>
+</li>
+<li>
+<p>(Oracle RAC) In a new Replicat configuration, you can increase the <code class="codeph">PCTFREE</code> attribute of the Replicat checkpoint table. However, this must be done before Replicat is started for the first time. The recommended value of <code class="codeph">PCTFREE</code> is 90.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D">Tuning Replicat Transactions</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD690"></a>
+<div class="props_rev_3"><a id="GUID-D03BBDF0-E7ED-408B-8B42-ABC97D0D7BFC"></a>
+<h3 id="GWUAD-GUID-D03BBDF0-E7ED-408B-8B42-ABC97D0D7BFC" class="sect3"><span class="enumeration_section">19.7.2</span> Applying Similar SQL Statements in Arrays</h3>
+<div>
+<p>Use the <code class="codeph">BATCHSQL</code> parameter to increase the performance of Replicat. <code class="codeph">BATCHSQL</code> causes Replicat to organize similar SQL statements into arrays and apply them at an accelerated rate. In its normal mode, Replicat applies one SQL statement at a time.</p>
+<p>When Replicat is in <code class="codeph">BATCHSQL</code> mode, smaller row changes will show a higher gain in performance than larger row changes. At 100 bytes of data per row change, <code class="codeph">BATCHSQL</code> has been known to improve the performance of Replicat by up to 300 percent, but actual performance benefits will vary, depending on the mix of operations. At around 5,000 bytes of data per row change, the benefits of using <code class="codeph">BATCHSQL</code> diminish.</p>
+<p>The gathering of SQL statements into batches improves efficiency but also consumes memory. To maintain optimum performance, use the following <code class="codeph">BATCHSQL</code> options:</p>
+<pre dir="ltr">
+BATCHESPERQUEUE 
+BYTESPERQUEUE 
+OPSPERBATCH 
+OPSPERQUEUE 
+</pre>
+<p>As a benchmark for setting values, assume that a batch of 1,000 SQL statements at 500 bytes each would require less than 10 megabytes of memory.</p>
+<p>You can use <code class="codeph">BATCHSQL</code> with the <code class="codeph">BATCHTRANSOPS</code> option to tune array sizing. <code class="codeph">BATCHTRANSOPS</code> controls the maximum number of batch operations that can be grouped into a transaction before requiring a commit. The default for non-integrated Replicat is 1000. The default for integrated Replicat is 50. If there are many wait dependencies when using integrated Replicat, try reducing the value of <code class="codeph">BATCHTRANSOPS</code>. To determine the number of wait dependencies, view the <code class="codeph">TOTAL_WAIT_DEPS</code> column of the <code class="codeph">V$GG_APPLY_COORDINATOR</code> database view in the Oracle database.</p>
+<p>See <a class="olink GWURF404" target="_blank" href="../GWURF/batchsql.htm#GWURF404"><span class="italic"><span id="GUID-D03BBDF0-E7ED-408B-8B42-ABC97D0D7BFC__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a> for additional usage considerations and syntax.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D">Tuning Replicat Transactions</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD691"></a>
+<div class="props_rev_3"><a id="GUID-D97F34E0-2565-45EA-9BE9-11E66B6AAFD2"></a>
+<h3 id="GWUAD-GUID-D97F34E0-2565-45EA-9BE9-11E66B6AAFD2" class="sect3"><span class="enumeration_section">19.7.3</span> Preventing Full Table Scans in the Absence of Keys</h3>
+<div>
+<p>If a target table does not have a primary key, a unique key, or a unique index, Replicat uses all of the columns to build its <code class="codeph">WHERE</code> clause. This is, essentially, a full table scan.</p>
+<p>To make row selection more efficient, use a <code class="codeph">KEYCOLS</code> clause in the <code class="codeph">TABLE</code> and <code class="codeph">MAP</code> statements to identify one or more columns as unique. Replicat will use the specified columns as a key. The following example shows a <code class="codeph">KEYCOLS</code> clause in a <code class="codeph">TABLE</code> statement:</p>
+<pre dir="ltr">
+TABLE hr.emp, KEYCOLS (FIRST_NAME, LAST_NAME, DOB, ID_NO);
+</pre>
+<p>For usage guidelines and syntax, see the <code class="codeph">TABLE</code> and <code class="codeph">MAP</code> parameters in <a class="olink GWURF394" target="_blank" href="../GWURF/oracle-goldengate-parameters.htm#GWURF394"><span class="italic"><span id="GUID-D97F34E0-2565-45EA-9BE9-11E66B6AAFD2__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D">Tuning Replicat Transactions</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD692"></a>
+<div class="props_rev_3"><a id="GUID-C8631DB5-4B39-4209-BAD7-908C65C2EBFC"></a>
+<h3 id="GWUAD-GUID-C8631DB5-4B39-4209-BAD7-908C65C2EBFC" class="sect3"><span class="enumeration_section">19.7.4</span> Splitting Large Transactions</h3>
+<div>
+<p>If the target database cannot handle large transactions from the source database, you can split them into a series of smaller ones by using the Replicat parameter <code class="codeph">MAXTRANSOPS</code>. See <a class="olink GWURF583" target="_blank" href="../GWURF/maxtransops.htm#GWURF583"><span class="italic"><span id="GUID-C8631DB5-4B39-4209-BAD7-908C65C2EBFC__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a> for more information.</p>
+<div class="infobox-note" id="GUID-C8631DB5-4B39-4209-BAD7-908C65C2EBFC__GUID-9015E44B-3B0C-436E-B27D-EC547A9B6540">
+<p class="notep1">Note:</p>
+<p><code class="codeph">MAXTRANSOPS</code> is not valid for an integrated Replicat on an Oracle database system.</p>
+</div>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D">Tuning Replicat Transactions</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD694"></a>
+<div class="props_rev_3"><a id="GUID-C23201EF-BE62-4207-BB72-1295E2CCF29B"></a>
+<h3 id="GWUAD-GUID-C23201EF-BE62-4207-BB72-1295E2CCF29B" class="sect3"><span class="enumeration_section">19.7.5</span> Adjusting Open Cursors</h3>
+<div>
+<p>The Replicat process maintains cursors for cached SQL statements and for <code class="codeph">SQLEXEC</code> operations. Without enough cursors, Replicat must age more statements. By default, Replicat maintains as many cursors as allowed by the <code class="codeph">MAXSQLSTATEMENTS</code> parameter. You might find that the value of this parameter needs to be increased. If so, you might also need to adjust the maximum number of open cursors that are permitted by the database. See <a class="olink GWURF582" target="_blank" href="../GWURF/maxsqlstatements.htm#GWURF582"><span class="italic"><span id="GUID-C23201EF-BE62-4207-BB72-1295E2CCF29B__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a> for more information.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D">Tuning Replicat Transactions</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD695"></a>
+<div class="props_rev_3"><a id="GUID-66EAA8F3-23B9-4652-9803-54D22F4311B5"></a>
+<h3 id="GWUAD-GUID-66EAA8F3-23B9-4652-9803-54D22F4311B5" class="sect3"><span class="enumeration_section">19.7.6</span> Improving Update Speed</h3>
+<div>
+<p>Excessive block fragmentation causes Replicat to apply SQL statements at a slower than normal speed. Reorganize heavily fragmented tables, and then stop and start Replicat to register the new object ID.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D">Tuning Replicat Transactions</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD697"></a>
+<div class="props_rev_3"><a id="GUID-E078D086-5F07-4A9D-838A-6A96C48BD0CD"></a>
+<h3 id="GWUAD-GUID-E078D086-5F07-4A9D-838A-6A96C48BD0CD" class="sect3"><span class="enumeration_section">19.7.7</span> Set a Replicat Transaction Timeout</h3>
+<div>
+<p>Use the <code class="codeph">TRANSACTIONTIMEOUT</code> parameter to prevent an uncommitted Replicat target transaction from holding locks on the target database and consuming its resources unnecessarily. You can change the value of this parameter so that Replicat can work within existing application timeouts and other database requirements on the target.</p>
+<p><code class="codeph">TRANSACTIONTIMEOUT</code> limits the amount of time that Replicat can hold a target transaction open if it has not received the end-of-transaction record for the last source transaction in that transaction. By default, Replicat groups multiple source transactions into one target transaction to improve performance, but it will not commit a partial source transaction and will wait indefinitely for that last record. The Replicat parameter <code class="codeph">GROUPTRANSOPS</code> controls the minimum size of a grouped target transaction.</p>
+<p>The following events could last long enough to trigger <code class="codeph">TRANSACTIONTIMEOUT</code>:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Network problems prevent trail data from being delivered to the target system.</p>
+</li>
+<li>
+<p>Running out of disk space on any system, preventing trail data from being written.</p>
+</li>
+<li>
+<p>Collector abends (a rare event).</p>
+</li>
+<li>
+<p>Extract abends or is terminated in the middle of writing records for a transaction.</p>
+</li>
+<li>
+<p>An Extract data pump abends or is terminated.</p>
+</li>
+<li>
+<p>There is a source system failure, such as a power outage or system crash.</p>
+</li>
+</ul>
+<p>See <a class="olink GWURF719" target="_blank" href="../GWURF/transactiontimeout.htm#GWURF719"><span class="italic"><span id="GUID-E078D086-5F07-4A9D-838A-6A96C48BD0CD__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a> for more information.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="tuning-performance-oracle-goldengate.htm#GUID-A489CE38-5D7D-4EB2-8CF0-A896AC17AA6D">Tuning Replicat Transactions</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment24">
+<tr>
+<td class="cellalignment31">
+<table class="cellalignment29">
+<tr>
+<td class="cellalignment28"><a href="monitoring-oracle-goldengate-processing.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment28"><a href="performing-administrative-operations.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment33">
+<table class="cellalignment27">
+<tr>
+<td class="cellalignment28"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment28"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

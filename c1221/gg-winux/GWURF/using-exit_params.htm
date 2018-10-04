@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using EXIT_PARAMS</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-exit_call_result.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-ercallback.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-0A55E82B-1EA3-49AB-AFC8-DE5598F9FB5D"></a> <span id="PAGE" style="display:none;">412/459</span> <!-- End Header -->
+<a id="GWURF839"></a><a id="GWURF838"></a>
+<h1 id="GWURF-GUID-0A55E82B-1EA3-49AB-AFC8-DE5598F9FB5D" class="sect1"><span class="enumeration_section">6.5</span> Using EXIT_PARAMS</h1>
+<div>
+<p>Use <code class="codeph">EXIT_PARAMS</code> to supply information to the user exit routine, such as the program name and user-defined parameters. You can process a single data record multiple times.</p>
+<div class="tblformalwide" id="GUID-0A55E82B-1EA3-49AB-AFC8-DE5598F9FB5D__GUID-F27DDFCB-7C71-4EB2-BFF0-BF92D6E25948">
+<p class="titleintable">Table 6-3 User Exit Input</p>
+<table class="cellalignment497" title="User Exit Input" summary="This table describes the user exit input parameters.">
+<thead>
+<tr class="cellalignment454">
+<th class="cellalignment524" id="d153559e30">Exit parameter</th>
+<th class="cellalignment525" id="d153559e33">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment454">
+<td class="cellalignment526" id="d153559e38" headers="d153559e30">
+<p><code class="codeph">PROGRAM_NAME</code></p>
+</td>
+<td class="cellalignment527" headers="d153559e38 d153559e33">
+<p>Specifies the full path and name of the calling process, for example <code class="codeph">\ggs\extract</code> or <code class="codeph">\ggs\replicat</code>. Use this parameter when loading an Oracle GoldenGate callback routine using the Windows API or to identify the calling program when user exits are used with both Extract and Replicat processing.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment526" id="d153559e53" headers="d153559e30">
+<p><code class="codeph">FUNCTION_PARAM</code></p>
+</td>
+<td class="cellalignment527" headers="d153559e53 d153559e33">
+<ul style="list-style-type: disc;">
+<li>
+<p>Allows you to pass a parameter that is a literal string to the user exit. Specify the parameter with the <code class="codeph">EXITPARAM</code> option of the <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement from which the parameter will be passed. See <span class="q">"<a href="table-map.htm#GUID-C2356234-3780-48EE-9E7A-F21DC352638C__I1053366">EXITPARAM 'parameter'</a>"</span>. This is only valid during the exit call to process a specific record.</p>
+</li>
+<li>
+<p><code class="codeph">FUNCTION_PARAM</code> can also be used at the exit call startup event to pass the parameters that are specified in the <code class="codeph">PARAMS</code> option of the <code class="codeph">CUSEREXIT</code> parameter. (See <span class="q">"<a href="cuserexit.htm#GUID-40AD086D-D391-411C-BF97-0E5570B5C520">CUSEREXIT</a>"</span>.) This is only valid to supply a global parameter at exit startup.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment526" id="d153559e92" headers="d153559e30">
+<p><code class="codeph">MORE_RECS_IND</code></p>
+</td>
+<td class="cellalignment527" headers="d153559e92 d153559e33">
+<p>Set on return from an exit. For database records, determines whether Extract or Replicat processes the record again. This allows the user exit to output many records per record processed by Extract, a common function when converting Enscribe to SQL (data normalization). To request the same record again, set <code class="codeph">MORE_RECS_IND</code> to <code class="codeph">CHAR_NO_VAL</code> or <code class="codeph">CHAR_YES_VAL</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="using-exit_call_result.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="using-ercallback.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>5 Configuring Oracle GoldenGate for Apply</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This chapter contains instructions for configuring the Oracle GoldenGate Replicat (apply) process to apply data to an Informix target. The Replicat process reads change data from the trail on the target system and applies that data to the Informix target." />
+<meta name="dcterms.created" content="2015-05-21T11:41:6Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Informix" />
+<meta name="dcterms.identifier" content="E50195-06" />
+<meta name="dcterms.isVersionOf" content="GIINF" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="giinf_capture_config.htm" title="Previous" type="text/html" />
+<link rel="Next" href="giinf_add_processes.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIINF.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIINF.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIINF.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">8/11</span>
+<!-- End Header -->
+<div id="GIINF286" class="chapter"><a id="BHCDFAHC"></a>
+<h1 class="chapter"><span class="secnum">5</span> Configuring Oracle GoldenGate for Apply</h1>
+<p><a id="GIINF287"></a>This chapter contains instructions for configuring the Oracle GoldenGate Replicat (apply) process to apply data to an Informix target. The Replicat process reads change data from the trail on the target system and applies that data to the Informix target. For more information about the Replicat process, see <a class="olink GWUAD119" href="../../gg-winux/GWUAD/wu_about_gg.htm#GWUAD119"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#A2011164">Section 5.1, "Prerequisites for Configuring Replicat"</a></p>
+</li>
+<li>
+<p><a href="#A2025966">Section 5.2, "What to Expect from these Instructions"</a></p>
+</li>
+<li>
+<p><a href="#A1542472">Section 5.3, "Creating a Checkpoint Table"</a></p>
+</li>
+<li>
+<p><a href="#A1543224">Section 5.4, "Configuring Replicat"</a></p>
+</li>
+<li>
+<p><a href="#A4932433">Section 5.5, "Advanced Configuration Options for Oracle GoldenGate"</a></p>
+</li>
+<li>
+<p><a href="#A2020000">Section 5.6, "Next Steps"</a></p>
+</li>
+</ul>
+<a id="A2011164"></a>
+<div id="GIINF288" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">5.1</span> Prerequisites for Configuring Replicat</h2>
+<p>The guidelines in the following sections should be satisfied before configuring Replicat.</p>
+<ul>
+<li>
+<p><a href="giinf_system_requirements.htm#BABCGIEG">Section 1, "System Requirements and Preinstallation Instructions"</a></p>
+</li>
+<li>
+<p><a href="giinf_install.htm#CIHEBDAJ">Section 2, "Installing Oracle GoldenGate"</a></p>
+</li>
+<li>
+<p><a href="giinf_setup_preparation.htm#CJHFGHGI">Section 3, "Preparing the System for Oracle GoldenGate"</a></p>
+</li>
+<li>
+<p><a href="giinf_capture_config.htm#BABJJGDH">Section 4, "Configuring Oracle GoldenGate for Capture"</a></p>
+</li>
+<li>
+<p>Create the Oracle GoldenGate instance on the target system by configuring the Manager process. See <a class="olink GWUAD138" href="../../gg-winux/GWUAD/wu_manager.htm#GWUAD138"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Additionally, review the guidelines in <a class="olink GWUAD153" href="../../gg-winux/GWUAD/wu_gettingstarted.htm#GWUAD153"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="A2025966"></a>
+<div id="GIINF289" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">5.2</span> What to Expect from these Instructions</h2>
+<p>These instructions show you how to configure a basic Replicat parameter (configuration) file. Your business requirements probably will require a more complex topology, but this procedure forms a basis for the rest of your configuration steps.</p>
+<p>By performing these steps, you can:</p>
+<ul>
+<li>
+<p>get the basic configuration file established.</p>
+</li>
+<li>
+<p>build upon it later by adding more parameters as you make decisions about features or requirements that apply to your environment.</p>
+</li>
+<li>
+<p>use copies of it to make the creation of additional Replicat parameter files faster than starting from scratch.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="A1542472"></a>
+<div id="GIINF290" class="sect1">
+<h2 class="sect1"><span class="secnum">5.3</span> Creating a Checkpoint Table</h2>
+<p>Replicat maintains its recovery checkpoints in a table, known as the <span class="italic">checkpoint table</span>, that is stored in the target database. Checkpoints are written to the checkpoint table within the Replicat transaction. Because a checkpoint either succeeds or fails with the transaction, Replicat ensures that a transaction is only applied once, even if there is a failure of the process or the database.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+This procedure installs a default checkpoint table, which is sufficient in most cases. More than one checkpoint table can be used, such as to use a different one for each Replicat group. To use a non-default checkpoint table, which overrides the default table, use the <code dir="ltr">CHECKPOINTTABLE</code> option of <code dir="ltr">ADD REPLICAT</code> when you create Replicat process.</div>
+<div id="GIINF291" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref26"></a>
+<h3 class="sect2"><span class="secnum">5.3.1</span> Adding the Checkpoint Table to the Target Database</h3>
+<ol>
+<li>
+<p>From the Oracle GoldenGate directory on the target, run GGSCI.</p>
+</li>
+<li>
+<p>Issue the <code dir="ltr">DBLOGIN</code> command as the <code dir="ltr">informix</code> user. Use one of the following options, depending on your security configuration.</p>
+<ul>
+<li>
+<p>If using the Oracle GoldenGate credential store:</p>
+<pre dir="ltr">
+DBLOGIN USERIDALIAS <span class="codeinlineitalic">alias_of_informix_user</span>
+</pre></li>
+<li>
+<p>If not using the Oracle GoldenGate credential store:</p>
+<pre dir="ltr">
+DBLOGIN SOURCEDB <span class="codeinlineitalic">DSN_of_syscdc</span> USERID informix PASSWORD <span class="codeinlineitalic">informix_password</span> <span class="codeinlineitalic">algorithm</span> ENCRYPTKEY {<span class="codeinlineitalic">keyname</span> | DEFAULT}]
+</pre></li>
+</ul>
+<p>See <a class="olink GWURF251" href="../../gg-winux/GWURF/ggsci_commands059.htm#GWURF251"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information about <code dir="ltr">DBLOGIN</code> syntax.</p>
+</li>
+<li>
+<p>In GGSCI, create the checkpoint table in a schema of your choice (ideally dedicated to Oracle GoldenGate).</p>
+<pre dir="ltr">
+</pre>
+<pre dir="ltr">
+ADD CHECKPOINTTABLE <span class="codeinlineitalic">database.</span><span class="codeinlineitalic">schema.table</span>
+</pre>
+<p>You can use a wildcard for any or all of the name components in the command input.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<div id="GIINF292" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref27"></a>
+<h3 class="sect2"><span class="secnum">5.3.2</span> Specifying the Checkpoint Table in the Oracle GoldenGate Configuration</h3>
+<p>To specify the checkpoint table in the Oracle GoldenGate configuration:</p>
+<ol>
+<li>
+<p>Create a <code dir="ltr">GLOBALS</code> file (or edit the existing one).</p>
+<pre dir="ltr">
+EDIT PARAMS ./GLOBALS
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<code dir="ltr">EDIT PARAMS</code> creates a simple text file. When you save the file after <code dir="ltr">EDIT PARAMS</code>, it is saved with the name <code dir="ltr">GLOBALS</code> in upper case, without a file extension. It must remain as such, and the file must remain in the root Oracle GoldenGate directory.</div>
+</li>
+<li>
+<p>In the <code dir="ltr">GLOBALS</code> file, enter the <code dir="ltr">CHECKPOINTTABLE</code> parameter.</p>
+<pre dir="ltr">
+CHECKPOINTTABLE <span class="codeinlineitalic">database.</span><span class="codeinlineitalic">schema.table</span>
+</pre></li>
+<li>
+<p>Save and close the <code dir="ltr">GLOBALS</code> file.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1543224"></a>
+<div id="GIINF293" class="sect1">
+<h2 class="sect1"><span class="secnum">5.4</span> Configuring Replicat</h2>
+<p>These steps configure the Replicat process. For more advanced mapping options, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+This configuration is a basic Replicat configuration to get you started. You may want to enhance this configuration by adding parameters that configure Replicat in coordinated mode. The coordinated mode uses parallel apply threads to enhance apply performance. For more information, see <a class="olink GWUAD127" href="../../gg-winux/GWUAD/wu_about_gg.htm#GWUAD127"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</div>
+<ol>
+<li>
+<p>In GGSCI on the target system, create the Replicat parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">name</span>
+</pre>
+<p>Where: <code dir="ltr"><span class="codeinlineitalic">name</span></code> is the name of the Replicat group.</p>
+</li>
+<li>
+<p>Enter the Replicat parameters in the order shown, starting a new line for each parameter statement. See <a href="#BHCGDIDJ">Table 5-1</a> for descriptions.</p>
+<p><span class="bold">Basic parameters for the Replicat group:</span></p>
+<pre dir="ltr">
+REPLICAT financer
+TARGETDB informix USERIDALIAS tiger2
+ASSUMETARGETDEFS
+MAP mydatabase.*.*, TARGET mydatabase2.*.*;
+</pre>
+<div id="GIINF294" class="tblhruleformalwide"><p class="titleintable"><a id="sthref28"></a><a id="BHCGDIDJ"></a>Table 5-1 Basic Parameters for Replicat</p>
+<table class="cellalignment41" title="Basic Parameters for Replicat" summary="This table describes the basic parameters for Replicat.">
+<thead>
+<tr class="cellalignment30">
+<th class="cellalignment42" id="r1c1-t5">Parameter</th>
+<th class="cellalignment42" id="r1c2-t5">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r2c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+REPLICAT <span class="codeinlineitalic">group</span>
+</pre></td>
+<td class="cellalignment36" headers="r2c1-t5 r1c2-t5">
+<p><code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the Replicat group.</p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r3c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+TARGETDB <span class="codeinlineitalic">DSN</span> USERIDALIAS <span class="codeinlineitalic">alias</span>
+</pre></td>
+<td class="cellalignment36" headers="r3c1-t5 r1c2-t5">
+<p>Specifies the ODBC data source (DSN) of the target database and the alias of the database login credential of the user that is assigned to Replicat. This credential must exist in the Oracle GoldenGate credential store. It is recommended that you use the credential store as a best practice. For more information about security options, see <a class="olink GWUAD354" href="../../gg-winux/GWUAD/wu_security.htm#GWUAD354"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>Note: This specification is required by Oracle GoldenGate. When specified here, you do not need to specify the login credentials in the <code dir="ltr">odbc.ini</code> file (thus avoiding a security risk).</p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r4c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+ASSUMETARGETDEFS
+</pre></td>
+<td class="cellalignment36" headers="r4c1-t5 r1c2-t5">
+<p>Specifies how to interpret data definitions. <code dir="ltr">ASSUMETARGETDEFS</code> assumes the source and target tables have identical definitions, including semantics. (This procedure assume identical definitions.)</p>
+<p>Use the alternative <code dir="ltr">SOURCEDEFS</code> if the source and target tables have different definitions, and create a source data-definitions file with <code dir="ltr">DEFGEN</code>. For more information about data definitions, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+<tr class="cellalignment30">
+<td class="cellalignment36" id="r5c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+MAP <span class="codeinlineitalic">database.schema.object</span>, TARGET <span class="codeinlineitalic">database.schema.object</span>;
+</pre></td>
+<td class="cellalignment36" headers="r5c1-t5 r1c2-t5">
+<p>Specifies the relationship between a source table or sequence, or multiple objects, and the corresponding target object or objects.</p>
+<ul>
+<li>
+<p><code dir="ltr">MAP</code> is a required keyword. The <code dir="ltr">MAP</code> clause specifies the source object or objects that are to be mapped to target object(s).</p>
+</li>
+<li>
+<p><code dir="ltr">TARGET</code> is a required keyword. The <code dir="ltr">TARGET</code> clause specifies the target object or objects to which the source object(s) are mapped.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">database</span></code> is the name of a database. Wildcards are not allowed for this component.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">schema</span></code> is the schema name or a wildcarded set of schemas.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">object</span></code> is the name of a table or sequence, or a wildcarded set of objects.</p>
+</li>
+</ul>
+<p>Terminate this parameter statement with a semi-colon (<code dir="ltr">;</code>).</p>
+<p>For cross database replication, Oracle Extract to Informix Replicat, the <code dir="ltr">MAP</code> table name on the source can be a two-part name. For example:</p>
+<p><code dir="ltr">MAP schema.tabname, TARGET mydatabase.schema.tabname;</code></p>
+<p>For a like-like database replication, Informix Extract to Informix Replicat, the <code dir="ltr">MAP</code> parameter should be used as follows:</p>
+<p><code dir="ltr">MAP database.schema.tabname, TARGET mydatabase.schema.tabname;</code></p>
+<p><span class="bold">Note:</span> If your data contains 0x00, then you must use the <code dir="ltr">BYTE</code> data type because Informix interprets zero values as terminators.</p>
+<p>For three-part table names used by <code dir="ltr">SQLEXCE QUERY</code> queries, you must define the names with <code dir="ltr">targetdb:informix.set_tcustmer_sqltrc</code> as in the following example:</p>
+<pre dir="ltr">
+map sourcedb.informix.set_tcustmer_sqltrc, target 
+targetdb.informix."set_tcustmer_sqltrc",
+</pre>
+<p>To exclude objects from a wildcard specification, use the <code dir="ltr">MAPEXCLUDE</code> parameter.</p>
+<p>For more information and for additional options that control data filtering, mapping, and manipulation, see <code dir="ltr">MAP</code> in <a class="olink GWURF546" href="../../gg-winux/GWURF/gg_parameters160.htm#GWURF546"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any optional Replicat parameters that are recommended for your configuration. You can edit this file at any point before starting processing by using the <code dir="ltr">EDIT PARAMS</code> command in GGSCI. For more information about optional parameters that control error handling, performance, and other aspects of processing, see <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>. For broader task-based information about how to configure Oracle GoldenGate, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="A4932433"></a>
+<div id="GIINF295" class="sect1">
+<h2 class="sect1"><span class="secnum">5.5</span> Advanced Configuration Options for Oracle GoldenGate</h2>
+<p>You may need to configure Oracle GoldenGate with advanced options to suit your business needs. See the following:</p>
+<ul>
+<li>
+<p>For additional configuration guidelines to achieve specific replication topologies, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>. This guide includes instructions for the following configurations:</p>
+<ul>
+<li>
+<p>Using Oracle GoldenGate for live reporting</p>
+</li>
+<li>
+<p>Using Oracle GoldenGate for real-time data distribution</p>
+</li>
+<li>
+<p>Configuring Oracle GoldenGate for real-time data warehousing</p>
+</li>
+<li>
+<p>Using Oracle GoldenGate to maintain a live standby database</p>
+</li>
+<li>
+<p>Using Oracle GoldenGate for active-active high availability</p>
+</li>
+</ul>
+<p>That guide also contains information about:</p>
+<ul>
+<li>
+<p>Oracle GoldenGate architecture</p>
+</li>
+<li>
+<p>Oracle GoldenGate commands</p>
+</li>
+<li>
+<p>Oracle GoldenGate initial load methods</p>
+</li>
+<li>
+<p>Configuring security</p>
+</li>
+<li>
+<p>Using customization features</p>
+</li>
+<li>
+<p>Configuring data filtering and manipulation</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="A2020000"></a>
+<div id="GIINF296" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">5.6</span> Next Steps</h2>
+<p>Once you have created a basic parameter file for Replicat, see <a href="giinf_add_processes.htm#BABJHFHF">Chapter 6, "Adding Process Groups."</a></p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment29">
+<tr>
+<td class="cellalignment36"><table class="cellalignment40">
+<tr>
+<td class="cellalignment33"><a href="giinf_capture_config.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment33"><a href="giinf_add_processes.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment38">
+<table class="cellalignment39">
+<tr>
+<td class="cellalignment33"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment33"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment33"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

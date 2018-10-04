@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>GETENV</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="keywords" content="lag, function for returning, LAG option, @GETENV" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-519C628F-42A1-494D-9C6A-734FAC839B8C.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-6FCA48AC-5CDA-4F4F-90B5-F4114E6C27D6.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312"></a> <span id="PAGE" style="display:none;">292/360</span> <!-- End Header -->
+<a id="GNSRF660"></a>
+<h1 id="GNSRF-GUID-085A4BCC-403B-4423-9386-FC15627F0312" class="sect1"><span class="enumeration_section">4.12</span> GETENV</h1>
+<div>
+<div class="section">
+<p><code class="codeph">@GETENV</code> returns a variety of information about Oracle GoldenGate processing, including lag information, the last replicated operation, and Oracle GoldenGate environment information.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@GETENV (<span class="italic">info_type</span>)
+</pre>
+<p><span class="italic"><code class="codeph">info_type</code></span> is one of the following.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-DB8CDD81-E0F5-486C-8774-6A651510AABB"><!-- --></a><code class="codeph">"COMMITTIMESTAMP"</code></dt>
+<dd>
+<p>Returns the timestamp when the transaction was committed as an integer representing the Julian GMT.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-1479D956-1833-4D71-BF38-5702A3009CB6"><!-- --></a><code class="codeph">"JULIANTIMESTAMP"</code></dt>
+<dd>
+<p>Returns the current Julian GMT timestamp in the form of an integer such as <code class="codeph">211919385876765584</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-E5C573BD-A05A-4766-A017-B392073AA829"><!-- --></a><code class="codeph">"LOCALTIMESTAMP"</code></dt>
+<dd>
+<p>Returns the current system time as an integer representing the Julian LCT.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-29E16FFF-232C-4758-AB83-6E414EEF64C6"><!-- --></a><code class="codeph">("LAG", "</code><span class="italic"><code class="codeph">unit</code></span><code class="codeph">")</code></dt>
+<dd>
+<p>Returns lag information. See <span class="q">"<a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__I935538">Reporting Lag Information</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-1364C549-8C3F-4B9A-852A-91083DE4D423"><!-- --></a>("<code class="codeph">LASTERR</code>","<span class="italic"><code class="codeph">option</code></span>")</dt>
+<dd>
+<p>Returns information about the last replicated operation, including detailed error information. See <span class="q">"<a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__I935564">Returning Information from Replicat</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-F52730DA-F100-4E58-B3BC-3E9718F9FBCE"><!-- --></a>("<code class="codeph">GGENVIRONMENT</code>", "<span class="italic"><code class="codeph">option</code></span>")</dt>
+<dd>
+<p>Returns Oracle GoldenGate environment information. See <span class="q">"<a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__I935607">Returning Oracle GoldenGate Environment Information</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-0A142BE1-7498-4650-90AF-B95EB1FF8DBC"><!-- --></a>("<code class="codeph">GGFILEHEADER</code>", "<span class="italic"><code class="codeph">option</code></span>")</dt>
+<dd>
+<p>Returns the format and properties of an Oracle GoldenGate trail file, which is stored in the file header record sent from open systems.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-274465F4-D104-4D8F-80AF-EB2B8D0CAB0C"><!-- --></a>("<code class="codeph">GGHEADER</code>", "<span class="italic"><code class="codeph">option</code></span>")</dt>
+<dd>
+<p>Returns Oracle GoldenGate record header information. See <span class="q">"<a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__I998500">Returning Record Header Information</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-DB590AA5-7B2C-4C3A-A1B5-C1DB9596AE92"><!-- --></a>("<code class="codeph">RECORD</code>", "<span class="italic"><code class="codeph">option</code></span>")</dt>
+<dd>
+<p>Returns information about the records that are being processed (such as the sequence number of the trail file), or the name of the source application program that altered the Enscribe file record. See <span class="q">"<a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAEIJBA">Returning Record Location and Source Application Information</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-EFD9D711-8761-4CE6-8149-E7C5A9C4620F"><!-- --></a><code class="codeph">"RECSOUTPUT"</code></dt>
+<dd>
+<p>Returns the total number of records processed.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-57FC1A7C-257F-48C0-A1BE-B1F34C4FE0C1"><!-- --></a>("<code class="codeph">TLFKEY</code>", <code class="codeph">SYSKEY</code> <span class="italic"><code class="codeph">unique_key</code></span>)</dt>
+<dd>
+<p>Enables a unique key to be associated with <code class="codeph">TLF/PTLF</code> records in the ACI BASE24 application. See <span class="q">"<a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__I935676">Associating BASE24 Keys and Records</a>"</span>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__I935538">
+<p class="subhead1">Reporting Lag Information</p>
+<p>Use the <code class="codeph">"LAG</code>" option of <code class="codeph">@GETENV</code> to return lag information. Lag is the difference between the time a record was processed by the Extract or Replicat program and the timestamp of that record in the data source. Both <code class="codeph">LAG</code> and <span class="italic"><code class="codeph">unit</code></span> must be enclosed within double quotes.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@GETENV ("LAG", "<span class="italic">unit</span>")
+</pre>
+<p><span class="italic"><code class="codeph">"unit"</code></span> is one of the following.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-380C8E52-B037-4959-85D9-B86758829026"><!-- --></a><code class="codeph">"SEC"</code></dt>
+<dd>
+<p>Returns the lag in seconds. This is the default when a unit is not explicitly provided for <code class="codeph">LAG</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-4B0D8249-287D-4DB0-BC89-27BF605BD748"><!-- --></a><code class="codeph">"MSEC"</code></dt>
+<dd>
+<p>Returns the lag in milliseconds.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-254068FF-1DEA-4C46-825A-341E6C3A0B5B"><!-- --></a><code class="codeph">"MIN"</code></dt>
+<dd>
+<p>Returns the lag in minutes.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__I935564">
+<p class="subhead1">Returning Information from Replicat</p>
+<p>Use the <code class="codeph">"LASTERR"</code> option of <code class="codeph">@GETENV</code> to return information about the last operation processed by the Replicat program. Options provide error information. Both <code class="codeph">LASTERR</code> and <span class="italic"><code class="codeph">option</code></span> must be enclosed within double quotes.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@GETENV ("LASTERR", "<span class="italic">option</span>")
+</pre>
+<p><span class="italic"><code class="codeph">"option"</code></span> is one of the following.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-2A9E49D5-B1E4-45F3-9A57-86360EC31E63"><!-- --></a><code class="codeph">"DBERRNUM"</code></dt>
+<dd>
+<p>Returns the database error number associated with the failed operation.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-DD3C9EFA-C09F-4BA8-9B71-525F0E09F8FB"><!-- --></a><code class="codeph">"DBERRMSG"</code></dt>
+<dd>
+<p>Returns the database error message associated with the failed operation.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-64A4ACFE-6EF3-4192-8806-E0B275981D18"><!-- --></a><code class="codeph">"OPTYPE"</code></dt>
+<dd>
+<p>Returns the operation type that was attempted.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-94697DA2-1DC5-4202-83F5-F5BA915595B2"><!-- --></a><code class="codeph">"OSERRNUM"</code></dt>
+<dd>
+<p>Specifies a NonStop operating system error.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-CCB26675-E114-4AE4-A71C-C0D9CC996A30"><!-- --></a><code class="codeph">"ERRTYPE"</code></dt>
+<dd>
+<p>Returns the type of error. Possible results are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">DB</code> (for database errors)</p>
+</li>
+<li>
+<p><code class="codeph">MAP</code> (for errors in mapping before replicating the record).</p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__I935607">
+<p class="subhead1">Returning Oracle GoldenGate Environment Information</p>
+<p>Use the <code class="codeph">GGENVIRONMENT</code> option of <code class="codeph">@GETENV</code> to return information about the Oracle GoldenGate environment. This option is valid for the Extract and Replicat program processing.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@GETENV ("GGENVIRONMENT", "<span class="italic">option</span>")
+</pre>
+<p><span class="italic"><code class="codeph">"option"</code></span> is one of the following.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-D699DF25-F4B4-4788-8C06-2343F69C708B"><!-- --></a><code class="codeph">GROUPNAME</code></dt>
+<dd>
+<p>Returns the Extract or Replicat group name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-D91A7AFE-46CB-487F-9045-BAFFCBB229F1"><!-- --></a><code class="codeph">HOSTNAME</code></dt>
+<dd>
+<p>Returns the name of the host running the Extract or Replicat programs.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-CDEC162D-5FB5-4C89-A54B-23AB85B82104"><!-- --></a><code class="codeph">OSUSERNAME</code></dt>
+<dd>
+<p>Returns the operating system user name that started the process.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__I998500">
+<p class="subhead1">Returning Record Header Information</p>
+<p>Use the <code class="codeph">GGHEADER</code> option of <code class="codeph">@GETENV</code> to return record header information. This option is valid for the Extract and Replicat processes.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@GETENV ("GGHEADER", "<span class="italic">option</span>")
+</pre>
+<p><span class="italic"><code class="codeph">"option"</code></span> is one of the following.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-C00344BE-0AFB-4047-A3DB-3DC4EDD90D60"><!-- --></a><code class="codeph">BEFOREAFTERINDICATOR</code></dt>
+<dd>
+<p>Returns the before or after indicator indicating whether the record is a <a id="d94382e411" class="indexterm-anchor"></a><a id="d94382e417" class="indexterm-anchor"></a>before-image or <a id="d94382e424" class="indexterm-anchor"></a>after-image. Possible results are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">BEFORE</code> (before-image)</p>
+</li>
+<li>
+<p><code class="codeph">AFTER</code> (after-image)</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-0A119077-D695-4AAC-9B0D-B20CD222C7E0"><!-- --></a><code class="codeph">COMMITTIMESTAMP</code></dt>
+<dd>
+<p>Returns the transaction <a id="d94382e449" class="indexterm-anchor"></a>timestamp (the time when the transaction committed) converted to the local time zone as a string in the format of <code class="codeph">YYYY-MM-DD HH:MI:SS.FFFFFF</code>, for example:</p>
+<pre dir="ltr">
+2010-01-24 17:08:59.000000
+</pre></dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-5EE6980E-3DD0-4E93-AAF0-2A583538C326"><!-- --></a><code class="codeph">LOGPOSITION</code></dt>
+<dd>
+<p>Returns the audit log position.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-663EBA49-9B74-41B9-A451-6EE90110D2FC"><!-- --></a><code class="codeph">LOGRBA</code></dt>
+<dd>
+<p>Returns the relative byte address for the audit log.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-B67968CE-B962-4091-8662-08CA33EEC9F6"><!-- --></a><code class="codeph">TABLENAME</code></dt>
+<dd>
+<p>Returns the table <a id="d94382e482" class="indexterm-anchor"></a>name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-C14BCDCA-E09B-4FF4-9C43-90D1788F6FE6"><!-- --></a><code class="codeph">OPTYPE</code></dt>
+<dd>
+<p>Returns the type of <a id="d94382e496" class="indexterm-anchor"></a>operation. Possible results are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">INSERT</code></p>
+</li>
+<li>
+<p><code class="codeph">UPDATE</code></p>
+</li>
+<li>
+<p><code class="codeph">DELETE</code></p>
+</li>
+<li>
+<p><code class="codeph">ENSCRIBE COMPUPDATE</code></p>
+</li>
+<li>
+<p><code class="codeph">SQL COMPUPDATE</code></p>
+</li>
+<li>
+<p><code class="codeph">PK UPDATE</code></p>
+</li>
+<li>
+<p><code class="codeph">TRUNCATE</code></p>
+</li>
+</ul>
+<p>If the operation is not one of the above types, then the function returns the word <code class="codeph">TYPE</code> with the number assigned to the type. For more information about possible record types, see the file format information in <span class="italic">Logdump Reference for Oracle GoldenGate</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-80CEF111-52B9-410D-99D3-E4B751FCB822"><!-- --></a><code class="codeph">RECORDLENGTH</code></dt>
+<dd>
+<p>Returns the <a id="d94382e554" class="indexterm-anchor"></a>record length.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-CD2CF5B4-BB43-438C-B7A3-B37757373552"><!-- --></a><code class="codeph">TRANSACTIONINDICATOR</code></dt>
+<dd>
+<p>Returns the <a id="d94382e566" class="indexterm-anchor"></a>transaction indicator. Possible results are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">BEGIN</code> - Returned when the record header <code class="codeph">TransInD</code> is <code class="codeph">0</code> indicating the first statement in the transaction.</p>
+</li>
+<li>
+<p><code class="codeph">MIDDLE</code> - Returned when the header <code class="codeph">TransInD</code> is <code class="codeph">1</code> indicating a statement in the middle of the transaction.</p>
+</li>
+<li>
+<p><code class="codeph">END</code> - Returned when the <code class="codeph">TransInD</code> is <code class="codeph">2</code> indicating the last statement in the transactions</p>
+</li>
+<li>
+<p><code class="codeph">WHOLE</code> - Returned when the <code class="codeph">TransInD</code> is <code class="codeph">3</code> indicating only one statement in the transaction.</p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Returning File Header Information</p>
+<p>Use the <code class="codeph">GGFILEHEADER</code> option of <code class="codeph">@GETENV</code> to return attributes of an Oracle GoldenGate extract file or trail file that are stored in the file header sent from an Oracle GoldenGate system on Windows or UNIX. Every file in such a trail contains this header. The header describes the file itself and the environment in which it is used.</p>
+<p>The file header is stored as a record at the beginning of a trail file preceding the data records. The information that is stored in the trail header provides enough information about the records to enable an Oracle GoldenGate process to determine whether the records are in a format that the current version of Oracle GoldenGate supports.</p>
+<p>The trail header fields are stored as tokens, where the token format remains the same across all versions of Oracle GoldenGate. If a version of Oracle GoldenGate does not support any given token, that token is ignored. Deprecated tokens are assigned a default value to preserve compatibility with previous versions of Oracle GoldenGate.</p>
+<p>This option is valid for the Replicat process. Both <code class="codeph">GGFILEHEADER</code> and <span class="italic"><code class="codeph">return_value</code></span> must be enclosed within double quotes.</p>
+<div class="infobox-note" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-F24195DE-CEF5-4541-9D67-74D76BDE966E">
+<p class="notep1">Note:</p>
+<p>If a given database, operating system, or Oracle GoldenGate version does not provide information that relates to a given token, a <code class="codeph">NULL</code> value will be returned.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@GETENV ("GGFILEHEADER", "<span class="italic">return_value</span>")
+</pre>
+<p>The following sections describe the valid values for <span class="italic"><code class="codeph">"return_value"</code></span>:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAFJBHA">TrailInfo: Information about the trail file</a></p>
+</li>
+<li>
+<p><a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAJCIGD">ProducerInfo: Information about the process that created the trail file</a></p>
+</li>
+<li>
+<p><a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJABHBHD">MachineInfo: Information about the local host of the trail file</a></p>
+</li>
+<li>
+<p><a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAEDAEF">DatabaseInfo: Information about the database that produced the data in the trail file</a></p>
+</li>
+<li>
+<p><a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAIEBAG">ContinuityInfo: Recovery information carried over from the previous trail file</a></p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAFJBHA">
+<p class="subhead1">TrailInfo: Information about the trail file</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-2F797C1C-0A79-487A-B732-6AEDB5EFD287"><!-- --></a><code class="codeph">"COMPATIBILITY"</code></dt>
+<dd>
+<p>The Oracle GoldenGate compatibility level of the trail file. The compatibility level of the current Oracle GoldenGate version must be greater than, or equal to, the compatibility level of the trail file to be able to read the data records in that file. Current valid values are 0 or 1.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>1 means that the trail file is of Oracle GoldenGate version 10.0 or later, which supports file headers that contain file versioning information.</p>
+</li>
+<li>
+<p>0 means that the trail file is of an Oracle GoldenGate version that is older than 10.0. File headers are not supported in those releases. The 0 value is used for compatibility to those Oracle GoldenGate versions.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-2FEF525D-540F-4279-AE3F-973EB9D66A66"><!-- --></a><code class="codeph">"CHARSET"</code></dt>
+<dd>
+<p>The global character set of the trail file. For example:</p>
+<p><code class="codeph">WCP1252-1</code></p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-CA4D9728-ADE8-43DC-BFDF-CC1444A84E87"><!-- --></a><code class="codeph">"CREATETIMESTAMP"</code></dt>
+<dd>
+<p>The time that the trail was created, in local GMT Julian time in INT64.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-E40AB1F5-3FC2-463A-AF48-5ED79048BC23"><!-- --></a><code class="codeph">"URI"</code></dt>
+<dd>
+<p>The universal resource identifier of the process that created the trail file, in the format of:</p>
+<pre dir="ltr">
+<span class="italic">host_name</span>:dir[:dir][:dir_n] <span class="italic">group_name</span>
+</pre>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">host_name</code> is the name of the server that hosts the process</p>
+</li>
+<li>
+<p><code class="codeph">dir</code> is a subdirectory of the Oracle GoldenGate installation path.</p>
+</li>
+<li>
+<p><code class="codeph">group_name</code> is the name of the process group that is linked with the process.</p>
+</li>
+</ul>
+<p>Example:</p>
+<p><code class="codeph">sys1:home:oracle:v9.5:extora</code></p>
+<p>Shows where the trail was processed and by which process. This includes a history of previous runs.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-CA651FA8-668A-4CBC-B708-EFB441305C9D"><!-- --></a><code class="codeph">"URIHISTORY"</code></dt>
+<dd>
+<p>List of the URIs of processes that wrote to the trail file before the current process.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For a primary Extract, this field is empty.</p>
+</li>
+<li>
+<p>For a data pump, this field is <code class="codeph">URIHistory</code> + <code class="codeph">URI</code> of the input trail file.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-111B82D9-567B-449F-98ED-42A57D338D7D"><!-- --></a><code class="codeph">"FILENAME"</code></dt>
+<dd>
+<p>Name of the trail file. Can be absolute or relative path, with forward or backward slash depending on the file system.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-83065269-96F4-4452-A987-2305E54E15E2"><!-- --></a><code class="codeph">"FILEISTRAIL"</code></dt>
+<dd>
+<p><code class="codeph">True/false</code> flag indicating whether the trail file is a single file (such as one created for a batch run) or a sequentially numbered file that is part of a trail for online, continuous processing. If <code class="codeph">false</code>, the <code class="codeph">SeqNum</code> subtoken is not valid.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-3CEDD5F0-88E7-4846-B75B-3AD0066A1907"><!-- --></a><code class="codeph">"FILESEQNO"</code></dt>
+<dd>
+<p>The sequence number of the trail file, without any leading zeros. For example, if a file sequence number is <code class="codeph">aa000026</code>, <code class="codeph">FILESEQNO</code> returns <code class="codeph">26</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-B38F6BE2-5BCF-419A-B64D-549277B4A69E"><!-- --></a><code class="codeph">"FILESIZE"</code></dt>
+<dd>
+<p>Size of the trail file. It returns <code class="codeph">NULL</code> on an active file and returns a size value when the file is full and the trail rolls over.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-02789BB8-3AC8-4E42-95B4-EAAE37BEB759"><!-- --></a><code class="codeph">"FIRSTRECCSN"</code></dt>
+<dd>
+<p>The commit sequence number (CSN) of the first record in the trail file.Value is <code class="codeph">NULL</code> until the trail file is completed.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-977BD808-EFF8-402B-92D9-AA14365BE5D3"><!-- --></a><code class="codeph">"LASTRECCSN"</code></dt>
+<dd>
+<p>Returns the commit sequence number (CSN) of the last record in the trail file.Value is <code class="codeph">NULL</code> until the trail file is completed.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-AC11437B-E95C-4503-8B38-D18A61AE7ACA"><!-- --></a><code class="codeph">"FIRSTRECIOTIME"</code></dt>
+<dd>
+<p>The time that the first record was written to the trail file. Value is <code class="codeph">NULL</code> until the trail file is completed.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-E77D123C-8469-4A2A-9F92-21B4EC847934"><!-- --></a><code class="codeph">"LASTRECIOTIME"</code></dt>
+<dd>
+<p>The time that the last record was written to the trail file. Value is <code class="codeph">NULL</code> until the trail file is completed.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAJCIGD">
+<p class="subhead1">ProducerInfo: Information about the process that created the trail file</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-5EA3CB48-1F19-4C99-AB92-67FBDFE96332"><!-- --></a><code class="codeph">"GROUPNAME"</code></dt>
+<dd>
+<p>The group name that is associated with the Extract process that created the trail. The group name is that which was given in the <code class="codeph">ADD EXTRACT</code> command. For example, "gg<code class="codeph">ext</code>."</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-92C05116-3645-476D-BD6C-4BAA8D89A3A5"><!-- --></a><code class="codeph">"DATASOURCE"</code></dt>
+<dd>
+<p>The data source that was read by the process. Can be one of:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">DS_EXTRACT_TRAILS</code> (source was an Oracle GoldenGate extract file, populated with change data)</p>
+</li>
+<li>
+<p><code class="codeph">DS_LOG_TABLE</code> (source was an Oracle GoldenGate log table, used for trigger-based extraction)</p>
+</li>
+<li>
+<p><code class="codeph">DS_DATABASE</code> (source was a direct select from database table written to a trail, used for <code class="codeph">SOURCEISTABLE</code>-driven initial load)</p>
+</li>
+<li>
+<p><code class="codeph">DS_TRAN_LOGS</code> (source was the database transaction log)</p>
+</li>
+<li>
+<p><code class="codeph">DS_INITIAL_DATA_LOAD</code> (source was Extract; data taken directly from source tables)</p>
+</li>
+<li>
+<p><code class="codeph">DS_VAM_EXTRACT</code> (source was a vendor access module)</p>
+</li>
+<li>
+<p><code class="codeph">DS_VAM_TWO_PHASE_COMMIT</code> (source was a VAM trail)</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-BEED4B6D-0057-4E26-85A2-DF93452A5F5C"><!-- --></a><code class="codeph">"GGMAJORVERSION"</code></dt>
+<dd>
+<p>The major version of the Extract process that created the trail, expressed as an integer (<code class="codeph">xx).</code></p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-278AC8B6-8CD0-424B-AF74-0213621B892D"><!-- --></a><code class="codeph">"GGMINORVERSION"</code></dt>
+<dd>
+<p>The minor version of the Extract process that created the trail, expressed as an integer (<code class="codeph">xx.xx</code>).</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-86B91E67-5ECC-4389-9FCC-CB0372AE2A84"><!-- --></a><code class="codeph">"GGMAINTENANCELEVEL"</code></dt>
+<dd>
+<p>The maintenance version of the process (<code class="codeph">xx.xx.xx)</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-ACB965F1-AF72-436D-9ABD-D9FA458A587E"><!-- --></a><code class="codeph">"GGBUGFIXLEVEL"</code></dt>
+<dd>
+<p>The patch version of the process (<code class="codeph">xx.xx.xx.xx)</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-39F67F89-0527-4B1B-B17E-610D50234279"><!-- --></a><code class="codeph">"GGBUILDNUMBER"</code></dt>
+<dd>
+<p>The build number of the process.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-476C3DB5-92B4-42A5-A34E-47B821C3970C"><!-- --></a><code class="codeph">"GGVERSIONSTRING"</code></dt>
+<dd>
+<p>The version string of the process. For example <code class="codeph">11.1.1.17A not for production</code>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJABHBHD">
+<p class="subhead1">MachineInfo: Information about the local host of the trail file</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-DA59B3CB-A1CB-4E04-981E-87473A0E197C"><!-- --></a><code class="codeph">"HOSTNAME"</code></dt>
+<dd>
+<p>The DNS name of the computer where the Extract that wrote the trail is running. For example:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">sysa</code></p>
+</li>
+<li>
+<p><code class="codeph">sysb</code></p>
+</li>
+<li>
+<p><code class="codeph">paris</code></p>
+</li>
+<li>
+<p><code class="codeph">hq25</code></p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-D886908B-19CA-4443-8327-F2BA40AEE4B2"><!-- --></a><code class="codeph">"OSVERSION"</code></dt>
+<dd>
+<p>The major version of the operating system of the computer where the Extract that wrote the trail is running. For example:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">Version s10_69</code></p>
+</li>
+<li>
+<p><code class="codeph">#1 SMP Fri Feb 24 16:56:28 EST 2006</code></p>
+</li>
+<li>
+<p><code class="codeph">5.00.2195 Service Pack 4</code></p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-1471EAF3-EF7E-4ED4-B904-36D7B7B8D7F3"><!-- --></a><code class="codeph">"OSRELEASE"</code></dt>
+<dd>
+<p>The release version of the operating system of the computer where the Extract that wrote the trail is running. For example, release versions of the examples given for <code class="codeph">OSVERSION</code> could be:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">5.10</code></p>
+</li>
+<li>
+<p><code class="codeph">2.6.9-34.ELsmp</code></p>
+</li>
+<li>
+<p><code class="codeph">2000 Advanced Server</code></p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-C9AF3551-1164-4766-9D98-3BFAF6208545"><!-- --></a><code class="codeph">"OSTYPE"</code></dt>
+<dd>
+<p>The type of operating system of the computer where the Extract that wrote the trail is running. For example:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">SunOS</code></p>
+</li>
+<li>
+<p><code class="codeph">Linux</code></p>
+</li>
+<li>
+<p><code class="codeph">Microsoft Windows</code></p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-6F7AEC1F-07AB-4357-851B-86597ACDF420"><!-- --></a><code class="codeph">"HARDWARETYPE"</code></dt>
+<dd>
+<p>The type of hardware of the computer where the Extract that wrote the trail is running. For example:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">sun4u</code></p>
+</li>
+<li>
+<p><code class="codeph">x86_64</code></p>
+</li>
+<li>
+<p><code class="codeph">x86</code></p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAEDAEF">
+<p class="subhead1">DatabaseInfo: Information about the database that produced the data in the trail file</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-F0C26876-7D8E-4369-88D7-7655FCE49A2E"><!-- --></a><code class="codeph">"DBTYPE"</code></dt>
+<dd>
+<p>The type of database that produced the data in the trail file. Some examples are:</p>
+<pre dir="ltr">
+DB2 UDB
+DB2 ZOS
+CTREE
+MSSQL
+MYSQL
+ORACLE
+SQLMX
+SYBASE
+TERADATA
+TIMESTEN
+NONSTOP
+</pre></dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-6E22A4F8-6BD9-4E1C-B501-C2052BC5730D"><!-- --></a><code class="codeph">"DBNAME"</code></dt>
+<dd>
+<p>The name of the database, for example <code class="codeph">findb</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-F5990078-6F14-41E4-8446-DF019964638B"><!-- --></a><code class="codeph">"DBINSTANCE"</code></dt>
+<dd>
+<p>The name of the database instance, if applicable to the database type, for example <code class="codeph">ORA1022A</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-60163CAB-FBA3-4FFF-B9D5-E1DEC760966B"><!-- --></a><code class="codeph">"DBCHARSET"</code></dt>
+<dd>
+<p>The character set that is used by the database that produced the data in the trail file. (For some databases, this will be empty.)</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-558579FE-88C7-4D6F-AEBE-50831FDD675A"><!-- --></a><code class="codeph">"DBMAJORVERSION"</code></dt>
+<dd>
+<p>The major version of the database that produced the data in the trail file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-5B583B88-5ECE-4470-9895-FBEA3DDC6C12"><!-- --></a><code class="codeph">"DBMINORVERSION"</code></dt>
+<dd>
+<p>The minor version of the database that produced the data in the trail file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-9DC2A7BD-D0FC-42E9-98DC-965B62A638E1"><!-- --></a><code class="codeph">"DBVERSIONSTRING"</code></dt>
+<dd>
+<p>The maintenance (patch) level of the database that produced the data in the trail file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-3D27DB03-4315-4E82-8800-B5C092C945B8"><!-- --></a><code class="codeph">"DBCLIENTCHARSET"</code></dt>
+<dd>
+<p>The character set of the database client.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-E7A299FA-F002-4473-AC48-7AEA421CDA25"><!-- --></a><code class="codeph">"DBCLIENTVERSIONSTRING"</code></dt>
+<dd>
+<p>Returns the maintenance (patch) level of the database client. (For some databases, this will be empty.)</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAIEBAG">
+<p class="subhead1">ContinuityInfo: Recovery information carried over from the previous trail file</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-1A0C13AF-19D5-4CF8-BEB8-E1BB6B778415"><!-- --></a><code class="codeph">"RECOVERYMODE"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-9603FE58-DB4B-4210-ADBB-551953F47350"><!-- --></a><code class="codeph">"LASTCOMPLETECSN"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-6715BFDF-791E-4975-A054-AA10A8640292"><!-- --></a><code class="codeph">"LASTCOMPLETEXIDS"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-7DCE7C96-D9E8-4C5C-95C9-CD796C16A7C2"><!-- --></a><code class="codeph">"LASTCSN"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-6860737D-C330-44C3-9B0B-716C17622866"><!-- --></a><code class="codeph">"LASTXiD"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-0C30399C-C2BB-4302-93DD-73242BA178BA"><!-- --></a><code class="codeph">"LASTCSNTS"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAEIJBA">
+<p class="subhead1">Returning Record Location and Source Application Information</p>
+<p>Use the <code class="codeph">RECORD</code> option of <code class="codeph">@GETENV</code> to return location information of a record in the Oracle GoldenGate trail file or source application process information. The location information uniquely identifies a record through the sequence number of the trail file and the relative byte address or the transaction identifier. Source application information identifies the source program that alters the Enscribe file record.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@GETENV ("RECORD", "<span class="italic">option</span>")
+</pre>
+<p>"<code class="codeph">option</code>" is one of options described in the following sections:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="q">"<a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAHHHCA">Record Location Options</a>"</span></p>
+</li>
+<li>
+<p><span class="q">"<a href="GUID-085A4BCC-403B-4423-9386-FC15627F0312.htm#GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJADHJCJ">Source Application Options</a>"</span></p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJAHHHCA">
+<p class="subhead1">Record Location Options</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-F6490D68-15FF-470D-80D4-F6376A57DEC7"><!-- --></a><code class="codeph">FILERBA</code></dt>
+<dd>
+<p>Returns the relative byte address (RBA) of the record within the <code class="codeph">FILESEQNO</code> trail file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-C0C64C1A-320F-4672-970D-CA6DC4EE86D6"><!-- --></a><code class="codeph">FILESEQNO</code></dt>
+<dd>
+<p>Returns the sequence number of the trail file without any leading zeros.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-31F72BC2-8B67-4C0E-B706-ECC20FAC43F8"><!-- --></a><code class="codeph">TRANSID</code></dt>
+<dd>
+<p>Returns the TMF transaction identifier for which the record was altered.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__CJADHJCJ">
+<p class="subhead1">Source Application Options</p>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-46BFA626-4DB0-401F-963B-8A4DF2866FA7"><!-- --></a><code class="codeph">PROGRAMNAME</code></dt>
+<dd>
+<p>Returns the name of the source application program that altered the Enscribe file record.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-AC271874-054A-4D85-A163-F0C5F85E4792"><!-- --></a><code class="codeph">PROCESSNAME</code></dt>
+<dd>
+<p>Returns the process identifier (PID) of the source application process that altered the Enscribe file record.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__I935676">
+<p class="subhead1">Associating BASE24 Keys and Records</p>
+<p>Use the <code class="codeph">TLFKEY</code> option of <code class="codeph">@GETENV</code> to associate a unique key with <code class="codeph">TLF/PTLF</code> records in the ACI BASE24 application. The 64-bit key is composed of the following concatenated items:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>the number of seconds since <code class="codeph">2000</code>.</p>
+</li>
+<li>
+<p>the block number of the record in the <code class="codeph">TLF/PTLF</code> block multiplied by ten.</p>
+</li>
+<li>
+<p>the node specified by the user (must be between <code class="codeph">0</code> and <code class="codeph">255)</code>.</p>
+</li>
+</ul>
+<p>This option is valid for the Extract and Replicat processes.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@GETENV ("TLFKEY", SYSKEY, <span class="italic">unique_key</span>)
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-085A4BCC-403B-4423-9386-FC15627F0312__GUID-BD564D43-00BE-449C-BEED-5D2E23FEEFC0"><!-- --></a><span class="italic"><code class="codeph">unique_key</code></span></dt>
+<dd>
+<p>The NonStop node number of the source <code class="codeph">TLF</code>/<code class="codeph">PTLF</code> file.</p>
+<p>Example: <code class="codeph">@GETENV ("TLFKEY", SYSKEY</code>, <code class="codeph">7)</code></p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-519C628F-42A1-494D-9C6A-734FAC839B8C.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-6FCA48AC-5CDA-4F4F-90B5-F4114E6C27D6.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

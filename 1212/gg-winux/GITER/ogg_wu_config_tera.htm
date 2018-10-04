@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>4 Configuring Oracle GoldenGate</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This chapter describes how Oracle GoldenGate works with the Change Data Capture (CDC) component of a source Teradata database to operate in either maximum protection mode or maximum performance mode." />
+<meta name="dcterms.created" content="2015-05-21T11:4:8Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Teradata" />
+<meta name="dcterms.identifier" content="E29290-02" />
+<meta name="dcterms.isVersionOf" content="GITER" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="ogg_wu_setup_tera.htm" title="Previous" type="text/html" />
+<link rel="Next" href="ogg_wu_ddl_tera.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GITER.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GITER.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GITER.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">7/11</span>
+<!-- End Header -->
+<div id="GITER185" class="chapter"><a id="CFHIIBIC"></a>
+<h1 class="chapter"><span class="secnum">4</span> Configuring Oracle GoldenGate</h1>
+<p><a id="GITER186"></a>This chapter describes how Oracle GoldenGate works with the Change Data Capture (CDC) component of a source Teradata database to operate in either <span class="italic">maximum protection mode</span> or <span class="italic">maximum performance mode</span>. The mode determines the commit protocol that is used and whether or not Oracle GoldenGate has an effect on the Teradata applications. This chapter contains the following sections:</p>
+<ul>
+<li>
+<p><a href="#BABGCDBB">Section 4.1, "Configuring Oracle GoldenGate in Maximum Protection Mode"</a></p>
+</li>
+<li>
+<p><a href="#BABIIGHE">Section 4.2, "Configuring Oracle GoldenGate in Maximum Performance Mode"</a></p>
+</li>
+<li>
+<p><a href="#BABBAHAF">Section 4.3, "Additional Oracle GoldenGate Configuration Guidelines"</a></p>
+</li>
+</ul>
+<a id="BABGCDBB"></a>
+<div id="GITER187" class="sect1">
+<h2 class="sect1"><span class="secnum">4.1</span> Configuring Oracle GoldenGate in Maximum Protection Mode</h2>
+<p>Maximum protection mode is the recommended Oracle GoldenGate configuration for the Teradata database. Maximum protection mode incorporates Oracle GoldenGate into the production system by using a two-phase commit protocol between CDC on the source server and a primary Extract process on the replication server (through the TAM). The two-phase commit requires a source transaction to be committed to Oracle GoldenGate as well as to the source database, ensuring that no transactions are lost in transit or duplicated if communication is interrupted or a component fails.</p>
+<p>In this mode, a transaction is <span class="italic">in doubt</span> (not committed) until the primary Extract acknowledges that it received all of the data and saved it to an Oracle GoldenGate VAM trail on disk.</p>
+<ul>
+<li>
+<p>If CDC receives the acknowledgement within a given timeout period, it releases the transaction for commit to the application, for commit to the database, and for propagation by Oracle GoldenGate.</p>
+</li>
+<li>
+<p>If CDC does not receive the acknowledgement within a given timeout period, it rolls back the transaction, and the application user receives an error message.</p>
+</li>
+</ul>
+<p>The VAM trail is a series of files that work like a transaction log. It stores incoming data in the order that it is received, but not necessarily in transaction order. A secondary Extract process, known as a <span class="italic">VAM-sort Extract</span>, sorts the data into transaction order and either deletes a transaction if a rollback is received (because the two-phase commit failed) or releases it to a regular trail for further processing.</p>
+<div id="GITER188" class="sect2"><a id="sthref47"></a>
+<h3 class="sect2"><span class="secnum">4.1.1</span> Recommended Maximum Protection Configuration</h3>
+<p>Install the Extract and Replicat processes on separate replication servers and use a data pump with a local trail on the server where the Extract processes are installed. In this configuration, the primary Extract group captures the data, and then the VAM-sort Extract persists the sorted data to a regular Oracle GoldenGate trail on the local disk. A data-pump Extract reads this trail and sends the data across TCP/IP to a trail on the Replicat replication server, where it is read again by a Replicat process and applied to the target. If there is a failure of communication between the Extract server and the Replicat server, only the data pump is affected. The other two Extract processes can continue to do their work without running out of memory if the outage persists.</p>
+<div id="GITER189" class="figure"><p class="titleinfigure"><a id="sthref48"></a>Figure 4-1 Recommended Maximum Protection Configuration</p>
+<img width="1675" height="558" src="img/VAMmaxprottworepservers.jpg" alt="Description of Figure 4-1 follows" /><br />
+<a id="sthref49" href="img_text/VAMmaxprottworepservers.htm">Description of "Figure 4-1 Recommended Maximum Protection Configuration"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect2" -->
+<div id="GITER190" class="sect2"><a id="sthref50"></a>
+<h3 class="sect2"><span class="secnum">4.1.2</span> Configuring Extract in Maximum Protection Mode</h3>
+<p>Perform these steps on the source replication server.</p>
+<ol>
+<li>
+<p>Configure the Manager process according to the instructions in <a class="olink GWUAD138" href="../../gg-winux/GWUAD/wu_manager.htm#GWUAD138">Administering Oracle GoldenGate for Windows and UNIX</a>.</p>
+</li>
+<li>
+<p>In the Manager parameter file, use the <code dir="ltr">PURGEOLDEXTRACTS</code> parameter to control the purging of files from the local trail.</p>
+</li>
+<li>
+<p>Run GGSCI.</p>
+</li>
+<li>
+<p>Create a primary Extract group. For documentation purposes, this group is called <code dir="ltr">ext</code>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="codeinlineitalic">ext</span>, VAM
+</pre></li>
+<li>
+<p>Create a local trail that is to be the VAM trail.</p>
+<pre dir="ltr">
+ADD EXTTRAIL <span class="codeinlineitalic">VAM_trail</span>, EXTRACT <span class="codeinlineitalic">ext</span>
+</pre>
+<p>Use the <code dir="ltr">EXTRACT</code> argument to link this trail to the primary Extract group. That Extract group creates this trail as a VAM trail.</p>
+</li>
+<li>
+<p>Use the <code dir="ltr">EDIT PARAMS</code> command to create a parameter file for the primary Extract group. Include the parameters shown in <a href="#BABBDCJG">Example 4-1</a> plus any others that apply to your database environment.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Encryption options exist for encrypting the database password, the data in the trail, and the data sent across TCP/IP. See <a class="olink GWUAD354" href="../../gg-winux/GWUAD/wu_security.htm#GWUAD354"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for more information about security features.</div>
+<div id="GITER191" class="example"><p class="titleinexample"><a id="BABBDCJG"></a>Example 4-1 Parameters for the Primary Extract Group</p>
+<pre dir="ltr">
+-- Identify the Extract group:
+EXTRACT <span class="italic">ext</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn1</span>,][USERID <span class="italic">user</span>[, PASSWORD <span class="italic">pw</span>]]
+-- Specify the VAM trail:
+EXTTRAIL <span class="italic">VAM_trail</span>
+-- Specify that this Extract creates and writes to a VAM trail:
+DSOPTIONS CREATETRANLOG RESTARTAPPEND, VAMCOMPATIBILITY 1
+-- Specify library, TAM initialization file, and callback program for the TAM:
+VAM <span class="italic">library</span>, PARAMS (inifile, <span class="codeinlineitalic">ini_file</span>, callbackLib, extract.exe)
+-- Specify tables to be captured:
+TABLE <span class="codeinlineitalic">owner</span>.<span class="italic">table</span>;
+</pre></div>
+<!-- class="example" --></li>
+<li>
+<p>Create a VAM-sort Extract group to read the VAM trail. For documentation purposes, this group is called <code dir="ltr">extsort</code>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">extsort</span>, VAMTRAILSOURCE <span class="italic">VAM_trail</span>
+</pre></li>
+<li>
+<p>Add a local trail to receive the sorted data.</p>
+<pre dir="ltr">
+ADD EXTTRAIL <span class="italic">local_trail</span>, EXTRACT <span class="italic">extsort</span>
+</pre>
+<p>Use the <code dir="ltr">EXTRACT</code> argument to link this trail to the VAM-sort Extract group. A data pump group will read this trail.</p>
+</li>
+<li>
+<p>Use the <code dir="ltr">EDIT PARAMS</code> command to create a parameter file for the VAM-sort Extract group. Include the parameters shown in <a href="#BABIGCFF">Example 4-2</a> plus any others that apply to your database environment.</p>
+<div id="GITER192" class="example"><p class="titleinexample"><a id="BABIGCFF"></a>Example 4-2 Parameters for the VAM-sort Extract Group</p>
+<pre dir="ltr">
+-- Identify the Extract group:
+EXTRACT <span class="italic">extsort</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn1</span>,][USERID <span class="italic">user</span>[, PASSWORD <span class="italic">pw</span>]]
+-- Specify that this Extract reads a VAM trail and sorts the data:
+DSOPTIONS SORTTRANLOG
+-- Specify the local trail to receive the sorted data:
+EXTTRAIL <span class="italic">local_trail</span>
+-- Specify tables to be captured:
+TABLE <span class="italic">owner</span>.<span class="italic">table</span>;
+</pre></div>
+<!-- class="example" --></li>
+<li>
+<p>Create a data pump group to read the local trail and send the data to a remote trail on one of the following:</p>
+<ul>
+<li>
+<p>The replication server where Replicat is running against a target Teradata database.</p>
+</li>
+<li>
+<p>A target server where Replicat is running against another database platform that is supported by Oracle GoldenGate.</p>
+</li>
+</ul>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">pump</span>, EXTTRAILSOURCE <span class="italic">local_trail</span>
+</pre>
+<p>For documentation purposes, this group is called <code dir="ltr">pump</code>.</p>
+</li>
+<li>
+<p>Add the remote trail.</p>
+<pre dir="ltr">
+ADD RMTTRAIL <span class="italic">remote_trail</span>, EXTRACT <span class="italic">pump</span>
+</pre>
+<p>Use the <code dir="ltr">EXTRACT</code> argument to link the remote trail to the data pump group.</p>
+</li>
+<li>
+<p>Create a parameter file for the data pump. Include the parameters shown in <a href="#BABICBFE">Example 4-3</a> plus any others that apply to your database environment.</p>
+<div id="GITER193" class="example"><p class="titleinexample"><a id="BABICBFE"></a>Example 4-3 Parameters for Data Pump Extract Group</p>
+<pre dir="ltr">
+-- Identify the data pump group:
+EXTRACT <span class="italic">pump</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn1</span>,][USERID <span class="italic">user</span>[, PASSWORD <span class="italic">pw</span>]]
+-- Specify the name or IP address of the remote system:
+RMTHOST <span class="italic">target</span>, MGRPORT <span class="italic">portnumber</span>
+-- Specify the remote trail:
+RMTTRAIL <span class="italic">remote_trail</span>
+-- Allow mapping, filtering, conversion or pass data through as-is:
+[PASSTHRU | NOPASSTHRU]
+-- Specify tables to be captured:
+TABLE <span class="italic">owner</span>.<span class="italic">table</span>;
+</pre></div>
+<!-- class="example" --></li>
+</ol>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+To use <code dir="ltr">PASSTHRU</code> mode, the names of the source and target objects must be identical. No column mapping, filtering, <code dir="ltr">SQLEXEC</code> functions, transformation, or other functions that require data manipulation can be specified in the parameter file. You can combine normal processing with pass-through processing by pairing <code dir="ltr">PASSTHRU</code> and <code dir="ltr">NOPASSTHRU</code> with different <code dir="ltr">TABLE</code> statements.</div>
+</div>
+<!-- class="sect2" -->
+<div id="GITER194" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref51"></a>
+<h3 class="sect2"><span class="secnum">4.1.3</span> Configuring Replicat to Support Maximum Protection Mode</h3>
+<p>Replicat does not require any special configuration with regard to maximum protection mode. This section highlights basic Replicat parameters that are required for most target database types. Additional parameters may be required. See the Oracle GoldenGate installation and configuration documentation for your target database and also <span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span> reference documentation.</p>
+<p>Perform these steps on the target replication server or target database system.</p>
+<ol>
+<li>
+<p>Configure the Manager process according to the instructions in <a class="olink GWUAD138" href="../../gg-winux/GWUAD/wu_manager.htm#GWUAD138">Administering Oracle GoldenGate for Windows and UNIX</a>.</p>
+</li>
+<li>
+<p>In the Manager parameter file, use the <code dir="ltr">PURGEOLDEXTRACTS</code> parameter to control the purging of files from the local trail.</p>
+</li>
+<li>
+<p>Create a Replicat checkpoint table. There are multiple options for this purpose. For instructions, see <a class="olink GWUAD521" href="../../gg-winux/GWUAD/wu_changesync.htm#GWUAD521"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Create a Replicat group. For documentation purposes, this group is called <code dir="ltr">rep</code>.</p>
+<pre dir="ltr">
+ADD REPLICAT <span class="italic">rep</span>, EXTTRAIL <span class="italic">remote_trail</span>
+</pre>
+<p>Use the <code dir="ltr">EXTTRAIL</code> argument to link the Replicat group to the remote trail that you specified for the data pump on the source server.</p>
+</li>
+<li>
+<p>Use the <code dir="ltr">EDIT PARAMS</code> command to create a parameter file for the Replicat group. Include the parameters shown in <a href="#BABHIJAI">Example 4-4</a> plus any others that apply to your database environment.</p>
+</li>
+</ol>
+<div id="GITER195" class="example"><p class="titleinexample"><a id="BABHIJAI"></a>Example 4-4 Parameters for the Replicat Group</p>
+<pre dir="ltr">
+-- Identify the Replicat group:
+REPLICAT <span class="italic">rep</span>
+-- State whether or not source and target definitions are identical:
+SOURCEDEFS {<span class="italic">full_pathname</span> | ASSUMETARGETDEFS}
+-- Specify database login information as needed for the database:
+[TARGETDB <span class="italic">dsn2</span>,] [USERID <span class="italic">user id</span>[, PASSWORD <span class="italic">pw</span>]]
+-- Specify error handling rules (See the NOTE following parameter file):
+REPERROR (<span class="italic">error</span>, <span class="italic">response</span>)
+-- Specify tables for delivery:
+MAP <span class="italic">owner</span>.<span class="italic">table</span>, TARGET <span class="italic">owner</span>.<span class="italic">table</span>[, DEF <span class="italic">template name</span>];
+</pre></div>
+<!-- class="example" -->
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Teradata Multiload does not participate in the full two-phase commit protocol of maximum protection mode. In a recovery situation, it is possible that Replicat could attempt to apply some updates twice. If a multiset table is affected, this could result in duplicate rows being created. Use the <code dir="ltr">REPERROR</code> parameter in the Replicat parameter file so that Replicat ignores duplicate rows.</div>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABIIGHE"></a>
+<div id="GITER196" class="sect1">
+<h2 class="sect1"><span class="secnum">4.2</span> Configuring Oracle GoldenGate in Maximum Performance Mode</h2>
+<p>Maximum performance mode is faster and less intrusive than maximum protection mode, but it is less fault tolerant. When the source application issues a commit, CDC begins transmitting the data to the replication server, where it is buffered and sorted by Extract. When the data is finished being transmitted, CDC sends Extract a commit and releases the transaction for commit to the application and to the database.</p>
+<p>The maximum performance configuration does not persist incoming data to disk, nor does it have an acknowledgement system between CDC and Extract that prevents data loss. If communication between the primary Extract and the Teradata source is interrupted, or if a component fails, the source and target data are no longer synchronized.</p>
+<div id="GITER197" class="sect2"><a id="sthref52"></a>
+<h3 class="sect2"><span class="secnum">4.2.1</span> Recommended Maximum Performance Configuration</h3>
+<p>Install the Extract and Replicat processes on separate replication servers, and use a data pump with a local trail on the Extract server. In this configuration, the primary Extract persists transactions to a local Oracle GoldenGate trail. A data pump Extract reads this trail and sends the data across TCP/IP to a trail on the Replicat server, where it is read again by Replicat and applied to the target. If there is a failure of communication between the Extract and Replicat replication servers, only the data pump is affected. The primary Extract can continue to write incoming data to disk instead of having to retain it in memory, which otherwise could be depleted in a prolonged outage.</p>
+<div id="GITER198" class="figure"><p class="titleinfigure"><a id="sthref53"></a>Figure 4-2 Recommended Maximum Performance Configuration</p>
+<img width="1670" height="307" src="img/VAMmaxperfwithPump.jpg" alt="Description of Figure 4-2 follows" /><br />
+<a id="sthref54" href="img_text/VAMmaxperfwithPump.htm">Description of "Figure 4-2 Recommended Maximum Performance Configuration"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect2" -->
+<div id="GITER199" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref55"></a>
+<h3 class="sect2"><span class="secnum">4.2.2</span> Configuring Extract in Maximum Performance Mode</h3>
+<p>Perform these steps on the source replication server.</p>
+<ol>
+<li>
+<p>Configure the Manager process according to the instructions in <a class="olink GWUAD138" href="../../gg-winux/GWUAD/wu_manager.htm#GWUAD138"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>In the Manager parameter file, use the <code dir="ltr">PURGEOLDEXTRACTS</code> parameter to control the purging of files from the local trail.</p>
+</li>
+<li>
+<p>Run GGSCI.</p>
+</li>
+<li>
+<p>Create a primary Extract group. For documentation purposes, this group is called <code dir="ltr">ext</code>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">ext</span>, VAM
+</pre></li>
+<li>
+<p>Add a local trail.</p>
+<pre dir="ltr">
+ADD EXTTRAIL <span class="italic">local_trail</span>, EXTRACT <span class="italic">ext</span>
+</pre>
+<p>Use the <code dir="ltr">EXTRACT</code> argument to link this trail to the primary Extract group.</p>
+</li>
+<li>
+<p>Use the <code dir="ltr">EDIT PARAMS</code> command to create a parameter file for the primary Extract group. Include the parameters in <a href="#BABBDCIH">Example 4-5</a> plus any others that apply to your database environment.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Encryption options exist for encrypting the database password, the data in the trail, and the data sent across TCP/IP. See <a class="olink GWUAD354" href="../../gg-winux/GWUAD/wu_security.htm#GWUAD354"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for more information about security features.</div>
+<div id="GITER200" class="example"><p class="titleinexample"><a id="BABBDCIH"></a>Example 4-5 Parameters for the Primary Extract Group</p>
+<pre dir="ltr">
+EXTRACT <span class="italic">ext</span>
+-- Identify the Extract group:
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn1</span>,][USERID <span class="italic">user</span>[, PASSWORD <span class="italic">pw</span>]]
+-- Specify the local trail that this Extract writes to:
+EXTTRAIL <span class="italic">local_trail</span>
+-- Specify that this Extract is in maximum performance mode:
+DSOPTIONS COMMITTEDTRANLOG RESTARTAPPEND, VAMCOMPATIBILITY 1
+-- Specify library, TAM initialization file, and callback program for the TAM:
+VAM <span class="italic">library</span>, PARAMS (inifile, <span class="codeinlineitalic">ini_file</span>, callbackLib, extract.exe)
+-- Specify tables to be captured:
+TABLE <span class="italic">owner</span>.<span class="italic">table</span>;
+</pre></div>
+<!-- class="example" --></li>
+<li>
+<p>Create a data pump group to read the local trail and send the data to a remote trail on one of the following:</p>
+<ul>
+<li>
+<p>The replication server where Replicat is running against a target Teradata database.</p>
+</li>
+<li>
+<p>A target server where Replicat is running against another database platform that is supported by Oracle GoldenGate.</p>
+</li>
+</ul>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">pump</span>, EXTTRAILSOURCE <span class="italic">local_trail</span>
+</pre>
+<p>For documentation purposes, this group is called <code dir="ltr">pump</code>.</p>
+</li>
+<li>
+<p>Add the remote trail.</p>
+<pre dir="ltr">
+ADD RMTTRAIL <span class="italic">remote_trail</span>, EXTRACT <span class="italic">pump</span>
+</pre>
+<p>Use the <code dir="ltr">EXTRACT</code> argument to link the remote trail to the data pump group.</p>
+</li>
+<li>
+<p>Create a parameter file for the data pump. Include the parameters shown in <a href="#BABJDBJF">Example 4-6</a> plus any others that apply to your database environment.</p>
+<div id="GITER201" class="example"><p class="titleinexample"><a id="BABJDBJF"></a>Example 4-6 Parameters for the Extract Data Pump</p>
+<pre dir="ltr">
+-- Identify the data pump group:
+EXTRACT <span class="italic">pump</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn1</span>,][USERID <span class="italic">user</span>[, PASSWORD <span class="italic">pw</span>]]
+-- Specify the name or IP address of the remote system:
+RMTHOST <span class="italic">target</span>, MGRPORT <span class="italic">portnumber</span>
+-- Specify the remote trail:
+RMTTRAIL <span class="italic">remote_trail</span>
+-- Allow mapping, filtering, conversion or pass data through as-is:
+[PASSTHRU | NOPASSTHRU]
+-- Specify tables to be captured:
+TABLE <span class="italic">owner</span>.<span class="italic">table</span>
+</pre></div>
+<!-- class="example" -->
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+To use <code dir="ltr">PASSTHRU</code> mode, the names of the source and target objects must be identical. No column mapping, filtering, <code dir="ltr">SQLEXEC</code> functions, transformation, or other functions that require data manipulation can be specified in the parameter file. You can combine normal processing with pass-through processing by pairing <code dir="ltr">PASSTHRU</code> and <code dir="ltr">NOPASSTHRU</code> with different <code dir="ltr">TABLE</code> statements.</div>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<div id="GITER202" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref56"></a>
+<h3 class="sect2"><span class="secnum">4.2.3</span> Configuring Replicat to Support Maximum Performance Mode</h3>
+<p>Replicat does not require any special configuration with regard to maximum protection mode. This section highlights basic Replicat parameters that are required for most target database types. Additional parameters may be required. See the Oracle GoldenGate documentation for your target database and also <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>Perform these steps on the target replication server or target database system.</p>
+<ol>
+<li>
+<p>Configure the Manager process according to the instructions in <a class="olink GWUAD138" href="../../gg-winux/GWUAD/wu_manager.htm#GWUAD138"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>In the Manager parameter file, use the <code dir="ltr">PURGEOLDEXTRACTS</code> parameter to control the purging of files from the local trail.</p>
+</li>
+<li>
+<p>Create a Replicat checkpoint table. There are multiple options for this purpose. For instructions, see <a class="olink GWUAD521" href="../../gg-winux/GWUAD/wu_changesync.htm#GWUAD521"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a></p>
+</li>
+<li>
+<p>Create a Replicat group. For documentation purposes, this group is called <code dir="ltr">rep</code>.</p>
+<pre dir="ltr">
+ADD REPLICAT <span class="italic">rep</span>, EXTTRAIL <span class="italic">remote_trail</span>
+</pre>
+<p>Use the <code dir="ltr">EXTTRAIL</code> argument to link the Replicat group to the remote trail that you specified for the data pump on the source server.</p>
+</li>
+<li>
+<p>Use the <code dir="ltr">EDIT PARAMS</code> command to create a parameter file for the Replicat group. Include the parameters shown in <a href="#BABJEJAG">Example 4-7</a> plus any others that apply to your database environment.</p>
+</li>
+</ol>
+<div id="GITER203" class="example"><p class="titleinexample"><a id="BABJEJAG"></a>Example 4-7 Parameters for the Replicat Group</p>
+<pre dir="ltr">
+-- Identify the Replicat group:
+REPLICAT <span class="italic">rep</span>
+-- State whether or not source and target definitions are identical:
+SOURCEDEFS <span class="italic">full_pathname</span> | ASSUMETARGETDEFS
+-- Specify database login information as needed for the database:
+[TARGETDB <span class="italic">dsn2</span>,] [USERID <span class="italic">user id</span>[, PASSWORD <span class="italic">pw</span>]]
+-- Specify error handling rules:
+REPERROR (<span class="italic">error</span>, <span class="italic">response</span>)
+-- Specify tables for delivery:
+MAP <span class="italic">owner</span>.<span class="italic">table</span>, TARGET <span class="italic">owner</span>.<span class="italic">table</span>[, DEF <span class="italic">template name</span>];
+;
+</pre></div>
+<!-- class="example" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABBAHAF"></a>
+<div id="GITER204" class="sect1">
+<h2 class="sect1"><span class="secnum">4.3</span> Additional Oracle GoldenGate Configuration Guidelines</h2>
+<p>The following are additional considerations to make once you have installed and configured your Oracle GoldenGate environment.</p>
+<div id="GITER205" class="sect2"><a id="sthref57"></a>
+<h3 class="sect2"><span class="secnum">4.3.1</span> Configuring DDL Support</h3>
+<p>Oracle GoldenGate supports the replication of Teradata DDL. For more information, see <a href="ogg_wu_ddl_tera.htm#BABDCGDJ">"Configuring DDL Synchronization for a Teradata Database"</a>.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GITER206" class="sect2"><a id="sthref58"></a>
+<h3 class="sect2"><span class="secnum">4.3.2</span> Handling Massive Update and Delete Operations</h3>
+<p>Operations that update or delete a large number of rows will generate discrete updates and deletes for each row on the subscriber database. This could cause a lock manager overflow on the Teradata subscriber system, and thus terminate the Replicat process.</p>
+<p>To avoid these errors, you can do either of the following:</p>
+<ul>
+<li>
+<p>Temporarily suspend replication for these operations and then perform them manually on the source and target systems. To suspend replication, use the following command, which suspends replication for that session only. The operations of other sessions on that table are replicated normally.</p>
+<pre dir="ltr">
+set session override replication on;
+</pre>
+<pre dir="ltr">
+commit;
+</pre></li>
+</ul>
+<ul>
+<li>
+<p>Set the Replicat parameter <code dir="ltr">MAXTRANSOPS</code> to a value of less than 1000. This parameter splits large transactions into smaller ones.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<div id="GITER207" class="sect2"><a id="sthref59"></a>
+<h3 class="sect2"><span class="secnum">4.3.3</span> Preventing Multiple Connections</h3>
+<p>By default, the Extract and Replicat processes create a new connection for catalog queries. You can prevent this extra connection by using the <code dir="ltr">DBOPTIONS</code> parameter with the <code dir="ltr">NOCATALOGCONNECT</code> option.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GITER209" class="sect2"><a id="sthref60"></a>
+<h3 class="sect2"><span class="secnum">4.3.4</span> Performing Initial Synchronization</h3>
+<p>Perform an initial synchronization of the source and target data before using Oracle GoldenGate to transmit transactional changes for the first time. The preferred methods for synchronizing two Teradata databases is to use any of the Teradata data loader utilities. The recommended utility is MultiLoad. To configure an initial load, see <a class="olink GWUAD546" href="../../gg-winux/GWUAD/wu_initsync.htm#GWUAD546"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment248">
+<tr>
+<td class="cellalignment255"><table class="cellalignment261">
+<tr>
+<td class="cellalignment252"><a href="ogg_wu_setup_tera.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment252"><a href="ogg_wu_ddl_tera.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment257">
+<table class="cellalignment258">
+<tr>
+<td class="cellalignment252"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment252"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment252"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

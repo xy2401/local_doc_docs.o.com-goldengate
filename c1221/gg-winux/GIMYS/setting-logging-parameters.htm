@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Setting Logging Parameters</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T04:12:29Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Installing and Configuring Oracle GoldenGate for MySQL" />
+<meta name="dcterms.identifier" content="E67826-03" />
+<meta name="dcterms.isVersionOf" content="GIMYS" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="ensuring-data-availability.htm" title="Previous" type="text/html" />
+<link rel="Next" href="adding-host-names.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GIMYS.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-98552470-95DA-4577-AD75-42226AC7E3E5"></a> <span id="PAGE" style="display:none;">23/39</span> <!-- End Header -->
+<a id="GIMYS154"></a>
+<h1 id="GIMYS-GUID-98552470-95DA-4577-AD75-42226AC7E3E5" class="sect1"><span class="enumeration_section">3.2</span> Setting Logging Parameters</h1>
+<div id="TOCAPTUREFROMTHEMYSQLTRANSACTIONLOG-33BE54F4">
+<div class="section">
+<p>To capture from the MySQL transaction logs, the Oracle GoldenGate Extract process must be able to find the index file. index file in turn contains the paths of all binary log files.</p>
+<div class="infobox-note" id="GUID-98552470-95DA-4577-AD75-42226AC7E3E5__GUID-984F7AF3-AF3C-4521-9D38-319610C4944B">
+<p class="notep1">Note:</p>
+<p>Extract expects that all of the table columns are in the binary log. As a result, only <code class="codeph">binlog_row_image</code> set as <code class="codeph">full</code> is supported and this is the default. Other values of <code class="codeph">binlog_row_image</code> are not supported.</p>
+</div>
+<p>Extract checks the following parameter settings to get this index file path:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Extract <code class="codeph">TRANLOGOPTIONS</code> parameter with the <code class="codeph">ALTLOGDEST</code> option: If this parameter specifies a location for the log index file, Extract accepts this location over any default that is specified in the MySQL Server configuration file. When <code class="codeph">ALTLOGDEST</code> is used, the binary log index file must also be stored in the specified directory. This parameter should be used if the MySQL configuration file does not specify the full index file path name, specifies an incorrect location, or if there are multiple installations of MySQL on the same machine</span>
+<div>
+<p>To specify the index file path with <code class="codeph">TRANLOGICOPTIONS</code> with <code class="codeph">ALTLOGDEST</code>, use the following command format on Windows:</p>
+<pre dir="ltr">
+TRANLOGOPTIONS ALTLOGDEST "C:\\Program Files\\MySQL\\logs\\binlog.index"
+</pre>
+<p>On Linux, use this format:</p>
+<pre dir="ltr">
+TRANLOGOPTIONS ALTLOGDEST "/mnt/rdbms/mysql/data/logs/binlog.index" 
+</pre></div>
+</li>
+<li class="stepexpand"><span>The MySQL Server configuration file: The configuration file stores default startup options for the MySQL server and clients. On Windows, the name of the configuration file is <code class="codeph">my.ini</code>. On other platforms, it is <code class="codeph">my.cnf</code>. In the absence of <code class="codeph">TRANLOGOPTIONS</code> with <code class="codeph">ALTLOGDEST</code>, Extract gets information about the location of the log files from the configuration file; however, even with <code class="codeph">ALTLOGDEST</code>, these Extract parameters must be set correctly:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">binlog-ignore-db=oggddl</code>: This prevents DDL logging history table entries in the <code class="codeph">binlog</code> and is set in the <code>my.cnf</code> or <code>my.ini</code> file.</p>
+</li>
+<li>
+<p><code class="codeph">log-bin</code>: This parameter is used to enable binary logging. This parameter also specifies the location of the binary log index file and is a required parameter for Oracle GoldenGate, even if <code class="codeph">ALTLOGDEST</code> is used. If log-bin is not specified, binary logging will be disabled and Extract returns an error.</p>
+</li>
+<li>
+<p><code class="codeph">log-bin-index</code>: This parameter specifies the location of the binary log index. If it is not used, Extract assumes that the index file is in the same location as the log files. If this parameter is used and specifies a different directory from the one that contains the binary logs, the binary logs must not be moved once Extract is started.</p>
+</li>
+<li>
+<p><code class="codeph">max_binlog_size</code>: This parameter specifies the size, in bytes, of the binary log file.</p>
+<div class="infobox-note" id="GUID-98552470-95DA-4577-AD75-42226AC7E3E5__GUID-7B31C4F6-6286-4885-A07F-F906FBE70D0D">
+<p class="notep1">Note:</p>
+<p>The server creates a new binary log file automatically when the size of the current log reaches the <code class="codeph">max_binlog_size</code> value, unless it must finish recording a transaction before rolling over to a new file.</p>
+</div>
+</li>
+<li>
+<p><code class="codeph">binlog_format</code>: This parameter sets the format of the logs. It must be set to the value of <code class="codeph">ROW</code>, which directs the database to log DML statements in binary format. Any other log format (<code class="codeph">MIXED</code> or <code class="codeph">STATEMENT</code>) causes Extract to abend.</p>
+<div class="infobox-note" id="GUID-98552470-95DA-4577-AD75-42226AC7E3E5__GUID-9B2DFAB5-9D99-410F-939D-5EAA7185F212">
+<p class="notep1">Note:</p>
+<p>MySQL binary logging does not allow logging to be enabled or disabled for specific tables. It applies globally to all tables in the database.</p>
+</div>
+</li>
+</ul>
+<p>To locate the configuration file, Extract checks the <code class="codeph">MYSQL_HOME</code> environment variable: If <code class="codeph">MYSQL_HOME</code> is set, Extract uses the configuration file in the specified directory. If <code class="codeph">MYSQL_HOME</code> is not set, Extract queries the <code class="codeph">information_schema.global_variables</code> table to determine the MySQL installation directory. If a configuration file exists in that directory, Extract uses it.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment226">
+<tr>
+<td class="cellalignment233">
+<table class="cellalignment231">
+<tr>
+<td class="cellalignment230"><a href="ensuring-data-availability.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment230"><a href="adding-host-names.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment235">
+<table class="cellalignment229">
+<tr>
+<td class="cellalignment230"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment230"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

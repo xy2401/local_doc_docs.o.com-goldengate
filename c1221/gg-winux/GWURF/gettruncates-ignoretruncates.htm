@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>GETTRUNCATES | IGNORETRUNCATES</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="getreplicates-ignorereplicates.htm" title="Previous" type="text/html" />
+<link rel="Next" href="getupdateafters-ignoreupdateafters.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-4A28C1D5-E7A3-47BE-A7AD-EBE562A66255"></a> <span id="PAGE" style="display:none;">217/459</span> <!-- End Header -->
+<a id="GWURF513"></a>
+<h1 id="GWURF-GUID-4A28C1D5-E7A3-47BE-A7AD-EBE562A66255" class="sect1"><span class="enumeration_section">3.84</span> GETTRUNCATES | IGNORETRUNCATES</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract and Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">GETTRUNCATES</code> and <code class="codeph">IGNORETRUNCATES</code> parameters to control whether or not Oracle GoldenGate processes table truncate operations. By default, truncate operations are not captured from the source or replicated to the target.</p>
+<p><code class="codeph">GETTRUNCATES</code> and <code class="codeph">IGNORETRUNCATES</code> are table-specific. One parameter remains in effect for all subsequent <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statements, until the other parameter is encountered.</p>
+<p>In a coordinated Replicat configuration, truncates are always processed by the thread that is responsible for barrier transactions.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Supported Databases</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">GETTRUNCATES</code> and <code class="codeph">IGNORETRUNCATES</code> are not supported for Teradata.</p>
+</li>
+<li>
+<p><code class="codeph">GETTRUNCATES</code> and <code class="codeph">IGNORETRUNCATES</code> are supported by Extract for Oracle Database, MySQL, DB2 LUW, and DB2 for i.</p>
+</li>
+<li>
+<p><code class="codeph">GETTRUNCATES</code> and <code class="codeph">IGNORETRUNCATES</code> are supported by Extract and Replicat for DB2 for i.</p>
+</li>
+<li>
+<p><code class="codeph">GETTRUNCATES</code> and <code class="codeph">IGNORETRUNCATES</code> are supported by Replicat for Oracle Database, SQL Server, DB2 LUW, DB2 z/OS, MySQL, and other ODBC targets that support the <code class="codeph">TRUNCATE</code> command.</p>
+</li>
+<li>
+<p><code class="codeph">GETTRUNCATES</code> and <code class="codeph">IGNORETRUNCATES</code> are supported by Extract for Sybase. However, if the same table name is present in the include list for two schemas then it is abended and an error occurs, stating " Found the same table name in multiple schemas and the table name could not be resolved to process truncate operation."</p>
+</li>
+<li>
+<p>Sybase AES 16 is supported from Oracle GoldenGate 12.2.0.2.0</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-4A28C1D5-E7A3-47BE-A7AD-EBE562A66255__GUID-F2D67012-68A9-4AC5-9A89-70992917E0B9">
+<p class="notep1">Note:</p>
+<p>It is not possible to ignore <code class="codeph">TRUNCATE</code>s during capture from a DB2 z/OS database. By default, <code class="codeph">TRUNCATE</code>s are always captured from a DB2 z/OS source, but they can be ignored by Replicat if <code class="codeph">IGNORETRUNCATES</code> is used in the Replicat parameter file.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">DB2 LUW Limitations</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>DB2 LUW does not support a <code class="codeph">TRUNCATE</code> command, so Replicat replicates a truncate operation by performing an <code class="codeph">IMPORT REPLACE</code> from a <code class="codeph">NULL</code> (blank) file.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Oracle Limitations</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Oracle GoldenGate supports the Oracle <code class="codeph">TRUNCATE TABLE</code> command, but not <code class="codeph">TRUNCATE PARTITION</code>. You can replicate <code class="codeph">TRUNCATE PARTITION</code> as part of the full Oracle GoldenGate DDL replication support.</p>
+</li>
+<li>
+<p>The database does not log truncates against an empty table, so those operations are not captured by Oracle GoldenGate. The DDL support of Oracle GoldenGate can be used for this purpose.</p>
+</li>
+<li>
+<p>The database does not log truncates for empty partitions, so Oracle GoldenGate cannot reliably process <code class="codeph">TRUNCATE TABLE</code> when the table contains any empty partitions. Do not use <code class="codeph">GETTRUNCATES</code> on any partitioned table. Oracle GoldenGate DDL support can be used to capture truncates on tables that might include empty partitions.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Default</p>
+<pre dir="ltr">
+IGNORETRUNCATES
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+GETTRUNCATES | IGNORETRUNCATES
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="getreplicates-ignorereplicates.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="getupdateafters-ignoreupdateafters.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

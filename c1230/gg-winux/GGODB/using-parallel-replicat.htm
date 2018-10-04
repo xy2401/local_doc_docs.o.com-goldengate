@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using Parallel Replicat</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="You can create (or add) and configure parallel replication in your environment. New Parallel Replicat processes then process the information in all the internal stages, from the beginning to the end in parallel. Components, such as Mappers, Master, and Appliers are also explained." />
+<meta name="dcterms.created" content="2018-07-26T05:17:29Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E88785-05" />
+<meta name="dcterms.isVersionOf" content="GGODB" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2010, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="automatic-conflict-detection-and-resolution2.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-procedural-replication.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGODB.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-AAD332AC-06FD-4116-A71E-BF785E41F2FE"></a> <span id="PAGE" style="display:none;">20/28</span> <!-- End Header -->
+<script  >
+//<![CDATA[
+window.name='using-parallel-replicat'
+//]]>
+</script> <script  >
+    function footdisplay(footnum,footnote) {
+    var msg = window.open('about:blank', 'NewWindow' + footnum,
+        'directories=no,height=100,location=no,menubar=no,resizable=yes,' +
+        'scrollbars=yes,status=no,toolbar=no,width=598');
+    msg.document.open('text/html');
+    msg.document.write('<!DOCTYPE html ');
+    msg.document.write('PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ');
+    msg.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'); 
+    msg.document.write('<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" ><head><title>');
+   
+    msg.document.write('Footnote&amp;nbsp; ' + footnum);
+    msg.document.write('<\/title><meta http-equiv="Content-Type" ');
+    msg.document.write('content="text/html; charset=utf-8" />');
+    msg.document.write('');
+    msg.document.write('<style> <![CDATA[ ');
+    msg.document.write('h1 {text-align: center; font-size: 14pt;}');
+    msg.document.write('fieldset {border: none;}');
+    msg.document.write('form {text-align: center;}');
+    msg.document.write(' ]]\u003e <\/style>');
+    msg.document.write('<\/head><body><div id="footnote"><h1>Footnote&nbsp; ' + footnum + '<\/h1><p>');
+    msg.document.write(footnote);
+    msg.document.write('<\/p><form action="" method="post"><fieldset>');
+    msg.document.write('<input type="button" value="OK" ');
+    msg.document.write('onclick="window.close();" />');
+    msg.document.write('<\/fieldset><\/form><\/div><\/body><\/html>');
+    msg.document.close();
+    setTimeout(function() {
+        var height = msg.document.getElementById('footnote').offsetHeight;
+        msg.resizeTo(598, height + 100);
+    }
+    , 100);
+    msg.focus();
+}
+</script><noscript>
+<p>The script content on this page is for navigation purposes only and does not alter the content in any way.</p>
+</noscript>
+<h1 id="GGODB-GUID-AAD332AC-06FD-4116-A71E-BF785E41F2FE" class="sect1"><span class="enumeration_chapter">17</span> Using Parallel Replicat</h1>
+<div>
+<p>You can create (or add) and configure parallel replication in your environment. New Parallel Replicat processes then process the information in all the internal stages, from the beginning to the end in parallel. Components, such as Mappers, Master, and Appliers are also explained.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-parallel-replicat.htm#GUID-05FC3EA1-5A9E-4587-9E4E-3532AB4B6FC7">Overview of Parallel Replicat</a><br /></li>
+<li class="ulchildlink"><a href="using-parallel-replicat.htm#GUID-F7764E22-D889-4272-A192-637AC68508EE">Parallel Replication Architecture</a><br /></li>
+<li class="ulchildlink"><a href="using-parallel-replicat.htm#GUID-35F9FCD6-A2CB-4B16-AA82-0E2F61110D26">Basic Parameters for Parallel Replicat</a><br /></li>
+<li class="ulchildlink"><a href="using-parallel-replicat.htm#GUID-DB9EBF0D-E88F-4328-AE2E-AF542B1F1F4F">Creating a Parallel Replication</a><br /></li>
+</ul>
+</div>
+<div class="sect2"><a id="GUID-05FC3EA1-5A9E-4587-9E4E-3532AB4B6FC7"></a>
+<h2 id="GGODB-GUID-05FC3EA1-5A9E-4587-9E4E-3532AB4B6FC7" class="sect2"><span class="enumeration_section">17.1</span> Overview of Parallel Replicat</h2>
+<div>
+<p id="GUID-05FC3EA1-5A9E-4587-9E4E-3532AB4B6FC7__PARALLELREPLICATISANEWVARIANTOFREPL-CB082A71">Parallel replicat is a new variant of Replicat that applies transactions in parallel to improve performance. It takes into account dependencies between transactions, similar to Integrated Replicat. The dependency computation, parallelism of the mapping and apply is performed outside the database so can be off-loaded to another server. The transaction integrity is maintained in this process. In addition, parallel replicat supports the parallel apply of large transactions by splitting a large transaction into chunks and applying them in parallel.</p>
+<p>Parallel Replicat supports all databases using the non-integrated option. Parallel Replicat only supports replicating data from trails with full metadata, which requires the classic trail format.</p>
+<div class="p">The components of parallel Replicat are:
+<ul style="list-style-type: disc;">
+<li>
+<p>Mappers operate in parallel to read the trail, map trail records, convert the mapped records to the Integrated Replicat LCR format, and send the LCRs to the Merger for further processing. While one Mapper maps one set of transactions, the next Mapper maps the next set of transactions. The the trail information is split and the trail file is untouched because it orders trail information in order.</p>
+</li>
+<li>
+<p>Master processes have two threads, Collater and Scheduler. The Collater receives mapped transactions from the Mappers and puts them back into trail order for dependency calculation. The Scheduler calculates dependencies between transactions, groups transactions into independent batches, and sends the batches to the Appliers to be applied to the target database.</p>
+</li>
+<li>
+<p>Appliers reorder records within a batch for array execution. It applies the batch to the target database and performs error handling. It also tracks applied transactions in checkpoint tables.</p>
+</li>
+</ul>
+</div>
+<div class="infobox-note" id="GUID-05FC3EA1-5A9E-4587-9E4E-3532AB4B6FC7__GUID-159F71FC-42DA-427F-9627-FFBD4853FF00">
+<p class="notep1">Note:</p>
+</div>
+<p>The following table lists the features supported by the respective Replicats.</p>
+<div class="tblformal" id="GUID-05FC3EA1-5A9E-4587-9E4E-3532AB4B6FC7__GUID-8B8A06ED-D9DE-45A8-BFF7-218425F2BB19">
+<p class="titleintable">Table 17-1 Features Supported by Replicats</p>
+<table class="cellalignment495" title="Features Supported by Replicats" summary="Five column table that describes the features supported by Replicats.">
+<thead>
+<tr class="cellalignment483">
+<th class="cellalignment508" id="d48697e98">Feature</th>
+<th class="cellalignment509" id="d48697e101">Classic Replicat</th>
+<th class="cellalignment510" id="d48697e104">Coordinated Replicat</th>
+<th class="cellalignment502" id="d48697e107">Integrated Replicat</th>
+<th class="cellalignment502" id="d48697e110">Parallel Replicat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment483">
+<td class="cellalignment511" id="d48697e115" headers="d48697e98">
+<p>Batch Processing</p>
+</td>
+<td class="cellalignment512" headers="d48697e115 d48697e101">
+<p>Yes</p>
+</td>
+<td class="cellalignment513" headers="d48697e115 d48697e104">
+<p>Yes</p>
+</td>
+<td class="cellalignment504" headers="d48697e115 d48697e107">
+<p>Yes</p>
+</td>
+<td class="cellalignment504" headers="d48697e115 d48697e110">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment511" id="d48697e131" headers="d48697e98">
+<p>Barrier Transactions</p>
+</td>
+<td class="cellalignment512" headers="d48697e131 d48697e101">
+<p>No</p>
+</td>
+<td class="cellalignment513" headers="d48697e131 d48697e104">
+<p>Yes</p>
+</td>
+<td class="cellalignment504" headers="d48697e131 d48697e107">
+<p>Yes</p>
+</td>
+<td class="cellalignment504" headers="d48697e131 d48697e110">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment511" id="d48697e147" headers="d48697e98">
+<p>Dependency Computation</p>
+</td>
+<td class="cellalignment512" headers="d48697e147 d48697e101">
+<p>No</p>
+</td>
+<td class="cellalignment513" headers="d48697e147 d48697e104">
+<p>No</p>
+</td>
+<td class="cellalignment504" headers="d48697e147 d48697e107">
+<p>Yes</p>
+</td>
+<td class="cellalignment504" headers="d48697e147 d48697e110">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment511" id="d48697e163" headers="d48697e98">
+<p>Auto-parallelism</p>
+</td>
+<td class="cellalignment512" headers="d48697e163 d48697e101">
+<p>No</p>
+</td>
+<td class="cellalignment513" headers="d48697e163 d48697e104">
+<p>No</p>
+</td>
+<td class="cellalignment504" headers="d48697e163 d48697e107">
+<p>Yes</p>
+</td>
+<td class="cellalignment504" headers="d48697e163 d48697e110">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment511" id="d48697e179" headers="d48697e98">
+<p>DHL Handler</p>
+</td>
+<td class="cellalignment512" headers="d48697e179 d48697e101">
+<p>No</p>
+</td>
+<td class="cellalignment513" headers="d48697e179 d48697e104">
+<p>No</p>
+</td>
+<td class="cellalignment504" headers="d48697e179 d48697e107">
+<p>Yes</p>
+</td>
+<td class="cellalignment504" headers="d48697e179 d48697e110">
+<p>Yes<a id="fn_1" href="#fn_1" onclick='footdisplay(1,"Integrated mode")'><sup>Foot&nbsp;1</sup></a></p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment511" id="d48697e197" headers="d48697e98">
+<p>Procedural Replication</p>
+</td>
+<td class="cellalignment512" headers="d48697e197 d48697e101">
+<p>No</p>
+</td>
+<td class="cellalignment513" headers="d48697e197 d48697e104">
+<p>No</p>
+</td>
+<td class="cellalignment504" headers="d48697e197 d48697e107">
+<p>Yes</p>
+</td>
+<td class="cellalignment504" headers="d48697e197 d48697e110">
+<p>Yes<a id="fn_2" href="#fn_2" onclick='footdisplay(2," used for integrated Parallel Replicat (iPR)")'><sup>Foot&nbsp;2</sup></a></p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment511" id="d48697e215" headers="d48697e98">
+<p>Auto CDR</p>
+</td>
+<td class="cellalignment512" headers="d48697e215 d48697e101">
+<p>No</p>
+</td>
+<td class="cellalignment513" headers="d48697e215 d48697e104">
+<p>No</p>
+</td>
+<td class="cellalignment504" headers="d48697e215 d48697e107">
+<p>Yes</p>
+</td>
+<td class="cellalignment504" headers="d48697e215 d48697e110">
+<p>Yes<a id="fn_3" href="#fn_3" onclick='footdisplay(3," used by iPR only")'><sup>Foot&nbsp;3</sup></a></p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment511" id="d48697e233" headers="d48697e98">
+<p>Dependency-aware Transaction Split</p>
+</td>
+<td class="cellalignment512" headers="d48697e233 d48697e101">
+<p>No</p>
+</td>
+<td class="cellalignment513" headers="d48697e233 d48697e104">
+<p>No</p>
+</td>
+<td class="cellalignment504" headers="d48697e233 d48697e107">
+<p>No</p>
+</td>
+<td class="cellalignment504" headers="d48697e233 d48697e110">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment511" id="d48697e249" headers="d48697e98">
+<p>Cross-RAC-node Processing</p>
+</td>
+<td class="cellalignment512" headers="d48697e249 d48697e101">
+<p>No</p>
+</td>
+<td class="cellalignment513" headers="d48697e249 d48697e104">
+<p>Yes</p>
+</td>
+<td class="cellalignment504" headers="d48697e249 d48697e107">
+<p>No</p>
+</td>
+<td class="cellalignment504" headers="d48697e249 d48697e110">
+<p>Yes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p class="tablefootnote"><sup class="tablefootnote">Footnote&nbsp;1</sup> Integrated mode</p>
+<p class="tablefootnote"><sup class="tablefootnote">Footnote&nbsp;2</sup> used for integrated Parallel Replicat (iPR)</p>
+<p class="tablefootnote"><sup class="tablefootnote">Footnote&nbsp;3</sup> used by iPR only</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-parallel-replicat.htm#GUID-AAD332AC-06FD-4116-A71E-BF785E41F2FE" title="You can create (or add) and configure parallel replication in your environment. New Parallel Replicat processes then process the information in all the internal stages, from the beginning to the end in parallel. Components, such as Mappers, Master, and Appliers are also explained.">Using Parallel Replicat</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-F7764E22-D889-4272-A192-637AC68508EE"></a>
+<h2 id="GGODB-GUID-F7764E22-D889-4272-A192-637AC68508EE" class="sect2"><span class="enumeration_section">17.2</span> Parallel Replication Architecture</h2>
+<div>
+<p>Parallel replication processes leverage the apply processing functionality that is available within the Oracle Database in integrated mode. Within a single Replicat configuration, multiple inbound server child processes, known as apply servers, apply transactions in parallel while preserving the original transaction atomicity.</p>
+<div class="figure" id="GUID-F7764E22-D889-4272-A192-637AC68508EE__GUID-07482827-528E-4C66-921B-D69EF0596356">
+<p class="titleinfigure">Figure 17-1 Parallel Replication Architecture</p>
+<img width="889" height="387" src="img/para_rep_arch.jpg" alt="Description of Figure 17-1 follows" title="Description of Figure 17-1 follows" /><br />
+<a href="img_text/para_rep_arch.htm">Description of "Figure 17-1 Parallel Replication Architecture"</a></div>
+<!-- class="figure" -->
+<p>The Mappers read the trail file and map records, forward the mapped records to the Master. The batches are sent to the Appliers where they are applied to the target database.</p>
+<p>The Master process consists of two separate threads, Collater and Scheduler. The Collater is responsible for managing and communicating with the Mappers, along with receiving the mapped transactions and reordering them into a single in-order stream. The Scheduler is responsible for managing and communicating with the Appliers, along with reading transactions from the Collater, batching them, and scheduling them to Appliers.</p>
+<p>The Scheduler controller communicates with the Scheduler to gather any necessary information (such as, the current low watermark position). The Scheduler controller is required for CDB mode for Oracle Database because it is responsible for aggregating information pertaining to the different target PDBs and reporting a unified picture. The Scheduler controller is created for simplicity and uniformity of implementation, even when not in CDB mode. Every process reads the parameter file and shares a single checkpoint file.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-parallel-replicat.htm#GUID-AAD332AC-06FD-4116-A71E-BF785E41F2FE" title="You can create (or add) and configure parallel replication in your environment. New Parallel Replicat processes then process the information in all the internal stages, from the beginning to the end in parallel. Components, such as Mappers, Master, and Appliers are also explained.">Using Parallel Replicat</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-35F9FCD6-A2CB-4B16-AA82-0E2F61110D26"></a>
+<h2 id="GGODB-GUID-35F9FCD6-A2CB-4B16-AA82-0E2F61110D26" class="sect2"><span class="enumeration_section">17.3</span> Basic Parameters for Parallel Replicat</h2>
+<div id="THEFOLLOWINGTABLELISTSTHEBASICPARAM-C3631334">
+<p>The following table lists the basic parallel Replicat parameters and their description.</p>
+<div class="tblformal" id="GUID-35F9FCD6-A2CB-4B16-AA82-0E2F61110D26__GUID-5B9288F8-0B4E-4AAB-BBF3-070B3414384D">
+<table class="cellalignment495" summary="Two column table describing parallel Replicat parameters.">
+<thead>
+<tr class="cellalignment483">
+<th class="cellalignment514" id="d48697e346">Parameter</th>
+<th class="cellalignment514" id="d48697e349">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment483">
+<td class="cellalignment483" id="d48697e354" headers="d48697e346"><code class="codeph">MAP_PARALLELISM</code></td>
+<td class="cellalignment483" headers="d48697e354 d48697e349">
+<p>Configures number of mappers. This controls the number of threads used to read the trail file. The minimum value is <code class="codeph">1</code>, maximum value is <code class="codeph">100</code> and the default value is <code class="codeph">2</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment483" id="d48697e370" headers="d48697e346"><code class="codeph">APPLY_PARALLELISM</code></td>
+<td class="cellalignment483" headers="d48697e370 d48697e349">
+<p>Configures number of appliers. This controls the number of connections in the target database used to apply the changes. The default value is four.</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment483" id="d48697e377" headers="d48697e346"><code class="codeph">MIN_APPLY_PARALLELISM</code>
+<p><code class="codeph">MAX_APPLY_PARALLELISM</code></p>
+</td>
+<td class="cellalignment483" headers="d48697e377 d48697e349">
+<p>The Apply parallelism is auto-tuned. You can set a minimum and maximum value to define the ranges in which the Replicat automatically adjusts its parallelism. There are no defaults. Do <span class="italic">not</span> use with <code class="codeph">APPLY_PARALLELISM</code> at same time.</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment483" id="d48697e393" headers="d48697e346"><code class="codeph">SPLIT_TRANS_REC</code></td>
+<td class="cellalignment483" headers="d48697e393 d48697e349">
+<p>Specifies that large transactions should be broken into pieces of specified size and applied in parallel. Dependencies between pieces are still honored. Disabled by default.</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment483" id="d48697e400" headers="d48697e346"><code class="codeph">COMMIT_SERIALIZATION</code></td>
+<td class="cellalignment483" headers="d48697e400 d48697e349">
+<p>Enables commit <code class="codeph">FULL</code> serialization mode, which forces transactions to be committed in trail order.</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment483" id="d48697e410" headers="d48697e346">
+<p><span class="bold">Advanced Parameters</span></p>
+</td>
+<td class="cellalignment483" headers="d48697e410 d48697e349">&nbsp;</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment483" id="d48697e416" headers="d48697e346"><code class="codeph">LOOK_AHEAD_TRANSACTIONS</code></td>
+<td class="cellalignment483" headers="d48697e416 d48697e349">
+<p>Controls how far ahead the Scheduler looks when batching transactions. The default value is 10000.</p>
+</td>
+</tr>
+<tr class="cellalignment483">
+<td class="cellalignment483" id="d48697e423" headers="d48697e346"><code class="codeph">CHUNK_SIZE</code></td>
+<td class="cellalignment483" headers="d48697e423 d48697e349">
+<p>Controls how large a transaction must be for parallel Replicat to consider it as large. When parallel Replicat encounters a transaction larger than this size, it will serialize it, resulting in decreased performance. However, increasing this value will also increase the amount of memory consumed by parallel Replicat.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="section">
+<p class="subhead2">Example Parameter File</p>
+<pre dir="ltr">
+replicat repA
+userid ggadmin, password ***
+MAP_PARALLELISM 3
+MIN_APPLY_PARALLELISM 2
+MAX_APPLY_PARALLELISM 10
+SPLIT_TRANS_RECS 1000
+map *.*, target *.*;
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-parallel-replicat.htm#GUID-AAD332AC-06FD-4116-A71E-BF785E41F2FE" title="You can create (or add) and configure parallel replication in your environment. New Parallel Replicat processes then process the information in all the internal stages, from the beginning to the end in parallel. Components, such as Mappers, Master, and Appliers are also explained.">Using Parallel Replicat</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-DB9EBF0D-E88F-4328-AE2E-AF542B1F1F4F"></a>
+<h2 id="GGODB-GUID-DB9EBF0D-E88F-4328-AE2E-AF542B1F1F4F" class="sect2"><span class="enumeration_section">17.4</span> Creating a Parallel Replication</h2>
+<div>
+<div class="section">
+<p>You can create a parallel replication using the graphical user interface or the command line interfaces GGSCI and the Admin Client.</p>
+<p>A parallel Replicat&nbsp;requires&nbsp;a checkpoint table so both the Administration Server UI and Admin Client issue an error when the parallel Replicat does not include a checkpoint table.</p>
+<div class="infobox-note" id="GUID-DB9EBF0D-E88F-4328-AE2E-AF542B1F1F4F__GUID-EC4C68A3-512D-4B21-A0CD-74118A1A773B">
+<p class="notep1">Note:</p>
+<p>Parallel replication does not support&nbsp;<code class="codeph">COMMIT_SERIALIZATION</code>&nbsp;in Integrated Mode.&nbsp;To use this apply process, use Integrated Replicat.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Creating a Non-Integrated Parallel Replication with the Administration Server</p>
+<ol>
+<li>
+<p>Open a browser and connect to the Service Manager that you created with the Configuration Assistant:</p>
+<pre dir="ltr">
+https://<span class="italic">server_name</span>:<span class="italic">service_manger_port</span>/
+</pre>
+<p>For Example,&nbsp;https://localhost:9000/.&nbsp;In an non secured environment, use http instead of https.</p>
+<p>The Oracle GoldenGate Service Manager is displayed.</p>
+</li>
+<li>
+<p>Enter the username and password you created and click&nbsp;<span class="bold">Sign In</span>.</p>
+<p>In the Service Manager, you can see servers that are running.</p>
+</li>
+<li>
+<p>In the Services section, click&nbsp;<span class="bold">Administration Server</span>, and then log in.</p>
+</li>
+<li>
+<p>Click the Application Navigation icon to the left of the page title to expand the navigation panel.</p>
+</li>
+<li>
+<p>Create the checkpoint table by clicking&nbsp;<span class="bold">Configuration</span>&nbsp;in the right navigation panel.</p>
+</li>
+<li>
+<p>Ensure that you have a valid credential and log in to the database by clicking the &lsquo;log in database&rsquo; icon under <span class="bold">Action</span>.</p>
+</li>
+<li>
+<p>Click the&nbsp;<span class="bold">+</span>&nbsp;sign to add a checkpoint table.</p>
+</li>
+<li>
+<p>Enter the&nbsp;<code class="codeph"><span class="codeinlineitalic">schema.name</span></code>&nbsp;of the checkpoint table that you would like to create, and then click&nbsp;<span class="bold">Submit</span>.</p>
+</li>
+<li>
+<p>Validate that the table was created correctly by logging out of the Credential Alias using the log out database icon, and then log back in.</p>
+<p>Once the log in is complete, your new checkpoint table is listed.</p>
+</li>
+<li>
+<p>Click&nbsp;<span class="bold">Overview</span>&nbsp;to return to the main Administration Server page.</p>
+</li>
+<li>
+<p>Click the&nbsp;<span class="bold">+</span>&nbsp;sign next to&nbsp;<span class="bold">Replicats</span>.</p>
+</li>
+<li>
+<p>Select&nbsp;<span class="bold">Nonintegrated Replicat</span>&nbsp;then click&nbsp;<span class="bold">Next</span>.</p>
+</li>
+<li>
+<p>Enter the required information making sure that you complete the Credential Domain and Credential Alias fields before completing the Checkpoint Table field, and then select your newly created Checkpoint Table from the list.</p>
+</li>
+<li>
+<p>Click&nbsp;<span class="bold">Next</span>, and then click <span class="bold">Create and Run</span> to complete the Replicat creation.</p>
+</li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Creating a Non-Integrated Parallel Replicat with the Admin Client</p>
+<ol>
+<li>
+<p>Go the&nbsp;<code class="codeph">bin</code>&nbsp;directory of your Oracle GoldenGate installation directory.</p>
+<pre dir="ltr">
+cd $OGG_HOME/bin
+</pre></li>
+<li>
+<p>Start the Admin Client.</p>
+<pre dir="ltr">
+./adminclient
+</pre>
+<p>The Admin Client command prompt is displayed.</p>
+<pre dir="ltr">
+OGG (not connected) 12&gt;
+</pre></li>
+<li>
+<p>Connect to the Service Manager deployment source:</p>
+<pre dir="ltr">
+connect http://<span class="italic">localhost</span>:<span class="italic">9500</span> deployment <span class="italic">Target1</span> as <span class="italic">oggadmin</span> <span class="italic">password</span> <span class="italic">welcome1</span>
+</pre>
+<p>You must use http or https in the connection string; this example is a non-SSL connection.</p>
+</li>
+<li>
+<p>Add the Parallel Replicat, which may take a few minutes to complete:</p>
+<pre dir="ltr">
+add replicat <span class="italic">R1</span>, parallel, exttrail <span class="italic">bb</span> checkpointtable <span class="italic">ggadmin.ggcheckpoint</span>
+</pre>
+<p>You could use just the two character trail name as part of the <code class="codeph">ADD REPLICAT</code> or you can use the full path, such as <code class="codeph">/u01/oggdeployments/target1/var/lib/data/bb</code>.</p>
+</li>
+<li>
+<p>Verify that the Replicat is running:</p>
+<pre dir="ltr">
+info replicat <span class="italic">R1</span>
+</pre>
+<p>Messages similar to the following are displayed:</p>
+<pre dir="ltr">
+REPLICAT   R1        Initialized   2016-12-20 13:56   Status RUNNING
+NONINTEGRATED
+Parallel
+Checkpoint Lag       00:00:00 (updated 00:00:22 ago)
+Process ID           30007
+Log Read 
+Checkpoint  File ./ra000000000First Record  RBA 0
+</pre></li>
+</ol>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-parallel-replicat.htm#GUID-AAD332AC-06FD-4116-A71E-BF785E41F2FE" title="You can create (or add) and configure parallel replication in your environment. New Parallel Replicat processes then process the information in all the internal stages, from the beginning to the end in parallel. Components, such as Mappers, Master, and Appliers are also explained.">Using Parallel Replicat</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment482">
+<tr>
+<td class="cellalignment492">
+<table class="cellalignment487">
+<tr>
+<td class="cellalignment486"><a href="automatic-conflict-detection-and-resolution2.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment486"><a href="using-procedural-replication.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment494">
+<table class="cellalignment485">
+<tr>
+<td class="cellalignment486"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment486"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment486"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+</body>
+</html>

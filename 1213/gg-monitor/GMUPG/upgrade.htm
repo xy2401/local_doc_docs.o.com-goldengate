@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Upgrading Oracle GoldenGate Monitor Server</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.24" />
+<meta name="description" content="This chapter describes the tasks you perform to upgrade Oracle GoldenGate Monitor." />
+<meta name="dcterms.created" content="2014-08-01T13:13:14Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Upgrading to Oracle GoldenGate Monitor 12.1.3" />
+<meta name="dcterms.identifier" content="E50583-02" />
+<meta name="dcterms.isVersionOf" content="GMUPG" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="intro.htm" title="Previous" type="text/html" />
+<link rel="Next" href="post_upgrade.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GMUPG.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="GMUPG.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="GMUPG.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">5/6</span> <!-- End Header --><a id="sthref9"></a>
+<h1 class="chapter"><span class="secnum">2</span> Upgrading Oracle GoldenGate Monitor Server</h1>
+<p>This chapter describes the tasks you perform to upgrade Oracle GoldenGate Monitor.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#CHDEIJAG">Section 2.1, "Upgrading from Version 11<span class="italic">g</span> on Tomcat"</a></p>
+</li>
+<li>
+<p><a href="#CHDEHBBF">Section 2.2, "Schema Upgrade Instructions for Oracle Database Users"</a></p>
+</li>
+<li>
+<p><a href="#CHDDAECC">Section 2.3, "Schema Upgrade Instructions for MySQL Database Users"</a></p>
+</li>
+<li>
+<p><a href="#CHDFCHHI">Section 2.4, "Schema Upgrade Instructions for SQL Server Database Users"</a></p>
+</li>
+</ul>
+<a id="CHDEIJAG"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">2.1</span> Upgrading from Version 11<span class="italic">g</span> on Tomcat</h2>
+<p>If you are upgrading from Oracle GoldenGate Monitor 11<span class="italic">g</span> on Tomcat, before commencing with the process, make sure that you have stopped all Oracle GoldenGate Monitor components, including the Oracle GoldenGate Monitor Server, Oracle GoldenGate Manager, and JAgent.</p>
+</div>
+<!-- class="sect1" -->
+<a id="CHDEHBBF"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">2.2</span> Schema Upgrade Instructions for Oracle Database Users</h2>
+<p>Upgrading Oracle GoldenGate Monitor Server for Oracle databases is a two-stage process:</p>
+<ol>
+<li>
+<p><a href="#CHDCHCCH">Create Required 12.1.3 Schema by Using RCU</a></p>
+</li>
+<li>
+<p><a href="#CHDHDBCB">Upgrade the Schema by Running UA</a></p>
+</li>
+</ol>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Enure that the existing Monitor 11g server is stopped before you proceeding with the following steps.</p>
+</div>
+<a id="CHDCHCCH"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">2.2.1</span> Create Required 12.1.3 Schema by Using RCU</h3>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>This upgrade supports only latest version of Oracle 11g R1, Oracle 11g R3 and Oracle 12c R1 database software releases. For current database support information for Oracle GoldenGate Monitor 12c (12.1.3), see <a class="olink GMINS119" href="../GMINS/introduction.htm#GMINS119">"Platform Support"</a> in <span class="italic">Installing and Configuring Oracle GoldenGate Monitor Server</span>.</p>
+</div>
+<div class="infobox-note">
+<p class="notep1">Important:</p>
+<p>Before running RCU for Oracle 12<span class="italic">c</span> databases, ensure the following:</p>
+<ul>
+<li>
+<p>The character set is AL32UTF8. You must do this because the default character set is not supported by RCU.</p>
+</li>
+<li>
+<p>You are using a plug-able database. By default, a container database will enable in Oracle12<span class="italic">c</span>, so RCU supports only plug-able database, not container database.</p>
+</li>
+</ul>
+</div>
+<p class="subhead2"><a id="CHDGFJIC"></a>To update the database:</p>
+<p>To update the database, run the Repository Creation Utility, which is part of the product installation. To launch RCU, navigate to <code>ORACLE_HOME/oracle_common/bin</code> and enter:</p>
+<pre>
+$./rcu
+</pre>
+<p>RCU will open, displaying the Welcome screen.</p>
+<p>Navigate the RCU screens as instructed in the following table to update the database.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Some of the RCU items that this procedure instructs you to select might already be selected by default. If an item on a screen is already selected and the instructions below tell you to select it, be careful not to <span class="italic">de-select</span> it.</p>
+</div>
+<div class="inftblhruleinformal">
+<table class="cellalignment50" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen." dir="ltr">
+<thead>
+<tr class="cellalignment39">
+<th class="cellalignment51" id="r1c1-t6">Screen</th>
+<th class="cellalignment51" id="r1c2-t6">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r2c1-t6" headers="r1c1-t6">
+<p>Welcome</p>
+</td>
+<td class="cellalignment45" headers="r2c1-t6 r1c2-t6">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r3c1-t6" headers="r1c1-t6">
+<p>Create Repository</p>
+</td>
+<td class="cellalignment45" headers="r3c1-t6 r1c2-t6">
+<ol>
+<li>
+<p>Select <span class="bold">System Load and Product Load</span>.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r4c1-t6" headers="r1c1-t6">
+<p>Database Connection Details</p>
+</td>
+<td class="cellalignment45" headers="r4c1-t6 r1c2-t6">
+<ol>
+<li>
+<p>Enter the Oracle GoldenGate Monitor database details.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r5c1-t6" headers="r1c1-t6">
+<p>Select Components</p>
+</td>
+<td class="cellalignment45" headers="r5c1-t6 r1c2-t6">
+<ol>
+<li>
+<p>Under the AS Common Services node, select the following schemata:</p>
+<ul>
+<li>
+<p><span class="bold">Audit Services</span></p>
+</li>
+<li>
+<p><span class="bold">Audit Services Append</span></p>
+</li>
+<li>
+<p><span class="bold">Audit Services Viewer</span></p>
+</li>
+<li>
+<p><span class="bold">Oracle Platform Security Services</span></p>
+</li>
+</ul>
+<p><span class="bold">Note:</span> Do not select the <span class="bold">Monitor Server</span> schema in this step.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+<p>A progress window appears, checking off each schema as its prerequisites ar e met.</p>
+</li>
+<li>
+<p>Click <span class="bold">OK</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r6c1-t6" headers="r1c1-t6">
+<p>Schema Passwords</p>
+</td>
+<td class="cellalignment45" headers="r6c1-t6 r1c2-t6">
+<ol>
+<li>
+<p>Enter the necessary password, if it's not already there, and confirm it.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r7c1-t6" headers="r1c1-t6">
+<p>Map Tablespaces</p>
+</td>
+<td class="cellalignment45" headers="r7c1-t6 r1c2-t6">
+<p>Click <span class="bold">Next</span>.</p>
+<p>Schema creation for the selected services will commence.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r8c1-t6" headers="r1c1-t6">
+<p>Summary</p>
+</td>
+<td class="cellalignment45" headers="r8c1-t6 r1c2-t6">
+<p>Review the schema information and click <span class="bold">Create</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r9c1-t6" headers="r1c1-t6">
+<p>Creation Summary</p>
+</td>
+<td class="cellalignment45" headers="r9c1-t6 r1c2-t6">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect2" -->
+<a id="CHDHDBCB"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">2.2.2</span> Upgrade the Schema by Running UA</h3>
+<div class="infobox-note">
+<p class="notep1">Warning:</p>
+<p>Ensure that the existing Oracle GoldenGate Monitor Server 11g pointed to the schema you are going to upgrade is stopped before commencing with this procedure.</p>
+</div>
+<p>With the repository created, you next run the Upgrade Assistant to upgrade the database to version 12<span class="italic">c</span> (12.1.3). Like RCU, UA is included in the product installation. Navigate to <code><span class="codeinlineitalic">ORACLE_HOME</span></code><code>/oracle_common/upgrade/bin</code> and enter:</p>
+<pre>
+$./ua
+</pre>
+<p>The UA Welcome screen appears.</p>
+<p>Navigate the UA screens as instructed in the following table to upgrade your server.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment50" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen." dir="ltr">
+<thead>
+<tr class="cellalignment39">
+<th class="cellalignment51" id="r1c1-t8">Screen</th>
+<th class="cellalignment51" id="r1c2-t8">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r2c1-t8" headers="r1c1-t8">
+<p>Welcome</p>
+</td>
+<td class="cellalignment45" headers="r2c1-t8 r1c2-t8">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r3c1-t8" headers="r1c1-t8">
+<p>Schemas</p>
+</td>
+<td class="cellalignment45" headers="r3c1-t8 r1c2-t8">
+<p>Ensure Schemas is selects and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r4c1-t8" headers="r1c1-t8">
+<p>Available Components</p>
+</td>
+<td class="cellalignment45" headers="r4c1-t8 r1c2-t8">
+<ol>
+<li>
+<p>Select <span class="bold">Oracle GoldenGate Monitor.</span></p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r5c1-t8" headers="r1c1-t8">
+<p>Prerequisites</p>
+</td>
+<td class="cellalignment45" headers="r5c1-t8 r1c2-t8">
+<ol>
+<li>
+<p>Select all three prerequisites.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r6c1-t8" headers="r1c1-t8">
+<p>OGGMON Schema</p>
+</td>
+<td class="cellalignment45" headers="r6c1-t8 r1c2-t8">
+<ol>
+<li>
+<p>Enter the Oracle GoldenGate Monitor schema name and password.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r7c1-t8" headers="r1c1-t8">
+<p>OGGMON Schema Prefix</p>
+</td>
+<td class="cellalignment45" headers="r7c1-t8 r1c2-t8">
+<ol>
+<li>
+<p>Enter the same schema prefix you used when creating the STB schema in RCU (see <a href="#CHDGFJIC">To update the database:</a>).</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r8c1-t8" headers="r1c1-t8">
+<p>Examine</p>
+</td>
+<td class="cellalignment45" headers="r8c1-t8 r1c2-t8">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r9c1-t8" headers="r1c1-t8">
+<p>Upgrade Summary</p>
+</td>
+<td class="cellalignment45" headers="r9c1-t8 r1c2-t8">
+<p>Click <span class="bold">Upgrade</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r10c1-t8" headers="r1c1-t8">
+<p>Upgrade Progress</p>
+</td>
+<td class="cellalignment45" headers="r10c1-t8 r1c2-t8">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r11c1-t8" headers="r1c1-t8">
+<p>Upgrade Success</p>
+</td>
+<td class="cellalignment45" headers="r11c1-t8 r1c2-t8">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>This completes the Oracle GoldenGate Monitor Server for Oracle database upgrade process. The <code>/ua_timestamp.log ,ua_timestamp.out</code> files are generated at <code>$oracle_common/upgrade/</code>logs under the 12g <code>ORACLE_HOME</code>.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CHDDAECC"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">2.3</span> Schema Upgrade Instructions for MySQL Database Users</h2>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Oracle GoldenGate Monitor Server 12<span class="italic">c</span> (12.1.3) supports only MySQL 5.5 and later. If you are trying to upgrade an earlier version of MySQL, you first must upgrade it to MySQL 5.5 or later. For more information, see "Upgrading or Downgrading MySQL" at:</p>
+<p><code><a href="http://dev.mysql.com/doc/refman/5.5/en/upgrading-downgrading.htm">http://dev.mysql.com/doc/refman/5.5/en/upgrading-downgrading.htm</a></code>l</p>
+</div>
+<p>Upgrading Oracle GoldenGate Monitor Server for MySQL databases is a two-stage process:</p>
+<ol>
+<li>
+<p><a href="#CHDFBGDE">Upgrade the MySQL Schema by Running RCU</a></p>
+</li>
+<li>
+<p><a href="#CHDDHHHE">Upgrade the Schema by Running UA</a></p>
+</li>
+</ol>
+<a id="CHDFBGDE"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">2.3.1</span> Upgrade the MySQL Schema by Running RCU</h3>
+<div class="infobox-note">
+<p class="notep1">Important:</p>
+<p>Before you can upgrade Oracle GoldenGate Monitor for a MySQL database, the following values need to be set in the database:</p>
+<pre>
+SET GLOBAL INNODB_FILE_PER_TABLE="ON";
+SET GLOBAL INNODB_FILE_FORMAT="Barracuda";
+SET GLOBAL INNODB_LARGE_PREFIX="ON";
+SET GLOBAL LOG_BIN_TRUST_FUNCTION_CREATORS="ON"; 
+</pre>
+<p>If you do not set these values, RCU will throw an error at the end of the session. You cannot cancel the RCU process and it is difficult to reboot the database to set/reflect the RCU during its run.</p>
+</div>
+<p>Since Oracle GoldenGate Monitor Server is released with Weblogic Server 12<span class="italic">c</span> (12.1.3) with JRF and to comply with Fusion Middleware standards and requirements, you must upgrade the existing Oracle GoldenGate Monitor by adding STB schemas to the MySQL database.</p>
+<p>To add these dependent schemas, use the RCU, which is included in the product installation. To launch RCU, navigate to <code><span class="codeinlineitalic">ORACLE_HOME</span></code><code>/oracle_common/</code>bin and enter:</p>
+<pre>
+$ ./rcu
+</pre>
+<p>RCU opens, displaying the Welcome screen.</p>
+<p>Navigate the RCU screens as instructed in the following table to update the database. If you want further information on any screen, click its name in the left-hand column.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment50" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen." dir="ltr">
+<thead>
+<tr class="cellalignment39">
+<th class="cellalignment51" id="r1c1-t11">Screen</th>
+<th class="cellalignment51" id="r1c2-t11">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r2c1-t11" headers="r1c1-t11">
+<p>Welcome</p>
+</td>
+<td class="cellalignment45" headers="r2c1-t11 r1c2-t11">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r3c1-t11" headers="r1c1-t11">
+<p>Create Repository</p>
+</td>
+<td class="cellalignment45" headers="r3c1-t11 r1c2-t11">
+<ol>
+<li>
+<p>Select <span class="bold">System Load and Product Load</span>.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r4c1-t11" headers="r1c1-t11">
+<p>Database Connection Details</p>
+</td>
+<td class="cellalignment45" headers="r4c1-t11 r1c2-t11">
+<ol>
+<li>
+<p>Enter the Oracle GoldenGate Monitor database details.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r5c1-t11" headers="r1c1-t11">
+<p>Select Components</p>
+</td>
+<td class="cellalignment45" headers="r5c1-t11 r1c2-t11">
+<ol>
+<li>
+<p><span class="bold">Service Table</span> should be selected, by default; if not, do so. If other values are selected, deselect them.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+<p>A progress window appears, checking off the schema when its prerequisites ar e met.</p>
+</li>
+<li>
+<p>Click <span class="bold">OK</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r6c1-t11" headers="r1c1-t11">
+<p>Schema Passwords</p>
+</td>
+<td class="cellalignment45" headers="r6c1-t11 r1c2-t11">
+<ol>
+<li>
+<p>Enter the necessary password, if it's not already there, and confirm it.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r7c1-t11" headers="r1c1-t11">
+<p>Summary</p>
+</td>
+<td class="cellalignment45" headers="r7c1-t11 r1c2-t11">
+<p>Review the schema information and click <span class="bold">Create</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r8c1-t11" headers="r1c1-t11">
+<p>Creation Summary</p>
+</td>
+<td class="cellalignment45" headers="r8c1-t11 r1c2-t11">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect2" -->
+<a id="CHDDHHHE"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">2.3.2</span> Upgrade the Schema by Running UA</h3>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Ensure that the existing Oracle GoldenGate Monitor Server 11g that is pointed to the schema that you are going to upgrade is stopped before starting this procedure.</p>
+</div>
+<p>This section describes how to use UA to upgrade the MySQL database.</p>
+<div class="sect3"><!-- infolevel="all" infotype="General" --><a id="sthref10"></a>
+<h4 class="sect3"><span class="secnum">2.3.2.1</span> Prerequisites</h4>
+<p>UA expects to see schema names in capital letters, therefore, before running UA, you need to do the following:</p>
+<ol>
+<li>
+<p>If Monitor 11g schema was created in lowercase letters, you need to create new schema using capital letters and then move the existing repository to that newly created Schema.</p>
+</li>
+<li>
+<p>Ensure the schema name and the username match.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect3" -->
+<div class="sect3"><!-- infolevel="all" infotype="General" --><a id="sthref11"></a>
+<h4 class="sect3"><span class="secnum">2.3.2.2</span> Run UA</h4>
+<p>To run UA, navigate to <code><span class="codeinlineitalic">ORACLE_HOME</span></code><code>/oracle_common/upgrade/bin</code> and enter:</p>
+<pre>
+$./ua
+</pre>
+<p>The UA Welcome screen appears.</p>
+<p>Navigate the UA screens as instructed in the following table to upgrade your server. If you want further information on any screen, click its name in the left-hand column.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment50" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen." dir="ltr">
+<thead>
+<tr class="cellalignment39">
+<th class="cellalignment51" id="r1c1-t13">Screen</th>
+<th class="cellalignment51" id="r1c2-t13">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r2c1-t13" headers="r1c1-t13">
+<p>Welcome</p>
+</td>
+<td class="cellalignment45" headers="r2c1-t13 r1c2-t13">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r3c1-t13" headers="r1c1-t13">
+<p>Schemas</p>
+</td>
+<td class="cellalignment45" headers="r3c1-t13 r1c2-t13">
+<p>Ensure Schemas is selects and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r4c1-t13" headers="r1c1-t13">
+<p>Available Components</p>
+</td>
+<td class="cellalignment45" headers="r4c1-t13 r1c2-t13">
+<ol>
+<li>
+<p>Select <span class="bold">Oracle GoldenGate Monitor.</span></p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r5c1-t13" headers="r1c1-t13">
+<p>Prerequisites</p>
+</td>
+<td class="cellalignment45" headers="r5c1-t13 r1c2-t13">
+<ol>
+<li>
+<p>Select all three prerequisites.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r6c1-t13" headers="r1c1-t13">
+<p>OGGMON Schema</p>
+</td>
+<td class="cellalignment45" headers="r6c1-t13 r1c2-t13">
+<ol>
+<li>
+<p>Ensure that the proper information is supplied.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r7c1-t13" headers="r1c1-t13">
+<p>OGGMON Schema Prefix</p>
+</td>
+<td class="cellalignment45" headers="r7c1-t13 r1c2-t13">
+<ol>
+<li>
+<p>Enter the same schema prefix you used when creating the STB schema in RCU.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r8c1-t13" headers="r1c1-t13">
+<p>Examine</p>
+</td>
+<td class="cellalignment45" headers="r8c1-t13 r1c2-t13">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r9c1-t13" headers="r1c1-t13">
+<p>Upgrade Summary</p>
+</td>
+<td class="cellalignment45" headers="r9c1-t13 r1c2-t13">
+<p>Click <span class="bold">Upgrade</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r10c1-t13" headers="r1c1-t13">
+<p>Upgrade Progress</p>
+</td>
+<td class="cellalignment45" headers="r10c1-t13 r1c2-t13">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r11c1-t13" headers="r1c1-t13">
+<p>Upgrade Success</p>
+</td>
+<td class="cellalignment45" headers="r11c1-t13 r1c2-t13">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>This completes the Oracle GoldenGate Monitor Server for MySQL databases upgrade process.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CHDFCHHI"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">2.4</span> Schema Upgrade Instructions for SQL Server Database Users</h2>
+<p>Upgrading Oracle GoldenGate Monitor Server for SQL Server databases is a two-stage process:</p>
+<ol>
+<li>
+<p><a href="#CHDHDIDC">Update the SQL Server Database by Running RCU</a></p>
+</li>
+<li>
+<p><a href="#CHDFBHHD">Upgrade the Database by Running UA</a></p>
+</li>
+</ol>
+<p>Oracle GoldenGate Monitor 12<span class="italic">c</span> (12.1.3) supports SQL Server versions 2008 and 2012. See <a class="olink GMINS130" href="../GMINS/prepare.htm#GMINS130">"Install the Database Software"</a> in <span class="italic">Installing and Configuring Oracle GoldenGate Monitor Server</span>.</p>
+<a id="CHDHDIDC"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">2.4.1</span> Update the SQL Server Database by Running RCU</h3>
+<p>Since Oracle GoldenGate Monitor Server is released with Weblogic Server 12c (12.1.3) with JRF and to comply with Fusion Middleware standards and requirements, you must upgrade the existing Oracle GoldenGate Monitor by adding STB schemas to the SQL Server database.</p>
+<p>Before you begin, do the following:</p>
+<ul>
+<li>
+<p>set:</p>
+<pre>
+ISOLATION LEVEL,ALTER DATABASE $(<span class="italic">DATABASE_NAME</span>) SET READ_COMMITTED_SNAPSHOT ON
+</pre></li>
+<li>
+<p>Ensure the database is case-sensitive:</p>
+<pre>
+DECLARE @collate sysname
+   select @collate = convert(sysname, serverproperty('Collation'))
+IF ( charindex(N'_CI', @collate) &gt; 0 )
+BEGIN
+   select @collate = replace(@collate, N'_CI', N'_CS')
+   exec ('ALTER database $(DATABASE_NAME) COLLATE ' + @collate)
+END
+</pre></li>
+</ul>
+<p>To add these dependent schemas, use RCU, which is included in the product installation. To launch RCU, navigate to <code><span class="codeinlineitalic">ORACLE_HOME</span></code><code>/oracle_common/bin</code> and enter:</p>
+<pre>
+$ ./rcu
+</pre>
+<p>RCU opens, displaying the Welcome screen.</p>
+<p>Navigate the RCU screens as instructed in the following table to update the database. If you want further information on any screen, click its name in the left-hand column.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment50" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen." dir="ltr">
+<thead>
+<tr class="cellalignment39">
+<th class="cellalignment51" id="r1c1-t14">Screen</th>
+<th class="cellalignment51" id="r1c2-t14">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r2c1-t14" headers="r1c1-t14">
+<p>Welcome</p>
+</td>
+<td class="cellalignment45" headers="r2c1-t14 r1c2-t14">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r3c1-t14" headers="r1c1-t14">
+<p>Create Repository</p>
+</td>
+<td class="cellalignment45" headers="r3c1-t14 r1c2-t14">
+<ol>
+<li>
+<p>Select <span class="bold">System Load and Product Load</span>.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r4c1-t14" headers="r1c1-t14">
+<p>Database Connection Details</p>
+</td>
+<td class="cellalignment45" headers="r4c1-t14 r1c2-t14">
+<ol>
+<li>
+<p>Enter the Oracle GoldenGate Monitor database details.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r5c1-t14" headers="r1c1-t14">
+<p>Select Components</p>
+</td>
+<td class="cellalignment45" headers="r5c1-t14 r1c2-t14">
+<ol>
+<li>
+<p><span class="bold">Service Table</span> should be selected, by default; if not, do so. If other values are selected, deselect them.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+<p>A progress window appears, checking off the schema when its prerequisites ar e met.</p>
+</li>
+<li>
+<p>Click <span class="bold">OK</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r6c1-t14" headers="r1c1-t14">
+<p>Schema Passwords</p>
+</td>
+<td class="cellalignment45" headers="r6c1-t14 r1c2-t14">
+<ol>
+<li>
+<p>Enter the necessary password, if it's not already there, and confirm it.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r7c1-t14" headers="r1c1-t14">
+<p>Summary</p>
+</td>
+<td class="cellalignment45" headers="r7c1-t14 r1c2-t14">
+<p>Review the schema information and click <span class="bold">Create</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r8c1-t14" headers="r1c1-t14">
+<p>Creation Summary</p>
+</td>
+<td class="cellalignment45" headers="r8c1-t14 r1c2-t14">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect2" -->
+<a id="CHDFBHHD"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">2.4.2</span> Upgrade the Database by Running UA</h3>
+<p>With the repository created, next run the Upgrade Assistant to upgrade the database to version 12<span class="italic">c</span> (12.1.3). Like RCU, UA is included in the product installation. Navigate to <code><span class="codeinlineitalic">ORACLE_HOME</span></code><code>/oracle_common/upgrade/bin</code> and enter:</p>
+<pre>
+$./ua
+</pre>
+<p>The UA Welcome screen appears.</p>
+<p>Navigate the UA screens as instructed in the following table to upgrade your server. If you want further information on any screen, click its name in the left-hand column.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment50" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen." dir="ltr">
+<thead>
+<tr class="cellalignment39">
+<th class="cellalignment51" id="r1c1-t15">Screen</th>
+<th class="cellalignment51" id="r1c2-t15">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r2c1-t15" headers="r1c1-t15">
+<p>Welcome</p>
+</td>
+<td class="cellalignment45" headers="r2c1-t15 r1c2-t15">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r3c1-t15" headers="r1c1-t15">
+<p>Schemas</p>
+</td>
+<td class="cellalignment45" headers="r3c1-t15 r1c2-t15">
+<p>Ensure Schemas is selects and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r4c1-t15" headers="r1c1-t15">
+<p>Available Components</p>
+</td>
+<td class="cellalignment45" headers="r4c1-t15 r1c2-t15">
+<ol>
+<li>
+<p>Select <span class="bold">Oracle GoldenGate Monitor.</span></p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r5c1-t15" headers="r1c1-t15">
+<p>Prerequisites</p>
+</td>
+<td class="cellalignment45" headers="r5c1-t15 r1c2-t15">
+<ol>
+<li>
+<p>Select all three prerequisites.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r6c1-t15" headers="r1c1-t15">
+<p>OGGMON Schema</p>
+</td>
+<td class="cellalignment45" headers="r6c1-t15 r1c2-t15">
+<ol>
+<li>
+<p>Ensure that the proper information is supplied.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r7c1-t15" headers="r1c1-t15">
+<p>OGGMON Schema Prefix</p>
+</td>
+<td class="cellalignment45" headers="r7c1-t15 r1c2-t15">
+<ol>
+<li>
+<p>Enter the same schema prefix you used when creating the STB schema in RCU.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r8c1-t15" headers="r1c1-t15">
+<p>Examine</p>
+</td>
+<td class="cellalignment45" headers="r8c1-t15 r1c2-t15">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r9c1-t15" headers="r1c1-t15">
+<p>Upgrade Summary</p>
+</td>
+<td class="cellalignment45" headers="r9c1-t15 r1c2-t15">
+<p>Click <span class="bold">Upgrade</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r10c1-t15" headers="r1c1-t15">
+<p>Upgrade Progress</p>
+</td>
+<td class="cellalignment45" headers="r10c1-t15 r1c2-t15">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment39">
+<td class="cellalignment45" id="r11c1-t15" headers="r1c1-t15">
+<p>Upgrade Success</p>
+</td>
+<td class="cellalignment45" headers="r11c1-t15 r1c2-t15">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>This completes the Oracle GoldenGate Monitor Server for SQL Server databases upgrade process.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<div class="sect1"><!-- infolevel="all" infotype="General" --><a id="sthref12"></a>
+<h2 class="sect1"><span class="secnum">2.5</span> Next Step: Perform Post-Upgrade Tasks</h2>
+<p>With the upgrade process complete for your database type, you next need to perform certain post-upgrade tasks, which are described in <a href="post_upgrade.htm#CACFCCCJ">Chapter 3, "Performing Post-Upgrade Tasks"</a>.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment38">
+<tr>
+<td class="cellalignment45">
+<table class="cellalignment49">
+<tr>
+<td class="cellalignment42"><a href="intro.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment42"><a href="post_upgrade.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment47">
+<table class="cellalignment48">
+<tr>
+<td class="cellalignment42"><a href="../../index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment42"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment42"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

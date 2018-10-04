@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>2 Introducing the File Writer</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1023">
+<meta name="description" content="This chapter provides an overview of the Oracle GoldenGate Adapter for Flat Files. This adapter provides a user exit library that is dynamically linked into an Oracle GoldenGate Extract process.">
+<meta name="dcterms.created" content="2015-04-08T9:18:57Z">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="robots" content="all">
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Application Adapters Administering Oracle GoldenGate Adapters">
+<meta name="dcterms.identifier" content="E61853-01">
+<meta name="partno" content="E64636-01">
+
+<meta name="dcterms.isVersionOf" content="GADAD">
+<link rel="Start" href="../../index.htm" title="Home" type="text/html">
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html">
+
+<script type="application/javascript" src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript" src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html">
+<link rel="Prev" href="intro_adapter.htm" title="Previous" type="text/html">
+<link rel="Next" href="intro_java.htm" title="Next" type="text/html">
+<link rel="alternate" href="../GADAD.pdf" title="PDF version" type="application/pdf">
+<link rel="alternate" href="../GADAD.epub" title="ePub version" type="application/epub+zip">
+<link rel="alternate" href="../GADAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook">
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="application/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53addf516e0e58a5"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate Adapters</a>
+</div>
+
+<span id="PAGE" style="display:none;">6/28</span>
+<!-- End Header -->
+<div id="GADAD409" class="chapter"><a id="BABFDFEJ"></a>
+<h1 class="chapter"><span class="secnum">2</span> Introducing the File Writer</h1>
+<p><a id="GADAD410"></a>This chapter provides an overview of the Oracle GoldenGate Adapter for Flat Files. This adapter provides a user exit library that is dynamically linked into an Oracle GoldenGate Extract process. The library may be a<code>.ddl</code> or an<code>.so</code> format. It is configured using a properties file so no programming is required.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#BABEEJJE">Overview of the Adapter for Flat Files</a></p>
+</li>
+<li>
+<p><a href="#BABCBAGI">Typical Configuration</a></p>
+</li>
+</ul>
+<a id="BABEEJJE"></a>
+<div id="GADAD411" class="sect1">
+<h2 class="sect1"><span class="secnum">2.1</span> Overview of the Adapter for Flat Files</h2>
+<p>Oracle GoldenGate Adapter for Flat Files outputs transactional data captured by Oracle GoldenGate to rolling flat files to be used by a third party product.</p>
+<p>The user exit supports two modes of output:</p>
+<ul>
+<li>
+<p>DSV &ndash; Delimiter Separated Values (commas are an example)</p>
+</li>
+<li>
+<p>LDV &ndash; Length Delimited Values</p>
+</li>
+</ul>
+<p>It can output data:</p>
+<ul>
+<li>
+<p>All to one file</p>
+</li>
+<li>
+<p>One file per table</p>
+</li>
+<li>
+<p>One file per operation code</p>
+</li>
+</ul>
+<p>The user exit can roll over based on time and/or size criteria. It flushes files and maintains checkpoints whenever Oracle GoldenGate checkpoints to ensure recovery. It writes a control file containing a list of rolled over files for synchronization with the supported data integration product and can also produce a summary file for use in auditing.</p>
+<p>Additional properties control formatting (delimiters, other values), directories, file extensions, metadata columns (such as table name, file position, etc.) and data options.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABCBAGI"></a>
+<div id="GADAD412" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">2.2</span> Typical Configuration</h2>
+<p>The following diagram shows a typical configuration for the Oracle GoldenGate Adapter for Flat Files.</p>
+<p>In this configuration, transactions from the source database are captured by a Primary Extract process and written to an Oracle GoldenGate trail. A data pump Extract send this trail to the Oracle GoldenGate Adapter Extract, whose associated user exit process writes the data to flat files formatted to suit a third party application.</p>
+<div id="GADAD413" class="figure"><p class="titleinfigure"><a id="sthref17"></a>Figure 2-1 Oracle GoldenGate for Flat File</p>
+<img width="605" height="545" src="img/gffad_jd_001_oview.gif" alt="Description of Figure 2-1 follows"><br>
+<a id="sthref18" href="img_text/gffad_jd_001_oview.htm">Description of "Figure 2-1 Oracle GoldenGate for Flat File"</a><br>
+<br></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr>
+<table class="cellalignment12">
+<tr>
+<td class="cellalignment19"><table class="cellalignment17">
+<tr>
+<td class="cellalignment16"><a href="intro_adapter.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page"><br>
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment16"><a href="intro_java.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page"><br>
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle"><br>
+Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br>
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment21">
+<table class="cellalignment15">
+<tr>
+<td class="cellalignment16"><a href="../../index.htm"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home"><br>
+<span class="icon">Home</span></a></td>
+<td class="cellalignment16"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents"><br>
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment16"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page"><br>
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

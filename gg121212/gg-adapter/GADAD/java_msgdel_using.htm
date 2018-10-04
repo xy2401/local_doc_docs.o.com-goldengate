@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>13 Using the Java User Exit</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1023">
+<meta name="description" content="This chapter describes how to start and restart the Oracle GoldenGate Adapter user exit that delivers messages. It assumes that the primary Extract has already generated a trail to be consumed by the user exit Extract.">
+<meta name="dcterms.created" content="2015-04-08T9:18:57Z">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="robots" content="all">
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Application Adapters Administering Oracle GoldenGate Adapters">
+<meta name="dcterms.identifier" content="E61853-01">
+<meta name="partno" content="E64636-01">
+
+<meta name="dcterms.isVersionOf" content="GADAD">
+<link rel="Start" href="../../index.htm" title="Home" type="text/html">
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html">
+
+<script type="application/javascript" src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript" src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html">
+<link rel="Prev" href="java_msgdel_config.htm" title="Previous" type="text/html">
+<link rel="Next" href="java_msgdel_handlers.htm" title="Next" type="text/html">
+<link rel="alternate" href="../GADAD.pdf" title="PDF version" type="application/pdf">
+<link rel="alternate" href="../GADAD.epub" title="ePub version" type="application/epub+zip">
+<link rel="alternate" href="../GADAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook">
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="application/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53addf516e0e58a5"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate Adapters</a>
+</div>
+
+<span id="PAGE" style="display:none;">20/28</span>
+<!-- End Header -->
+<div id="GADAD316" class="chapter"><a id="BCGGHAGD"></a> <a id="i1005391"></a>
+<h1 class="chapter"><span class="secnum">13</span> Using the Java User Exit</h1>
+<p><a id="GADAD545"></a>This chapter describes how to start and restart the Oracle GoldenGate Adapter user exit that delivers messages. It assumes that the primary Extract has already generated a trail to be consumed by the user exit Extract.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#m_d_u_s_t_a">Starting the Application</a></p>
+</li>
+<li>
+<p><a href="#i1005931">Restarting the Application at the Beginning of a Trail</a></p>
+</li>
+</ul>
+<a id="m_d_u_s_t_a"></a>
+<div id="GADAD317" class="sect1">
+<h2 class="sect1"><span class="secnum">13.1</span> Starting the Application</h2>
+<p>To run the user exit and execute the Java application, you only need an existing trail file and its corresponding source definitions file. For the examples that follow, a simple <code>TCUSTMER</code> and <code>TCUSTORD</code> trail is used (matching the demo SQL provided with the Oracle GoldenGate software download), along with a source definitions file defining the data types used in the trail.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The user exit does not require access to a database in order to run. But the Extract process does require metadata describing the trail data. Either the Extract must login to a database for metadata, or a source definitions file can be provided. In either case, the Extract cannot be in <code>PASSTHRU</code> mode when using a user exit.</div>
+<p>To run the user exit, simply start the Extract process from GGSCI:</p>
+<pre>
+GGSCI&gt; START EXTRACT javaue
+GGSCI&gt; INFO EXTRACT javaue
+</pre>
+<p>The <code>INFO</code> command will return information similar to the following:</p>
+<pre>
+EXTRACT JAVAUE Last Started 2011-08-25 18:41 Status RUNNING
+Checkpoint Lag 00:00:00 (updated 00:00:00 ago)
+Log Read Checkpoint File ./dirdat/bb000000
+2011-09-24 12:52:58.000000 RBA 2702
+</pre>
+<p>If the Extract process is running and the file handler is being used (as in the example above), then you should see the output file <code>output.xml</code> in the Oracle GoldenGate installation directory (the same directory as the Extract executable).</p>
+<p>If the process does not start or abends, see <a href="troubleshoot_java.htm#i1011655">Section 18.1, "Checking for Errors."</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="i1005931"></a>
+<div id="GADAD318" class="sect1">
+<h2 class="sect1"><span class="secnum">13.2</span> Restarting the Application at the Beginning of a Trail</h2>
+<p>There are two checkpoints for an Extract running the user exit: the user exit checkpoint and the Extract checkpoint. Before rerunning the Extract, you must reset both checkpoints:</p>
+<ol>
+<li>
+<p>Delete the user exit checkpoint file.</p>
+<p>In this example the name of the Extract group is <code>javaue</code>, so this will default to the checkpoint prefix. The prefix can also be set in the properties file using <code>goldengate.userexit.chkptprefix.</code></p>
+<p>Windows: <code>cmd&gt; del javaue_jvm.chkpt</code></p>
+<p>UNIX: <code>$ rm javaue_jvm.chkpt</code></p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Do not modify checkpoints or delete the user exit checkpoint file on a production system.</div>
+</li>
+<li>
+<p>Reset the Extract to the beginning of the trail data:</p>
+<pre>
+GGSCI&gt; ALTER EXTRACT JAVAUE, EXTSEQNO 0, EXTRBA 0
+</pre></li>
+<li>
+<p>Restart the Extract:</p>
+<pre>
+GGSCI&gt; START JAVAUE
+GGSCI&gt; INFO JAVAUE
+EXTRACT    JAVAUE    Last Started 2011-08-25 18:41   Status RUNNING
+Checkpoint Lag       00:00:00 (updated 00:00:00 ago)
+Log Read Checkpoint  File ./dirdat/ps000000
+                     2011-09-24 12:52:58.000000  RBA 2702
+</pre>
+<p>It may take a few seconds for the Extract process status to report itself as running. Check the report file to see if it abended or is still in the process of starting:</p>
+<pre>
+GGSCI&gt; VIEW REPORT JAVAUE
+</pre></li>
+</ol>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr>
+<table class="cellalignment12">
+<tr>
+<td class="cellalignment19"><table class="cellalignment17">
+<tr>
+<td class="cellalignment16"><a href="java_msgdel_config.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page"><br>
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment16"><a href="java_msgdel_handlers.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page"><br>
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle"><br>
+Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br>
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment21">
+<table class="cellalignment15">
+<tr>
+<td class="cellalignment16"><a href="../../index.htm"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home"><br>
+<span class="icon">Home</span></a></td>
+<td class="cellalignment16"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents"><br>
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment16"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page"><br>
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

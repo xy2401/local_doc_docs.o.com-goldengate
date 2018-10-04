@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using EXIT_CALL_TYPE</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="summary-user-exit-functions.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-exit_call_result.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-59C458AF-8BEC-403F-BF7F-8A3CD31BEC79"></a> <span id="PAGE" style="display:none;">410/459</span> <!-- End Header -->
+<a id="GWURF835"></a><a id="GWURF834"></a>
+<h1 id="GWURF-GUID-59C458AF-8BEC-403F-BF7F-8A3CD31BEC79" class="sect1"><span class="enumeration_section">6.3</span> Using EXIT_CALL_TYPE</h1>
+<div>
+<p>Use <code class="codeph">EXIT_CALL_TYPE</code> to indicate when, during processing, the Extract or Replicat process (the caller) calls a user exit routine. A process can call a routine with the following calls.</p>
+<div class="tblformalwide" id="GUID-59C458AF-8BEC-403F-BF7F-8A3CD31BEC79__GUID-6152CE10-EE29-455D-8C21-851B733B8178">
+<p class="titleintable">Table 6-1 User Exit Calls</p>
+<table class="cellalignment497" title="User Exit Calls" summary="This table lists the user exit calls. It gives the call type and processing point.">
+<thead>
+<tr class="cellalignment454">
+<th class="cellalignment468" id="d152517e30">Call type</th>
+<th class="cellalignment469" id="d152517e33">Processing point</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e38" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_ABORT_TRANS</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e38 d152517e33">
+<p>Valid when the <code class="codeph">RECOVERYOPTIONS</code> mode is <code class="codeph">APPEND</code> (the default). Called when a data pump or Replicat reads a <code class="codeph">RESTART ABEND</code> record from the trail, placed there by a writer process that abended. (The writer process can be the primary Extract writing to a local trail read by a data pump, or a data pump writing to a remote trail read by Replicat.) This call type enables the user exit to abort or discard the transaction that was left incomplete when the writer process stopped, and then to recover and resume processing at the start of the previous completed transaction.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e55" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_BEGIN_TRANS</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e55 d152517e33">
+<p>Called just before either of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>a <code class="codeph">BEGIN</code> record of a transaction that is read by a data pump</p>
+</li>
+<li>
+<p>the start of a Replicat transaction</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e73" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_CHECKPOINT</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e73 d152517e33">
+<p>Called just before an Extract or Replicat checkpoint is written.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e82" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_DISCARD_ASCII_RECORD</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e82 d152517e33">
+<p>Called during Extract processing before an ASCII input record is written to the discard file. The associated ASCII buffer can be retrieved and manipulated by the user exit using callback routines.</p>
+<p>This call type is not applicable for use with the Replicat process.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e92" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_DISCARD_RECORD</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e92 d152517e33">
+<p>Called during Replicat processing before a record is written to the discard file. Records can be discarded for several reasons, such as when a value in the Oracle GoldenGate change record is different from the current version in the target table.The associated discard buffer can be retrieved and manipulated by the user exit using callback routines.</p>
+<p>This call type is not applicable for use with the Extract process.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e102" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_END_TRANS</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e102 d152517e33">
+<p>Called just after either of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>an <code class="codeph">END</code> record of a transaction that is read by a data pump</p>
+</li>
+<li>
+<p>the last record in a Replicat transaction</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e121" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_FATAL_ERROR</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e121 d152517e33">
+<p>Called during Extract or Replicat processing just before Oracle GoldenGate terminates after a fatal error.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e130" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_PROCESS_MARKER</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e130 d152517e33">
+<p>Called during Replicat processing when a marker from a NonStop server is read from the trail, and before writing to the marker history file.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e139" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_PROCESS_RECORD</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e139 d152517e33">
+<ul style="list-style-type: disc;">
+<li>
+<p>For Extract, called before a record buffer is output to the trail.</p>
+</li>
+<li>
+<p>For Replicat, called just before a replicated operation is performed.</p>
+</li>
+</ul>
+<p>This call is the basis of most user exit processing. When <code class="codeph">EXIT_CALL_PROCESS_RECORD</code> is called, the record buffer and other record information are available to the user exit through callback routines. If source-target mapping is specified in the parameter file, the mapping is performed before the <code class="codeph">EXIT_CALL_PROCESS_RECORD</code> event takes place. The user exit can map, transform, clean, or perform virtually any other operation with the record. The user exit can return a status indicating whether the caller should process or ignore the record.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e161" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_START</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e161 d152517e33">
+<p>Called at the start of processing. The user exit can perform initialization work, such as opening files and initializing variables.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e170" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_STOP</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e170 d152517e33">
+<p>Called before the process stops gracefully or ends abnormally. The user exit can perform completion work, such as closing files or outputting totals.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment470" id="d152517e180" headers="d152517e30">
+<p><code class="codeph">EXIT_CALL_RESULT</code></p>
+</td>
+<td class="cellalignment471" headers="d152517e180 d152517e33">
+<p>Set by the user exit routines to instruct the caller how to respond when each exit call completes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="summary-user-exit-functions.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="using-exit_call_result.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

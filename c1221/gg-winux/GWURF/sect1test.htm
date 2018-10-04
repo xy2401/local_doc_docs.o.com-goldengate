@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Summary of Oracle GoldenGate IBM i Native Commands</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="oracle-goldengate-native-commands.htm" title="Previous" type="text/html" />
+<link rel="Next" href="checkprm.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-35F4CC64-92FF-46FB-9FBF-1E1EE6E73FD8"></a> <span id="PAGE" style="display:none;">123/459</span> <!-- End Header -->
+<a id="GWURF1175"></a><a id="GWURF1188"></a>
+<h1 id="GWURF-GUID-35F4CC64-92FF-46FB-9FBF-1E1EE6E73FD8" class="sect1"><span class="enumeration_section">2.1</span> Summary of Oracle GoldenGate IBM i Native Commands</h1>
+<div>
+<p>This section summarizes the commands that can be issued directly from the native command line of the Linux, UNIX, Windows, or IBM i platforms. For the purpose of this document, commands issued from the IBM i PASE environment are considered UNIX commands.</p>
+<p>On the IBM i platform, these commands are stored in the Oracle GoldenGate installation library and can be used instead of issuing them from a PASE environment. With this support, it is possible to use the typical job submission tools such as SBMJOB to operate the Oracle GoldenGate product. If submitted to batch, the output is written to a spool file, and only job messages and any exceptions are written to the job log. In a typical installation, a batch submitted command should have both a <code class="codeph">QPRINT</code> output spool file and a joblog spool file.</p>
+<p>To use the native commands from the IBM CLI, you need only include the Oracle GoldenGate installation library in the library list, or reference it explicitly through a qualified name such as <span class="italic"><code class="codeph">OGGLIB</code></span>/GGSCI. During the execution of the command the current directory will be set to the Oracle GoldenGate installation directory, and all appropriate environment variables will be set to operate the Oracle GoldenGate commands. Therefore, the paths for any parameter that can take a path may be specified either as an absolute path name or as a relative path name based at the Oracle GoldenGate installation directory. The <code class="codeph">OTHERS</code> parameter of the IBM i CLI commands is used to allow the specification of other parameters not explicitly exposed by the IBM i CLI commands. For example, if you want to specify <code class="codeph">REPORTFILE</code> and <code class="codeph">PROCESSID</code> for Extract, you would use the following syntax:</p>
+<pre dir="ltr">
+EXTRACT PARAMFILE('dirprm/myext.prm') OTHERS(REPORTFILE 'dirrpt/myext.rpt' PROCESSID myext)
+</pre>
+<div class="infobox-note" id="GUID-35F4CC64-92FF-46FB-9FBF-1E1EE6E73FD8__GUID-BB5583F1-9791-4B4F-B48A-C8CC62A80A63">
+<p class="notep1">Note:</p>
+<p>Normally, Extract and Replicat should be run from GGSCI, but some situations, such as certain initial load procedures, require running them from the command line of the operating system.</p>
+</div>
+<div class="tblformal" id="GUID-35F4CC64-92FF-46FB-9FBF-1E1EE6E73FD8__GUID-A74E34FF-0A5A-4918-8D50-5FF67FC58FC8">
+<p class="titleintable">Table 2-1 Commands</p>
+<table class="cellalignment463" title="Commands " summary="Describes the native IBM i commands for operating Oracle GoldenGate.">
+<thead>
+<tr class="cellalignment454">
+<th class="cellalignment528" id="d43246e52">Command</th>
+<th class="cellalignment529" id="d43246e55">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment454">
+<td class="cellalignment530" id="d43246e60" headers="d43246e52">
+<p><code class="codeph"><a href="checkprm.htm#GUID-4A207F53-0408-4696-95CD-654562821E36">checkprm</a></code></p>
+</td>
+<td class="cellalignment531" headers="d43246e60 d43246e55">
+<p>Assess the validity of the specified parameter file.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment530" id="d43246e69" headers="d43246e52">
+<p><code class="codeph"><a href="convchk.htm#GUID-A278A430-308C-4199-A583-6AC50DCA9E9E">convchk</a></code></p>
+</td>
+<td class="cellalignment531" headers="d43246e69 d43246e55">
+<p>Converts the trail files from 9 digit to 6 digit checkpoint record for the named Extract group.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment530" id="d43246e78" headers="d43246e52">
+<p><code class="codeph"><a href="defgen.htm#GUID-DD61351B-88F8-4B10-BD80-91B2CDB13191">defgen</a></code></p>
+</td>
+<td class="cellalignment531" headers="d43246e78 d43246e55">
+<p>Runs the DEFGEN program. This program generates data definitions in a file that is transferred to a remote system to support the retrieval of object metadata.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment530" id="d43246e87" headers="d43246e52">
+<p><code class="codeph"><a href="extract1.htm#GUID-C21EA6F6-8D8F-4BD2-AA0E-1C8271734567">extract</a></code></p>
+</td>
+<td class="cellalignment531" headers="d43246e87 d43246e55">
+<p>Runs the Extract program. This program captures either full data records or transactional data changes, depending on configuration parameters, and then sends the data to a trail for further processing by a downstream process, such as a data-pump Extract or the Replicat process.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment530" id="d43246e96" headers="d43246e52">
+<p><code class="codeph"><a href="ggsci-12.3-command-interface.htm">ggsci</a></code></p>
+</td>
+<td class="cellalignment531" headers="d43246e96 d43246e55">
+<p>Runs the Oracle GoldenGate command line interface.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment530" id="d43246e106" headers="d43246e52">
+<p><code class="codeph"><a href="keygen.htm#GUID-CCCD1E79-E270-4C7C-848A-A87B35162820">keygen</a></code></p>
+</td>
+<td class="cellalignment531" headers="d43246e106 d43246e55">
+<p>Runs the KEYGEN utility. This utility generates encryption keys to support Oracle GoldenGate security.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment530" id="d43246e115" headers="d43246e52">
+<p><code class="codeph"><a href="logdump.htm#GUID-DC23369B-C622-4FD2-A369-3E245FD5A508">logdump</a></code></p>
+</td>
+<td class="cellalignment531" headers="d43246e115 d43246e55">
+<p>Runs the Logdump utility. This utility enables the contents of a trail file to be viewed for the purpose of troubleshooting. This command takes no arguments. For more information about Logdump, see <a class="olink GLOGD-GUID-11F54047-D1D7-4348-B145-EB65B824A5C3" target="_blank" href="../GLOGD/GUID-11F54047-D1D7-4348-B145-EB65B824A5C3.htm#GLOGD-GUID-11F54047-D1D7-4348-B145-EB65B824A5C3">Logdump Reference for Oracle GoldenGate</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment530" id="d43246e128" headers="d43246e52">
+<p><code class="codeph"><a href="mgr.htm#GUID-556C6504-F4CA-4E66-9025-716944026AF3">mgr</a></code></p>
+</td>
+<td class="cellalignment531" headers="d43246e128 d43246e55">
+<p>Runs the Manager program. Manager is the parent process of Oracle GoldenGate and is responsible for the management of its processes and files, resources, user interface, and the reporting of thresholds and errors.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment530" id="d43246e137" headers="d43246e52">
+<p><code class="codeph"><a href="replicat1.htm#GUID-E135E058-2CEF-4CA2-B25F-984698D7059F">replicat</a></code></p>
+</td>
+<td class="cellalignment531" headers="d43246e137 d43246e55">
+<p>Runs the Replicat program. This program reads a trail, performs mapping and manipulation as needed, and applies the data to a target database.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="oracle-goldengate-native-commands.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="checkprm.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Configuring Oracle GoldenGate for Active-Active High Availability</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter describes how to configure Oracle GoldenGate for active-active high availability." />
+<meta name="dcterms.created" content="2018-09-07T14:17:29Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81607-07" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="configuring-oracle-goldengate-maintain-live-standby-database.htm" title="Previous" type="text/html" />
+<link rel="Next" href="configuring-conflict-detection-and-resolution.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-2348ADBE-D528-4BD5-83AE-3BC26FEECADE"></a> <span id="PAGE" style="display:none;">13/30</span> <!-- End Header -->
+<a id="GWUAD283"></a><a id="GWUAD282"></a>
+<h1 id="GWUAD-GUID-2348ADBE-D528-4BD5-83AE-3BC26FEECADE" class="sect1"><span class="enumeration_chapter">9</span> Configuring Oracle GoldenGate for Active-Active High Availability</h1>
+<div>
+<div><span>This chapter describes how to configure Oracle GoldenGate for active-active high availability.</span></div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<a id="GWUAD284"></a>
+<div class="props_rev_3"><a id="GUID-5CEB29BE-671C-40C4-A3FB-E3D8B7A18A43"></a>
+<h2 id="GWUAD-GUID-5CEB29BE-671C-40C4-A3FB-E3D8B7A18A43" class="sect2"><span class="enumeration_section">9.1</span> Overview of an Active-Active Configuration</h2>
+<div>
+<p>Oracle GoldenGate supports an active-active bi-directional configuration, where there are two systems with identical sets of data that can be changed by application users on either system. Oracle GoldenGate replicates transactional data changes from each database to the other to keep both sets of data current.</p>
+<div class="figure" id="GUID-5CEB29BE-671C-40C4-A3FB-E3D8B7A18A43__GUID-B8202A1A-C146-4FD2-A014-3BB8C8AE8D92"><img width="232" height="80" src="img/simple_config_bidirectional.jpg" alt="Description of simple_config_bidirectional.jpg follows" title="Description of simple_config_bidirectional.jpg follows" /><br />
+<a href="img_text/simple_config_bidirectional.htm">Description of the illustration simple_config_bidirectional.jpg</a></div>
+<!-- class="figure" -->
+<p>In a bi-directional configuration, there is a complete set of active Oracle GoldenGate processes on each system. Data captured by an Extract process on one system is propagated to the other system, where it is applied by a local Replicat process.</p>
+<p>This configuration supports load sharing. It can be used for disaster tolerance if the business applications are identical on any two peers. Bi-directional synchronization is supported for all database types that are supported by Oracle GoldenGate.</p>
+<p>Oracle GoldenGate supports active-active configurations for:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>DB2 on z/OS, LUW, and IBM i</p>
+</li>
+<li>
+<p>MySQL</p>
+</li>
+<li>
+<p>Oracle</p>
+</li>
+<li>
+<p>SQL Server</p>
+</li>
+<li>
+<p>Teradata</p>
+</li>
+</ul>
+<p>Oracle GoldenGate supports DDL replication in an Oracle active-active configuration. DDL support is available for Oracle Database and MySQL (like-to-like configuration) databases.</p>
+</div>
+</div>
+<a id="GWUAD287"></a>
+<div class="props_rev_3"><a id="GUID-A6330D68-C306-4845-A4C7-AEC837619971"></a>
+<h2 id="GWUAD-GUID-A6330D68-C306-4845-A4C7-AEC837619971" class="sect2"><span class="enumeration_section">9.2</span> Considerations for an Active-Active Configuration</h2>
+<div>
+<p>The following considerations apply in an active-active configuration. In addition, review the Oracle GoldenGate installation and configuration document for your type of database to see if there are any other limitations or requirements to support a bi-directional configuration.</p>
+</div>
+<a id="GWUAD288"></a>
+<div class="props_rev_3"><a id="GUID-5C7DB986-7E1A-4B31-AEE0-604000C1C896"></a>
+<h3 id="GWUAD-GUID-5C7DB986-7E1A-4B31-AEE0-604000C1C896" class="sect3"><span class="enumeration_section">9.2.1</span> TRUNCATES</h3>
+<div>
+<div class="section">
+<p>Bi-directional replication of <code class="codeph">TRUNCATES</code> is not supported, but you can configure these operations to be replicated in one direction, while data is replicated in both directions. To replicate <code class="codeph">TRUNCATES</code> (if supported by Oracle GoldenGate for the database) in an active-active configuration, the <code class="codeph">TRUNCATES</code> must originate only from one database, and only from the same database each time.</p>
+<p>Configure the environment as follows:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>Configure all database roles so that they cannot execute <code class="codeph">TRUNCATE</code> from any database other than the one that is designated for this purpose.</p>
+</li>
+<li>
+<p>On the system where <code class="codeph">TRUNCATE</code> will be permitted, configure the Extract and Replicat parameter files to contain the <code class="codeph">GETTRUNCATES</code> parameter.</p>
+</li>
+<li>
+<p>On the other system, configure the Extract and Replicat parameter files to contain the <code class="codeph">IGNORETRUNCATES</code> parameter. No <code class="codeph">TRUNCATES</code> should be performed on this system by applications that are part of the Oracle GoldenGate configuration.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD291"></a>
+<div class="props_rev_3"><a id="GUID-C5DFCFBC-A9A6-4D8D-ABCE-B58FDD24835C"></a>
+<h3 id="GWUAD-GUID-C5DFCFBC-A9A6-4D8D-ABCE-B58FDD24835C" class="sect3"><span class="enumeration_section">9.2.2</span> Application Design</h3>
+<div>
+<p>When using Active-Active replication, the time zones must be the same on both systems so that timestamp-based conflict resolution and detection can operate.</p>
+<p>Active-active replication is not recommended for use with commercially available packaged business applications, unless the application is designed to support it. Among the obstacles that these applications present are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Packaged applications might contain objects and data types that are not supported by Oracle GoldenGate.</p>
+</li>
+<li>
+<p>They might perform automatic DML operations that you cannot control, but which will be replicated by Oracle GoldenGate and cause conflicts when applied by Replicat.</p>
+</li>
+<li>
+<p>You probably cannot control the data structures to make modifications that are required for active-active replication.</p>
+</li>
+</ul>
+</div>
+</div>
+<a id="GWUAD292"></a>
+<div class="props_rev_3"><a id="GUID-A1D72332-BA45-4864-BF6F-41B6DDDBAA3B"></a>
+<h3 id="GWUAD-GUID-A1D72332-BA45-4864-BF6F-41B6DDDBAA3B" class="sect3"><span class="enumeration_section">9.2.3</span> Keys</h3>
+<div>
+<p>For accurate detection of conflicts, all records must have a unique, not-null identifier. If possible, create a primary key. If that is not possible, use a unique key or create a substitute key with a <code class="codeph">KEYCOLS</code> option of the <code class="codeph">MAP</code> and <code class="codeph">TABLE</code> parameters. In the absence of a unique identifier, Oracle GoldenGate uses all of the columns that are valid in a <code class="codeph">WHERE</code> clause, but this will degrade performance if the table contains numerous columns.</p>
+<p>To maintain data integrity and prevent errors, the following must be true of the key that you use for any given table:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>contain the same columns in all of the databases where that table resides.</p>
+</li>
+<li>
+<p>contain the same values in each set of corresponding rows across the databases.</p>
+</li>
+</ul>
+</div>
+</div>
+<a id="GWUAD293"></a>
+<div class="props_rev_3"><a id="GUID-B7421B66-9C6A-4B9A-B053-5EC93B39EC35"></a>
+<h3 id="GWUAD-GUID-B7421B66-9C6A-4B9A-B053-5EC93B39EC35" class="sect3"><span class="enumeration_section">9.2.4</span> Triggers and Cascaded Deletes</h3>
+<div>
+<p>Triggers and <code class="codeph">ON DELETE CASCADE</code> constraints generate DML operations that can be replicated by Oracle GoldenGate. To prevent the local DML from conflicting with the replicated DML from these operations, do the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Modify triggers to ignore DML operations that are applied by Replicat. If the target is an Oracle database, Replicat handles triggers without any additional configuration when in integrated mode. Parameter options are available for a nonintegrated Replicat for Oracle. See <a class="olink GGODB-GUID-B881299C-7D3E-4E94-B6C1-25760B01FB7D" target="_blank" href="../GGODB/additional-configuration-steps-using-nonintegrated-replicat.htm#GGODB-GUID-B881299C-7D3E-4E94-B6C1-25760B01FB7D">Diabling Triggers and Referential Cascade Constraints on Target Tables</a> in <span id="GUID-B7421B66-9C6A-4B9A-B053-5EC93B39EC35__GGODB"><cite>Using Oracle GoldenGate for Oracle Database</cite></span>.</p>
+</li>
+<li>
+<p>Disable <code class="codeph">ON DELETE CASCADE</code> constraints and use a trigger on the parent table to perform the required delete(s) to the child tables. Create it as a <code class="codeph">BEFORE</code> trigger so that the child tables are deleted before the delete operation is performed on the parent table. This reverses the logical order of a cascaded delete but is necessary so that the operations are replicated in the correct order to prevent "table not found" errors on the target.</p>
+<div class="infobox-note" id="GUID-B7421B66-9C6A-4B9A-B053-5EC93B39EC35__GUID-57FF8CCB-C4A8-4C93-9D9A-744CED4B5F71">
+<p class="notep1">Note:</p>
+<p>For MySQL targets, cascade delete queries result in the deletion of the child of the parent operation.</p>
+</div>
+<div class="infobox-note" id="GUID-B7421B66-9C6A-4B9A-B053-5EC93B39EC35__GUID-3856435A-3137-473C-AAA1-F69D9C0E8ADE">
+<p class="notep1">Note:</p>
+<p>For Oracle Database targets, if Replicat is in integrated mode, constraints are handled automatically without special configuration.</p>
+</div>
+<div class="infobox-note" id="GUID-B7421B66-9C6A-4B9A-B053-5EC93B39EC35__GUID-32A78DD0-711B-42D7-849B-29BACD3E9BE4">
+<p class="notep1">Note:</p>
+<p>See other <code class="codeph">IDENTITY</code> limitations for SQL Server in <a class="olink GGHDB-GUID-8ACF97BF-8B30-427A-88DD-CA48BF4A17F7" target="_blank" href="../GGHDB/sql-server-preparing-system-oracle-goldengate.htm#GGHDB-GUID-8ACF97BF-8B30-427A-88DD-CA48BF4A17F7">Configuring a Replicat Database Connection</a><span id="GUID-B7421B66-9C6A-4B9A-B053-5EC93B39EC35__GGHDB"><cite>Using Oracle GoldenGate for Heterogeneous Databases</cite></span>.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<a id="GWUAD294"></a>
+<div class="props_rev_3"><a id="GUID-2EC9AEA2-DC5C-480D-AA69-7BC1F205BB76"></a>
+<h3 id="GWUAD-GUID-2EC9AEA2-DC5C-480D-AA69-7BC1F205BB76" class="sect3"><span class="enumeration_section">9.2.5</span> Database-Generated Values</h3>
+<div>
+<p>Do not replicate database-generated sequential values, such as Oracle sequences, in a bi-directional configuration. The range of values must be different on each system, with no chance of overlap. For example, in a two-database environment, you can have one server generate even values, and the other odd. For an <span class="italic">n</span>-server environment, start each key at a different value and increment the values by the number of servers in the environment. This method may not be available to all types of applications or databases. If the application permits, you can add a location identifier to the value to enforce uniqueness.</p>
+</div>
+</div>
+<a id="GWUAD290"></a>
+<div class="props_rev_3"><a id="GUID-C6ADE077-74CE-476A-9D61-998C9238CF92"></a>
+<h3 id="GWUAD-GUID-C6ADE077-74CE-476A-9D61-998C9238CF92" class="sect3"><span class="enumeration_section">9.2.6</span> Database Configuration</h3>
+<div>
+<p>One of the databases must be designated as the <span class="italic">trusted source</span>. This is the primary database and its host system from which the other database is derived in the initial synchronization phase and in any subsequent resynchronizations that become necessary. Maintain frequent backups of the trusted source data.</p>
+</div>
+</div>
+</div>
+<a id="GWUAD298"></a>
+<div class="props_rev_3"><a id="GUID-6EB4EB97-FECA-4754-A753-1A480DAC8702"></a>
+<h2 id="GWUAD-GUID-6EB4EB97-FECA-4754-A753-1A480DAC8702" class="sect2"><span class="enumeration_section">9.3</span> Preventing Data Looping</h2>
+<div>
+<p>In a bidirectional configuration, SQL changes that are replicated from one system to another must be prevented from being replicated back to the first system. Otherwise, it moves back and forth in an endless loop, as in this example:</p>
+<ol>
+<li>
+<p>A user application updates a row on system A.</p>
+</li>
+<li>
+<p>Extract extracts the row on system A and sends it to system B.</p>
+</li>
+<li>
+<p>Replicat updates the row on system B.</p>
+</li>
+<li>
+<p>Extract extracts the row on system B and sends it back to system A.</p>
+</li>
+<li>
+<p>The row is applied on system A (for the second time).</p>
+</li>
+<li>
+<p>This loop continues endlessly.</p>
+</li>
+</ol>
+<p>To prevent data loopback, you may need to provide instructions that:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>prevent the capture of SQL operations that are generated by Replicat, but enable the capture of SQL operations that are generated by business applications if they contain objects that are specified in the Extract parameter file.</p>
+</li>
+<li>
+<p>identify local Replicat transactions, in order for the Extract process to ignore them.</p>
+</li>
+</ul>
+</div>
+<a id="GWUAD299"></a>
+<div class="props_rev_3"><a id="GUID-36F5930B-1186-42FC-B0E8-E510E7254BD0"></a>
+<h3 id="GWUAD-GUID-36F5930B-1186-42FC-B0E8-E510E7254BD0" class="sect3"><span class="enumeration_section">9.3.1</span> Preventing the Capture of Replicat Operations</h3>
+<div>
+<div class="section">
+<p>Depending on which database you are using, you may or may not need to provide explicit instructions to prevent the capture of Replicat operations.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GWUAD1093"></a>
+<div class="props_rev_3"><a id="GUID-CDD72C0C-FFFC-48C3-B8A0-E7EBD7E82E28"></a>
+<h4 id="GWUAD-GUID-CDD72C0C-FFFC-48C3-B8A0-E7EBD7E82E28" class="sect4"><span class="enumeration_section">9.3.1.1</span> Preventing the Capture of Replicat Transactions (Oracle)</h4>
+<div>
+<div class="section">
+<p>To prevent the capture of SQL that is applied by Replicat to an Oracle database, there are different options depending on the Extract capture mode:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>When Extract is in classic or integrated capture mode, use the <code class="codeph">TRANLOGOPTIONS</code> parameter with the <code class="codeph">EXCLUDETAG</code> <span class="italic"><code class="codeph">tag</code></span> option. This parameter directs the Extract process to ignore transactions that are tagged with the specified redo tag. See <a href="configuring-oracle-goldengate-active-active-high-availability.htm#GUID-2E9E61FF-C22F-489E-8CAA-625944D4AAB1">Identifying Replicat Transactions</a> to set the tag value.</p>
+</li>
+<li>
+<p>When Extract is in classic capture mode, use the Extract <code class="codeph">TRANLOGOPTIONS</code> parameter with the <code class="codeph">EXCLUDEUSER</code> or <code class="codeph">EXCLUDEUSERID</code> option to exclude the user name or ID that is used by Replicat to apply the DDL and DML transactions. Multiple <code class="codeph">EXCLUDEUSER</code> statements can be used. The specified user is subject to the rules of the <code class="codeph">GETREPLICATES</code> or <code class="codeph">IGNOREREPLICATES</code> parameter. See <a href="configuring-oracle-goldengate-active-active-high-availability.htm#GUID-81EE7FCB-15D6-4492-BCEF-E38B86909A9A">Preventing Capture of Replicat Transactions (Other Databases)</a> for more information.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD301"></a>
+<div class="props_rev_3"><a id="GUID-81EE7FCB-15D6-4492-BCEF-E38B86909A9A"></a>
+<h4 id="GWUAD-GUID-81EE7FCB-15D6-4492-BCEF-E38B86909A9A" class="sect4"><span class="enumeration_section">9.3.1.2</span> Preventing Capture of Replicat Transactions (Other Databases)</h4>
+<div>
+<div class="section">
+<p>To prevent the capture of SQL that is applied by Replicat to other database types (including Oracle, if Extract operates in classic capture mode), use the following parameters:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">GETAPPLOPS | IGNOREAPPLOPS</code>: Controls whether or not data operations (DML) produced by business applications <span class="italic">except Replicat</span> are included in the content that Extract writes to a specific trail or file.</p>
+</li>
+<li>
+<p><code class="codeph">GETREPLICATES | IGNOREREPLICATES</code>: Controls whether or not DML operations produced by <span class="italic">Replicat</span> are included in the content that Extract writes to a specific trail or file.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GWUAD302"></a>
+<div class="props_rev_3"><a id="GUID-2E9E61FF-C22F-489E-8CAA-625944D4AAB1"></a>
+<h3 id="GWUAD-GUID-2E9E61FF-C22F-489E-8CAA-625944D4AAB1" class="sect3"><span class="enumeration_section">9.3.2</span> Identifying Replicat Transactions</h3>
+<div>
+<div class="section">
+<p>To configure Extract to identify Replicat transactions, follow the instructions for the database from which Extract will capture data.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GWUAD303"></a>
+<div class="props_rev_3"><a id="GUID-B40C5033-B79B-40D2-BAAE-36EA14984AD9"></a>
+<h4 id="GWUAD-GUID-B40C5033-B79B-40D2-BAAE-36EA14984AD9" class="sect4"><span class="enumeration_section">9.3.2.1</span> DB2 z/OS, DB2 LUW, and DB2 for i</h4>
+<div>
+<div class="section">
+<p>Identify the Replicat user name by using the following parameter statement in the Extract parameter file.</p>
+<pre dir="ltr">
+TRANLOGOPTIONS EXCLUDEUSER <span class="italic">user</span>
+</pre>
+<p>This parameter statement marks all DDL and DML transactions that are generated by this user as Replicat transactions. The user name is included in the transaction record that is read by Extract.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD304"></a>
+<div class="props_rev_3"><a id="GUID-1A77039D-42DB-4D3C-8E3F-B46150175837"></a>
+<h4 id="GWUAD-GUID-1A77039D-42DB-4D3C-8E3F-B46150175837" class="sect4"><span class="enumeration_section">9.3.2.2</span> MySQL</h4>
+<div>
+<div class="section">
+<p>Identify the name of the Replicat checkpoint table by using the following parameter statement in the Extract parameter file.</p>
+<pre dir="ltr">
+TRANLOGOPTIONS FILTERTABLE <span class="italic">table_name</span>
+</pre>
+<p>Replicat writes a checkpoint to the checkpoint table at the end of each of its transactions as part of its checkpoint procedure. (This is the table that is created with the <code class="codeph">ADD CHECKPOINTTABLE</code> command.) Because every Replicat transaction includes a write to this table, it can be used to identify Replicat transactions in a bidirectional configuration. <code class="codeph">FILTERTABLE</code> identifies the name of the checkpoint table, so that Extract ignores transactions that contain any operations on it.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD305"></a>
+<div class="props_rev_3"><a id="GUID-0A182FCC-E196-4F6B-923C-656AD771B0E4"></a>
+<h4 id="GWUAD-GUID-0A182FCC-E196-4F6B-923C-656AD771B0E4" class="sect4"><span class="enumeration_section">9.3.2.3</span> Oracle</h4>
+<div>
+<div class="section">
+<p>There are multiple ways to identify Replicat transaction in an Oracle environment. When Replicat is in classic or integrated mode, you use the following parameters:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>Use <code class="codeph">DBOPTIONS</code> with the <code class="codeph">SETTAG</code> option in the Replicat parameter file. Replicat tags the transactions being applied with the specified value, which identifies those transactions in the redo stream. The default <code class="codeph">SETTAG</code> value is <code class="codeph">00</code>. Valid values are a single TAG value consisting of hexadecimal digits. For more information about tags, see <a class="olink GWURF-GUID-729383C7-BD7F-4B99-8F44-54EAC50215A7" target="_blank" href="../GWURF/dboptions.htm#GWURF-GUID-729383C7-BD7F-4B99-8F44-54EAC50215A7"><span id="GUID-0A182FCC-E196-4F6B-923C-656AD771B0E4__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></a>.</p>
+</li>
+</ul>
+<ul style="list-style-type: disc;">
+<li>
+<p>Use the <code class="codeph">TRANLOGOPTIONS</code> parameter with the <code class="codeph">EXCLUDETAG</code> option in the Extract parameter file. The logmining server associated with that Extract excludes redo that is tagged with the <code class="codeph">SETTAG</code> value.</p>
+<p>The following shows how <code class="codeph">SETTAG</code> can be set in the Replicat parameter file:</p>
+<pre dir="ltr">
+DBOPTIONS SETTAG 0935
+</pre>
+<p>The following shows how <code class="codeph">EXCLUDETAG</code> can be set in the Extract parameter file:</p>
+<pre dir="ltr">
+TRANLOGOPTIONS EXCLUDETAG 0935
+</pre>
+<p>If you are excluding multiple tags, each must have a separate <code class="codeph">TRANLOGOPTIONS EXCLUDETAG</code> statement specified.</p>
+</li>
+</ul>
+<p>You can also use the transaction name or userid of the Replicat user to identify Replicat transactions. You can choose which of these to ignore when you configure Extract. See <a href="configuring-oracle-goldengate-active-active-high-availability.htm#GUID-CDD72C0C-FFFC-48C3-B8A0-E7EBD7E82E28">Preventing the Capture of Replicat Transactions (Oracle)</a>.</p>
+<p>For more information, see <a class="olink GWURF712" target="_blank" href="../GWURF/tranlogoptions.htm#GWURF712"><span class="italic"><span><cite>Reference for Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD306"></a>
+<div class="props_rev_3"><a id="GUID-F8A42291-C5B3-44D9-A468-284B3545189A"></a>
+<h4 id="GWUAD-GUID-F8A42291-C5B3-44D9-A468-284B3545189A" class="sect4"><span class="enumeration_section">9.3.2.4</span> SQL Server</h4>
+<div>
+<div class="section">
+<p>(CDC Extract) Identify the name of the Replicat checkpoint table by using the following parameter statement in the Extract parameter file and ensure that the Replicat checkpoint table has been enabled for supplemental logging with the <code class="codeph">ADD TRANDATA</code> command.</p>
+<pre dir="ltr">
+TRANLOGOPTIONS FILTERTABLE <span class="italic">table_name</span>
+</pre>
+<p>Replicat writes a checkpoint to the checkpoint table at the end of each of its transactions as part of its checkpoint procedure. (This is the table that is created with the <code class="codeph">ADD CHECKPOINTTABLE</code> command). Because every Replicat transaction includes a write to this table, it can be used to identify Replicat transactions in a bi-directional configuration. <code class="codeph">FILTERTABLE</code> identifies the name of the checkpoint table, so that Extract ignores transactions that contain any operations on it.</p>
+<p>(Classic Extract) By default, Extract ignores the Replicat's transactions, however, if you modify the Replicat's transaction name with the <code class="codeph">DBOPTIONS TRANSNAME</code> parameter, then you must exclude those transactions by using the following parameter statement in the Extract parameter file.</p>
+<pre dir="ltr">
+TRANLOGOPTIONS EXCLUDETRANS <span class="italic">transaction_name</span>
+</pre>
+<p>This parameter statement is only required if the Replicat transaction name is set to something other than the default of <code class="codeph">ggs_repl</code>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GWUAD1099"></a>
+<div class="props_rev_3"><a id="GUID-0E2F579D-3215-44FD-97CB-9FDF04CBB2BF"></a>
+<h3 id="GWUAD-GUID-0E2F579D-3215-44FD-97CB-9FDF04CBB2BF" class="sect3"><span class="enumeration_section">9.3.3</span> Replicating DDL in a Bi-directional Configuration</h3>
+<div>
+<div class="section">
+<p>Additional consideration must be taken when replicating DDL bi-directionally, currently only supported for Oracle database. For more information, see <a class="olink GGODB-GUID-21B1050E-836E-4503-9BBD-D81263587AE7" target="_blank" href="../GGODB/managing-ddl-replication-environment.htm#GGODB-GUID-21B1050E-836E-4503-9BBD-D81263587AE7">Managing the DDL Replication Environment</a><span id="GUID-0E2F579D-3215-44FD-97CB-9FDF04CBB2BF__GGODB"><cite>Using Oracle GoldenGate for Oracle Database</cite></span>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GWUAD314"></a>
+<div class="props_rev_3"><a id="GUID-29ECC820-7F46-4F5A-BF4F-6F82FB2E0E81"></a>
+<h2 id="GWUAD-GUID-29ECC820-7F46-4F5A-BF4F-6F82FB2E0E81" class="sect2"><span class="enumeration_section">9.4</span> Managing Conflicts</h2>
+<div>
+<p>Uniform conflict-resolution procedures must be in place on all systems in an active-active configuration. Conflicts should be identified immediately and handled with as much automation as possible; however, different business applications will present their own unique set of requirements in this area.</p>
+<p>Because Oracle GoldenGate is an asynchronous solution, conflicts can occur when modifications are made to identical sets of data on separate systems at (or almost at) the same time. Conflicts occur when the timing of simultaneous changes results in one of these out-of-sync conditions:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>A <span class="bold">uniqueness conflict</span> occurs when Replicat applies an insert or update operation that violates a uniqueness integrity constraint, such as a <code class="codeph">PRIMARY KEY</code> or <code class="codeph">UNIQUE</code> constraint. An example of this conflict type is when two transactions originate from two different databases, and each one inserts a row into a table with the same primary key value.</p>
+</li>
+<li>
+<p>An <span class="bold">update conflict</span> occurs when Replicat applies an update that conflicts with another update to the same row. Update conflicts happen when two transactions that originate from different databases update the same row at nearly the same time. Replicat detects an update conflict when there is a difference between the old values (the before values) that are stored in the trail record and the current values of the same row in the target database.</p>
+</li>
+<li>
+<p>A <span class="bold">delete conflict</span> occurs when two transactions originate at different databases, and one deletes a row while the other updates or deletes the same row. In this case, the row does not exist to be either updated or deleted. Replicat cannot find the row because the primary key does not exist.</p>
+</li>
+</ul>
+<p>For example, UserA on DatabaseA updates a row, and UserB on DatabaseB updates the same row. If UserB's transaction occurs before UserA's transaction is synchronized to DatabaseB, there will be a conflict on the replicated transaction.</p>
+<p>A more complicated example involves three databases and illustrates a more complex ordering conflict. Assume three databases A, B, and C. Suppose a user inserts a row at database A, which is then replicated to database B. Another user then modifies the row at database B, and the row modification is replicated to database C. If the row modification from B arrives at database C before the row insert from database A, C will detect a conflict.</p>
+<p>Where possible, try to minimize or eliminate any chance of conflict. Some ways to do so are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Configure the applications to restrict which columns can be modified in each database. For example, you could limit access based on geographical area, such as by allowing different sales regions to modify only the records of their own customers. As another example, you could allow a customer service application on one database to modify only the <code class="codeph">NAME</code> and <code class="codeph">ADDRESS</code> columns of a customer table, while allowing a financial application on another database to modify only the <code class="codeph">BALANCE</code> column. In each of those cases, there cannot be a conflict caused by concurrent updates to the same record.</p>
+</li>
+<li>
+<p>Keep synchronization latency low. If UserA on DatabaseA and UserB on DatabaseB both update the same rows at about the same time, and UserA's transaction gets replicated to the target row before UserB's transaction is completed, conflict is avoided. See <a href="tuning-performance-oracle-goldengate.htm#GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" title="This chapter contains suggestions for improving the performance of Oracle GoldenGate components.">Tuning the Performance of Oracle GoldenGate</a> for suggestions on improving the performance of the Oracle GoldenGate processes.</p>
+</li>
+</ul>
+<p>To avoid conflicts, replication latency must be kept as low as possible. When conflicts are unavoidable, they must be identified immediately and resolved with as much automation as possible, either through the Oracle GoldenGate Conflict Detection and Resolution (CDR) feature, or through methods developed on your own. Custom methods can be integrated into Oracle GoldenGate processing through the <code class="codeph">SQLEXEC</code> and user exit functionality. See <a href="configuring-conflict-detection-and-resolution.htm#GUID-B14CDCB5-50EC-4797-95FC-9AAEB7F5FBD1" title="This chapter contains instructions for using the Oracle GoldenGate Conflict Detection and Resolution (CDR) feature. Conflict detection and resolution is required in active-active configurations, where Oracle GoldenGate must maintain data synchronization among multiple databases that contain the same data sets.">Configuring Conflict Detection and Resolution</a> for more information about using Oracle GoldenGate to handle conflicts.</p>
+</div>
+</div>
+<a id="GWUAD1094"></a>
+<div class="props_rev_3"><a id="GUID-3F99873F-0C5C-4A94-A58A-8692FA297569"></a>
+<h2 id="GWUAD-GUID-3F99873F-0C5C-4A94-A58A-8692FA297569" class="sect2"><span class="enumeration_section">9.5</span> Additional Information</h2>
+<div>
+<div class="section">
+<p>The following documentation provides additional information of relevance to configuring Oracle GoldenGate.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For additional system requirements, process configuration, and database setup requirements, see the Oracle GoldenGate installation and configuration document for your database type.</p>
+</li>
+<li>
+<p>For detailed instructions on configuring Oracle GoldenGate change capture and delivery groups, see <a href="configuring-online-change-synchronization.htm#GUID-3388C553-994A-4ECD-95C8-A54FC7446E67" title="This chapter describes how to configure online change synchronization.">Configuring Online Change Synchronization</a>.</p>
+</li>
+<li>
+<p>For additional tuning options for Oracle GoldenGate, see <a href="tuning-performance-oracle-goldengate.htm#GUID-CAD4585D-9CC9-4542-AD5C-9FA941896FC9" title="This chapter contains suggestions for improving the performance of Oracle GoldenGate components.">Tuning the Performance of Oracle GoldenGate</a>.</p>
+</li>
+<li>
+<p>For complete syntax and descriptions of the Oracle GoldenGate commands and parameters, see <a class="olink GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB" target="_blank" href="../GWURF/oracle-goldengate-parameters.htm#GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB"><span id="GUID-3F99873F-0C5C-4A94-A58A-8692FA297569__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></a>.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD310"></a><a id="GWUAD309"></a>
+<div class="props_rev_3"><a id="GUID-1866270B-C54B-414E-9134-80C5DE1D375C"></a>
+<h2 id="GWUAD-GUID-1866270B-C54B-414E-9134-80C5DE1D375C" class="sect2"><span class="enumeration_section">9.6</span> Creating an Active-Active Configuration</h2>
+<div>
+<div class="section">
+<p>Refer to <a href="configuring-oracle-goldengate-active-active-high-availability.htm#GUID-1866270B-C54B-414E-9134-80C5DE1D375C__BAGEBIAA">Figure 9-1</a> for a visual representation of the objects you will be creating.</p>
+<div class="figure" id="GUID-1866270B-C54B-414E-9134-80C5DE1D375C__BAGEBIAA">
+<p class="titleinfigure">Figure 9-1 Oracle GoldenGate Configuration for Active-active Synchronization</p>
+<img width="766" height="476" src="img/bidirectional_config.jpg" alt="Description of Figure 9-1 follows" title="Description of Figure 9-1 follows" /><br />
+<a href="img_text/bidirectional_config.htm">Description of "Figure 9-1 Oracle GoldenGate Configuration for Active-active Synchronization"</a></div>
+<!-- class="figure" --></div>
+<!-- class="section" --></div>
+<a id="GWUAD311"></a>
+<div class="sect3"><a id="GUID-CD736B75-6C0B-4EE4-9DA4-69F1ABB3594D"></a>
+<h3 id="GWUAD-GUID-CD736B75-6C0B-4EE4-9DA4-69F1ABB3594D" class="sect3"><span class="enumeration_section">9.6.1</span> Prerequisites on Both Systems</h3>
+<div>
+<p>Perform these prerequisite tasks on both systems:</p>
+<ol>
+<li>
+<p>Create a Replicat checkpoint table (unless using Oracle integrated Replicat). See <a href="configuring-online-change-synchronization.htm#GUID-8C910642-0080-487C-A162-9633FB11E9E9">Creating a Checkpoint Table</a> for instructions.</p>
+</li>
+<li>
+<p>Configure the Manager process. See <a href="configuring-manager-and-network-communications.htm#GUID-5005AF6D-76D2-4C72-80E2-AD33C24F0C26" title="This chapter describes how to configure the Manager process and specify ports for local and remote network communications.">Configuring Manager and Network Communications</a> for instructions.</p>
+</li>
+</ol>
+</div>
+</div>
+<a id="GWUAD1068"></a><a id="GWUAD1069"></a><a id="GWUAD1070"></a><a id="GWUAD312"></a>
+<div class="sect3"><a id="GUID-BF791E46-0B3C-4CDD-8BB1-092096D37EF1"></a>
+<h3 id="GWUAD-GUID-BF791E46-0B3C-4CDD-8BB1-092096D37EF1" class="sect3"><span class="enumeration_section">9.6.2</span> Configuration from Primary System to Secondary System</h3>
+<div>
+<p>These steps add the processes necessary to send data from the primary system to the secondary database.</p>
+<div class="section">
+<p class="subhead3">To Configure the Primary Extract Group</p>
+</div>
+<!-- class="section" -->
+<p>Perform these steps on the primary system.</p>
+<ol>
+<li>
+<p>Use the <code class="codeph">ADD EXTRACT</code> command to create a primary Extract group. For documentation purposes, this group is called <code class="codeph"><span class="codeinlineitalic">ext_1</span></code>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">ext_1</span>, {TRANLOG | INTEGRATED TRANLOG}, BEGIN <span class="italic">time</span>
+</pre></li>
+<li>
+<p>Use the <code class="codeph">ADD EXTTRAIL</code> command to add a local trail. For documentation purposes, this trail is called <code class="codeph"><span class="codeinlineitalic">local_trail_1</span></code>.</p>
+<pre dir="ltr">
+ADD EXTTRAIL <span class="italic">local_trail_1</span>, EXTRACT <span class="italic">ext_1</span>
+</pre>
+<p>For <code class="codeph">EXTRACT</code>, specify the <code class="codeph"><span class="codeinlineitalic">ext_1</span></code> group to write to this trail</p>
+</li>
+<li>
+<p>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <code class="codeph"><span class="codeinlineitalic">ext_1</span></code> group. Include the following parameters plus any others that apply to your database environment. For possible additional required parameters, see the Oracle GoldenGate installation and setup guide for your database.</p>
+<pre dir="ltr">
+-- Identify the Extract group:
+EXTRACT <span class="italic">ext_1</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn_1</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Specify the local trail that this Extract writes to
+-- and the encryption algorithm:
+ENCRYPTTRAIL <span class="italic">algorithm</span>
+EXTTRAIL <span class="italic">local_trail_1</span>
+-- Exclude Replicat transactions. Uncomment ONE of the following:
+-- DB2 z/OS, DB2 LUW, DB2 IBM i, and Oracle (classic capture):
+-- TRANLOGOPTIONS EXCLUDEUSER <span class="italic">Replicat_user</span>
+-- Oracle (classic capture) alternative to EXCLUDEUSER:
+-- EXCLUDEUSERID <span class="italic">Oracle_uid</span>
+-- Oracle integrated capture:
+-- EXCLUDETAG <span class="italic">tag</span>
+-- SQL Server:
+-- TRANLOGOPTIONS EXCLUDETRANS <span class="italic">transaction_name</span>
+-- -- Teradata:
+-- SQLEXEC 'SET SESSION OVERRIDE REPLICATION ON;'
+-- SQLEXEC 'COMMIT;'
+-- Specify API commands if Teradata:
+VAM library name, PARAMS ('<span class="italic">param</span>' [, '<span class="italic">param</span>'] [, ...])
+-- Capture before images for conflict resolution:
+GETBEFORECOLS (ON <span class="italic">operation</span> {ALL | KEY | KEYINCLUDING (<span class="italic">col_list</span>) | ALLEXCLUDING (<span class="italic">col_list</span>)})
+-- Log all scheduling columns for CDR and if using integrated Replicat
+LOGALLSUPCOLS
+-- Specify tables to be captured and (optional) columns to fetch:
+TABLE [<span class="italic">container</span>.|<span class="italic">catalog</span>.]<span class="italic">owner</span>.* [, FETCHCOLS <span class="italic">cols</span> | FETCHCOLSEXCEPT <span class="italic">cols</span>];
+</pre>
+<div class="infobox-note" id="GUID-BF791E46-0B3C-4CDD-8BB1-092096D37EF1__GUID-3BB902DC-CE1D-4D54-A715-FBD010DDC7A3">
+<p class="notep1">Note:</p>
+<p>The VAM parameter in the examples is used only for heterogeneous databases and does not apply to Oracle Database.</p>
+</div>
+</li>
+</ol>
+<div class="section">
+<p class="subhead3">To Configure the Data Pump</p>
+</div>
+<!-- class="section" -->
+<p>Perform these steps on the primary system.</p>
+<ol>
+<li>
+<p>Use the <code class="codeph">ADD EXTRACT</code> command to create a data pump group. For documentation purposes, this group is called <code class="codeph"><span class="codeinlineitalic">pump_1</span></code>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">pump_1</span>, EXTTRAILSOURCE <span class="italic">local_trail_1</span>, BEGIN <span class="italic">time</span>
+</pre>
+<p>For <code class="codeph">EXTTRAILSOURCE</code>, specify <code class="codeph"><span class="codeinlineitalic">local_trail_1</span></code> as the data source.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">ADD RMTTRAIL</code> command to add a remote trail that will be created on the secondary system. For documentation purposes, this trail is called <code class="codeph"><span class="codeinlineitalic">remote_trail_1</span></code>.</p>
+<pre dir="ltr">
+ADD RMTTRAIL <span class="italic">remote_trail_1</span>, EXTRACT <span class="italic">pump_1</span>
+</pre>
+<p>For <code class="codeph">EXTRACT</code>, specify the <code class="codeph"><span class="codeinlineitalic">pump_1</span></code> data pump to write to this trail.</p>
+<p>See <a class="olink GWURF227" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF227"><span class="italic"><span id="GUID-BF791E46-0B3C-4CDD-8BB1-092096D37EF1__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a> for additional <code class="codeph">ADD RMTTRAIL</code> options.</p>
+<p>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <code class="codeph"><span class="codeinlineitalic">pump_1</span></code> group. Include the following parameters plus any others that apply to your database environment.</p>
+<pre dir="ltr">
+-- Identify the data pump group:
+EXTRACT <span class="italic">pump_1</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn_1</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Decrypt the data only if the data pump must process it.
+-- DECRYPTTRAIL
+-- Specify the name or IP address of the secondary system
+-- and optional encryption of data over TCP/IP:
+RMTHOSTOPTIONS <span class="italic">system_2</span>, MGRPORT <span class="italic">port_number</span>, ENCRYPT <span class="italic">encryption_options</span>
+-- Specify remote trail and encryption algorithm on secondary system:
+ENCRYPTTRAIL <span class="italic">algorithm</span>
+RMTTRAIL <span class="italic">remote_trail_1</span>
+-- Specify tables to be captured:
+TABLE [<span class="italic">container</span>.|<span class="italic">catalog</span>.]<span class="italic">owner</span>.*;
+</pre></li>
+</ol>
+<div class="section">
+<p class="subhead3">To Configure the Replicat Group</p>
+</div>
+<!-- class="section" -->
+<p>Perform these steps on the secondary system.</p>
+<ol>
+<li>
+<p>Use the <code class="codeph">ADD REPLICAT</code> command to create a Replicat group. For documentation purposes, this group is called <code class="codeph"><span class="codeinlineitalic">rep_1</span></code>.</p>
+<pre dir="ltr">
+ADD REPLICAT <span class="italic">rep_1</span>
+[, INTEGRATED | COORDINATED [MAXTHREADS <span class="italic">number</span>]]
+, EXTTRAIL <span class="italic">remote_trail_1</span>, BEGIN <span class="italic">time</span>
+</pre>
+<p>For <code class="codeph">EXTTRAIL</code>, specify <code class="codeph"><span class="codeinlineitalic">remote_trail_1</span></code> as the trail that this Replicat reads.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <code class="codeph"><span class="codeinlineitalic">rep_1</span></code> group. Include the following parameters plus any others that apply to your database environment. For possible additional required parameters, see the Oracle GoldenGate installation and setup guide for your database.</p>
+<pre dir="ltr">
+-- Identify the Replicat group:
+REPLICAT <span class="italic">rep_1</span>
+-- State that source and target definitions are identical:
+ASSUMETARGETDEFS
+-- Specify database login information as needed for the database:
+[TARGETDB <span class="italic">dsn_2</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Specify error handling rules:
+REPERROR (<span class="italic">error</span>, <span class="italic">response</span>)
+-- Set redo tag for Oracle only replicat via settag
+-- Default is 00.
+SETTAG <span class="italic">tag_value</span>
+-- Specify tables for delivery, threads if coordinated Replicat 
+-- and conflict-resolution:
+MAP [<span class="italic">container</span>.|<span class="italic">catalog</span>.]<span class="italic">owner</span>.*, TARGET <span class="italic">owner</span>.*, COMPARECOLS (ON <span class="italic">operation</span> {ALL | KEY | KEYINCLUDING (<span class="italic">col_list</span>) | ALLEXCLUDING (<span class="italic">col_list</span>)}), RESOLVECONFLICT (<span class="italic">conflict type</span> (<span class="italic">resolution_name</span>, <span class="italic">resolution_type</span> COLS (<span class="italic">col</span>[,...]))
+[, THREAD (<span class="italic">thread_ID</span>)]
+[, THREADRANGE (<span class="italic">thread_range</span>[, <span class="italic">column_list</span>])]
+;
+-- Specify mapping of exceptions to exceptions table:
+MAP [<span class="italic">container</span>.|<span class="italic">catalog</span>.]<span class="italic">owner</span>.*, TARGET <span class="italic">owner</span>.<span class="italic">exceptions</span>, EXCEPTIONSONLY;
+</pre></li>
+</ol>
+</div>
+</div>
+<a id="GWUAD1071"></a><a id="GWUAD1072"></a><a id="GWUAD1073"></a><a id="GWUAD313"></a>
+<div class="sect3"><a id="GUID-166D68D6-0C3C-4D1F-BAF4-B86A043CD621"></a>
+<h3 id="GWUAD-GUID-166D68D6-0C3C-4D1F-BAF4-B86A043CD621" class="sect3"><span class="enumeration_section">9.6.3</span> Configuration from Secondary System to Primary System</h3>
+<div>
+<p>These steps add the processes necessary to send data from the secondary system to the primary database.</p>
+<div class="section">
+<p class="subhead3">To Configure the Primary Extract Group</p>
+</div>
+<!-- class="section" -->
+<p>Perform these steps on the secondary system.</p>
+<div class="infobox-note" id="GUID-166D68D6-0C3C-4D1F-BAF4-B86A043CD621__GUID-0F00F1C7-B870-43F2-80D6-0F27CE5091AB">
+<p class="notep1">Note:</p>
+<p>This is a reverse image of the configuration that you just created.</p>
+</div>
+<ol>
+<li>
+<p>Use the <code class="codeph">ADD EXTRACT</code> command to create a primary Extract group. For documentation purposes, this group is called <code class="codeph"><span class="codeinlineitalic">ext_2</span></code>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">ext_2</span>, {TRANLOG | INTEGRATED TRANLOG}, BEGIN <span class="italic">time</span>
+</pre></li>
+<li>
+<p>Use the <code class="codeph">ADD EXTTRAIL</code> command to add a local trail. For documentation purposes, this trail is called <code class="codeph"><span class="codeinlineitalic">local_trail_2</span></code>.</p>
+<pre dir="ltr">
+ADD EXTTRAIL <span class="italic">local_trail_2</span>, EXTRACT <span class="italic">ext_2</span>
+</pre>
+<p>For <code class="codeph">EXTRACT</code>, specify the <code class="codeph"><span class="codeinlineitalic">ext_2</span></code> group to write to this trail.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <code class="codeph"><span class="codeinlineitalic">ext_2</span></code> group. Include the following parameters plus any others that apply to your database environment. For possible additional required parameters, see the Oracle GoldenGate installation and setup guide for your database.</p>
+<pre dir="ltr">
+-- Identify the Extract group:
+EXTRACT <span class="italic">ext_2</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn_2</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Specify the local trail that this Extract writes to
+-- and the encryption algorithm:
+ENCRYPTTRAIL <span class="italic">algorithm</span>
+EXTTRAIL <span class="italic">local_trail_2</span> 
+-- Exclude Replicat transactions. Uncomment ONE of the following:
+-- DB2 z/OS, DB2 LUW, DB2 IBM i, and Oracle:
+-- TRANLOGOPTIONS EXCLUDEUSER <span class="italic">Replicat_user</span>
+-- Oracle alternative to EXCLUDEUSER:
+-- EXCLUDEUSERID <span class="italic">Oracle_uid</span>
+-- Oracle integrated capture:
+-- EXCLUDETAG <span class="italic">tag</span>
+-- SQL Server:
+-- TRANLOGOPTIONS EXCLUDETRANS <span class="italic">transaction_name</span>
+---- Teradata:
+-- SQLEXEC 'SET SESSION OVERRIDE REPLICATION ON;'
+-- SQLEXEC 'COMMIT;'
+-- Oracle:
+-- TRACETABLE <span class="italic">trace_table_name</span>
+-- Log all scheduling columns for CDR and if using integrated Replicat
+LOGALLSUPCOLS
+-- Capture before images for conflict resolution:
+GETBEFORECOLS (ON <span class="italic">operation</span> {ALL | KEY | KEYINCLUDING (<span class="italic">col_list</span>) | ALLEXCLUDING (<span class="italic">col_list</span>)})
+-- Specify tables to be captured and (optional) columns to fetch:
+TABLE [<span class="italic">container</span>.|<span class="italic">catalog</span>.]<span class="italic">owner</span>.* [, FETCHCOLS <span class="italic">cols</span> | FETCHCOLSEXCEPT <span class="italic">cols</span>];
+</pre>
+<div class="infobox-note" id="GUID-166D68D6-0C3C-4D1F-BAF4-B86A043CD621__GUID-21828B69-2C8F-46FD-BBE5-20A0DA990AB8">
+<p class="notep1">Note:</p>
+<p>To replicate Oracle DBFS data, specify the internally generated local read-write DBFS tables in the <code class="codeph">TABLE</code> statement on each node. For more information on identifying these tables and configuring DBFS for propagation by Oracle GoldenGate, see <a class="olink GGODB-GUID-40BACF8D-1603-4FAB-B8E4-CE1E6F46571A" target="_blank" href="../GGODB/preparing-dbfs-active-active-configuration.htm#GGODB-GUID-40BACF8D-1603-4FAB-B8E4-CE1E6F46571A">Applying the Required Patch</a> in <span class="italic"><span id="GUID-166D68D6-0C3C-4D1F-BAF4-B86A043CD621__GGODB"><cite>Using Oracle GoldenGate for Oracle Database</cite></span></span>.</p>
+</div>
+</li>
+</ol>
+<div class="section">
+<p class="subhead3">To Configure the Data Pump</p>
+</div>
+<!-- class="section" -->
+<p>Perform these steps on the secondary system.</p>
+<ol>
+<li>
+<p>Use the <code class="codeph">ADD EXTRACT</code> command to create a data pump group. For documentation purposes, this group is called <code class="codeph"><span class="codeinlineitalic">pump_2</span></code>.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">pump_2</span>, EXTTRAILSOURCE <span class="italic">local_trail_2</span>, BEGIN <span class="italic">time</span>
+</pre>
+<p>For <code class="codeph">EXTTRAILSOURCE</code>, specify <code class="codeph"><span class="codeinlineitalic">local_trail_2</span></code> as the data source.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">ADD RMTTRAIL</code> command to add a remote trail that will be created on the primary system. For documentation purposes, this trail is called <code class="codeph"><span class="codeinlineitalic">remote_trail_2</span></code>.</p>
+<pre dir="ltr">
+ADD RMTTRAIL <span class="italic">remote_trail_2</span>, EXTRACT <span class="italic">pump_2</span>
+</pre>
+<p>For <code class="codeph">EXTRACT</code>, specify the <code class="codeph"><span class="codeinlineitalic">pump_2</span></code> data pump to write to this trail.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <code class="codeph"><span class="codeinlineitalic">pump_2</span></code> group. Include the following parameters plus any others that apply to your database environment.</p>
+<pre dir="ltr">
+-- Identify the data pump group:
+EXTRACT <span class="italic">pump_2</span>
+-- Specify database login information as needed for the database:
+[SOURCEDB <span class="italic">dsn_2</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Decrypt the data only if the data pump must process it.
+-- DECRYPTTRAIL
+-- Specify the name or IP address of the primary system
+-- and optional encryption of data over TCP/IP:
+RMTHOSTOPTIONS <span class="italic">system_1</span>, MGRPORT <span class="italic">port_number</span>, ENCRYPT <span class="italic">encryption_options</span>
+-- Specify the remote trail and encryption algorithm on the primary system:
+ENCRYPTTRAIL <span class="italic">algorithm</span>
+RMTTRAIL <span class="italic">remote_trail_2</span> 
+-- Specify tables to be captured:
+TABLE [<span class="italic">container</span>.|<span class="italic">catalog</span>.]<span class="italic">owner</span>.*;
+</pre>
+<div class="infobox-note" id="GUID-166D68D6-0C3C-4D1F-BAF4-B86A043CD621__GUID-FFF65F75-B1BE-4EC4-91AA-71E087A734D5">
+<p class="notep1">Note:</p>
+<p>To replicate Oracle DBFS data, specify the internally generated local read-write DBFS tables in the <code class="codeph">TABLE</code> statement on each node. For more information on identifying these tables and configuring DBFS for propagation by Oracle GoldenGate, see <a class="olink GGODB-GUID-B571096D-71E3-4FB7-8100-579B96A966E7" target="_blank" href="../GGODB/preparing-dbfs-active-active-configuration.htm#GGODB-GUID-B571096D-71E3-4FB7-8100-579B96A966E7">Configuring the DBFS File System</a> <span><cite>Using Oracle GoldenGate for Oracle Database</cite></span>.</p>
+</div>
+</li>
+</ol>
+<div class="section">
+<p class="subhead3">To Configure the Replicat Group</p>
+</div>
+<!-- class="section" -->
+<p>Perform these steps on the primary system.</p>
+<ol>
+<li>
+<p>Use the <code class="codeph">ADD REPLICAT</code> command to create a Replicat group. For documentation purposes, this group is called <code class="codeph"><span class="codeinlineitalic">rep_2</span></code>.</p>
+<pre dir="ltr">
+ADD REPLICAT <span class="italic">rep_2</span>
+[, INTEGRATED | COORDINATED [MAXTHREADS <span class="italic">number</span>]]
+, EXTTRAIL <span class="italic">remote_trail_2</span>, BEGIN <span class="italic">time</span>
+</pre>
+<p>For <code class="codeph">EXTTRAIL</code>, specify <code class="codeph"><span class="codeinlineitalic">remote_trail_2</span></code> as the trail that this Replicat reads.</p>
+<p>See <a class="olink GWURF-GUID-933CE949-A2B1-4BD8-95EA-C95805B4DDD0" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF-GUID-933CE949-A2B1-4BD8-95EA-C95805B4DDD0"><code class="codeph">ADD RMTTRAIL</code></a> in <span class="italic"><span id="GUID-166D68D6-0C3C-4D1F-BAF4-B86A043CD621__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span>for detailed information about these and other options that may be required for your installation.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">EDIT PARAMS</code> command to create a parameter file for the <code class="codeph"><span class="codeinlineitalic">rep_2</span></code> group. Include the following parameters plus any others that apply to your database environment.</p>
+<pre dir="ltr">
+-- Identify the Replicat group:
+REPLICAT <span class="italic">rep_2</span>
+-- State that source and target definitions are identical:
+ASSUMETARGETDEFS
+-- Specify database login information as needed for the database:
+[TARGETDB <span class="italic">dsn_1</span>][, USERIDALIAS <span class="italic">alias</span>]
+-- Specify error handling rules:
+REPERROR (<span class="italic">error</span>, <span class="italic">response</span>)
+-- Specify tables for delivery, threads if coordinated Replicat 
+-- and conflict-resolution:
+MAP [<span class="italic">container</span>.|<span class="italic">catalog</span>.]<span class="italic">owner</span>.*, TARGET <span class="italic">owner</span>.*, COMPARECOLS (ON <span class="italic">operation</span> {ALL | KEY | KEYINCLUDING (<span class="italic">col_list</span>) | ALLEXCLUDING (<span class="italic">col_list</span>)}), RESOLVECONFLICT (<span class="italic">conflict type</span> (<span class="italic">resolution_name</span>, <span class="italic">resolution_type</span> COLS (<span class="italic">col</span>[,...]))
+[, THREAD (<span class="italic">thread_ID</span>)]
+[, THREADRANGE (<span class="italic">thread_range</span>[, <span class="italic">column_list</span>])]
+;
+-- Specify mapping of exceptions to exceptions table:
+MAP [<span class="italic">container</span>.|<span class="italic">catalog</span>.]<span class="italic">owner</span>.*, TARGET <span class="italic">owner</span>.<span class="italic">exceptions</span>, EXCEPTIONSONLY;
+</pre>
+<div class="infobox-note" id="GUID-166D68D6-0C3C-4D1F-BAF4-B86A043CD621__GUID-753FCB12-A76D-46EE-BEA8-4F4C77518343">
+<p class="notep1">Note:</p>
+<p>To replicate Oracle DBFS data, specify the internally generated local read-write DBFS tables in the <code class="codeph">TABLE</code> statement on each node.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8">
+<table class="cellalignment6">
+<tr>
+<td class="cellalignment5"><a href="configuring-oracle-goldengate-maintain-live-standby-database.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment5"><a href="configuring-conflict-detection-and-resolution.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

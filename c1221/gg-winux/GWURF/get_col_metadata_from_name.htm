@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>GET_COL_METADATA_FROM_NAME</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="get_col_metadata_from_index.htm" title="Previous" type="text/html" />
+<link rel="Next" href="get_column_index_from_name.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E"></a> <span id="PAGE" style="display:none;">423/459</span> <!-- End Header -->
+<a id="GWURF850"></a>
+<h1 id="GWURF-GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E" class="sect1"><span class="enumeration_section">6.16</span> GET_COL_METADATA_FROM_NAME</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract and Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">GET_COL_METADATA_FROM_NAME</code> function to retrieve column metadata by specifying the name of the desired column. If the character session of the user exit is set with <code class="codeph">SET_SESSION_CHARSET</code> to a value other than the default character set of the operating system, as defined in <code class="codeph">ULIB_CS_DEFAULT</code> in the <code class="codeph">ucharset.h</code> file, the character data that is exchanged between the user exit and the process is interpreted in the session character set.</p>
+<p>If the database is case-sensitive, object names must be specified in the same letter case as they are defined in the hosting database; otherwise, the case does not matter.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+#include "usrdecs.h"
+short result_code;
+col_metadata_def column_meta_rec;
+ERCALLBACK (GET_COL_METADATA_FROM_NAME, &amp;column_meta_rec, &amp;result_code);
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Buffer</p>
+<pre dir="ltr">
+typedef struct
+{
+  short column_index;
+  char *column_name;
+  long max_name_length;
+  short native_data_type;
+  short gg_data_type;
+  short gg_sub_data_type;
+  short is_nullable;
+  short is_part_of_key;
+  short key_column_index;
+  short length;
+  short precision;
+  short scale;
+  short source_or_target;
+} col_metadata_def;
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Input</p>
+<dl>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-65D6FCE7-48A4-4157-94E0-0CE832333401"><!-- --></a><code class="codeph">column_name</code></dt>
+<dd>
+<p>The column name of the column value to be returned.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-AA22C5A3-5BE9-4091-94D8-B97F06D0F29B"><!-- --></a><code class="codeph">max_name_length</code></dt>
+<dd>
+<p>The maximum length of the returned column name. Typically, the maximum length is the length of the name buffer. Since the returned name is null-terminated, the maximum length should equal the maximum length of the column name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-221C76AD-DCA0-4A16-BCC2-5710218CF39C"><!-- --></a><code class="codeph">source_or_target</code></dt>
+<dd>
+<p>One of the following to indicate whether the source or target record is being compressed.</p>
+<pre dir="ltr">
+EXIT_FN_SOURCE_VAL
+EXIT_FN_TARGET_VAL
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Output</p>
+<dl>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-FCD8C83D-04C8-4E34-B0F9-9D4F46587AC0"><!-- --></a><code class="codeph">column_index</code></dt>
+<dd>
+<p>The column index of the column value to be returned.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-59330EDB-CAFA-4168-958B-867ED7C9ED40"><!-- --></a><code class="codeph">actual_name_length</code></dt>
+<dd>
+<p>The actual length of the returned name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-F97D6024-0B5A-4199-BD2A-6D2EA189F36C"><!-- --></a><code class="codeph">source_or_target</code></dt>
+<dd>
+<p>One of the following to indicate whether the source or target record is being compressed.</p>
+<pre dir="ltr">
+EXIT_FN_SOURCE_VAL
+EXIT_FN_TARGET_VAL
+</pre></dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-A76F0862-6C46-4EBE-9BB7-C917CEE5D83A"><!-- --></a><code class="codeph">value_truncated</code></dt>
+<dd>
+<p>A flag (<code class="codeph">0</code> or <code class="codeph">1</code>) to indicate whether or not the value was truncated. Truncation occurs if the length of the column name plus the null terminator exceeds the maximum buffer length.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-422F067B-A1B3-48E7-B93A-3D7111EFEDF0"><!-- --></a><code class="codeph">native_data_type</code></dt>
+<dd>
+<p>The native (to the database) data type of the column.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-A6CF86CB-5912-4375-88BE-F5827D6AF962"><!-- --></a><code class="codeph">gg_data_type</code></dt>
+<dd>
+<p>The Oracle GoldenGate data type of the column.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-1FBA781C-6A26-4799-BD30-878F4679FF57"><!-- --></a><code class="codeph">gg_sub_data_type</code></dt>
+<dd>
+<p>The Oracle GoldenGate sub-type of the column.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-45A035D3-907B-4D1E-BDCB-EA8552F9FD3F"><!-- --></a><code class="codeph">is_nullable</code></dt>
+<dd>
+<p>Flag indicating whether the column permits a null value (<code class="codeph">TRUE</code> or <code class="codeph">FALSE</code>).</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-F1CBB081-7E23-4DB1-B3B7-25D4692AEAAF"><!-- --></a><code class="codeph">is_part_of_key</code></dt>
+<dd>
+<p>Flag (<code class="codeph">TRUE</code> or <code class="codeph">FALSE</code>) indicating whether the column is part of the key that is being used by Oracle GoldenGate.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-8564DB75-443B-4E1F-8F65-F71D1DC8CCB5"><!-- --></a><code class="codeph">key_column_index</code></dt>
+<dd>
+<p>Indicates the order of the columns in the index. For example, the following table has two key columns that are defined in one order in the table and another in the index definition.</p>
+<pre dir="ltr">
+CREATE TABLE tcustmer
+(
+cust_code        VARCHAR2(4),
+name             VARCHAR2(30),
+city             VARCHAR2(20),
+state            CHAR(2),
+PRIMARY KEY (city, cust_code)
+USING INDEX
+);
+</pre>
+<p>The return is as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">cust_code</code> returns <code class="codeph">1</code></p>
+</li>
+<li>
+<p><code class="codeph">name</code> returns <code class="codeph">-1</code></p>
+</li>
+<li>
+<p><code class="codeph">city</code> returns <code class="codeph">0</code></p>
+</li>
+<li>
+<p><code class="codeph">state</code> returns <code class="codeph">-1</code></p>
+</li>
+</ul>
+<p>If the column is part of the key, its order in the index is returned as an integer.</p>
+<p>If the column is not part of the key, a value of -1 is returned.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-5D970631-CC19-449C-A9AB-DEA243AF574E"><!-- --></a><code class="codeph">length</code></dt>
+<dd>
+<p>Returns the length of the column.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-B31C8A43-46DE-4357-BDE7-1A88E65FDF03"><!-- --></a><code class="codeph">precision</code></dt>
+<dd>
+<p>If a numeric data type, returns the precision of the column.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-511B82E3-74B2-42AD-8E72-E9F25B372C7E__GUID-89B87C93-E168-4D37-A9FC-5491B6B4215D"><!-- --></a><code class="codeph">scale</code></dt>
+<dd>
+<p>If a numeric data type, returns the scale.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Return Values</p>
+<pre dir="ltr">
+EXIT_FN_RET_INVALID_PARAM
+EXIT_FN_RET_INVALID_CONTEXT
+EXIT_FN_RET_EXCEEDED_MAX_LENGTH
+EXIT_FN_RET_INVALID_COLUMN
+EXIT_FN_RET_OK
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="get_col_metadata_from_index.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="get_column_index_from_name.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Configuring Conflict Detection and Resolution</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter contains instructions for using the Oracle GoldenGate Conflict Detection and Resolution (CDR) feature. Conflict detection and resolution is required in active-active configurations, where Oracle GoldenGate must maintain data synchronization among multiple databases that contain the same data sets." />
+<meta name="dcterms.created" content="2018-07-19T06:21:43Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66357-07" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="configuring-oracle-goldengate-active-active-high-availability.htm" title="Previous" type="text/html" />
+<link rel="Next" href="configuring-oracle-goldengate-security.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-B14CDCB5-50EC-4797-95FC-9AAEB7F5FBD1"></a> <span id="PAGE" style="display:none;">17/34</span> <!-- End Header -->
+<a id="GWUAD1000"></a><a id="GWUAD999"></a>
+<h1 id="GWUAD-GUID-B14CDCB5-50EC-4797-95FC-9AAEB7F5FBD1" class="sect1"><span class="enumeration_chapter">10</span> Configuring Conflict Detection and Resolution</h1>
+<div>
+<div><span>This chapter contains instructions for using the Oracle GoldenGate Conflict Detection and Resolution (CDR) feature. Conflict detection and resolution is required in active-active configurations, where Oracle GoldenGate must maintain data synchronization among multiple databases that contain the same data sets.</span></div>
+<p>This chapter includes the following sections:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><a href="configuring-conflict-detection-and-resolution.htm#GUID-665D5560-F83B-4799-A44A-A4A2826FE2A0">Overview of the Oracle GoldenGate CDR Feature</a></p>
+</li>
+<li>
+<p><a href="configuring-conflict-detection-and-resolution.htm#GUID-6D9D369B-9E05-4816-AE6E-851C27B05F9E">Configuring Oracle GoldenGate CDR</a></p>
+</li>
+<li>
+<p><a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a></p>
+</li>
+<li>
+<p><a href="configuring-conflict-detection-and-resolution.htm#GUID-3183C4DD-7566-427B-BF85-D28EE3EEE24D">CDR Example 2: UPDATEROWEXISTS with USEDELTA and USEMAX</a></p>
+</li>
+<li>
+<p><a href="configuring-conflict-detection-and-resolution.htm#GUID-C1889BE4-1E9A-4A6C-A72B-5E89B8D2A6FD">CDR Example 3: UPDATEROWEXISTS with USEDELTA, USEMAX, and IGNORE</a></p>
+</li>
+</ul>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-665D5560-F83B-4799-A44A-A4A2826FE2A0">Overview of the Oracle GoldenGate CDR Feature</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-6D9D369B-9E05-4816-AE6E-851C27B05F9E">Configuring Oracle GoldenGate CDR</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-3183C4DD-7566-427B-BF85-D28EE3EEE24D">CDR Example 2: UPDATEROWEXISTS with USEDELTA and USEMAX</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-C1889BE4-1E9A-4A6C-A72B-5E89B8D2A6FD">CDR Example 3: UPDATEROWEXISTS with USEDELTA, USEMAX, and IGNORE</a><br /></li>
+</ul>
+</div>
+<a id="GWUAD315"></a>
+<div class="props_rev_3"><a id="GUID-665D5560-F83B-4799-A44A-A4A2826FE2A0"></a>
+<h2 id="GWUAD-GUID-665D5560-F83B-4799-A44A-A4A2826FE2A0" class="sect2"><span class="enumeration_section">10.1</span> Overview of the Oracle GoldenGate CDR Feature</h2>
+<div>
+<p>Oracle GoldenGate Conflict Detection and Resolution (CDR) provides basic conflict resolution routines that:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Resolve a uniqueness conflict for an <code class="codeph">INSERT</code>.</p>
+</li>
+<li>
+<p>Resolve a "no data found" conflict for an <code class="codeph">UPDATE</code> when the row exists, but the before image of one or more columns is different from the current value in the database.</p>
+</li>
+<li>
+<p>Resolve a "no data found" conflict for an <code class="codeph">UPDATE</code> when the row does not exist.</p>
+</li>
+<li>
+<p>Resolve a "no data found" conflict for a <code class="codeph">DELETE</code> when the row exists, but the before image of one or more columns is different from the current value in the database.</p>
+</li>
+<li>
+<p>Resolve a "no data found" conflict for a <code class="codeph">DELETE</code> when the row does not exist.</p>
+</li>
+</ul>
+<p>To use conflict detection and resolution (CDR), the target database must reside on a Windows, Linux, or UNIX system. It is not supported for databases on the NonStop platform.</p>
+<p>CDR supports data types that can be compared with simple SQL and without explicit conversion:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">NUMERIC</code></p>
+</li>
+<li>
+<p><code class="codeph">DATE</code></p>
+</li>
+<li>
+<p><code class="codeph">TIMESTAMP</code></p>
+</li>
+<li>
+<p><code class="codeph">CHAR/NCHAR</code></p>
+</li>
+<li>
+<p><code class="codeph">VARCHAR/ NVARCHAR</code></p>
+</li>
+</ul>
+<p>This means that these column types can be used with the <code class="codeph">COMPARECOLS</code> parameter, the <code class="codeph">GETBEFORECOLS</code> parameter, and as the resolution column in the <code class="codeph">USEMIN</code> and <code class="codeph">USEMAX</code> options of the <code class="codeph">RESOLVECONFLICT</code> parameter. Only <code class="codeph">NUMERIC</code> columns can be used for the <code class="codeph">USEDELTA</code> option of <code class="codeph">RESOLVECONFLICT</code>. Do not use CDR for columns that contain LOBs, abstract data types (ADT), or user-defined types (UDT).</p>
+<p>Conflict resolution is not performed when Replicat operates in <code class="codeph">BATCHSQL</code> mode. If a conflict occurs in <code class="codeph">BATCHSQL</code> mode, Replicat reverts to <code class="codeph">GROUPTRANSOPS</code> mode, and then to single-transaction mode. Conflict detection occurs in all three modes. For more information, see <a class="olink GWURF404" target="_blank" href="../GWURF/batchsql.htm#GWURF404"><span class="italic"><span id="GUID-665D5560-F83B-4799-A44A-A4A2826FE2A0__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-B14CDCB5-50EC-4797-95FC-9AAEB7F5FBD1" title="This chapter contains instructions for using the Oracle GoldenGate Conflict Detection and Resolution (CDR) feature. Conflict detection and resolution is required in active-active configurations, where Oracle GoldenGate must maintain data synchronization among multiple databases that contain the same data sets.">Configuring Conflict Detection and Resolution</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD316"></a>
+<div class="props_rev_3"><a id="GUID-6D9D369B-9E05-4816-AE6E-851C27B05F9E"></a>
+<h2 id="GWUAD-GUID-6D9D369B-9E05-4816-AE6E-851C27B05F9E" class="sect2"><span class="enumeration_section">10.2</span> Configuring Oracle GoldenGate CDR</h2>
+<div>
+<div class="section">
+<p>Follow these steps to configure the source database, target database, and Oracle GoldenGate for conflict detection and resolution. These steps are:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p><a href="configuring-conflict-detection-and-resolution.htm#GUID-AD77CF1B-BA0F-43E1-944A-7B2376BB04F4">Making the Required Column Values Available to Extract</a></p>
+</li>
+<li>
+<p><a href="configuring-conflict-detection-and-resolution.htm#GUID-41225550-0162-4CB5-A65F-FF64A557BDA9">Configuring the Oracle GoldenGate Parameter Files for Conflict Resolution</a></p>
+</li>
+<li>
+<p><a href="configuring-conflict-detection-and-resolution.htm#GUID-6C54492C-4B34-4354-A1CB-3F6448529126">Configuring the Oracle GoldenGate Parameter Files for Error Handling</a></p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-AD77CF1B-BA0F-43E1-944A-7B2376BB04F4">Making the Required Column Values Available to Extract</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-41225550-0162-4CB5-A65F-FF64A557BDA9">Configuring the Oracle GoldenGate Parameter Files for Conflict Resolution</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-6C54492C-4B34-4354-A1CB-3F6448529126">Configuring the Oracle GoldenGate Parameter Files for Error Handling</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-6826181B-7FB5-4411-B741-93321517CE02">Viewing CDR Statistics</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-B14CDCB5-50EC-4797-95FC-9AAEB7F5FBD1" title="This chapter contains instructions for using the Oracle GoldenGate Conflict Detection and Resolution (CDR) feature. Conflict detection and resolution is required in active-active configurations, where Oracle GoldenGate must maintain data synchronization among multiple databases that contain the same data sets.">Configuring Conflict Detection and Resolution</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD317"></a>
+<div class="props_rev_3"><a id="GUID-AD77CF1B-BA0F-43E1-944A-7B2376BB04F4"></a>
+<h3 id="GWUAD-GUID-AD77CF1B-BA0F-43E1-944A-7B2376BB04F4" class="sect3"><span class="enumeration_section">10.2.1</span> Making the Required Column Values Available to Extract</h3>
+<div>
+<div class="section">
+<p>To use CDR, the following column values must be logged so that Extract can write them to the trail.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>The full before image of each record. Some databases do not provide a before image in the log record, and must be configured to do so with supplemental logging. For most supported databases, you can use the <code class="codeph">ADD TRANDATA</code> command for this purpose.</p>
+</li>
+<li>
+<p>Use the <code class="codeph">LOGALLSUPCOLS</code> parameter to ensure that the full before and after images of the scheduling columns are written to the trail. Scheduling columns are primary key, unique index, and foreign key columns. <code class="codeph">LOGALLSUPCOLS</code> causes Extract to include in the trail record the before image for <code class="codeph">UPDATE</code> operations and the before image of all supplementally logged columns for both <code class="codeph">UPDATE</code> and <code class="codeph">DELETE</code> operations.</p>
+</li>
+<li>
+<p>For NonStop SQL/MX source databases, create or alter the table to have the <code class="codeph">no auditcompress</code> attribute.</p>
+</li>
+</ul>
+<p>For detailed information about these parameters and commands, see the <span class="italic"><span id="GUID-AD77CF1B-BA0F-43E1-944A-7B2376BB04F4__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span>. See the examples starting on <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a> for more information on how these parameters work with CDR.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-6D9D369B-9E05-4816-AE6E-851C27B05F9E">Configuring Oracle GoldenGate CDR</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD318"></a>
+<div class="props_rev_3"><a id="GUID-41225550-0162-4CB5-A65F-FF64A557BDA9"></a>
+<h3 id="GWUAD-GUID-41225550-0162-4CB5-A65F-FF64A557BDA9" class="sect3"><span class="enumeration_section">10.2.2</span> Configuring the Oracle GoldenGate Parameter Files for Conflict Resolution</h3>
+<div>
+<div class="section">
+<p>The following parameters are required to support conflict detection and resolution.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li><span>Use the <code class="codeph">GETBEFORECOLS</code> option of the Extract <code class="codeph">TABLE</code> parameter to specify columns for which you want Extract to capture the before image of an update or delete operation. For DB2 databases, use the <code class="codeph">GETUPDATEBEFORES</code> parameter instead of <code class="codeph">GETBEFORECOLS</code>, which is not supported for DB2.</span></li>
+<li><span>Use the <code class="codeph">COMPARECOLS</code> option of the <code class="codeph">MAP</code> parameter in the Replicat parameter file to specify columns that are to be used with before values in the Replicat <code class="codeph">WHERE</code> clause. The before values are compared with the current values in the target database to detect update and delete conflicts. (By default, Replicat only uses the primary key in the <code class="codeph">WHERE</code> clause; this may not be enough for conflict detection).</span></li>
+<li><span>Use the <code class="codeph">RESOLVECONFLICT</code> option of the <code class="codeph">MAP</code> parameter to specify conflict resolution routines for different operations and conflict types. You can use <code class="codeph">RESOLVECONFLICT</code> multiple times in a <code class="codeph">MAP</code> statement to specify different resolutions for different conflict types. However, you cannot use <code class="codeph">RESOLVECONFLICT</code> multiple times for the same type of conflict. Use identical conflict-resolution procedures on all databases, so that the same conflict produces the same end result. One conflict-resolution method might not work for every conflict that could occur. You might need to create several routines that can be called in a logical order of priority so that the risk of failure is minimized.</span></li>
+</ol>
+<div class="section">
+<div class="infobox-note" id="GUID-41225550-0162-4CB5-A65F-FF64A557BDA9__GUID-82ECA28B-C9FD-47AA-8F44-10F2D09F2C67">
+<p class="notep1">Note:</p>
+<p>Additional consideration should be given when a table has a primary key and additional unique indexes or unique keys. The automated routines provided with the <code class="codeph">COMPARECOLS</code> and <code class="codeph">RESOLVECONFLICT</code> parameters require a consistent way to uniquely identify each row. Failure to consistently identify a row will result in an error during conflict resolution. In these situations the additional unique keys should be disabled or you can use the <code class="codeph">SQLEXEC</code> feature to handle the error thrown and resolve the conflict.</p>
+</div>
+<p>For detailed information about these parameters, see <span class="italic"><span id="GUID-41225550-0162-4CB5-A65F-FF64A557BDA9__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span>. See the examples starting on <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a>, for more information on these parameters.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-6D9D369B-9E05-4816-AE6E-851C27B05F9E">Configuring Oracle GoldenGate CDR</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD319"></a>
+<div class="props_rev_3"><a id="GUID-6C54492C-4B34-4354-A1CB-3F6448529126"></a>
+<h3 id="GWUAD-GUID-6C54492C-4B34-4354-A1CB-3F6448529126" class="sect3"><span class="enumeration_section">10.2.3</span> Configuring the Oracle GoldenGate Parameter Files for Error Handling</h3>
+<div>
+<div class="section">
+<p>CDR should be used in conjunction with error handling to capture errors that were resolved and errors that CDR could not resolve.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Conflict resolution is performed before these other error-handling parameters: <code class="codeph">HANDLECOLLSIONS</code>, <code class="codeph">INSERTMISSINGUPDATES</code>, and <code class="codeph">REPERROR</code>. Use the <code class="codeph">REPERROR</code> parameter to assign rules for handling errors that cannot be resolved by CDR, or for errors that you do not want to handle through CDR. It might be appropriate to have <code class="codeph">REPERROR</code> handle some errors, and CDR handle others; however, if <code class="codeph">REPERROR</code> and CDR are configured to handle the same conflict, CDR takes precedence. The <code class="codeph">INSERTMISSINGUPDATES</code> and <code class="codeph">HANDLECOLLISIONS</code> parameters also can be used to handle some errors not handled by CDR. See the <a class="olink GWURF394" target="_blank" href="../GWURF/oracle-goldengate-parameters.htm#GWURF394"><span class="italic"><span id="GUID-6C54492C-4B34-4354-A1CB-3F6448529126__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a> for details about these parameters.</span></li>
+<li class="stepexpand"><span>(Optional) Create an exceptions table. When an exceptions table is used with an exceptions <code class="codeph">MAP</code> statment (see <a href="configuring-conflict-detection-and-resolution.htm#GUID-6C54492C-4B34-4354-A1CB-3F6448529126">Configuring the Oracle GoldenGate Parameter Files for Error Handling</a>), Replicat sends every operation that generates a conflict (resolved or not) to the exceptions <code class="codeph">MAP</code> statement to be mapped to the exceptions table. Omit a primary key on this table if Replicat is to process <code class="codeph">UPDATE</code> and <code class="codeph">DELETE</code> conflicts; otherwise there can be integrity constraint errors.</span>
+<div>
+<p>At minimum, an exceptions table should contain the same columns as the target table. These rows will contain each row image that Replicat applied to the target (or tried to apply).</p>
+<p>In addition, you can define additional columns to capture other information that helps put the data in transactional context. Oracle GoldenGate provides tools to capture this information through the exceptions <code class="codeph">MAP</code> statement (see <a href="configuring-conflict-detection-and-resolution.htm#GUID-6C54492C-4B34-4354-A1CB-3F6448529126">Configuring the Oracle GoldenGate Parameter Files for Error Handling</a>). Such columns can be, but are not limited to, the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The before image of the trail record. This is a duplicate set of the target columns with names such as <span class="italic"><code class="codeph">col1</code></span>_before, <span class="italic"><code class="codeph">col2</code></span>_before, and so forth.</p>
+</li>
+<li>
+<p>The current values of the target columns. This also is a duplicate set of the target columns with names such as <span class="italic"><code class="codeph">col1</code></span>_current, <span class="italic"><code class="codeph">col2</code></span>_current, and so forth.</p>
+</li>
+<li>
+<p>The name of the target table</p>
+</li>
+<li>
+<p>The timestamp of the conflict</p>
+</li>
+<li>
+<p>The operation type</p>
+</li>
+<li>
+<p>The database error number</p>
+</li>
+<li>
+<p>(Optional) The database error message</p>
+</li>
+<li>
+<p>Whether the conflict was resolved or not</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Create an exceptions <code class="codeph">MAP</code> statement to map the exceptions data to the exceptions table. An exceptions <code class="codeph">MAP</code> statement contains:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>(Required) The <code class="codeph">INSERTALLRECORDS</code> option. This parameter converts all mapped operations to <code class="codeph">INSERT</code>s so that all column values are mapped to the exceptions table.</p>
+</li>
+<li>
+<p>(Required) The <code class="codeph">EXCEPTIONSONLY</code> option. This parameter causes Replicat to map operations that generate an error, but not those that were successful.</p>
+</li>
+<li>
+<p>(Optional) A <code class="codeph">COLMAP</code> clause. If the names and definitions of the columns in the exceptions table are identical to those of the source table, and the exceptions table only contains those columns, no <code class="codeph">COLMAP</code> is needed. However, if any names or definitions differ, or if there are extra columns in the exceptions table that you want to populate with additional data, use a <code class="codeph">COLMAP</code> clause to map all columns.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-B4CD5554-AA85-4392-959A-7197D81C7516">Tools for Mapping Extra Data to the Exceptions Table</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-81588046-73D1-4105-A086-DBB64DD98736">Sample Exceptions Mapping with Source and Target Columns Only</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-87CEB1D9-A389-4AD5-8678-800644F45F0A">Sample Exceptions Mapping with Additional Columns in the Exceptions Table</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-6D9D369B-9E05-4816-AE6E-851C27B05F9E">Configuring Oracle GoldenGate CDR</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD320"></a>
+<div class="props_rev_3"><a id="GUID-B4CD5554-AA85-4392-959A-7197D81C7516"></a>
+<h4 id="GWUAD-GUID-B4CD5554-AA85-4392-959A-7197D81C7516" class="sect4"><span class="enumeration_section">10.2.3.1</span> Tools for Mapping Extra Data to the Exceptions Table</h4>
+<div>
+<p>The following are some tools that you can use in the <code class="codeph">COLMAP</code> clause to populate extra columns:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>If the names and definitions of the source columns are identical to those of the target columns in the exceptions table, you can use the <code class="codeph">USEDEFAULTS</code> keyword instead of explicitly mapping names. Otherwise, you must map those columns in the <code class="codeph">COLMAP</code> clause, for example:</p>
+<pre dir="ltr">
+COLMAP (exceptions_col1 = col1, [...])
+</pre></li>
+<li>
+<p>To map the before image of the source row to columns in the exceptions table, use the <code class="codeph">@BEFORE</code> conversion function, which captures the before image of a column from the trail record. This example shows the <code class="codeph">@BEFORE</code> usage.</p>
+<pre dir="ltr">
+COLMAP (USEDEFAULTS, exceptions_col1 = @BEFORE (source_col1), &amp;
+exceptions_col2 = @BEFORE (source_col2), [...])
+</pre></li>
+<li>
+<p>To map the current image of the target row to columns in the exceptions table, use a <code class="codeph">SQLEXEC</code> query to capture the image, and then map the results of the query to the columns in the exceptions table by using the '<span class="italic"><code class="codeph">queryID.column</code></span>' syntax in the <code class="codeph">COLMAP</code> clause, as in the following example:</p>
+<pre dir="ltr">
+COLMAP (USEDEFAULTS, name_current = <span class="italic">queryID</span>.<span class="italic">name</span>, phone_current = <span class="italic">queryID</span>.<span class="italic">phone</span>, [...])
+</pre></li>
+<li>
+<p>To map timestamps, database errors, and other environmental information, use the appropriate Oracle GoldenGate column-conversion functions. For example, the following maps the current timestamp at time of execution.</p>
+<pre dir="ltr">
+res_date = @DATENOW ()
+</pre></li>
+</ul>
+<p>See <a href="configuring-conflict-detection-and-resolution.htm#GUID-87CEB1D9-A389-4AD5-8678-800644F45F0A">Sample Exceptions Mapping with Additional Columns in the Exceptions Table</a>, for how to combine these features in a <code class="codeph">COLMAP</code> clause in the exceptions <code class="codeph">MAP</code> statement to populate a detailed exceptions table.</p>
+<p>See <a class="olink GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB" target="_blank" href="../GWURF/oracle-goldengate-parameters.htm#GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB">Reference for Oracle GoldenGate for Windows and UNIX</a> for the usage and syntax of the parameters and column-conversion functions shown in these examples.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-6C54492C-4B34-4354-A1CB-3F6448529126">Configuring the Oracle GoldenGate Parameter Files for Error Handling</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD321"></a>
+<div class="props_rev_3"><a id="GUID-81588046-73D1-4105-A086-DBB64DD98736"></a>
+<h4 id="GWUAD-GUID-81588046-73D1-4105-A086-DBB64DD98736" class="sect4"><span class="enumeration_section">10.2.3.2</span> Sample Exceptions Mapping with Source and Target Columns Only</h4>
+<div>
+<div class="section">
+<p>The following is a sample parameter file that shows error handling and simple exceptions mapping for the source and target tables that are used in the CDR examples that begin. This example maps source and target columns, but no extra columns. For the following reasons, a <code class="codeph">COLMAP</code> clause is not needed in the exceptions <code class="codeph">MAP</code> statement in this example:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The source and target exceptions columns are identical in name and definition.</p>
+</li>
+<li>
+<p>There are no other columns in the exceptions table.</p>
+<div class="infobox-note" id="GUID-81588046-73D1-4105-A086-DBB64DD98736__GUID-280E41FA-015B-4986-8654-515304704B04">
+<p class="notep1">Note:</p>
+<p>This example intentionally leaves out other parameters that are required in a Replicat parameter file, such as process name and login credentials, as well as any optional parameters that may be required for a given database type. When using line breaks to split a parameter statement into multiple lines, use an ampersand (&amp;) at the end of each line.</p>
+</div>
+<pre dir="ltr">
+    -- REPERROR error handling: DEFAULT represents all error types. DISCARD
+    -- writes operations that could not be processed to a discard file.
+REPERROR (DEFAULT, DISCARD)
+    -- Specifies a discard file.
+DISCARDFILE /users/ogg/discards/discards.dsc, PURGE
+    -- The regular MAP statement with the CDR parameters
+MAP fin.src, TARGET fin.tgt, &amp;
+COMPARECOLS (ON UPDATE ALL, ON DELETE ALL), &amp;
+RESOLVECONFLICT (UPDATEROWEXISTS, (DEFAULT, USEMAX (last_mod_time)), &amp;
+RESOLVECONFLICT (INSERTROWEXISTS, (DEFAULT, USEMAX (last_mod_time)), &amp;
+RESOLVECONFLICT (DELETEROWEXISTS, (DEFAULT, OVERWRITE)), &amp;
+RESOLVECONFLICT (UPDATEROWMISSING, (DEFAULT, OVERWRITE)), &amp;
+RESOLVECONFLICT (DELETEROWMISSING, (DEFAULT, DISCARD)), &amp;
+);
+    -- Starts the exceptions MAP statement by mapping the source table to the
+    -- exceptions table.
+MAP fin.src, TARGET fin.exception, &amp;
+    -- directs Replicat only to map operations that caused the error specified
+    -- in REPERROR.
+EXCEPTIONSONLY, &amp;
+    -- directs Replicat to convert all the exceptions to inserts into the
+    -- exceptions table. This is why there cannot be a primary key constraint
+    -- on the exceptions table.
+INSERTALLRECORDS 
+;
+</pre></li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-6C54492C-4B34-4354-A1CB-3F6448529126">Configuring the Oracle GoldenGate Parameter Files for Error Handling</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD322"></a>
+<div class="props_rev_3"><a id="GUID-87CEB1D9-A389-4AD5-8678-800644F45F0A"></a>
+<h4 id="GWUAD-GUID-87CEB1D9-A389-4AD5-8678-800644F45F0A" class="sect4"><span class="enumeration_section">10.2.3.3</span> Sample Exceptions Mapping with Additional Columns in the Exceptions Table</h4>
+<div>
+<div class="section">
+<p>The following is a sample parameter file that shows error handling and complex exceptions mapping for the source and target tables that are used in the CDR examples that begin. In this example, the exceptions table has the same rows as the source table, but it also has additional columns to capture context data.</p>
+<div class="infobox-note" id="GUID-87CEB1D9-A389-4AD5-8678-800644F45F0A__GUID-69A0B353-74ED-404A-BC95-6BE06FCFE3BB">
+<p class="notep1">Note:</p>
+<p>This example intentionally leaves out other parameters that are required in a Replicat parameter file, such as process name and login credentials, as well as any optional parameters that may be required for a given database type. When using line breaks to split a parameter statement into multiple lines, use an ampersand (&amp;) at the end of each line.</p>
+</div>
+<pre dir="ltr">
+    -- REPERROR error handling: DEFAULT represents all error types. DISCARD
+    -- writes operations that could not be processed to a discard file.
+REPERROR (DEFAULT, DISCARD)
+    -- Specifies the discard file.
+DISCARDFILE /users/ogg/discards/discards.dsc, PURGE
+    -- The regular MAP statement with the CDR parameters
+MAP fin.src, TARGET fin.tgt, &amp;
+COMPARECOLS (ON UPDATE ALL, ON DELETE ALL), &amp;
+RESOLVECONFLICT (UPDATEROWEXISTS, (DEFAULT, USEMAX (last_mod_time)), &amp;
+RESOLVECONFLICT (INSERTROWEXISTS, (DEFAULT, USEMAX (last_mod_time)), &amp;
+RESOLVECONFLICT (DELETEROWEXISTS, (DEFAULT, OVERWRITE)), &amp;
+RESOLVECONFLICT (UPDATEROWMISSING, (DEFAULT, OVERWRITE)), &amp;
+RESOLVECONFLICT (DELETEROWMISSING, (DEFAULT, DISCARD)) 
+);
+    -- Starts the exceptions MAP statement by mapping the source table to the -- exceptions table.
+MAP fin.src, TARGET fin.exception, &amp;
+    -- directs Replicat only to map operations that caused the error specified
+    -- in REPERROR.
+EXCEPTIONSONLY, &amp;
+    -- directs Replicat to convert all the exceptions to inserts into the
+    -- exceptions table. This is why there cannot be a primary key constraint
+    -- on the exceptions table.
+INSERTALLRECORDS &amp;
+    -- SQLEXEC query to select the values from the target record before the
+    -- Replicat statement is applied. These are mapped to the *_target
+    -- columns later.
+SQLEXEC (id qry, query 'select name, phone, address, salary, balance, &amp; comment, last_mod_time from fin.tgt where name = :p1', PARAMS(p1 = name )), &amp;
+    -- Start of the column mapping, specifies use default column definitions.
+COLMAP ( &amp;
+    -- USEDEFAULTS maps the source columns to the target exceptions columns
+    -- that receive the after image that Replicat applied or tried to apply.
+    -- In this case, USEDEFAULTS can be used because the names and definitions 
+    -- of the source and target exceptions columns are identical; otherwise
+    -- the columns must be mapped explicitly in the COLMAP clause.
+USEDEFAULTS, &amp;
+    -- captures the timestamp when the resolution was performed.
+res_date = @DATENOW (), &amp;
+    -- captures and maps the DML operation type.
+optype = @GETENV ('LASTERR', 'OPTYPE'), &amp;
+    -- captures and maps the database error number that was returned.
+dberrnum = @GETENV ('LASTERR', 'DBERRNUM'), &amp;
+    -- captures and maps the database error that was returned.
+dberrmsge = @GETENV ('LASTERR', 'DBERRMSG'), &amp;
+    -- captures and maps the name of the target table
+tabname = @GETENV ('GGHEADER', 'TABLENAME'), &amp;
+    -- If the names and definitions of the source columns and the target
+    -- exceptions columns were not identical, the columns would need to
+    -- be mapped in the COLMAP clause instead of using USEDEFAULTS, as 
+    -- follows:
+       -- name_after = name, &amp;
+       -- phone_after = phone, &amp;
+       -- address_after = address, &amp;
+       -- salary_after = salary, &amp;
+       -- balance_after = balance, &amp;
+       -- comment_after = comment, &amp;
+       -- last_mod_time_after = last_mod_time &amp;
+    -- maps the before image of each column from the trail to a column in the
+    -- exceptions table.
+name_before = @BEFORE (name), &amp;
+phone_before = @BEFORE (phone), &amp;
+address_before = @BEFORE (address), &amp;
+salary_before = @BEFORE (salary), &amp;
+balance_before = @BEFORE (balance), &amp;
+comment_before = @BEFORE (comment), &amp;
+last_mod_time_before = @BEFORE (last_mod_time), &amp;
+    -- maps the results of the SQLEXEC query to rows in the exceptions table
+    -- to show the current image of the row in the target.
+name_current = qry.name, &amp;
+phone_current = qry.phone, &amp;
+address_current = qry.address, &amp;
+salary_current = qry.salary, &amp;
+balance_current = qry.balance, &amp;
+comment_current = qry.comment, &amp;
+last_mod_time_current = qry.last_mod_time)
+;
+</pre>
+<p>For more information about creating an exceptions table and using exceptions mapping, see <a href="handling-processing-errors.htm#GUID-EB044AF7-BE35-419F-A285-193D6091F46D">Handling Replicat Errors during DML Operations</a>.</p>
+<p>Once you are confident that your routines work as expected in all situations, you can reduce the amount of data that is logged to the exceptions table to reduce the overhead of the resolution routines.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-6C54492C-4B34-4354-A1CB-3F6448529126">Configuring the Oracle GoldenGate Parameter Files for Error Handling</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD323"></a>
+<div class="props_rev_3"><a id="GUID-6826181B-7FB5-4411-B741-93321517CE02"></a>
+<h3 id="GWUAD-GUID-6826181B-7FB5-4411-B741-93321517CE02" class="sect3"><span class="enumeration_section">10.2.4</span> Viewing CDR Statistics</h3>
+<div>
+<div class="section">
+<p>The CDR feature provides the following methods for viewing the results of conflict resolution.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-AD450B13-930E-4CE2-8D69-9D3487BCE21E">Report File</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-98F2CFD2-85E6-4679-B2A3-013D17DCD014">GGSCI</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-218DB550-13F7-405A-B4D7-D3C76046B677">Column-conversion Functions</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-6D9D369B-9E05-4816-AE6E-851C27B05F9E">Configuring Oracle GoldenGate CDR</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD324"></a>
+<div class="props_rev_3"><a id="GUID-AD450B13-930E-4CE2-8D69-9D3487BCE21E"></a>
+<h4 id="GWUAD-GUID-AD450B13-930E-4CE2-8D69-9D3487BCE21E" class="sect4"><span class="enumeration_section">10.2.4.1</span> Report File</h4>
+<div>
+<p>Replicat writes CDR statistics to the report file:</p>
+<pre dir="ltr">
+Total CDR conflicts                 7
+    CDR resolutions succeeded       6
+    CDR resolutions failed          1
+    CDR INSERTROWEXISTS conflicts   1
+    CDR UPDATEROWEXISTS conflicts   4
+    CDR UPDATEROWMISSING conflicts
+    CDR DELETEROWEXISTS conflicts      1
+    CDR DELETEROWMISSING conflicts     1
+</pre></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-6826181B-7FB5-4411-B741-93321517CE02">Viewing CDR Statistics</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD325"></a>
+<div class="props_rev_3"><a id="GUID-98F2CFD2-85E6-4679-B2A3-013D17DCD014"></a>
+<h4 id="GWUAD-GUID-98F2CFD2-85E6-4679-B2A3-013D17DCD014" class="sect4"><span class="enumeration_section">10.2.4.2</span> GGSCI</h4>
+<div>
+<div class="section">
+<p>You can view CDR statistics from GGSCI by using the <code class="codeph">STATS REPLICAT</code> command with the <code class="codeph">REPORTCDR</code> option:</p>
+<pre dir="ltr">
+STATS REPLICAT <span class="italic">group</span>, REPORTCDR
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-6826181B-7FB5-4411-B741-93321517CE02">Viewing CDR Statistics</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD326"></a>
+<div class="props_rev_3"><a id="GUID-218DB550-13F7-405A-B4D7-D3C76046B677"></a>
+<h4 id="GWUAD-GUID-218DB550-13F7-405A-B4D7-D3C76046B677" class="sect4"><span class="enumeration_section">10.2.4.3</span> Column-conversion Functions</h4>
+<div>
+<div class="section">
+<p>The following CDR statistics can be retrieved and mapped to an exceptions table or used in other Oracle GoldenGate parameters that accept input from column-conversion functions, as appropriate.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>Number of conflicts that Replicat detected</p>
+</li>
+<li>
+<p>Number of resolutions that Replicat resolved</p>
+</li>
+<li>
+<p>Number of resolutions that Replicat could not resolve</p>
+</li>
+</ul>
+<p>To retrieve these statistics, use the <code class="codeph">@GETENV</code> column-conversion function with the <code class="codeph">'STATS</code>' or <code class="codeph">'DELTASTATS</code>' information type. The results are based on the current Replicat session. If Replicat stops and restarts, it resets the statistics.</p>
+<p>You can return these statistics for a specific table or set of wildcarded tables:</p>
+<pre dir="ltr">
+@GETENV ('STATS','TABLE','SCHEMA.TABLNAME','CDR_CONFLICTS')
+@GETENV ('STATS','TABLE','SCHEMA.TABLNAME','CDR_RESOLUTIONS_SUCCEEDED')
+@GETENV ('STATS','TABLE','SCHEMA.TABLNAME','CDR_RESOLUTIONS_FAILED')
+</pre>
+<p>You can return these statistics for all of the tables in all of the <code class="codeph">MAP</code> statements in the Replicat parameter file:</p>
+<pre dir="ltr">
+@GETENV ('STATS','CDR_CONFLICTS')
+@GETENV ('STATS','CDR_RESOLUTIONS_SUCCEEDED')
+@GETENV ('STATS','CDR_RESOLUTIONS_FAILED')
+</pre>
+<p>The <code class="codeph">'STATS'</code> information type in the preceding examples can be replaced by <code class="codeph">'DELTASTATS'</code> to return the requested counts since the last execution of <code class="codeph">'DELTASTATS'</code>.</p>
+<p>For more information about <code class="codeph">@GETENV</code>, see <a class="olink GWURF788" target="_blank" href="../GWURF/getenv-01.htm#GWURF788"><span class="italic"><span id="GUID-218DB550-13F7-405A-B4D7-D3C76046B677__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-6826181B-7FB5-4411-B741-93321517CE02">Viewing CDR Statistics</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD327"></a>
+<div class="props_rev_3"><a id="GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB"></a>
+<h2 id="GWUAD-GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB" class="sect2"><span class="enumeration_section">10.3</span> CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</h2>
+<div>
+<div class="section">
+<p>This example resolves all conflict types by using the <code class="codeph">USEMAX</code>, <code class="codeph">OVERWRITE</code>, and <code class="codeph">DISCARD</code> resolutions.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-7F1B9DE7-AA29-40A8-ACA0-85B8E3EC04AA">Table Used in this Example</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-93A269B3-6796-4654-9578-921282E99923">MAP Statement with Conflict Resolution Specifications</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-80EDC5A2-16AF-4163-8E13-080050674913">Description of MAP Statement</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-D8CA0A3C-0436-4535-9829-7B1C5CC6B998">Error Handling</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-B2342B40-C3EE-4DCE-884D-105BCB4235DC">INSERTROWEXISTS with the USEMAX Resolution</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-B204A1C6-FBAC-4AEB-AA7E-4E90C6DC27B0">UPDATEROWEXISTS with the USEMAX Resolution</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-8FADA218-2389-483E-8AFE-CBE8B7BD4A5E">UPDATEROWMISSING with OVERWRITE Resolution</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-724B51DA-AB64-45B7-85B9-2FFF21F40C13">DELETEROWMISSING with DISCARD Resolution</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-D40B04DB-2182-4E38-8AE4-6CEBAEE3CADB">DELETEROWEXISTS with OVERWRITE Resolution</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-B14CDCB5-50EC-4797-95FC-9AAEB7F5FBD1" title="This chapter contains instructions for using the Oracle GoldenGate Conflict Detection and Resolution (CDR) feature. Conflict detection and resolution is required in active-active configurations, where Oracle GoldenGate must maintain data synchronization among multiple databases that contain the same data sets.">Configuring Conflict Detection and Resolution</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD328"></a>
+<div class="props_rev_3"><a id="GUID-7F1B9DE7-AA29-40A8-ACA0-85B8E3EC04AA"></a>
+<h3 id="GWUAD-GUID-7F1B9DE7-AA29-40A8-ACA0-85B8E3EC04AA" class="sect3"><span class="enumeration_section">10.3.1</span> Table Used in this Example</h3>
+<div>
+<div class="section">
+<p>The examples assume identical Oracle databases.</p>
+<pre dir="ltr">
+CREATE TABLE tgt(
+    name varchar2(30) primary key,
+    phone varchar2(10),
+    address varchar2(100),
+    salary number,
+    balance number,
+    comment varchar2(100),
+    last_mod_time timestamp);
+</pre>
+<p>At the source database, all columns are supplementally logged:</p>
+<pre dir="ltr">
+ADD TRANDATA scott.src, COLS (name, phone, address, salary, balance, comment, last_mod_time);
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD329"></a>
+<div class="props_rev_3"><a id="GUID-93A269B3-6796-4654-9578-921282E99923"></a>
+<h3 id="GWUAD-GUID-93A269B3-6796-4654-9578-921282E99923" class="sect3"><span class="enumeration_section">10.3.2</span> MAP Statement with Conflict Resolution Specifications</h3>
+<div>
+<div class="section">
+<pre dir="ltr">
+MAP fin.src, TARGET fin.tgt,
+    COMPARECOLS (ON UPDATE ALL, ON DELETE ALL),
+    RESOLVECONFLICT (UPDATEROWEXISTS, (DEFAULT, USEMAX (last_mod_time)),
+    RESOLVECONFLICT (INSERTROWEXISTS, (DEFAULT, USEMAX (last_mod_time)),
+    RESOLVECONFLICT (DELETEROWEXISTS, (DEFAULT, OVERWRITE)),
+    RESOLVECONFLICT (UPDATEROWMISSING, (DEFAULT, OVERWRITE)),
+    RESOLVECONFLICT (DELETEROWMISSING, (DEFAULT, DISCARD)),
+    );
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD330"></a>
+<div class="props_rev_3"><a id="GUID-80EDC5A2-16AF-4163-8E13-080050674913"></a>
+<h3 id="GWUAD-GUID-80EDC5A2-16AF-4163-8E13-080050674913" class="sect3"><span class="enumeration_section">10.3.3</span> Description of MAP Statement</h3>
+<div>
+<div class="section">
+<p>The following describes the <code class="codeph">MAP</code> statement:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>Per <code class="codeph">COMPARECOLS</code>, use the before image of all columns in the trail record in the Replicat <code class="codeph">WHERE</code> clause for updates and deletes.</p>
+</li>
+<li>
+<p>Per <code class="codeph">DEFAULT</code>, use all columns as the column group for all conflict types; thus the resolution applies to all columns.</p>
+</li>
+<li>
+<p>For an <code class="codeph">INSERTROWEXISTS</code> conflict, use the <code class="codeph">USEMAX</code> resolution: If the row exists during an insert, use the <code class="codeph">last_mod_time</code> column as the resolution column for deciding which is the greater value: the value in the trail or the one in the database. If the value in the trail is greater, apply the record but change the insert to an update. If the database value is higher, ignore the record.</p>
+</li>
+<li>
+<p>For an <code class="codeph">UPDATEROWEXISTS</code> conflict, use the <code class="codeph">USEMAX</code> resolution: If the row exists during an update, use the <code class="codeph">last_mod_time</code> column as the resolution column: If the value in the trail is greater, apply the update.</p>
+</li>
+<li>
+<p>If you use <code class="codeph">USEMIN</code> or <code class="codeph">USEMAX</code>, and the values are exactly the same, then <code class="codeph">RESOLVECONFLICT</code> isn't triggered and the incoming row is ignored. If you use <code class="codeph">USEMINEQ</code> or <code class="codeph">USEMAXEQ</code>, and the values are exactly the same, then the resolution is triggered.</p>
+</li>
+<li>
+<p>For a <code class="codeph">DELETEROWEXISTS</code> conflict, use the <code class="codeph">OVERWRITE</code> resolution: If the row exists during a delete operation, apply the delete.</p>
+</li>
+<li>
+<p>For an <code class="codeph">UPDATEROWMISSING</code> conflict, use the <code class="codeph">OVERWRITE</code> resolution: If the row does not exist during an update, change the update to an insert and apply it.</p>
+</li>
+<li>
+<p>For a <code class="codeph">DELETROWMISSING</code> conflict use the <code class="codeph">DISCARD</code> resolution: If the row does not exist during a delete operation, discard the trail record.</p>
+<div class="infobox-note" id="GUID-80EDC5A2-16AF-4163-8E13-080050674913__GUID-B2D43601-E940-4387-84F4-98760555A44E">
+<p class="notep1">Note:</p>
+<p>As an alternative to <code class="codeph">USEMAX</code>, you can use the <code class="codeph">USEMAXEQ</code> resolution to apply a <code class="codeph">&gt;=</code> condition. For more information, see <a class="olink GWURF546" target="_blank" href="../GWURF/table-map.htm#GWURF546"><span class="italic"><span id="GUID-80EDC5A2-16AF-4163-8E13-080050674913__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD331"></a>
+<div class="props_rev_3"><a id="GUID-D8CA0A3C-0436-4535-9829-7B1C5CC6B998"></a>
+<h3 id="GWUAD-GUID-D8CA0A3C-0436-4535-9829-7B1C5CC6B998" class="sect3"><span class="enumeration_section">10.3.4</span> Error Handling</h3>
+<div>
+<div class="section">
+<p>For an example of error handling to an exceptions table, see <a href="configuring-conflict-detection-and-resolution.htm#GUID-6C54492C-4B34-4354-A1CB-3F6448529126">Configuring the Oracle GoldenGate Parameter Files for Error Handling</a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD333"></a><a id="GWUAD332"></a>
+<div class="props_rev_3"><a id="GUID-B2342B40-C3EE-4DCE-884D-105BCB4235DC"></a>
+<h3 id="GWUAD-GUID-B2342B40-C3EE-4DCE-884D-105BCB4235DC" class="sect3"><span class="enumeration_section">10.3.5</span> INSERTROWEXISTS with the USEMAX Resolution</h3>
+<div>
+<p>For this example, the <code class="codeph">USEMAX</code> resolution is illustrated with the applicable before and after images for the record in the trail and in the database. It shows how to resolve an insert where the row exists in the source and target, but some or all row values are different.</p>
+<div class="tblformalwide" id="GUID-B2342B40-C3EE-4DCE-884D-105BCB4235DC__GUID-79A9BA63-828F-4826-BA8E-EA2F725F8BD6">
+<p class="titleintable">Table 10-1 INSERTROWEXISTS Conflict with USEMAX Resolution</p>
+<table class="cellalignment49" title="INSERTROWEXISTS Conflict with USEMAX Resolution" summary="This table shows how to resolve an insert where the row exists in the source and target, but some or all row values are different.">
+<thead>
+<tr class="cellalignment25">
+<th class="cellalignment50" id="d29341e1389">Image</th>
+<th class="cellalignment51" id="d29341e1392">SQL</th>
+<th class="cellalignment52" id="d29341e1395">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1400" headers="d29341e1389">
+<p>Before image in trail</p>
+</td>
+<td class="cellalignment54" headers="d29341e1400 d29341e1392">
+<pre dir="ltr">
+None (row was inserted on the source).
+</pre></td>
+<td class="cellalignment55" headers="d29341e1400 d29341e1395">
+<p>N/A</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1410" headers="d29341e1389">
+<p>After image in trail</p>
+</td>
+<td class="cellalignment54" headers="d29341e1410 d29341e1392">
+<pre dir="ltr">
+name='Mary'
+phone='1234567890'
+address='Oracle Pkwy'
+salary=100
+balance=100
+comment=NULL
+last_mod_time='9/1/10 3:00'
+</pre></td>
+<td class="cellalignment55" headers="d29341e1410 d29341e1395">
+<p><code class="codeph">last_mod_time='9/1/10 3:00</code> is the after image of the resolution column. Since there is an after image, this will be used to determine the resolution.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1423" headers="d29341e1389">
+<p>Target database image</p>
+</td>
+<td class="cellalignment54" headers="d29341e1423 d29341e1392">
+<pre dir="ltr">
+name='Mary'
+phone='111111'
+address='Ralston'
+salary=200
+balance=500
+comment='aaa'
+last_mod_time='9/1/10 1:00'
+</pre></td>
+<td class="cellalignment55" headers="d29341e1423 d29341e1395">
+<p><code class="codeph">last_mod_time='9/1/10 1:00</code> is the current image of the resolution column in the target against which the resolution column value in the trail is compared.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1435" headers="d29341e1389">
+<p>Initial <code class="codeph">INSERT</code> applied by Replicat that detects the conflict</p>
+</td>
+<td class="cellalignment54" headers="d29341e1435 d29341e1392">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'Mary'
+2)'1234567890'
+3)'Oracle Pkwy'
+4)100
+5)100
+6)NULL
+7)'9/1/10 3:00'
+</pre></td>
+<td class="cellalignment55" headers="d29341e1435 d29341e1395">
+<p>This SQL returns a uniqueness conflict on 'Mary'.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1450" headers="d29341e1389">
+<p><code class="codeph">UPDATE</code> applied by Replicat to resolve the conflict</p>
+</td>
+<td class="cellalignment54" headers="d29341e1450 d29341e1392">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'1234567890'
+2)'Oracle Pkwy'
+3)100
+4)100
+5)NULL
+6)'9/1/10 3:00'
+7)'Mary'
+8)'9/1/10 3:00'
+</pre></td>
+<td class="cellalignment55" headers="d29341e1450 d29341e1395">
+<p>Because <code class="codeph">USEMAX</code> is specified for <code class="codeph">INSERTROWEXISTS</code>, Replicat converts the insert to an update, and it compares the value of <code class="codeph">last_mod_time</code> in the trail record with the value in the database. The value in the record is greater, so the after images for columns in the trail file are applied to the target.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD335"></a><a id="GWUAD334"></a>
+<div class="props_rev_3"><a id="GUID-B204A1C6-FBAC-4AEB-AA7E-4E90C6DC27B0"></a>
+<h3 id="GWUAD-GUID-B204A1C6-FBAC-4AEB-AA7E-4E90C6DC27B0" class="sect3"><span class="enumeration_section">10.3.6</span> UPDATEROWEXISTS with the USEMAX Resolution</h3>
+<div>
+<div class="section">
+<p>For this example, the <code class="codeph">USEMAX</code> resolution is illustrated with the applicable before and after images for the record in the trail and in the database. It shows how to resolve an update where the row exists in the source and target, but some or all row values are different.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformalwide" id="GUID-B204A1C6-FBAC-4AEB-AA7E-4E90C6DC27B0__GUID-FA08800A-3015-4CD2-B0E7-449084F236EC">
+<p class="titleintable">Table 10-2 UPDATEROWEXISTS Conflict with USEMAX Resolution</p>
+<table class="cellalignment49" title="UPDATEROWEXISTS Conflict with USEMAX Resolution" summary="This table shows how to resolve an update where the row exists in the source and target, but some or all row values are different.">
+<thead>
+<tr class="cellalignment25">
+<th class="cellalignment56" id="d29341e1515">Image</th>
+<th class="cellalignment57" id="d29341e1518">SQL</th>
+<th class="cellalignment58" id="d29341e1521">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment25">
+<td class="cellalignment59" id="d29341e1526" headers="d29341e1515">
+<p>Before image in trail</p>
+</td>
+<td class="cellalignment60" headers="d29341e1526 d29341e1518">
+<pre dir="ltr">
+name='Mary'
+phone='1234567890'
+address='Oracle Pkwy'
+salary=100
+balance=100
+comment=NULL
+last_mod_time='9/1/10 3:00'
+</pre></td>
+<td class="cellalignment61" headers="d29341e1526 d29341e1521">
+<p><code class="codeph">last_mod_time='9/1/10 3:00</code> is the before image of the resolution column.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment59" id="d29341e1538" headers="d29341e1515">
+<p>After image in trail</p>
+</td>
+<td class="cellalignment60" headers="d29341e1538 d29341e1518">
+<pre dir="ltr">
+phone='222222'
+address='Holly'
+last_mod_time='9/1/10 5:00'
+</pre></td>
+<td class="cellalignment61" headers="d29341e1538 d29341e1521">
+<p><code class="codeph">last_mod_time='9/1/10 5:00</code> is the after image of the resolution column. Since there is an after image, this will be used to determine the resolution.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment59" id="d29341e1550" headers="d29341e1515">
+<p>Target database image</p>
+</td>
+<td class="cellalignment60" headers="d29341e1550 d29341e1518">
+<pre dir="ltr">
+name='Mary'
+phone='1234567890'
+address='Oracle Pkwy'
+salary=100
+balance=600
+comment='com'
+last_mod_time='9/1/10 6:00'
+</pre></td>
+<td class="cellalignment61" headers="d29341e1550 d29341e1521">
+<p><code class="codeph">last_mod_time='9/1/10 6:00</code> is the current image of the resolution column in the target against which the resolution column value in the trail is compared.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment59" id="d29341e1562" headers="d29341e1515">
+<p>Initial <code class="codeph">UPDATE</code> applied by Replicat that detects the conflict</p>
+</td>
+<td class="cellalignment60" headers="d29341e1562 d29341e1518">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'222222'
+2)'Holly'
+3)'9/1/10 5:00'
+4)'Mary'
+5)'1234567890'
+6)'Oracle Pkwy'
+7)100
+8)100
+9)NULL
+10)'9/1/10 3:00'
+</pre></td>
+<td class="cellalignment61" headers="d29341e1562 d29341e1521">
+<p>This SQL returns a no-data-found error because the values for the <code class="codeph">balance</code>, <code class="codeph">comment</code>, and <code class="codeph">last_mod_time</code> are different in the target.</p>
+<p>All columns are used in the <code class="codeph">WHERE</code> clause because the <code class="codeph">COMPARECOLS</code> statement is set to <code class="codeph">ALL</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment59" id="d29341e1597" headers="d29341e1515">
+<p><code class="codeph">UPDATE</code> applied by Replicat to resolve the conflict</p>
+</td>
+<td class="cellalignment60" headers="d29341e1597 d29341e1518">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'Mary'
+2)'222222'
+3)'Holly'
+4)100
+5)100
+6)NULL
+7)'9/1/10 5:00'
+8)'Mary'
+9)'9/1/10 5:00'
+</pre></td>
+<td class="cellalignment61" headers="d29341e1597 d29341e1521">
+<p>Because the after value of <code class="codeph">last_mod_time</code> in the trail record is less than the current value in the database, the database value is retained. Replicat applies the operation with a <code class="codeph">WHERE</code> clause that contains the primary key plus a <code class="codeph">last_mod_time</code> value set to less than <code class="codeph">9/1/10 5:00</code>. No rows match this criteria, so the statement fails with a "data not found" error, but Replicat ignores the error because a <code class="codeph">USEMAX</code> resolution is expected to fail if the condition is not satisfied.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD337"></a><a id="GWUAD336"></a>
+<div class="props_rev_3"><a id="GUID-8FADA218-2389-483E-8AFE-CBE8B7BD4A5E"></a>
+<h3 id="GWUAD-GUID-8FADA218-2389-483E-8AFE-CBE8B7BD4A5E" class="sect3"><span class="enumeration_section">10.3.7</span> UPDATEROWMISSING with OVERWRITE Resolution</h3>
+<div>
+<div class="section">
+<p>For this example, the <code class="codeph">OVERWRITE</code> resolution is illustrated with the applicable before and after images for the record in the trail and in the database. It shows how to resolve the case where the target row is missing. The logical resolution, and the one used, is to overwrite the row into the target so that both databases are in sync again.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformalwide" id="GUID-8FADA218-2389-483E-8AFE-CBE8B7BD4A5E__GUID-EE625C62-9786-491F-AB83-6BD0877CC11E">
+<p class="titleintable">Table 10-3 UPDATEROWMISSING Conflict with OVERWRITE Resolution</p>
+<table class="cellalignment49" title="UPDATEROWMISSING Conflict with OVERWRITE Resolution" summary="This table shows how to resolve the case where the target row is missing by overwriting the row into the target so that both databases are in sync again.">
+<thead>
+<tr class="cellalignment25">
+<th class="cellalignment50" id="d29341e1668">Image</th>
+<th class="cellalignment62" id="d29341e1671">SQL</th>
+<th class="cellalignment63" id="d29341e1674">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1679" headers="d29341e1668">
+<p>Before image in trail</p>
+</td>
+<td class="cellalignment64" headers="d29341e1679 d29341e1671">
+<pre dir="ltr">
+name='Jane'
+phone='333'
+address='Oracle Pkwy'
+salary=200
+balance=200
+comment=NULL
+last_mod_time='9/1/10 7:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e1679 d29341e1674">
+<p>N/A</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1689" headers="d29341e1668">
+<p>After image in trail</p>
+</td>
+<td class="cellalignment64" headers="d29341e1689 d29341e1671">
+<pre dir="ltr">
+phone='4444'
+address='Holly'
+last_mod_time='9/1/10 8:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e1689 d29341e1674">&nbsp;</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1698" headers="d29341e1668">
+<p>Target database image</p>
+</td>
+<td class="cellalignment64" headers="d29341e1698 d29341e1671">
+<pre dir="ltr">
+None (row for Jane is missing)
+</pre></td>
+<td class="cellalignment65" headers="d29341e1698 d29341e1674">&nbsp;</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1707" headers="d29341e1668">
+<p>Initial <code class="codeph">UPDATE</code> applied by Replicat that detects the conflict</p>
+</td>
+<td class="cellalignment64" headers="d29341e1707 d29341e1671">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'4444'
+2)'Holly'
+3)'9/1/10 8:00'
+4)'Jane'
+5)'333'
+6)'Oracle Pkwy'
+7)200
+8)200
+9)NULL
+10)'9/1/10 7:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e1707 d29341e1674">
+<p>This SQL returns a no-data-found error. All columns are used in the <code class="codeph">WHERE</code> clause because the <code class="codeph">COMPARECOLS</code> statement is set to <code class="codeph">ALL</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1731" headers="d29341e1668">
+<p><code class="codeph">INSERT</code> applied by Replicat to resolve the conflict</p>
+</td>
+<td class="cellalignment64" headers="d29341e1731 d29341e1671">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'Jane'
+2)'4444'
+3)'Holly'
+4)200
+5)200
+6)NULL
+7)'9/1/10 8:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e1731 d29341e1674">
+<p>The update is converted to an insert because <code class="codeph">OVERWRITE</code> is the resolution. The after image of a column is used if available; otherwise the before image is used.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD339"></a><a id="GWUAD338"></a>
+<div class="props_rev_3"><a id="GUID-724B51DA-AB64-45B7-85B9-2FFF21F40C13"></a>
+<h3 id="GWUAD-GUID-724B51DA-AB64-45B7-85B9-2FFF21F40C13" class="sect3"><span class="enumeration_section">10.3.8</span> DELETEROWMISSING with DISCARD Resolution</h3>
+<div>
+<div class="section">
+<p>For this example, the <code class="codeph">DISCARD</code> resolution is illustrated with the applicable before and after images for the record in the trail and in the database. It shows how to resolve the case where the target row is missing. In the case of a delete on the source, it is acceptable for the target row not to exist (it would need to be deleted anyway), so the resolution is to discard the <code class="codeph">DELETE</code> operation that is in the trail.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformalwide" id="GUID-724B51DA-AB64-45B7-85B9-2FFF21F40C13__GUID-F04B604F-7ED6-4445-85AE-F7024198F901">
+<p class="titleintable">Table 10-4 DELETEROWMSING Conflict with DISCARD Resolution</p>
+<table class="cellalignment49" title="DELETEROWMSING Conflict with DISCARD Resolution" summary="This table shows how to resolve the case where the target row is missing by discarding the DELETE operation that is in the trail.">
+<thead>
+<tr class="cellalignment25">
+<th class="cellalignment50" id="d29341e1794">Image</th>
+<th class="cellalignment62" id="d29341e1797">SQL</th>
+<th class="cellalignment63" id="d29341e1800">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1805" headers="d29341e1794">
+<p>Before image in trail</p>
+</td>
+<td class="cellalignment64" headers="d29341e1805 d29341e1797">
+<pre dir="ltr">
+name='Jane'
+phone='4444'
+address='Holly'
+salary=200
+balance=200
+comment=NULL
+last_mod_time='9/1/10 8:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e1805 d29341e1800">
+<p>N/A</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1815" headers="d29341e1794">
+<p>After image in trail</p>
+</td>
+<td class="cellalignment64" headers="d29341e1815 d29341e1797">
+<pre dir="ltr">
+None
+</pre></td>
+<td class="cellalignment65" headers="d29341e1815 d29341e1800">
+<p>N/A</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1825" headers="d29341e1794">
+<p>Target database image</p>
+</td>
+<td class="cellalignment64" headers="d29341e1825 d29341e1797">
+<pre dir="ltr">
+None (row missing)
+</pre></td>
+<td class="cellalignment65" headers="d29341e1825 d29341e1800">
+<p>N/A</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1835" headers="d29341e1794">
+<p>Initial <code class="codeph">DELETE</code> applied by Replicat that detects the conflict</p>
+</td>
+<td class="cellalignment64" headers="d29341e1835 d29341e1797">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'Jane'
+2)'4444'
+3)'Holly'
+4)200
+5)200
+6)NULL
+7)'9/1/10 8:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e1835 d29341e1800">
+<p>This SQL returns a no-data-found error. All columns are used in the <code class="codeph">WHERE</code> clause because the <code class="codeph">COMPARECOLS</code> statement is set to <code class="codeph">ALL</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1859" headers="d29341e1794">
+<p>SQL applied by Replicat to resolve the conflict</p>
+</td>
+<td class="cellalignment64" headers="d29341e1859 d29341e1797">
+<pre dir="ltr">
+None
+</pre></td>
+<td class="cellalignment65" headers="d29341e1859 d29341e1800">
+<p>Because <code class="codeph">DISCARD</code> is specified as the resolution for <code class="codeph">DELETEROWMISSING</code>, so the delete from the trail goes to the discard file.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD341"></a><a id="GWUAD340"></a>
+<div class="props_rev_3"><a id="GUID-D40B04DB-2182-4E38-8AE4-6CEBAEE3CADB"></a>
+<h3 id="GWUAD-GUID-D40B04DB-2182-4E38-8AE4-6CEBAEE3CADB" class="sect3"><span class="enumeration_section">10.3.9</span> DELETEROWEXISTS with OVERWRITE Resolution</h3>
+<div>
+<div class="section">
+<p>For this example, the <code class="codeph">OVERWRITE</code> resolution is illustrated with the applicable before and after images for the record in the trail and in the database. It shows how to resolve the case where the source row was deleted but the target row exists. In this case, the <code class="codeph">OVERWRITE</code> resolution applies the delete to the target.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformalwide" id="GUID-D40B04DB-2182-4E38-8AE4-6CEBAEE3CADB__GUID-608D7F14-C0C2-44A0-9C80-B18D45B62731">
+<p class="titleintable">Table 10-5 DELETEROWEXISTS Conflict with OVERWRITE Resolution</p>
+<table class="cellalignment49" title="DELETEROWEXISTS Conflict with OVERWRITE Resolution" summary="This table shows how to resolve the case where the source row was deleted but the target row exists by using the OVERWRITE resolution to apply the delete to the target.">
+<thead>
+<tr class="cellalignment25">
+<th class="cellalignment50" id="d29341e1920">Image</th>
+<th class="cellalignment62" id="d29341e1923">SQL</th>
+<th class="cellalignment63" id="d29341e1926">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1931" headers="d29341e1920">
+<p>Before image in trail</p>
+</td>
+<td class="cellalignment64" headers="d29341e1931 d29341e1923">
+<pre dir="ltr">
+name='Mary'
+phone='222222'
+address='Holly'
+salary=100
+balance=100
+comment=NULL
+last_mod_time='9/1/10 5:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e1931 d29341e1926">
+<p>N/A</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1941" headers="d29341e1920">
+<p>After image in trail</p>
+</td>
+<td class="cellalignment64" headers="d29341e1941 d29341e1923">
+<pre dir="ltr">
+None
+</pre></td>
+<td class="cellalignment65" headers="d29341e1941 d29341e1926">
+<p>N/A</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1951" headers="d29341e1920">
+<p>Target database image</p>
+</td>
+<td class="cellalignment64" headers="d29341e1951 d29341e1923">
+<pre dir="ltr">
+name='Mary'
+phone='1234567890'
+address='Oracle Pkwy'
+salary=100
+balance=600
+comment=com
+last_mod_time='9/1/10 7:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e1951 d29341e1926">
+<p>The row exists on the target, but the <code class="codeph">phone</code>, <code class="codeph">address</code>, <code class="codeph">balance</code>, <code class="codeph">comment</code>, and <code class="codeph">last_mod_time</code> columns are different from the before image in the trail.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e1976" headers="d29341e1920">
+<p>Initial <code class="codeph">DELETE</code> applied by Replicat that detects the conflict</p>
+</td>
+<td class="cellalignment64" headers="d29341e1976 d29341e1923">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'Mary'
+2)'222222'
+3)'Holly'
+4)100
+5)100d
+6)NULL
+7)'9/1/10 5:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e1976 d29341e1926">
+<p>All columns are used in the <code class="codeph">WHERE</code> clause because the <code class="codeph">COMPARECOLS</code> statement is set to <code class="codeph">ALL</code>.</p>
+<p>A no-data-found error occurs because of the difference between the before and current values.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2002" headers="d29341e1920">
+<p><code class="codeph">DELETE</code> applied by Replicat to resolve the conflict</p>
+</td>
+<td class="cellalignment64" headers="d29341e2002 d29341e1923">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'Mary'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2002 d29341e1926">
+<p>Because <code class="codeph">OVERWRITE</code> is the resolution. the <code class="codeph">DELETE</code> is applied using only the primary key (to avoid an integrity error).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-EAE34743-C8D1-46D4-A096-4AA7BD42C6CB">CDR Example 1: All Conflict Types with USEMAX, OVERWRITE, DISCARD</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD342"></a>
+<div class="props_rev_3"><a id="GUID-3183C4DD-7566-427B-BF85-D28EE3EEE24D"></a>
+<h2 id="GWUAD-GUID-3183C4DD-7566-427B-BF85-D28EE3EEE24D" class="sect2"><span class="enumeration_section">10.4</span> CDR Example 2: UPDATEROWEXISTS with USEDELTA and USEMAX</h2>
+<div>
+<div class="section">
+<p>This example resolves the condition where a target row exists on <code class="codeph">UPDATE</code> but non-key columns are different, and it uses two different resolution types to handle this condition based on the affected column.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-CDF8E9EF-2F8E-4A6E-9635-E926A1B8F19F">Table Used in this Example</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-850F7506-776E-4425-BE4B-1BA5A3BB0A2B">MAP Statement</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-FBEF94E2-DA97-4C73-BAAF-DDBE7070B942">Description of MAP Statement</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-6F1389CE-2802-413F-81DD-7DB5D09D468C">Error Handling</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-B14CDCB5-50EC-4797-95FC-9AAEB7F5FBD1" title="This chapter contains instructions for using the Oracle GoldenGate Conflict Detection and Resolution (CDR) feature. Conflict detection and resolution is required in active-active configurations, where Oracle GoldenGate must maintain data synchronization among multiple databases that contain the same data sets.">Configuring Conflict Detection and Resolution</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD343"></a>
+<div class="props_rev_3"><a id="GUID-CDF8E9EF-2F8E-4A6E-9635-E926A1B8F19F"></a>
+<h3 id="GWUAD-GUID-CDF8E9EF-2F8E-4A6E-9635-E926A1B8F19F" class="sect3"><span class="enumeration_section">10.4.1</span> Table Used in this Example</h3>
+<div>
+<div class="section">
+<p>The examples assume identical Oracle databases.</p>
+<pre dir="ltr">
+CREATE TABLE tgt(
+    name varchar2(30) primary key,
+    phone varchar2(10),
+    address varchar2(100),
+    salary number,
+    balance number,
+    comment varchar2(100),
+    last_mod_time timestamp);
+</pre>
+<p>At the source database, all columns are supplementally logged:</p>
+<pre dir="ltr">
+ADD TRANDATA scott.src, COLS (name, phone, address, salary, balance, comment, last_mod_time);
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-3183C4DD-7566-427B-BF85-D28EE3EEE24D">CDR Example 2: UPDATEROWEXISTS with USEDELTA and USEMAX</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD344"></a>
+<div class="props_rev_3"><a id="GUID-850F7506-776E-4425-BE4B-1BA5A3BB0A2B"></a>
+<h3 id="GWUAD-GUID-850F7506-776E-4425-BE4B-1BA5A3BB0A2B" class="sect3"><span class="enumeration_section">10.4.2</span> MAP Statement</h3>
+<div>
+<div class="section">
+<pre dir="ltr">
+MAP fin.src, TARGET fin.tgt,
+    COMPARECOLS
+    (ON UPDATE KEYINCLUDING (address, phone, salary, last_mod_time),
+    ON DELETE KEYINCLUDING (address, phone, salary, last_mod_time)),
+    RESOLVECONFLICT (
+    UPDATEROWEXISTS,
+    (delta_res_method, USEDELTA, COLS (salary)),
+    (DEFAULT, USEMAX (last_mod_time)));
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-3183C4DD-7566-427B-BF85-D28EE3EEE24D">CDR Example 2: UPDATEROWEXISTS with USEDELTA and USEMAX</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD345"></a>
+<div class="props_rev_3"><a id="GUID-FBEF94E2-DA97-4C73-BAAF-DDBE7070B942"></a>
+<h3 id="GWUAD-GUID-FBEF94E2-DA97-4C73-BAAF-DDBE7070B942" class="sect3"><span class="enumeration_section">10.4.3</span> Description of MAP Statement</h3>
+<div>
+<p>For an <code class="codeph">UPDATEROWEXISTS</code> conflict, where a target row exists on <code class="codeph">UPDATE</code> but non-key columns are different, use two different resolutions depending on the column:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Per the <code class="codeph">delta_res_method</code> resolution, use the <code class="codeph">USEDELTA</code> resolution logic for the <code class="codeph">salary</code> column so that the change in value will be added to the current value of the column.</p>
+</li>
+<li>
+<p>Per <code class="codeph">DEFAULT</code>, use the <code class="codeph">USEMAX</code> resolution logic for all other columns in the table (the default column group), using the <code class="codeph">last_mod_time</code> column as the resolution column. This column is updated with the current time whenever the row is modified; the value of this column in the trail is compared to the value in the target. If the value of <code class="codeph">last_mod_time</code> in the trail record is greater than the current value of <code class="codeph">last_mod_time</code> in the target database, the changes to <code class="codeph">name</code>, <code class="codeph">phone</code>, <code class="codeph">address</code>, <code class="codeph">balance</code>, <code class="codeph">comment</code> and <code class="codeph">last_mod_time</code> are applied to the target.</p>
+</li>
+</ul>
+<p>Per <code class="codeph">COMPARECOLS</code>, use the primary key (<code class="codeph">name</code> column) plus the <code class="codeph">address</code>, <code class="codeph">phone</code>, <code class="codeph">salary</code>, and <code class="codeph">last_mod_time</code> columns as the comparison columns for conflict detection for <code class="codeph">UPDATE</code> and <code class="codeph">DELETE</code> operations. (The <code class="codeph">balance</code> and <code class="codeph">comment</code> columns are not compared.)</p>
+<div class="infobox-note" id="GUID-FBEF94E2-DA97-4C73-BAAF-DDBE7070B942__GUID-74E760CE-1F1A-427F-9B8B-2AC66C53F1F8">
+<p class="notep1">Note:</p>
+<p>As an alternative to <code class="codeph">USEMAX</code>, you can use the <code class="codeph">USEMAXEQ</code> resolution to apply a <code class="codeph">&gt;=</code> condition. For more information, see <a class="olink GWURF546" target="_blank" href="../GWURF/table-map.htm#GWURF546"><span class="italic"><span id="GUID-FBEF94E2-DA97-4C73-BAAF-DDBE7070B942__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</div>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-3183C4DD-7566-427B-BF85-D28EE3EEE24D">CDR Example 2: UPDATEROWEXISTS with USEDELTA and USEMAX</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD347"></a><a id="GWUAD346"></a>
+<div class="props_rev_3"><a id="GUID-6F1389CE-2802-413F-81DD-7DB5D09D468C"></a>
+<h3 id="GWUAD-GUID-6F1389CE-2802-413F-81DD-7DB5D09D468C" class="sect3"><span class="enumeration_section">10.4.4</span> Error Handling</h3>
+<div>
+<div class="section">
+<p>For an example of error handling to an exceptions table, see <a href="configuring-conflict-detection-and-resolution.htm#GUID-6C54492C-4B34-4354-A1CB-3F6448529126">Configuring the Oracle GoldenGate Parameter Files for Error Handling</a>.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformalwide" id="GUID-6F1389CE-2802-413F-81DD-7DB5D09D468C__GUID-CAC61800-B957-4DFE-896F-472D5194D8BC">
+<p class="titleintable">Table 10-6 UPDATEROWEXISTS with USEDELTA and USEMAX</p>
+<table class="cellalignment49" title="UPDATEROWEXISTS with USEDELTA and USEMAX" summary="This table shows an example for conflict detection and resolution.">
+<thead>
+<tr class="cellalignment25">
+<th class="cellalignment50" id="d29341e2320">Image</th>
+<th class="cellalignment62" id="d29341e2323">SQL</th>
+<th class="cellalignment63" id="d29341e2326">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2331" headers="d29341e2320">
+<p>Before image in trail</p>
+</td>
+<td class="cellalignment64" headers="d29341e2331 d29341e2323">
+<pre dir="ltr">
+name='Mary'
+phone='1234567890'
+address='Oracle Pkwy'
+salary=100
+balance=100
+comment=NULL
+last_mod_time='9/1/10 3:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2331 d29341e2326">
+<p><code class="codeph">last_mod_time='9/1/10 3:00</code> is the before image of the resolution column for the <code class="codeph">USEMAX</code> resolution.</p>
+<p><code class="codeph">salary=100</code> is the before image for the <code class="codeph">USEDELTA</code> resolution.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2353" headers="d29341e2320">
+<p>After image in trail</p>
+</td>
+<td class="cellalignment64" headers="d29341e2353 d29341e2323">
+<pre dir="ltr">
+phone='222222'
+address='Holly'
+salary=200
+comment='new'
+last_mod_time='9/1/10 5:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2353 d29341e2326">
+<p><code class="codeph">last_mod_time='9/1/10 5:00</code> is the after image of the resolution column for <code class="codeph">USEMAX</code>. Since there is an after image, this will be used to determine the resolution.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2368" headers="d29341e2320">
+<p>Target database image</p>
+</td>
+<td class="cellalignment64" headers="d29341e2368 d29341e2323">
+<pre dir="ltr">
+name='Mary'
+phone='1234567890'
+address='Oracle Pkwy'
+salary=600
+balance=600
+comment='com'
+last_mod_time='9/1/10 4:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2368 d29341e2326">
+<p><code class="codeph">last_mod_time='9/1/10 4:00</code> is the current image of the resolution column in the target against which the resolution column value in the trail is compared.</p>
+<p><code class="codeph">salary=600</code> is the current image of the target column for the <code class="codeph">USEDELTA</code> resolution.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2387" headers="d29341e2320">
+<p>Initial <code class="codeph">UPDATE</code> applied by Replicat that detects the conflict</p>
+</td>
+<td class="cellalignment64" headers="d29341e2387 d29341e2323">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'222222'
+2)'Holly'
+3)200
+4)'new'
+5)'9/1/10 5:00'
+6)'Mary'
+7)'1234567890'
+8)'Oracle Pkwy'
+9)100
+10)'9/1/10 3:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2387 d29341e2326">
+<p>This SQL returns a no-data-found error because the values for the <code class="codeph">salary</code> and <code class="codeph">last_mod_time</code> are different. (The values for <code class="codeph">comment</code> and <code class="codeph">balance</code> are also different, but these columns are not compared.)</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2414" headers="d29341e2320">
+<p><code class="codeph">UPDATE</code> applied by Replicat to resolve the conflict for <code class="codeph">salary</code>, using <code class="codeph">USEDELTA</code>.</p>
+</td>
+<td class="cellalignment64" headers="d29341e2414 d29341e2323">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)200
+2)100
+3)'Mary'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2414 d29341e2326">
+<p>Per <code class="codeph">USEDELTA</code>, the difference between the after image of <code class="codeph">salary</code> (200) in the trail and the before image of <code class="codeph">salary</code> (100) in the trail is added to the current value of <code class="codeph">salary</code> in the target (600). The result is 700.</p>
+<pre dir="ltr">
+600 + (200 - 100) = 700
+</pre></td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2448" headers="d29341e2320">
+<p><code class="codeph">UPDATE</code> applied by Replicat to resolve the conflict for the default columns, using <code class="codeph">USEMAX</code>.</p>
+</td>
+<td class="cellalignment64" headers="d29341e2448 d29341e2323">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'222222'
+2)'Holly'
+3)'new'
+4)'9/1/10 5:00'
+5)'Mary'
+6)'9/1/10 5:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2448 d29341e2326">
+<p>Per <code class="codeph">USEMAX</code>, because the after value of <code class="codeph">last_mod_time</code> in the trail record is greater than the current value in the database, the row is updated with the after values from the trail record.</p>
+<p>Note that the <code class="codeph">salary</code> column is not set here, because it is resolved with the <code class="codeph">UPDATE</code> from the <code class="codeph">USEDELTA</code> resolution.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-3183C4DD-7566-427B-BF85-D28EE3EEE24D">CDR Example 2: UPDATEROWEXISTS with USEDELTA and USEMAX</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD348"></a>
+<div class="props_rev_3"><a id="GUID-C1889BE4-1E9A-4A6C-A72B-5E89B8D2A6FD"></a>
+<h2 id="GWUAD-GUID-C1889BE4-1E9A-4A6C-A72B-5E89B8D2A6FD" class="sect2"><span class="enumeration_section">10.5</span> CDR Example 3: UPDATEROWEXISTS with USEDELTA, USEMAX, and IGNORE</h2>
+<div>
+<div class="section">
+<p>This example resolves the conflict where a target row exists on <code class="codeph">UPDATE</code> but non-key columns are different, and it uses three different resolution types to handle this condition based on the affected column.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-B130EF04-02AE-45B6-8B59-4A29D2CEDE15">Table Used in this Example</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-522629BF-844C-4379-93C5-0B09E003C5B8">MAP Statement</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-C1ED8188-7022-42F4-87FE-3917DD593FA2">Description of MAP Statement</a><br /></li>
+<li class="ulchildlink"><a href="configuring-conflict-detection-and-resolution.htm#GUID-DB3DBCCB-8B19-4AD4-829E-15206A57F9BA">Error Handling</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-B14CDCB5-50EC-4797-95FC-9AAEB7F5FBD1" title="This chapter contains instructions for using the Oracle GoldenGate Conflict Detection and Resolution (CDR) feature. Conflict detection and resolution is required in active-active configurations, where Oracle GoldenGate must maintain data synchronization among multiple databases that contain the same data sets.">Configuring Conflict Detection and Resolution</a></p>
+</div>
+</div>
+</div>
+<a id="GWUAD349"></a>
+<div class="props_rev_3"><a id="GUID-B130EF04-02AE-45B6-8B59-4A29D2CEDE15"></a>
+<h3 id="GWUAD-GUID-B130EF04-02AE-45B6-8B59-4A29D2CEDE15" class="sect3"><span class="enumeration_section">10.5.1</span> Table Used in this Example</h3>
+<div>
+<div class="section">
+<p>The examples assume identical Oracle databases.</p>
+<pre dir="ltr">
+CREATE TABLE tgt(
+    name varchar2(30) primary key,
+    phone varchar2(10),
+    address varchar2(100),
+    salary number,
+    balance number,
+    comment varchar2(100),
+    last_mod_time timestamp);
+</pre>
+<p>At the source database, all columns are supplementally logged:</p>
+<pre dir="ltr">
+ADD TRANDATA scott.src, COLS (name, phone, address, salary, balance, comment, last_mod_time);
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-C1889BE4-1E9A-4A6C-A72B-5E89B8D2A6FD">CDR Example 3: UPDATEROWEXISTS with USEDELTA, USEMAX, and IGNORE</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD350"></a>
+<div class="props_rev_3"><a id="GUID-522629BF-844C-4379-93C5-0B09E003C5B8"></a>
+<h3 id="GWUAD-GUID-522629BF-844C-4379-93C5-0B09E003C5B8" class="sect3"><span class="enumeration_section">10.5.2</span> MAP Statement</h3>
+<div>
+<div class="section">
+<pre dir="ltr">
+MAP fin.src, TARGET fin.tgt,
+    COMPARECOLS
+    (ON UPDATE ALLEXCLUDING (comment)),
+    RESOLVECONFLICT (
+    UPDATEROWEXISTS,
+    (delta_res_method, USEDELTA, COLS (salary, balance)),
+    (max_res_method, USEMAX (last_mod_time), COLS (address, last_mod_time)),
+    (DEFAULT, IGNORE));
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-C1889BE4-1E9A-4A6C-A72B-5E89B8D2A6FD">CDR Example 3: UPDATEROWEXISTS with USEDELTA, USEMAX, and IGNORE</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD351"></a>
+<div class="props_rev_3"><a id="GUID-C1ED8188-7022-42F4-87FE-3917DD593FA2"></a>
+<h3 id="GWUAD-GUID-C1ED8188-7022-42F4-87FE-3917DD593FA2" class="sect3"><span class="enumeration_section">10.5.3</span> Description of MAP Statement</h3>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>For an <code class="codeph">UPDATEROWEXISTS</code> conflict, where a target row exists on <code class="codeph">UPDATE</code> but non-key columns are different, use two different resolutions depending on the column:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Per the <code class="codeph">delta_res_method</code> resolution, use the <code class="codeph">USEDELTA</code> resolution logic for the <code class="codeph">salary</code> and <code class="codeph">balance</code> columns so that the change in each value will be added to the current value of each column.</p>
+</li>
+<li>
+<p>Per the <code class="codeph">max_res_method</code> resolution, use the <code class="codeph">USEMAX</code> resolution logic for the <code class="codeph">address</code> and <code class="codeph">last_mod_time</code> columns. The <code class="codeph">last_mod_time</code> column is the resolution column. This column is updated with the current time whenever the row is modified; the value of this column in the trail is compared to the value in the target. If the value of <code class="codeph">last_mod_time</code> in the trail record is greater than the current value of <code class="codeph">last_mod_time</code> in the target database, the changes to <code class="codeph">address</code> and <code class="codeph">last_mod_time</code> are applied to the target; otherwise, they are ignored in favor of the target values.</p>
+</li>
+<li>
+<p>Per <code class="codeph">DEFAULT</code>, use the <code class="codeph">IGNORE</code> resolution logic for the remaining columns (<code class="codeph">phone</code> and <code class="codeph">comment</code>) in the table (the default column group). Changes to these columns will always be ignored by Replicat.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Per <code class="codeph">COMPARECOLS</code>, use all columns except the <code class="codeph">comment</code> column as the comparison columns for conflict detection for <code class="codeph">UPDATE</code> operations. Comment will not be used in the <code class="codeph">WHERE</code> clause for updates, but all other columns that have a before image in the trail record will be used.</p>
+<div class="infobox-note" id="GUID-C1ED8188-7022-42F4-87FE-3917DD593FA2__GUID-2A984F77-D7E5-428F-B952-B62F505F1E9C">
+<p class="notep1">Note:</p>
+<p>As an alternative to <code class="codeph">USEMAX</code>, you can use the <code class="codeph">USEMAXEQ</code> resolution to apply a <code class="codeph">&gt;=</code> condition. For more information, see <a class="olink GWURF546" target="_blank" href="../GWURF/table-map.htm#GWURF546"><span class="italic"><span id="GUID-C1ED8188-7022-42F4-87FE-3917DD593FA2__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</div>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-C1889BE4-1E9A-4A6C-A72B-5E89B8D2A6FD">CDR Example 3: UPDATEROWEXISTS with USEDELTA, USEMAX, and IGNORE</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GWUAD353"></a><a id="GWUAD352"></a>
+<div class="props_rev_3"><a id="GUID-DB3DBCCB-8B19-4AD4-829E-15206A57F9BA"></a>
+<h3 id="GWUAD-GUID-DB3DBCCB-8B19-4AD4-829E-15206A57F9BA" class="sect3"><span class="enumeration_section">10.5.4</span> Error Handling</h3>
+<div>
+<div class="section">
+<p>For an example of error handling to an exceptions table, see <a href="configuring-conflict-detection-and-resolution.htm#GUID-6C54492C-4B34-4354-A1CB-3F6448529126">Configuring the Oracle GoldenGate Parameter Files for Error Handling</a>.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformalwide" id="GUID-DB3DBCCB-8B19-4AD4-829E-15206A57F9BA__GUID-959FC2F2-171B-4DD7-AF7A-AFE7DC1C1140">
+<p class="titleintable">Table 10-7 UPDATEROWEXISTS with USEDELTA, USEMAX, and IGNORE</p>
+<table class="cellalignment49" title="UPDATEROWEXISTS with USEDELTA, USEMAX, and IGNORE" summary="This table shows an example for conflict detection and resolution.">
+<thead>
+<tr class="cellalignment25">
+<th class="cellalignment50" id="d29341e2777">Image</th>
+<th class="cellalignment62" id="d29341e2780">SQL</th>
+<th class="cellalignment63" id="d29341e2783">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2788" headers="d29341e2777">
+<p>Before image in trail</p>
+</td>
+<td class="cellalignment64" headers="d29341e2788 d29341e2780">
+<pre dir="ltr">
+name='Mary'
+phone='1234567890'
+address='Oracle Pkwy'
+salary=100
+balance=100
+comment=NULL
+last_mod_time='9/1/10 3:00
+</pre></td>
+<td class="cellalignment65" headers="d29341e2788 d29341e2783">
+<p><code class="codeph">last_mod_time='9/1/10 3:00</code> is the before image of the resolution column for the <code class="codeph">USEMAX</code> resolution.</p>
+<p><code class="codeph">salary=100</code> and <code class="codeph">balance=100</code> are the before images for the <code class="codeph">USEDELTA</code> resolution.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2813" headers="d29341e2777">
+<p>After image in trail</p>
+</td>
+<td class="cellalignment64" headers="d29341e2813 d29341e2780">
+<pre dir="ltr">
+phone='222222'
+address='Holly'
+salary=200
+comment='new'
+last_mod_time='9/1/10 5:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2813 d29341e2783">
+<p><code class="codeph">last_mod_time='9/1/10 5:00</code> is the after image of the resolution column for <code class="codeph">USEMAX</code>. Since there is an after image, this will be used to determine the resolution.</p>
+<p><code class="codeph">salary=200</code> is the only after image available for the <code class="codeph">USEDELTA</code> resolution. For <code class="codeph">balance</code>, the before image will be used in the calculation.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2838" headers="d29341e2777">
+<p>Target database image</p>
+</td>
+<td class="cellalignment64" headers="d29341e2838 d29341e2780">
+<pre dir="ltr">
+name='Mary'
+phone='1234567890'
+address='Ralston'
+salary=600
+balance=600
+comment='com'
+last_mod_time='9/1/10 4:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2838 d29341e2783">
+<p><code class="codeph">last_mod_time='9/1/10 4:00</code> is the current image of the resolution column in the target against which the resolution column value in the trail is compared for <code class="codeph">USEMAX</code>.</p>
+<p><code class="codeph">salary=600</code> and <code class="codeph">balance=600</code> are the current images of the target columns for <code class="codeph">USEDELTA</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2863" headers="d29341e2777">
+<p>Initial <code class="codeph">UPDATE</code> applied by Replicat that detects the conflict</p>
+</td>
+<td class="cellalignment64" headers="d29341e2863 d29341e2780">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'222222'
+2)'Holly'
+3)200
+4)'new'
+5)'9/1/10 5:00'
+6)'Mary'
+7)'1234567890'
+8)'Oracle Pkwy'
+9)100
+10)100
+11)'9/1/10 3:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2863 d29341e2783">
+<p>This SQL returns a no-data-found error because the values for the <code class="codeph">address</code>, <code class="codeph">salary</code>, <code class="codeph">balance</code> and <code class="codeph">last_mod_time</code> columns are different.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2890" headers="d29341e2777">
+<p><code class="codeph">UPDATE</code> applied by Replicat to resolve the conflict for <code class="codeph">salary</code>, using <code class="codeph">USEDELTA</code>.</p>
+</td>
+<td class="cellalignment64" headers="d29341e2890 d29341e2780">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)200
+2)100
+3)'Mary'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2890 d29341e2783">
+<p>For <code class="codeph">salary</code>, there is a difference of 100, but there was no change in value for <code class="codeph">balance</code>, so it is not needed in the update SQL. Per <code class="codeph">USEDELTA</code>, the difference (delta) between the after (200) image and the before image (100) of <code class="codeph">salary</code> in the trail is added to the current value of <code class="codeph">salary</code> in the target (600). The result is 700.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2925" headers="d29341e2777">
+<p><code class="codeph">UPDATE</code> applied by Replicat to resolve the conflict for <code class="codeph">USEMAX</code>.</p>
+</td>
+<td class="cellalignment64" headers="d29341e2925 d29341e2780">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'Holly'
+2)'9/1/10 5:00'
+3)'Mary'
+4)'9/1/10 5:00'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2925 d29341e2783">
+<p>Because the after value of <code class="codeph">last_mod_time</code> in the trail record is greater than the current value in the database, that column plus the <code class="codeph">address</code> column are updated with the after values from the trail record.</p>
+<p>Note that the <code class="codeph">salary</code> column is not set here, because it is resolved with the <code class="codeph">UPDATE</code> from the <code class="codeph">USEDELTA</code> resolution.</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment53" id="d29341e2959" headers="d29341e2777">
+<p><code class="codeph">UPDATE</code> applied by Replicat for <code class="codeph">IGNORE</code>.</p>
+</td>
+<td class="cellalignment64" headers="d29341e2959 d29341e2780">
+<p>SQL bind variables:</p>
+<pre dir="ltr">
+1)'222222'
+2)'new'
+3)'Mary'
+</pre></td>
+<td class="cellalignment65" headers="d29341e2959 d29341e2783">
+<p><code class="codeph">IGNORE</code> is specified for the <code class="codeph">DEFAULT</code> column group (<code class="codeph">phone</code> and <code class="codeph">comment</code>), so no resolution SQL is applied.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-conflict-detection-and-resolution.htm#GUID-C1889BE4-1E9A-4A6C-A72B-5E89B8D2A6FD">CDR Example 3: UPDATEROWEXISTS with USEDELTA, USEMAX, and IGNORE</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment24">
+<tr>
+<td class="cellalignment31">
+<table class="cellalignment29">
+<tr>
+<td class="cellalignment28"><a href="configuring-oracle-goldengate-active-active-high-availability.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment28"><a href="configuring-oracle-goldengate-security.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment33">
+<table class="cellalignment27">
+<tr>
+<td class="cellalignment28"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment28"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

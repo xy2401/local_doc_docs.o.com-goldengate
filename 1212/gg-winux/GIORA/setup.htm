@@ -1,0 +1,625 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>3 Preparing the Database for Oracle GoldenGate</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This chapter contains steps to take so that the source Oracle database is configured properly to support the capture of transactional changes." />
+<meta name="dcterms.created" content="2015-06-05T14:9:48Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E29644-07" />
+<meta name="dcterms.isVersionOf" content="GIORA" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="install.htm" title="Previous" type="text/html" />
+<link rel="Next" href="user_assignment.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIORA.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIORA.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIORA.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">6/27</span>
+<!-- End Header -->
+<div id="GIORA357" class="chapter"><a id="BABCDHDZ"></a>
+<h1 class="chapter"><span class="secnum">3</span> Preparing the Database for Oracle GoldenGate</h1>
+<p><a id="GIORA545"></a>This chapter contains steps to take so that the source Oracle database is configured properly to support the capture of transactional changes.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#A1866610">Configuring Connections for Integrated Processes</a></p>
+</li>
+<li>
+<p><a href="#BABFJCCC">Configuring Logging Properties</a></p>
+</li>
+<li>
+<p><a href="#A1869041">Enabling Oracle GoldenGate in the Database</a></p>
+</li>
+<li>
+<p><a href="#BABHJHGD">Setting Flashback Query</a></p>
+</li>
+<li>
+<p><a href="#CBDHHEIE">Managing Server Resources</a></p>
+</li>
+</ul>
+<a id="A1866610"></a>
+<div id="GIORA982" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">3.1</span> Configuring Connections for Integrated Processes</h2>
+<p>If you will be using integrated capture and integrated Replicat, each requires a dedicated server connection in the <code dir="ltr">tnsnames.ora</code> file. You direct the processes to use these connections with the <code dir="ltr">USERID</code> or <code dir="ltr">USERIDALIAS</code> parameter in the Extract and Replicat parameter files when you configure those processes.</p>
+<p>The following is an example of the dedicated connection required for integrated capture (Extract) and integrated Replicat.</p>
+<pre dir="ltr">
+TEST =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = test2)(PORT = 1521))
+    )
+(CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = test)
+  )
+)
+</pre>
+<p>The following are the security options for specifying the connection string in the Extract or Replicat parameter file.</p>
+<p>Password encryption method:</p>
+<pre dir="ltr">
+USERID intext@test, PASSWORD mypassword
+</pre>
+<p>Credential store method:</p>
+<pre dir="ltr">
+USERIDALIAS ext
+</pre>
+<p>In the case of <code dir="ltr">USERIDALIAS</code>, the alias <code dir="ltr">ext</code> is stored in the Oracle GoldenGate credential store with the actual connection string, as in the following example:</p>
+<pre dir="ltr">
+GGSCI&gt; INFO CREDENTIALSTORE DOMAIN support
+Domain: Support
+  Alias: ext
+  Userid: intext@test
+</pre>
+<p>For more information about specifying database connection information in the parameter file, see <a class="olink GWUAD354" href="../../gg-winux/GWUAD/wu_security.htm#GWUAD354"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABFJCCC"></a>
+<div id="GIORA364" class="sect1">
+<h2 class="sect1"><span class="secnum">3.2</span> Configuring Logging Properties</h2>
+<p>Oracle GoldenGate relies on the redo logs to capture the data that it needs to replicate source transactions. The Oracle redo logs on the source system must be configured properly before you start Oracle GoldenGate processing.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Redo volume is increased as the result of this required logging. You can wait until you are ready to start Oracle GoldenGate processing to enable the logging.</div>
+<p>This section addresses the following logging levels that apply to Oracle GoldenGate. Which logging level that you use is dependent on the Oracle GoldenGate feature or features that you are using.</p>
+<ul>
+<li>
+<p><a href="#BABEIBDG">Section 3.2.1, "Enabling Minimum Database-level Supplemental Logging"</a></p>
+</li>
+<li>
+<p><a href="#BABCJHJF">Section 3.2.2, "Enabling Schema-level Supplemental Logging"</a></p>
+</li>
+<li>
+<p><a href="#BABIBIIF">Section 3.2.3, "Enabling Table-level Supplemental Logging"</a></p>
+</li>
+</ul>
+<p><a href="#BABIIBFI">Table 3-1</a> shows the Oracle GoldenGate use cases for the different logging properties. Detailed information follows.</p>
+<div id="GIORA365" class="tblformal"><p class="titleintable"><a id="sthref64"></a><a id="BABIIBFI"></a>Table 3-1 Supplemental Logging Options Per Use Case</p>
+<table class="cellalignment247" title="Supplemental Logging Options Per Use Case" summary="This table summarizes the supplemental logging options that are, or may be, required to support your intended Oracle GoldenGate use case.">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t3">Logging option</th>
+<th class="cellalignment246" id="r1c2-t3">GGSCI command</th>
+<th class="cellalignment246" id="r1c3-t3">What it does</th>
+<th class="cellalignment246" id="r1c4-t3">Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t3" headers="r1c1-t3">
+<p>Forced logging mode</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c2-t3">
+<p>None; enable through the database.</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c3-t3">
+<p>Forces the logging of all transactions and loads.</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c4-t3">
+<p>Strongly recommended for all Oracle GoldenGate use cases.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r3c1-t3" headers="r1c1-t3">
+<p>Minimum database-level supplemental logging</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c2-t3">
+<p>None; enable through the database.</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c3-t3">
+<p>Enables minimal supplemental logging to add row-chaining information to the redo log.</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c4-t3">
+<p>Required for all Oracle GoldenGate use cases</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r4c1-t3" headers="r1c1-t3">
+<p>Schema-level supplemental logging, default setting</p>
+<p>See <a href="#BABCJHJF">Section 3.2.2, "Enabling Schema-level Supplemental Logging"</a>.</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c2-t3">
+<p><code dir="ltr">ADD SCHEMATRANDATA</code></p>
+</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c3-t3">
+<p>Enables unconditional supplemental logging of the primary key and conditional supplemental logging of unique key(s) and foreign key(s) of all tables in a schema. All of these keys together are known as the <span class="italic">scheduling columns</span>.</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c4-t3">
+<p>Enables the logging for all current and future tables in the schema. If the primary key, unique key, and foreign key columns are not identical at both source and target, use <code dir="ltr">ALLCOLS</code>. Required when using DDL support.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r5c1-t3" headers="r1c1-t3">
+<p>Schema-level supplemental logging with unconditional logging for all supported columns. (See <a href="#BABCJHJF">Section 3.2.2, "Enabling Schema-level Supplemental Logging"</a> for non-supported column types.)</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t3 r1c2-t3">
+<p><code dir="ltr">ADD SCHEMATRANDATA</code> with <code dir="ltr">ALLCOLS</code> option</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t3 r1c3-t3">
+<p>Enables unconditional supplemental logging of all of the columns in a table, for all of the tables in a schema.</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t3 r1c4-t3">
+<p>Use for integrated Replicat when parallelism is greater than 1 and the source and target have different scheduling columns.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r6c1-t3" headers="r1c1-t3">
+<p>Schema-level supplemental logging, minimal setting</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t3 r1c2-t3">
+<p><code dir="ltr">ADD SCHEMATRANDATA</code> with <code dir="ltr">NOSCHEDULINGCOLS</code> option</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t3 r1c3-t3">
+<p>Enables unconditional supplemental logging of the primary key and all valid unique indexes of all tables in a schema.</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t3 r1c4-t3">
+<p>Use only for nonintegrated Replicat. This is the minimum required schema-level logging.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r7c1-t3" headers="r1c1-t3">
+<p>Table-level supplemental logging with built-in support for integrated Replicat</p>
+<p>See <a href="#BABIBIIF">Section 3.2.3, "Enabling Table-level Supplemental Logging"</a></p>
+</td>
+<td class="cellalignment240" headers="r7c1-t3 r1c2-t3">
+<p><code dir="ltr">ADD TRANDATA</code></p>
+</td>
+<td class="cellalignment240" headers="r7c1-t3 r1c3-t3">
+<p>Enables unconditional supplemental logging of the primary key and conditional supplemental logging of unique key(s) and foreign key(s) of a table. All of these keys together are known as the <span class="italic">scheduling columns</span>.</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t3 r1c4-t3">
+<p>Required for all Oracle GoldenGate use cases unless schema-level supplemental logging is used. If the primary key, unique key, and foreign key columns are not identical at both source and target, use <code dir="ltr">ALLCOLS</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r8c1-t3" headers="r1c1-t3">
+<p>Table-level supplemental logging with unconditional logging for all supported columns. (See <a href="#BABIBIIF">Section 3.2.3, "Enabling Table-level Supplemental Logging"</a> for non-supported column types.)</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t3 r1c2-t3">
+<p><code dir="ltr">ADD TRANDATA</code> with <code dir="ltr">ALLCOLS</code> option</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t3 r1c3-t3">
+<p>Enables unconditional supplemental logging of all of the columns of the table.</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t3 r1c4-t3">
+<p>Use for integrated Replicat when parallelism is greater than 1 and the source and target have different scheduling columns.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r9c1-t3" headers="r1c1-t3">
+<p>Table-level supplemental logging, minimal setting</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t3 r1c2-t3">
+<p><code dir="ltr">ADD TRANDATA</code> with <code dir="ltr">NOSCHEDULINGCOLS</code> option</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t3 r1c3-t3">
+<p>Enables unconditional supplemental logging of the primary key and all valid unique indexes of a table.</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t3 r1c4-t3">
+<p>Use only for nonintegrated Replicat. This is the minimum required table-level logging.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblformal" -->
+<a id="BABEIBDG"></a>
+<div id="GIORA366" class="sect2">
+<h3 class="sect2"><span class="secnum">3.2.1</span> Enabling Minimum Database-level Supplemental Logging</h3>
+<p>Oracle strongly recommends putting the Oracle source database into forced logging mode. Forced logging mode forces the logging of all transactions and loads, overriding any user or storage settings to the contrary. This ensures that no source data in the Extract configuration gets missed.</p>
+<p>In addition, minimal supplemental logging, a database-level option, is required for an Oracle source database when using Oracle GoldenGate. This adds row chaining information, if any exists, to the redo log for update operations.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Database-level primary key (PK) and unique index (UI) logging is strongly discouraged because of the excessive additional overhead it creates on tables outside of replication. Unless those logging options are required for business purposes, you only need to enable minimal supplemental logging at the database level and force logging for Oracle GoldenGate.</div>
+<p>Perform the following steps to verify and enable, if necessary, minimal supplemental logging and forced logging.</p>
+<ol>
+<li>
+<p>Log in to SQL*Plus as a user with <code dir="ltr">ALTER SYSTEM</code> privilege.</p>
+</li>
+<li>
+<p>Issue the following command to determine whether the database is in supplemental logging mode and in forced logging mode. If the result is <code dir="ltr">YES</code> for both queries, the database meets the Oracle GoldenGate requirement.</p>
+<pre dir="ltr">
+SELECT supplemental_log_data_min, force_logging FROM v$database;
+</pre></li>
+<li>
+<p>If the result is <code dir="ltr">NO</code> for either or both properties, continue with these steps to enable them as needed:</p>
+<pre dir="ltr">
+SQL&gt; ALTER DATABASE ADD SUPPLEMENTAL LOG DATA;
+SQL&gt; ALTER DATABASE FORCE LOGGING;
+</pre></li>
+<li>
+<p>Issue the following command to verify that these properties are now enabled.</p>
+<pre dir="ltr">
+SELECT supplemental_log_data_min, force_logging FROM v$database;
+</pre>
+<p>The output of the query must be <code dir="ltr">YES</code> for both properties.</p>
+</li>
+<li>
+<p>Switch the log files.</p>
+<pre dir="ltr">
+SQL&gt; ALTER SYSTEM SWITCH LOGFILE;
+</pre></li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="BABCJHJF"></a>
+<div id="GIORA367" class="sect2">
+<h3 class="sect2"><span class="secnum">3.2.2</span> Enabling Schema-level Supplemental Logging</h3>
+<p>Oracle GoldenGate supports schema-level supplemental logging. Schema-level logging is required for an Oracle source database when using the Oracle GoldenGate DDL replication feature. In all other use cases, it is optional, but then you must use table-level logging instead (see <a href="#BABIBIIF">Section 3.2.3, "Enabling Table-level Supplemental Logging"</a>).</p>
+<p>By default, schema-level logging automatically enables unconditional supplemental logging of the primary key and conditional supplemental logging of unique key(s) and foreign key(s) of all tables in a schema. Options enable you to alter the logging as needed.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Oracle strongly recommends using schema-level logging rather than table-level logging, because it ensures that any new tables added to a schema are captured if they satisfy wildcard specifications.</div>
+<p>Perform the following steps on the source system to enable schema-level supplemental logging.</p>
+<ol>
+<li>
+<p>Apply Oracle Patch 13794550 to the source Oracle database if the version is earlier than 11.2.0.2.</p>
+</li>
+<li>
+<p>Run GGSCI on the source system.</p>
+</li>
+<li>
+<p>Issue the <code dir="ltr">DBLOGIN</code> command with the alias of a user in the credential store who has privilege to enable schema-level supplemental logging.</p>
+<pre dir="ltr">
+DBLOGIN USERIDALIAS <span class="codeinlineitalic">alias</span>
+</pre>
+<p>See <a class="olink GWURF251" href="../../gg-winux/GWURF/ggsci_commands059.htm#GWURF251"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information about <code dir="ltr">DBLOGIN</code> and additional options.</p>
+</li>
+<li>
+<p>Issue the <code dir="ltr">ADD SCHEMATRANDATA</code> command for each schema for which you want to capture data changes with Oracle GoldenGate.</p>
+<pre dir="ltr">
+ADD SCHEMATRANDATA <span class="codeinlineitalic">schema</span> [ALLCOLS | NOSCHEDULINGCOLS]
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p>Without options, <code dir="ltr">ADD SCHEMATRANDATA</code> schema enables the unconditional supplemental logging on the source system of the primary key and the conditional supplemental logging of all unique key(s) and foreign key(s) of all current and future tables in the given schema. Unconditional logging forces the primary key values to the log whether or not the key was changed in the current operation. Conditional logging logs all of the column values of a foreign or unique key if at least one of them was changed in the current operation. The default is optional to support nonintegrated Replicat but is required to support integrated Replicat because primary key, unique keys, and foreign keys must all be available to the inbound server to compute dependencies. For more information about integrated Replicat, see <a href="process_mode.htm#CBDFHBIB">Section 5.3, "Deciding Which Apply Method to Use"</a>.</p>
+</li>
+<li>
+<p><code dir="ltr">ALLCOLS</code> can be used to enable the unconditional supplemental logging of all of the columns of a table and applies to all current and future tables in the given schema. Use to support integrated Replicat when the source and target tables have different scheduling columns. (<span class="italic">Scheduling columns</span> are the primary key, the unique key, and the foreign key.)</p>
+</li>
+<li>
+<p><code dir="ltr">NOSCHEDULINGCOLS</code> logs only the values of the primary key and all valid unique indexes for existing tables in the schema and new tables added later. This is the minimal required level of schema-level logging and is valid only for Replicat in nonintegrated mode.</p>
+</li>
+</ul>
+<p>In the following example, the command enables default supplemental logging for the <code dir="ltr">finance</code> schema.</p>
+<pre dir="ltr">
+ADD SCHEMATRANDATA finance
+</pre>
+<p>In the following example, the command enables the supplemental logging only for the primary key and valid unique indexes for the <code dir="ltr">hr</code> schema.</p>
+<pre dir="ltr">
+ADD SCHEMATRANDATA hr NOSCHEDULINGCOLS
+</pre>
+<p>See <a class="olink GWURF265" href="../../gg-winux/GWURF/ggsci_commands066.htm#GWURF265"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information about <code dir="ltr">ADD SCHEMATRANDATA</code>.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="BABIBIIF"></a>
+<div id="GIORA368" class="sect2">
+<h3 class="sect2"><span class="secnum">3.2.3</span> Enabling Table-level Supplemental Logging</h3>
+<p>Enable table-level supplemental logging on the source system in the following cases:</p>
+<ul>
+<li>
+<p>To enable the required level of logging when not using schema-level logging (see <a href="#BABCJHJF">Section 3.2.2, "Enabling Schema-level Supplemental Logging"</a>). Either schema-level or table-level logging must be used. By default, table-level logging automatically enables unconditional supplemental logging of the primary key and conditional supplemental logging of unique key(s) and foreign key(s) of a table. Options enable you to alter the logging as needed.</p>
+</li>
+<li>
+<p>To prevent the logging of the primary key for any given table.</p>
+</li>
+<li>
+<p>To log non-key column values at the table level to support specific Oracle GoldenGate features such as filtering.</p>
+</li>
+</ul>
+<p>Perform the following steps on the source system to enable table-level supplemental logging or use the optional features of the command.</p>
+<ol>
+<li>
+<p>Run GGSCI on the source system.</p>
+</li>
+<li>
+<p>Issue the <code dir="ltr">DBLOGIN</code> command using the alias of a user in the credential store who has privilege to enable table-level supplemental logging.</p>
+<pre dir="ltr">
+DBLOGIN USERIDALIAS <span class="codeinlineitalic">alias</span>
+</pre>
+<p>See <a class="olink GWURF251" href="../../gg-winux/GWURF/ggsci_commands059.htm#GWURF251"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information about <code dir="ltr">DBLOGIN</code> and additional options.</p>
+</li>
+<li>
+<p>Issue the <code dir="ltr">ADD TRANDATA</code> command.</p>
+<pre dir="ltr">
+ADD TRANDATA [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">schema.</span><span class="codeinlineitalic">table</span> [, COLS (<span class="codeinlineitalic">columns)</span>] [, NOKEY] [, ALLCOLS | NOSCHEDULINGCOLS]
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">container</span></code> is the name of the root container or pluggable database if the table is in a multitenant container database.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">schema</span></code> is the source schema that contains the table.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">table</span></code> is the name of the table. See <a class="olink GWUAD192" href="../../gg-winux/GWUAD/wu_gettingstarted.htm#GWUAD192"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for instructions for specifying object names.</p>
+</li>
+<li>
+<p><code dir="ltr">ADD TRANDATA</code> without other options automatically enables unconditional supplemental logging of the primary key and conditional supplemental logging of unique key(s) and foreign key(s) of the table. Unconditional logging forces the primary key values to the log whether or not the key was changed in the current operation. Conditional logging logs all of the column values of a foreign or unique key if at least one of them was changed in the current operation. The default is optional to support nonintegrated Replicat (see also <code dir="ltr">NOSCHEDULINGCOLS</code>) but is required to support integrated Replicat because primary key, unique keys, and foreign keys must all be available to the inbound server to compute dependencies. For more information about integrated Replicat, see <a href="process_mode.htm#CBDFHBIB">Section 5.3, "Deciding Which Apply Method to Use"</a>.</p>
+</li>
+<li>
+<p><code dir="ltr">ALLCOLS</code> enables the unconditional supplemental logging of all of the columns of the table. Use to support integrated Replicat when the source and target tables have different scheduling columns. (<span class="italic">Scheduling columns</span> are the primary key, the unique key, and the foreign key.)</p>
+</li>
+<li>
+<p><code dir="ltr">NOSCHEDULINGCOLS</code> is valid for Replicat in nonintegrated mode only. It issues an <code dir="ltr">ALTER TABLE</code> command with an <code dir="ltr">ADD SUPPLEMENTAL LOG DATA ALWAYS</code> clause that is appropriate for the type of unique constraint that is defined for the table, or all columns in the absence of a unique constraint. This command satisfies the basic table-level logging requirements of Oracle GoldenGate when schema-level logging will not be used. See <a href="additional_config.htm#BABHHCAA">Section 10.1, "Ensuring Row Uniqueness in Source and Target Tables"</a> for how Oracle GoldenGate selects a key or index.</p>
+</li>
+<li>
+<p><code dir="ltr">COLS</code> <code dir="ltr"><span class="codeinlineitalic">columns</span></code> logs non-key columns that are required for a <code dir="ltr">KEYCOLS</code> clause or for filtering and manipulation. The parentheses are required. These columns will be logged in addition to the primary key unless the <code dir="ltr">NOKEY</code> option is also present.</p>
+</li>
+<li>
+<p><code dir="ltr">NOKEY</code> prevents the logging of the primary key or unique key. Requires a <code dir="ltr">KEYCOLS</code> clause in the <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> parameters and a <code dir="ltr">COLS</code> clause in the <code dir="ltr">ADD TRANDATA</code> command to log the alternate <code dir="ltr">KEYCOLS</code> columns.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>If using <code dir="ltr">ADD TRANDATA</code> with the <code dir="ltr">COLS</code> option, create a unique index for those columns on the target to optimize row retrieval. If you are logging those columns as a substitute key for a <code dir="ltr">KEYCOLS</code> clause, make a note to add the <code dir="ltr">KEYCOLS</code> clause to the <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements when you configure the Oracle GoldenGate processes.</p>
+</li>
+</ol>
+<p>See <a class="olink GWURF268" href="../../gg-winux/GWURF/ggsci_commands067.htm#GWURF268"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information about <code dir="ltr">ADD TRANDATA</code>.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1869041"></a>
+<div id="GIORA983" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">3.3</span> Enabling Oracle GoldenGate in the Database</h2>
+<p>The database services required to support Oracle GoldenGate capture and apply must be enabled explicitly for an Oracle 11.2.0.4 database. This is required for all modes of Extract and Replicat.</p>
+<p>To enable Oracle GoldenGate, set the following database initialization parameter. All instances in Oracle RAC must have the same setting.</p>
+<pre dir="ltr">
+ENABLE_GOLDENGATE_REPLICATION=true
+</pre>
+<p>For more information about this parameter, see <a class="olink REFRN" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=REFRN"><span class="italic">Oracle Database Reference</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABHJHGD"></a>
+<div id="GIORA374" class="sect1">
+<h2 class="sect1"><span class="secnum">3.4</span> Setting Flashback Query</h2>
+<p>To process certain update records, Extract fetches additional row data from the source database. Oracle GoldenGate fetches data for the following:</p>
+<ul>
+<li>
+<p>User-defined types</p>
+</li>
+<li>
+<p>Nested tables</p>
+</li>
+<li>
+<p>XMLType objects</p>
+</li>
+</ul>
+<p>By default, Oracle GoldenGate uses Flashback Query to fetch the values from the undo (rollback) tablespaces. That way, Oracle GoldenGate can reconstruct a read-consistent row image as of a specific time or SCN to match the redo record.</p>
+<p>For best fetch results, configure the source database as follows:</p>
+<ol>
+<li>
+<p>Set a sufficient amount of redo retention by setting the Oracle initialization parameters <code dir="ltr">UNDO_MANAGEMENT</code> and <code dir="ltr">UNDO_RETENTION</code> as follows (in seconds).</p>
+<pre dir="ltr">
+UNDO_MANAGEMENT=AUTO
+
+UNDO_RETENTION=86400 
+
+UNDO_RETENTION can be adjusted upward in high-volume environments.
+</pre></li>
+<li>
+<p>Calculate the space that is required in the undo tablespace by using the following formula.</p>
+<pre dir="ltr">
+<span class="codeinlineitalic">undo_space</span> = UNDO_RETENTION * <span class="codeinlineitalic">UPS</span> + <span class="codeinlineitalic">overhead</span>
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">undo_space</span></code> is the number of undo blocks.</p>
+</li>
+<li>
+<p><code dir="ltr">UNDO_RETENTION</code> is the value of the <code dir="ltr">UNDO_RETENTION</code> parameter (in seconds).</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">UPS</span></code> is the number of undo blocks for each second.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">overhead</span></code> is the minimal overhead for metadata (transaction tables, etc.).</p>
+</li>
+</ul>
+<p>Use the system view <code dir="ltr">V$UNDOSTAT</code> to estimate <code dir="ltr"><span class="codeinlineitalic">UPS</span></code> and <code dir="ltr"><span class="codeinlineitalic">overhead</span></code>.</p>
+</li>
+<li>
+<p>For tables that contain <code dir="ltr">LOBs</code>, do one of the following:</p>
+<ul>
+<li>
+<p>Set the <code dir="ltr">LOB</code> storage clause to <code dir="ltr">RETENTION</code>. This is the default for tables that are created when <code dir="ltr">UNDO_MANAGEMENT</code> is set to <code dir="ltr">AUTO</code>.</p>
+</li>
+<li>
+<p>If using <code dir="ltr">PCTVERSION</code> instead of <code dir="ltr">RETENTION</code>, set <code dir="ltr">PCTVERSION</code> to an initial value of 25. You can adjust it based on the fetch statistics that are reported with the <code dir="ltr">STATS EXTRACT</code> command (see <a href="#BABBEDDF">Table 3-2</a>). If the value of the <code dir="ltr">STAT_OPER_ROWFETCH</code> <code dir="ltr">CURRENTBYROWID</code> or <code dir="ltr">STAT_OPER_ROWFETCH_CURRENTBYKEY</code> field in these statistics is high, increase <code dir="ltr">PCTVERSION</code> in increments of 10 until the statistics show low values.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Grant either of the following privileges to the Oracle GoldenGate Extract user:</p>
+<pre dir="ltr">
+GRANT FLASHBACK ANY TABLE TO <span class="codeinlineitalic">db_user</span>
+
+GRANT FLASHBACK ON <span class="codeinlineitalic">schema.table</span> TO <span class="codeinlineitalic">db_user</span>
+</pre></li>
+</ol>
+<p>Oracle GoldenGate provides the following parameters to manage fetching.</p>
+<div id="GIORA375" class="tblhruleformalwide"><p class="titleintable"><a id="sthref65"></a><a id="BABBEDDF"></a>Table 3-2 Oracle GoldenGate Parameters and Commands to Manage Fetching</p>
+<table class="cellalignment245" title="Oracle GoldenGate Parameters and Commands to Manage Fetching" summary="This table describes the Oracle GoldenGate parameters and commands to manage fetching.">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t6">Parameter or Command</th>
+<th class="cellalignment246" id="r1c2-t6">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t6" headers="r1c1-t6">
+<p><code dir="ltr">STATS EXTRACT</code> command with <code dir="ltr">REPORTFETCH</code> option</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t6 r1c2-t6">
+<p>Shows Extract fetch statistics on demand.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r3c1-t6" headers="r1c1-t6">
+<p><code dir="ltr">STATOPTIONS</code> parameter with <code dir="ltr">REPORTFETCH</code> option</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t6 r1c2-t6">
+<p>Sets the <code dir="ltr">STATS EXTRACT</code> command so that it always shows fetch statistics.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r4c1-t6" headers="r1c1-t6">
+<p><code dir="ltr">MAXFETCHSTATEMENTS</code> parameter</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t6 r1c2-t6">
+<p>Controls the number of open cursors for prepared queries that Extract maintains in the source database, and also for <code dir="ltr">SQLEXEC</code> operations.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r5c1-t6" headers="r1c1-t6">
+<p><code dir="ltr">MAXFETCHSTATEMENTS</code> parameter</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t6 r1c2-t6">
+<p>Controls the default fetch behavior of Extract: whether Extract performs a flashback query or fetches the current image from the table.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r6c1-t6" headers="r1c1-t6">
+<p><code dir="ltr">FETCHOPTIONS</code> parameter with the <code dir="ltr">USELATESTVERSION</code> or <code dir="ltr">NOUSELATESTVERSION</code> option</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t6 r1c2-t6">
+<p>Handles the failure of an Extract flashback query, such as if the undo retention expired or the structure of a table changed. Extract can fetch the current image from the table or ignore the failure.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r7c1-t6" headers="r1c1-t6">
+<p><code dir="ltr">REPFETCHEDCOLOPTIONS</code> parameter</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t6 r1c2-t6">
+<p>Controls the response by Replicat when it processes trail records that include fetched data or column-missing conditions.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></div>
+<!-- class="sect1" -->
+<a id="CBDHHEIE"></a>
+<div id="GIORA234" class="sect1">
+<h2 class="sect1"><span class="secnum">3.5</span> Managing Server Resources</h2>
+<p>In integrated mode, Extract interacts with an underlying logmining server in the source database and Replicat interacts with an inbound server in the target database. This section provides guidelines for managing the shared memory consumed by the these servers.</p>
+<p>The shared memory that is used by the servers comes from the Streams pool portion of the System Global Area (SGA) in the database. Therefore, you must set the database initialization parameter <code dir="ltr">STREAMS_POOL_SIZE</code> high enough to keep enough memory available for the number of Extract and Replicat processes that you expect to run in integrated mode. Note that Streams pool is also used by other components of the database (like Oracle Streams, Advanced Queuing, and Datapump export/import), so make certain to take them into account while sizing the Streams pool for Oracle GoldenGate.</p>
+<p>By default, one integrated capture Extract requests the logmining server to run with <code dir="ltr">MAX_SGA_SIZE</code> of 1GB and a <code dir="ltr">PARALLELISM</code> of 2. Thus, if you are running three Extracts in integrated capture mode in the same database instance, you need at least 3 GB of memory allocated to the Streams pool. As best practice, keep 25 percent of the Streams pool available. For example, if there are three Extracts in integrated capture mode, set <code dir="ltr">STREAMS_POOL_SIZE</code> to the following:</p>
+<pre dir="ltr">
+3 GB + (3 GB * 0.25) = 3.75 GB
+</pre></div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment233">
+<tr>
+<td class="cellalignment240"><table class="cellalignment238">
+<tr>
+<td class="cellalignment237"><a href="install.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment237"><a href="user_assignment.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment242">
+<table class="cellalignment236">
+<tr>
+<td class="cellalignment237"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment237"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment237"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

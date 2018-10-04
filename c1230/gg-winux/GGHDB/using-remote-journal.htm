@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using Remote Journal</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter contains instructions for remote journal preparation and adding a remote journal. Remote Journal support in the IBM DB2 for i operating system provides the ability for a system to replicate, in its entirety, a sequence of journal entries from one DB2 for i system to another. Once setup, this replication is handled automatically and transparently by the operating system. The entries that are replicated are placed in a journal on the target system that is available to be read by an application in the same way as on the source system." />
+<meta name="dcterms.created" content="2018-09-07T08:20:49Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Heterogeneous Databases" />
+<meta name="dcterms.identifier" content="E88786-08" />
+<meta name="dcterms.isVersionOf" content="GGHDB" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="instantiating-and-starting-oracle-goldengate-replication.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-oracle-goldengate-db2-z-os.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGHDB.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-1EC2E808-3112-4E27-A673-88D739739FB0"></a> <span id="PAGE" style="display:none;">14/37</span> <!-- End Header -->
+<h1 id="GGHDB-GUID-1EC2E808-3112-4E27-A673-88D739739FB0" class="sect1"><span class="enumeration_chapter">8</span> Using Remote Journal</h1>
+<div>
+<div><span>This chapter contains instructions for remote journal preparation and adding a remote journal. Remote Journal support in the IBM DB2 for i operating system provides the ability for a system to replicate, in its entirety, a sequence of journal entries from one DB2 for i system to another. Once setup, this replication is handled automatically and transparently by the operating system. The entries that are replicated are placed in a journal on the target system that is available to be read by an application in the same way as on the source system.</span></div>
+<p>You must have an understanding of how to setup and use remote journaling on an DB2 for i system to use this feature with Oracle GoldenGate. There are no special software requirements for either Oracle GoldenGate or the DB2 for i systems to use remote journaling.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-remote-journal.htm#GUID-401C1B6D-815F-4080-9A4B-345C5D038D66">Preparing to Use Remote Journals</a><br /></li>
+<li class="ulchildlink"><a href="using-remote-journal.htm#GUID-E8C4ADBB-EBBA-480A-B4F0-0785EACD5FD6">Adding a Remote Journal</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-oracle-goldengate-db2-i.htm" title="This part describes tasks for configuring and running Oracle GoldenGateon a DB2 for i database.&nbsp;">Using Oracle GoldenGate with IBM DB2 for i</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-401C1B6D-815F-4080-9A4B-345C5D038D66"></a>
+<h2 id="GGHDB-GUID-401C1B6D-815F-4080-9A4B-345C5D038D66" class="sect2"><span class="enumeration_section">8.1</span> Preparing to Use Remote Journals</h2>
+<div>
+<div class="section">
+<p>Before establishing the remote journal environment, complete the following steps:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Determine the extent of your remote journal network or environment.</span></li>
+<li class="stepexpand"><span><span class="italic">Library redirection</span> is the ability to allow the remote journal and associated journal receivers to reside in different libraries on the target system from the corresponding source journal and its associated journal receivers.</span>
+<div>
+<p>Determine what library redirection, if any, you will be using for the remote journals and associated journal receivers.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Ensure that all selected libraries exist on the target systems. You must consider whether or not library redirection will be used when adding the remote journal.</span></li>
+<li class="stepexpand"><span>Create the appropriate local journal if it does not already exist.</span></li>
+<li class="stepexpand"><span>Configure and activate the communications protocol you have chosen to use.</span></li>
+<li class="stepexpand"><span>After you have configured the communications protocol, it must be active while you are using the remote journal function.</span>
+<div>
+<p>For example, if you are using the OptiConnect for IBM i bus transport method, then the OptiConnect for IBM i subsystem, QSOC, must be active. QSOC must be active for both the source system and the target system, and the appropriate controllers and devices must be varied on. If you are using a SNA communications transport, vary on the appropriate line, controller, and devices and ensure subsystem QCMN is active on both systems. Start of change If you are using TCP/IP or Sockets IPv6, you must start TCP/IP by using the Start TCP/IP (<code class="codeph">STRTCP</code>) command, including the distributed data management (DDM) servers. If you are using data port, you must configure a cluster, make sure that the cluster is active, and start the internet Daemon (<code class="codeph">inetd</code>) server using the Start TCP/IP Server (<code class="codeph">STRTCPSVR</code>) command.End of change</p>
+</div>
+</li>
+<li class="stepexpand"><span>If one does not already exist, create the appropriate relational database (RDB) directory entry that will be used to define the communications protocol for the remote journal environment. When TCP communications are being used to connect to an independent disk pool, the RDB entry to the independent disk pool must have the Relational database value set to the target system's local RDB entry and the relational database alias value set to the independent disk pool's name.</span></li>
+<li class="stepexpand"><span>Now you should be able to see the remote database connection by issuing the <code class="codeph">WRKRDBDIRE</code> command.</span>
+<div>
+<pre dir="ltr">
+ Work with Relational Database Directory Entries
+ 
+ Position to . . . . . .
+ 
+ Type options, press Enter.
+   1=Add 2=Change 4=Remove 5=Display details 6=Print details
+ 
+                             Remote
+ Option Entry Location Text
+ 
+         SYS1 system1
+         SYS2 system2
+         MYSYSTEM *LOCAL Entry added by system
+         
+         
+          
+          
+ 
+ 
+ 
+ 
+                                                                         Bottom
+ F3=Exit F5=Refresh F6=Print list F12=Cancel F22=Display entire field
+ (C) COPYRIGHT IBM CORP. 1980, 2007.
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-remote-journal.htm#GUID-1EC2E808-3112-4E27-A673-88D739739FB0" title="This chapter contains instructions for remote journal preparation and adding a remote journal. Remote Journal support in the IBM DB2 for i operating system provides the ability for a system to replicate, in its entirety, a sequence of journal entries from one DB2 for i system to another. Once setup, this replication is handled automatically and transparently by the operating system. The entries that are replicated are placed in a journal on the target system that is available to be read by an application in the same way as on the source system.">Using Remote Journal</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-E8C4ADBB-EBBA-480A-B4F0-0785EACD5FD6"></a>
+<h2 id="GGHDB-GUID-E8C4ADBB-EBBA-480A-B4F0-0785EACD5FD6" class="sect2"><span class="enumeration_section">8.2</span> Adding a Remote Journal</h2>
+<div>
+<div class="section">
+<p>Adding a remote journal creates a remote journal on a target system or independent disk pool and associates that remote journal with the journal on the source system. This occurs if this is the first time the remote journal is being established for a journal. The journal on the source system can be either a local or remote journal.</p>
+<p>If a remote journal environment has previously been established, adding a remote journal reassociates the remote journal on the target system with the journal on the source system.</p>
+<p>You can establish and associate a remote journal on a target system with a journal on the source system by one of the following methods:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>System i Navigator.</p>
+</li>
+<li>
+<p>Add the Remote Journal (<code class="codeph">QjoAddRemoteJournal</code>) API on the source system.</p>
+</li>
+<li>
+<p>Add the Remote Journal (<code class="codeph">ADDRMTJRN</code>) command on the source system.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-remote-journal.htm#GUID-3F9F5447-7897-427C-97B6-5A4FDD970B06">What Happens During Add Remote Journal Processing?</a><br /></li>
+<li class="ulchildlink"><a href="using-remote-journal.htm#GUID-95219AE5-CDC9-4432-81AF-01239F015B23">Guidelines For Adding a Remote Journal</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-remote-journal.htm#GUID-1EC2E808-3112-4E27-A673-88D739739FB0" title="This chapter contains instructions for remote journal preparation and adding a remote journal. Remote Journal support in the IBM DB2 for i operating system provides the ability for a system to replicate, in its entirety, a sequence of journal entries from one DB2 for i system to another. Once setup, this replication is handled automatically and transparently by the operating system. The entries that are replicated are placed in a journal on the target system that is available to be read by an application in the same way as on the source system.">Using Remote Journal</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-3F9F5447-7897-427C-97B6-5A4FDD970B06"></a>
+<h3 id="GGHDB-GUID-3F9F5447-7897-427C-97B6-5A4FDD970B06" class="sect3"><span class="enumeration_section">8.2.1</span> What Happens During Add Remote Journal Processing?</h3>
+<div>
+<p>The processing that takes place as part of adding a remote journal includes the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>A check is performed on the target system to verify that the user profile adding the remote journal exists. A user profile with the same name as the user profile which is adding a remote journal must exist on the target system. If the profile does not exist on the target system, then an exception is signaled, and the processing ends.</p>
+</li>
+<li>
+<p>A check is performed to verify that the target system has a library by the same name as the library for the journal on the source system. If the library does not exist on the target system, then an exception is signaled, and the processing ends.</p>
+</li>
+<li>
+<p>A check is performed on the target system to determine if a journal by the same qualified name as the journal on the source system already exists. If a journal already exists, it can be used for the remainder of the add remote journal processing if it meets the following criteria:</p>
+<ol>
+<li>
+<p>It is a remote journal.</p>
+</li>
+<li>
+<p>It was previously associated with this same source journal or part of the same remote journal network.</p>
+</li>
+<li>
+<p>The type of the remote journal matches the specified remote journal type.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>If a journal was found, but does not meet the preceding criteria, then an exception is signaled, and the processing ends. Otherwise, the remote journal is used for the rest of the add remote journal processing.</p>
+</li>
+<li>
+<p>If no journal is found on the specified target system, then a remote journal is created on the target system. The new remote journal has the same configuration, authority, and audit characteristics of the source journal. The journal that is created has a journal type of <code class="codeph">*REMOTE</code>.</p>
+</li>
+</ul>
+<p>When adding the remote journal, you must specify the type of remote journal to add. The remote journal type influences the library redirection rules and other operational characteristics for the journal.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-remote-journal.htm#GUID-E8C4ADBB-EBBA-480A-B4F0-0785EACD5FD6">Adding a Remote Journal</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-95219AE5-CDC9-4432-81AF-01239F015B23"></a>
+<h3 id="GGHDB-GUID-95219AE5-CDC9-4432-81AF-01239F015B23" class="sect3"><span class="enumeration_section">8.2.2</span> Guidelines For Adding a Remote Journal</h3>
+<div>
+<div class="section">
+<p>You should observe the following guidelines for adding a remote journal:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>You can only associate a remote journal with a single source journal.</p>
+<p>Note: The same remote journal can then have additional remote journals that are associated with it that are located on other target systems. This is the cascade configuration that is shown in Network configurations for remote journals.</p>
+</li>
+<li>
+<p>The remote journal will only have its attached receiver populated with journal entries that are replicated from the corresponding journal receiver on the source system. No journal entries can be directly deposited to a remote journal.</p>
+</li>
+<li>
+<p>A maximum of 255 remote journals can be associated with a single journal on a source system. This can be any combination of asynchronously maintained or synchronously maintained remote journals.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To Add a Remote Journal</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>The following is an example using the physical file QGPL/TESTPF setup to have remote journaling enabled to a second system.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Create the physical file.:</span>
+<div>
+<pre dir="ltr">
+&gt; CRTPF FILE(QGPL/TESTPF) RCDLEN(10) 
+  File TESTPF created in library QGPL.
+  Member TESTPF added to file TESTPF in QGPL.
+</pre></div>
+</li>
+<li class="stepexpand"><span>Create the local journal receiver and journals, and enable the journaling of the physical file created:</span>
+<div>
+<pre dir="ltr">
+&gt; crtjrnrcv jrnrcv(qgpl/jrcvrmt)
+  Journal receiver JRCVRMT created in library QGPL
+</pre>
+<pre dir="ltr">
+&gt; crtjrn jrn(qgpl/jrnrmt) jrnrcv(qgpl/jrcvrmt) fixlendta(*job *usr *pgm *sysseq)
+  Journal JRNRMT created in library QGPL
+</pre>
+<pre dir="ltr">
+strjrnpf file(qgpl/testpf) jrn(qgpl/testpf)
+  1 of 1 files have started journaling
+</pre></div>
+</li>
+<li class="stepexpand"><span>Add the remote journal:</span>
+<div>
+<pre dir="ltr">
+&gt; addrmtjrn rdb(sys2) srcjrn(qgpl/JRNRMT) rmtjrntype(*TYPE2)
+  Remote journal JRNRMT in QGPL was added
+</pre></div>
+</li>
+<li class="stepexpand"><span>Activate the remote journaling:</span>
+<div>
+<pre dir="ltr">
+&gt; chgrmtjrn rbd(sys2) srcjrn(qgpl/jrnrmt) jrnstate(*active)
+  Remote journal JRNRMT in library QGPL was activated
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-remote-journal.htm#GUID-E8C4ADBB-EBBA-480A-B4F0-0785EACD5FD6">Adding a Remote Journal</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment114">
+<tr>
+<td class="cellalignment121">
+<table class="cellalignment119">
+<tr>
+<td class="cellalignment118"><a href="instantiating-and-starting-oracle-goldengate-replication.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment118"><a href="using-oracle-goldengate-db2-z-os.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment123">
+<table class="cellalignment117">
+<tr>
+<td class="cellalignment118"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment118"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment118"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

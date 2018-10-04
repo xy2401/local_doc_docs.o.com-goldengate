@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>DECOMPRESS_RECORD | DECOMPRESS_RECORD2</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-1124F971-A47F-407D-85B1-848F87459142.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-31F968FD-9F10-4343-8A2E-BEADEE2600F9.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB"></a> <span id="PAGE" style="display:none;">338/360</span> <!-- End Header -->
+<a id="GNSRF728"></a>
+<h1 id="GNSRF-GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB" class="sect1"><span class="enumeration_section">7.8</span> DECOMPRESS_RECORD | DECOMPRESS_RECORD2</h1>
+<div>
+<div class="section">
+<p><a id="d106656e16" class="indexterm-anchor"></a><code class="codeph">DECOMPRESS_RECORD</code> makes compressed update records easier to process and map. Typically, <a id="d106656e21" class="indexterm-anchor"></a><code class="codeph">DECOMPRESS_RECORD</code> is invoked before mapping a compressed update to trigger fetching of missing column values. <code class="codeph">COMPRESS_RECORD</code> is called after processing the compressed updates.</p>
+<p>In a C program, precede the <code class="codeph">INVOKE</code> statement by the <code class="codeph">#pragma SQL CHAR_AS_ARRAY.</code> Within this structure there may be one or more columns without any true values. Valid columns are indicated in the <code class="codeph">COLUMNS&#8208;PRESENT</code> array.</p>
+<p><code class="codeph">DECOMPRESS_RECORD</code> is only valid for use with records that are less than 32767. <code class="codeph">DECOMPRESS_RECORD2</code> is valid for both these shorter records and the longer records defined with DDL2.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax DECOMPRESS_RECORD</p>
+<p><span class="bold"><tt>For C:</tt></span></p>
+<pre dir="ltr">
+#include "usrdecs"
+char     *compressed_rec;
+short    compressed_len;
+char     *decompressed_rec;
+short    *columns_present;
+short    source_or_target;
+short    result;
+result = DECOMPRESS_RECORD (compressed_rec, compressed_len, decompressed_rec,
+                            columns_present, source_or_target);
+</pre>
+<p><span class="bold"><tt>For TAL:</tt></span></p>
+<pre dir="ltr">
+?source usrdect
+int result;
+string .ext compressed_rec;
+int    .ext compressed_len;
+string .ext decompressed_rec;
+int    .ext columns_present;
+int     source_or_target; 
+result := DECOMPRESS_RECORD (compressed_rec, compressed_len,
+                         decompressed_rec, columns_present, source_or_target);
+</pre>
+<p><span class="bold"><tt>For COBOL:</tt></span></p>
+<pre dir="ltr">
+?CONSULT =EXTRACT (or =REPLICAT)
+01 compressed-rec         PIC X(32767).
+01 compressed-len         PIC S9(4) COMP.
+01 decompressed-rec       PIC X(32767).
+01 columns-present.
+  05 columns-present-flag PIC S9(4) COMP OCCURS 2000 TIMES.
+01 source-or-target       PIC S9(4) COMP.
+01 result                 PIC S9(4) COMP.
+ENTER C "DECOMPRESS_RECORD" using compressed-rec, compressed-len,
+          decompressed-rec, columns-present, source-or-target giving result.
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-8E8294DD-F648-4237-B73A-61148F9155E2"><!-- --></a><code class="codeph">columns_present</code></dt>
+<dt class="dlterm"><code class="codeph">columns-present</code></dt>
+<dd>
+<p>An array of values that indicate the columns present in the compressed record. For example, if the first, third and sixth columns exist in the compressed record, and the total number of columns is seven, the array should contain <code class="codeph">1,0,1,0,0,1,0</code>. The number of columns in the table can be obtained by <code class="codeph">GET_NUM_COLUMNS</code>. A column that is present but set to <code class="codeph">NULL</code> should be indicated by a <code class="codeph">1</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-25BA42C3-A7AD-4B70-939C-E01C0DFAE86C"><!-- --></a><code class="codeph">compressed_len</code></dt>
+<dt class="dlterm"><code class="codeph">compressed-len</code></dt>
+<dd>
+<p>The length of the compressed record.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-72494449-F614-4044-A96B-F943A1F0F210"><!-- --></a><code class="codeph">compressed_rec</code></dt>
+<dt class="dlterm"><code class="codeph">compressed-rec</code></dt>
+<dd>
+<p>The record in compressed format. The size is allocated by the user up to the maximum of 32767.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-9EBDD1F0-E058-4694-9120-407E10DA387B"><!-- --></a><code class="codeph">decompressed_rec</code></dt>
+<dt class="dlterm"><code class="codeph">decompressed-rec</code></dt>
+<dd>
+<p>The record returned in decompressed format. The size is allocated by the user up to the maximum of 32767</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-C6A88A3D-659A-4FBA-B290-EE58E56B95B3"><!-- --></a><code class="codeph">result</code></dt>
+<dd>
+<p>A code indicating whether the call was successful or not.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-C2822596-AAC8-4321-A952-2D3077DA0532"><!-- --></a><code class="codeph">source_or_target</code></dt>
+<dt class="dlterm"><code class="codeph">source-or-target</code></dt>
+<dd>
+<p>Represented by either <code class="codeph">EXIT&#8208;FN&#8208;SOURCE&#8208;VAL</code> or <code class="codeph">EXIT-FN-TARGET-VAL</code> to indicate whether the record is a source or target record.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax DECOMPRESS_RECORD2</p>
+<p><span class="bold"><tt>For C:</tt></span></p>
+<pre dir="ltr">
+#include "usrdecs"
+char     *compressed_rec;
+long     compressed_len;
+char     *decompressed_rec;
+short    *columns_present;
+short    source_or_target;
+short    result;
+result = DECOMPRESS_RECORD2 (compressed_rec, compressed_len, decompressed_rec,
+                            columns_present, source_or_target);
+</pre>
+<p><span class="bold"><tt>For TAL:</tt></span></p>
+<pre dir="ltr">
+?source usrdect
+int result;
+string .ext compressed_rec;
+int(32).ext compressed_len;
+string .ext decompressed_rec;
+int    .ext columns_present;
+int     source_or_target; 
+result := DECOMPRESS_RECORD2 (compressed_rec, compressed_len,
+                         decompressed_rec, columns_present, source_or_target);
+</pre>
+<p><span class="bold"><tt>For COBOL:</tt></span></p>
+<pre dir="ltr">
+?CONSULT =EXTRACT (or =REPLICAT)
+01 compressed-rec         PIC X(128000).
+01 compressed-len         PIC S9(8) COMP.
+01 decompressed-rec       PIC X(128000).
+01 columns-present.
+  05 columns-present-flag PIC S9(4) COMP OCCURS 2000 TIMES.
+01 source-or-target       PIC S9(4) COMP.
+01 result                 PIC S9(4) COMP.
+ENTER C "DECOMPRESS_RECORD2" using compressed-rec, compressed-len,
+          decompressed-rec, columns-present, source-or-target giving result.
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-4CE8AEA9-04FF-494E-9723-F5C59A584110"><!-- --></a><code class="codeph">columns_present</code></dt>
+<dt class="dlterm"><code class="codeph">columns-present</code></dt>
+<dd>
+<p>An array of values that indicate the columns present in the compressed record. For example, if the first, third and sixth columns exist in the compressed record, and the total number of columns is seven, the array should contain <code class="codeph">1,0,1,0,0,1,0</code>. The number of columns in the table can be obtained by <code class="codeph">GET_NUM_COLUMNS</code>. A column that is present but set to <code class="codeph">NULL</code> should be indicated by a <code class="codeph">1</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-AF712F35-E880-45C9-A9C0-FE6D779F6493"><!-- --></a><code class="codeph">compressed_len</code></dt>
+<dt class="dlterm"><code class="codeph">compressed-len</code></dt>
+<dd>
+<p>The length of the compressed record.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-96181878-436C-4565-B418-E487C6C22907"><!-- --></a><code class="codeph">compressed_rec</code></dt>
+<dt class="dlterm"><code class="codeph">compressed-rec</code></dt>
+<dd>
+<p>The record in compressed format. Up to <code class="codeph">X(128000)</code> can be allocated by the user as long as it is declared in extended storage.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-2C8A3595-0CB0-4A29-9BD3-F4F93BEE6B41"><!-- --></a><code class="codeph">decompressed_rec</code></dt>
+<dt class="dlterm"><code class="codeph">decompressed-rec</code></dt>
+<dd>
+<p>The record returned in decompressed format. Up to <code class="codeph">X(128000)</code> can be allocated by the user as long as it is declared in extended storage.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-448DC069-FEA3-4103-B68D-ADDFE7DF2064"><!-- --></a><code class="codeph">result</code></dt>
+<dd>
+<p>A code indicating whether the call was successful or not.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB__GUID-47474F14-2FA3-4B8D-B4DB-83F352647D8A"><!-- --></a><code class="codeph">source_or_target</code></dt>
+<dt class="dlterm"><code class="codeph">source-or-target</code></dt>
+<dd>
+<p>Represented by either <code class="codeph">EXIT&#8208;FN&#8208;SOURCE&#8208;VAL</code> or <code class="codeph">EXIT-FN-TARGET-VAL</code> to indicate whether the record is a source or target record.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-1124F971-A47F-407D-85B1-848F87459142.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-31F968FD-9F10-4343-8A2E-BEADEE2600F9.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

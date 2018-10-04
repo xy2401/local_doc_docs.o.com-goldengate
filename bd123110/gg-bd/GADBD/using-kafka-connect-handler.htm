@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the Kafka Connect Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2017-09-08T08:33:14Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Integrating Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E89478-02" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-kafka-handler.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-kinesis-handler.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-81730248-AC12-438E-AF82-48C7002178EC"></a> <span id="PAGE" style="display:none;">12/24</span> <!-- End Header -->
+<h1 id="GADBD-GUID-81730248-AC12-438E-AF82-48C7002178EC" class="sect1"><span class="enumeration_chapter">9</span> Using the Kafka Connect Handler</h1>
+<div>
+<p>This chapter explains the Kafka Connect Handler and includes examples so that you can understand this functionality.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-22C9C4B2-48B0-4116-BD21-45D94F9296EC">Overview</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-848CCA80-36F1-4487-A5CA-94DA6E0D57EE">Detailed Functionality</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-A8184318-F08A-4519-8A3B-D819C7DD0318">Setting Up and Running the Kafka Connect Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-48998500-C606-4D29-B1FE-C7FFA243C20C">Kafka Connect Handler Performance Considerations</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-894F01D1-3027-4FA3-8961-8D9A8B264BA9">Troubleshooting the Kafka Connect Handler</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-22C9C4B2-48B0-4116-BD21-45D94F9296EC"></a>
+<h2 id="GADBD-GUID-22C9C4B2-48B0-4116-BD21-45D94F9296EC" class="sect2"><span class="enumeration_section">9.1</span> Overview</h2>
+<div>
+<div class="section">
+<p>The Oracle GoldenGate Kafka Connect is an extension of the standard Kafka messaging functionality. Kafka Connect is a functional layer on top of the standard Kafka Producer and Consumer interfaces. It provides standardization for messaging to make it easier to add new source and target systems into your topology.</p>
+<p>Confluent IO is primary adopter of Kafka Connect and their Kafka product offerings include extensions over the standard Kafka Connect functionality including Avro serialization and deserialization and an Avro schema registry. Much of the Kafka Connect functionality is available in Apache Kafka. A number of open source Kafka Connect integrations are found at <a href="https://www.confluent.io/product/connectors/" target="_blank">https://www.confluent.io/product/connectors/</a>.</p>
+<p>The Kafka Connect Handler is a Kafka Connect source connector. You can capture database changes from any database supported by Oracle GoldenGate and stream that change of data through the Kafka Connect layer to Kafka.</p>
+<p>Kafka Connect uses proprietary objects to define the schemas (<code class="codeph">org.apache.kafka.connect.data.Schema</code>) and the messages (<code class="codeph">org.apache.kafka.connect.data.Struct</code>). The Kafka Connect Handler can be configured to manage what data is published and the structure of the published data.</p>
+<p>The Kafka Connect Handler does <span class="italic">not</span> support any of the pluggable formatters that are supported by the Kafka Handler.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-848CCA80-36F1-4487-A5CA-94DA6E0D57EE"></a>
+<h2 id="GADBD-GUID-848CCA80-36F1-4487-A5CA-94DA6E0D57EE" class="sect2"><span class="enumeration_section">9.2</span> Detailed Functionality</h2>
+<div>
+<div class="section">
+<p class="subhead2">JSON Converter</p>
+<p>The Kafka Connect framework provides converters to convert in-memory Kafka Connect messages to a serialized format suitable for transmission over a network. These converters are selected using configuration in the Kafka Producer properties file.</p>
+<p>Kafka Connect and the JSON converter is available as part of the Apache Kafka download. The JSON Converter converts the Kafka keys and values to JSONs which are then sent to a Kafka topic. You identify the JSON Converters with the following configuration in the Kafka Producer properties file:</p>
+<pre dir="ltr">
+key.converter=org.apache.kafka.connect.json.JsonConverter 
+key.converter.schemas.enable=true 
+value.converter=org.apache.kafka.connect.json.JsonConverter 
+value.converter.schemas.enable=true
+</pre>
+<p>The format of the messages is the message schema information followed by the payload information. JSON is a self describing format so you should not include the schema information in each message published to Kafka.</p>
+<p>To omit the JSON schema information from the messages set the following:</p>
+<pre dir="ltr">
+key.converter.schemas.enable=false
+value.converter.schemas.enable=false
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Avro Converter</p>
+<p>Confluent IO provides Kafka installations, support for Kafka, and extended functionality built on top of Kafka to help realize the full potential of Kafka. Confluent IO provides both open source versions of Kafka (Confluent Open Source) and an enterprise edition (Confluent Enterprise), which is available for purchase.</p>
+<p>A common Kafka use case is to send Avro messages over Kafka. This can create a problem on the receiving end as there is a dependency for the Avro schema in order to deserialize an Avro message. Schema evolution can increase the problem because received messages must be matched up with the exact Avro schema used to generate the message on the producer side. Deserializing Avro messages with an incorrect Avro schema can cause runtime failure, incomplete data, or incorrect data. Confluent IO has solved this problem by using a schema registry and the Confluent IO schema converters.</p>
+<p>The following shows the configuration of the Kafka Producer properties file.</p>
+<pre dir="ltr">
+key.converter=io.confluent.connect.avro.AvroConverter 
+value.converter=io.confluent.connect.avro.AvroConverter 
+key.converter.schema.registry.url=http://localhost:8081 
+value.converter.schema.registry.url=http://localhost:8081 
+</pre>
+<p>When messages are published to Kafka, the Avro schema is registered and stored in the schema registry. When messages are consumed from Kafka, the exact Avro schema used to create the message can be retrieved from the schema registry to deserialize the Avro message. This creates matching of Avro messages to corresponding Avro schemas on the receiving side, which solves this problem.</p>
+<p>Following are the requirements to use the Avro Converters:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>This functionality is currently available in the Confluent IO Kafka versions (open source or enterprise).</p>
+</li>
+<li>
+<p>The Confluent schema registry service must be running.</p>
+</li>
+<li>
+<p>Source database tables must have an associated Avro schema. Messages associated with different Avro schemas must be sent to different Kafka topics.</p>
+</li>
+<li>
+<p>The Confluent IO Avro converters and the schema registry client must be available in the classpath.</p>
+</li>
+</ul>
+<p>The schema registry keeps track of Avro schemas by topic. Messages must be sent to a topic that has the same schema or evolving versions of the same schema. Source messages have Avro schemas based on the source database table schema so Avro schemas are unique for each source table. Publishing messages to a single topic for multiple source tables will appear to the schema registry that the schema is evolving every time the message sent from a source table that is different from the previous message.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-A8184318-F08A-4519-8A3B-D819C7DD0318"></a>
+<h2 id="GADBD-GUID-A8184318-F08A-4519-8A3B-D819C7DD0318" class="sect2"><span class="enumeration_section">9.3</span> Setting Up and Running the Kafka Connect Handler</h2>
+<div>
+<div class="section">
+<p>Instructions for configuring the Kafka Connect Handler components and running the handler are described in this section.</p>
+<p><span class="bold">Classpath Configuration</span></p>
+<p>Two things must be configured in the <code class="codeph">gg.classpath</code> configuration variable so that the Kafka Connect Handler can to connect to Kafka and run. The required items are the Kafka Producer properties file and the Kafka client JARs. The Kafka client JARs must match the version of Kafka that the Kafka Connect Handler is connecting to. For a listing of the required client JAR files by version, see Kafka Handler Client Dependencies <a href="kafka-connect-handler-client-dependencies.htm#GUID-0F954978-9BFC-48B4-93D0-D7989C7BD76C">Kafka Connect Client Dependencies</a>. The recommended storage location for the Kafka Producer properties file is the Oracle GoldenGate <code class="codeph">dirprm</code> directory.</p>
+<p>The default location of the Kafka Connect client JARs is the <code class="codeph">Kafka_Home/libs/*</code> directory.</p>
+<p>The <code class="codeph">gg.classpath</code> variable must be configured precisely. Pathing to the Kafka Producer properties file should contain the path with no wildcard appended. The inclusion of the asterisk (*) wildcard in the path to the Kafka Producer properties file causes it to be discarded. Pathing to the dependency JARs should include the * wildcard character to include all of the JAR files in that directory in the associated classpath. Do not use <code class="codeph">*.jar</code>.</p>
+<p>Following is an example of a correctly configured Apache Kafka classpath:</p>
+<pre dir="ltr">
+gg.classpath=dirprm:{<span class="italic">kafka_install_dir</span>}/libs/*
+</pre>
+<p>Following is an example of a correctly configured Confluent IO Kafka classpath:</p>
+<pre dir="ltr">
+gg.classpath={<span class="italic">confluent_install_dir</span>}/share/java/kafka-serde-tools/*:{<span class="italic">confluent_install_dir</span>}/share/java/kafka/*:{<span class="italic">confluent_install_dir</span>}/share/java/confluent-common/*
+</pre>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-23F5CCE3-845C-43F0-A08E-42C2BD1824FB">Kafka Connect Handler Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-A87CAFFA-DACF-43A0-8C6C-5C64B578D606">Using Templates to Resolve the Topic Name and Message Key</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-F2272529-F7D5-45C3-92B4-90436907746B">Configuring Security in Kafka Connect Handler</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-23F5CCE3-845C-43F0-A08E-42C2BD1824FB"></a>
+<h3 id="GADBD-GUID-23F5CCE3-845C-43F0-A08E-42C2BD1824FB" class="sect3"><span class="enumeration_section">9.3.1</span> Kafka Connect Handler Configuration</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the Kafka Connect Handler.</p>
+<div class="tblformal" id="GUID-23F5CCE3-845C-43F0-A08E-42C2BD1824FB__GUID-D9A8DB8F-BB51-4D27-9343-035157B21077">
+<p class="titleintable">Table 9-1 Kafka Connect Handler Configuration Properties</p>
+<table class="cellalignment77" title="Kafka Connect Handler Configuration Properties" summary="Five column table describing the Kafka Connect Handler Configuration Properties">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment78" id="d28374e278">Properties</th>
+<th class="cellalignment78" id="d28374e281">Required/ Optional</th>
+<th class="cellalignment78" id="d28374e284">Legal Values</th>
+<th class="cellalignment78" id="d28374e287">Default</th>
+<th class="cellalignment78" id="d28374e290">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e295" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.type</code></td>
+<td class="cellalignment62" headers="d28374e295 d28374e281">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d28374e295 d28374e284">
+<p><code class="codeph">kafkaconnect</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e295 d28374e287">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d28374e295 d28374e290">
+<p>The configuration to select the Kafka Connect Handler.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e315" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.kafkaProducerConfigFile</code></td>
+<td class="cellalignment62" headers="d28374e315 d28374e281">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d28374e315 d28374e284">
+<p>string</p>
+</td>
+<td class="cellalignment62" headers="d28374e315 d28374e287">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d28374e315 d28374e290">
+<p>A path to a properties file containing the properties of the Kafka and Kafka Connect configuration properties.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e334" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.topicMappingTemplate</code></td>
+<td class="cellalignment62" headers="d28374e334 d28374e281">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d28374e334 d28374e284">
+<p>A template string value to resolve the Kafka topic name at runtime.</p>
+</td>
+<td class="cellalignment62" headers="d28374e334 d28374e287">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d28374e334 d28374e290">
+<p>See <a href="using-kafka-connect-handler.htm#GUID-A87CAFFA-DACF-43A0-8C6C-5C64B578D606">Using Templates to Resolve the Topic Name and Message Key</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e356" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.keyMappingTemplate</code></td>
+<td class="cellalignment62" headers="d28374e356 d28374e281">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d28374e356 d28374e284">
+<p>A template string value to resolve the Kafka message key at runtime.</p>
+</td>
+<td class="cellalignment62" headers="d28374e356 d28374e287">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d28374e356 d28374e290">
+<p>See <a href="using-kafka-connect-handler.htm#GUID-A87CAFFA-DACF-43A0-8C6C-5C64B578D606">Using Templates to Resolve the Topic Name and Message Key</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e378" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.includeTableName</code></td>
+<td class="cellalignment62" headers="d28374e378 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e378 d28374e284">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e378 d28374e287">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e378 d28374e290">
+<p>Set to <code class="codeph">true</code> to create a field in the output messages called &ldquo;table&rdquo; for which the value is the fully qualified table name.</p>
+<p>Set to <code class="codeph">false</code> to omit this field in the output.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e410" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.includeOpType</code></td>
+<td class="cellalignment62" headers="d28374e410 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e410 d28374e284">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e410 d28374e287">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e410 d28374e290">
+<p>Set to <code class="codeph">true</code> to create a field in the output messages called <code class="codeph">op_type</code> for which the value is is an indicator of the type of source database operation (for example, <code class="codeph">I</code> for insert, <code class="codeph">U</code> for update, and <code class="codeph">D</code>for delete). Set to <code class="codeph">false</code> to omit this field in the output.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e453" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.includeOpTimestamp</code></td>
+<td class="cellalignment62" headers="d28374e453 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e453 d28374e284">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e453 d28374e287">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e453 d28374e290">
+<p>Set to <code class="codeph">true</code> to create a field in the output messages called <code class="codeph">op_ts</code> for which the value is the operation timestamp (commit timestamp) from the source trail file.</p>
+<p>Set to <code class="codeph">false</code> to omit this field in the output.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e488" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.includeCurrentTimestamp</code></td>
+<td class="cellalignment62" headers="d28374e488 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e488 d28374e284">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e488 d28374e287">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e488 d28374e290">
+<p>Set to <code class="codeph">true</code> to create a field in the output messages called <code class="codeph">current_ts</code> for which the value is the current timestamp of when the handler processes the operation.</p>
+<p>Set to <code class="codeph">false</code> to omit this field in the output.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e523" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.includePosition</code></td>
+<td class="cellalignment62" headers="d28374e523 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e523 d28374e284">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e523 d28374e287">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e523 d28374e290">
+<p>Set to <code class="codeph">true</code> to create a field in the output messages called <code class="codeph">pos</code> for which the value is the position (sequence number + offset) of the operation from the source trail file.</p>
+<p>Set to <code class="codeph">false</code> to omit this field in the output.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e558" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.includePrimaryKeys</code></td>
+<td class="cellalignment62" headers="d28374e558 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e558 d28374e284">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e558 d28374e287">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e558 d28374e290">
+<p>Set to <code class="codeph">true</code> to include a field in the message called <code class="codeph">primary_keys</code> and the value of which is an array of the column names of the primary key columns.</p>
+<p>Set to <code class="codeph">false</code> to suppress this field.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e593" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.includeTokens</code></td>
+<td class="cellalignment62" headers="d28374e593 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e593 d28374e284">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e593 d28374e287">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e593 d28374e290">
+<p>Set to <code class="codeph">true</code> to include a map field in output messages. The key is <span class="bold">tokens</span> and the value is a map where the keys and values are the token keys and values from the Oracle GoldenGate source trail file.</p>
+<p>Set to <code class="codeph">false</code> to suppress this field.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e629" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.messageFormatting</code></td>
+<td class="cellalignment62" headers="d28374e629 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e629 d28374e284">
+<p><code class="codeph">row</code> | <code class="codeph">op</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e629 d28374e287">
+<p><code class="codeph">row</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e629 d28374e290">
+<p>Controls how output messages are modeled. Selecting row and the output messages will be modeled as row. Set to op and the output messages will be modeled as operations messages.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e653" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.insertOpKey</code></td>
+<td class="cellalignment62" headers="d28374e653 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e653 d28374e284">
+<p>any string</p>
+</td>
+<td class="cellalignment62" headers="d28374e653 d28374e287">
+<p><code class="codeph">I</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e653 d28374e290">
+<p>The value of the field <code class="codeph">op_type</code> to indicate an insert operation.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e676" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.updateOpKey</code></td>
+<td class="cellalignment62" headers="d28374e676 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e676 d28374e284">
+<p>any string</p>
+</td>
+<td class="cellalignment62" headers="d28374e676 d28374e287">
+<p><code class="codeph">U</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e676 d28374e290">
+<p>The value of the field <code class="codeph">op_type</code> to indicate an insert operation.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e699" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.deleteOpKey</code></td>
+<td class="cellalignment62" headers="d28374e699 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e699 d28374e284">
+<p>any string</p>
+</td>
+<td class="cellalignment62" headers="d28374e699 d28374e287">
+<p><code class="codeph">D</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e699 d28374e290">
+<p>The value of the field <code class="codeph">op_type</code> to indicate a delete operation.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e722" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.truncateOpKey</code></td>
+<td class="cellalignment62" headers="d28374e722 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e722 d28374e284">
+<p>any string</p>
+</td>
+<td class="cellalignment62" headers="d28374e722 d28374e287">
+<p><code class="codeph">T</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e722 d28374e290">
+<p>The value of the field <code class="codeph">op_type</code> to indicate a truncate operation.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e745" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.treatAllColumnsAsStrings</code></td>
+<td class="cellalignment62" headers="d28374e745 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e745 d28374e284">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e745 d28374e287">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e745 d28374e290">
+<p>Set to true to treat all output fields as strings. Set to false and the Handler will map the corresponding field type from the source trail file to the best corresponding Kafka Connect data type.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e769" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.mapLargeNumbersAsStrings</code></td>
+<td class="cellalignment62" headers="d28374e769 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e769 d28374e284">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e769 d28374e287">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e769 d28374e290">
+<p>Large numbers are mapping to number fields as Doubles. It is possible to lose precision in certain scenarios.</p>
+<p>If set to <code class="codeph">true</code> these fields will be mapped as Strings in order to preserve precision.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e798" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.iso8601Format</code></td>
+<td class="cellalignment62" headers="d28374e798 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e798 d28374e284">
+<p><code class="codeph">True</code> | <code class="codeph">False</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e798 d28374e287">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e798 d28374e290">
+<p>Set to true to output the current date in the ISO8601 format.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e822" headers="d28374e278"><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.pkUpdateHandling</code></td>
+<td class="cellalignment62" headers="d28374e822 d28374e281">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d28374e822 d28374e284"><code class="codeph">insert | abend | update | delete</code></td>
+<td class="cellalignment62" headers="d28374e822 d28374e287">
+<p><code class="codeph">abend</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e822 d28374e290">
+<p>Only applicable if modeling row messages <code class="codeph">gg.handler.name.messageFormatting=row</code>. Not applicable if modeling operations messages as the before and after images are propagated to the message in the case of an update.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>See <a href="using-kinesis-handler.htm#GUID-851621F3-951D-4BE9-87D5-5026B433E94D">Using Templates to Resolve the Stream Name and Partition Name</a> for more information.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-A87CAFFA-DACF-43A0-8C6C-5C64B578D606"></a>
+<h3 id="GADBD-GUID-A87CAFFA-DACF-43A0-8C6C-5C64B578D606" class="sect3"><span class="enumeration_section">9.3.2</span> Using Templates to Resolve the Topic Name and Message Key</h3>
+<div>
+<div class="section">
+<p>The Kafka Connect Handler provides functionality to resolve the topic name and the message key at runtime using a template configuration value. Templates allow you to configure static values and keywords. Keywords are used to dynamically replace the keyword with the context of the current processing. Templates are applicable to the following configuration parameters:</p>
+<pre dir="ltr">
+gg.handler.<span class="italic">name</span>.topicMappingTemplate
+gg.handler.<span class="italic">name</span>.keyMappingTemplate
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Template Modes</p>
+<p>The Kafka Connect Handler can only send operation messages. The Kafka Connect Handler cannot group operation messages into a larger transaction message.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Template Keywords</p>
+<div class="tblformal" id="GUID-A87CAFFA-DACF-43A0-8C6C-5C64B578D606__GUID-D9A8DB8F-BB51-4D27-9343-035157B21077">
+<table class="cellalignment77" summary="Two column table describing Kafka Connect Handler template keywords.">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment78" id="d28374e892">Keyword</th>
+<th class="cellalignment78" id="d28374e895">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e900" headers="d28374e892">
+<p><code class="codeph">${<span class="codeinlineitalic">fullyQualifiedTableName</span>}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e900 d28374e895">
+<p>Resolves to the fully qualified table name including the period (.) delimiter between the catalog, schema, and table names.</p>
+<p>For example, <code class="codeph">test.dbo.table1</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e916" headers="d28374e892">
+<p><code class="codeph">${<span class="codeinlineitalic">catalogName</span>}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e916 d28374e895">
+<p>Resolves to the catalog name.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e927" headers="d28374e892">
+<p><code class="codeph">${<span class="codeinlineitalic">schemaName</span>}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e927 d28374e895">
+<p>Resolves to the schema name.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e938" headers="d28374e892">
+<p><code class="codeph">${<span class="codeinlineitalic">tableName</span>}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e938 d28374e895">
+<p>Resolves to the short table name.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e949" headers="d28374e892">
+<p><code class="codeph">${opType}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e949 d28374e895">
+<p>Resolves to the type of the operation: (<code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, <code class="codeph">DELETE</code>, or <code class="codeph">TRUNCATE</code>)</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e969" headers="d28374e892">
+<p><code class="codeph">${primaryKeys}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e969 d28374e895">
+<p>Resolves to the concatenated primary key values delimited by an underscore (_) character.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e977" headers="d28374e892">
+<p><code class="codeph">${position}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e977 d28374e895">
+<p>The sequence number of the source trail file followed by the offset (RBA).</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e985" headers="d28374e892">
+<p><code class="codeph">${opTimestamp}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e985 d28374e895">
+<p>The operation timestamp from the source trail file.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e993" headers="d28374e892">
+<p><code class="codeph">${emptyString}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e993 d28374e895">
+<p>Resolves to &ldquo;&rdquo;.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e1001" headers="d28374e892">
+<p><code class="codeph">${<span class="codeinlineitalic">groupName</span>}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e1001 d28374e895">
+<p>Resolves to the name of the Replicat process. If using coordinated delivery, it resolves to the name of the Replicat process with the Replicate thread number appended.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e1012" headers="d28374e892">
+<p><code class="codeph">${staticMap[]}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e1012 d28374e895">
+<p>Resolves to a static value where the key is the fully-qualified table name. The keys and values are designated inside of the square brace in the following format:</p>
+<pre dir="ltr">
+${staticMap[dbo.table1=value1,dbo.table2=value2]}
+</pre></td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e1023" headers="d28374e892">
+<p><code class="codeph">${columnValue[]}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e1023 d28374e895">
+<p>Resolves to a column value where the key is the fully-qualified table name and the value is the column name to be resolved. For example:</p>
+<pre dir="ltr">
+${staticMap[dbo.table1=col1,dbo.table2=col2]}
+</pre></td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e1033" headers="d28374e892">
+<p><code class="codeph">${currentTimestamp}</code></p>
+<p>Or</p>
+<p><code class="codeph">${currentTimestamp[]}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e1033 d28374e895">
+<p>Resolves to the current timestamp. You can control the format of the current timestamp using the Java based formatting as described in the <code class="codeph">SimpleDateFormat</code> class, see <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html" target="_blank">https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html</a>.</p>
+<p>Examples:</p>
+<pre dir="ltr">
+${currentDate}
+${currentDate[yyyy-mm-dd hh:MM:ss.SSS]}
+</pre></td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e1057" headers="d28374e892">
+<p><code class="codeph">${null}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e1057 d28374e895">
+<p>Resolves to a NULL string.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e1065" headers="d28374e892">
+<p><code class="codeph">${custom[]}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e1065 d28374e895">
+<p>It is possible to write a custom value resolver. If required, contact Oracle Support.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Example Templates</p>
+<p>The following describes example template configuration values and the resolved values.</p>
+<div class="tblformal" id="GUID-A87CAFFA-DACF-43A0-8C6C-5C64B578D606__GUID-5F1F62DC-D9B8-4609-B8B4-046CD8140201">
+<table class="cellalignment77" summary="A two column table describing example Kafka Connect Handler example templates.">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment78" id="d28374e1085">Example Template</th>
+<th class="cellalignment78" id="d28374e1088">Resolved Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e1093" headers="d28374e1085">
+<p><code class="codeph">${groupName}_{<span class="codeinlineitalic">fullyQualfiedTableName</span>}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e1093 d28374e1088">
+<p><code class="codeph">KAFKA001_dbo.table1</code></p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e1105" headers="d28374e1085">
+<p><code class="codeph">prefix_${<span class="codeinlineitalic">schemaName</span>}_${<span class="codeinlineitalic">tableName</span>}_suffix</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e1105 d28374e1088">
+<p><code class="codeph">prefix_dbo_table1_suffix</code></p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d28374e1120" headers="d28374e1085">
+<p><code class="codeph">${currentDate[yyyy-mm-dd hh:MM:ss.SSS]}</code></p>
+</td>
+<td class="cellalignment62" headers="d28374e1120 d28374e1088">
+<p><code class="codeph">2017-05-17 11:45:34.254</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-F2272529-F7D5-45C3-92B4-90436907746B"></a>
+<h3 id="GADBD-GUID-F2272529-F7D5-45C3-92B4-90436907746B" class="sect3"><span class="enumeration_section">9.3.3</span> Configuring Security in Kafka Connect Handler</h3>
+<div>
+<div class="section">
+<p>Kafka version 0.9.0.0 introduced security through SSL/TLS or Kerberos. The Kafka Connect Handler can be secured using SSL/TLS or Kerberos. The Kafka producer client libraries provide an abstraction of security functionality from the integrations utilizing those libraries. The Kafka Connect Handler is effectively abstracted from security functionality. Enabling security requires setting up security for the Kafka cluster, connecting machines, and then configuring the Kafka Producer properties file, that the Kafka Handler uses for processing, with the required security properties.</p>
+<p>For more information, see <a href="http://kafka.apache.org/documentation.html#security" target="_blank">http://kafka.apache.org/documentation.html#security</a>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-48998500-C606-4D29-B1FE-C7FFA243C20C"></a>
+<h2 id="GADBD-GUID-48998500-C606-4D29-B1FE-C7FFA243C20C" class="sect2"><span class="enumeration_section">9.4</span> Kafka Connect Handler Performance Considerations</h2>
+<div>
+<div class="section">
+<p>There are multiple configuration settings both for the Oracle GoldenGate for Big Data configuration and in the Kafka producer which affect performance.</p>
+<p>The Oracle GoldenGate parameter have the greatest affect on performance is the Replicat <code class="codeph">GROUPTRANSOPS</code> parameter. The <code class="codeph">GROUPTRANSOPS</code> parameter allows Replicat to group multiple source transactions into a single target transaction. At transaction commit, the Kafka Connect Handler calls flush on the Kafka Producer to push the messages to Kafka for write durability followed by a checkpoint. The flush call is an expensive call and setting the Replicat <code class="codeph">GROUPTRANSOPS</code> setting to larger amount allows the replicat to call the flush call less frequently thereby improving performance.</p>
+<p>The default setting for <code class="codeph">GROUPTRANSOPS</code> is <code class="codeph">1000</code> and performance improvements can be obtained by increasing the value to 2500, 5000, or even 10000.</p>
+<p>The Op mode <code class="codeph">gg.handler.kafkaconnect.mode=op</code> parameter can also improve performance than the Tx mode <code class="codeph">gg.handler.kafkaconnect.mode=tx</code>.</p>
+<p>A number of Kafka Producer properties can affect performance. The following are the parameters with significant impact:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">linger.ms</code></p>
+</li>
+<li>
+<p><code class="codeph">batch.size</code></p>
+</li>
+<li>
+<p><code class="codeph">acks</code></p>
+</li>
+<li>
+<p><code class="codeph">buffer.memory</code></p>
+</li>
+<li>
+<p><code class="codeph">compression.type</code></p>
+</li>
+</ul>
+<p>Oracle recommends that you start with the default values for these parameters and perform performance testing to obtain a base line for performance. Review the Kafka documentation for each of these parameters to understand its role and adjust the parameters and perform additional performance testing to ascertain the performance effect of each parameter.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-894F01D1-3027-4FA3-8961-8D9A8B264BA9"></a>
+<h2 id="GADBD-GUID-894F01D1-3027-4FA3-8961-8D9A8B264BA9" class="sect2"><span class="enumeration_section">9.5</span> Troubleshooting the Kafka Connect Handler</h2>
+<div>
+<div class="section">
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-7CC4CB3C-E93E-48B7-B69E-8D97058486AB">Java Classpath for Kafka Connect Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-B7D2A4E1-0B34-4469-A09D-4CA5D18129DA">Invalid Kafka Version</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-070541B9-B1BC-4A82-8109-45334306FD69">Kafka Producer Properties File Not Found</a><br /></li>
+<li class="ulchildlink"><a href="using-kafka-connect-handler.htm#GUID-059B560F-DC29-4273-BD06-424DA7F03D40">Kafka Connection Problem</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-7CC4CB3C-E93E-48B7-B69E-8D97058486AB"></a>
+<h3 id="GADBD-GUID-7CC4CB3C-E93E-48B7-B69E-8D97058486AB" class="sect3"><span class="enumeration_section">9.5.1</span> Java Classpath for Kafka Connect Handler</h3>
+<div>
+<div class="section">
+<p>Issues with the Java classpath are one of the most common problems. The indication of a classpath problem is a <code class="codeph">ClassNotFoundException</code> in the Oracle GoldenGate Java <code class="codeph">log4j</code> log file or and error while resolving the classpath if there is a typographic error in the <code class="codeph">gg.classpath</code> variable.</p>
+<p>The Kafka client libraries do not ship with the Oracle GoldenGate for Big Data product. You are required to obtain the correct version of the Kafka client libraries and to properly configure the <code class="codeph">gg.classpath</code> property in the Java Adapter Properties file to correctly resolve the Java the Kafka client libraries as described in <a href="using-kafka-connect-handler.htm#GUID-A8184318-F08A-4519-8A3B-D819C7DD0318">Setting Up and Running the Kafka Connect Handler</a>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-B7D2A4E1-0B34-4469-A09D-4CA5D18129DA"></a>
+<h3 id="GADBD-GUID-B7D2A4E1-0B34-4469-A09D-4CA5D18129DA" class="sect3"><span class="enumeration_section">9.5.2</span> Invalid Kafka Version</h3>
+<div>
+<div class="section">
+<p>Kafka Connect was introduced in Kafka 0.9.0.0 version. The Kafka Connect Handler does not work with Kafka versions 0.8.2.2 and older. Attempting to use Kafka Connect with Kafka 0.8.2.2 version typically results in a <code class="codeph">ClassNotFoundException</code> error at runtime.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-070541B9-B1BC-4A82-8109-45334306FD69"></a>
+<h3 id="GADBD-GUID-070541B9-B1BC-4A82-8109-45334306FD69" class="sect3"><span class="enumeration_section">9.5.3</span> Kafka Producer Properties File Not Found</h3>
+<div>
+<div class="section">
+<p>Typically, the following exception message occurs:</p>
+<pre dir="ltr">
+ERROR 2015-11-11 11:49:08,482 [main] Error loading the kafka producer properties
+</pre>
+<p>Verify that the <code class="codeph">gg.handler.kafkahandler.KafkaProducerConfigFile</code> configuration property for the Kafka Producer Configuration file name is set correctly.</p>
+<p>Ensure that the <code class="codeph">gg.classpath</code> variable includes the path to the Kafka Producer properties file and that the path to the properties file does not contain a * wildcard at the end.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-059B560F-DC29-4273-BD06-424DA7F03D40"></a>
+<h3 id="GADBD-GUID-059B560F-DC29-4273-BD06-424DA7F03D40" class="sect3"><span class="enumeration_section">9.5.4</span> Kafka Connection Problem</h3>
+<div>
+<div class="section">
+<p>Typically, the following exception message appears:</p>
+<pre dir="ltr">
+WARN 2015-11-11 11:25:50,784 [kafka-producer-network-thread | producer-1] 
+
+WARN  (Selector.java:276) - Error in I/O with localhost/127.0.0.1  java.net.ConnectException: Connection refused
+</pre>
+<p>When this occurs, the connection retry interval expires and the Kafka Connection Handler process abends. Ensure that the Kafka Brokers are running and that the host and port provided in the Kafka Producer properties file is correct.</p>
+<p>Network shell commands (such as, <code class="codeph">netstat -l</code>) can be used on the machine hosting the Kafka broker to verify that Kafka is listening on the expected port.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment61">
+<tr>
+<td class="cellalignment79">
+<table class="cellalignment66">
+<tr>
+<td class="cellalignment65"><a href="using-kafka-handler.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment65"><a href="using-kinesis-handler.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment81">
+<table class="cellalignment64">
+<tr>
+<td class="cellalignment65"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment65"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

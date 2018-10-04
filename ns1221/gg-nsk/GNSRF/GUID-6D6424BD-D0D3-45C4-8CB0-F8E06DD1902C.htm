@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Calling environment functions</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-63DAABB9-A0D8-4D78-ADDA-7544ADFEA02C.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-1124F971-A47F-407D-85B1-848F87459142.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-6D6424BD-D0D3-45C4-8CB0-F8E06DD1902C"></a> <span id="PAGE" style="display:none;">336/360</span> <!-- End Header -->
+<a id="GNSRF724"></a><a id="GNSRF725"></a><a id="GNSRF726"></a><a id="GNSRF723"></a>
+<h1 id="GNSRF-GUID-6D6424BD-D0D3-45C4-8CB0-F8E06DD1902C" class="sect1"><span class="enumeration_section">7.6</span> Calling environment functions</h1>
+<div>
+<p><a id="d104632e18" class="indexterm-anchor"></a>Environment functions are routines the exit can call to retrieve context information from Extract or Replicat. These functions are summarized below and each of the functions is explained in more detail in the remainder of the chapter. Syntax examples are included for <code class="codeph">C</code>, <code class="codeph">TAL</code>, and <code class="codeph">COBOL</code>.</p>
+<div class="infobox-note" id="GUID-6D6424BD-D0D3-45C4-8CB0-F8E06DD1902C__GUID-69F787A3-6C6A-43FF-ADCC-A05F8F82DDEC">
+<p class="notep1">Note:</p>
+<p>Each <code class="codeph">COBOL</code> syntax section documents the <code class="codeph">?CONSULT =EXTRACT (or =REPLICAT)</code> compiler directive. Actually, this directive is declared only once no matter how many functions are called in the user exit. Make sure it points to the correct object type, which will be Extract for an Extract user exit, Replicat for a <code class="codeph">TNS</code> Replicat user exit or <code class="codeph">REPR</code> for native relinkable Replicat user exit.</p>
+</div>
+<div class="section">
+<p class="subhead1">Function Summary</p>
+</div>
+<!-- class="section" -->
+<div class="tblformal" id="GUID-6D6424BD-D0D3-45C4-8CB0-F8E06DD1902C__GUID-4EB67BE2-7BC7-4AC9-8982-C410DF1126FC">
+<table class="cellalignment38" summary="This table lists and describes the environment functions used by user exits.">
+<thead>
+<tr class="cellalignment29">
+<th class="cellalignment76" id="d104632e63">Function</th>
+<th class="cellalignment75" id="d104632e66">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e71" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-1124F971-A47F-407D-85B1-848F87459142.htm#GUID-1124F971-A47F-407D-85B1-848F87459142">COMPRESS_RECORD | COMPRESS_RECORD2</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e71 d104632e66">
+<p>Use when some of a target table's columns are present after mapping. Typically, use in conjunction with <code class="codeph">DECOMPRESS_RECORD</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e82" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB.htm#GUID-1BC66305-7D21-43F0-8C9F-F69A0AA7ABBB">DECOMPRESS_RECORD | DECOMPRESS_RECORD2</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e82 d104632e66">
+<p>Makes compressed SQL updates easier to process and map.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e90" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-31F968FD-9F10-4343-8A2E-BEADEE2600F9.htm#GUID-31F968FD-9F10-4343-8A2E-BEADEE2600F9">FETCH_CURRENT_RECORD</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e90 d104632e66">
+<p>Obtains the current Enscribe key-sequenced or entry-sequenced target record.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e98" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-83BCDB99-78D0-4666-8390-E8FE32E0B3AD.htm#GUID-83BCDB99-78D0-4666-8390-E8FE32E0B3AD">FETCH_CURRENT_RECORD_WITH_LOCK</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e98 d104632e66">
+<p>Obtains the current Enscribe key-sequenced or entry-sequenced target record while locking the record for update.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e106" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-73E25A99-305A-4380-83AD-9D36F5E721A3.htm#GUID-73E25A99-305A-4380-83AD-9D36F5E721A3">GET_ALTKEY_INFO</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e106 d104632e66">
+<p>Returns information on a file's alternate key.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e114" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-E54BA620-4451-4E46-B57B-A6FE2729E0AF.htm#GUID-E54BA620-4451-4E46-B57B-A6FE2729E0AF">GET_COLUMN_INDEX</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e114 d104632e66">
+<p>Given a column name, returns the column index number.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e122" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-B5F4364A-BDB7-44B7-8810-C38DADC9F9D5.htm#GUID-B5F4364A-BDB7-44B7-8810-C38DADC9F9D5">GET_COLUMN_NAME</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e122 d104632e66">
+<p>Given a column index, returns the column's name.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e130" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-AA9E1867-10A4-47DB-A9B6-4707AD5C835E.htm#GUID-AA9E1867-10A4-47DB-A9B6-4707AD5C835E">GET_ENV_VALUE</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e130 d104632e66">
+<p>Returns the source or target file name in internal or external format.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e138" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-8F5E39EE-DC23-417A-B711-9F2663BEEFF3.htm#GUID-8F5E39EE-DC23-417A-B711-9F2663BEEFF3">GET_EXTRBA</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e138 d104632e66">
+<p>Gets the current position in the extract trail.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e146" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-52B2DDB1-E413-4A26-8204-1DCDA14F03AF.htm#GUID-52B2DDB1-E413-4A26-8204-1DCDA14F03AF">GET_EXTSEQNO</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e146 d104632e66">
+<p>Gets the sequence number of the current extract trail.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e154" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-300B6C31-3FCD-427A-9E2F-4E94FBBF4CDE.htm#GUID-300B6C31-3FCD-427A-9E2F-4E94FBBF4CDE">DATEDIFF</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e154 d104632e66">
+<p>Retrieves the source or target file name.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e163" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-F40C393A-C850-4EFD-A569-8AF5923013A0.htm#GUID-F40C393A-C850-4EFD-A569-8AF5923013A0">GET_FOPEN_NUM</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e163 d104632e66">
+<p>Gets the open number of the current file.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e171" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-46FA0EBE-37F8-4B9F-A34E-44B5ACF5A6A0.htm#GUID-46FA0EBE-37F8-4B9F-A34E-44B5ACF5A6A0">GET_NUM_COLUMNS</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e171 d104632e66">
+<p>Returns the number of columns.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e179" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA.htm#GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA">GET_RECORD | GET_RECORD2</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e179 d104632e66">
+<p>Use for custom field conversions that may not be handled by Extract or Replicat.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e188" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-6F9A3800-BCC3-4FEC-9E97-C6B133F1C594.htm#GUID-6F9A3800-BCC3-4FEC-9E97-C6B133F1C594">GET_RECORD_LENGTH | GET_RECORD_LENGTH2</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e188 d104632e66">
+<p>Retrieves the length of the target record.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e196" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-AEC7F33F-286A-449C-8181-6BA23948515C.htm#GUID-AEC7F33F-286A-449C-8181-6BA23948515C">GET_SYSKEY_LENGTH</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e196 d104632e66">
+<p>Retrieves the SYSKEY length for the current record.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e204" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-1DBCEFB5-6E86-44D2-859D-DB291C790A98.htm#GUID-1DBCEFB5-6E86-44D2-859D-DB291C790A98">GET_TRANSACTION_IND</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e204 d104632e66">
+<p>Supplies a data records position in a transaction, such as first, last, or middle.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e212" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-4FB27EA1-253D-4546-AF15-75F39A841153.htm#GUID-4FB27EA1-253D-4546-AF15-75F39A841153">GET_USER_TOKEN_VALUE</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e212 d104632e66">
+<p>Allows user to retrieve the value of a user token.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e220" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-D23A3A3B-5815-4921-AEF4-84DF61312FE2.htm#GUID-D23A3A3B-5815-4921-AEF4-84DF61312FE2">GGS_EMSMESSAGE</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e220 d104632e66">
+<p>Allows a user exit to write an EMS message.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e228" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-AB009655-118E-465D-B7B8-E5B4E688B51F.htm#GUID-AB009655-118E-465D-B7B8-E5B4E688B51F">GGS_REPORTMESSAGE</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e228 d104632e66">
+<p>Allows a user exit to write to the report file.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e236" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-A5FE98DE-1FAE-43EE-BFE0-20C149E7FDD7.htm#GUID-A5FE98DE-1FAE-43EE-BFE0-20C149E7FDD7">SET_TARGET_RECORD2</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e236 d104632e66">
+<p>Sets the values of a modified record.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment78" id="d104632e244" headers="d104632e63">
+<pre dir="ltr">
+<a href="GUID-E6E2F6E6-4846-45A4-ABC0-356E4ACD4271.htm#GUID-E6E2F6E6-4846-45A4-ABC0-356E4ACD4271">SET_TARGET_RECORD_LENGTH2</a>
+</pre></td>
+<td class="cellalignment77" headers="d104632e244 d104632e66">
+<p>Sets the length of a modified record.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="section">
+<p class="subhead1">The function RESULT</p>
+</div>
+<!-- class="section" -->
+<p>The <code class="codeph">RESULT</code> value returned by each function indicates whether or not the function was successful. Possible values are listed below, but different functions may be limited in those they will use.</p>
+<div class="tblformal" id="GUID-6D6424BD-D0D3-45C4-8CB0-F8E06DD1902C__GUID-544E5677-7238-4800-A158-E5D23D9A666A">
+<table class="cellalignment38" summary="This table lists the name and discription of return values results">
+<thead>
+<tr class="cellalignment29">
+<th class="cellalignment121" id="d104632e267">Return value</th>
+<th class="cellalignment122" id="d104632e270">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment29">
+<td class="cellalignment123" id="d104632e275" headers="d104632e267">
+<pre dir="ltr">
+EXIT_ENV_SOURCE_FILE
+</pre></td>
+<td class="cellalignment124" headers="d104632e275 d104632e270">
+<p>Indicates the 24-byte internal format source file name.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment123" id="d104632e282" headers="d104632e267">
+<pre dir="ltr">
+EXIT_ENV_SOURCE_FILE_EXT
+</pre></td>
+<td class="cellalignment124" headers="d104632e282 d104632e270">
+<p>Indicates the source file name in external format.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment123" id="d104632e289" headers="d104632e267">
+<pre dir="ltr">
+EXIT_ENV_TARGET_FILE
+</pre></td>
+<td class="cellalignment124" headers="d104632e289 d104632e270">
+<p>Indicates the target file name in internal format.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment123" id="d104632e296" headers="d104632e267">
+<pre dir="ltr">
+EXIT_ENV_TARGET_FILE_EXT
+</pre></td>
+<td class="cellalignment124" headers="d104632e296 d104632e270">
+<p>Indicates the target file name in external format.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment123" id="d104632e303" headers="d104632e267">
+<pre dir="ltr">
+EXIT_FN_RET_OK
+</pre></td>
+<td class="cellalignment124" headers="d104632e303 d104632e270">
+<p>Function succeeded.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment123" id="d104632e310" headers="d104632e267">
+<pre dir="ltr">
+EXIT_FN_RET_FETCH-ERROR
+</pre></td>
+<td class="cellalignment124" headers="d104632e310 d104632e270">
+<p>An error occurred when attempting to fetch a record.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment123" id="d104632e317" headers="d104632e267">
+<pre dir="ltr">
+EXIT_FN_RET_INVALID_COLUMN
+</pre></td>
+<td class="cellalignment124" headers="d104632e317 d104632e270">
+<p>A non-existent column was referred to in the function call.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment123" id="d104632e324" headers="d104632e267">
+<pre dir="ltr">
+EXIT_FN_RET_INVALID_CONTEXT
+</pre></td>
+<td class="cellalignment124" headers="d104632e324 d104632e270">
+<p>Function called at improper time.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment123" id="d104632e331" headers="d104632e267">
+<pre dir="ltr">
+EXIT_FN_RET_NOT_SUPPORTED
+</pre></td>
+<td class="cellalignment124" headers="d104632e331 d104632e270">
+<p>The request is not supported.</p>
+</td>
+</tr>
+<tr class="cellalignment29">
+<td class="cellalignment123" id="d104632e338" headers="d104632e267">
+<pre dir="ltr">
+EXIT_FN_RET_INVALID_PARAM
+</pre></td>
+<td class="cellalignment124" headers="d104632e338 d104632e270">
+<p>An invalid parameter was passed to the function.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="section">
+<p class="subhead1">User exit libraries</p>
+</div>
+<!-- class="section" -->
+<p>Three copy libraries define error codes, constants, and structures that are passed to and from the user exits. <code class="codeph">C</code> user exits should use <a id="d104632e352" class="indexterm-anchor"></a><code class="codeph">XLIBC and TAL</code> should use <code class="codeph">XLIBTAL.</code> For <code class="codeph">COBOL</code> the library is <code class="codeph">XLIBCOB</code>.</p>
+<p>The function prototypes for <code class="codeph">C</code> user exits are defined in the library <a id="d104632e373" class="indexterm-anchor"></a><code class="codeph">usrdecs</code>. For <code class="codeph">TAL</code> the library is <a id="d104632e383" class="indexterm-anchor"></a><code class="codeph">usrdect</code>. These should be included in the user exit routine.</p>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-63DAABB9-A0D8-4D78-ADDA-7544ADFEA02C.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-1124F971-A47F-407D-85B1-848F87459142.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

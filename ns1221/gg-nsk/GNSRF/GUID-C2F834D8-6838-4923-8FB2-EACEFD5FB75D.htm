@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Marker commands</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="keywords" content="ADD command, MARKER" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-81002620-B8E1-4A88-89F2-76EB087BDBF8.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-513FCB94-24CA-4ED1-B180-DEDA7A516573.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-C2F834D8-6838-4923-8FB2-EACEFD5FB75D"></a> <span id="PAGE" style="display:none;">21/360</span> <!-- End Header -->
+<a id="GNSRF212"></a>
+<h1 id="GNSRF-GUID-C2F834D8-6838-4923-8FB2-EACEFD5FB75D" class="sect1"><span class="enumeration_section">1.13</span> Marker commands</h1>
+<div>
+<div class="section">
+<p>Markers are records inserted into the <a id="d19410e17" class="indexterm-anchor"></a><a id="d19410e23" class="indexterm-anchor"></a>audit trails and log trails to identify application-specific events during Extract and Replicat processing.</p>
+<p>For example, to switch from a primary to a backup database, you must determine that all records have been delivered from the primary to the backup database before switching. Markers provide a method for determining this without shutting down all TMF-related activity on the source node.</p>
+<p>To determine that all records have been delivered, perform the following tasks:</p>
+<ol>
+<li>
+<p>Shut down application activity against the source database (for example, bring down <code class="codeph">PATHWAY</code>).</p>
+</li>
+<li>
+<p>Add a marker to the audit trail.</p>
+</li>
+<li>
+<p>Wait until the corresponding Replicat process writes an event message indicating that it processed the marker. At this point, Replicat has processed all data from the source database and you can safely switch to the backup database.</p>
+</li>
+</ol>
+<p>Event messages and history records are written each time a marker is processed by GGSCI, Extract, or Replicat.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GNSRF213"></a>
+<div class="props_rev_3"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25"></a>
+<h2 id="GNSRF-GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25" class="sect2"><span class="enumeration_section">1.13.1</span> ADD MARKER</h2>
+<div>
+<div class="section">
+<p>You can add markers:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For TMF installations</p>
+</li>
+<li>
+<p>For non-TMF installations</p>
+</li>
+<li>
+<p>Executing TACL commands</p>
+</li>
+<li>
+<p>For a Replicat group</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Default</p>
+<p>By default, Oracle GoldenGate applies markers to the TMF audit trail.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+ADD MARKER 
+[<a id="d19410e95" class="indexterm-anchor"></a>LOGGER <span class="italic">logger_prefix</span>] [<span class="italic">freeform_text</span>] |
+[<a id="d19410e108" class="indexterm-anchor"></a>TACLCMD <span class="italic">program</span> <span class="italic">group_name</span> <span class="italic">command</span>] |
+[<a id="d19410e126" class="indexterm-anchor"></a>GROUPCMD] <span class="italic">program</span> <span class="italic">group_name</span> <span class="italic">command</span> ]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-AEBC95D2-2469-4C5D-8046-76C74BFA2C64"><!-- --></a><code class="codeph">LOGGER</code> <span class="italic"><code class="codeph">logger_prefix</code></span> <span class="italic"><code class="codeph">freeform_text</code></span></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-C2F834D8-6838-4923-8FB2-EACEFD5FB75D.htm#GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__I1100245">Adding markers for TMF or non-TMF installations</a>"</span> for information on adding markers for TMF and non-TMF installations</p>
+</dd>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-4586998A-C22A-4F8A-A52E-C813344F43A3"><!-- --></a><code class="codeph">TACLCMD</code> <span class="italic"><code class="codeph">program</code></span> <span class="italic"><code class="codeph">group_name</code></span> <span class="italic"><code class="codeph">command</code></span></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-C2F834D8-6838-4923-8FB2-EACEFD5FB75D.htm#GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__I1123010">Invoking TACL commands</a>"</span> for information on executing TACL commands.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-BB84F92D-47E4-45B5-940E-866555AC6254"><!-- --></a><code class="codeph">GROUPCMD</code> <span class="italic"><code class="codeph">program</code></span> <span class="italic"><code class="codeph">group_name</code></span> <span class="italic"><code class="codeph">command</code></span></dt>
+<dd>
+<p>See <span class="q">"<a href="GUID-C2F834D8-6838-4923-8FB2-EACEFD5FB75D.htm#GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__I1100290">Adding markers for an Extract or Replicat group</a>"</span>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__I1100245">
+<p class="subhead2">Adding markers for TMF or non-TMF installations</p>
+<p>For TMF installations, <code class="codeph">ADD MARKER</code> creates a marker in the local audit trail. For non-TMF installations, specify <code class="codeph">ADD MARKER</code> with the <code class="codeph">LOGGER</code> option.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Default</p>
+<p>By default, Oracle GoldenGate applies markers to the TMF audit trail.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+ADD MARKER [LOGGER <span class="italic">logger_prefix</span>] [<span class="italic">freeform_text</span>]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-A498A664-7FA5-447B-B606-3BB0AE08AA69"><!-- --></a><code class="codeph">LOGGER</code> <span class="italic"><code class="codeph">logger_prefix</code></span></dt>
+<dd>
+<p>Required to send markers to Logger processes and associated log trails. Identifies the Logger process group or an individual Logger process within a group. For example, <code class="codeph">ADD MARKER LOGGER $GGL</code> specifies the Logger group and sends a marker to all processes beginning with <code class="codeph">$GGL</code>. The command: <code class="codeph">ADD</code> <code class="codeph">MARKER</code> <code class="codeph">LOGGER</code> <code class="codeph">$GGL01</code>, sends a marker to the logger <code class="codeph">$GGL01</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-2E3FD710-3B3E-42BC-AC74-954E1DA59BDA"><!-- --></a><span class="italic"><code class="codeph">freeform_text</code></span></dt>
+<dd>
+<p>Text<a id="d19410e281" class="indexterm-anchor"></a> you want added to the marker record to distinguish the purpose of the marker, as in:</p>
+<pre dir="ltr">
+ADD MARKER BROUGHT DOWN FINANCE
+ADD MARKER LOGGER $GGL END OF DAY 2010-07-30
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__I1123010">
+<p class="subhead2">Invoking TACL commands</p>
+<p>A special form of marker invokes <a id="d19410e293" class="indexterm-anchor"></a>TACL commands through Extract or Replicat. This lets you fit TACL commands into a stream of database activity. The command is carried out when Extract or Replicat encounters the marker record in the data stream.</p>
+<p>Extract or Replicat end abnormally if encountering a problem issuing the command, but will not <code class="codeph">ABEND</code> if the command itself fails. While the command runs, Extract or Replicat waits until it finishes. Specify <code class="codeph">NOWAIT</code> as part of the command to return control immediately.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+ADD MARKER [LOGGER <span class="italic">logger_prefix</span>] 
+TACLCMD <span class="italic">program</span> <span class="italic">group_name</span> <span class="italic">command</span>
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-4835E9D0-980B-4AF2-AB8E-4D6EEE65130A"><!-- --></a><code class="codeph">LOGGER</code> <span class="italic"><code class="codeph">logger_prefix</code></span></dt>
+<dd>
+<p>Required to send markers to Logger processes and associated log trails. Identifies the Logger process group or an individual Logger process within a group. For example, <code class="codeph">ADD</code> <code class="codeph">MARKER</code> <code class="codeph">LOGGER</code> <code class="codeph">$GGL</code> specifies the Logger group and sends a marker to all processes beginning with <code class="codeph">$GGL.</code> The command: <code class="codeph">ADD</code> <code class="codeph">MARKER</code> <code class="codeph">LOGGER</code> <code class="codeph">$GGL01</code>, sends a marker to the Logger <code class="codeph">$GGL01</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-2854D6B5-C415-4F3F-B2CE-4862B8E909FB"><!-- --></a><code class="codeph">TACLCMD</code> <span class="italic"><code class="codeph">program</code></span> <span class="italic"><code class="codeph">group_name</code></span> <span class="italic"><code class="codeph">command</code></span></dt>
+<dd>
+<p>The <code class="codeph">TACLCMD</code> keyword informs the process that a TACL command is to be carried out. <code class="codeph">TACLCMD</code> must include the following:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-8176C1F1-72C7-4C58-B01C-29288349DE1F"><!-- --></a><span class="italic"><code class="codeph">program</code></span></dt>
+<dd>
+<p>Either <code class="codeph">EXTRACT</code> or <code class="codeph">REPLICAT</code>. This determines which program runs the command.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-2867A995-30BB-4991-881A-41C3A76B88C6"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>The group name to run the command. You can specify a wildcard.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-9280394E-792A-4881-A13E-5AADB228AB6B"><!-- --></a><span class="italic"><code class="codeph">command</code></span></dt>
+<dd>
+<p>The TACL command to invoke. This can be the name of a program, a macro or any command that can be executed from TACL.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<p>In this example, <code class="codeph">TACLCMD</code> specifies that the command is to be invoked by Extract for the <code class="codeph">FINANCE</code> group. The command is: <code class="codeph">FUP PURGEDATA $DATA1.DAT.FILE1</code></p>
+<pre dir="ltr">
+ADD MARKER TACLCMD EXTRACT FINANCE FUP PURGEDATA $DATA1.DAT.FILE1
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__I1100290">
+<p class="subhead2">Adding markers for an Extract or Replicat group</p>
+<p>You can use markers to send a command to an Extract or <a id="d19410e449" class="indexterm-anchor"></a>Replicat group.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+ADD MARKER GROUPCMD <span class="italic">program</span> <span class="italic">group_name</span> <span class="italic">command</span>
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-2A640F6E-F96E-4D94-AD27-BF002813E622"><!-- --></a><code class="codeph">GROUPCMD</code> <span class="italic"><code class="codeph">program</code></span> <span class="italic"><code class="codeph">group_name</code></span> <span class="italic"><code class="codeph">command</code></span></dt>
+<dd>
+<p>The <code class="codeph">GROUPCMD</code> keyword informs the process that a group command is to be invoked.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-8B37CEE0-AC98-4CA5-8662-AB8204EE887B"><!-- --></a><span class="italic"><code class="codeph">program</code></span></dt>
+<dd>
+<p>Enter Extract or Replicat.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-E00FCA42-2A32-477C-A8B3-4C434FB65E79"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>Enter the Extract or Replicat group name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-21DFAFE9-157E-4691-A9AC-CA4B6E6CBF25__GUID-2EB94E87-4D89-45F0-B5B9-26CE76D53C03"><!-- --></a><span class="italic"><code class="codeph">command</code></span></dt>
+<dd>
+<p>Enter the command. Currently, <code class="codeph">CLOSEFILES</code> is the only command available for <code class="codeph">GROUPCMD</code>. <code class="codeph">CLOSEFILES</code> instructs Replicat to close all opens on Enscribe files and SQL tables. It instructs Extract to close opens from <code class="codeph">FETCHCOMPS</code> and <code class="codeph">FETCHLASTIMAGE</code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF214"></a>
+<div class="props_rev_3"><a id="GUID-8C814F78-54A7-441B-A7C8-12F41822865F"></a>
+<h2 id="GNSRF-GUID-8C814F78-54A7-441B-A7C8-12F41822865F" class="sect2"><span class="enumeration_section">1.13.2</span> INFO MARKER</h2>
+<div>
+<div class="section">
+<p>Use <a id="d19410e553" class="indexterm-anchor"></a><a id="d19410e557" class="indexterm-anchor"></a><code class="codeph">INFO MARKER</code> to review recently processed markers. A record is displayed for each occasion on which GGSCI, Logger, Extract or Replicat processed the marker.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+INFO MARKER [COUNT <span class="italic">num_items</span>]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-8C814F78-54A7-441B-A7C8-12F41822865F__GUID-EB73088E-E804-4628-9A46-B6D0D3E5D2E9"><!-- --></a><code class="codeph">COUNT</code> <span class="italic"><code class="codeph">num_items</code></span></dt>
+<dd>
+<p>Specify <code class="codeph">COUNT</code> to restrict the list to the most recent number of items, as in: <code class="codeph">INFO MARKER COUNT 2</code>.</p>
+</dd>
+</dl>
+<p>Information returned includes:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-8C814F78-54A7-441B-A7C8-12F41822865F__GUID-ABADAC95-2348-4D4D-A434-80AE85EF0994"><!-- --></a><code class="codeph">PROCESSED</code></dt>
+<dd>
+<p>The local time that a program processed the marker.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-8C814F78-54A7-441B-A7C8-12F41822865F__GUID-E4908CEA-6A46-4361-8EE1-C4D11A35B08F"><!-- --></a><code class="codeph">ADDED</code></dt>
+<dd>
+<p>The local time at which the marker was inserted into the audit trails or log trails.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-8C814F78-54A7-441B-A7C8-12F41822865F__GUID-FB73E83E-12E0-4F42-A55F-8E3A4CC44A90"><!-- --></a><code class="codeph">DIFF</code></dt>
+<dd>
+<p>The time difference between <code class="codeph">PROCESSED</code> and <code class="codeph">ADDED</code>. <code class="codeph">DIFF</code> can serve as an indicator of the lag between application, Extract, and Replicat activities.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-8C814F78-54A7-441B-A7C8-12F41822865F__GUID-7AF3F183-1A47-44C7-9246-659BBF466FA0"><!-- --></a><code class="codeph">PROG</code></dt>
+<dd>
+<p>The process that processed the marker, such as GGSCI, Logger, Extract or Replicat.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-8C814F78-54A7-441B-A7C8-12F41822865F__GUID-1500FEFA-E8A6-429B-BAFE-805A189A1547"><!-- --></a><code class="codeph">GROUP</code></dt>
+<dd>
+<p>The Extract or Replicat group or Logger process that processed the marker. <code class="codeph">N/A</code> is displayed if GGSCI processed the marker.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-8C814F78-54A7-441B-A7C8-12F41822865F__GUID-95A73B05-D709-40EC-853C-0038E370B50E"><!-- --></a><code class="codeph">NODE</code></dt>
+<dd>
+<p>The node at which the marker was inserted into the audit trails.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-8C814F78-54A7-441B-A7C8-12F41822865F__GUID-002E013B-08A1-4003-9FAA-C88B70477812"><!-- --></a><code class="codeph">Optional text</code></dt>
+<dd>
+<p>The free text you entered in the <code class="codeph">ADD MARKER</code> command.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-81002620-B8E1-4A88-89F2-76EB087BDBF8.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-513FCB94-24CA-4ED1-B180-DEDA7A516573.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

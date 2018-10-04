@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Setting Up Secure or Non-Secure Deployments</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="You can choose to set up a secure or non-secure deployment. A secure deployment involves making RESTful API calls and conveying trail data between the Distribution Server and Receiver Server, over SSL/TLS. You can use your existing wallets and certificates, or you can create new ones." />
+<meta name="dcterms.created" content="2018-09-07T12:38:55Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate Microservices Architecture" />
+<meta name="dcterms.identifier" content="E84970-05" />
+<meta name="dcterms.isVersionOf" content="GGSAU" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2017, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="getting-started-oracle-goldengate.htm" title="Previous" type="text/html" />
+<link rel="Next" href="working-deployments-and-services.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGSAU.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-89EE41E7-F382-4E43-B555-B183837569BA"></a> <span id="PAGE" style="display:none;">5/15</span> <!-- End Header -->
+<h1 id="GGSAU-GUID-89EE41E7-F382-4E43-B555-B183837569BA" class="sect1"><span class="enumeration_chapter">2</span> Setting Up Secure or Non-Secure Deployments</h1>
+<div>
+<p>You can choose to set up a secure or non-secure deployment. A secure deployment involves making RESTful API calls and conveying trail data between the Distribution Server and Receiver Server, over SSL/TLS. You can use your existing wallets and certificates, or you can create new ones.</p>
+<p>When first creating the SSL/TLS security certificates, you must ensure that the SSL/TLS security environment variables are set as described in <a href="getting-started-oracle-goldengate.htm#GUID-C3D90660-13CB-4C38-8310-30A26AD3F426" title="You can set the MA-specific environment variables while performing the deployment tasks:">Setting Environment Variables</a>.</p>
+<p>For a non-secure deployment, the RESTful API calls occur over plain-text HTTP and conveyance between Distribution Server and Receiver Server is performed using the UDT, ogg://, and ws:// protocols.</p>
+<p>This section describes the steps to configure a non-secure deployment and prerequisites and tasks to configure a secure deployment.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="setting-secure-and-non-secure-deployments.htm#GUID-6977754C-A497-438B-BA40-24A47E78C5F0">How to Add Secure or Non-Secure Deployments</a><br />
+Adding deployments is the first task in the process of setting up a data extraction and replication platform. Deployments are d as source and target deployments. Deployments are managed from the Service Manager.</li>
+<li class="ulchildlink"><a href="setting-secure-and-non-secure-deployments.htm#GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A">How to Add Users</a><br />
+Each deployment has its own list of users, and when you add users from the Administration Server, you are adding them to that deployment.</li>
+<li class="ulchildlink"><a href="setting-secure-and-non-secure-deployments.htm#GUID-82A80C30-13BD-48B3-9D84-C8EB729B2895">Creating a Self-Signed Root Certificate</a><br />
+In a secure mode, communication with Oracle GoldeGate SA including administrative calls and data transport is secured using SSL/TLS certificates, which you purchase or create your own for testing purposes.</li>
+<li class="ulchildlink"><a href="setting-secure-and-non-secure-deployments.htm#GUID-F42B6E2C-600B-4729-A5B1-91EE748AB251">Creating Server Certificates</a><br />
+You must make sure that your Oracle GoldenGate SA implementation has a clear guideline for security certificates, before you go into production. For testing purposes, however, you can generate server certificates.</li>
+<li class="ulchildlink"><a href="setting-secure-and-non-secure-deployments.htm#GUID-09D79621-1C60-4D14-825C-57D04CEE4E2A">Creating a Distribution Server User Certificate</a><br />
+To replicate data to an SSL/TLS secured target <span>Oracle GoldenGate</span> <span>MA</span>deployment, you must create a wallet with a client certificate for the Distribution Server. This certificate is also signed by the root certificate. It provides a common trust point because the server considers any certificate signed by the same root certificate as the server's certificate authentication.</li>
+</ul>
+</div>
+<div class="sect2"><a id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0"></a>
+<h2 id="GGSAU-GUID-6977754C-A497-438B-BA40-24A47E78C5F0" class="sect2"><span class="enumeration_section">2.1</span> How to Add Secure or Non-Secure Deployments</h2>
+<div>
+<p>Adding deployments is the first task in the process of setting up a data extraction and replication platform. Deployments are d as source and target deployments. Deployments are managed from the Service Manager.</p>
+<p>After completing the Oracle GoldenGate <span>MA</span> installation, you can add an initial and subsequent deployments using the Configuration Assistant (OGGCA) wizard.</p>
+<div class="infobox-note" id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ORACLERECOMMENDSTHATYOUAPPLYTHESING-CF241854">
+<p class="notep1">Note:</p>
+Oracle recommends that you have a single Service Manager per host, to avoid redundant upgrade and maintenance tasks with <span>Oracle GoldenGate</span> releases.</div>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__YOUCANUSETHECONFIGURATIONASSISTANTW-D8EBD987">You can use the Configuration Assistant wizard to add multiple deployments to a Service Manager, which enables you to upgrade the same Service Manager with new releases or patches. The source and target deployments serve as endpoints for setting up the distribution path for data replication. A target deployment is added the same way as the source deployment but for a different database user or a different database.</p>
+<ol>
+<li>
+<p>From the <code class="codeph">OGG_HOME</code> directory, run the <code class="codeph">$OGG_HOME/bin/oggca.sh</code> program on UNIX or Linux.</p>
+<p>The Oracle GoldenGate Configuration Assistant (oggca) is started. Run this program, each time you want to add a deployment.</p>
+</li>
+<li>
+<p>In the <span class="bold">Select Service Manager Options</span> step:</p>
+<ol>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__SELECTWHETHERYOUWANTTOUSEANEXISTING-D8EBDF04">Select whether you want to use an existing Service Manager or a new one. If two Service Managers are running, one of them is discovered, at random, to associate it with deployments. Therefore, it is recommended to have only one Service manager per host.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERORBROWSETOTHEDIRECTORYTHATYOUW-D8EBE2E6">Enter or browse to the directory that you want to use for your deployment. Oracle recommends that you do <span class="italic">not</span> use your Oracle GoldenGate installation directory.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERTHEHOSTNAMEORIPADDRESSFORYOURS-D8EF3F25">Enter the hostname or IP Address of the server.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERAUNIQUEPORTNUMBERTHATYOUWANTTO-D8EF4161">Enter a unique port number that you want to contact your Service Manager on or use the default, which is used in the URL to connect to it. Ensure that the port is unreserved and unrestricted. Each service must use a different port number.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__OPTIONALYOUCANREGISTERTHESERVICEMAN-D8EF4385">(Optional) You can register the Service Manager to run as a service so as to avoid manually starting and stopping it.</p>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__YOUCANCHOOSETORUNONESERVICEMANAGERA-D8E970AA">You can choose to run <span class="italic">one</span> Service Manager as a service (daemon). If there is an existing Service Manager registered as a service and you select a new Service Manager to register as a service, an alert is displayed indicating that you cannot register the new one as a service. All other Service Managers are started and stopped using scripts installed in the <code class="codeph">bin</code> directory of the deployment. You cannot register an existing Service Manager as a service.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__OPTIONALYOUCANCHOOSETOINTEGRATEYOUR-DD1753A0">(Optional) You can choose to integrate your deployment with an Oracle Grid Infrastructure for Oracle Database by selecting the option &ldquo;Integrate with XAG&rdquo;. This option cannot be used when running your Service Manager as a service.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>In the <span class="bold">Configuration Options</span> step, you can add or remove deployments.</p>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__SELECTTHEAPPROPRIATEOPTION.-CF3350DF">Select the appropriate option.</p>
+</li>
+<li>
+<p>In the <span class="bold">Deployment Details</span> step:</p>
+<ol>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERTHEDEPLOYMENTNAMEUSINGTHESECON-D8EFEEDB">Enter the deployment name using these conventions:</p>
+<ul style="list-style-type: disc;" id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__MUSTBEGINWITHALETTER.CANBEASTANDARD-D8EFF38B">
+<li>
+<p>Must begin with a letter.</p>
+</li>
+<li>
+<p>Can be a standard ASCII alphanumeric string not exceeding 32 characters.</p>
+</li>
+<li>
+<p>Cannot include extended ASCII characters.</p>
+</li>
+<li>
+<p>Special characters that are allowed include underscore (&lsquo;_&rsquo;), hyphen (&lsquo;/&rsquo;), dash (&lsquo;-&rsquo;), period (&lsquo;.&rsquo;).</p>
+</li>
+<li>
+<p>Cannot be &ldquo;ServiceManager&rdquo;.</p>
+</li>
+</ul>
+</li>
+<li>Select <span class="bold">Enable Sharding</span> to use the database sharding feature in your deployment. The schema must be <code class="codeph">ggadmin</code>.</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERORSELECTTHEORACLEGOLDENGATEINS-D8ECD54D">Enter or select the Oracle GoldenGate installation (home) directory. If you have set the <code class="codeph">$OGG_HOME</code> environment variable, the directory is automatically populated. Otherwise, the parent directory of the <code class="codeph">oggca.sh</code> script is used.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>On the <span class="bold">Select Deployment Directories</span> page:</p>
+<ol>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERORSELECTADEPLOYMENTDIRECTORYWH-D8F0669D">Enter or select a deployment directory where you want to store the deployment registry and configuration files. When you enter the deployment directory name, it is d if it doesn&rsquo;t exist. Oracle recommends that you do <span class="italic">not</span> locate your deployment directory inside your <code class="codeph">$OGG_HOME</code> and that you a separate directory for easier upgrades. The additional fields are automatically populated based on the specified deployment directory.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__YOUCANCUSTOMIZETHEDEPLOYMENTDIRECTO-D8ED077F">You can customize the deployment directories so that they are named and located differently from the default.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERORSELECTDIFFERENTDIRECTORIESFO-D8ED0A2F">Enter or select different directories for the various deployment elements.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>On the <span class="bold">Environment Variables</span> page:</p>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERTHEREQUESTEDVALUESFORTHEENVIRO-CF35E02A">Enter the requested values for the environment variables. Double-click in the field to edit it. You can copy and paste values in the environment variable fields. Make sure that you tab or click outside of the field after entering each value, otherwise it&rsquo;s not saved. If you have set any of these environment variables, the directory is automatically populated.</p>
+<dl id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ORACLE_HOMETHEDIRECTORYWHEREYOUINST-CF35E265">
+<dt class="dlterm"><a id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__GUID-A7E74910-2EDC-46E4-9C46-CFD14E14E254"><!-- --></a><span class="bold">ORACLE_HOME</span></dt>
+<dd>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__THEDIRECTORYWHEREYOUINSTALLEDYOURDA-CF3D2D38">The directory where you installed your database.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__GUID-4452CC30-2A93-45AC-A24C-8CF1DBCB4542"><!-- --></a><span class="bold">LD_LIBRARY_PATH</span></dt>
+<dd>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__THELIBRARYDIRECTORIESTOYOUROGG_HOME-CF3D2EAE">The library directories to your <code class="codeph">$OGG_HOME</code>, OUI, database installation, and database network (<code class="codeph">TNS_ADMIN</code>).</p>
+</dd>
+<dt class="dlterm"><a id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__GUID-1699F796-8B17-4DC5-8871-CAF1E1B8E716"><!-- --></a><span class="bold">TNS_ADMIN</span></dt>
+<dd>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__THEDIRECTORYWHEREYOUINSTALLEDYOURDA-CF3D31E9">The directory where you installed your database appended with <code class="codeph">/network/admin</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__GUID-F49992F1-EE01-4F9C-8619-2F09D8D5F81E"><!-- --></a><span class="bold">ORACLE_SID</span></dt>
+<dd>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__THENAMESIDOFYOURDATABASE-CF3D33BF">The name (SID) of your database</p>
+</dd>
+<dt class="dlterm"><a id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__GUID-C234496D-0A3F-46FC-918E-76DEEA8A642D"><!-- --></a><span class="bold">STREAMS_POOL_SIZE</span></dt>
+<dd>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__THISAPPEARSONLYIFYOUENABLEDSHARDING-CF3D35D1">This appears only if you enabled sharding. Use the default or set your pool size value that is at least 1200MB.</p>
+</dd>
+</dl>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__YOUCANADDADDITIONALENVIRONMENTVARIA-CF36080C">You can add additional environment variables to customize your deployment or remove variables. For instance, you can enter the following variable to default to an international charset: <code class="codeph">ENV_LC_ALL=zh_CN.UTF-8</code></p>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+<li>
+<p>On the <span class="bold">Administrator Account</span> page:</p>
+<ol>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERAUSERNAMEANDPASSWORDTHATYOUWAN-D8ED1419">Enter a user name and password that you want to use to sign in to the Oracle GoldenGate <span>MA</span> Service Manager and the other servers. This user is the security user for this deployment. For details on the different types of users, see <a href="setting-secure-and-non-secure-deployments.htm#GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A" title="Each deployment has its own list of users, and when you add users from the Administration Server, you are adding them to that deployment.">How to Add Users</a>. If you are using an existing Service Manager, you must enter the same log in credentials that were used when adding the first deployment.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>On the <span class="bold">Security Options</span> page:</p>
+<ol>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__YOUCANCHOOSEWHETHERORNOTYOUWANTTOSE-D8ED2B1A">You can choose whether or not you want to secure your deployment. Oracle recommends that you enable SSL/TLS Security. If you do not want to use security for your deployment, deselect the check box. However, you must enable security if configuring for <span>Oracle GoldenGate</span>sharding support.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__OPTIONALYOUCANSELECTTHECHECKBOXTHIS-D8ED4342">(Optional) You can specify a client wallet location so that you can send trail data to a secure deployment. This option is useful when Distribution Server from the source deployment is unsecured whereas the Receiver Server on the target deployment is secured. In this case, the sender may be configured for public access whereas the Receiver Server requires authentication and authorization, which is established using PKI before the incoming data is applied. For more information, see <a href="setting-secure-and-non-secure-deployments.htm#GUID-82A80C30-13BD-48B3-9D84-C8EB729B2895" title="In a secure mode, communication with Oracle GoldeGate SA including administrative calls and data transport is secured using SSL/TLS certificates, which you purchase or create your own for testing purposes.">Creating Self-Signed Root Certificate,</a></p>
+and <a href="setting-secure-and-non-secure-deployments.htm#GUID-09D79621-1C60-4D14-825C-57D04CEE4E2A" title="To replicate data to an SSL/TLS secured target Oracle GoldenGate MAdeployment, you must create a wallet with a client certificate for the Distribution Server. This certificate is also signed by the root certificate. It provides a common trust point because the server considers any certificate signed by the same root certificate as the server's certificate authentication.">Creating a Distribution Server User Certificate.</a></li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__FORYOURSERVERSELECTEITHERUSEEXISTIN-D8ED4CDA">For your Server, select one of the options, and then provide the required file locations. When using an existing wallet, it must have the appropriate certificates already imported into it. If you choose to use a certificate, enter the corresponding pass phrase. When using a self-signed certificate, a new Oracle Wallet is d in the new deployment and these certificates are imported into it. For certificates, enter the location of the private key file and the pass phrase.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__FORYOURCLIENTSELECTEITHERUSEEXISTIN-D8ED55DA">For your Client, select one of the options, and then provide the required information as you did for your server.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>(If Security is enabled) On the <span class="bold">Advanced Security Settings</span> page:</p>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__THESETOFCRYPTOGRAPHICALGORITHMSUSED-D8ED6D8E">The set of cryptographic algorithms used for secure communication with the Oracle GoldenGate services display. The default cipher suites are:</p>
+<ul style="list-style-type: disc;" id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__TLS_RSA_WITH_AES_256_CBC_SHATLS_RSA-D8ED705A">
+<li>
+<p>TLS_RSA_WITH_AES_256_CBC_SHA</p>
+</li>
+<li>
+<p>TLS_RSA_WITH_AES_128_CBC_SHA</p>
+</li>
+<li>
+<p>SSL_RSA_WITH_RC4_128_SHA</p>
+</li>
+<li>
+<p>SSL_RSA_WITH_RC4_128_MD5</p>
+</li>
+<li>
+<p>SSL_RSA_WITH_3DES_EDE_CBC_SHA</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__THECIPHERSUITESTHATAREGREYINCOLORAN-D8ED7674">
+<p class="notep1">Note:</p>
+<p>The cipher suites that are grey in color and italicized are <span class="italic">not</span> supported by your current JRE environment.</p>
+</div>
+<ol>
+<li>
+<p>Use the arrows to add or remove cipher suites.</p>
+</li>
+<li>
+<p>Use <span class="bold">Up</span> and <span class="bold">Down</span> to reorder how the cipher suites are applied</p>
+</li>
+<li>
+<div class="p">Click <span class="bold">Next</span>.
+<div class="infobox-note" id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__GUID-912ADF0E-9110-42C8-931B-2FB45A34DB36">
+<p class="notep1">Note:</p>
+For more information on TCP/IP encryption options with RMTHOST, see <a class="olink GWURF-GUID-4675F779-D83C-4AF6-9B0A-C811CC715F15" target="_blank" href="../GWURF/rmthost.htm#GWURF-GUID-4675F779-D83C-4AF6-9B0A-C811CC715F15">RMTHOST</a> in <span class="italic"><span id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></div>
+</div>
+</li>
+</ol>
+</li>
+<li>
+<p>(If Sharding is enabled) On the <span class="bold">Sharding Options</span> page:</p>
+<ol>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__LOCATEANDIMPORTYOURORACLEGOLDENGATE-D8ED87D3">Locate and import your Oracle GoldenGate Sharding Certificate. Enter the distinguished name from the certificate that will be used by the database sharding code to identify itself when making REST API calls to the Oracle GoldenGate MA services.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERAUNIQUENAMEFORTHECERTIFICATE.-D8ED81F0">Enter a unique name for the certificate.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>On the <span class="bold">Port Settings</span> page:</p>
+<ol>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERTHEADMINISTRATIONSERVERPORTNUM-D8ED8C7B">Enter the Administration Server port number, and then when you leave the field the other port numbers are populated in ascending numbers. Optionally, you can enter unique ports for each of the servers.</p>
+</li>
+<li>
+<p>Select <span class="bold">Enable Monitoring</span> to use the Performance Metrics Server.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__CLICKINSIDETHEPERFORMANCEMETRICSSER-D8ED8F38">Click inside the Performance Metrics Server port fields to populate or enter the ports you want to use.</p>
+<div class="infobox-note" id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__GUID-792A9C23-CCB2-487C-B829-C14C93BCCECD">
+<p class="notep1">Note:</p>
+Ensure that you choose available ports for TCP and UDP for performance monitoring. After the deployment is d, you can change the TCP port from the Service Manager console. For more information on <code class="codeph">PMSRVR</code>, see <a class="olink GWURF-GUID-6303D6DA-CB36-4253-91F3-6724BC122D5F" target="_blank" href="../GWURF/enablemonitoring.htm#GWURF-GUID-6303D6DA-CB36-4253-91F3-6724BC122D5F"><code class="codeph">ENABLEMONITORING</code></a></div>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__SELECTTHETYPEOFDATASTORETHATYOUWANT-D8EDF460">Select the type of datastore that you want the Metrics Server to use, the default Berkeley Database (BDB) data store or Open LDAP Lighting Memory-Mapped Database (LMDB).</p>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__BDBANDLMDBAREIN-MEMORYANDDISK-RESID-DD202916">BDB and LMDB are in-memory and disk-resident databases. The Performance Metrics server uses the datastore to store all metrics information. For BDB informtion, see <a href="http://docs.oracle.com/cd/E17076_05/html/index.html" target="_blank">Oracle Berkeley DB 12<span class="italic">c</span> Release 1</a> For LMDB information, see <a href="http://www.lmdb.tech/doc/" target="_blank">http://www.lmdb.tech/doc/</a></p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+<div class="infobox-note" id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__THEOGGCAUTILITYDOESNOTVALIDATEWHETH-CF38EDAB">
+<p class="notep1">Note:</p>
+<p>The <code class="codeph">oggca</code> utility does not validate whether or not the port you entered is currently in use or not, so you must manually ensure that the ports are free and will not be reassigned to other processes.</p>
+</div>
+</li>
+<li>In the <span class="bold">Replication Settings</span> step:
+<ol>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__ENTERTHEORACLEGOLDENGATEDEFAULTSCHE-D8EDFF6B">Enter the Oracle GoldenGate default schema you want to use to perform the replication settings. For example, ggadmin.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>On the <span class="bold">Summary</span> page:</p>
+<ol>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__REVIEWTHEDETAILEDCONFIGURATIONSETTI-D8EE022F">Review the detailed configuration settings of the deployment before you continue.</p>
+</li>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__OPTIONALYOUCANSAVETHECONFIGURATIONI-D8EE168E">(Optional) You can save the configuration information to a response file. You can run the installer from the command line using this file as an input to duplicate the results of a successful configuration on other systems. You can edit this file or a new one from the provided template.</p>
+<div class="infobox-note" id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__WHENSAVINGTOARESPONSEFILETHEADMINIS-D8EE1B58">
+<p class="notep1">Note:</p>
+<p>When saving to a response file, the administrator password is not saved for security reasons. You must edit the response file and enter the password if you want to reuse the response file for use on other systems.</p>
+</div>
+</li>
+<li>
+<p>Click <span class="bold">Finish</span> to the deployment.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>On the <span class="bold">Configure Deployment</span> page:</p>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__DISPLAYSTHEPROGRESSOFTHEDEPLOYMENTC-D8EE1D6C">Displays the progress of the deployment creation and configuration.</p>
+<ol>
+<li>
+<p id="GUID-6977754C-A497-438B-BA40-24A47E78C5F0__IFTHESERVICEMANAGERISBEINGREGISTERE-D8EE2AE5">If the Service Manager is being registered as a service, a pop-up appears that directs you how to run the script to register the service. The Configuration Assistant verifies that these scripts have been run. If you did not run them, you are queried if you want to continue. When you click <span class="bold">Yes</span>, the configuration completes successfully. When you click <span class="bold">No</span>, a temporary failed status is set and you click <span class="bold">Retry</span> to run the scripts.</p>
+<p>Click <span class="bold">Ok</span> after you run the script to continue.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>On the <span class="bold">Finish</span> page:</p>
+<p>Click <span class="bold">Close</span> to close the Configuration Assistant.</p>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="setting-secure-and-non-secure-deployments.htm#GUID-89EE41E7-F382-4E43-B555-B183837569BA" title="You can choose to set up a secure or non-secure deployment. A secure deployment involves making RESTful API calls and conveying trail data between the Distribution Server and Receiver Server, over SSL/TLS. You can use your existing wallets and certificates, or you can create new ones.">Setting Up Secure or Non-Secure Deployments</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A"></a>
+<h2 id="GGSAU-GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A" class="sect2"><span class="enumeration_section">2.2</span> How to Add Users</h2>
+<div>
+<p>Each deployment has its own list of users, and when you add users from the Administration Server, you are adding them to that deployment.</p>
+<p>The only user that can manage the services in Service Manager is the user that was originally added as the security user when you initially add the deployment to the Service Manager. The other users created from the Administration Server are specific to the MA deployment and the security user needs to create users to every MA deployment individually.</p>
+<p>You can create users for that deployment by performing the following steps:</p>
+<ol>
+<li id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A__d323e14">
+<p>Click the + sign.</p>
+</li>
+<li id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A__d323e17">
+<p>Enter a unique user name.</p>
+</li>
+<li id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A__d323e20">
+<p>Select one of these roles:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A__d323e24"><!-- --></a>User</dt>
+<dd>
+<p>&nbsp;Can view resources hosted by the server.&nbsp; This includes monitoring performance, requesting reports, and viewing resource configuration</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A__d323e30"><!-- --></a>Operator</dt>
+<dd>
+<p>Can&nbsp;create, update, destroy, start, pause, and stop server hosted resources in addition to User role rights</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A__d323e36"><!-- --></a>Administrator</dt>
+<dd>
+<p>Can manage and administer all services with the exception of security related configurations and profiles in addition to User and Operator role rights.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A__d323e42"><!-- --></a>Security</dt>
+<dd>
+<p>Can administer security related objects and invoke security related service requests. This role has full rights.</p>
+</dd>
+</dl>
+</li>
+<li id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A__d323e48">
+<p>Enter information that describes the user.</p>
+</li>
+<li id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A__d323e51">
+<p>Enter the password twice to verify it. Passwords can contain the user name.</p>
+</li>
+<li id="GUID-3AA1C84B-9324-4891-A9FC-57770BA8A04A__d323e54">
+<p>Click <span class="bold">Submit</span>.</p>
+<p>The user is registered</p>
+</li>
+</ol>
+<p>Users cannot be changed. You must delete a user, and then add it again.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="setting-secure-and-non-secure-deployments.htm#GUID-89EE41E7-F382-4E43-B555-B183837569BA" title="You can choose to set up a secure or non-secure deployment. A secure deployment involves making RESTful API calls and conveying trail data between the Distribution Server and Receiver Server, over SSL/TLS. You can use your existing wallets and certificates, or you can create new ones.">Setting Up Secure or Non-Secure Deployments</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-82A80C30-13BD-48B3-9D84-C8EB729B2895"></a>
+<h2 id="GGSAU-GUID-82A80C30-13BD-48B3-9D84-C8EB729B2895" class="sect2"><span class="enumeration_section">2.3</span> Creating a Self-Signed Root Certificate</h2>
+<div>
+<p>In a secure mode, communication with Oracle GoldeGate SA including administrative calls and data transport is secured using SSL/TLS certificates, which you purchase or create your own for testing purposes.</p>
+<div class="section">
+<p>You may apply your existing root certificate or use the <code class="codeph">orapki</code> in the <code class="codeph">OGG_HOME/bin</code> directory, see <a href="https://docs.oracle.com/database/121/DBSEG/asoappf.htm#DBSEG9830" target="_blank">About the orapki Utility</a> in the <a href="https://docs.oracle.com/database/121/DBSEG/title.htm" target="_blank"><span><cite>Oracle Database Security Guide</cite></span></a>.</p>
+<p>Here's an example of how you can create a root certificate using <code class="codeph">orapki</code>:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Create a directory to store your wallets and certificates. For example, <code class="codeph">~/<span class="codeinlineitalic">wallet_directory</span></code>.</span></li>
+<li class="stepexpand"><span>Create an automatic login wallet. This example uses <code class="codeph">root_ca</code> for the wallet name.</span>
+<div>
+<pre dir="ltr">
+orapki wallet create -wallet ~/<span class="italic">wallet_directory/root_ca</span> -auto_login -pwd <span class="italic">welcome123</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Create a new self-signed (root user) certificate and add it to the wallet.</span>
+<div>
+<pre dir="ltr">
+orapki wallet add -wallet ~/<span class="italic">wallet_directory/root_ca</span> -dn "CN=<span class="italic">RootCA</span>" -keysize 2048 -self_signed -validity 7300 -pwd <span class="italic">welcome123</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Export the certificate to a <code class="codeph">.pem</code> file.</span>
+<div>
+<pre dir="ltr">
+orapki wallet export -wallet ~/<span class="italic">wallet_directory/root_ca</span> -dn "CN=<span class="italic">RootCA</span>" -cert ~/<span class="italic">wallet_directory/rootCA</span>_Cert.pem -pwd <span class="italic">welcome123</span>
+</pre></div>
+</li>
+</ol>
+<div class="section">The wallet creation is complete.</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="setting-secure-and-non-secure-deployments.htm#GUID-89EE41E7-F382-4E43-B555-B183837569BA" title="You can choose to set up a secure or non-secure deployment. A secure deployment involves making RESTful API calls and conveying trail data between the Distribution Server and Receiver Server, over SSL/TLS. You can use your existing wallets and certificates, or you can create new ones.">Setting Up Secure or Non-Secure Deployments</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-F42B6E2C-600B-4729-A5B1-91EE748AB251"></a>
+<h2 id="GGSAU-GUID-F42B6E2C-600B-4729-A5B1-91EE748AB251" class="sect2"><span class="enumeration_section">2.4</span> Creating Server Certificates</h2>
+<div>
+<p>You must make sure that your Oracle GoldenGate SA implementation has a clear guideline for security certificates, before you go into production. For testing purposes, however, you can generate server certificates.</p>
+<div class="section">You must create a wallet with a server certificate for each server on which you installed Oracle GoldenGate SA. Each server certificate is signed with the root certificate. This provides a common trust point because the server considers any certificate signed by the same root certificate as the server's certificate authentication.</div>
+<!-- class="section" -->
+<div class="section">To create the certificate, use the <code class="codeph">orapki</code> in the <code class="codeph">OGG_HOME/bin</code> directory. For more information about <code class="codeph">orapki</code>, see <a href="https://docs.oracle.com/database/121/DBSEG/asoappf.htm#DBSEG9830" target="_blank">About the orapki Utility</a> in the <cite><span class="italic">Oracle Database Security Guide</span></cite>.</div>
+<!-- class="section" -->
+<div class="section">The following steps are an example of how you can create a sever certificate using a root certificate named <code class="codeph">root_ca</code>. In addition, <code class="codeph">servername</code> must be replaced with the actual name of the server where you installed Oracle GoldenGate:</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Create a directory to store your wallets and certificates. For example, <code class="codeph">~/<span class="codeinlineitalic">wallet_directory</span></code>.</span></li>
+<li class="stepexpand"><span>Create an automatic login server wallet.</span>
+<div>
+<pre dir="ltr">
+orapki wallet create -wallet /<span class="italic">wallet_directory/servername</span> 
+</pre></div>
+<div>Enter the password for the server when prompted.</div>
+</li>
+<li class="stepexpand"><span>Add a Certificate Signing Request (CSR) to the server&rsquo;s wallet.</span>
+<div>
+<pre dir="ltr">
+orapki wallet add -wallet /<span class="italic">wallet_directory/servername</span> -dn "CN=<span class="italic">servername</span>" -keysize 2048 
+</pre></div>
+</li>
+<li class="stepexpand"><span>Export the CSR to a <code class="codeph">.pem</code> file.</span>
+<div>
+<pre dir="ltr">
+orapki wallet export -wallet /<span class="italic">wallet_directory/servername</span> -dn "CN=<span class="italic">servername</span>" -request /<span class="italic">wallet_directory/servername_req</span>.pem
+</pre></div>
+</li>
+<li class="stepexpand"><span>Using the CSR, create a signed server or client certificate and sign it using the root certificate. Assign a unique serial number to each certificate.</span>
+<div>
+<pre dir="ltr">
+orapki cert create -wallet ~/<span class="italic">wallet_directory/root_ca</span> -request ~/<span class="italic">wallet_directory/servername</span>_req.pem -cert ~/<span class="italic">wallet_directory/servername</span>_Cert.pem -serial_num 20 -validity 375
+</pre></div>
+</li>
+<li class="stepexpand"><span>Add the root certificate into the client&rsquo;s or server&rsquo;s wallet as a trusted certificate.</span>
+<div>
+<pre dir="ltr">
+orapki wallet add -wallet ~/<span class="italic">wallet_directory/servername</span> -trusted_cert -cert ~/<span class="italic">wallet_directory/rootCA</span>_Cert.pem 
+</pre></div>
+</li>
+<li class="stepexpand"><span>Add the server or client certificate as a user certificate into the client&rsquo;s or server&rsquo;s wallet.</span>
+<div>
+<pre dir="ltr">
+orapki wallet add -wallet ~/<span class="italic">wallet_directory/servername</span> -user_cert -cert ~/<span class="italic">wallet_directory/servername</span>_Cert.pem  
+</pre></div>
+</li>
+</ol>
+<div class="section">The wallet creation is complete.</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="setting-secure-and-non-secure-deployments.htm#GUID-89EE41E7-F382-4E43-B555-B183837569BA" title="You can choose to set up a secure or non-secure deployment. A secure deployment involves making RESTful API calls and conveying trail data between the Distribution Server and Receiver Server, over SSL/TLS. You can use your existing wallets and certificates, or you can create new ones.">Setting Up Secure or Non-Secure Deployments</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-09D79621-1C60-4D14-825C-57D04CEE4E2A"></a>
+<h2 id="GGSAU-GUID-09D79621-1C60-4D14-825C-57D04CEE4E2A" class="sect2"><span class="enumeration_section">2.5</span> Creating a Distribution Server User Certificate</h2>
+<div>
+<p>To replicate data to an SSL/TLS secured target <span>Oracle GoldenGate</span> <span>MA</span>deployment, you must create a wallet with a client certificate for the Distribution Server. This certificate is also signed by the root certificate. It provides a common trust point because the server considers any certificate signed by the same root certificate as the server's certificate authentication.</p>
+<div class="section">To create the certificate, use the <code class="codeph">orapki</code> in the <code class="codeph">OGG_HOME/bin</code> directory. For more information about <code class="codeph">orapki</code>, see <a href="https://docs.oracle.com/database/121/DBSEG/asoappf.htm#DBSEG9830" target="_blank">About the orapki Utility</a> in the <a href="https://docs.oracle.com/database/121/DBSEG/title.htm" target="_blank"><span><cite>Oracle Database Security Guide</cite></span></a>.</div>
+<!-- class="section" -->
+<div class="section">The following steps are an example of how you can create a distribution sever user certificate:</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Create a directory to store your wallets and certificates. For example, <code class="codeph">~/<span class="codeinlineitalic">wallet_directory</span></code>.</span></li>
+<li class="stepexpand"><span>Create an automatic login client wallet. This example uses <code class="codeph">dist_client</code> for the wallet name.</span>
+<div>
+<pre dir="ltr">
+orapki wallet create -wallet ~/<span class="italic">wallet_directory/dist_client</span> -auto_login -pwd <span class="italic">welcome123</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Add a CSR to the wallet.</span>
+<div>
+<pre dir="ltr">
+orapki wallet add -wallet ~/<span class="italic">wallet_directory/dist_client</span> -dn "CN=<span class="italic">dist_client</span>" -keysize 2048 -pwd <span class="italic">welcome123</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Export the CSR to a <code class="codeph">.pem</code> file.</span>
+<div>
+<pre dir="ltr">
+orapki wallet export -wallet ~/<span class="italic">wallet_directory/dist_client</span> -dn "CN=<span class="italic">dist_client</span>" -request ~/<span class="italic">wallet_directory/dist_client_req</span>.pem -pwd <span class="italic">welcome123</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Using CSR, create a signed server or client certificate and sign it using the root certificate. Assign a unique serial number to each certificate.</span>
+<div>
+<pre dir="ltr">
+orapki cert create -wallet ~/<span class="italic">wallet_directory/root_ca</span> -request ~/<span class="italic">wallet_directory/dist_client_req</span>.pem -cert ~/<span class="italic">wallet_directory/dist_client_Cert</span>.pem -serial_num 30 -validity 375 -pwd <span class="italic">welcome123</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Add the root certificate as a trusted certificate into the client&rsquo;s or server&rsquo;s wallet.</span>
+<div>
+<pre dir="ltr">
+orapki wallet add -wallet ~/<span class="italic">wallet_directory/dist_client</span> -trusted_cert -cert ~/<span class="italic">wallet_directory/rootCA_Cert</span>.pem -pwd <span class="italic">welcome123</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Add the server or client certificate as a user certificate into the client&rsquo;s or server&rsquo;s wallet.</span>
+<div>
+<pre dir="ltr">
+orapki wallet add -wallet ~/<span class="italic">wallet_directory/dist_client</span> -user_cert -cert ~/<span class="italic">wallet_directory/dist_client_Cert</span>.pem -pwd <span class="italic">welcome123</span> 
+</pre></div>
+</li>
+</ol>
+<div class="section">The wallet creation is complete.</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="setting-secure-and-non-secure-deployments.htm#GUID-89EE41E7-F382-4E43-B555-B183837569BA" title="You can choose to set up a secure or non-secure deployment. A secure deployment involves making RESTful API calls and conveying trail data between the Distribution Server and Receiver Server, over SSL/TLS. You can use your existing wallets and certificates, or you can create new ones.">Setting Up Secure or Non-Secure Deployments</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment183">
+<tr>
+<td class="cellalignment190">
+<table class="cellalignment188">
+<tr>
+<td class="cellalignment187"><a href="getting-started-oracle-goldengate.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment187"><a href="working-deployments-and-services.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2017, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment192">
+<table class="cellalignment186">
+<tr>
+<td class="cellalignment187"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment187"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment187"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

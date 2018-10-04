@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>6 Adding Process Groups</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the "change-synchronization" processes." />
+<meta name="dcterms.created" content="2015-05-21T11:41:6Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Informix" />
+<meta name="dcterms.identifier" content="E50195-06" />
+<meta name="dcterms.isVersionOf" content="GIINF" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="giinf_apply_config.htm" title="Previous" type="text/html" />
+<link rel="Next" href="giinf_uninstalling.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIINF.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIINF.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIINF.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">9/11</span>
+<!-- End Header -->
+<div id="GIINF297" class="chapter"><a id="BABJHFHF"></a>
+<h1 class="chapter"><span class="secnum">6</span> Adding Process Groups</h1>
+<p><a id="GIINF298"></a>This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the "change-synchronization" processes. At minimum, you will create one primary Extract, one data pump, and one Replicat process group. You configured these groups in the following chapters:</p>
+<p><a href="giinf_capture_config.htm#BABJJGDH">Chapter 4, "Configuring Oracle GoldenGate for Capture"</a></p>
+<p><a href="giinf_apply_config.htm#BHCDFAHC">Chapter 5, "Configuring Oracle GoldenGate for Apply"</a></p>
+<p>This chapter guides you through the process of actually creating these processes. Each Extract and Replicat process is known as a <code dir="ltr"><span class="codeinlineitalic">process group</span></code>. For more information about Oracle GoldenGate process groups, see <a class="olink GWUAD110" href="../../gg-winux/GWUAD/wu_about_gg.htm#GWUAD110"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#A2008360">Section 6.1, "Prerequisites to These Procedures"</a></p>
+</li>
+<li>
+<p><a href="#A1877758">Section 6.2, "Adding the Primary Extract"</a></p>
+</li>
+<li>
+<p><a href="#A4635446">Section 6.3, "Adding the Local Trail"</a></p>
+</li>
+<li>
+<p><a href="#A1878900">Section 6.4, "Add the Data Pump Extract Group"</a></p>
+</li>
+<li>
+<p><a href="#A1885014">Section 6.5, "Add the Remote Trail"</a></p>
+</li>
+<li>
+<p><a href="#A1885318">Section 6.6, "Add the Replicat Group"</a></p>
+</li>
+<li>
+<p><a href="#A4634346">Section 6.7, "Next Steps"</a></p>
+</li>
+</ul>
+<a id="A2008360"></a>
+<div id="GIINF299" class="sect1">
+<h2 class="sect1"><span class="secnum">6.1</span> Prerequisites to These Procedures</h2>
+<p>This chapter assumes you have installed Oracle GoldenGate, understand the different processing options available to you, and have performed the following prerequisite configuration steps before proceeding to configure Oracle GoldenGate process groups:</p>
+<p><a href="giinf_system_requirements.htm#BABCGIEG">Chapter 1, "System Requirements and Preinstallation Instructions"</a></p>
+<p><a href="giinf_install.htm#CIHEBDAJ">Chapter 2, "Installing Oracle GoldenGate"</a></p>
+<p><a href="giinf_setup_preparation.htm#CJHFGHGI">Chapter 3, "Preparing the System for Oracle GoldenGate"</a></p>
+<p><a href="giinf_capture_config.htm#BABJJGDH">Chapter 4, "Configuring Oracle GoldenGate for Capture"</a></p>
+<p><a href="giinf_apply_config.htm#BHCDFAHC">Chapter 5, "Configuring Oracle GoldenGate for Apply"</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="A1877758"></a>
+<div id="GIINF300" class="sect1">
+<h2 class="sect1"><span class="secnum">6.2</span> Adding the Primary Extract</h2>
+<p>These steps add the primary Extract that captures change data.</p>
+<ol>
+<li>
+<p>Run GGSCI.</p>
+</li>
+<li>
+<p>Issue the <code dir="ltr">ADD EXTRACT</code> command to add the primary Extract group.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="codeinlineitalic">group</span>, VAM, BEGIN NOW
+ 
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the Extract group.</p>
+</li>
+<li>
+<p><code dir="ltr">VAM</code> specifies the VAM (Vendor Access Module) as the data source. For more information about the VAM, see <a class="olink GWUAD127" href="../../gg-winux/GWUAD/wu_about_gg.htm#GWUAD127"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p><code dir="ltr">BEGIN</code> <code dir="ltr">NOW</code> starts at the end of the log file. Positioning at a particular LSN is also possible when using BEGIN with the LSN option, such as the following:</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="codeinlineitalic">group</span>, BEGIN LSN 139:0xc68018
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Oracle GoldenGate Extract processes read transaction log records from the database. If Extract is positioned to start at any valid LSN and the database is idle, the transaction records are not pushed to the extract until the next database checkpoint occurs. You can force your Informix database to checkpoint using the <code dir="ltr">onmode -c</code> command.</div>
+<div id="GIINF301" class="example"><p class="titleinexample"><a id="sthref29"></a>Example 6-1 Add Extract group named "finance"</p>
+<pre dir="ltr">
+ADD EXTRACT finance, VAM, BEGIN NOW
+</pre></div>
+<!-- class="example" -->
+<p>This command initializes the position in the Informix logical log to capture the record. When the first DML is processed, the record is contained in the logical log. Each record in the log is associated with a position, which is called LSN (Log Sequence Number). Only when initialization is complete will it be able to honor the positioning based on the LSN. The very first time you add an Extract, you <span class="italic">must</span> ensure that the has initialization completed (the duration depends on number of tables in your Extract parameter file) using the <code dir="ltr">INFO EXTRACT</code> command.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+For detailed syntax information, see <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</div>
+</li>
+</ul>
+</li>
+<li>
+<p>Issue the <code dir="ltr">INFO EXTRACT</code> command.</p>
+</li>
+<li>
+<p>Ensure that the LSN number displayed matches the LSN displayed as the first record processed in the Extract report file. For example, if the LSN number returned by <code dir="ltr">INFO EXTRACT</code> is <code dir="ltr">LSN: 892:0X1235018</code>, then the message in the report file must be <code dir="ltr">Position of first record processed LSN: 892:0X1235018, Apr 16, 2014 2:56:58 AM</code>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<span class="italic">Do not</span> issue a stop or kill command until you have verified the LSN positioning.</div>
+<p>When the initial Extract log positioning is complete, you can issue a stop or kill command <span class="italic">though not before</span>; doing so before results in any capture restart always starting from the EOF position of the database logs.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="A4635446"></a>
+<div id="GIINF302" class="sect1">
+<h2 class="sect1"><span class="secnum">6.3</span> Adding the Local Trail</h2>
+<p>This adds the local trail to which the primary Extract writes captured data. For more information about Oracle GoldenGate and the trail naming conventions, see <a class="olink GWUAD127" href="../../gg-winux/GWUAD/wu_about_gg.htm#GWUAD127"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>In GGSCI on the source system, issue the <code dir="ltr">ADD EXTTRAIL</code> command:</p>
+<pre dir="ltr">
+ADD EXTTRAIL <span class="codeinlineitalic">path</span>, EXTRACT <span class="codeinlineitalic">group</span>
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr">EXTTRAIL</code> specifies that the trail is to be created on the local system.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the trail, including the two-character name.</p>
+</li>
+<li>
+<p><code dir="ltr">EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the primary Extract group.</p>
+</li>
+</ul>
+<div id="GIINF303" class="example"><p class="titleinexample"><a id="sthref30"></a>Example 6-2</p>
+<pre dir="ltr">
+ADD EXTTRAIL /ggs/dirdat/lt, EXTRACT finance
+</pre></div>
+<!-- class="example" -->
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Oracle GoldenGate creates this trail automatically during processing.</div>
+</div>
+<!-- class="sect1" -->
+<a id="A1878900"></a>
+<div id="GIINF304" class="sect1">
+<h2 class="sect1"><span class="secnum">6.4</span> Add the Data Pump Extract Group</h2>
+<p>This adds the data pump that reads the local trail and sends the data to the target.</p>
+<p>In GGSCI on the source system, issue the <code dir="ltr">ADD EXTRACT</code> command.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="codeinlineitalic">group, </span>EXTTRAILSOURCE <span class="codeinlineitalic">trail</span> 
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the Extract group.</p>
+</li>
+<li>
+<p><code dir="ltr">EXTTRAILSOURCE</code> <code dir="ltr"><span class="codeinlineitalic">trail</span></code> is the relative or fully qualified name of the local trail.</p>
+</li>
+</ul>
+<div id="GIINF305" class="example"><p class="titleinexample"><a id="sthref31"></a>Example 6-3</p>
+<pre dir="ltr">
+ADD EXTRACT financep, EXTTRAILSOURCE /ggs/dirdat/lt
+</pre></div>
+<!-- class="example" --></div>
+<!-- class="sect1" -->
+<a id="A1885014"></a>
+<div id="GIINF306" class="sect1">
+<h2 class="sect1"><span class="secnum">6.5</span> Add the Remote Trail</h2>
+<p>These steps add the remote trail. Although it is read by Replicat, this trail must be associated with the data pump, so it must be added on the source system, not the target. For more information about Oracle GoldenGate and the trail naming conventions, see <a class="olink GWUAD127" href="../../gg-winux/GWUAD/wu_about_gg.htm#GWUAD127"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>In GGSCI on the source system, issue the following command:</p>
+<pre dir="ltr">
+ADD RMTTRAIL <span class="codeinlineitalic">path, </span>EXTRACT <span class="codeinlineitalic">group</span>
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr">RMTTRAIL</code> specifies that the trail is to be created on the target system.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the trail, including the two-character name.</p>
+</li>
+<li>
+<p><code dir="ltr">EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the data-pump Extract group.</p>
+</li>
+</ul>
+<div id="GIINF307" class="example"><p class="titleinexample"><a id="sthref32"></a>Example 6-4</p>
+<pre dir="ltr">
+ADD RMTTRAIL /ggs/dirdat/rt, EXTRACT financep
+</pre></div>
+<!-- class="example" -->
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Oracle GoldenGate creates this trail automatically during processing.</div>
+</div>
+<!-- class="sect1" -->
+<a id="A1885318"></a>
+<div id="GIINF308" class="sect1">
+<h2 class="sect1"><span class="secnum">6.6</span> Add the Replicat Group</h2>
+<p>These steps add the Replicat group that reads the remote trail and applies the data changes to the target Informix database.</p>
+<ol>
+<li>
+<p>Run GGSCI on the target system.</p>
+</li>
+<li>
+<p>Issue the <code dir="ltr">ADD REPLICAT</code> command with the following syntax.</p>
+<pre dir="ltr">
+ADD REPLICAT <span class="codeinlineitalic">group</span>, COORDINATED [MAXTHREADS number], EXTTRAIL <span class="codeinlineitalic">path</span>
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the Replicat group.</p>
+</li>
+<li>
+<p><code dir="ltr">COORDINATED [MAXTHREADS</code> <code dir="ltr"><span class="codeinlineitalic">number</span></code><code dir="ltr">]</code> specifies that this group is a coordinated Replicat group. Use this option only if you configured the parameter file as a coordinated Replicat group in <a href="giinf_apply_config.htm#BHCDFAHC">Chapter 5, "Configuring Oracle GoldenGate for Apply."</a></p>
+</li>
+<li>
+<p><code dir="ltr">EXTTRAIL</code> <code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the remote trail, including the two-character name.</p>
+<p>For more information, see <a class="olink GWURF183" href="../../gg-winux/GWURF/ggsci_commands020.htm#GWURF183"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+</ul>
+</li>
+</ol>
+<div id="GIINF309" class="example"><p class="titleinexample"><a id="sthref33"></a>Example 6-5 Add a Replicat group named "financer"</p>
+<pre dir="ltr">
+ADD REPLICAT financer, EXTTRAIL /ggs/dirdat/rt
+</pre></div>
+<!-- class="example" --></div>
+<!-- class="sect1" -->
+<a id="A4634346"></a>
+<div id="GIINF310" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">6.7</span> Next Steps</h2>
+<p>The next step, from a simple standpoint, is to instantiate replication processing by performing an initial synchronization of the data and starting the Oracle GoldenGate processes. However, most business requirements extend well beyond the simple configuration that is provided in this manual. Oracle GoldenGate is very flexible, and you should understand the options available to you before you start the processes. It is strongly recommended that you review <a class="olink GWUAD127" href="../../gg-winux/GWUAD/wu_about_gg.htm#GWUAD127"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> to learn more about the Oracle GoldenGate architecture and the many additional configuration options available to you to expand and customize Oracle GoldenGate to meet your specific requirements.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment29">
+<tr>
+<td class="cellalignment36"><table class="cellalignment40">
+<tr>
+<td class="cellalignment33"><a href="giinf_apply_config.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment33"><a href="giinf_uninstalling.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment38">
+<table class="cellalignment39">
+<tr>
+<td class="cellalignment33"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment33"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment33"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

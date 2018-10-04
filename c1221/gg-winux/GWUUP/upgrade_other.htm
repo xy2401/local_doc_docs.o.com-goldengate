@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Upgrading to Release 12c (12.2.0.1) for Heterogeneous Databases</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1079" />
+<meta name="description" content="These instructions are for upgrading Oracle GoldenGate in the following database environments:" />
+<meta name="dcterms.created" content="2016-03-10T16:23:56Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Upgrading Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E67827-03" />
+<meta name="dcterms.isVersionOf" content="GWUUP" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2016,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="upgrade_ora.htm" title="Previous" type="text/html" />
+<link rel="Next" href="deploy_new.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWUUP.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">6/7</span> <!-- End Header -->
+<div id="GWUUP129" class="chapter"><a id="sthref17"></a>
+<h1 class="chapter"><span class="secnum">3</span> Upgrading to Release 12<span class="italic">c</span> (12.2.0.1) for Heterogeneous Databases</h1>
+<p><a id="GWUUP130"></a>These instructions are for upgrading Oracle GoldenGate in the following database environments:</p>
+<ul>
+<li>
+<p>DB2 LUW</p>
+</li>
+<li>
+<p>Informix</p>
+</li>
+<li>
+<p>MySQL</p>
+</li>
+<li>
+<p>PostgreSQL</p>
+</li>
+<li>
+<p>SQL/MX</p>
+</li>
+<li>
+<p>SQL Server</p>
+</li>
+<li>
+<p>Sybase</p>
+</li>
+<li>
+<p>Teradata</p>
+</li>
+</ul>
+<p>This chapter includes the following sections that must be performed in order to successfully upgrade:</p>
+<ul>
+<li>
+<p><a href="#A1946907">Section 3.1, "Overview of the Upgrade Procedure for Heterogeneous Databases"</a></p>
+</li>
+<li>
+<p><a href="#A19776971">Section 3.2, "Downloading Oracle GoldenGate"</a></p>
+</li>
+<li>
+<p><a href="#A1970648">Section 3.3, "Performing the Upgrade to Oracle GoldenGate 12<span class="italic">c</span> (12.2.0.1) for Heterogeneous Databases"</a></p>
+</li>
+</ul>
+<a id="A1946907"></a>
+<div id="GWUUP131" class="sect1"><!-- infolevel="all" infotype="Concept" -->
+<h2 class="sect1"><span class="secnum">3.1</span> Overview of the Upgrade Procedure for Heterogeneous Databases</h2>
+<p>The upgrade instructions perform a minimal upgrade only to deploy the updated core Oracle GoldenGate functionality, without implementing any of the major new 12<span class="italic">c</span> (12.2.0.1) features at this time, such as coordinated Replicat, updated globalization support, new SQL-92 defaults, and enhanced security features. The best practice is to perform a minimal upgrade first, so that you can trouble shoot more easily in the event that any problems arise. Once you know your environment is upgraded successfully, you can implement the new functionality.</p>
+<p>If you are upgrading multiple Extract processes that operate in a consolidation configuration (many sources to one target), follow these steps fully to upgrade one Extract at a time.</p>
+<p>All Replicat installations should be upgraded at the same time. It is critical to ensure that all trails leading to all Replicat groups on all target systems are processed until empty, according to these instructions.</p>
+<div class="infoboxnotewarn">
+<p class="notep1">Caution:</p>
+<p class="warnsp">The hash calculation used by the <code dir="ltr">@RANGE</code> function to partition data among Replicat processes has been changed. This change is transparent, and no re-partitioning of rows in the parameter files is required, so long as the upgrade is performed as directed in these instructions. To ensure data continuity, make certain to allow all Replicat processes on all systems to finish processing all of the data in their trails before stopping those processes, according to the upgrade instructions. Note that if the Replicat processes are not upgraded all at the same time, or the trails are not cleaned out prior to the upgrade, rows may shift partitions as a result of the new hash method, which may result in collision errors.</p>
+</div>
+</div>
+<!-- class="sect1" -->
+<a id="A19776971"></a>
+<div id="GWUUP147" class="sect1"><!-- infolevel="all" infotype="Task" -->
+<h2 class="sect1"><span class="secnum">3.2</span> Downloading Oracle GoldenGate</h2>
+<p>Download the appropriate Oracle GoldenGate build to each system that will be part of the Oracle GoldenGate configuration.</p>
+<ol>
+<li>
+<p>Using a browser, navigate to <code dir="ltr"><a href="http://support.oracle.com">http://support.oracle.com</a><a href=""></a></code>.</p>
+</li>
+<li>
+<p>Log in with your Oracle ID and password.</p>
+</li>
+<li>
+<p>Select the <span class="gui-object-action">Patches and Upgrades</span> tab.</p>
+</li>
+<li>
+<p>On the Search tab, click <span class="gui-object-action">Product or Family</span>.</p>
+</li>
+<li>
+<p>In the <code dir="ltr">Product</code> field, type <span class="bold">Oracle GoldenGate</span>.</p>
+</li>
+<li>
+<p>From the Release drop-down list, select the release version that you want to download.</p>
+</li>
+<li>
+<p>Make certain that <span class="gui-object-action">Platform</span> is displayed as the default in the next field, and then select the platform from the drop-down list.</p>
+</li>
+<li>
+<p>Leave the last field blank.</p>
+</li>
+<li>
+<p>Click <span class="gui-object-action">Search</span>.</p>
+</li>
+<li>
+<p>In the Patch Advanced Search Results list, select the patch that best meets your search criteria, making certain that the Oracle GoldenGate patch that you select corresponds to the version of the database that will be used.</p>
+<p>When you select the build, a dialog box pops up under the build description, and then you are advanced to the download page.</p>
+</li>
+<li>
+<p>Click the Patch file name link for each patch that you want to download. The File Download dialog box appears.</p>
+</li>
+<li>
+<p>Select either <span class="bold">Open with</span> or <span class="bold">Save File</span>:</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment337" summary="This is a two-column decision table that lists system behavior based on the option you decide to use." dir="ltr">
+<thead>
+<tr class="cellalignment331">
+<th class="cellalignment338" id="r1c1-t3">To...</th>
+<th class="cellalignment338" id="r1c2-t3">Select...</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment331">
+<td class="cellalignment339" id="r2c1-t3" headers="r1c1-t3">Extract the patch immediately</td>
+<td class="cellalignment339" headers="r2c1-t3 r1c2-t3"><span class="bold">Open with</span>, then select the desired file extraction utility and extract the files to a location on your file system.</td>
+</tr>
+<tr class="cellalignment331">
+<td class="cellalignment339" id="r3c1-t3" headers="r1c1-t3">Save the patch for later extraction</td>
+<td class="cellalignment339" headers="r3c1-t3 r1c2-t3">Select <span class="bold">Save file</span>, then save to a directory on your file system.</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></li>
+</ol>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Before installing the software, see <a class="olink GRLWU" href="../GRLWU/toc.htm"><span class="italic">Release Notes for Oracle GoldenGate for Windows and UNIX</span></a> for any new features, parameter changes, upgrade requirements, or bug fixes that affect your current configuration. Review the readme file for known issues.</div>
+</div>
+<!-- class="sect1" -->
+<a id="A1970648"></a>
+<div id="GWUUP133" class="sect1"><!-- infolevel="all" infotype="Task" -->
+<h2 class="sect1"><span class="secnum">3.3</span> Performing the Upgrade to Oracle GoldenGate 12<span class="italic">c</span> (12.2.0.1) for Heterogeneous Databases</h2>
+<p>Even though you may only be upgrading Extract or Replicat, rather than both, all processes are involved in the upgrade. All processes must be stopped in the correct order for the upgrade, regardless of which component you upgrade, and the trails must be processed until empty.</p>
+<div class="infoboxnotewarn">
+<p class="notep1">WARNING:</p>
+<p class="warnsp">(Sybase database) To proceed with these instructions and upgrade to Oracle GoldenGate version 12<span class="italic">c</span> (12.2.0.1) for Sybase, the Sybase page size must be at least 4K.</p>
+</div>
+<ol>
+<li>
+<p>(Source and target systems) Back up the current Oracle GoldenGate installation directory on the source and target systems, and any working directories that you have installed on a shared drive in a cluster (if applicable).</p>
+</li>
+<li>
+<p>(Source and target systems, as applicable) Expand version 12<span class="italic">c</span> (12.2.0.1) of Oracle GoldenGate into a new directory on each system (not the current Oracle GoldenGate directory). Do not create the sub-directories; just complete the steps to the point where the installation files are expanded.</p>
+</li>
+<li>
+<p>(Source system) Stop user activity on objects in the Oracle GoldenGate configuration.</p>
+</li>
+<li>
+<p>(Source system) In GGSCI on the source system, issue the <code dir="ltr">SEND EXTRACT</code> command with the <code dir="ltr">LOGEND</code> option until it shows there is no more data in transaction log to process.</p>
+<p><code dir="ltr">GGSCI&gt; SEND EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code> <code dir="ltr">LOGEND</code></p>
+</li>
+<li>
+<p>(Source system) In GGSCI, stop Extract and data pumps.</p>
+<p><code dir="ltr">GGSCI&gt; STOP EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code></p>
+</li>
+<li>
+<p>(Target systems) In GGSCI on each target system, issue the <code dir="ltr">SEND REPLICAT</code> command with the <code dir="ltr">STATUS</code> option until it shows a status of "<code dir="ltr">At EOF</code>" to indicate that it finished processing all of the data in the trail. This must be done on all target systems until all Replicat processes return "<code dir="ltr">At EOF</code>."</p>
+<p><code dir="ltr">GGSCI&gt; SEND REPLICAT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code> <code dir="ltr">STATUS</code></p>
+</li>
+<li>
+<p>(Target systems) In GGSCI, stop all Replicat processes.</p>
+<p><code dir="ltr">GGSCI&gt; STOP REPLICAT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code></p>
+</li>
+<li>
+<p>(Source and target systems) In GGSCI, stop Manager on the source and target systems.</p>
+<p><code dir="ltr">GGSCI&gt; STOP MANAGER</code></p>
+</li>
+<li>
+<p>If you want to upgrade the source or target database, or both, do so at this time according to the upgrade instructions provided by the database vendor. Make certain to start the databases after the upgrade, but do not permit transactions on the objects in the Oracle GoldenGate configuration.</p>
+</li>
+<li>
+<p>(Source and target systems) Move the expanded Oracle GoldenGate files from the new directory to your existing Oracle GoldenGate directory on the source and target systems.</p>
+</li>
+<li>
+<p>(DB2 for IBM i) Run <code dir="ltr">ggos400install</code> without arguments. For an upgrade, no arguments are necessary; however, if you change the library, the old library is left on the system until you remove it. For more information about <code dir="ltr">ggos400install</code>, see <a class="olink GIDBI139" href="../GIDBI/installing.htm#GIDBI139"><span class="italic">Installing and Configuring Oracle GoldenGate for DB2 for i</span></a>.</p>
+</li>
+<li>
+<p>(Target systems, if upgrading Replicat from version 11.2.1.0.0 or earlier only) In GGSCI on each target system, issue the following commands to upgrade the Replicat checkpoint tables on those systems. This step updates the table definition.</p>
+<pre dir="ltr">
+GGSCI&gt; DBLOGIN {[SOURCEDB <span class="codeinlineitalic">data_source</span>] |[, <span class="codeinlineitalic">database@host:port</span>] |USERID {/ | <span class="codeinlineitalic">userid</span>}[, PASSWORD <span class="codeinlineitalic">password</span>]   [<span class="codeinlineitalic">algorithm</span> ENCRYPTKEY {<span class="codeinlineitalic">keyname</span> | DEFAULT}] |USERIDALIAS <span class="codeinlineitalic">alias</span> [DOMAIN <span class="codeinlineitalic">domain</span>] |[SYSDBA | SQLID sqlid][SESSIONCHARSET character_set]}
+</pre>
+<p><code dir="ltr">GGSCI&gt; UPGRADE CHECKPOINTTABLE [</code><code dir="ltr"><span class="codeinlineitalic">owner</span></code>.<code dir="ltr"><span class="codeinlineitalic">table</span></code><code dir="ltr">]</code></p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<code dir="ltr"><span class="codeinlineitalic">owner</span></code>.<code dir="ltr"><span class="codeinlineitalic">table</span></code> can be omitted if the checkpoint table was created with the name listed with <code dir="ltr">CHECKPOINTTABLE</code> in the <code dir="ltr">GLOBALS</code> file.</div>
+</li>
+<li>
+<p>(Source and target systems) Updates to the trail version, the checkpoint storage format, and integrated capture require that you perform the following steps:</p>
+<ol>
+<li>
+<p>In GGSCI, alter the primary Extract process and the associated data-pump Extract processes to write to a new trail sequence number. The command should return "<code dir="ltr">Rollover performed</code>."</p>
+<p><code dir="ltr">GGSCI&gt; ALTER EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code> <code dir="ltr">ETROLLOVER</code></p>
+</li>
+<li>
+<p>In GGSCI, issue the <code dir="ltr">INFO EXTRACT</code> command with <code dir="ltr">DETAIL</code> for the primary Extract and the data pumps to verify the trail sequence number.</p>
+<p><code dir="ltr">GGSCI&gt; INFO EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code><code dir="ltr">, DETAIL</code></p>
+</li>
+<li>
+<p>In GGSCI, reposition the data pumps and the Replicat processes to start at the new trail sequence number.</p>
+<p><code dir="ltr">GGSCI&gt; ALTER EXTRACT</code> <code dir="ltr"><span class="codeinlineitalic">pump</span></code>, <code dir="ltr">EXTSEQNO</code> <code dir="ltr"><span class="codeinlineitalic">seqno</span></code>, <code dir="ltr">EXTRBA</code> <code dir="ltr"><span class="codeinlineitalic">RBA</span></code></p>
+<p><code dir="ltr">GGSCI&gt; ALTER REPLICAT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code>, <code dir="ltr">EXTSEQNO</code> <code dir="ltr"><span class="codeinlineitalic">seqno</span></code>, <code dir="ltr">EXTRBA</code> <code dir="ltr"><span class="codeinlineitalic">RBA</span></code></p>
+</li>
+</ol>
+</li>
+<li>
+<p>(SQL/MX, only if upgrading from Oracle GoldenGate version 10.4.x) From the Oracle GoldenGate installation directory on the source system, run the convchk program for the primary SQL/MX Extract to convert the checkpoints to the new format.</p>
+<pre dir="ltr">
+./convchk <span class="codeinlineitalic">group</span>
+</pre>
+<p>If the checkpoints are not converted, the primary SQL/MX Extract process abends at startup and ignores all data in the transaction log.</p>
+</li>
+<li>
+<p>(Source system if not upgrading Extract) Add the <code dir="ltr">SOURCECHARSET</code> parameter to the Replicat parameter file. Specify the character set of the source database with this parameter. For more information, see <a class="olink GWURF1123" href="../GWURF/sourcecharset.htm#GWURF1123"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>(Source system if not upgrading Replicat) If you are not upgrading Replicat on the target systems at this time, add the following parameter to the Extract parameter file to specify the version of Oracle GoldenGate that is running on the target. This parameter causes Extract to write a version of the trail that is compatible with the older version of Replicat.</p>
+<pre dir="ltr">
+{EXTTRAIL | RMTTRAIL} <span class="codeinlineitalic">file_name</span> FORMAT RELEASE <span class="codeinlineitalic">major.minor</span>
+</pre>
+<p>where: <code dir="ltr"><span class="codeinlineitalic">version</span></code> specifies an Oracle GoldenGate release version. <code dir="ltr"><span class="codeinlineitalic">major</span></code> is the major version number, and <code dir="ltr"><span class="codeinlineitalic">minor</span></code> is the minor version number, such as 11.2. Make certain to include the dot.</p>
+</li>
+<li>
+<p>(Oracle GoldenGate upgrades on DB2 z/OS) You might need to re-set the "a" attribute for the Extract process and its DLLs to APF-authorize them to use the privileged API. For more information, see the installation instructions in <span class="italic">Installing and Configuring Oracle GoldenGate for DB2 z/OS</span>.</p>
+</li>
+<li>
+<p>If you made copies of the parameter files to make parameter changes, move the new parameter files into the Oracle GoldenGate directory where the old parameter files were stored, and give them the same names as the old parameter files. If using case-sensitivity support, make certain that you either added <code dir="ltr">NOUSEANSISQLQUOTES</code> to your parameter files, or that you ran the <code dir="ltr">convprm</code> utility to convert the quotes as required. See <a href="upgrade.htm#CACIJHCC">"Upgrade Considerations if Using Character-Set Conversion"</a> for more information.</p>
+</li>
+<li>
+<p>In GGSCI, start the Oracle GoldenGate processes on the source and target systems in the following order.</p>
+<pre dir="ltr">
+GGSCI&gt; START MANAGER
+GGSCI&gt; START EXTRACT <span class="codeinlineitalic">group</span>
+GGSCI&gt; START EXTRACT <span class="codeinlineitalic">pump</span>
+GGSCI&gt; START REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>If you need to restore any log files, Extract will abend with an error that indicates the log to restore. Restore the logs back to, and including that log, and then restart Extract.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment330">
+<tr>
+<td class="cellalignment339">
+<table class="cellalignment335">
+<tr>
+<td class="cellalignment334"><a href="upgrade_ora.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment334"><a href="deploy_new.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2016,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment341">
+<table class="cellalignment333">
+<tr>
+<td class="cellalignment334"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment334"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

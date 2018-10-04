@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>SEND REPLICAT</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="register-replicat.htm" title="Previous" type="text/html" />
+<link rel="Next" href="start-replicat.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F"></a> <span id="PAGE" style="display:none;">37/459</span> <!-- End Header -->
+<a id="GWURF208"></a><a id="GWURF209"></a><a id="GWURF210"></a><a id="GWURF211"></a><a id="GWURF1088"></a><a id="GWURF1089"></a><a id="GWURF1090"></a><a id="GWURF1091"></a><a id="GWURF207"></a>
+<h1 id="GWURF-GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F" class="sect1"><span class="enumeration_section">1.29</span> SEND REPLICAT</h1>
+<div>
+<div class="section">
+<p>Use <code class="codeph">SEND REPLICAT</code> to communicate with a starting or running Replicat process. The request is processed as soon as Replicat is ready to accept commands from users.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+SEND REPLICAT <span class="italic">group_name</span>[<span class="italic">threadID</span>],
+{
+CACHEMGR {CACHESTATS | CACHEQUEUES | CACHEPOOL <span class="italic">n</span>} |
+FORCESTOP |
+GETLAG |
+GETPARAMINFO [<span class="italic">parameter_name</span>] [FILE <span class="italic">output_file</span>] |
+HANDLECOLLISIONS | NOHANDLECOLLISIONS [<span class="italic">table_spec</span>] |
+INTEGRATEDPARAMS(<span class="italic">parameter_specification</span>) |
+REPORT [HANDLECOLLISIONS [<span class="italic">table_spec</span>]] |
+RESUME |
+STATUS |
+STOP |
+TRACE[2] [DDLINCLUDE | DDL[ONLY]] <span class="italic">file_name</span> |
+TRACE[2] OFF |
+TRACE OFF <span class="italic">file_name</span> |
+TRACEINIT |
+THREADS (<span class="italic">threadID</span>[, <span class="italic">threadID</span>][, ...][, <span class="italic">thread_range</span>[, <span class="italic">thread_range</span>][, ...])
+}
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-09AE2FD0-9BC8-44F8-8BD3-210A78DCB054"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span><code class="codeph">[</code><span class="italic"><code class="codeph">threadID</code></span><code class="codeph">]</code></dt>
+<dd>
+<p>The name of the Replicat group or the name of a specific thread of a coordinated Replicat, for example <code class="codeph">fin003</code>. If the command is issued for a specific thread, then an option that is used applies only to that thread. As an alternative, you can issue <code class="codeph">SEND REPLICAT</code> with the <code class="codeph">THREADS</code> option instead of including <span class="italic"><code class="codeph">threadID</code></span> with the group name. If Replicat is not running, an error is returned.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-F83724F2-9A36-443C-92D6-2F9338B819D6"><!-- --></a><code class="codeph">CACHEMGR {CACHESTATS | CACHEQUEUES | CACHEPOOL</code> <span class="italic"><code class="codeph">n</code></span><code class="codeph">}</code></dt>
+<dd>
+<p>Returns statistics about the Oracle GoldenGate memory cache manager. <code class="codeph">CACHEMGR</code> should only be used as explicitly directed by Oracle Support.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-794C0C76-D16B-4517-BE44-D60DA9D3A1DA"><!-- --></a><code class="codeph">CACHESTATS</code></dt>
+<dd>
+<p>Returns statistics for virtual memory usage and file caching.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-123BECAE-E72D-4439-90BF-C5EF7B065BF4"><!-- --></a><code class="codeph">CACHEQUEUES</code></dt>
+<dd>
+<p>Returns statistics for the free queues only.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-6DFE322D-CFF0-4A40-A1B7-6B6E605BD536"><!-- --></a><code class="codeph">CACHEPOOL</code> <span class="italic"><code class="codeph">n</code></span></dt>
+<dd>
+<p>Returns statistics for the specified object pool only.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-A4942250-609D-48B6-90EC-B181876157AD"><!-- --></a><code class="codeph">FORCESTOP</code></dt>
+<dd>
+<p>Forces Replicat to stop, bypassing any notifications. This command will roll back any active transaction and stop the process immediately. This command applies to Replicat as a whole and cannot be used for a specific Replicat thread.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-21A2CE4C-4160-4FE9-939C-6A6F4A472D26"><!-- --></a><code class="codeph">GETLAG</code></dt>
+<dd>
+<p>Shows a true lag time between Replicat and the trail. Lag time is the difference, in seconds, between the time that the last record was processed by Replicat and the timestamp of the record in the trail. The results are the same as <code class="codeph">LAG REPLICAT</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-87BDCD1C-9D0F-471C-9600-0F2DA38F960F"><!-- --></a>GETPARAMINFO [<span class="italic"><code class="codeph">parameter_name</code></span>] [FILE <span class="italic"><code class="codeph">output_file</code></span>]</dt>
+<dd>
+<p>Use <code class="codeph">GETPARAMINFO</code> to query runtime parameter values of a running instance, including Extract, Replicat, and Manager. You can query for a single parameter or all parameters and send the output to the console or a text file</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-D5488F62-350E-4164-B639-DEFDA35CE36B"><!-- --></a><span class="italic"><code class="codeph">parameter_name</code></span></dt>
+<dd>
+<p>The default behavior is to display all parameters in use, meaning those parameters that have ever been queried by the application, parameters, and their current values. If you specify a particular parameter, then the output is filtered by that name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-F108F945-5AB7-46B2-A3AB-F87A86391EF3"><!-- --></a><code class="codeph">FILE</code> <span class="italic"><code class="codeph">output_file</code></span></dt>
+<dd>
+<p>The name of the text file that your output is redirected to.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-94C9CC24-BCA5-4CCF-BF4F-5384D23BA4AF"><!-- --></a><code class="codeph">HANDLECOLLISIONS | NOHANDLECOLLISIONS [</code><span class="italic"><code class="codeph">table_spec]</code></span></dt>
+<dd>
+<p>Control <code class="codeph">HANDLECOLLISIONS</code> behavior. Instead of using this option, you can specify the <code class="codeph">HANDLECOLLISIONS</code> or <code class="codeph">NOHANDLECOLLISIONS</code> parameter in the Replicat parameter file. See <span class="q">"<a href="handlecollisions-nohandlecollisions.htm#GUID-D5A23DE0-9B9F-4497-AF74-30439D55B807">HANDLECOLLISIONS | NOHANDLECOLLISIONS</a>"</span> for more information about <code class="codeph">HANDLECOLLISIONS</code>. This command can be sent directly to an individual thread by means of <code class="codeph">SEND REPLICAT</code> <span class="italic"><code class="codeph">group_name[threadID]</code></span> or you can use the <code class="codeph">THREADS</code> option to send the command through the coordinator thread to affect multiple threads.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-9FF143DA-4B93-483F-947E-7AE06337BF41"><!-- --></a><code class="codeph">HANDLECOLLISIONS</code></dt>
+<dd>
+<p>Use <code class="codeph">HANDLECOLLISIONS</code> to enable automatic error handling when performing initial data loads while the source database is active. Make certain to disable <code class="codeph">HANDLECOLLISIONS</code>, either by issuing <code class="codeph">SEND REPLICAT</code> with the <code class="codeph">NOHANDLECOLLISIONS</code> option or by removing the parameter from the parameter file, after the initial load is complete and online data changes have been applied to the target tables.</p>
+<div class="infobox-note" id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-8AB865DF-3B6C-4DAC-8F12-DEA3AAC75639">
+<p class="notep1">Note:</p>
+<p>The message returned by <code class="codeph">SEND REPLICAT</code> with <code class="codeph">HANDLECOLLISIONS</code>, when issued for a specific Replicat thread, shows that the command set <code class="codeph">HANDLECOLLISIONS</code> for all <code class="codeph">MAP</code> statements, not only the one handled by the specified thread. This is a known issue. The command actually affects only the <code class="codeph">MAP</code> statement that includes the specified thread.</p>
+</div>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-3C73A24D-902C-4645-A360-5D8C27A40ED6"><!-- --></a><code class="codeph">NOHANDLECOLLISIONS</code></dt>
+<dd>
+<p>Turns off the <code class="codeph">HANDLECOLLISIONS</code> parameter but does not remove it from the parameter file. To avoid enabling <code class="codeph">HANDLECOLLISIONS</code> the next time Replicat starts, remove it from the parameter file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-1F93D634-37E2-4613-BEDC-D9F7C63AC587"><!-- --></a><span class="italic"><code class="codeph">table_spec</code></span></dt>
+<dd>
+<p><span class="italic"><code class="codeph">table_spec</code></span> restricts <code class="codeph">HANDLECOLLISIONS</code> or <code class="codeph">NOHANDLECOLLISIONS</code>to a specific target table or a group of target tables specified with a standard wildcard (*).</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-0A4D9DC2-512E-427C-95B0-7B0F18C13169"><!-- --></a><code class="codeph">INTEGRATEDPARAMS(</code><span class="italic"><code class="codeph">parameter_specification</code></span><code class="codeph">)</code></dt>
+<dd>
+<p>(Oracle) Supports an integrated Replicat. Sends a parameter specification to the database inbound server while Replicat is running in integrated mode. Only one parameter specification can be sent at a time with this command. To send multiple parameter changes, issue multiple <code class="codeph">SEND REPLICAT</code> commands as in the following example.</p>
+<pre dir="ltr">
+SEND REPLICAT myrep INTEGRATEDPARAMS ( parallelism 4 )SEND REPLICAT myrep INTEGRATEDPARAMS ( max_sga_size 250) 
+</pre>
+<p>To preserve the continuity of processing, the parameter change is made at a transaction boundary. For a list of supported inbound server parameters, see <a class="olink GIORA233" target="_blank" href="../GIORA/optional-parameters-integrated-modes.htm#GIORA233"><span class="italic"><span id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GIORA"><cite>Installing and Configuring Oracle GoldenGate for Oracle Database</cite></span></span></a>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-BD38B7E7-3332-488C-B5D7-D83088ADF15B"><!-- --></a><code class="codeph">REPORT [HANDLECOLLISIONS [</code><span class="italic"><code class="codeph">table_spec]]</code></span></dt>
+<dd>
+<p>Generates an interim statistical report to the Extract report file. The statistics that are displayed depend upon the configuration of the <code class="codeph">STATOPTIONS</code> parameter when used with the <code class="codeph">RESETREPORTSTATS</code> | <code class="codeph">NORESETREPORTSTATS</code> option. See <span class="q">"<a href="statoptions.htm#GUID-4F96F04E-C66D-4B49-922D-C0E0316BA0E4">STATOPTIONS</a>"</span>.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-856E2BDF-BE0A-47D3-9175-6A3C048FE9BB"><!-- --></a><code class="codeph">HANDLECOLLISIONS</code></dt>
+<dd>
+<p>Shows tables for which <code class="codeph">HANDLECOLLISIONS</code> has been enabled.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-BEE6C31E-F5B7-4BE2-A8F1-0429C0A7CB20"><!-- --></a><span class="italic"><code class="codeph">table spec</code></span></dt>
+<dd>
+<p>Restricts the output to a specific target table or a group of target tables specified with a standard wildcard (*).</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-B106635C-24D1-4763-997E-9B2A3940D816"><!-- --></a><code class="codeph">RESUME</code></dt>
+<dd>
+<p>Resumes (makes active) a process that was suspended by an <code class="codeph">EVENTACTIONS SUSPEND</code> event. The process resumes normal processing from the point at which it was suspended.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-1E179B58-CE53-4192-A7FC-50D899B09499"><!-- --></a><code class="codeph">STATUS</code></dt>
+<dd>
+<p>Returns the current location within the trail and information regarding the current transaction. Fields output are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Processing status (per thread, if Replicat is coordinated)</p>
+</li>
+<li>
+<p>Position in the trail file (per thread, if Replicat is coordinated)</p>
+</li>
+<li>
+<p>Trail sequence number (per thread, if Replicat is coordinated)</p>
+</li>
+<li>
+<p>RBA in trail</p>
+</li>
+<li>
+<p>Trail name</p>
+</li>
+</ul>
+<p>Possible processing status messages are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">Delaying</code> &ndash; waiting for more data</p>
+</li>
+<li>
+<p><code class="codeph">Suspended</code> &ndash; waiting to be resumed</p>
+</li>
+<li>
+<p><code class="codeph">Waiting on deferred apply</code> &ndash; delaying processing based on the <code class="codeph">DEFERAPPLYINTERVAL</code> parameter.</p>
+</li>
+<li>
+<p><code class="codeph">Processing data</code> &ndash; processing data</p>
+</li>
+<li>
+<p><code class="codeph">Skipping current transaction</code> &ndash; <code class="codeph">START REPLICAT</code> with <code class="codeph">SKIPTRANSACTION</code> was used.</p>
+</li>
+<li>
+<p><code class="codeph">Searching for START ATCSN</code> <span class="italic"><code class="codeph">csn</code></span> &ndash; <code class="codeph">START REPLICAT</code> with <code class="codeph">ATCSN</code> was used.</p>
+</li>
+<li>
+<p><code class="codeph">Searching for START AFTERCSN</code> <span class="italic"><code class="codeph">csn</code></span> &ndash; <code class="codeph">START REPLICAT</code> with <code class="codeph">AFTERCSN</code> was used.</p>
+</li>
+<li>
+<p><code class="codeph">Performing transaction timeout recovery</code> &ndash; Aborting current incomplete transaction and repositioning to start new one (see the <a href="transactiontimeout.htm#GUID-D8C397E3-C0DC-4B5F-B304-9373D73185F9">TRANSACTIONTIMEOUT</a> parameter).</p>
+</li>
+<li>
+<p><code class="codeph">Waiting for data at logical EOF after transaction timeout recovery</code> &ndash; Waiting to receive remainder of incomplete source transaction after a <code class="codeph">TRANSACTIONTIMEOUT</code> termination.</p>
+</li>
+<li>
+<p><code class="codeph">At EOF (end of file)</code> &ndash; no more records to process</p>
+</li>
+</ul>
+<p>Possible thread status messages when <code class="codeph">THREADS</code> is used or the command is issued for a specific thread are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">Waiting for consensus stop point</code>: This indicates that the threads are attempting to synchronize for a barrier transaction.</p>
+</li>
+<li>
+<p><code class="codeph">Waiting for Watermark</code>: Indicates that all threads are attempting to stop at the same transaction boundary in the trail, known as the global watermark.</p>
+</li>
+<li>
+<p><code class="codeph">Waiting on all threads to start up</code>: Indicates that the thread is waiting for all of the threads to start after a successful barrier transaction or a Replicat startup.</p>
+</li>
+</ul>
+<p>Possible coordinator thread status messages are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">Waiting for all threads to register</code>: Indicates that the <code class="codeph">MAP</code> statements are all being parsed to determine the thread IDs that are specified in them.</p>
+</li>
+<li>
+<p><code class="codeph">Processing data</code>: Indicates that data is being processed normally.</p>
+</li>
+<li>
+<p><code class="codeph">Suspended, waiting to be resumed</code>: Indicates that a <code class="codeph">SEND REPLICAT</code> command with a <code class="codeph">SUSPEND</code> request was sent to Replicat.</p>
+</li>
+<li>
+<p><code class="codeph">At EOF</code>: Indicates that there is no more data in the trail to process.</p>
+</li>
+<li>
+<p><code class="codeph">Waiting to register MAP statistics</code>: Indicates that Replicat is collecting processing statistics to send to the report file.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-2B199FF6-F67F-4CE6-86F0-DFDEB073BA69"><!-- --></a><code class="codeph">STOP</code></dt>
+<dd>
+<p>Stops Replicat gracefully. This command applies to Replicat as a whole and cannot be used for a specific Replicat thread.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-B8BF6868-5D77-4395-8389-3B11EF84FC84"><!-- --></a><code class="codeph">THREADS (</code><span class="italic"><code class="codeph">threadID</code></span><code class="codeph">[,</code> <span class="italic"><code class="codeph">threadID</code></span><code class="codeph">][, ...][,</code> <span class="italic"><code class="codeph">thread_range</code></span><code class="codeph">[,</code> <span class="italic"><code class="codeph">thread_range</code></span><code class="codeph">][, ...]</code><code class="codeph">)</code></dt>
+<dd>
+<p>Issues the command only for the specified thread or threads of a coordinated Replicat. You can use this option or you can use <span class="italic"><code class="codeph">groupname</code></span> with <span class="italic"><code class="codeph">threadID</code></span>. Without either of those options, the command applies to all active threads.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-614EF9F5-F007-40DB-AFFD-2402B72F4DF0"><!-- --></a><span class="italic"><code class="codeph">threadID</code></span><code class="codeph">[,</code> <span class="italic"><code class="codeph">threadID</code></span><code class="codeph">][, ...]</code></dt>
+<dd>
+<p>Specifies a thread ID or a comma-delimited list of threads in the format of <code class="codeph">threadID, threadID, threadID</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-7E549911-C5A9-4DB9-BCCE-4DAA5B824A90"><!-- --></a><span class="italic"><code class="codeph">thread_range</code></span><code class="codeph">[,</code> <span class="italic"><code class="codeph">thread_range</code></span><code class="codeph">][, ...]</code></dt>
+<dd>
+<p>Specifies a range of threads in the form of <code class="codeph">threadIDlow-threadIDhigh</code> or a comma-delimted list of ranges in the format of <code class="codeph">threadIDlow-threadIDhigh</code>, <code class="codeph">threadIDlow-threadIDhigh</code>.</p>
+</dd>
+</dl>
+<p>A combination of these formats is permitted, such as threadID, threadID, <code class="codeph">threadIDlow-threadIDhigh</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-2A256D55-B1E5-4E21-8A70-96485B34F6B3"><!-- --></a><code class="codeph">TRACE[2] [DDLINCLUDE | DDL[ONLY]]</code> <span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p>Turns tracing on and off. Tracing captures information to the specified file to reveal processing bottlenecks. Tracing also can be enabled by means of the Replicat parameters <code class="codeph">TRACE</code> and <code class="codeph">TRACE2</code>.</p>
+<p>If the Replicat is in coordinated mode and <code class="codeph">TRACE</code> is used with a <code class="codeph">THREADS</code> list or range, a trace file is created for each currently active thread. Each file name is appended with its associated thread ID. This method of identifying trace files by thread ID does not apply when <code class="codeph">SEND REPLICAT</code> is issued by <code class="codeph">groupname</code> with <code class="codeph">threadID</code> (as in <code class="codeph">SEND REPLICAT fin003</code> <code class="codeph">TRACE</code>...) or when only one thread is specified with <code class="codeph">THREADS</code>.</p>
+<p>Contact Oracle Support for assistance if the trace reveals significant processing bottlenecks.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-65BD690B-13AE-4861-8834-2FBD5937024A"><!-- --></a><code class="codeph">TRACE</code></dt>
+<dd>
+<p>Captures step-by-step processing information.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-51F7E1B5-0224-4CD2-BF9F-B77087B0EC79"><!-- --></a><code class="codeph">TRACE2</code></dt>
+<dd>
+<p>Identifies code segments rather than specific steps.</p>
+</dd>
+</dl>
+<dl>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-2D076F2F-CEA3-469A-B32A-56246909C08C"><!-- --></a><code class="codeph">DDLINCLUDE | DDLONLY</code></dt>
+<dd>
+<p>(Replicat only) Enables DDL tracing and specifies how DDL tracing is included in the trace report.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">DDLINCLUDE</code> includes DDL tracing in addition to regular tracing of transactional data processing.</p>
+</li>
+<li>
+<p><code class="codeph">DDL[ONLY]</code> excludes the tracing of transactional data processing and only traces DDL. This option can be abbreviated to <code class="codeph">DDL</code>.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-AD6B1B0C-9872-47B9-9BFF-16BBD0F896F2"><!-- --></a><span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p><span class="italic"><code class="codeph">file_name</code></span> specifies the relative or fully qualified name of a file to which Oracle GoldenGate logs the trace information. If a trace is already in progress, the existing trace file is closed and the trace resumes to the file specified with <span class="italic"><code class="codeph">file_name</code></span>. For example:</p>
+<pre dir="ltr">
+SEND REPLICAT <span class="italic">group_name</span> TRACE <span class="italic">file_name</span> DDLINCLUDE
+</pre>
+<p>If no other options will follow the file name, the <code class="codeph">FILE</code> keyword can be omitted, for example:</p>
+<pre dir="ltr">
+SEND REPLICAT <span class="italic">group_name</span> TRACE DDLINCLUDE <span class="italic">file_name</span>
+</pre></dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-0B0118D4-41E1-4297-92BF-F80BF86936CF"><!-- --></a><code class="codeph">TRACE[2] OFF</code></dt>
+<dd>
+<p>Turns off tracing.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-908788A3-DF31-4CEF-9636-A3DFC8BB96AB"><!-- --></a><code class="codeph">TRACE OFF</code> <span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p>Turns tracing off only for the specified trace file. This option supports the <code class="codeph">EVENTACTIONS</code> feature, where there can be multiple trace files due to multiple <code class="codeph">EVENTACTIONS</code> statements.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-C1DEBBE7-A1CB-4346-AFC3-48EC71CC9954"><!-- --></a><code class="codeph">TRACEINIT</code></dt>
+<dd>
+<p>Resets tracing statistics back to 0 and then starts accumulating statistics again. Use this option to track the current behavior of processing, as opposed to historical.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-E5026DD1-F750-424A-912E-EC13570D5559"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+SEND REPLICAT finance, HANDLECOLLISIONS
+</pre></dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-A5D05884-5CCB-4A3A-A770-EC40E21B6797"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+SEND REPLICAT finance, REPORT HANDLECOLLISIONS fin_*
+</pre></dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-06CA793F-C5C9-4E05-9786-BC4EC30CE605"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+SEND REPLICAT finance, GETLAG
+</pre></dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-4EE30EDF-0EEB-40FB-82DF-9728B551CF16"><!-- --></a>Example 4&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+SEND REPLICAT finance, INTEGRATEDPARAMS(parallelism 10)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-E7A8BECE-C3BE-47F0-84CE-3C4D02947F3C"><!-- --></a>Example 5&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following gets lag for thread 3 of a coordinated Replicat.</p>
+<pre dir="ltr">
+SEND REPLICAT fin003, GETLAG
+</pre></dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-4D229631-1B35-46FD-B118-6AB955CC37A5"><!-- --></a>Example 6&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following enables tracing for only thread 1 of a coordinated Replicat. In this case, because only one thread is being traced, the trace file will not have a <span class="italic"><code class="codeph">threadID</code></span> extension. The file name is <code class="codeph">trace.trc</code>.</p>
+<pre dir="ltr">
+SEND REPLICAT fin, TRACE THREADS(1) FILE ./dirrpt/trace.trc
+</pre></dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-EF157D5B-87A7-4767-A3DF-14E64DE382AC"><!-- --></a>Example 7&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following enables tracing for threads 1,2, and 3 of a coordinated Replicat. Assuming all threads are active, the tracing produces files <code class="codeph">trace001</code>, <code class="codeph">trace002</code>, and <code class="codeph">trace003</code>.</p>
+<pre dir="ltr">
+SEND REPLICAT fin TRACE THREADS(1-3) FILE ./dirrpt/trace.trc
+</pre></dd>
+<dt class="dlterm"><a id="GUID-DBA8F45C-6016-4AB4-BF9A-00C117029E7F__GUID-B3E12E14-E7BE-43EB-9C2E-F211899FEBE7"><!-- --></a>Example 8&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following enables tracing only for thread 1 of a coordinated Replicat. Because the command was issued directly for thread 1 without the use of a <code class="codeph">THREAD</code> clause, the trace file is named <code class="codeph">trace</code> (without a thread ID suffix).</p>
+<pre dir="ltr">
+SEND REPLICAT fin001 TRACE FILE ./dirrpt/trace.trc
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="register-replicat.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="start-replicat.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

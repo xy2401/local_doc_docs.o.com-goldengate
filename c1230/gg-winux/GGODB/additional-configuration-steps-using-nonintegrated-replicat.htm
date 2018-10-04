@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Additional Configuration Steps For Using Nonintegrated Replicat</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter contains instructions that are specific only to Replicat when operating in nonintegrated mode. When Replicat operates in nonintegrated mode, triggers, cascade constraints, and unique identifiers must be properly configured in an Oracle GoldenGate environment." />
+<meta name="dcterms.created" content="2018-07-26T05:17:29Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E88785-05" />
+<meta name="dcterms.isVersionOf" content="GGODB" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2010, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="additional-configuration-steps-using-classic-capture.htm" title="Previous" type="text/html" />
+<link rel="Next" href="configuring-ddl-support.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGODB.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-6A2C3836-57D1-4C82-9037-319AB23C2953"></a> <span id="PAGE" style="display:none;">14/28</span> <!-- End Header -->
+<h1 id="GGODB-GUID-6A2C3836-57D1-4C82-9037-319AB23C2953" class="sect1"><span class="enumeration_chapter">11</span> Additional Configuration Steps For Using Nonintegrated Replicat</h1>
+<div>
+<div><span>This chapter contains instructions that are specific only to Replicat when operating in <span class="italic">nonintegrated</span> mode. When Replicat operates in nonintegrated mode, triggers, cascade constraints, and unique identifiers must be properly configured in an Oracle GoldenGate environment.</span></div>
+<p>This chapter is a supplement to the basic configuration requirements that are documented in <a class="olink GIORA-GUID-BC8E65B4-25D5-4637-BF6D-DCA51D6A1837" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GIORA-GUID-BC8E65B4-25D5-4637-BF6D-DCA51D6A1837">Configuring Oracle GoldenGate Apply</a>.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="additional-configuration-steps-using-nonintegrated-replicat.htm#GUID-B881299C-7D3E-4E94-B6C1-25760B01FB7D">Disabling Triggers and Referential Cascade Constraints on Target Tables</a><br /></li>
+<li class="ulchildlink"><a href="additional-configuration-steps-using-nonintegrated-replicat.htm#GUID-C3FC512E-BA4E-4DF2-A4F1-77AD53EF2203">Deferring Constraint Checking on Target Tables</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-B881299C-7D3E-4E94-B6C1-25760B01FB7D"></a>
+<h2 id="GGODB-GUID-B881299C-7D3E-4E94-B6C1-25760B01FB7D" class="sect2"><span class="enumeration_section">11.1</span> Disabling Triggers and Referential Cascade Constraints on Target Tables</h2>
+<div>
+<div class="section">
+<p>Triggers and cascade constraints must be disabled on Oracle target tables when Replicat is in nonintegrated mode. Oracle GoldenGate provides some options to handle triggers or cascade constraints automatically, depending on the Oracle version:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For Oracle 11.2.0.2 and later 11gR2 versions, Replicat automatically disables the work performed by triggers during its session. It does not disable a trigger, but instead prevents the trigger body from executing. The <code class="codeph">WHEN</code> portion of the trigger must still compile and execute correctly to avoid database errors. To enable triggers to fire, or to disable them manually, use the <code class="codeph">NOSUPPRESSTRIGGERS</code> option of <code class="codeph">DBOPTIONS</code> and place the statement after the <code class="codeph">USERIDALIAS</code> parameter. To allow a specific trigger to fire, you can use the following database procedure, where <span class="italic"><code class="codeph">trigger_owner</code></span> is the owner of the trigger and <span class="italic"><code class="codeph">trigger_name</code></span> is the name of the trigger. Once the procedure is called with <code class="codeph">FALSE</code> for a particular trigger, it remains set until the procedure is called with <code class="codeph">TRUE</code>.</p>
+</li>
+<li>
+<pre dir="ltr">
+dbms_ddl.set_trigger_firing_property(<span class="italic">trigger_owner</span> "<span class="italic">trigger_name</span>", FALSE)
+</pre></li>
+<li>
+<p>For Oracle 11.2.0.2 and later 11gR2 versions, you can use the <code class="codeph">DBOPTIONS</code> parameter with the <code class="codeph">DEFERREFCONST</code> option to delay the checking and enforcement of cascade update and cascade delete constraints until the Replicat transaction commits.</p>
+</li>
+<li>
+<p>For other Oracle versions, you must disable triggers and integrity constraints or alter them manually to ignore the Replicat database user.</p>
+</li>
+</ul>
+<p>Constraints must be disabled in nonintegrated Replicat mode because Oracle GoldenGate replicates DML that results from the firing of a trigger or a cascade constraint. If the same trigger or constraint gets activated on the target table, it becomes redundant because of the replicated version, and the database returns an error. Consider the following example, where the source tables are <code class="codeph">emp_src</code> and <code class="codeph">salary_src</code> and the target tables are <code class="codeph">emp_targ</code> and <code class="codeph">salary_targ</code>.</p>
+<ol>
+<li>
+<p>A delete is issued for <code class="codeph">emp_src</code>.</p>
+</li>
+<li>
+<p>It cascades a delete to <code class="codeph">salary_src</code>.</p>
+</li>
+<li>
+<p>Oracle GoldenGate sends both deletes to the target.</p>
+</li>
+<li>
+<p>The parent delete arrives first and is applied to <code class="codeph">emp_targ</code>.</p>
+</li>
+<li>
+<p>The parent delete cascades a delete to <code class="codeph">salary_targ</code>.</p>
+</li>
+<li>
+<p>The cascaded delete from <code class="codeph">salary_src</code> is applied to <code class="codeph">salary_targ</code>.</p>
+</li>
+<li>
+<p>The row cannot be located because it was already deleted in step 5.</p>
+</li>
+</ol>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="additional-configuration-steps-using-nonintegrated-replicat.htm#GUID-6A2C3836-57D1-4C82-9037-319AB23C2953" title="This chapter contains instructions that are specific only to Replicat when operating in nonintegrated mode. When Replicat operates in nonintegrated mode, triggers, cascade constraints, and unique identifiers must be properly configured in an Oracle GoldenGate environment.">Additional Configuration Steps For Using Nonintegrated Replicat</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-C3FC512E-BA4E-4DF2-A4F1-77AD53EF2203"></a>
+<h2 id="GGODB-GUID-C3FC512E-BA4E-4DF2-A4F1-77AD53EF2203" class="sect2"><span class="enumeration_section">11.2</span> Deferring Constraint Checking on Target Tables</h2>
+<div>
+<div class="section">
+<p>When Replicat is in nonintegrated mode, you may need to defer constraint checking on the target.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>If constraints are <code class="codeph">DEFERRABLE</code> on the source, the constraints on the target must also be <code class="codeph">DEFERRABLE</code>. You can use one of the following parameter statements to defer constraint checking until a Replicat transaction commits:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Use <code class="codeph">SQLEXEC</code> at the root level of the Replicat parameter file to defer the constraints for an entire Replicat session.</p>
+<p><code class="codeph">SQLEXEC ("alter session set constraint deferred")</code></p>
+</li>
+<li>
+<p>Use the Replicat parameter <code class="codeph">DBOPTIONS</code> with the <code class="codeph">DEFERREFCONST</code> option to delay constraint checking for each Replicat transaction.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>You might need to configure Replicat to overcome integrity errors caused by transient primary-key duplicates. Transient primary-key duplicates are duplicates that occur temporarily during the execution of a transaction, but are resolved by transaction commit time. This kind of operation typically uses a <code class="codeph">SET x = x+n</code> formula or some other manipulation that shifts values so that a new value equals an existing one.</span>
+<div>
+<p>The following illustrates a sequence of value changes that can cause a transient primary-key duplicate if constraints are not deferred. The example assumes the primary key column is <code class="codeph">CODE</code> and the current key values (before the updates) are 1, 2, and 3.</p>
+<pre dir="ltr">
+update item set code = 2 where code = 1;
+update item set code = 3 where code = 2;
+update item set code = 4 where code = 3;
+</pre></div>
+</li>
+</ol>
+<div class="section">
+<p>In this example, when Replicat applies the first update to the target, there is an ORA-00001 (unique constraint) error because the key value of 2 already exists in the table. The Replicat transaction returns constraint violation errors. By default, Replicat does not handle these violations and abends.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="additional-configuration-steps-using-nonintegrated-replicat.htm#GUID-DABFCB85-0CE9-4904-AFB0-91E8B98B7EF9">Handling Transient Primary-key Duplicates in Versions Earlier than 11.2.0.2</a><br /></li>
+<li class="ulchildlink"><a href="additional-configuration-steps-using-nonintegrated-replicat.htm#GUID-92573AE7-B4B7-4BA4-A12A-18D5790E6EB8">Handling Transient Primary-key Duplicates in Version 11.2.0.2 or Later</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="additional-configuration-steps-using-nonintegrated-replicat.htm#GUID-6A2C3836-57D1-4C82-9037-319AB23C2953" title="This chapter contains instructions that are specific only to Replicat when operating in nonintegrated mode. When Replicat operates in nonintegrated mode, triggers, cascade constraints, and unique identifiers must be properly configured in an Oracle GoldenGate environment.">Additional Configuration Steps For Using Nonintegrated Replicat</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-DABFCB85-0CE9-4904-AFB0-91E8B98B7EF9"></a>
+<h3 id="GGODB-GUID-DABFCB85-0CE9-4904-AFB0-91E8B98B7EF9" class="sect3"><span class="enumeration_section">11.2.1</span> Handling Transient Primary-key Duplicates in Versions Earlier than 11.2.0.2</h3>
+<div>
+<div class="section">
+<p>To handle transient primary-key duplicates in versions earlier than 11.2.0.2, use the Replicat parameter <code class="codeph">HANDLETPKUPDATE</code>. In this configuration, a nonintegrated Replicat handles transient primary-key updates by temporarily deferring constraints. To support this functionality, you must create or alter the constraints as <code class="codeph">DEFERRABLE INITIALLY IMMEDIATE</code> on the target tables. If the constraints are not <code class="codeph">DEFERRABLE</code>, Replicat handles the errors according to rules that are specified with the <code class="codeph">HANDLECOLLISIONS</code> and <code class="codeph">REPERROR</code> parameters, if they exist, or else it abends.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="additional-configuration-steps-using-nonintegrated-replicat.htm#GUID-C3FC512E-BA4E-4DF2-A4F1-77AD53EF2203">Deferring Constraint Checking on Target Tables</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-92573AE7-B4B7-4BA4-A12A-18D5790E6EB8"></a>
+<h3 id="GGODB-GUID-92573AE7-B4B7-4BA4-A12A-18D5790E6EB8" class="sect3"><span class="enumeration_section">11.2.2</span> Handling Transient Primary-key Duplicates in Version 11.2.0.2 or Later</h3>
+<div>
+<div class="section">
+<p>For versions later than 11.2.0.2, a nonintegrated Replicat by default tries to resolve transient primary-key duplicates automatically by using a workspace in Oracle Workspace Manager. In this configuration, Replicat can defer the constraint checking until commit time without requiring the constraints to be explicitly defined as deferrable.</p>
+<p>The requirements for automatic handling of transient primary-key duplicates are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Grant the Replicat database user access to the following Oracle function:</p>
+<pre dir="ltr">
+DBMS_XSTREAM_GG.ENABLE_TDUP_WORKSPACE()
+</pre></li>
+<li>
+<p>The target tables cannot have deferrable constraints; otherwise Replicat returns an error and abends.</p>
+</li>
+</ul>
+<p>To handle tables with deferrable constraints, make certain the constraints are <code class="codeph">DEFERRABLE INITIALLY IMMEDIATE</code>, and use the <code class="codeph">HANDLETPKUPDATE</code> parameter in the <code class="codeph">MAP</code> statement that maps that table. The <code class="codeph">HANDLETPKUPDATE</code> parameter overrides the default of handling the duplicates automatically.The use of a workspace affects the following Oracle GoldenGate error handling parameters:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">HANDLECOLLISIONS</code></p>
+</li>
+<li>
+<p><code class="codeph">REPERROR</code></p>
+</li>
+</ul>
+<p>When Replicat enables a workspace in Oracle Workspace Manager, it ignores the error handling that is specified by Oracle GoldenGate parameters such as <code class="codeph">HANDLECOLLISIONS</code> and <code class="codeph">REPERROR</code>. Instead, Replicat aborts its grouped transaction (if <code class="codeph">BATCHSQL</code> is enabled), and then retries the update in normal mode by using the active workspace. If ORA-00001 occurs again, Replicat rolls back the transaction and then retries the transaction with error-handling rules in effect again.</p>
+<div class="infobox-note" id="GUID-92573AE7-B4B7-4BA4-A12A-18D5790E6EB8__GUID-99655C11-EE9A-448F-B9AB-334839CD6B34">
+<p class="notep1">Note:</p>
+<p>If Replicat encounters ORA-00001 for a non-update record, the error-handling parameters such as <code class="codeph">HANDLECOLLISIONS</code> and <code class="codeph">REPERROR</code> handle it.</p>
+</div>
+<p>A workspace cannot be used if the operation that contains a transient primary-key duplicate also has updates to any out-of-line columns, such as LOB and XMLType. Therefore, these cases are not supported, and any such cases can result in undetected data corruption on the target. An example of this is:</p>
+<pre dir="ltr">
+update T set PK = PK + 1, C_LOB = 'ABC'; 
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="additional-configuration-steps-using-nonintegrated-replicat.htm#GUID-C3FC512E-BA4E-4DF2-A4F1-77AD53EF2203">Deferring Constraint Checking on Target Tables</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment482">
+<tr>
+<td class="cellalignment492">
+<table class="cellalignment487">
+<tr>
+<td class="cellalignment486"><a href="additional-configuration-steps-using-classic-capture.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment486"><a href="configuring-ddl-support.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment494">
+<table class="cellalignment485">
+<tr>
+<td class="cellalignment486"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment486"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment486"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

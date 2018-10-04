@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>FILEHEADER</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2016-08-17T10:30:55Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Logdump Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E66976-03" />
+<meta name="dcterms.isVersionOf" content="GLOGD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-6588D91B-E1A1-4E16-94EE-6BF2C7662B99.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-6F09582F-330B-4AED-B07C-51D0FD5E1EE5.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GLOGD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-10262F26-178A-4B7F-8021-040BFCB1A0FD"></a> <span id="PAGE" style="display:none;">38/88</span> <!-- End Header -->
+<a id="GLOGD171"></a><a id="GLOGD172"></a><a id="GLOGD173"></a><a id="GLOGD170"></a>
+<h1 id="GLOGD-GUID-10262F26-178A-4B7F-8021-040BFCB1A0FD" class="sect1"><span class="enumeration_section">2.23</span> FILEHEADER</h1>
+<div>
+<div class="section">
+<p>Use <code>FILEHEADER</code> to display the contents of the header of the currently open trail file.</p>
+<p>The file header is stored as a record at the beginning of a trail file preceding the data records. The information that is stored in the trail header provides enough information about the records to enable an Oracle GoldenGate process to determine whether the records are in a format that the current version of Oracle GoldenGate supports.</p>
+<p>The trail header fields are stored as tokens, where the token format remains the same across all versions of Oracle GoldenGate. If a version of Oracle GoldenGate does not support any given token, that token is ignored. Deprecated tokens are assigned a default value to preserve compatibility with previous versions of Oracle GoldenGate.</p>
+<p>The current <code>FILEHEADER</code> command applies globally to the Logdump session, until a different <code>FILEHEADER</code> command is issued.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">To View the File Header</p>
+<p>To view the file header:</p>
+<ol>
+<li>
+<p>Position to the beginning of the trail file with the following Logdump command.</p>
+<pre dir="ltr">
+pos 0
+</pre></li>
+<li>
+<p>Issue the following Logdump command to see the first record of the file, the one that contains the file header.</p>
+<pre dir="ltr">
+next
+</pre></li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">To Retrieve the File Header Tokens</p>
+<p>To retrieve file header values as input parameters, use the <code>@GETENV</code> function with the <code>GGFILEHEADER</code> option. See <a class="olink GWURF" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=ns1221&amp;id=GWURF"><span class="italic"><span id="GUID-10262F26-178A-4B7F-8021-040BFCB1A0FD__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+<div class="infobox-note" id="GUID-10262F26-178A-4B7F-8021-040BFCB1A0FD__GUID-01D570E0-411F-4D94-91DE-15574778BCCB">
+<p class="notep1">Note:</p>
+<p>The Logdump command <code>HEADERTOKEN</code> also shows trail tokens, but it shows a brief summary of each one. <code>FILEHEADER</code> shows actual token values.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="tblformalwide" id="GUID-10262F26-178A-4B7F-8021-040BFCB1A0FD__GUID-EF6BE02B-638A-4001-9C9D-835782B4D0E1">
+<hr />
+<p class="titleintable">Table 2-8 File Header Tokens</p>
+<table class="cellalignment173" title=" File Header Tokens" summary="This table describes the Oracle GoldenGate file header tokens/subtokens.">
+<thead align="left">
+<tr>
+<th class="cellalignment174" id="d9764e90">Token/subtoken</th>
+<th class="cellalignment175" id="d9764e93">Data Type</th>
+<th class="cellalignment176" id="d9764e96">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment174" id="d9764e101" headers="d9764e90">
+<p><code>Signature</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e101 d9764e93">
+<p><code>UINT32</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e101 d9764e96">
+<p>Internal use.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e113" headers="d9764e90">
+<p><code>Compatibility</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e113 d9764e93">
+<pre dir="ltr">
+UINT16
+</pre></td>
+<td class="cellalignment176" headers="d9764e113 d9764e96">
+<p>The version of the trail. The compatibility level of the software must be greater than, or equal to, that of the trail file for a process to be able to read the trail file.</p>
+<p>Current valid values are 0 to 5.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e129" headers="d9764e90">
+<p><code>CharSet</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e129 d9764e93">
+<pre dir="ltr">
+INT32
+</pre></td>
+<td class="cellalignment176" headers="d9764e129 d9764e96">
+<p>The global character set of the trail file, as defined in the parameter file or the default value. For example:</p>
+<pre dir="ltr">
+WCP1252-1
+</pre>
+<p>-3 indicates the system default.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e145" headers="d9764e90">
+<p><code>CreationTime</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e145 d9764e93">
+<p><code>Timestamp</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e145 d9764e96">
+<p>The time that the trail file was created, in local GMT Julian time, INT 64.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e157" headers="d9764e90">
+<p><code>URI</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e157 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e157 d9764e96">
+<p>The universal resource identifier of the process that created the trail file, in the format of:</p>
+<pre dir="ltr">
+<span class="italic">host_name</span>:<span class="italic">dir</span>:[:<span class="italic">dir</span>][:<span class="italic">dir_n</span>]<span class="italic">group_name</span>
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code>host_name</code></span> is the name of the server that hosts the process</p>
+</li>
+<li>
+<p><span class="italic"><code>dir</code></span> is a subdirectory of the installation path.</p>
+</li>
+<li>
+<p><span class="italic"><code>group_name</code></span> is the name of the process group that is linked with the process.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre dir="ltr">
+sys1:home:oracle:v9.5:extora
+</pre>
+<p>Shows where the trail was processed and by which process. This includes a history of previous runs.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e218" headers="d9764e90">
+<p><code>URIHistory</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e218 d9764e93">
+<p><code>String array</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e218 d9764e96">
+<p>List of the URIs of processes that wrote to the trail file before the current process.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For a primary Extract, this field is empty.</p>
+</li>
+<li>
+<p>For a data pump, this field is <code>URIHistory + URI</code> of the input trail file.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e240" headers="d9764e90">
+<p><code>FileName</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e240 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e240 d9764e96">
+<p>Name of the trail file. Can be absolute or relative path, with forward or backward slash depending on the file system.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e252" headers="d9764e90">
+<p><code>MultiPart</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e252 d9764e93">
+<p><code>Boolean</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e252 d9764e96">
+<p><code>True/False</code> flag indicating whether the trail file is a single file (such as one created for a batch run) or a sequentially numbered file that is part of a trail for online, continuous processing. If <code>False</code>, the <code>SeqNum</code> subtoken is not valid.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e272" headers="d9764e90">
+<p><code>SeqNum</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e272 d9764e93">
+<p><code>UINT32</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e272 d9764e96">
+<p>The sequence number of the file in the trail, if <code>MultiPart</code> is true. Invalid if multipart is <code>false</code>. The value is the numerical sequence number, without any zero padding.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e290" headers="d9764e90">
+<p><code>FileSize</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e290 d9764e93">
+<p><code>UINT64</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e290 d9764e96">
+<p>Size of the trail file. Value is <code>NULL</code> until the trail file is completed. Non-<code>NULL</code> values are in bytes.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e308" headers="d9764e90">
+<p><code>FirstRecordCSN</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e308 d9764e93">
+<p><code>CSN</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e308 d9764e96">
+<p>The commit sequence number (CSN) of the first record in the trail file.Value is <code>NULL</code> until the trail file is completed.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e324" headers="d9764e90">
+<p><code>LastRecordCSN</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e324 d9764e93">
+<p><code>CSN</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e324 d9764e96">
+<p>The commit sequence number (CSN) of the last record in the trail file.Value is <code>NULL</code> until the trail file is completed.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e339" headers="d9764e90">
+<p><code>FirstRecordIOTime</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e339 d9764e93">
+<p><code>Timestamp</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e339 d9764e96">
+<p>The time that the first record in the trail file was written.Value is <code>NULL</code> until the trail file is completed.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e354" headers="d9764e90">
+<p><code>LastRecordIOTime</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e354 d9764e93">
+<p><code>Timestamp</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e354 d9764e96">
+<p>The time that the last record in the trail file was written.Value is <code>NULL</code> until the trail file is completed.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e369" headers="d9764e90">
+<p><code>SysName</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e369 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e369 d9764e96">
+<p>The name of the operating system, for example:</p>
+<p><code>SunOS</code></p>
+<p><code>Linux</code></p>
+<p><code>Microsoft Windows</code></p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e390" headers="d9764e90">
+<p><code>NodeName</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e390 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e390 d9764e96">
+<p>The name of the machine, for example <code>sys1</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e405" headers="d9764e90">
+<p><code>Release</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e405 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e405 d9764e96">
+<p>The release level of the operating system, for example:</p>
+<p><code>5.10</code></p>
+<p><code>2.6.9-11.ELsmp</code></p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e423" headers="d9764e90">
+<p><code>Version</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e423 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e423 d9764e96">
+<p>The version of the operating system, for example:</p>
+<p><code>s10_69</code></p>
+<p><code>#1 SMP Fri Feb 24 16:56:28 EST 2006</code></p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e441" headers="d9764e90">
+<p><code>Hardware</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e441 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e441 d9764e96">
+<p>The hardware type of the processor, for example:</p>
+<p><code>sun4u</code></p>
+<p><code>x86_64</code></p>
+<p><code>x86</code></p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e462" headers="d9764e90">
+<p><code>Vendor</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e462 d9764e93">
+<p><code>UINT16</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e462 d9764e96">
+<p>The name of the database vendor. Some (but not all) examples are:</p>
+<pre dir="ltr">
+DB2 ZOS
+CTREE
+MSSQL
+MYSQL
+ORACLE
+SQLMX
+SYBASE
+TERADATA
+TIMESTEN
+NONSTOP
+ENSCRIBE
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e476" headers="d9764e90">
+<p><code>Name</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e476 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e476 d9764e96">
+<p>The name of the database, for example <code>findb</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e491" headers="d9764e90">
+<p><code>Instance</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e491 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e491 d9764e96">
+<p>The name of the database instance, if applicable to the database type, for example <code>ORA1022A</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e507" headers="d9764e90">
+<p><code>Charset</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e507 d9764e93">
+<p><code>INT32</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e507 d9764e96">
+<p>The character set of the database. Currently, the valid value is -1 (unknown). (For some databases, this will be empty.)</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e519" headers="d9764e90">
+<p><code>MajorVersion</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e519 d9764e93">
+<p><code>UINT16</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e519 d9764e96">
+<p>The major version of the database.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e531" headers="d9764e90">
+<p><code>MinorVersion</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e531 d9764e93">
+<p><code>UINT16</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e531 d9764e96">
+<p>The minor version of the database.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e543" headers="d9764e90">
+<p><code>VerString</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e543 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e543 d9764e96">
+<p>The maintenance (patch) level of the database.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e555" headers="d9764e90">
+<p><code>ClientCharset</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e555 d9764e93">
+<p><code>INT32</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e555 d9764e96">
+<p>The character set of the database client. Currently, the valid value is -1 (unknown). (For some databases, this will be empty.)</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e567" headers="d9764e90">
+<p><code>ClientVerString</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e567 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e567 d9764e96">
+<p>The maintenance (patch) level of the database client. <code>(</code>For some databases, this will be empty.)</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e582" headers="d9764e90">
+<p><code>Name</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e582 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e582 d9764e96">
+<p>The group name that is associated with the process.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e594" headers="d9764e90">
+<p><code>DataSource</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e594 d9764e93">
+<p><code>UINT16</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e594 d9764e96">
+<p>The data source that was read by the process. Can be one of:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code>DS_EXTRACT_TRAILS</code> (source was an extract file, populated with change data)</p>
+</li>
+<li>
+<p><code>DS_LOG_TABLE</code> (source was an log table, used for trigger-based extraction)</p>
+</li>
+<li>
+<p><code>DS_DATABASE</code> (source was a direct select from database table written to a trail, used for <code>SOURCEISTABLE</code>-driven initial load)</p>
+</li>
+<li>
+<p><code>DS_TRAN_LOGS</code> (source was the database transaction log)</p>
+</li>
+<li>
+<p><code>DS_INITIAL_DATA_LOAD</code> (source was Extract; data taken directly from source tables)</p>
+</li>
+<li>
+<p><code>DS_VAM_EXTRACT</code> (source was a vendor access module)</p>
+</li>
+<li>
+<p><code>DS_VAM_TWO_PHASE_COMMIT</code> (source was a VAM trail)</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e649" headers="d9764e90">
+<p><code>MajorVersion</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e649 d9764e93">
+<p><code>UINT16</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e649 d9764e96">
+<p>The major version of the process (<code>xx)</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e664" headers="d9764e90">
+<p><code>MinorVersion</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e664 d9764e93">
+<p><code>UINT16</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e664 d9764e96">
+<p>The minor version of the process (<code>xx.xx)</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e679" headers="d9764e90">
+<p><code>MaintenanceLevel</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e679 d9764e93">
+<p><code>UINT16</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e679 d9764e96">
+<p>The maintenance version of the process (<code>xx.xx.xx)</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e695" headers="d9764e90">
+<p><code>PatchLevel</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e695 d9764e93">
+<p><code>UINT16</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e695 d9764e96">
+<p>The patch version of the process (<code>xx.xx.xx.xx)</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e710" headers="d9764e90">
+<p><code>BuildNumber</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e710 d9764e93">
+<p><code>UINT16</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e710 d9764e96">
+<p>The build number of the process.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e722" headers="d9764e90">
+<p><code>VerString</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e722 d9764e93">
+<p><code>String</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e722 d9764e96">
+<p>The version string of the process. For example:</p>
+<p><code>11.1.1.17A not for production</code></p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e737" headers="d9764e90">
+<p><code>RecoveryMode</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e737 d9764e93">
+<p><code>UINT16</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e737 d9764e96">
+<p>Internal use</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e749" headers="d9764e90">
+<p><code>LastCompletedCSN</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e749 d9764e93">
+<p><code>CSN</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e749 d9764e96">
+<p>Internal use</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e761" headers="d9764e90">
+<p><code>LastCompletedXids</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e761 d9764e93">
+<p><code>Xid</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e761 d9764e96">
+<p>Internal use</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e773" headers="d9764e90">
+<p><code>LastSCN</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e773 d9764e93">
+<p><code>CSN</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e773 d9764e96">
+<p>Internal use</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment174" id="d9764e785" headers="d9764e90">
+<p><code>LastXid</code></p>
+</td>
+<td class="cellalignment175" headers="d9764e785 d9764e93">
+<p><code>Xid</code></p>
+</td>
+<td class="cellalignment176" headers="d9764e785 d9764e96">
+<p>Internal use</p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="section">
+<p class="subhead1">Default</p>
+<pre dir="ltr">
+OFF
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILEHEADER {ON | OFF | DETAIL}
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-10262F26-178A-4B7F-8021-040BFCB1A0FD__GUID-F81357EB-012E-4B08-A453-D6B28812D7C4"><!-- --></a><code>ON</code></dt>
+<dd>
+<p>Enables the display of the file header, showing the main header tokens.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-10262F26-178A-4B7F-8021-040BFCB1A0FD__GUID-CDC00974-B100-4B31-B35E-60FC887A55A1"><!-- --></a><code>OFF</code></dt>
+<dd>
+<p>Disables the display of the file header.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-10262F26-178A-4B7F-8021-040BFCB1A0FD__GUID-DEB45E00-B745-4137-B295-BCA2E46E0DF6"><!-- --></a><code>DETAIL</code></dt>
+<dd>
+<p>Provides detailed information that includes the sub-tokens.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-10262F26-178A-4B7F-8021-040BFCB1A0FD__GUID-F37B07C2-2135-412B-91A2-8E6DD1F893CE"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+FILEHEADER ON
+TokenID x46 'F' Record Header    Info x00  Length  587
+TokenID x30 '0' TrailInfo        Info x00  Length  303
+TokenID x31 '1' MachineInfo      Info x00  Length  103
+TokenID x32 '2' DatabaseInfo     Info x00  Length   88
+TokenID x33 '3' ProducerInfo     Info x00  Length   85
+TokenID x34 '4' ContinunityInfo  Info x00  Length    4
+TokenID x5a 'Z' Record Trailer   Info x00  Length  587
+2011/1/18 13:39:18.951.346 FileHeader           Len   587 RBA 0
+Name: *FileHeader*
+ 3000 012f 3000 0008 660d 0a71 3100 0006 0001 3200 | 0../0...f..q1.....2.
+ 0008 0000 0016 3300 000c 02f1 7834 eac7 7f3f 3400 | ......3.....x4...?4.
+ 0037 0031 7572 693a 7465 6c6c 7572 6961 6e3a 3a68 | .7.1uri:tellurian::h
+ 6f6d 653a 6d63 6361 7267 6172 3a67 6773 3a67 6773 | ome:mccargar:ggs:ggs
+ 4f72 6163 6c65 3a73 6f75 7263 6536 0000 1700 112e | Oracle:source6......
+ 2f64 6972 6461 742f 6572 3030 3030 3030 3700 0005 | /dirdat/er0000007...
+ 0138 0000 0800 01e2 4039 0000 0c00 0000 0000 001d | .8......@9..........
+
+
+GroupID x30 '0' TrailInfo        Info x00  Length  303
+ 3000 012f 3000 0008 660d 0a71 3100 0006 0001 3200 | 0../0...f..q1.....2.
+ 0008 0000 0016 3300 000c 02f1 7834 eac7 7f3f 3400 | ......3.....x4...?4.
+ 0037 0031 7572 693a 7465 6c6c 7572 6961 6e3a 3a68 | .7.1uri:tellurian::h
+ 6f6d 653a 6d63 6361 7267 6172 3a67 6773 3a67 6773 | ome:mccargar:ggs:ggs
+ 4f72 6163 6c65 3a73 6f75 7263 6536 0000 1700 112e | Oracle:source6......
+ 2f64 6972 6461 742f 6572 3030 3030 3030 3700 0005 | /dirdat/er0000007...
+ 0138 0000 0800 01e2 4039 0000 0c00 0000 0000 001d | .8......@9..........
+ a33b 0000 450a 3634 3136 3138 3936 3932 0000 0000 | .;..E.6416189692....
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 3aff 0045 0000 0000 0000 | ..........:..E......
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 003d | ...................=
+ 0000 0c02 f178 34eb 556a 403c ff00 0c00 0000 0000 | .....x4.Uj@&lt;........
+ 0000 00                                           | ...
+
+GroupID x31 '1' MachineInfo      Info x00  Length  103
+ 3100 0067 3000 000b 0005 4c69 6e75 7831 0000 0f00 | 1..g0.....Linux1....
+ 0974 656c 6c75 7269 616e 3200 0014 000e 322e 362e | .tellurian2.....2.6.
+ 392d 3131 2e45 4c73 6d70 3300 0029 0023 2331 2053 | 9-11.ELsmp3..).##1 S
+ 4d50 2046 7269 204d 6179 2032 3020 3138 3a32 353a | MP Fri May 2018:25:
+ 3330 2045 4454 2032 3030 3534 0000 0c00 0678 3836 | 30 EDT 20054.....x86
+ 5f36 34                                           | _64
+
+GroupID x32 '2' DatabaseInfo     Info x00  Length   88
+ 3200 0058 3000 0006 0007 3100 000e 0008 4f52 4131 | 2..X0.....1.....ORA1
+ 3032 3241 3200 000e 0008 6f72 6131 3032 3261 3300 | 022A2.....ora1022a3.
+ 0008 ffff ffff 3400 0006 0000 3500 0006 0000 3600 | ......4.....5.....6.
+ 0006 0000 3700 0008 ffff ffff 3800 0010 000a 3130 | ....7.......8.....10
+ 2e32 2e30 2e32 2e30                               | .2.0.2.0
+
+GroupID x33 '3' ProducerInfo     Info x00  Length   85
+ 3300 0055 3000 000a 0004 4546 4152 3100 0006 0003 | 3..U0.....EFAR1.....
+ 3200 0006 0000 3300 0006 0000 3400 0006 0000 3500 | 2.....3.....4.....5.
+ 0006 0000 3600 0006 0017 3700 0023 001d 5665 7273 | ....6.....7..#..Vers
+ 696f 6e20 5374 2e20 416e 6472 6577 7320 4275 696c | ion St. Andrews Buil
+ 6420 3032 33                                      | d 023
+
+GroupID x34 '4' ContinunityInfo  Info x00  Length    4
+ 3400 0004                                         | 4...
+</pre></dd>
+<dt class="dlterm"><a id="GUID-10262F26-178A-4B7F-8021-040BFCB1A0FD__GUID-9076BBFE-B824-4FC2-8709-50B535269276"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+FILEHEADER DETAIL
+TokenID x46 'F' Record Header    Info x00  Length  587
+TokenID x30 '0' TrailInfo        Info x00  Length  303
+TokenID x31 '1' MachineInfo      Info x00  Length  103
+TokenID x32 '2' DatabaseInfo     Info x00  Length   88
+TokenID x33 '3' ProducerInfo     Info x00  Length   85
+TokenID x34 '4' ContinunityInfo  Info x00  Length    4
+TokenID x5a 'Z' Record Trailer   Info x00  Length  587
+
+2011/01/18 13:40:26.034.631 FileHeader           Len   587 RBA 0
+Name: *FileHeader*
+ 3000 012f 3000 0008 660d 0a71 3100 0006 0001 3200 | 0../0...f..q1.....2.
+ 0008 0000 0016 3300 000c 02f1 7834 eac7 7f3f 3400 | ......3.....x4...?4.
+ 0037 0031 7572 693a 7465 6c6c 7572 6961 6e3a 3a68 | .7.1uri:tellurian::h
+ 6f6d 653a 6d63 6361 7267 6172 3a67 6773 3a67 6773 | ome:mccargar:ggs:ggs
+ 4f72 6163 6c65 3a73 6f75 7263 6536 0000 1700 112e | Oracle:source6......
+ 2f64 6972 6461 742f 6572 3030 3030 3030 3700 0005 | /dirdat/er0000007...
+ 0138 0000 0800 01e2 4039 0000 0c00 0000 0000 001d | .8......@9..........
+
+GroupID x30 '0' TrailInfo        Info x00  Length  303
+ 3000 012f 3000 0008 660d 0a71 3100 0006 0001 3200 | 0../0...f..q1.....2.
+ 0008 0000 0016 3300 000c 02f1 7834 eac7 7f3f 3400 | ......3.....x4...?4.
+ 0037 0031 7572 693a 7465 6c6c 7572 6961 6e3a 3a68 | .7.1uri:tellurian::h
+ 6f6d 653a 6d63 6361 7267 6172 3a67 6773 3a67 6773 | ome:mccargar:ggs:ggs
+ 4f72 6163 6c65 3a73 6f75 7263 6536 0000 1700 112e | Oracle:source6......
+ 2f64 6972 6461 742f 6572 3030 3030 3030 3700 0005 | /dirdat/er0000007...
+ 0138 0000 0800 01e2 4039 0000 0c00 0000 0000 001d | .8......@9..........
+ a33b 0000 450a 3634 3136 3138 3936 3932 0000 0000 | .;..E.6416189692....
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 3aff 0045 0000 0000 0000 | ..........:..E......
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 003d | ...................=
+ 0000 0c02 f178 34eb 556a 403c ff00 0c00 0000 0000 | .....x4.Uj@&lt;........
+ 0000 00                                           | ...
+TokenID x30 '0' Signature        Info x00  Length    8
+ 660d 0a71                                         | f..q
+TokenID x31 '1' Compatibility    Info x00  Length    6
+ 0001                                              | ..
+TokenID x32 '2' Charset          Info x00  Length    8
+ 0000 0016                                         | ....
+TokenID x33 '3' CreationTime     Info x00  Length   12
+ 02f1 7834 eac7 7f3f                               | ..x4...?
+TokenID x34 '4' URI              Info x00  Length   55
+ 0031 7572 693a 7465 6c6c 7572 6961 6e3a 3a68 6f6d | .1uri:tellurian::hom
+ 653a 6d63 6361 7267 6172 3a67 6773 3a67 6773 4f72 | e:mccargar:ggs:ggsOr
+ 6163 6c65 3a73 6f75 7263 65                       | acle:source
+TokenID x36 '6' Filename         Info x00  Length   23
+ 0011 2e2f 6469 7264 6174 2f65 7230 3030 3030 30   | .../dirdat/er000000
+TokenID x37 '7' MultiPart        Info x00  Length    5
+ 01                                                | .
+TokenID x38 '8' Seqno            Info x00  Length    8
+ 0001 e240                                         | ...@
+TokenID x39 '9' FileSize         Info x00  Length   12
+ 0000 0000 0000 1da3                               | ........
+TokenID x3b ';' LastCSN          Info x00  Length   69
+ 0a36 3431 3631 3839 3639 3200 0000 0000 0000 0000 | .6416189692.........
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 00                                      | .....
+TokenID x3a ':' FirstCSN         Info xff  Length   69
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 | ....................
+ 0000 0000 00                                      | .....
+TokenID x3d '=' LastIOTime       Info x00  Length   12
+ 02f1 7834 eb55 6a40                               | ..x4.Uj@
+TokenID x3c '&lt;' FirstIOTime      Info xff  Length   12
+ 0000 0000 0000 0000                               | ........
+
+GroupID x31 '1' MachineInfo      Info x00  Length  103
+ 3100 0067 3000 000b 0005 4c69 6e75 7831 0000 0f00 | 1..g0.....Linux1....
+ 0974 656c 6c75 7269 616e 3200 0014 000e 322e 362e | .tellurian2.....2.6.
+ 392d 3131 2e45 4c73 6d70 3300 0029 0023 2331 2053 | 9-11.ELsmp3..).##1 S
+ 4d50 2046 7269 204d 6179 2032 3020 3138 3a32 353a | MP Fri May 20 18:25:
+ 3330 2045 4454 2032 3030 3534 0000 0c00 0678 3836 | 30 EDT 20054.....x86
+ 5f36 34                                           | _64
+TokenID x30 '0' Sysname          Info x00  Length   11
+ 0005 4c69 6e75 78                                 | ..Linux
+TokenID x31 '1' Nodename         Info x00  Length   15
+ 0009 7465 6c6c 7572 6961 6e                       | ..tellurian
+TokenID x32 '2' Release          Info x00  Length   20
+ 000e 322e 362e 392d 3131 2e45 4c73 6d70           | ..2.6.9-11.ELsmp
+TokenID x33 '3' Version          Info x00  Length   41
+ 0023 2331 2053 4d50 2046 7269 204d 6179 2032 3020 | .##1 SMP Fri May 20
+ 3138 3a32 353a 3330 2045 4454 2032 3030 35        | 18:25:30 EDT 2005
+TokenID x34 '4' Hardware         Info x00  Length   12
+ 0006 7838 365f 3634                               | ..x86_64
+
+GroupID x32 '2' DatabaseInfo     Info x00  Length   88
+ 3200 0058 3000 0006 0007 3100 000e 0008 4f52 4131 |2..X0.....1.....ORA1
+ 3032 3241 3200 000e 0008 6f72 6131 3032 3261 3300 |022A2.....ora1022a3.
+ 0008 ffff ffff 3400 0006 0000 3500 0006 0000 3600 |......4.....5.....6.
+ 0006 0000 3700 0008 ffff ffff 3800 0010 000a 3130 |....7.......8.....10
+ 2e32 2e30 2e32 2e30                               | .2.0.2.0
+TokenID x30 '0' Vendor           Info x00  Length    6
+ 0007                                              | ..
+TokenID x31 '1' Name             Info x00  Length   14
+ 0008 4f52 4131 3032 3241                          | ..ORA1022A
+TokenID x32 '2' Instance         Info x00  Length   14
+ 0008 6f72 6131 3032 3261                          | ..ora1022a
+TokenID x33 '3' Charset          Info x00  Length    8
+ ffff ffff                                         | ....
+TokenID x34 '4' MajorVersion     Info x00  Length    6
+ 0000                                              | ..
+TokenID x35 '5' MinorVersion     Info x00  Length    6
+ 0000                                              | ..
+TokenID x36 '6' VerString        Info x00  Length    6
+ 0000                                              | ..
+TokenID x37 '7' ClientCharset    Info x00  Length    8
+ ffff ffff                                         | ....
+TokenID x38 '8' ClientVerString  Info x00  Length   16
+ 000a 3130 2e32 2e30 2e32 2e30                     | ..10.2.0.2.0
+
+GroupID x33 '3' ProducerInfo     Info x00  Length   85
+ 3300 0055 3000 000a 0004 4546 4152 3100 0006 0003 | 3..U0.....EFAR1.....
+ 3200 0006 0000 3300 0006 0000 3400 0006 0000 3500 | 2.....3.....4.....5.
+ 0006 0000 3600 0006 0017 3700 0023 001d 5665 7273 | ....6.....7..#..Vers
+ 696f 6e20 5374 2e20 416e 6472 6577 7320 4275 696c | ion St. Andrews Buil
+ 6420 3032 33                                      | d 023
+TokenID x30 '0' Name             Info x00  Length   10
+ 0004 4546 4152                                    | ..EFAR
+TokenID x31 '1' DataSource       Info x00  Length    6
+ 0003                                              | ..
+TokenID x32 '2' MajorVersion     Info x00  Length    6
+ 0000                                              | ..
+TokenID x33 '3' MinorVersion     Info x00  Length    6
+ 0000                                              | ..
+TokenID x34 '4' MaintLevel       Info x00  Length    6
+ 0000                                              | ..
+TokenID x35 '5' BugFixLevel      Info x00  Length    6
+ 0000                                              | ..
+TokenID x36 '6' BuildNumber      Info x00  Length    6
+ 0017                                              | ..
+TokenID x37 '7' VerString        Info x00  Length   35
+ 001d 5665 7273 696f 6e20 5374 2e20 416e 6472 6577 | ..Version St.Andrew
+ 7320 4275 696c 6420 3032 33                       | s Build 023
+
+GroupID x34 '4' ContinunityInfo  Info x00  Length    4
+ 3400 0004                                         | 4...
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment158">
+<tr>
+<td class="cellalignment165">
+<table class="cellalignment163">
+<tr>
+<td class="cellalignment162"><a href="GUID-6588D91B-E1A1-4E16-94EE-6BF2C7662B99.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment162"><a href="GUID-6F09582F-330B-4AED-B07C-51D0FD5E1EE5.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment167">
+<table class="cellalignment161">
+<tr>
+<td class="cellalignment162"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment162"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment162"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment162"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

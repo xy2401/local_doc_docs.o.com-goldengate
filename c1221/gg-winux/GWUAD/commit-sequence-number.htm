@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>About the Commit Sequence Number</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This appendix contains information about the Oracle GoldenGate Commit Sequence Number (CSN)." />
+<meta name="dcterms.created" content="2018-07-19T06:21:43Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66357-07" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="oracle-goldengate-trail.htm" title="Previous" type="text/html" />
+<link rel="Next" href="checkpoints.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-C8A3CB58-2A18-4A1E-9A2F-5AADCD9BF599"></a> <span id="PAGE" style="display:none;">32/34</span> <!-- End Header -->
+<a id="GWUAD1018"></a><a id="GWUAD753"></a><a id="GWUAD752"></a>
+<h1 id="GWUAD-GUID-C8A3CB58-2A18-4A1E-9A2F-5AADCD9BF599" class="sect1"><span class="enumeration_chapter">D</span> About the Commit Sequence Number</h1>
+<div>
+<div><span>This appendix contains information about the Oracle GoldenGate Commit Sequence Number (CSN).</span></div>
+<p>When working with Oracle GoldenGate, you might need to refer to a <span class="italic">Commit Sequence Number</span>, or CSN. The CSN can be required to position Extract in the transaction stream, to reposition Replicat in the trail, or for other purposes. It is returned by some conversion functions and is included in reports and certain GGSCI output.</p>
+<p>A CSN is a monotonically increasing identifier generated by Oracle GoldenGate that uniquely identifies a point in time when a transaction commits to the database. It purpose is to ensure transactional consistency and data integrity as transactions are replicated from source to target.</p>
+<p>Each kind of database management system generates some kind of unique serial number of its own at the completion of each transaction, which uniquely identifies the commit of that transaction. For example, the Oracle RDBMS generates a System Change Number, which is a monotonically increasing sequence number assigned to every event by Oracle RDBMS. The CSN captures this same identifying information and represents it internally as a series of bytes, but the CSN is processed in a platform-independent manner. A comparison of any two CSN numbers, each of which is bound to a transaction-commit record in the same log stream, reliably indicates the order in which the two transactions completed.</p>
+<p>The CSN is cross-checked with the transaction ID (displayed as <code class="codeph">XID</code> in Oracle GoldenGate informational output). The XID-CSN combination uniquely identifies a transaction even in cases where there are multiple transactions that commit at the same time, and thus have the same CSN. For example, this can happen in an Oracle RAC environment, where there is parallelism and high transaction concurrency.</p>
+<p>The CSN value is stored as a token in any trail record that identifies the commit of a transaction. This value can be retrieved with the <code class="codeph">@GETENV</code> column conversion function and viewed with the Logdump utility.</p>
+<p>All database platforms except Oracle, DB2 LUW, and DB2 z/OS have fixed-length CSNs, which are padded with leading zeroes as required to fill the fixed length. CSNs that contain multiple fields can be padded within each field, such as the Sybase CSN.</p>
+<p>MySQL does not create a transaction ID as part of its event data, so Oracle GoldenGate considers a unique transaction identifier to be a <span class="italic">combination</span> of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>the log file number of the log file that contains the <code class="codeph">START TRANSACTION</code> record for the transaction that is being identified</p>
+</li>
+<li>
+<p>the record offset of that record</p>
+</li>
+</ul>
+<div class="tblformal" id="GUID-C8A3CB58-2A18-4A1E-9A2F-5AADCD9BF599__GUID-59FA7680-E4FC-43DD-8723-F01DD4B21449">
+<p class="titleintable">Table D-1 Oracle GoldenGate CSN Values Per Database</p>
+<table class="cellalignment80" title="Oracle GoldenGate CSN Values Per Database" summary="This table provides the Oracle GoldenGate CSN values per database.">
+<thead>
+<tr class="cellalignment25">
+<th class="cellalignment69" id="d119398e65">Database</th>
+<th class="cellalignment101" id="d119398e68">CSN Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment25">
+<td class="cellalignment73" id="d119398e73" headers="d119398e65">
+<p>DB2 for i</p>
+</td>
+<td class="cellalignment102" headers="d119398e73 d119398e68">
+<p><span class="italic"><code class="codeph">sequence_number</code></span></p>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>sequence_number is the fixed-length, 20 digit, decimal-based DB2 for i system sequence number.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre dir="ltr">
+12345678901234567890
+</pre></td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment73" id="d119398e92" headers="d119398e65">
+<p>DB2 LUW</p>
+</td>
+<td class="cellalignment102" headers="d119398e92 d119398e68">
+<p><span class="italic"><code class="codeph">LSN</code></span> or <code class="codeph">LRI</code></p>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For version 9.7 and earlier, <span class="italic"><code class="codeph">LSN</code></span> is the variable-length, decimal-based DB2 log sequence number.</p>
+<p>Example:</p>
+<pre dir="ltr">
+1234567890
+</pre></li>
+<li>
+<p>For version 10.1 and later, <span class="italic"><code class="codeph">LRI</code></span> is a period-separated pair of numbers for the DB2 log record identifier.</p>
+<p>Example:</p>
+<pre dir="ltr">
+123455.34645
+</pre></li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment73" id="d119398e129" headers="d119398e65">
+<p>DB2 z/OS</p>
+</td>
+<td class="cellalignment102" headers="d119398e129 d119398e68">
+<pre dir="ltr">
+<span class="italic">RBA</span>
+</pre>
+<p><span class="bold">where</span>:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">RBA</code></span> is the 6-byte relative byte address of the commit record within the transaction log.</p>
+</li>
+</ul>
+<p><span class="bold">Example:</span></p>
+<pre dir="ltr">
+1274565892
+</pre></td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment73" id="d119398e154" headers="d119398e65">
+<p>MySQL</p>
+</td>
+<td class="cellalignment102" headers="d119398e154 d119398e68">
+<pre dir="ltr">
+<span class="italic">LogNum</span>:<span class="italic">LogPosition</span>
+</pre>
+<p><span class="bold">Where:</span></p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">LogNum</code></span> is the the name of the log file that contains the <code class="codeph">START TRANSACTION</code> record for the transaction that is being identified.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">LogPosition</code></span> is the event offset value of that record. Event offset values are stored in the record header section of a log record.</p>
+</li>
+</ul>
+<p>For example, if the log number is 12 and the log position is 121, the CSN is:</p>
+<pre dir="ltr">
+000012:000000000000121
+</pre></td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment73" id="d119398e190" headers="d119398e65">
+<p>Oracle</p>
+</td>
+<td class="cellalignment102" headers="d119398e190 d119398e68">
+<pre dir="ltr">
+<span class="italic">system_change_number</span>
+</pre>
+<p><span class="bold">Where:</span></p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">system_change number</code></span> is the Oracle SCN value.</p>
+</li>
+</ul>
+<p><span class="bold">Example:</span></p>
+<pre dir="ltr">
+6488359
+</pre></td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment73" id="d119398e214" headers="d119398e65">
+<p>SQL/MX</p>
+</td>
+<td class="cellalignment102" headers="d119398e214 d119398e68">
+<pre dir="ltr">
+<span class="italic">sequence_number</span>|<span class="italic">RBA</span>
+</pre>
+<p><span class="bold">Where:</span></p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">sequence_number</code></span> is the 6-digit decimal NonStop TMF audit trail sequence number padded with leading zeroes.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">RBA</code></span> is the 10-digit decimal relative byte address within that file, padded with leading zeroes.</p>
+</li>
+</ul>
+<p>Together these specify the location in the TMF Master Audit Trail (MAT).</p>
+<p><span class="bold">Example:</span></p>
+<pre dir="ltr">
+000042|0000068242
+</pre></td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment73" id="d119398e250" headers="d119398e65">
+<p>SQL Server</p>
+</td>
+<td class="cellalignment102" headers="d119398e250 d119398e68">
+<p>Can be any of these, depending on how the database returns it:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Colon separated hex string (<code class="codeph">8:8:4</code>) padded with leading zeroes and <code class="codeph">0X</code> prefix</p>
+</li>
+<li>
+<p>Colon separated decimal string (<code class="codeph">10:10:5</code>) padded with leading zeroes</p>
+</li>
+<li>
+<p>Colon separated hex string with <code class="codeph">0X</code> prefix and without leading zeroes</p>
+</li>
+<li>
+<p>Colon separated decimal string without leading zeroes</p>
+</li>
+<li>
+<p>Decimal string</p>
+</li>
+</ul>
+<p><span class="bold">Where:</span></p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The first value is the virtual log file number, the second is the segment number within the virtual log, and the third is the entry number.</p>
+</li>
+</ul>
+<p><span class="bold">Examples:</span></p>
+<pre dir="ltr">
+0X00000d7e:0000036b:01bd
+0000003454:0000000875:00445
+0Xd7e:36b:1bd
+3454:875:445
+3454000000087500445
+</pre></td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment73" id="d119398e297" headers="d119398e65">
+<p>Sybase</p>
+</td>
+<td class="cellalignment102" headers="d119398e297 d119398e68">
+<pre dir="ltr">
+<span class="italic">time_high</span>.<span class="italic">time_low</span>.<span class="italic">page</span>.<span class="italic">row</span>
+</pre>
+<p><span class="bold">Where:</span></p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">time_high</code></span> and <span class="italic"><code class="codeph">time_low</code></span> represent an instance ID for the log page. It is stored in the header of each database log page. <span class="italic"><code class="codeph">time_high</code></span> is 2-bytes and <span class="italic"><code class="codeph">time_low</code></span>is 4-bytes, each padded with leading zeroes.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">page</code></span> is the database logical page number, padded with zeroes.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">row</code></span> is the row number, padded with zeroes.</p>
+</li>
+</ul>
+<p>Taken together, these components represent a unique location in the log stream. The valid range of a 2-byte integer for a <code class="codeph">timestamp-high</code> is <code class="codeph">0 - 65535</code>. For a 4-byte integer for a <code class="codeph">timestamp-low</code>, it is<code class="codeph">: 0 - 4294967295.</code></p>
+<p><span class="bold">Example:</span></p>
+<pre dir="ltr">
+00001.0000067330.0000013478.00026
+</pre></td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment73" id="d119398e370" headers="d119398e65">
+<p>Teradata</p>
+</td>
+<td class="cellalignment102" headers="d119398e370 d119398e68">
+<pre dir="ltr">
+<span class="italic">sequence_ID</span>
+</pre>
+<p><span class="bold">Where:</span></p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">sequence_ID</code></span> is a generic fixed-length printable sequence ID.</p>
+</li>
+</ul>
+<p><span class="bold">Example:</span></p>
+<pre dir="ltr">
+0x0800000000000000D700000021
+</pre></td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment73" id="d119398e394" headers="d119398e65">
+<p>TimesTen</p>
+</td>
+<td class="cellalignment102" headers="d119398e394 d119398e68">
+<p>There is no CSN for TimesTen, because extraction (capture) is not supported by Oracle GoldenGate for this database.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment24">
+<tr>
+<td class="cellalignment31">
+<table class="cellalignment29">
+<tr>
+<td class="cellalignment28"><a href="oracle-goldengate-trail.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment28"><a href="checkpoints.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment33">
+<table class="cellalignment27">
+<tr>
+<td class="cellalignment28"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment28"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

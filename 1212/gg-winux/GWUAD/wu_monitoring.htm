@@ -1,0 +1,781 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>18 Monitoring Oracle GoldenGate Processing</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1028" />
+<meta name="description" content="This chapter describes the monitoring of Oracle GoldenGate processing." />
+<meta name="dcterms.created" content="2014-11-11T22:58:6Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Administering Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E29388-06" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Index" href="index.htm" title="Index" type="text/html" />
+<link rel="Prev" href="wu_customcode.htm" title="Previous" type="text/html" />
+<link rel="Next" href="wu_performance.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GWUAD.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GWUAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">21/30</span>
+<!-- End Header -->
+<div id="GWUAD633" class="chapter"><a id="i999987"></a>
+<h1 class="chapter"><span class="secnum">18</span> Monitoring <a id="sthref976"></a><a id="sthref977"></a><a id="sthref978"></a>Oracle GoldenGate<a id="sthref979"></a><a id="sthref980"></a> Processing</h1>
+<p><a id="GWUAD634"></a>This chapter describes the monitoring of Oracle GoldenGate processing.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#BABFADJA">Using the Information Commands in GGSCI</a></p>
+</li>
+<li>
+<p><a href="#BABIACDB">Monitoring an Extract Recovery</a></p>
+</li>
+<li>
+<p><a href="#BABJFFHI">Monitoring Lag</a></p>
+</li>
+<li>
+<p><a href="#BABIECBE">Monitoring Processing Volume</a></p>
+</li>
+<li>
+<p><a href="#BABEJIIE">Using the Error Log</a></p>
+</li>
+<li>
+<p><a href="#i1010706">Using the Process Report</a></p>
+</li>
+<li>
+<p><a href="#BABHJAJD">Using the Discard File</a></p>
+</li>
+<li>
+<p><a href="#A3104537">Maintaining the Discard and Report Files</a></p>
+</li>
+<li>
+<p><a href="#BABDDAJH">Using the System Logs</a></p>
+</li>
+<li>
+<p><a href="#BABIHAFD">Reconciling Time Differences</a></p>
+</li>
+<li>
+<p><a href="#BABDHCCJ">Sending Event Messages to a NonStop System</a></p>
+</li>
+<li>
+<p><a href="#BABJADDD">Getting Help with Performance Tuning</a></p>
+</li>
+</ul>
+<a id="BABFADJA"></a>
+<div id="GWUAD636" class="sect1">
+<h2 class="sect1"><span class="secnum">18.1</span> Using the Information Commands in GGSCI</h2>
+<p>The primary way to view processing information is through GGSCI. For more information about these commands, see <a class="olink GWURF110" href="../../gg-winux/GWURF/ggsci_commands.htm#GWURF110"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div id="GWUAD637" class="tblhruleformal"><p class="titleintable"><a id="sthref981"></a><a id="sthref982"></a>Table 18-1 Commands to View Process Information</p>
+<table class="cellalignment160" title="Commands to View Process Information" summary="This table lists and describes the commands used to view process information.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t2">Command</th>
+<th class="cellalignment161" id="r1c2-t2">What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t2" headers="r1c1-t2">
+<p><a id="sthref983"></a><code dir="ltr">INFO {EXTRACT | REPLICAT}</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code> <code dir="ltr">[DETAIL]</code></p>
+</td>
+<td class="cellalignment157" headers="r2c1-t2 r1c2-t2">
+<p>Run status, checkpoints, approximate lag, and environmental information.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">INFO MANAGER</code></p>
+</td>
+<td class="cellalignment157" headers="r3c1-t2 r1c2-t2">
+<p>Run status and port number</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">INFO ALL</code></p>
+</td>
+<td class="cellalignment157" headers="r4c1-t2 r1c2-t2">
+<p><code dir="ltr">INFO</code> output for all Oracle GoldenGate processes on the system</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t2" headers="r1c1-t2">
+<p><a id="sthref984"></a><a id="sthref985"></a><a id="sthref986"></a><code dir="ltr">STATS {EXTRACT | REPLICAT}</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code></p>
+</td>
+<td class="cellalignment157" headers="r5c1-t2 r1c2-t2">
+<p>Statistics on processing volume, such as number of operations performed.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t2" headers="r1c1-t2">
+<p><a id="sthref987"></a><code dir="ltr">STATUS {EXTRACT | REPLICAT}</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code></p>
+</td>
+<td class="cellalignment157" headers="r6c1-t2 r1c2-t2">
+<p>Run status (starting, running, stopped, abended)</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">STATUS MANAGER</code></p>
+</td>
+<td class="cellalignment157" headers="r7c1-t2 r1c2-t2">
+<p>Run status</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r8c1-t2" headers="r1c1-t2">
+<p><a id="sthref988"></a><code dir="ltr">LAG {EXTRACT | REPLICAT}</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code></p>
+</td>
+<td class="cellalignment157" headers="r8c1-t2 r1c2-t2">
+<p><a id="sthref989"></a>Latency between last record processed and timestamp in the data source</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r9c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">INFO {</code><code dir="ltr">EXTTRAIL</code> <code dir="ltr">|</code> <code dir="ltr">RMTTRAIL</code><code dir="ltr">}</code> <code dir="ltr"><span class="codeinlineitalic">trail</span></code></p>
+</td>
+<td class="cellalignment157" headers="r9c1-t2 r1c2-t2">
+<p>Name of associated process, position of last data processed, maximum file size</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r10c1-t2" headers="r1c1-t2">
+<p><a id="sthref990"></a><a id="sthref991"></a><code dir="ltr">SEND MANAGER</code></p>
+</td>
+<td class="cellalignment157" headers="r10c1-t2 r1c2-t2">
+<p>Run status, information about child processes, port information, trail purge settings</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r11c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">SEND</code> {<code dir="ltr">EXTRACT</code> | <code dir="ltr">REPLICAT</code>} group</p>
+</td>
+<td class="cellalignment157" headers="r11c1-t2 r1c2-t2">
+<p>Depending on the process and selected options, returns information about memory pool, lag, TCP statistics, long-running transactions, process status, recovery progress, and more.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r12c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">VIEW REPORT</code> <code dir="ltr"><span class="codeinlineitalic">group</span></code></p>
+</td>
+<td class="cellalignment157" headers="r12c1-t2 r1c2-t2">
+<p>Contents of the discard file or process report</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r13c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">VIEW GGSEVT</code></p>
+</td>
+<td class="cellalignment157" headers="r13c1-t2 r1c2-t2">
+<p>Contents of the Oracle GoldenGate error log</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r14c1-t2" headers="r1c1-t2">
+<p><code dir="ltr"><span class="codeinlineitalic">COMMAND</span></code> <code dir="ltr">ER</code> <code dir="ltr"><span class="codeinlineitalic">wildcard</span></code></p>
+</td>
+<td class="cellalignment157" headers="r14c1-t2 r1c2-t2">
+<p>Information dependent on the <code dir="ltr"><span class="codeinlineitalic">COMMAND</span></code> type:</p>
+<p><code dir="ltr">INFO</code></p>
+<p><code dir="ltr">LAG</code></p>
+<p><code dir="ltr">SEND</code></p>
+<p><code dir="ltr">STATS</code></p>
+<p><code dir="ltr">STATUS</code></p>
+<p><code dir="ltr"><span class="codeinlineitalic">wildcard</span></code> is a wildcard specification for the process groups to be affected, for example:</p>
+<pre dir="ltr">
+INFO ER ext*
+STATS ER *
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="sect1" -->
+<a id="BABIACDB"></a>
+<div id="GWUAD638" class="sect1">
+<h2 class="sect1"><span class="secnum">18.2</span> Monitoring an Extract Recovery</h2>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+This topic applies to all types of databases except Oracle, for which a different recovery mechanism known as <span class="italic">Bounded Recovery</span> is used. For more information, see the <code dir="ltr">BR</code> parameter in <a class="olink GWURF410" href="../../gg-winux/GWURF/gg_parameters015.htm#GWURF410"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</div>
+<p>If Extract abends when a long-running transaction is open, it can seem to take a long time to recover when it is started again. To recover its processing state, Extract must search back through the online and archived logs (if necessary) to find the first log record for that long-running transaction. The farther back in time that the transaction started, the longer the recovery takes, in general, and Extract can appear to be stalled.</p>
+<p>To confirm that Extract is recovering properly, use the <code dir="ltr">SEND EXTRACT</code> command with the <code dir="ltr">STATUS</code> option. One of the following status notations appears, and you can follow the progress as Extract changes its log read position over the course of the recovery.</p>
+<ul>
+<li>
+<p><code dir="ltr">In recovery[1]</code> &ndash; Extract is recovering to its checkpoint in the transaction log.</p>
+</li>
+<li>
+<p><code dir="ltr">In recovery[2]</code> &ndash; Extract is recovering from its checkpoint to the end of the trail.</p>
+</li>
+<li>
+<p><code dir="ltr">Recovery complete</code> &ndash; The recovery is finished, and normal processing will resume.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="BABJFFHI"></a>
+<div id="GWUAD639" class="sect1">
+<h2 class="sect1"><span class="secnum">18.3</span> Monitoring Lag<a id="sthref992"></a><a id="sthref993"></a></h2>
+<p>Lag statistics show you how well the Oracle GoldenGate processes are keeping pace with the amount of data that is being generated by the business applications. With this information, you can diagnose suspected problems and tune the performance of the Oracle GoldenGate processes to minimize the latency between the source and target databases. See <a href="wu_performance.htm#g998643">Section 19, "Tuning the Performance of Oracle GoldenGate"</a> for help with tuning Oracle GoldenGate to minimize lag.</p>
+<div id="GWUAD640" class="sect2"><a id="sthref994"></a>
+<h3 class="sect2"><span class="secnum">18.3.1</span> About Lag</h3>
+<p>For Extract, lag is the difference, in seconds, between the time that a record was processed by Extract (based on the system clock) and the timestamp of that record in the data source.</p>
+<p>For Replicat, lag is the difference, in seconds, between the time that the last record was processed by Replicat (based on the system clock) and the timestamp of the record in the trail.</p>
+<p>To view lag statistics, use either the <code dir="ltr">LAG</code> or <code dir="ltr">SEND</code> command in GGSCI. For more information, see <a class="olink GWURF110" href="../../gg-winux/GWURF/ggsci_commands.htm#GWURF110"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The <code dir="ltr">INFO</code> command also returns a lag statistic, but this statistic is taken from the last record that was checkpointed, not the current record that is being processed. It is less accurate than <code dir="ltr">LAG</code> or <code dir="ltr">INFO</code>.</div>
+</div>
+<!-- class="sect2" -->
+<div id="GWUAD641" class="sect2"><a id="sthref995"></a>
+<h3 class="sect2"><span class="secnum">18.3.2</span> <span class="bold">Controlling How Lag<a id="sthref996"></a> is Reported<a id="sthref997"></a><a id="sthref998"></a><a id="sthref999"></a></span></h3>
+<p>Use the <code dir="ltr">LAGREPORTMINUTES</code> or <code dir="ltr">LAGREPORTHOURS</code> parameter to specify the interval at which Manager checks for Extract and Replicat lag. See <a class="olink GWURF533" href="../../gg-winux/GWURF/gg_parameters092.htm#GWURF533"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>Use the <code dir="ltr">LAGCRITICALSECONDS</code>, <code dir="ltr">LAGCRITICALMINUTES</code>, or <code dir="ltr">LAGCRITICALHOURS</code> parameter to specify a lag threshold that is considered critical, and to force a warning message to the error log when the threshold is reached. This parameter affects Extract and Replicat processes on the local system. See <a class="olink GWURF531" href="../../gg-winux/GWURF/gg_parameters090.htm#GWURF531"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>Use the <code dir="ltr">LAGINFOSECONDS</code>, <code dir="ltr">LAGINFOMINUTES</code>, or <code dir="ltr">LAGINFOHOURS</code> parameter to specify a lag threshold; if lag exceeds the specified value, Oracle GoldenGate reports lag information to the error log. If the lag exceeds the value specified with the <code dir="ltr">LAGCRITICAL</code> parameter, Manager reports the lag as critical; otherwise, it reports the lag as an informational message. A value of zero (0) forces a message at the frequency specified with the <code dir="ltr">LAGREPORTMINUTES</code> or <code dir="ltr">LAGREPORTHOURS</code> parameter. See <a class="olink GWURF532" href="../../gg-winux/GWURF/gg_parameters091.htm#GWURF532"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABIECBE"></a>
+<div id="GWUAD642" class="sect1">
+<h2 class="sect1"><span class="secnum">18.4</span> Monitoring Processing<a id="sthref1000"></a> <a id="sthref1001"></a><a id="sthref1002"></a>Volume</h2>
+<p>The <code dir="ltr">STATS</code> commands in GGSCI show you the amount of data that is being processed by an Oracle GoldenGate process, and how fast it is being moved through the Oracle GoldenGate system. With this information, you can diagnose suspected problems and tune the performance of the Oracle GoldenGate processes. These commands provide a variety of options to select and filter the output.</p>
+<p>The <code dir="ltr">STATS</code> commands are: <code dir="ltr">STATS EXTRACT</code>, <code dir="ltr">STATS REPLICAT</code>, or <code dir="ltr">STATS ER</code> command. See <a class="olink GWURF110" href="../../gg-winux/GWURF/ggsci_commands.htm#GWURF110"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>You can send interim statistics to the report file at any time with the <code dir="ltr">SEND EXTRACT</code> or <code dir="ltr">SEND REPLICAT</code> command with the <code dir="ltr">REPORT</code> option. See <a class="olink GWURF110" href="../../gg-winux/GWURF/ggsci_commands.htm#GWURF110"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABEJIIE"></a>
+<div id="GWUAD643" class="sect1">
+<h2 class="sect1"><span class="secnum">18.5</span> Using the <a id="sthref1003"></a><a id="sthref1004"></a><a id="sthref1005"></a>Error Log</h2>
+<p>Use the Oracle GoldenGate error log to view:</p>
+<ul>
+<li>
+<p>a history of GGSCI commands</p>
+</li>
+<li>
+<p>Oracle GoldenGate processes that started and stopped</p>
+</li>
+<li>
+<p>processing that was performed</p>
+</li>
+<li>
+<p>errors that occurred</p>
+</li>
+<li>
+<p>informational and <a id="sthref1006"></a>warning <a id="sthref1007"></a>messages</p>
+</li>
+</ul>
+<p>Because the error log shows events as they occurred in sequence, it is a good tool for detecting the cause (or causes) of an error. For example, you might discover that:</p>
+<ul>
+<li>
+<p>someone stopped a process</p>
+</li>
+<li>
+<p>a process failed to make a TCP/IP or database connection</p>
+</li>
+<li>
+<p>a process could not open a file</p>
+</li>
+</ul>
+<p>To view the error log, use any of the following:</p>
+<ul>
+<li>
+<p>Standard shell command to view the <code dir="ltr">ggserr.log</code> file within the root Oracle GoldenGate directory</p>
+</li>
+<li>
+<p>Oracle GoldenGate Director or Oracle GoldenGate Monitor</p>
+</li>
+<li>
+<p><code dir="ltr"><a id="sthref1008"></a>VIEW GGSEVT</code> command in GGSCI. See <a class="olink GWURF329" href="../../gg-winux/GWURF/ggsci_commands102.htm#GWURF329"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+</ul>
+<p>Because the error log will continue to grow as you use Oracle GoldenGate, consider archiving and deleting the oldest entries in the file.</p>
+</div>
+<!-- class="sect1" -->
+<a id="i1010706"></a>
+<div id="GWUAD644" class="sect1">
+<h2 class="sect1"><span class="secnum">18.6</span> Using the <a id="sthref1009"></a><a id="sthref1010"></a><a id="sthref1011"></a><a id="sthref1012"></a>Process Report</h2>
+<p>Use the process report to view (depending on the process):</p>
+<ul>
+<li>
+<p>parameters in use</p>
+</li>
+<li>
+<p>table and column mapping</p>
+</li>
+<li>
+<p>database information</p>
+</li>
+<li>
+<p>runtime messages and errors</p>
+</li>
+<li>
+<p>runtime statistics for the number of operations processed</p>
+</li>
+</ul>
+<p>Every Extract, Replicat, and Manager process generates a report file. The report can help you diagnose problems that occurred during the run, such as invalid mapping syntax, SQL errors, and connection errors.</p>
+<p>To view a process report, use any of the following:</p>
+<ul>
+<li>
+<p>standard shell command for viewing a text file</p>
+</li>
+<li>
+<p>Oracle GoldenGate Director or Oracle GoldenGate Monitor</p>
+</li>
+<li>
+<p><code dir="ltr">VIEW REPORT</code> command in GGSCI. See <a class="olink GWURF331" href="../../gg-winux/GWURF/ggsci_commands103.htm#GWURF331"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>To view information if a process abends without generating a report, use the following command to run the process from the command shell of the operating system (not GGSCI) to send the information to the terminal.</p>
+<pre dir="ltr">
+<span class="codeinlineitalic">process</span> paramfile <span class="codeinlineitalic">path</span>.prm
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p>The value for <code dir="ltr"><span class="codeinlineitalic">process</span></code> is either <code dir="ltr">extract</code> or <code dir="ltr">replicat</code>.</p>
+</li>
+<li>
+<p>The value for <code dir="ltr"><span class="codeinlineitalic">path</span></code>.<code dir="ltr">prm</code> is the fully qualified name of the parameter file, for example:</p>
+<pre dir="ltr">
+replicat paramfile /ogg/dirdat/repora.prm
+</pre></li>
+</ul>
+</li>
+</ul>
+<p>By default, reports have a file extension of <code dir="ltr">.rpt</code>, for example <code dir="ltr">EXTORA.rpt</code>. The default location is the <code dir="ltr">dirrpt</code> sub-directory of the Oracle GoldenGate directory. However, these properties can be changed when the group is created. Once created, a report file must remain in its original location for Oracle GoldenGate to operate properly after processing has started.</p>
+<p>To determine the name and location of a process report, use the <code dir="ltr">INFO EXTRACT</code>, <code dir="ltr">INFO REPLICAT</code>, or <code dir="ltr">INFO MANAGER</code> command in GGSCI. See <a class="olink GWURF110" href="../../gg-winux/GWURF/ggsci_commands.htm#GWURF110"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div id="GWUAD645" class="sect2"><a id="sthref1013"></a>
+<h3 class="sect2"><span class="secnum">18.6.1</span> Scheduling Runtime Statistics in the Process Report</h3>
+<p>By default, runtime statistics are written to the report once, at the end of each run. For long or continuous runs, you can use optional parameters to view these statistics on a regular basis, without waiting for the end of the run.</p>
+<p>To set a schedule<a id="sthref1014"></a> for reporting runtime statistics, use the <code dir="ltr">REPORT</code> parameter in the Extract or Replicat parameter file to specify a day and time to generate runtime statistics in the report. See <a class="olink GWURF617" href="../../gg-winux/GWURF/gg_parameters131.htm#GWURF617"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>To send runtime statistics<a id="sthref1015"></a> to the report on demand, use the <code dir="ltr">SEND EXTRACT</code> or <code dir="ltr">SEND REPLICAT</code> command with the <code dir="ltr">REPORT</code> option to view current runtime statistics when needed. See <a class="olink GWURF110" href="../../gg-winux/GWURF/ggsci_commands.htm#GWURF110"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GWUAD646" class="sect2"><a id="sthref1016"></a>
+<h3 class="sect2"><span class="secnum">18.6.2</span> Viewing Record Counts in the Process Report</h3>
+<p>Use the <code dir="ltr">REPORTCOUNT</code> parameter to report a count of transaction records that Extract or Replicat processed since startup. Each transaction record represents a logical database operation that was performed within a transaction that was captured by Oracle GoldenGate. The record count is printed to the report file and to the screen. For more information, see <a class="olink GWURF620" href="../../gg-winux/GWURF/gg_parameters132.htm#GWURF620"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GWUAD647" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref1017"></a>
+<h3 class="sect2"><span class="secnum">18.6.3</span> Preventing SQL Errors from Filling the Replicat Report File</h3>
+<p>Use the <code dir="ltr">WARNRATE</code> parameter to set a threshold for the number of SQL errors that can be tolerated on any target table before being reported to the process report and to the error log. The errors are reported as a warning. If your environment can tolerate a large number of these errors, increasing <code dir="ltr">WARNRATE</code> helps to minimize the size of those files. For more information, see <a class="olink GWURF740" href="../../gg-winux/GWURF/gg_parameters193.htm#GWURF740"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABHJAJD"></a>
+<div id="GWUAD648" class="sect1">
+<h2 class="sect1"><span class="secnum">18.7</span> Using the Discard File</h2>
+<p>By default, a discard file is generated whenever a process is started with the <code dir="ltr">START</code> command through GGSCI. The <a id="sthref1018"></a><a id="sthref1019"></a><a id="sthref1020"></a>discard file captures information about Oracle GoldenGate operations that failed. This information can help you resolve data errors, such as those that involve invalid column mapping.</p>
+<p>The discard file reports such information as:</p>
+<ul>
+<li>
+<p>The database error message</p>
+</li>
+<li>
+<p>The sequence number of the data source or trail file</p>
+</li>
+<li>
+<p>The relative byte address of the record in the data source or trail file</p>
+</li>
+<li>
+<p>The details of the discarded operation, such as column values of a DML statement or the text of a DDL statement.</p>
+</li>
+</ul>
+<p>To view the discard file, use a text editor or use the <code dir="ltr">VIEW REPORT</code> command in GGSCI. See <a class="olink GWURF331" href="../../gg-winux/GWURF/ggsci_commands103.htm#GWURF331"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>The default discard file has the following properties:</p>
+<ul>
+<li>
+<p>The file is named after the process that creates it, with a default extension of <code dir="ltr">.dsc</code>. Example: <code dir="ltr">finance.dsc</code>.</p>
+</li>
+<li>
+<p>The file is created in the <code dir="ltr">dirrpt</code> sub-directory of the Oracle GoldenGate installation directory.</p>
+</li>
+<li>
+<p>The maximum file size is 50 megabytes.</p>
+</li>
+<li>
+<p>At startup, if a discard file exists, it is purged before new data is written.</p>
+</li>
+</ul>
+<p>You can change these properties by using the <code dir="ltr">DISCARDFILE</code> parameter. You can disable the use of a discard file by using the <code dir="ltr">NODISCARDFILE</code> parameter. See <a class="olink GWURF462" href="../../gg-winux/GWURF/gg_parameters044.htm#GWURF462"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>If a proces is started from the command line of the operating system, it does not generate a discard file by default. You can use the <code dir="ltr">DISCARDFILE</code> parameter to specify the use of a discard file and its properties.</p>
+<p>Once created, a discard file must remain in its original location for Oracle GoldenGate to operate properly after processing has started.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A3104537"></a>
+<div id="GWUAD649" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">18.8</span> Maintaining the Discard and Report Files</h2>
+<p>By default, discard files and report files are aged the same way. A new discard or report file is created at the start of a new process run. Old files are aged by appending a sequence number from 0 (the most recent) to 9 (the oldest) to their names.</p>
+<p>If the active report or discard file reaches its maximum file size before the end of a run (or over a continuous run), the process abends unless there is an aging schedule in effect. Use the <code dir="ltr">DISCARDROLLOVER</code> and <code dir="ltr">REPORTROLLOVER</code> parameters to set aging schedules for the discard and report files respectively. These parameters set instructions for rolling over the files at regular intervals, in addition to when the process starts. Not only does this control the size of the files and prevent process outages, but it also provides a predictable set of archives that can be included in your archiving routine. For more information, see the following documentation:</p>
+<ul>
+<li>
+<p><a class="olink GWURF463" href="../../gg-winux/GWURF/gg_parameters045.htm#GWURF463"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a></p>
+</li>
+<li>
+<p><a class="olink GWURF623" href="../../gg-winux/GWURF/gg_parameters133.htm#GWURF623"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a></p>
+</li>
+</ul>
+<p>No process ever has more than ten aged reports or discard files and one active report or discard file. After the tenth aged file, the oldest is deleted when a new report is created. It is recommended that you establish an archiving schedule for aged reports and discard files in case they are needed to resolve a service request.</p>
+<div id="GWUAD650" class="tblformal"><p class="titleintable"><a id="sthref1021"></a><a id="sthref1022"></a>Table 18-2 Current Extract and Manager Reports Plus Aged Reports</p>
+<table class="cellalignment164" title="Current Extract and Manager Reports Plus Aged Reports" summary="This table lists the current extract and manager reports plus aged reports. There are four columns: Permissions, X, Date, Report.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t5">Permissions</th>
+<th class="cellalignment161" id="r1c2-t5">X</th>
+<th class="cellalignment161" id="r1c3-t5">Date</th>
+<th class="cellalignment161" id="r1c4-t5">Report</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t5" headers="r1c1-t5">
+<p>-rw-rw-rw-</p>
+</td>
+<td class="cellalignment157" headers="r2c1-t5 r1c2-t5">
+<pre dir="ltr">
+1 ggs ggs
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t5 r1c3-t5">
+<pre dir="ltr">
+1193 Oct 11 14:59
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t5 r1c4-t5">
+<pre dir="ltr">
+MGR.rpt
+</pre></td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t5" headers="r1c1-t5">
+<p>-rw-rw-rw-</p>
+</td>
+<td class="cellalignment157" headers="r3c1-t5 r1c2-t5">
+<pre dir="ltr">
+1 ggs ggs
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t5 r1c3-t5">
+<pre dir="ltr">
+3996 Oct 5  14:02
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t5 r1c4-t5">
+<pre dir="ltr">
+MGR0.rpt
+</pre></td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+-rw-rw-rw-
+</pre></td>
+<td class="cellalignment157" headers="r4c1-t5 r1c2-t5">
+<pre dir="ltr">
+1 ggs ggs
+</pre></td>
+<td class="cellalignment157" headers="r4c1-t5 r1c3-t5">
+<pre dir="ltr">
+4384 Oct 5  14:02
+</pre></td>
+<td class="cellalignment157" headers="r4c1-t5 r1c4-t5">
+<pre dir="ltr">
+TCUST.rpt
+</pre></td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+-rw-rw-rw-
+</pre></td>
+<td class="cellalignment157" headers="r5c1-t5 r1c2-t5">
+<pre dir="ltr">
+1 ggs ggs
+</pre></td>
+<td class="cellalignment157" headers="r5c1-t5 r1c3-t5">
+<pre dir="ltr">
+1011 Sep 27 14:10
+</pre></td>
+<td class="cellalignment157" headers="r5c1-t5 r1c4-t5">
+<pre dir="ltr">
+TCUST0.rpt
+</pre></td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+-rw-rw-rw-
+</pre></td>
+<td class="cellalignment157" headers="r6c1-t5 r1c2-t5">
+<pre dir="ltr">
+1 ggs ggs
+</pre></td>
+<td class="cellalignment157" headers="r6c1-t5 r1c3-t5">
+<pre dir="ltr">
+3184 Sep 27 14:10
+</pre></td>
+<td class="cellalignment157" headers="r6c1-t5 r1c4-t5">
+<pre dir="ltr">
+TCUST1.rpt
+</pre></td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+-rw-rw-rw-
+</pre></td>
+<td class="cellalignment157" headers="r7c1-t5 r1c2-t5">
+<pre dir="ltr">
+1 ggs ggs
+</pre></td>
+<td class="cellalignment157" headers="r7c1-t5 r1c3-t5">
+<pre dir="ltr">
+2655 Sep 27 14:06
+</pre></td>
+<td class="cellalignment157" headers="r7c1-t5 r1c4-t5">
+<pre dir="ltr">
+TCUST2.rpt
+</pre></td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r8c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+-rw-rw-rw-
+</pre></td>
+<td class="cellalignment157" headers="r8c1-t5 r1c2-t5">
+<pre dir="ltr">
+1 ggs ggs
+</pre></td>
+<td class="cellalignment157" headers="r8c1-t5 r1c3-t5">
+<pre dir="ltr">
+2655 Sep 27 14:04
+</pre></td>
+<td class="cellalignment157" headers="r8c1-t5 r1c4-t5">
+<pre dir="ltr">
+TCUST3.rpt
+</pre></td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r9c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+-rw-rw-rw-
+</pre></td>
+<td class="cellalignment157" headers="r9c1-t5 r1c2-t5">
+<pre dir="ltr">
+1 ggs ggs
+</pre></td>
+<td class="cellalignment157" headers="r9c1-t5 r1c3-t5">
+<pre dir="ltr">
+2744 Sep 27 13:56
+</pre></td>
+<td class="cellalignment157" headers="r9c1-t5 r1c4-t5">
+<pre dir="ltr">
+TCUST4.rpt
+</pre></td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r10c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+-rw-rw-rw-
+</pre></td>
+<td class="cellalignment157" headers="r10c1-t5 r1c2-t5">
+<pre dir="ltr">
+1 ggs ggs
+</pre></td>
+<td class="cellalignment157" headers="r10c1-t5 r1c3-t5">
+<pre dir="ltr">
+3571 Aug 29 14:27
+</pre></td>
+<td class="cellalignment157" headers="r10c1-t5 r1c4-t5">
+<pre dir="ltr">
+TCUST5.rpt
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblformal" --></div>
+<!-- class="sect1" -->
+<a id="BABDDAJH"></a>
+<div id="GWUAD651" class="sect1">
+<h2 class="sect1"><span class="secnum">18.9</span> Using the System Logs</h2>
+<p>Oracle GoldenGate writes errors that are generated at the level of the operating system to the Event <a id="sthref1023"></a>Viewer on Windows or to the <a id="sthref1024"></a>syslog on UNIX and Linux. Oracle GoldenGate events are basically the same format in the UNIX, Linux, and Windows system logs. Oracle GoldenGate errors that appear in the system logs also appear in the Oracle GoldenGate error log.</p>
+<p>On UNIX and Linux, Oracle GoldenGate messaging to the <code dir="ltr">syslog</code> is enabled by default. On Windows, Oracle GoldenGate messaging to the Event Viewer must be installed by registering the Oracle GoldenGate message DLL during the installation process. You can add this functionality at any time by running the <code dir="ltr">install</code> program with the <code dir="ltr">addevents</code> option. This program is stored in the root of the Oracle GoldenGate directory.</p>
+<p>Use the <code dir="ltr"><a id="sthref1025"></a>SYSLOG</code> parameter to control the types of messages that Oracle GoldenGate sends to the system logs on a Windows or UNIX system. You can:</p>
+<ul>
+<li>
+<p>include all Oracle GoldenGate messages</p>
+</li>
+<li>
+<p>suppress all Oracle GoldenGate messages</p>
+</li>
+<li>
+<p>filter to include information, warning, or error messages, or any combination of those types</p>
+</li>
+</ul>
+<p>You can use <code dir="ltr">SYSLOG</code> as a <code dir="ltr">GLOBALS</code> or Manager parameter, or both. For more information, see <a class="olink GWURF668" href="../../gg-winux/GWURF/gg_parameters159.htm#GWURF668"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABIHAFD"></a>
+<div id="GWUAD652" class="sect1">
+<h2 class="sect1"><span class="secnum">18.10</span> Reconciling Time Differences</h2>
+<p>To account for time differences between source and target systems, use the <code dir="ltr"><a id="sthref1026"></a>TCPSOURCETIMER</code> parameter in the Extract parameter file. This parameter adjusts the <a id="sthref1027"></a>timestamps of replicated records for reporting purposes, making it easier to interpret synchronization lag. For more information, see <a class="olink GWURF701" href="../../gg-winux/GWURF/gg_parameters166.htm#GWURF701"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABDHCCJ"></a>
+<div id="GWUAD653" class="sect1">
+<h2 class="sect1"><span class="secnum">18.11</span> Sending Event Messages to a <a id="sthref1028"></a>NonStop System</h2>
+<p>Event messages created by Collector and Replicat processes on a Windows or UNIX system can be captured and sent to EMS on NonStop systems. This feature enables centralized viewing of Oracle GoldenGate messages across platforms. To use this feature, there are two procedures:</p>
+<ul>
+<li>
+<p>Run the EMS client on the Windows or UNIX system</p>
+</li>
+<li>
+<p>Start a Collector process on the NonStop system</p>
+</li>
+</ul>
+<div id="GWUAD654" class="sect2"><a id="sthref1029"></a>
+<h3 class="sect2"><span class="secnum">18.11.1</span> Running <a id="sthref1030"></a>EMSCLNT on a Windows or UNIX System</h3>
+<p>The <code dir="ltr">EMSCLNT</code> utility captures Oracle GoldenGate event messages that originate on a Windows or UNIX system and sends them to a TCP/IP Collector process on the NonStop system. <code dir="ltr">EMSCLNT</code> reads a designated error log and runs indefinitely, waiting for more messages to send.</p>
+<p>Run <code dir="ltr">emsclnt</code> from the Oracle GoldenGate directory on the Windows or UNIX system, using the following syntax:</p>
+<pre dir="ltr">
+emsclnt -h <span class="italic">host_name</span> | <span class="codeinlineitalic">IP_address</span>
+-p <span class="codeinlineitalic">port_number</span>
+-f <span class="codeinlineitalic">file_name</span>
+-c <span class="codeinlineitalic">Collector</span>
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr">-h</code> <code dir="ltr"><span class="codeinlineitalic">host_name</span></code> | <code dir="ltr"><span class="codeinlineitalic">IP_address</span></code> is either the name or IP address of the NonStop server to which EMS messages will be sent.</p>
+</li>
+<li>
+<p><code dir="ltr">-p</code> <code dir="ltr"><span class="codeinlineitalic">port_number</span></code> is the port number of the NonStop Collector process.</p>
+</li>
+<li>
+<p><code dir="ltr">-f</code> <code dir="ltr"><span class="codeinlineitalic">file_name</span></code> is the name of the local file from which to distribute error messages. Use the full path name if the file resides somewhere other than the Oracle GoldenGate directory.</p>
+</li>
+<li>
+<p><code dir="ltr">-c</code> <code dir="ltr"><span class="codeinlineitalic">Collector</span></code> is the EMS Collector for this client.</p>
+</li>
+</ul>
+<p>The following Windows example, executed from the DOS prompt, reads the file <code dir="ltr">D:\ogg\ggserr.log</code> for error messages. Error messages are sent to the Collector on NonStop host <code dir="ltr">myhost.us.example.com</code> listening on port 9876. The Collector process on NonStop writes formatted messages to EMS Collector <code dir="ltr">$0</code>.</p>
+<div id="GWUAD655" class="example"><p class="titleinexample"><a id="sthref1031"></a>Example 18-1 Reading the Log File for Error Messages (WIndows)</p>
+<pre dir="ltr">
+&gt; emsclnt &ndash;h myhost.us.example.com &ndash;p 9876 &ndash;f d:\ogg\ggserr.log &ndash;c $0
+</pre></div>
+<!-- class="example" -->
+<p>The following UNIX example reads the file <code dir="ltr">ggserr.log</code> for error messages. Error messages are sent to the Collector on the NonStop server at IP address 10.0.0.0 listening on port 7850. The Collector on NonStop writes formatted messages to ems Collector <code dir="ltr">$0</code>.</p>
+<div id="GWUAD656" class="example"><p class="titleinexample"><a id="sthref1032"></a>Example 18-2 Reading the Log File for Error Messages (UNIX)</p>
+<pre dir="ltr">
+emsclnt &ndash;h 10.0.0.0 &ndash;p 7850 &ndash;f ggserr.log &ndash;c '$0'
+</pre></div>
+<!-- class="example" -->
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Because the dollar sign on UNIX denotes a variable, the $0 must be within single quotes.</div>
+</div>
+<!-- class="sect2" -->
+<div id="GWUAD657" class="sect2"><a id="sthref1033"></a>
+<h3 class="sect2"><span class="secnum">18.11.2</span> Running the Collector on NonStop</h3>
+<p>The Collector on the NonStop system (called Server-Collector on that platform) collects and distributes the ems messages. To start the Collector, run the <code dir="ltr">server</code> program. For each <code dir="ltr">EMSCLNT</code> process that you will be running on a Windows or UNIX system, start one <code dir="ltr">server</code> process on the NonStop system.</p>
+<p>For example, the following runs <code dir="ltr">server</code> and outputs messages to <code dir="ltr">$DATA1.GGSERRS.<a id="sthref1034"></a>SERVLOG.</code></p>
+<pre dir="ltr">
+&gt; ASSIGN STDERR, $DATA1.GGSERRS.SERVLOG
+&gt; RUN SERVER /NOWAIT/ &ndash;p 7880
+</pre>
+<p>See <span class="italic">Administering Oracle GoldenGate for Mainframe for HP NonStop Guardian</span> for more information about running Collector on NonStop.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABJADDD"></a>
+<div id="GWUAD658" class="sect1">
+<h2 class="sect1"><span class="secnum">18.12</span> Getting Help with Performance Tuning</h2>
+<p>See <a href="wu_performance.htm#g998643">Chapter 19, "Tuning the Performance of Oracle GoldenGate"</a> for help with tuning the performance of Oracle GoldenGate.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment150">
+<tr>
+<td class="cellalignment157"><table class="cellalignment155">
+<tr>
+<td class="cellalignment154"><a href="wu_customcode.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment154"><a href="wu_performance.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment159">
+<table class="cellalignment153">
+<tr>
+<td class="cellalignment154"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment154"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment154"><a href="index.htm"><img width="24" height="24" src="../../dcommon/gifs/index.gif" alt="Go to Index" /><br />
+<span class="icon">Index</span></a></td>
+<td class="cellalignment154"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

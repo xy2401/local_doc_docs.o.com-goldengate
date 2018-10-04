@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>4 Preparing the DB2 for z/OS Transaction Logs for Oracle GoldenGate</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.24" />
+<meta name="description" content="This chapter contains information that you need to configure the DB2 transaction logging to support data capture by Oracle GoldenGate Extract." />
+<meta name="dcterms.created" content="2014-09-23T12:50:2Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for DB2 z/OS" />
+<meta name="dcterms.identifier" content="E29289-02" />
+<meta name="dcterms.isVersionOf" content="GIDBZ" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="ogg_wu_setup_db2zos.htm" title="Previous" type="text/html" />
+<link rel="Next" href="ogg_wu_uninstall_db2zos.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIDBZ.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIDBZ.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIDBZ.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">7/9</span>
+<!-- End Header --><a id="GIDBZ181"></a> <a id="sthref40"></a>
+<h1 class="chapter"><span class="secnum">4</span> Preparing the DB2 for z/OS Transaction Logs for Oracle GoldenGate</h1>
+<p><a id="GIDBZ182"></a>This chapter contains information that you need to configure the DB2 transaction logging to support data capture by Oracle GoldenGate Extract.</p>
+<ul>
+<li>
+<p><a href="#CHDEHCJE">Section 4.1, "Specifying a Bootstrap Data Set"</a></p>
+</li>
+<li>
+<p><a href="#CHDCHCHA">Section 4.2, "Making Transaction Data Available"</a></p>
+</li>
+</ul>
+<a id="CHDEHCJE"></a><a id="GIDBZ183"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.1</span> Specifying a Bootstrap Data Set</h2>
+<p>The Extract process uses the BSDS to find its initial position in the transaction log within a non-data-sharing environment. You specify the BSDS when you create your Extract groups. It must be the BSDS for the DB2 subsystem to which the Extract process will be connecting. Oracle GoldenGate does not perform any validations of the BSDS specification.</p>
+</div>
+<!-- class="sect1" -->
+<a id="CHDCHCHA"></a><a id="GIDBZ184"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.2</span> Making Transaction Data Available</h2>
+<p>Oracle GoldenGate can extract DB2 transaction data from the active and archived logs. Follow these guidelines to configure the logs so that Extract can capture data.</p>
+<p><a href="#CHDDCJBE">Enabling Change Capture</a></p>
+<p><a href="#CHDIJDDI">Enabling Access to Log Records</a></p>
+<p><a href="#CHDGCGDC">Sizing and Retaining the Logs</a></p>
+<p><a href="#CHDBCCDI">Using Archive Logs on Tape</a></p>
+<p><a href="#CHDCBBFB">Controlling Log Flushes</a></p>
+<a id="CHDDCJBE"></a><a id="GIDBZ185"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">4.2.1</span> Enabling Change Capture</h3>
+<p>Follow these steps to configure DB2 to log data changes in the expanded format that is supplied by the <code>DATA CAPTURE CHANGES</code> feature of the <code>CREATE TABLE</code> and <code>ALTER TABLE</code> commands. This format provides Oracle GoldenGate with the entire before and after images of rows that are changed with update statements.</p>
+<ol>
+<li>
+<p>From the Oracle GoldenGate directory, run GGSCI.</p>
+</li>
+<li>
+<p>Log on to DB2 from GGSCI as a user that has <code>ALTER TABLE</code> privileges.</p>
+<pre>
+DBLOGIN SOURCEDB <span class="italic">DSN</span>, USERID <span class="italic">user</span>[, PASSWORD <span class="italic">password</span>][, <span class="codeinlineitalic">encryption_options</span>]
+</pre></li>
+<li>
+<p>Issue the following command. where <code><span class="codeinlineitalic">table</span></code> is the fully qualified name of the table. You can use a wildcard to specify multiple table names but not owner names.</p>
+<pre>
+ADD TRANDATA <span class="codeinlineitalic">table</span>
+</pre>
+<p>By default, <code>ADD TRANDATA</code> issues the following command:</p>
+<pre>
+ALTER TABLE <span class="codeinlineitalic">name</span> DATA CAPTURE CHANGES;
+</pre></li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="CHDIJDDI"></a><a id="GIDBZ186"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">4.2.2</span> Enabling Access to Log Records</h3>
+<p>Activate DB2 Monitor Trace Class 1 ("<code>TRACE(MONITOR) CLASS(1)</code> ") so that DB2 allows Extract to read the active log. The default destination of <code>OPX</code> is sufficient, because Oracle GoldenGate does not use a destination.</p>
+<p class="subhead2"><a id="GIDBZ187"></a>To start the trace manually</p>
+<ol>
+<li>
+<p>Log on to DB2 as a DB2 user who has the <code>TRACE</code> privilege or at least <code>SYSOPR</code> authority.</p>
+</li>
+<li>
+<p>Issue the following command:</p>
+<pre>
+start trace(monitor) class(1) scope(group)
+</pre></li>
+</ol>
+<p class="subhead2"><a id="GIDBZ188"></a>To start the trace automatically when DB2 is started</p>
+<p>Do either of the following:</p>
+<ul>
+<li>
+<p>Set <code>MONITOR TRACE</code> to "<code>YES</code>" on the <code>DSNTIPN</code> installation tracing panel.</p>
+</li>
+<li>
+<p>Set '<code>DSN6SYSP MON=YES</code> ' in the <code>DSNTIJUZ</code> installation job, as described in the <span class="italic">DB2 UDB Installation Guide</span>.</p>
+</li>
+</ul>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>The primary authorization ID, or one of the secondary authorization IDs, of the ODBC plan executor also must have the <code>MONITOR2</code> privilege.</p>
+</div>
+</div>
+<!-- class="sect2" -->
+<a id="CHDGCGDC"></a><a id="GIDBZ189"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">4.2.3</span> Sizing and Retaining the Logs</h3>
+<p>When tables are defined with <code>DATA CAPTURE CHANGES</code>, more data is logged than when they are defined with <code>DATA CAPTURE NONE</code> . If any of the following is true, you might need to increase the number and size of the active and archived logs.</p>
+<ul>
+<li>
+<p>Your applications generate large amounts of DB2 data.</p>
+</li>
+<li>
+<p>Your applications have infrequent commits.</p>
+</li>
+<li>
+<p>You expect to stop Extract for long periods of time.</p>
+</li>
+<li>
+<p>Your network is unreliable or slow.</p>
+</li>
+</ul>
+<p>To control log retention, use the <code>DSN6LOGP MAXARCH</code> system parameter in the <code>DSNTIJUZ</code> installation job.</p>
+<p>Retain enough log data so that Extract can start again from its checkpoints after you stop it or after an unplanned outage. Extract must have access to the log that contains the start of the oldest uncommitted unit of work, and all logs thereafter.</p>
+<p>If data that Extract needs during processing was not retained, either in online or archived logs, one of the following corrective actions might be required:</p>
+<ul>
+<li>
+<p>Alter Extract to capture from a later point in time for which log data is available (and accept possible data loss on the target).</p>
+</li>
+<li>
+<p>Resynchronize the source and target tables, and then start the Oracle GoldenGate environment over again.</p>
+</li>
+</ul>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>The IBM documentation makes recommendations for improving the performance of log reads. In particular, you can use large log output buffers, large active logs, and make archives to disk.</p>
+</div>
+</div>
+<!-- class="sect2" -->
+<a id="CHDBCCDI"></a><a id="GIDBZ190"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">4.2.4</span> Using Archive Logs on Tape</h3>
+<p>Oracle GoldenGate can read DB2 archive logs on tape, but it will degrade performance. For example, DB2 reserves taped archives for a single recovery task. Therefore, Extract would not be able to read an archive tape that is being used to recover a table until the recovery is finished. You could use DFHSM or an equivalent tools to move the archive logs in a seamless manner between online DASD storage and tape, but Extract will have to wait until the transfer is finished. Delays in Extract processing increase the latency between source and target data.</p>
+</div>
+<!-- class="sect2" -->
+<a id="CHDCBBFB"></a><a id="GIDBZ191"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">4.2.5</span> Controlling Log Flushes</h3>
+<p>When reading the transaction log, Extract does not process a transaction until it captures the commit record. If the commit record is on a data block that is not full, it cannot be captured until more log activity is generated to complete the block. The API that is used by Extract to read the logs only retrieves full physical data blocks.</p>
+<p>A delay in receiving blocks that contain commits can cause latency between the source and target data. If the applications are not generating enough log records to fill a block, Extract generates its own log records by issuing <code>SAVEPOINT</code> and <code>COMMIT</code> statements, until the block fills up one way or the other and is released.</p>
+<p>In a data sharing group, each API call causes DB2 to flush the data blocks of all active members, eliminating the need for Extract to perform flushes.</p>
+<p>To prevent Extract from performing flushes, use the Extract parameter <code>TRANLOGOPTIONS</code> with the <code>NOFLUSH</code> option.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment96">
+<tr>
+<td class="cellalignment103"><table class="cellalignment107">
+<tr>
+<td class="cellalignment100"><a href="ogg_wu_setup_db2zos.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment100"><a href="ogg_wu_uninstall_db2zos.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment105">
+<table class="cellalignment106">
+<tr>
+<td class="cellalignment100"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment100"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment100"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

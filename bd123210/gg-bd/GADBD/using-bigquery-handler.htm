@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the BigQuery Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Learn how to use the Google BigQuery Handler, which streams change data capture data from source trail files into Google BigQuery." />
+<meta name="dcterms.created" content="2018-09-04T10:47:42Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E89845-03" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="introduction-oracle-goldengate-big-data.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-cassandra-handler.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-489AAA81-CBED-4734-BA78-7A773DD70CE6"></a> <span id="PAGE" style="display:none;">5/33</span> <!-- End Header -->
+<h1 id="GADBD-GUID-489AAA81-CBED-4734-BA78-7A773DD70CE6" class="sect1"><span class="enumeration_chapter">2</span> Using the BigQuery Handler</h1>
+<div>
+<p>Learn how to use the Google BigQuery Handler, which streams change data capture data from source trail files into Google BigQuery.</p>
+<p>BigQuery is a RESTful web service that enables interactive analysis of massively large datasets working in conjunction with Google Storage, see <a href="https://cloud.google.com/bigquery/" target="_blank">https://cloud.google.com/bigquery/</a>.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-bigquery-handler.htm#GUID-7DCDD1C1-A0DB-4DEB-9EFF-57132C54AAE5">Detailing the Functionality</a><br /></li>
+<li class="ulchildlink"><a href="using-bigquery-handler.htm#GUID-A8426075-81E8-47AB-BA15-3C564751A490">Setting Up and Running the BigQuery Handler</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-7DCDD1C1-A0DB-4DEB-9EFF-57132C54AAE5"></a>
+<h2 id="GADBD-GUID-7DCDD1C1-A0DB-4DEB-9EFF-57132C54AAE5" class="sect2"><span class="enumeration_section">2.1</span> Detailing the Functionality</h2>
+<div>
+<div class="section">
+<p class="subhead2"></p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-bigquery-handler.htm#GUID-53F16D54-F950-4729-8C0E-1539C89C89BD">Data Types</a><br /></li>
+<li class="ulchildlink"><a href="using-bigquery-handler.htm#GUID-3FDB406B-BDFB-4F70-852C-A00C90009BF3">Operation Modes</a><br /></li>
+<li class="ulchildlink"><a href="using-bigquery-handler.htm#GUID-7B3B374A-07C9-4561-87C4-CEE01D8151C9">Operation Processing Support</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-bigquery-handler.htm#GUID-489AAA81-CBED-4734-BA78-7A773DD70CE6" title="Learn how to use the Google BigQuery Handler, which streams change data capture data from source trail files into Google BigQuery.">Using the BigQuery Handler</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-53F16D54-F950-4729-8C0E-1539C89C89BD"></a>
+<h3 id="GADBD-GUID-53F16D54-F950-4729-8C0E-1539C89C89BD" class="sect3"><span class="enumeration_section">2.1.1</span> Data Types</h3>
+<div>
+<div class="section">
+<p>The BigQuery Handler supports the standard SQL data types and most of these data types are supported by the BigQuery Handler. A data type conversion from the column value in the trail file to the corresponding Java type representing the BigQuery column type in the BigQuery Handler is required.</p>
+<p>The following data types are supported:</p>
+<pre dir="ltr">
+STRING
+BYTES
+INTEGER
+FLOAT
+NUMERIC
+BOOLEAN
+TIMESTAMP
+DATE
+TIME
+DATETIME
+</pre>
+<p>The BigQuery Handler does not support complex data types, such as <code class="codeph">ARRAY</code> and <code class="codeph">STRUCT</code>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-bigquery-handler.htm#GUID-7DCDD1C1-A0DB-4DEB-9EFF-57132C54AAE5">Detailing the Functionality</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-3FDB406B-BDFB-4F70-852C-A00C90009BF3"></a>
+<h3 id="GADBD-GUID-3FDB406B-BDFB-4F70-852C-A00C90009BF3" class="sect3"><span class="enumeration_section">2.1.2</span> Operation Modes</h3>
+<div>
+<div class="section">
+<p>You can configure the BigQuery Handler in one of these two modes:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-3FDB406B-BDFB-4F70-852C-A00C90009BF3__GUID-4CCF1FDE-1303-484B-B84C-9FF35B0AD719"><!-- --></a><code class="codeph">auditLogMode = true</code></dt>
+<dd>
+<p>When the handler is configured to run with Audit log mode, the data is pushed into Google BigQuery without a unique id and primary key. As a result, Google BigQuery is not able to merge different operations on the same row.</p>
+<p>Also, the order in which the audit log is displayed in the BigQuery data set is not deterministic.</p>
+<p>To overcome these limitations, you need to specify <code class="codeph">optype</code> and <code class="codeph">position</code> in the meta columns template for the handler. This adds two columns of the same names in the schema for the table in Google BigQuery. For example:</p>
+<pre dir="ltr">
+gg.handler.bigquery.metaColumnsTemplate = ${optype}, ${position}
+</pre>
+<p>The <code class="codeph">optype</code> is important to determine the operation type for the row in the audit log.</p>
+<p>To view the audit log in order of the operations processed in the trail file, specify position which can be used in the <code class="codeph">ORDER BY</code> clause while querying the table in Google BigQuery. For example:</p>
+<pre dir="ltr">
+SELECT * FROM [<span class="italic">projectId</span>:<span class="italic">datasetId</span>.<span class="italic">tableId</span>] ORDER BY position
+</pre></dd>
+<dt class="dlterm"><a id="GUID-3FDB406B-BDFB-4F70-852C-A00C90009BF3__GUID-0AC186F5-62AA-4110-A921-65F4495E3747"><!-- --></a><code class="codeph">auditLogMode = false</code></dt>
+<dd>
+<p>This causes the handler to write data into Google BigQuery specifying a unique id and primary key for each row. As a result, Google BigQuery is able to merge different operations on the same row.</p>
+<p>The trail source needs to have a full image of the records in order to merge correctly.</p>
+<p>Google BigQuery processes every operation as an <code class="codeph">insert</code> for each row. As a result, there is a <code class="codeph">deleted</code> column added to the schema for the table in this mode of operation. When the handler encounters a delete operation on a row, it inserts the row into Google BigQuery and sets the deleted column to <code class="codeph">true</code>.</p>
+<p>To view data in the BigQuery table like it would ideally be seen in a RDBMS, specify a <code class="codeph">WHERE deleted = false</code> clause while querying the table in Google BigQuery.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-bigquery-handler.htm#GUID-7DCDD1C1-A0DB-4DEB-9EFF-57132C54AAE5">Detailing the Functionality</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-7B3B374A-07C9-4561-87C4-CEE01D8151C9"></a>
+<h3 id="GADBD-GUID-7B3B374A-07C9-4561-87C4-CEE01D8151C9" class="sect3"><span class="enumeration_section">2.1.3</span> Operation Processing Support</h3>
+<div>
+<div class="section">
+<p>The BigQuery Handler pushes operations to Google BigQuery using synchronous API. Insert, update, and delete operations are processed differently in BigQuery than in a traditional RDBMS.</p>
+<p>The following explains how insert, update, and delete operations are interpreted by the handler depending on the mode of operation:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-7B3B374A-07C9-4561-87C4-CEE01D8151C9__GUID-2C08D84F-A0A6-44A1-9FED-FCB9874CA761"><!-- --></a><code class="codeph">auditLogMode = true</code></dt>
+<dd>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">insert</code> &ndash; Inserts the record with <code class="codeph">optype</code> as an insert operation in the BigQuery table.</p>
+</li>
+<li>
+<p><code class="codeph">update</code> &ndash;Inserts the record with <code class="codeph">optype</code> as an update operation in the BigQuery table.</p>
+</li>
+<li>
+<p><code class="codeph">delete</code> &ndash; Inserts the record with <code class="codeph">optype</code> as a delete operation in the BigQuery table.</p>
+</li>
+<li>
+<p><code class="codeph">pkUpdate</code>&mdash;When <code class="codeph">pkUpdateHandling</code> property is configured as <code class="codeph">delete-insert</code>, the handler sends out a delete operation followed by an insert operation. Both these rows have the same position in the BigQuery table, which helps to identify it as a primary key operation and not a separate delete and insert operation.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-7B3B374A-07C9-4561-87C4-CEE01D8151C9__GUID-B2DB3490-F936-4EBA-8155-D214A5B0E218"><!-- --></a><code class="codeph">auditLogMode = false</code></dt>
+<dd>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">insert</code> &ndash; If the row does not already exist in Google BigQuery, then an insert operation is processed as an <code class="codeph">insert</code>. If the row already exists in Google BigQuery, then an insert operation is processed as an <code class="codeph">update</code>. The handler sets the deleted column to <code class="codeph">false</code>.</p>
+</li>
+<li>
+<p><code class="codeph">update</code> &ndash;If a row does not exist in Google BigQuery, then an update operation is processed as an <code class="codeph">insert</code>. If the row already exists in Google BigQuery, then an update operation is processed as <code class="codeph">update</code>. The handler sets the deleted column to <code class="codeph">false</code>.</p>
+</li>
+<li>
+<p><code class="codeph">delete</code> &ndash; If the row does not exist in Google BigQuery, then a delete operation has no effect. If the row exists in Google BigQuery, then a delete operation is processed as a <code class="codeph">delete</code>. The handler sets the deleted column to <code class="codeph">true</code>.</p>
+</li>
+<li>
+<p><code class="codeph">pkUpdate</code>&mdash;When <code class="codeph">pkUpdateHandling</code> property is configured as <code class="codeph">delete-insert</code>, the handler sets the deleted column to <code class="codeph">true</code> for the row whose primary key is updated. It is followed by a separate insert operation with the new primary key and the deleted column set to <code class="codeph">false</code> for this row.</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Do not toggle the audit log mode because it forces the BigQuery handler to abend as Google BigQuery cannot alter schema of an existing table. The existing table needs to be deleted before switching audit log modes.</p>
+<div class="infobox-note" id="GUID-7B3B374A-07C9-4561-87C4-CEE01D8151C9__GUID-DA4A3932-DB0F-4D8D-8276-4E80A6882D52">
+<p class="notep1">Note:</p>
+<p>The BigQuery Handler does not support the <code class="codeph">truncate</code> operation. It abends when it encounters a <code class="codeph">truncate</code> operation.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-bigquery-handler.htm#GUID-7DCDD1C1-A0DB-4DEB-9EFF-57132C54AAE5">Detailing the Functionality</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-A8426075-81E8-47AB-BA15-3C564751A490"></a>
+<h2 id="GADBD-GUID-A8426075-81E8-47AB-BA15-3C564751A490" class="sect2"><span class="enumeration_section">2.2</span> Setting Up and Running the BigQuery Handler</h2>
+<div>
+<div class="section">
+<p>The BigQuery Client library does not ship with <span>Oracle GoldenGate for Big Data</span>. You must download the latest version of the Java Client library for BigQuery at:</p>
+<p><a href="https://developers.google.com/api-client-library/java/apis/bigquery/v2" target="_blank">https://developers.google.com/api-client-library/java/apis/bigquery/v2</a></p>
+<p>You must configure the <code class="codeph">gg.classpath</code> configuration property in the Java Adapter properties file to specify the JARs for the Java Client Library for BigQuery. The path to the dependency JARs must include the asterisk (<code class="codeph">*</code>) wildcard character to include all of the JAR files in that directory in the associated classpath. Do<span class="italic">not</span> use <code class="codeph">*.jar</code>. This is an example of the correctly configured classpath:</p>
+<pre dir="ltr">
+gg.classpath= /path_to_repository/bigquery/libs/*:/path_to_repository/bigquery/*
+</pre>
+<p>Next, download the following JARs from Maven Central, and then include them in the classpath for the BigQuery Handler:</p>
+<pre dir="ltr">
+&bull;       api-common-1.6.0.jar
+&bull;  gax-1.28.0.jar
+&bull;  gax-httpjson-0.45.0.jar
+&bull;  google-auth-library-credentials-0.9.1.jar
+&bull;  google-auth-library-oauth2-http-0.9.1.jar
+&bull;  google-cloud-bigquery-1.31.0.jar
+&bull;  google-cloud-core-1.35.0.jar
+&bull;  google-cloud-core-http-1.35.0.jar
+&bull;  google-http-client-jackson-1.23.0.jar
+&bull;  guava-25.1-jre.jar
+&bull;  threetenbp-1.3.6.jar
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-bigquery-handler.htm#GUID-ECCD53B7-84DE-43BC-AC7A-814BE432C6BC">Understanding the BigQuery Handler Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-bigquery-handler.htm#GUID-4568CD10-5495-4DB0-8E75-10F40451A8A7">Review a Sample Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-bigquery-handler.htm#GUID-3D0E7B8F-54C5-412E-9937-1691C040A8B7">Proxy Settings</a><br /></li>
+<li class="ulchildlink"><a href="using-bigquery-handler.htm#GUID-14C8C018-FCCC-4BFF-A531-392C57DB9D9F">Configuring Handler Authentication</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-bigquery-handler.htm#GUID-489AAA81-CBED-4734-BA78-7A773DD70CE6" title="Learn how to use the Google BigQuery Handler, which streams change data capture data from source trail files into Google BigQuery.">Using the BigQuery Handler</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-ECCD53B7-84DE-43BC-AC7A-814BE432C6BC"></a>
+<h3 id="GADBD-GUID-ECCD53B7-84DE-43BC-AC7A-814BE432C6BC" class="sect3"><span class="enumeration_section">2.2.1</span> Understanding the BigQuery Handler Configuration</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the BigQuery Handler. These properties are located in the Java Adapter properties file (not in the Replicat properties file).</p>
+<p>To enable the selection of the BigQuery Handler, you must first configure the handler type by specifying <code class="codeph">gg.handler.jdbc.type=bigquery</code> and the other BigQuery properties as follows:</p>
+</div>
+<!-- class="section" -->
+<div class="tblformal" id="GUID-ECCD53B7-84DE-43BC-AC7A-814BE432C6BC__GUID-2F0D04A3-FC62-428E-A3AC-44349A09933F">
+<p class="titleintable">Table 2-1 BigQuery Handler Configuration Properties</p>
+<table class="cellalignment78" title="BigQuery Handler Configuration Properties" summary="Five column table describing the BigQuery Handler Configuration">
+<thead>
+<tr class="cellalignment65">
+<th class="cellalignment98" id="d6657e487">Properties</th>
+<th class="cellalignment99" id="d6657e490">Required/ Optional</th>
+<th class="cellalignment100" id="d6657e493">Legal Values</th>
+<th class="cellalignment101" id="d6657e496">Default</th>
+<th class="cellalignment102" id="d6657e499">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d6657e504" headers="d6657e487">
+<p><code class="codeph">gg.handlerlist</code></p>
+</td>
+<td class="cellalignment104" headers="d6657e504 d6657e490">
+<p>Required</p>
+</td>
+<td class="cellalignment105" headers="d6657e504 d6657e493">
+<p>Any string</p>
+</td>
+<td class="cellalignment106" headers="d6657e504 d6657e496">
+<p>None</p>
+</td>
+<td class="cellalignment107" headers="d6657e504 d6657e499">
+<p>Provides a name for the BigQuery Handler. The BigQuery Handler name then becomes part of the property names listed in this table.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d6657e521" headers="d6657e487">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">type=bigquery</code></p>
+</td>
+<td class="cellalignment104" headers="d6657e521 d6657e490">
+<p>Required</p>
+</td>
+<td class="cellalignment105" headers="d6657e521 d6657e493">
+<p><code class="codeph">bigquery</code></p>
+</td>
+<td class="cellalignment106" headers="d6657e521 d6657e496">
+<p>None</p>
+</td>
+<td class="cellalignment107" headers="d6657e521 d6657e499">
+<p>Selects the BigQuery Handler for streaming change data capture into Google BigQuery.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d6657e544" headers="d6657e487">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">credentialsFile</code></p>
+</td>
+<td class="cellalignment104" headers="d6657e544 d6657e490">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d6657e544 d6657e493">
+<p>Relative or absolute path to the credentials file</p>
+</td>
+<td class="cellalignment106" headers="d6657e544 d6657e496">
+<p>None</p>
+</td>
+<td class="cellalignment107" headers="d6657e544 d6657e499">
+<p>The credentials file downloaded from Google BigQuery for authentication. If you do not specify the path to the credentials file, you need to set it as an environment variable, see <a href="using-bigquery-handler.htm#GUID-14C8C018-FCCC-4BFF-A531-392C57DB9D9F">Configuring Handler Authentication</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d6657e569" headers="d6657e487">
+<p><code class="codeph">gg.handler.</code><code class="codeph">name.projectId</code></p>
+</td>
+<td class="cellalignment104" headers="d6657e569 d6657e490">
+<p>Required</p>
+</td>
+<td class="cellalignment105" headers="d6657e569 d6657e493">
+<p>Any string</p>
+</td>
+<td class="cellalignment106" headers="d6657e569 d6657e496">
+<p>None</p>
+</td>
+<td class="cellalignment107" headers="d6657e569 d6657e499">
+<p>The name of the project in Google BigQuery. The handler needs project ID to connect to Google BigQuery store.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d6657e590" headers="d6657e487">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">datasetId</code></p>
+</td>
+<td class="cellalignment104" headers="d6657e590 d6657e490">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d6657e590 d6657e493">
+<p>Any string</p>
+</td>
+<td class="cellalignment106" headers="d6657e590 d6657e496">
+<p><code class="codeph">default_dataset</code></p>
+</td>
+<td class="cellalignment107" headers="d6657e590 d6657e499">
+<p>The name of the data set the tables are stored in. If not specified, the handler creates a new data set named <code class="codeph">default_dataset</code> and inserts the table into it.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d6657e616" headers="d6657e487">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">batchSize</code></p>
+</td>
+<td class="cellalignment104" headers="d6657e616 d6657e490">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d6657e616 d6657e493">
+<p>Any number</p>
+</td>
+<td class="cellalignment106" headers="d6657e616 d6657e496">
+<p><code class="codeph">500</code></p>
+</td>
+<td class="cellalignment107" headers="d6657e616 d6657e499">
+<p>The maximum number of operations to be batched together. This is applicable for all target table batches.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d6657e639" headers="d6657e487">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">batchFlushFrequency</code></p>
+</td>
+<td class="cellalignment104" headers="d6657e639 d6657e490">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d6657e639 d6657e493">
+<p>Any number</p>
+</td>
+<td class="cellalignment106" headers="d6657e639 d6657e496">
+<p><code class="codeph">1000</code></p>
+</td>
+<td class="cellalignment107" headers="d6657e639 d6657e499">
+<p>The maximum amount of time in milliseconds to wait before executing the next batch of operations. This is applicable for all target table batches.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d6657e662" headers="d6657e487">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">skipInvalidRows</code></p>
+</td>
+<td class="cellalignment104" headers="d6657e662 d6657e490">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d6657e662 d6657e493">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment106" headers="d6657e662 d6657e496">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment107" headers="d6657e662 d6657e499">
+<p>Sets whether to insert all valid rows of a request, even if invalid rows exist. If not set, the entire insert request fails if it contains an invalid row.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d6657e689" headers="d6657e487"><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">ignoreUnknownValues</code></td>
+<td class="cellalignment104" headers="d6657e689 d6657e490">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d6657e689 d6657e493">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment106" headers="d6657e689 d6657e496">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment107" headers="d6657e689 d6657e499">
+<p>Sets whether to accept rows that contain values that do not match the schema. If not set, rows with unknown values are considered to be invalid.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d6657e715" headers="d6657e487"><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">connectionTimeout</code></td>
+<td class="cellalignment104" headers="d6657e715 d6657e490">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d6657e715 d6657e493">
+<p>Positive integer</p>
+</td>
+<td class="cellalignment106" headers="d6657e715 d6657e496">
+<p><code class="codeph">20000</code></p>
+</td>
+<td class="cellalignment107" headers="d6657e715 d6657e499">
+<p>The maximum amount of time, in milliseconds, to wait for the handler to establish a connection with Google BigQuery.</p>
+</td>
+</tr>
+</tbody>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d6657e744"><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">readTimeout</code></td>
+<td class="cellalignment73" headers="d6657e744">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d6657e744">
+<p>Positive integer</p>
+</td>
+<td class="cellalignment73" headers="d6657e744">
+<p><code class="codeph">30000</code></p>
+</td>
+<td class="cellalignment73" headers="d6657e744">
+<p>The maximum amount of time in milliseconds to wait for the handler to read data from an established connection.</p>
+</td>
+</tr>
+</tbody>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d6657e773">
+<p><code class="codeph">gg.handler.</code><code class="codeph">name.metaColumnsTemplate</code></p>
+</td>
+<td class="cellalignment73" headers="d6657e773">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d6657e773">
+<p>A legal string</p>
+</td>
+<td class="cellalignment73" headers="d6657e773">
+<p>None</p>
+</td>
+<td class="cellalignment73" headers="d6657e773">
+<p>A legal string specifying the <code class="codeph">metaColumns</code> to be included. If you set <code class="codeph">auditLogMode</code> to <code class="codeph">true</code>, it is important that you set the <code class="codeph">metaColumnsTemplate</code> property to view the operation type for the row inserted in the audit log.</p>
+</td>
+</tr>
+</tbody>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d6657e813"><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">auditLogMode</code></td>
+<td class="cellalignment73" headers="d6657e813">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d6657e813">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment73" headers="d6657e813">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment73" headers="d6657e813">
+<p>Set to <code class="codeph">true</code>, the handler writes each record to the target without any primary key. Everything is processed as insert.</p>
+<p>Set to <code class="codeph">false</code>, the handler tries to merge incoming records into the target table if they have the same primary key. Primary keys are needed for this property. The trail source records need to have a full image updates to merge correctly.</p>
+</td>
+</tr>
+</tbody>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d6657e854"><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">pkUpdateHandling</code></td>
+<td class="cellalignment73" headers="d6657e854">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d6657e854">
+<p><code class="codeph">abend</code> | <code class="codeph">delete-insert</code></p>
+</td>
+<td class="cellalignment73" headers="d6657e854">
+<p><code class="codeph">abend</code></p>
+</td>
+<td class="cellalignment73" headers="d6657e854">
+<p>Sets how the handler handles update operations that change a primary key. Primary key operations can be problematic for the BigQuery Handler and require special consideration:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">abend</code>- indicates the process abends.</p>
+</li>
+<li>
+<p><code class="codeph">delete-insert</code>- indicates the process treats the operation as a delete and an insert. The full before image is required for this property to work correctly. Without full before and after row images the insert data are incomplete. Oracle recommends this option.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-bigquery-handler.htm#GUID-A8426075-81E8-47AB-BA15-3C564751A490">Setting Up and Running the BigQuery Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-4568CD10-5495-4DB0-8E75-10F40451A8A7"></a>
+<h3 id="GADBD-GUID-4568CD10-5495-4DB0-8E75-10F40451A8A7" class="sect3"><span class="enumeration_section">2.2.2</span> Review a Sample Configuration</h3>
+<div>
+<p>The following is a sample configuration for the BigQuery Handler from the Java Adapter properties file:</p>
+<pre dir="ltr">
+gg.handlerlist = bigquery
+
+#The handler properties
+gg.handler.bigquery.type = bigquery
+gg.handler.bigquery.projectId = festive-athlete-201315
+gg.handler.bigquery.datasetId = oggbd
+gg.handler.bigquery.credentialsFile = credentials.json
+gg.handler.bigquery.auditLogMode = true
+gg.handler.bigquery.pkUpdateHandling = delete-insert
+
+gg.handler.bigquery.metaColumnsTemplate =${optype}, ${position}
+</pre></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-bigquery-handler.htm#GUID-A8426075-81E8-47AB-BA15-3C564751A490">Setting Up and Running the BigQuery Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-3D0E7B8F-54C5-412E-9937-1691C040A8B7"></a>
+<h3 id="GADBD-GUID-3D0E7B8F-54C5-412E-9937-1691C040A8B7" class="sect3"><span class="enumeration_section">2.2.3</span> Proxy Settings</h3>
+<div>
+<div class="section">
+<p>To connect to BigQuery using a proxy server, you must configure the proxy host and the proxy port in the properties file as follows:</p>
+<pre dir="ltr">
+javawriter.bootoptions= -Dhttps.proxyHost=<span class="italic">proxy_host_name</span>
+                                                -Dhttps.proxyPort=<span class="italic">proxy_port_number
+</span>
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-bigquery-handler.htm#GUID-A8426075-81E8-47AB-BA15-3C564751A490">Setting Up and Running the BigQuery Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-14C8C018-FCCC-4BFF-A531-392C57DB9D9F"></a>
+<h3 id="GADBD-GUID-14C8C018-FCCC-4BFF-A531-392C57DB9D9F" class="sect3"><span class="enumeration_section">2.2.4</span> Configuring Handler Authentication</h3>
+<div>
+<div class="section">
+<p>You have to configure the BigQuery Handler authentication using the credentials in the JSON file downloaded from Google BigQuery.</p>
+<p>Download the credentials file:</p>
+<ol>
+<li>
+<p>Login into your Google account at <a href="http://cloud.google.com" target="_blank">cloud.google.com</a>.</p>
+</li>
+<li>
+<p>Click <span class="bold">Console</span>, and then to go to the Dashboard where you can select your project.</p>
+</li>
+<li>
+<p>From the navigation menu, click <span class="bold">APIs &amp; Services</span> then select <span class="bold">Credentials</span>.</p>
+</li>
+<li>
+<p>From the Create Credentials menu, choose <span class="bold">Service account key</span>.</p>
+</li>
+<li>
+<p>Choose the JSON key type to download the JSON credentials file for your system.</p>
+</li>
+</ol>
+<p>Once you have the credentials file, you can authenticate the handler in one of these two ways:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Specify the path to the credentials file in the properties file with the <code class="codeph">gg.handler.name.credentialsFile</code> configuration property.</p>
+<p>The path of the credentials file must contain the path with no wildcard appended. If you include the <code class="codeph">*</code> wildcard in the path to the credentials file, the file is not recognized.</p>
+<p>Or</p>
+</li>
+<li>
+<p>Set the <code class="codeph">GOOGLE_APPLICATION_CREDENTIALS</code> environment variable on your system. For example:</p>
+<pre dir="ltr">
+export GOOGLE_APPLICATION_CREDENTIALS = credentials.json
+</pre>
+<p>Then restart the Oracle GoldenGate manager process.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-bigquery-handler.htm#GUID-A8426075-81E8-47AB-BA15-3C564751A490">Setting Up and Running the BigQuery Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment64">
+<tr>
+<td class="cellalignment74">
+<table class="cellalignment69">
+<tr>
+<td class="cellalignment68"><a href="introduction-oracle-goldengate-big-data.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment68"><a href="using-cassandra-handler.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment76">
+<table class="cellalignment67">
+<tr>
+<td class="cellalignment68"><a href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment68"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment68"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

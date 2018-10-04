@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>12 Additional Configuration Steps For Using Nonintegrated Replicat</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This chapter contains instructions that are specific only to Replicat when operating in nonintegrated mode. When Replicat operates in nonintegrated mode, triggers, cascade constraints, and unique identifiers must be properly configured in an Oracle GoldenGate environment." />
+<meta name="dcterms.created" content="2015-06-05T14:9:49Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E29644-07" />
+<meta name="dcterms.isVersionOf" content="GIORA" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="classic_capture.htm" title="Previous" type="text/html" />
+<link rel="Next" href="ddl.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIORA.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIORA.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIORA.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">15/27</span>
+<!-- End Header -->
+<div id="GIORA900" class="chapter"><a id="BABCDHDE"></a>
+<h1 class="chapter"><span class="secnum">12</span> Additional Configuration Steps For Using Nonintegrated Replicat</h1>
+<p><a id="GIORA564"></a>This chapter contains instructions that are specific only to Replicat when operating in <span class="italic">nonintegrated</span> mode. When Replicat operates in nonintegrated mode, triggers, cascade constraints, and unique identifiers must be properly configured in an Oracle GoldenGate environment.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#CEGBCDFA">Disabling Triggers and Referential Cascade Constraints on Target Tables</a></p>
+</li>
+<li>
+<p><a href="#CHDIEDJF">Deferring Constraint Checking on Target Tables</a></p>
+</li>
+</ul>
+<p>This chapter is a supplement to the basic configuration requirements that are documented in <a href="config_apply.htm#CHDEJBHB">Chapter 9, "Configuring Oracle GoldenGate Apply"</a>.</p>
+<a id="CEGBCDFA"></a>
+<div id="GIORA359" class="sect1">
+<h2 class="sect1"><span class="secnum">12.1</span> Disabling Triggers and Referential Cascade Constraints on Target Tables</h2>
+<p>Triggers and cascade constraints must be disabled on Oracle target tables when Replicat is in nonintegrated mode. Oracle GoldenGate provides some options to handle triggers or cascade constraints automatically, depending on the Oracle version:</p>
+<ul>
+<li>
+<p>For Oracle 11.2.0.2 and later 11gR2 versions, Replicat automatically disables the work performed by triggers during its session. It does not disable a trigger, but instead prevents the trigger body from executing. The <code dir="ltr">WHEN</code> portion of the trigger must still compile and execute correctly to avoid database errors. To enable triggers to fire, or to disable them manually, use the <code dir="ltr">NOSUPPRESSTRIGGERS</code> option of <code dir="ltr">DBOPTIONS</code> and place the statement after the <code dir="ltr">USERIDALIAS</code> parameter. To allow a specific trigger to fire, you can use the following database procedure, where <code dir="ltr"><span class="codeinlineitalic">trigger_owner</span></code> is the owner of the trigger and <code dir="ltr"><span class="codeinlineitalic">trigger_name</span></code> is the name of the trigger. Once the procedure is called with <code dir="ltr">FALSE</code> for a particular trigger, it remains set until the procedure is called with <code dir="ltr">TRUE</code>.</p>
+</li>
+<li>
+<pre dir="ltr">
+dbms_ddl.set_trigger_firing_property(<span class="codeinlineitalic">trigger_owner</span> "<span class="codeinlineitalic">trigger_name</span>", FALSE)
+</pre></li>
+<li>
+<p>For Oracle 11.2.0.2 and later 11gR2 versions, you can use the <code dir="ltr">DBOPTIONS</code> parameter with the <code dir="ltr">DEFERREFCONST</code> option to delay the checking and enforcement of cascade update and cascade delete constraints until the Replicat transaction commits.</p>
+</li>
+<li>
+<p>For other Oracle versions, you must disable triggers and integrity constraints or alter them manually to ignore the Replicat database user.</p>
+</li>
+</ul>
+<p>Constraints must be disabled in nonintegrated Replicat mode because Oracle GoldenGate replicates DML that results from the firing of a trigger or a cascade constraint. If the same trigger or constraint gets activated on the target table, it becomes redundant because of the replicated version, and the database returns an error. Consider the following example, where the source tables are <code dir="ltr">emp_src</code> and <code dir="ltr">salary_src</code> and the target tables are <code dir="ltr">emp_targ</code> and <code dir="ltr">salary_targ</code>.</p>
+<ol>
+<li>
+<p>A delete is issued for <code dir="ltr">emp_src</code>.</p>
+</li>
+<li>
+<p>It cascades a delete to <code dir="ltr">salary_src</code>.</p>
+</li>
+<li>
+<p>Oracle GoldenGate sends both deletes to the target.</p>
+</li>
+<li>
+<p>The parent delete arrives first and is applied to <code dir="ltr">emp_targ</code>.</p>
+</li>
+<li>
+<p>The parent delete cascades a delete to <code dir="ltr">salary_targ</code>.</p>
+</li>
+<li>
+<p>The cascaded delete from <code dir="ltr">salary_src</code> is applied to <code dir="ltr">salary_targ</code>.</p>
+</li>
+<li>
+<p>The row cannot be located because it was already deleted in step 5.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="CHDIEDJF"></a>
+<div id="GIORA360" class="sect1">
+<h2 class="sect1"><span class="secnum">12.2</span> Deferring Constraint Checking on Target Tables</h2>
+<p>When Replicat is in nonintegrated mode, you may need to defer constraint checking on the target.</p>
+<ol>
+<li>
+<p>If constraints are <code dir="ltr">DEFERRABLE</code> on the source, the constraints on the target must also be <code dir="ltr">DEFERRABLE</code>. You can use one of the following parameter statements to defer constraint checking until a Replicat transaction commits:</p>
+<ul>
+<li>
+<p>Use <code dir="ltr">SQLEXEC</code> at the root level of the Replicat parameter file to defer the constraints for an entire Replicat session.</p>
+<p><code dir="ltr">SQLEXEC ("alter session set constraint deferred")</code></p>
+</li>
+<li>
+<p>Use the Replicat parameter <code dir="ltr">DBOPTIONS</code> with the <code dir="ltr">DEFERREFCONST</code> option to delay constraint checking for each Replicat transaction.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>You might need to configure Replicat to overcome integrity errors caused by transient primary-key duplicates. Transient primary-key duplicates are duplicates that occur temporarily during the execution of a transaction, but are resolved by transaction commit time. This kind of operation typically uses a <code dir="ltr">SET x = x+n</code> formula or some other manipulation that shifts values so that a new value equals an existing one.</p>
+<p>The following illustrates a sequence of value changes that can cause a transient primary-key duplicate if constraints are not deferred. The example assumes the primary key column is <code dir="ltr">CODE</code> and the current key values (before the updates) are 1, 2, and 3.</p>
+<pre dir="ltr">
+update item set code = 2 where code = 1;
+update item set code = 3 where code = 2;
+update item set code = 4 where code = 3;
+</pre></li>
+</ol>
+<p>In this example, when Replicat applies the first update to the target, there is an ORA-00001 (unique constraint) error because the key value of 2 already exists in the table. The Replicat transaction returns constraint violation errors. By default, Replicat does not handle these violations and abends.</p>
+<div id="GIORA361" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref126"></a>
+<h3 class="sect2"><span class="secnum">12.2.1</span> Handling Transient Primary-key Duplicates in Versions Earlier than 11.2.0.2</h3>
+<p>To handle transient primary-key duplicates in versions earlier than 11.2.0.2, use the Replicat parameter <code dir="ltr">HANDLETPKUPDATE</code>. In this configuration, a nonintegrated Replicat handles transient primary-key updates by temporarily deferring constraints. To support this functionality, you must create or alter the constraints as <code dir="ltr">DEFERRABLE INITIALLY IMMEDIATE</code> on the target tables. If the constraints are not <code dir="ltr">DEFERRABLE</code>, Replicat handles the errors according to rules that are specified with the <code dir="ltr">HANDLECOLLISIONS</code> and <code dir="ltr">REPERROR</code> parameters, if they exist, or else it abends.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA362" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref127"></a>
+<h3 class="sect2"><span class="secnum">12.2.2</span> Handling Transient Primary-key Duplicates in Version 11.2.0.2 or Later</h3>
+<p>For versions later than 11.2.0.2, a nonintegrated Replicat by default tries to resolve transient primary-key duplicates automatically by using a workspace in Oracle Workspace Manager. In this configuration, Replicat can defer the constraint checking until commit time without requiring the constraints to be explicitly defined as deferrable.</p>
+<p>The requirements for automatic handling of transient primary-key duplicates are:</p>
+<ul>
+<li>
+<p>Grant the Replicat database user access to the following Oracle function:</p>
+<pre dir="ltr">
+DBMS_XSTREAM_GG.ENABLE_TDUP_WORKSPACE()
+</pre></li>
+<li>
+<p>The target tables cannot have deferrable constraints; otherwise Replicat returns an error and abends.</p>
+</li>
+</ul>
+<p>To handle tables with deferrable constraints, make certain the constraints are <code dir="ltr">DEFERRABLE INITIALLY IMMEDIATE</code>, and use the <code dir="ltr">HANDLETPKUPDATE</code> parameter in the <code dir="ltr">MAP</code> statement that maps that table. The <code dir="ltr">HANDLETPKUPDATE</code> parameter overrides the default of handling the duplicates automatically.The use of a workspace affects the following Oracle GoldenGate error handling parameters:</p>
+<ul>
+<li>
+<p><code dir="ltr">HANDLECOLLISIONS</code></p>
+</li>
+<li>
+<p><code dir="ltr">REPERROR</code></p>
+</li>
+</ul>
+<p>When Replicat enables a workspace in Oracle Workspace Manager, it ignores the error handling that is specified by Oracle GoldenGate parameters such as <code dir="ltr">HANDLECOLLISIONS</code> and <code dir="ltr">REPERROR</code>. Instead, Replicat aborts its grouped transaction (if <code dir="ltr">BATCHSQL</code> is enabled), and then retries the update in normal mode by using the active workspace. If ORA-00001 occurs again, Replicat rolls back the transaction and then retries the transaction with error-handling rules in effect again.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If Replicat encounters ORA-00001 for a non-update record, the error-handling parameters such as <code dir="ltr">HANDLECOLLISIONS</code> and <code dir="ltr">REPERROR</code> handle it.</div>
+<p>A workspace cannot be used if the operation that contains a transient primary-key duplicate also has updates to any out-of-line columns, such as LOB and XMLType. Therefore, these cases are not supported, and any such cases can result in undetected data corruption on the target. An example of this is:</p>
+<pre dir="ltr">
+update T set PK = PK + 1, C_LOB = 'ABC'; 
+</pre></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment233">
+<tr>
+<td class="cellalignment240"><table class="cellalignment238">
+<tr>
+<td class="cellalignment237"><a href="classic_capture.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment237"><a href="ddl.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment242">
+<table class="cellalignment236">
+<tr>
+<td class="cellalignment237"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment237"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment237"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

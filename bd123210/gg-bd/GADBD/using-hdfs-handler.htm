@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the HDFS Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS)." />
+<meta name="dcterms.created" content="2018-09-04T10:47:42Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E89845-03" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-hbase-handler.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-jdbc-handler.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0"></a> <span id="PAGE" style="display:none;">11/33</span> <!-- End Header -->
+<a id="GADBD376"></a>
+<h1 id="GADBD-GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" class="sect1"><span class="enumeration_chapter">8</span> Using the HDFS Handler</h1>
+<div>
+<p>Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-FDF4E815-C834-4756-933C-7D9333DA2AB1">Overview</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-4CAFC347-0F7D-49AB-B293-EFBCE95B66D6">Writing into HDFS in SequenceFile Format</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-172EB051-FCC7-4B7C-8A60-5AC6F29758BD">Setting Up and Running the HDFS Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-EC369D6C-E3F5-4ADC-96D1-B234E7F3C5D2">Writing in HDFS in Avro Object Container File Format</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B">Generating HDFS File Names Using Template Strings</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-0814033A-1654-4C78-9CFB-1A2E8674BDB2">Metadata Change Events</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-6214E40B-9F80-4B35-A6DB-E546A9834248">Partitioning</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-5DC92AF0-8F64-4A85-B57A-21C06D1B2534">HDFS Additional Considerations</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-938E6596-3113-473B-8CE7-39834E1A793D">Best Practices</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-4217D98D-D1B9-44BA-83D3-7250027DB38E">Troubleshooting the HDFS Handler</a><br /></li>
+</ul>
+</div>
+<a id="GADBD377"></a>
+<div class="props_rev_3"><a id="GUID-FDF4E815-C834-4756-933C-7D9333DA2AB1"></a>
+<h2 id="GADBD-GUID-FDF4E815-C834-4756-933C-7D9333DA2AB1" class="sect2"><span class="enumeration_section">8.1</span> Overview</h2>
+<div>
+<div class="section">
+<p>The HDFS is the primary file system for Big Data. Hadoop is typically installed on multiple machines that work together as a Hadoop cluster. Hadoop allows you to store very large amounts of data in the cluster that is horizontally scaled across the machines in the cluster. You can then perform analytics on that data using a variety of Big Data applications.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" title="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).">Using the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-4CAFC347-0F7D-49AB-B293-EFBCE95B66D6"></a>
+<h2 id="GADBD-GUID-4CAFC347-0F7D-49AB-B293-EFBCE95B66D6" class="sect2"><span class="enumeration_section">8.2</span> Writing into HDFS in SequenceFile Format</h2>
+<div>
+<p>The HDFS <code class="codeph">SequenceFile</code> is a flat file consisting of binary key and value pairs. You can enable writing data in <code class="codeph">SequenceFile</code> format by setting the <code class="codeph">gg.handler.<span class="codeinlineitalic">name.</span>format</code> property to <code class="codeph">sequencefile</code>. The <code class="codeph">key</code> part of the record is set to null, and the actual data is set in the <code class="codeph">value</code> part. For information about Hadoop <code class="codeph">SequenceFile</code>, see <a href="https://wiki.apache.org/hadoop/SequenceFile" target="_blank">https://wiki.apache.org/hadoop/SequenceFile</a>.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-CABBA7A7-062D-42BB-ABF0-99EBE22833AC">Integrating with Hive</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-EE2D45B1-11E6-4B2E-B91F-2FB49F90900A">Understanding the Data Format</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" title="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).">Using the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+<div class="sect3"><a id="GUID-CABBA7A7-062D-42BB-ABF0-99EBE22833AC"></a>
+<h3 id="GADBD-GUID-CABBA7A7-062D-42BB-ABF0-99EBE22833AC" class="sect3"><span class="enumeration_section">8.2.1</span> Integrating with Hive</h3>
+<div>
+<p>Oracle GoldenGate for Big Data release does not include a Hive storage handler because the HDFS Handler provides all of the necessary Hive functionality .</p>
+<p>You can create a Hive integration to create tables and update table definitions in case of DDL events. This is limited to data formatted in Avro Object Container File format. For more information, see <a href="using-hdfs-handler.htm#GUID-EC369D6C-E3F5-4ADC-96D1-B234E7F3C5D2">Writing in HDFS in Avro Object Container File Format</a> and <a href="using-hdfs-handler.htm#GUID-C37C24D6-34B1-41A8-B111-AE539DFB03CF">HDFS Handler Configuration</a>.</p>
+<p>For Hive to consume sequence files, the DDL creates Hive tables including <code class="codeph">STORED as sequencefile</code> . The following is a sample <code class="codeph">create table</code> script:</p>
+<pre dir="ltr">
+CREATE EXTERNAL TABLE table_name (
+  col1 string,
+  ...
+  ...
+  col2 string)
+ROW FORMAT DELIMITED
+STORED as sequencefile
+LOCATION '<span class="italic">/path/to/hdfs/file</span>';
+</pre>
+<div class="infobox-note" id="GUID-CABBA7A7-062D-42BB-ABF0-99EBE22833AC__GUID-F43930D6-6885-46DB-A1CB-8710E4A0F754">
+<p class="notep1">Note:</p>
+<p>If files are intended to be consumed by Hive, then the <code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.partitionByTable</code> property should be set to <code class="codeph">true</code>.</p>
+</div>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-4CAFC347-0F7D-49AB-B293-EFBCE95B66D6">Writing into HDFS in SequenceFile Format</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3"><a id="GUID-EE2D45B1-11E6-4B2E-B91F-2FB49F90900A"></a>
+<h3 id="GADBD-GUID-EE2D45B1-11E6-4B2E-B91F-2FB49F90900A" class="sect3"><span class="enumeration_section">8.2.2</span> Understanding the Data Format</h3>
+<div>
+<p>The data written in the <code class="codeph">value</code> part of each record and is in delimited text format. All of the options described in the <a href="using-pluggable-formatters.htm#GUID-D7986B13-1D90-45FB-A5F8-4CF69EA2EE6C">Using the Delimited Text Formatter</a> section are applicable to HDFS SequenceFile when writing data to it.</p>
+<p>For example:</p>
+<pre dir="ltr">
+gg.handler.<span class="italic">name</span>.format=sequencefile
+gg.handler.<span class="italic">name</span>.format.includeColumnNames=true
+gg.handler.<span class="italic">name</span>.format.includeOpType=true
+gg.handler.<span class="italic">name</span>.format.includeCurrentTimestamp=true
+gg.handler.<span class="italic">name</span>.format.updateOpKey=U
+</pre></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-4CAFC347-0F7D-49AB-B293-EFBCE95B66D6">Writing into HDFS in SequenceFile Format</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD380"></a>
+<div class="props_rev_3"><a id="GUID-172EB051-FCC7-4B7C-8A60-5AC6F29758BD"></a>
+<h2 id="GADBD-GUID-172EB051-FCC7-4B7C-8A60-5AC6F29758BD" class="sect2"><span class="enumeration_section">8.3</span> Setting Up and Running the HDFS Handler</h2>
+<div>
+<div class="section">
+<p>To run the HDFS Handler, a Hadoop single instance or Hadoop cluster must be installed, running, and network-accessible from the machine running the HDFS Handler. Apache Hadoop is open source and you can download it from:</p>
+<p><a href="http://hadoop.apache.org/" target="_blank"><code class="codeph">http://hadoop.apache.org/</code></a></p>
+<p>Follow the Getting Started links for information on how to install a single-node cluster (for pseudo-distributed operation mode) or a clustered setup (for fully-distributed operation mode).</p>
+<p>Instructions for configuring the HDFS Handler components and running the handler are described in the following sections.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-2A9BB3C9-3774-49E3-860C-31088A29290E">Classpath Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-C37C24D6-34B1-41A8-B111-AE539DFB03CF">HDFS Handler Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-0FEA539B-1667-4331-8CA4-3573F790AE70">Review a Sample Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-4592896C-74E4-4F4F-A830-B8F294C81F52">Performance Considerations</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-2D595151-0859-4C6B-BB10-C24C78C68299">Security</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" title="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).">Using the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+<a id="GADBD381"></a>
+<div class="props_rev_3"><a id="GUID-2A9BB3C9-3774-49E3-860C-31088A29290E"></a>
+<h3 id="GADBD-GUID-2A9BB3C9-3774-49E3-860C-31088A29290E" class="sect3"><span class="enumeration_section">8.3.1</span> Classpath Configuration</h3>
+<div>
+<p>For the HDFS Handler to connect to HDFS and run, the HDFS <code class="codeph">core-site.xml</code> file and the HDFS client jars must be configured in <code class="codeph">gg.classpath</code> variable. The HDFS client jars must match the version of HDFS that the HDFS Handler is connecting. For a list of the required client jar files by release, see <a href="hdfs-handler-client-dependencies.htm#GUID-1A409BCB-A8A2-41CD-B9D6-4D65D356D1A5">HDFS Handler Client Dependencies</a>.</p>
+<p>The default location of the <code class="codeph">core-site.xml</code> file is <span class="italic"><code class="codeph">Hadoop_Home</code></span><code class="codeph">/etc/hadoop</code></p>
+<p>The default locations of the HDFS client jars are the following directories:</p>
+<p><span class="italic"><code class="codeph">Hadoop_Home</code></span><code class="codeph">/share/hadoop/common/lib/*</code></p>
+<p><span class="italic"><code class="codeph">Hadoop_Home</code></span><code class="codeph">/share/hadoop/common/*</code></p>
+<p><span class="italic"><code class="codeph">Hadoop_Home</code></span><code class="codeph">/share/hadoop/hdfs/lib/</code>*</p>
+<p><span class="italic"><code class="codeph">Hadoop_Home</code></span><code class="codeph">/share/hadoop/hdfs/*</code></p>
+<p>The <code class="codeph">gg.classpath</code> must be configured exactly as shown. The path to the <code class="codeph">core-site.xml</code> file must contain the path to the directory containing the <code class="codeph">core-site.xml</code>file with no wildcard appended. If you include a (*) wildcard in the path to the <code class="codeph">core-site.xml</code> file, the file is not picked up. Conversely, the path to the dependency jars must include the (*) wildcard character in order to include all the jar files in that directory in the associated classpath. Do not use <code class="codeph">*.jar</code>.</p>
+<p>The following is an example of a correctly configured <code class="codeph">gg.classpath</code> variable:</p>
+<pre dir="ltr">
+gg.classpath=/ggwork/hadoop/hadoop-2.6.0/etc/hadoop:/ggwork/hadoop/hadoop-2.6.0/share/hadoop/common/lib/*:/ggwork/hadoop/hadoop-2.6.0/share/hadoop/common/*:/ggwork/hadoop/hadoop-2.6.0/share/hadoop/hdfs/*:/ggwork/hadoop/hadoop-2.6.0/share/hadoop/hdfs/lib/*
+</pre>
+<p>The HDFS configuration file <code class="codeph">hdfs-site.xml</code> must also be in the classpath if Kerberos security is enabled. By default, the <code class="codeph">hdfs-site.xml</code> file is located in the <span class="italic"><code class="codeph">Hadoop_Home</code></span><code class="codeph">/etc/hadoop</code> directory. If the HDFS Handler is not collocated with Hadoop, either or both files can be copied to another machine.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-172EB051-FCC7-4B7C-8A60-5AC6F29758BD">Setting Up and Running the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD384"></a><a id="GADBD383"></a>
+<div class="props_rev_3"><a id="GUID-C37C24D6-34B1-41A8-B111-AE539DFB03CF"></a>
+<h3 id="GADBD-GUID-C37C24D6-34B1-41A8-B111-AE539DFB03CF" class="sect3"><span class="enumeration_section">8.3.2</span> HDFS Handler Configuration</h3>
+<div>
+<p>The following are the configurable values for the HDFSHandler. These properties are located in the Java Adapter properties file (not in the Replicat properties file).</p>
+<p>To enable the selection of the HDFS Handler, you must first configure the handler type by specifying <code class="codeph">gg.handler.jdbc.type=hdfs</code> and the other HDFS properties as follows:</p>
+<div class="tblformalwide" id="GUID-C37C24D6-34B1-41A8-B111-AE539DFB03CF__GUID-444B3819-4C4F-4723-B556-F6600B03F219">
+<p class="titleintable">Table 8-1 HDFS Handler Configuration Properties</p>
+<table class="cellalignment87" title="HDFS Handler Configuration Properties" summary="Five column table describing the configuration properties of the HDFS Handler.">
+<thead>
+<tr class="cellalignment65">
+<th class="cellalignment142" id="d41683e517">Property</th>
+<th class="cellalignment81" id="d41683e520">Optional / Required</th>
+<th class="cellalignment108" id="d41683e523">Legal Values</th>
+<th class="cellalignment79" id="d41683e526">Default</th>
+<th class="cellalignment143" id="d41683e529">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e534" headers="d41683e517">
+<p><code class="codeph">gg.handlerlist</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e534 d41683e520">
+<p>Required</p>
+</td>
+<td class="cellalignment110" headers="d41683e534 d41683e523">
+<p>Any string</p>
+</td>
+<td class="cellalignment83" headers="d41683e534 d41683e526">
+<p>None</p>
+</td>
+<td class="cellalignment145" headers="d41683e534 d41683e529">
+<p>Provides a name for the HDFS Handler. The HDFS Handler name then becomes part of the property names listed in this table.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e551" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name</code></span><code class="codeph">.type</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e551 d41683e520">
+<p>Required</p>
+</td>
+<td class="cellalignment110" headers="d41683e551 d41683e523">
+<p><code class="codeph">hdfs</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e551 d41683e526">
+<p>None</p>
+</td>
+<td class="cellalignment145" headers="d41683e551 d41683e529">
+<p>Selects the HDFS Handler for streaming change data capture into HDFS.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e574" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name</code></span><code class="codeph">.mode</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e574 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e574 d41683e523">
+<p><code class="codeph">tx</code> | <code class="codeph">op</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e574 d41683e526">
+<p><code class="codeph">op</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e574 d41683e529">
+<p>Selects operation (<code class="codeph">op</code>) mode or transaction (<code class="codeph">tx</code>) mode for the handler. In almost all scenarios, transaction mode results in better performance.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e607" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name</code></span><code class="codeph">.maxFileSize</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e607 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e607 d41683e523">
+<p>The default unit of measure is bytes. You can use <code class="codeph">k</code>, <code class="codeph">m</code>, or <code class="codeph">g</code> to specify kilobytes, megabytes, or gigabytes. Examples of legal values include <code class="codeph">10000</code>, <code class="codeph">10k</code>, <code class="codeph">100m</code>, <code class="codeph">1.1g</code>.</p>
+</td>
+<td class="cellalignment83" headers="d41683e607 d41683e526">
+<p><code class="codeph">1g</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e607 d41683e529">
+<p>Selects the maximum file size of the created HDFS files.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e652" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name</code></span><code class="codeph">.pathMappingTemplate</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e652 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e652 d41683e523">
+<p>Any legal templated string to resolve the target write directory in HDFS. Templates can contain a mix of constants and keywords which are dynamically resolved at runtime to generate the HDFS write directory.</p>
+</td>
+<td class="cellalignment83" headers="d41683e652 d41683e526">
+<p><code class="codeph">/ogg/${toLowerCase[${<span class="codeinlineitalic">fullyQualifiedTableName</span>}]}</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e652 d41683e529">
+<p>You can use keywords interlaced with constants to dynamically generate the HDFS write directory at runtime, see <a href="using-hdfs-handler.htm#GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B">Generating HDFS File Names Using Template Strings</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e681" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">fileRollInterval</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e681 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e681 d41683e523">
+<p>The default unit of measure is milliseconds. You can stipulate <code class="codeph">ms</code>, <code class="codeph">s</code>, <code class="codeph">m</code>, <code class="codeph">h</code> to signify milliseconds, seconds, minutes, or hours respectively. Examples of legal values include <code class="codeph">10000</code>, 10000ms, <code class="codeph">10s</code>, <code class="codeph">10m</code>, or <code class="codeph">1.5h</code>. Values of <code class="codeph">0</code> or less indicate that file rolling on time is turned off.</p>
+</td>
+<td class="cellalignment83" headers="d41683e681 d41683e526">
+<p>File rolling on time is off.</p>
+</td>
+<td class="cellalignment145" headers="d41683e681 d41683e529">
+<p>The timer starts when an HDFS file is created. If the file is still open when the interval elapses, then the file is closed. A new file is not immediately opened. New HDFS files are created on a just-in-time basis.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e731" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">inactivityRollInterval</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e731 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e731 d41683e523">
+<p>The default unit of measure is milliseconds. You can use <code class="codeph">ms</code>, <code class="codeph">s</code>, <code class="codeph">m</code>, <code class="codeph">h</code> to specify milliseconds, seconds, minutes, or hours. Examples of legal values include 10000, 10000ms, 10s, 10, 5m, or 1h. Values of 0 or less indicate that file inactivity rolling on time is turned off.</p>
+</td>
+<td class="cellalignment83" headers="d41683e731 d41683e526">
+<p>File inactivity rolling on time is off.</p>
+</td>
+<td class="cellalignment145" headers="d41683e731 d41683e529">
+<p>The timer starts from the latest write to an HDFS file. New writes to an HDFS file restart the counter. If the file is still open when the counter elapses, the HDFS file is closed. A new file is not immediately opened. New HDFS files are created on a just-in-time basis.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e765" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">fileNameMappingTemplate</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e765 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e765 d41683e523">
+<p>A string with resolvable keywords and constants used to dynamically generate HDFS file names at runtime.</p>
+</td>
+<td class="cellalignment83" headers="d41683e765 d41683e526">
+<p><code class="codeph">${<span class="codeinlineitalic">fullyQualifiedTableName</span>}_${<span class="codeinlineitalic">groupName</span>}_${<span class="codeinlineitalic">currentTimeStamp</span>}.txt</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e765 d41683e529">
+<p>You can use keywords interlaced with constants to dynamically generate unique HDFS file names at runtime, see <a href="using-hdfs-handler.htm#GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B">Generating HDFS File Names Using Template Strings</a>. File names typically follow the format, <code class="codeph">${<span class="codeinlineitalic">fullyQualifiedTableName</span>}_${<span class="codeinlineitalic">groupName</span>}_${<span class="codeinlineitalic">currentTimeStamp</span>}{<span class="codeinlineitalic">.txt</span>}</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e815" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">partitionByTable</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e815 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e815 d41683e523">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e815 d41683e526">
+<p><code class="codeph">true</code> (data is partitioned by table)</p>
+</td>
+<td class="cellalignment145" headers="d41683e815 d41683e529">
+<p>Determines whether data written into HDFS must be partitioned by table. If set to <code class="codeph">true</code>, then data for different tables are written to different HDFS files. If set to <code class="codeph">false</code>, then data from different tables is interlaced in the same HDFS file.</p>
+<p>Must be set to <code class="codeph">true</code> to use the Avro Object Container File Formatter. If set to <code class="codeph">false</code>, a configuration exception occurs at initialization.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e857" headers="d41683e517">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.rollOnMetadataChange</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e857 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e857 d41683e523">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e857 d41683e526">
+<p><code class="codeph">true</code> (HDFS files are rolled on a metadata change event)</p>
+</td>
+<td class="cellalignment145" headers="d41683e857 d41683e529">
+<p>Determines whether HDFS files are rolled in the case of a metadata change. True means the HDFS file is rolled, false means the HDFS file is not rolled.</p>
+<p>Must be set to <code class="codeph">true</code> to use the Avro Object Container File Formatter. If set to <code class="codeph">false</code>, a configuration exception occurs at initialization.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e891" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">format</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e891 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e891 d41683e523">
+<p><code class="codeph">delimitedtext</code> | <code class="codeph">json</code> | <code class="codeph">json_row</code> | <code class="codeph">xml</code> | <code class="codeph">avro_row</code> | <code class="codeph">avro_op</code> | <code class="codeph">avro_row_ocf</code> | <code class="codeph">avro_op_ocf</code> | <code class="codeph">sequencefile</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e891 d41683e526">
+<p><code class="codeph">delimitedtext</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e891 d41683e529">
+<p>Selects the formatter for the HDFS Handler for how output data is formatted.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">delimitedtext</code>: Delimited text</p>
+</li>
+<li>
+<p><code class="codeph">json</code>: JSON</p>
+</li>
+<li>
+<p><code class="codeph">json_row</code>: JSON output modeling row data</p>
+</li>
+<li>
+<p><code class="codeph">xml</code>: XML</p>
+</li>
+<li>
+<p><code class="codeph">avro_row</code>: Avro in row compact format</p>
+</li>
+<li>
+<p><code class="codeph">avro_op</code>: Avro in operation more verbose format.</p>
+</li>
+<li>
+<p><code class="codeph">avro_row_ocf</code>: Avro in the row compact format written into HDFS in the Avro Object Container File (OCF) format.</p>
+</li>
+<li>
+<p><code class="codeph">avro_op_ocf</code>: Avro in the more verbose format written into HDFS in the Avro Object Container File format.</p>
+</li>
+<li>
+<p><code class="codeph">sequencefile</code>: Delimited text written in sequence into HDFS is sequence file format.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e987" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">includeTokens</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e987 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e987 d41683e523">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e987 d41683e526">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e987 d41683e529">
+<p>Set to <code class="codeph">true</code> to include the tokens field and tokens key/values in the output. Set to <code class="codeph">false</code> to suppress tokens output.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1020" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">partitioner.</code><span class="italic"><code class="codeph">fully_qualified_table_ name</code></span></p>
+<p>Equals one or more column names separated by commas.</p>
+</td>
+<td class="cellalignment85" headers="d41683e1020 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1020 d41683e523">
+<p>Fully qualified table name and column names must exist.</p>
+</td>
+<td class="cellalignment83" headers="d41683e1020 d41683e526">
+<p><code class="codeph">-</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1020 d41683e529">
+<p>This partitions the data into subdirectories in HDFS in the following format: <code class="codeph">par_{<span class="codeinlineitalic">column name</span>}={<span class="codeinlineitalic">column value</span>}</code></p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1056" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">authType</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e1056 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1056 d41683e523">
+<div class="p">
+<pre dir="ltr">
+kerberos
+</pre></div>
+</td>
+<td class="cellalignment83" headers="d41683e1056 d41683e526">
+<p><code class="codeph">none</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1056 d41683e529">
+<p>Setting this property to <code class="codeph">kerberos</code> enables Kerberos authentication.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1083" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">kerberosKeytabFile</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e1083 d41683e520">
+<div class="p">Optional (Required if
+<pre dir="ltr">
+authType=Kerberos
+</pre>
+)</div>
+</td>
+<td class="cellalignment110" headers="d41683e1083 d41683e523">
+<p>Relative or absolute path to a Kerberos <code class="codeph">keytab</code> file.</p>
+</td>
+<td class="cellalignment83" headers="d41683e1083 d41683e526">
+<p><code class="codeph">-</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1083 d41683e529">
+<p>The <code class="codeph">keytab</code> file allows the HDFS Handler to access a password to perform a <code class="codeph">kinit</code> operation for Kerberos security.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1118" headers="d41683e517">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name</code></span><code class="codeph">.kerberosPrincipal</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e1118 d41683e520">
+<div class="p">Optional (Required if
+<pre dir="ltr">
+authType=Kerberos
+</pre>
+)</div>
+</td>
+<td class="cellalignment110" headers="d41683e1118 d41683e523">
+<p>A legal Kerberos principal name like <code class="codeph">user/FQDN@MY.REALM</code>.</p>
+</td>
+<td class="cellalignment83" headers="d41683e1118 d41683e526">
+<p><code class="codeph">-</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1118 d41683e529">
+<p>The Kerberos principal name for Kerberos authentication.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1147" headers="d41683e517">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.schemaFilePath</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e1147 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1147 d41683e523">&nbsp;</td>
+<td class="cellalignment83" headers="d41683e1147 d41683e526">
+<p><code class="codeph">null</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1147 d41683e529">
+<p>Set to a legal path in HDFS so that schemas (if available) are written in that HDFS directory. Schemas are currently only available for Avro and JSON formatters. In the case of a metadata change event, the schema is overwritten to reflect the schema change.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1168" headers="d41683e517">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name.</span></code><code class="codeph">compressionType</code></p>
+<p>Applicable to Sequence File Format only.</p>
+</td>
+<td class="cellalignment85" headers="d41683e1168 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1168 d41683e523">
+<p><code class="codeph">block | none | record</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e1168 d41683e526">
+<p><code class="codeph">none</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1168 d41683e529">
+<p>Hadoop Sequence File Compression Type. Applicable only if <code class="codeph">gg.handler.<span class="codeinlineitalic">name.</span>format</code> is set to <code class="codeph">sequencefile</code></p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1201" headers="d41683e517">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name.</span></code><code class="codeph">compressionCodec</code></p>
+<p>Applicable to Sequence File and writing to HDFS is Avro OCF formats only.</p>
+</td>
+<td class="cellalignment85" headers="d41683e1201 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1201 d41683e523">
+<p><code class="codeph">org.apache.hadoop.io.compress.DefaultCodec | org.apache.hadoop.io.compress. BZip2Codec | org.apache.hadoop.io.compress.SnappyCodec | org.apache.hadoop.io.compress. GzipCodec</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e1201 d41683e526">
+<p><code class="codeph">org.apache.hadoop.io.compress.DefaultCodec</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1201 d41683e529">
+<p>Hadoop Sequence File Compression Codec. Applicable only if <code class="codeph">gg.handler.<span class="codeinlineitalic">name.</span>format</code> is set to <code class="codeph">sequencefile</code></p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1234" headers="d41683e517">&nbsp;</td>
+<td class="cellalignment85" headers="d41683e1234 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1234 d41683e523">
+<p><code class="codeph">null | snappy | bzip2 | xz | deflate</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e1234 d41683e526">
+<p><code class="codeph">null</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1234 d41683e529">
+<p>Avro OCF Formatter Compression Code. This configuration controls the selection of the compression library to be used for Avro OCF files.</p>
+<p>Snappy includes native binaries in the Snappy JAR file and performs a Java-native traversal when compressing or decompressing. Use of Snappy may introduce runtime issues and platform porting issues that you may not experience when working with Java. You may need to perform additional testing to ensure that Snappy works on all of your required platforms. Snappy is an open source library, so Oracle cannot guarantee its ability to operate on all of your required platforms.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1252" headers="d41683e517">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.hiveJdbcUrl</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e1252 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1252 d41683e523">
+<p>A legal URL for connecting to Hive using the Hive JDBC interface.</p>
+</td>
+<td class="cellalignment83" headers="d41683e1252 d41683e526">
+<p><code class="codeph">null</code> (Hive integration disabled)</p>
+</td>
+<td class="cellalignment145" headers="d41683e1252 d41683e529">
+<p>Only applicable to the Avro OCF Formatter.</p>
+<p>This configuration value provides a JDBC URL for connectivity to Hive through the Hive JDBC interface. Use of this property requires that you include the Hive JDBC library in the <code class="codeph">gg.classpath</code>.</p>
+<p>Hive JDBC connectivity can be secured through basic credentials, SSL/TLS, or Kerberos. Configuration properties are provided for the user name and password for basic credentials.</p>
+<p>See the Hive documentation for how to generate a Hive JDBC URL for SSL/TLS.</p>
+<p>See the Hive documentation for how to generate a Hive JDBC URL for Kerberos. (If Kerberos is used for Hive JDBC security, it must be enabled for HDFS connectivity. Then the Hive JDBC connection can piggyback on the HDFS Kerberos functionality by using the same Kerberos principal.)</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1285" headers="d41683e517">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.hiveJdbcUsername</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e1285 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1285 d41683e523">
+<p>A legal user name if the Hive JDBC connection is secured through credentials.</p>
+</td>
+<td class="cellalignment83" headers="d41683e1285 d41683e526">
+<p>Java call result from <code class="codeph">System.getProperty</code>(<code class="codeph">user.name</code>)</p>
+</td>
+<td class="cellalignment145" headers="d41683e1285 d41683e529">
+<p>Only applicable to the Avro Object Container File OCF Formatter.</p>
+<p>This property is only relevant if the <code class="codeph">hiveJdbcUrl</code>property is set. It may be required in your environment when the Hive JDBC connection is secured through credentials. Hive requires that Hive DDL operations be associated with a user. If you do not set the value, it defaults to the result of the following Java call: <code class="codeph">System.getProperty</code>(<code class="codeph">user.name</code>)</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1323" headers="d41683e517">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.hiveJdbcPassword</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e1323 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1323 d41683e523">
+<p>A legal password if the Hive JDBC connection requires a password.</p>
+</td>
+<td class="cellalignment83" headers="d41683e1323 d41683e526">
+<p>None</p>
+</td>
+<td class="cellalignment145" headers="d41683e1323 d41683e529">
+<p>Only applicable to the Avro OCF Formatter.</p>
+<p>This property is only relevant if the <code class="codeph">hiveJdbcUrl</code> property is set. It may be required in your environment when the Hive JDBC connection is secured through credentials. This property is required if Hive is configured to require passwords for the JDBC connection.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1348" headers="d41683e517">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.hiveJdbcDriver</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e1348 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1348 d41683e523">
+<p>The fully qualified Hive JDBC driver class name.</p>
+</td>
+<td class="cellalignment83" headers="d41683e1348 d41683e526">
+<p><code class="codeph">org.apache.hive.jdbc.HiveDriver</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1348 d41683e529">
+<p>Only applicable to the Avro OCF Formatter.</p>
+<p>This property is only relevant if the <code class="codeph">hiveJdbcUrl</code> property is set. The default is the Hive Hadoop2 JDBC driver name. Typically, this property does not require configuration and is provided for use when Apache Hive introduces a new JDBC driver class.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1374" headers="d41683e517">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.openNextFileAtRoll</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e1374 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1374 d41683e523">
+<p><code class="codeph">true | false</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e1374 d41683e526">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1374 d41683e529">
+<p>Applicable only to the HDFS Handler that is not writing an Avro OCF or sequence file to support extract, load, transform (ELT) situations.</p>
+<p>When set to <code class="codeph">true</code>, this property creates a new file immediately on the occurrence of a file roll.</p>
+<p>File rolls can be triggered by any one of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Metadata change</p>
+</li>
+<li>
+<p>File roll interval elapsed</p>
+</li>
+<li>
+<p>Inactivity interval elapsed</p>
+</li>
+</ul>
+<p>Data files are being loaded into HDFS and a monitor program is monitoring the write directories waiting to consume the data. The monitoring programs use the appearance of a new file as a trigger so that the previous file can be consumed by the consuming application.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment144" id="d41683e1415" headers="d41683e517">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.hsync</code></p>
+</td>
+<td class="cellalignment85" headers="d41683e1415 d41683e520">
+<p>Optional</p>
+</td>
+<td class="cellalignment110" headers="d41683e1415 d41683e523">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment83" headers="d41683e1415 d41683e526">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment145" headers="d41683e1415 d41683e529">
+<p>Set to use an <code class="codeph">hflush</code> call to ensure that data is transferred from the HDFS Handler to the HDFS cluster. When set to <code class="codeph">false</code>, <code class="codeph">hflush</code> is called on open HDFS write streams at transaction commit to ensure write durability.</p>
+<p>Setting <code class="codeph">hsync</code> to <code class="codeph">true</code> calls <code class="codeph">hsync</code> instead of <code class="codeph">hflush</code> at transaction commit. Using <code class="codeph">hsync</code> ensures that data has moved to the HDFS cluster and that the data is written to disk. This provides a higher level of write durability though it adversely effects performance. Also, it does not make the write data immediately available to analytic tools.</p>
+<p>For most applications setting this property to <code class="codeph">false</code> is appropriate.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-172EB051-FCC7-4B7C-8A60-5AC6F29758BD">Setting Up and Running the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD385"></a>
+<div class="props_rev_3"><a id="GUID-0FEA539B-1667-4331-8CA4-3573F790AE70"></a>
+<h3 id="GADBD-GUID-0FEA539B-1667-4331-8CA4-3573F790AE70" class="sect3"><span class="enumeration_section">8.3.3</span> Review a Sample Configuration</h3>
+<div>
+<p>The following is a sample configuration for the HDFS Handler from the Java Adapter properties file:</p>
+<pre dir="ltr">
+gg.handlerlist=hdfs
+gg.handler.hdfs.type=hdfs
+gg.handler.hdfs.mode=tx
+gg.handler.hdfs.includeTokens=false
+gg.handler.hdfs.maxFileSize=1g
+gg.handler.hdfs.pathMappingTemplate=/ogg/${fullyQualifiedTableName
+gg.handler.hdfs.fileRollInterval=0
+gg.handler.hdfs.inactivityRollInterval=0
+gg.handler.hdfs.partitionByTable=true
+gg.handler.hdfs.rollOnMetadataChange=true
+gg.handler.hdfs.authType=none
+gg.handler.hdfs.format=delimitedtext
+</pre></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-172EB051-FCC7-4B7C-8A60-5AC6F29758BD">Setting Up and Running the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD390"></a>
+<div class="props_rev_3"><a id="GUID-4592896C-74E4-4F4F-A830-B8F294C81F52"></a>
+<h3 id="GADBD-GUID-4592896C-74E4-4F4F-A830-B8F294C81F52" class="sect3"><span class="enumeration_section">8.3.4</span> Performance Considerations</h3>
+<div>
+<p>The HDFS Handler calls the HDFS flush method on the HDFS write stream to flush data to the HDFS data nodes at the end of each transaction in order to maintain write durability. This is an expensive call and performance can adversely affect, especially in the case of transactions of one or few operations that result in numerous HDFS flush calls.</p>
+<p>Performance of the HDFS Handler can be greatly improved by batching multiple small transactions into a single larger transaction. If you require high performance, configure batching functionality for the Replicat process. For more information, see <a href="introduction-oracle-goldengate-big-data.htm#GUID-D0CFCD1C-1C81-455A-AA99-D87F2A78F17C">Replicat Grouping</a>.</p>
+<p>The HDFS client libraries spawn threads for every HDFS file stream opened by the HDFS Handler. Therefore, the number of threads executing in the JMV grows proportionally to the number of HDFS file streams that are open. Performance of the HDFS Handler may degrade as more HDFS file streams are opened. Configuring the HDFS Handler to write to many HDFS files (due to many source replication tables or extensive use of partitioning) may result in degraded performance. If your use case requires writing to many tables, then Oracle recommends that you enable the roll on time or roll on inactivity features to close HDFS file streams. Closing an HDFS file stream causes the HDFS client threads to terminate, and the associated resources can be reclaimed by the JVM.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-172EB051-FCC7-4B7C-8A60-5AC6F29758BD">Setting Up and Running the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD391"></a>
+<div class="props_rev_3"><a id="GUID-2D595151-0859-4C6B-BB10-C24C78C68299"></a>
+<h3 id="GADBD-GUID-2D595151-0859-4C6B-BB10-C24C78C68299" class="sect3"><span class="enumeration_section">8.3.5</span> Security</h3>
+<div>
+<p>The HDFS cluster can be secured using Kerberos authentication. The HDFS Handler can connect to Kerberos secured cluster. The HDFS <code class="codeph">core-site.xml</code> should be in the handlers classpath with the <code class="codeph">hadoop.security.authentication</code> property set to <code class="codeph">kerberos</code> and the <code class="codeph">hadoop.security.authorization</code> property set to <code class="codeph">true</code>. Additionally, you must set the following properties in the HDFS Handler Java configuration file:</p>
+<pre dir="ltr">
+gg.handler.<span class="italic">name</span>.authType=kerberos
+gg.handler.<span class="italic">name</span>.kerberosPrincipalName=<span class="italic">legal Kerberos principal name</span>
+gg.handler.<span class="italic">name</span>.kerberosKeytabFile=<span class="italic">path to a keytab file that contains the password for the Kerberos principal so that the HDFS Handler can programmatically perform the Kerberos kinit operations to obtain a Kerberos ticket</span>
+</pre>
+<p>You may encounter the inability to decrypt the Kerberos password from the <code>keytab</code> file. This causes the Kerberos authentication to fall back to interactive mode which cannot work because it is being invoked programmatically. The cause of this problem is that the Java Cryptography Extension (JCE) is not installed in the Java Runtime Environment (JRE). Ensure that the JCE is loaded in the JRE, see <a href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html" target="_blank">http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html</a>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-172EB051-FCC7-4B7C-8A60-5AC6F29758BD">Setting Up and Running the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-EC369D6C-E3F5-4ADC-96D1-B234E7F3C5D2"></a>
+<h2 id="GADBD-GUID-EC369D6C-E3F5-4ADC-96D1-B234E7F3C5D2" class="sect2"><span class="enumeration_section">8.4</span> Writing in HDFS in Avro Object Container File Format</h2>
+<div>
+<p>The HDFS Handler includes specialized functionality to write to HDFS in Avro Object Container File (OCF) format. This Avro OCF is part of the Avro specification and is detailed in the Avro documentation at:</p>
+<p><a href="https://avro.apache.org/docs/current/spec.html#Object+Container+Files" target="_blank">https://avro.apache.org/docs/current/spec.html#Object+Container+Files</a></p>
+<p>Avro OCF format may be a good choice because it:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>integrates with Apache Hive (Raw Avro written to HDFS is not supported by Hive.)</p>
+</li>
+<li>
+<p>provides good support for schema evolution.</p>
+</li>
+</ul>
+<p>Configure the following to enable writing to HDFS in Avro OCF format:</p>
+<p>To write row data to HDFS in Avro OCF format, configure the <code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format=avro_row_ocf</code> property.</p>
+<p>To write operation data to HDFS is Avro OCF format, configure the <code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.format=avro_op_ocf</code> property.</p>
+<p>The HDFS and Avro OCF integration includes functionality to create the corresponding tables in Hive and update the schema for metadata change events. The configuration section provides information on the properties to enable integration with Hive. The Oracle GoldenGate Hive integration accesses Hive using the JDBC interface, so the Hive JDBC server must be running to enable this integration.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" title="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).">Using the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B"></a>
+<h2 id="GADBD-GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B" class="sect2"><span class="enumeration_section">8.5</span> Generating HDFS File Names Using Template Strings</h2>
+<div>
+<p>The HDFS Handler can dynamically generate HDFS file names using a template string. The template string allows you to generate a combination of keywords that are dynamically resolved at runtime with static strings to provide you more control of generated HDFS file names. You can control the template file name using the <code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.fileNameMappingTemplate</code> configuration property. The default value for this parameters is:</p>
+<pre dir="ltr">
+${<span class="italic">fullyQualifiedTableName</span>}_${<span class="italic">groupName</span>}_${currentTimestamp}.txt
+</pre>
+<p>Supported keywords which are dynamically replaced at runtime include the following:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-F22977FD-E495-42F3-AB41-B9AEFDD3BF9E"><!-- --></a>Keyword</dt>
+<dd><span class="bold">Replacement</span></dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-E1E30E80-3A97-4ED4-AEA8-725C90E9C3F6"><!-- --></a><code class="codeph">${<span class="codeinlineitalic">fullyQualifiedTableName</span>}</code></dt>
+<dd>
+<p>The fully qualified table name with period (.) delimiting the names. For example, <code class="codeph">oracle.test.table1</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-CE3054AB-FE95-42BF-BF13-110D56E89CC0"><!-- --></a><code class="codeph">${<span class="codeinlineitalic">catalogName</span>}</code></dt>
+<dd>
+<p>The catalog name of the source table. For example, <code class="codeph">oracle</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-2656B24D-9DA9-495E-83FF-35673571EED5"><!-- --></a><code class="codeph">${<span class="codeinlineitalic">schemaName</span>}</code></dt>
+<dd>
+<p>The schema name of the source table. For example, <code class="codeph">test</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-E4AC5C27-CA10-428C-9252-470D4891295E"><!-- --></a><code class="codeph">${<span class="codeinlineitalic">tableName</span>}</code></dt>
+<dd>
+<p>The short table name of the source table. For example, <code class="codeph">table1</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-18D9C773-1123-4B36-83C9-234A3FF98140"><!-- --></a><code class="codeph">${<span class="codeinlineitalic">groupName</span>}</code></dt>
+<dd>
+<p>The Replicat process name concatenated with the thread id if using coordinated apply. For example, <code class="codeph">HDFS001</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-B1C3E748-85C5-48AA-8904-C34AA1BA1485"><!-- --></a><code class="codeph">${<span class="codeinlineitalic">currentTimestamp</span>}</code></dt>
+<dd>
+<p>The default output format for the date time is <code class="codeph">yyyy-MM-dd_HH-mm-ss.SSS</code>. For example, <code class="codeph">2017-07-05_04-31-23.123</code>.</p>
+<p>Alternatively, your can configure your own format mask for the date using the syntax, <code class="codeph">${currentTimestamp[yyyy-MM-dd_HH-mm-ss.SSS]}</code>. Date time format masks follow the convention in the <code class="codeph">java.text.SimpleDateFormat</code> Java class.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-E2F8A430-CFB5-482E-A4D9-FC82A40B8D32"><!-- --></a><code class="codeph">${toLowerCase[]}</code></dt>
+<dd>
+<p>Converts the argument inside of the square brackets to lower case. Keywords can be nested inside of the square brackets as follows:</p>
+<pre dir="ltr">
+${toLowerCase[${fullyQualifiedTableName}]}
+</pre>
+<p>This is important because source table names are normalized in <span>Oracle GoldenGate</span> to upper case.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-0A1008E0-3716-40EC-B0FF-97D05E820F17"><!-- --></a><code class="codeph">${toUpperCase[]}</code></dt>
+<dd>
+<p>Converts the arguments inside of the square brackets to upper case. Keywords can be nested inside of the square brackets.</p>
+</dd>
+</dl>
+<p>Following are examples of legal templates and the resolved strings:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-0CCBA61B-7659-4FA3-A8AA-DF2A79416005"><!-- --></a>Legal Template</dt>
+<dd>
+<p><span class="bold">Replacement</span></p>
+</dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-B0B72E02-6028-422B-A84F-1133C4EF3367"><!-- --></a><code class="codeph">${<span class="codeinlineitalic">schemaName</span>}.${<span class="codeinlineitalic">tableName</span>}__${<span class="codeinlineitalic">groupName</span>}_${currentTimestamp}.txt</code></dt>
+<dd><code class="codeph">test.table1__HDFS001_2017-07-05_04-31-23.123.txt</code></dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-28851216-8FB4-499A-9A9C-2D6CC9852838"><!-- --></a><code class="codeph">${<span class="codeinlineitalic">fullyQualifiedTableName</span>}--${currentTimestamp}.avro</code></dt>
+<dd><code class="codeph">oracle.test.table1&mdash;2017-07-05_04-31-23.123.avro</code></dd>
+<dt class="dlterm"><a id="GUID-AFA75023-9635-4CA2-A039-AFCDD719E83B__GUID-B9A356F2-4CC4-42B4-A64B-3EF4B38A244B"><!-- --></a><code class="codeph">${<span class="codeinlineitalic">fullyQualifiedTableName</span>}_${currentTimestamp[yyyy-MM-ddTHH-mm-ss.SSS]}.json</code></dt>
+<dd><code class="codeph">oracle.test.table1&mdash;2017-07-05T04-31-23.123.json</code></dd>
+</dl>
+<p>Be aware of these restrictions when generating HDFS file names using templates:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Generated HDFS file names must be legal HDFS file names.</p>
+</li>
+<li>
+<p>Oracle strongly recommends that you use <code class="codeph">${<span class="codeinlineitalic">groupName</span>}</code> as part of the HDFS file naming template when using coordinated apply and breaking down source table data to different Replicat threads. The group name provides uniqueness of generated HDFS names that <code class="codeph">${<span class="codeinlineitalic">currentTimestamp</span>}</code> alone does not guarantee.. HDFS file name collisions result in an abend of the Replicat process.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" title="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).">Using the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD393"></a>
+<div class="props_rev_3"><a id="GUID-0814033A-1654-4C78-9CFB-1A2E8674BDB2"></a>
+<h2 id="GADBD-GUID-0814033A-1654-4C78-9CFB-1A2E8674BDB2" class="sect2"><span class="enumeration_section">8.6</span> Metadata Change Events</h2>
+<div>
+<div class="section">
+<p>Metadata change events are now handled in the HDFS Handler. The default behavior of the HDFS Handler is to roll the current relevant file in the event of a metadata change event. This behavior allows for the results of metadata changes to at least be separated into different files. File rolling on metadata change is configurable and can be turned off.</p>
+<p>To support metadata change events, the process capturing changes in the source database must support both DDL changes and metadata in trail. <span>Oracle GoldenGate</span>does not support DDL replication for all database implementations. See the <span>Oracle GoldenGate</span>installation and configuration guide for the appropriate database to determine whether DDL replication is supported.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" title="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).">Using the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD394"></a>
+<div class="props_rev_3"><a id="GUID-6214E40B-9F80-4B35-A6DB-E546A9834248"></a>
+<h2 id="GADBD-GUID-6214E40B-9F80-4B35-A6DB-E546A9834248" class="sect2"><span class="enumeration_section">8.7</span> Partitioning</h2>
+<div>
+<div class="section">
+<p>The HDFS Handler supports partitioning of table data by one or more column values. The configuration syntax to enable partitioning is the following:</p>
+<pre dir="ltr">
+gg.handler.<span class="italic">name</span>.partitioner.<span class="italic">fully qualified table name</span>=<span class="italic">one mor more column names separated by commas</span>
+</pre>
+<p>Consider the following example:</p>
+<pre dir="ltr">
+gg.handler.hdfs.partitioner.dbo.orders=sales_region
+</pre>
+<p>This example can result in the following breakdown of files in HDFS:</p>
+<pre dir="ltr">
+/ogg/dbo.orders/par_sales_region=west/<span class="italic">data files</span>
+/ogg/dbo.orders/par_sales_region=east/<span class="italic">data files</span>
+/ogg/dbo.orders/par_sales_region=north/<span class="italic">data files</span>
+/ogg/dbo.orders/par_sales_region=south/<span class="italic">data files</span>
+</pre>
+<p>You should exercise care when choosing columns for partitioning. The key is to choose columns that contain only a few (10 or less) possible values, and to make sure that those values are also helpful for grouping and analyzing the data. For example, a column of sales regions would be good for partitioning. A column that contains the customers dates of birth would not be good for partitioning. Configuring partitioning on a column that has many possible values can cause problems. A poor choice can result in hundreds of HDFS file streams being opened, and performance may degrade for the reasons discussed in <a href="using-hdfs-handler.htm#GUID-4592896C-74E4-4F4F-A830-B8F294C81F52">Performance Considerations</a>. Additionally, poor partitioning can result in problems during data analysis. Apache Hive requires that all <code class="codeph">where</code> clauses specify partition criteria if the Hive data is partitioned.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" title="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).">Using the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD395"></a>
+<div class="props_rev_3"><a id="GUID-5DC92AF0-8F64-4A85-B57A-21C06D1B2534"></a>
+<h2 id="GADBD-GUID-5DC92AF0-8F64-4A85-B57A-21C06D1B2534" class="sect2"><span class="enumeration_section">8.8</span> HDFS Additional Considerations</h2>
+<div>
+<div class="section">
+<p>The Oracle HDFS Handler requires certain HDFS client libraries to be resolved in its classpath as a prerequisite for streaming data to HDFS.</p>
+<p>For a list of required client JAR files by version, see <a href="hdfs-handler-client-dependencies.htm#GUID-1A409BCB-A8A2-41CD-B9D6-4D65D356D1A5">HDFS Handler Client Dependencies</a>. The HDFS client jars do not ship with the <span>Oracle GoldenGate for Big Data</span>product. The HDFS Handler supports multiple versions of HDFS, and the HDFS client jars must be the same version as the HDFS version to which the HDFS Handler is connecting. The HDFS client jars are open source and are freely available to download from sites such as the Apache Hadoop site or the maven central repository.</p>
+<p>In order to establish connectivity to HDFS, the HDFS <code class="codeph">core-site.xml</code> file must be in the classpath of the HDFS Handler. If the <code class="codeph">core-site.xml</code> file is not in the classpath, the HDFS client code defaults to a mode that attempts to write to the local file system. Writing to the local file system instead of HDFS can be advantageous for troubleshooting, building a point of contact (POC), or as a step in the process of building an HDFS integration.</p>
+<p>Another common issue is that data streamed to HDFS using the HDFS Handler may not be immediately available to Big Data analytic tools such as Hive. This behavior commonly occurs when the HDFS Handler is in possession of an open write stream to an HDFS file. HDFS writes in blocks of 128 MB by default. HDFS blocks under construction are not always visible to analytic tools. Additionally, inconsistencies between file sizes when using the <code class="codeph">-ls</code>, <code class="codeph">-cat</code>, and <code class="codeph">-get</code> commands in the HDFS shell may occur. This is an anomaly of HDFS streaming and is discussed in the HDFS specification. This anomaly of HDFS leads to a potential 128 MB per file blind spot in analytic data. This may not be an issue if you have a steady stream of replication data and do not require low levels of latency for analytic data from HDFS. However, this may be a problem in some use cases because closing the HDFS write stream finalizes the block writing. Data is immediately visible to analytic tools, and file sizing metrics become consistent again. Therefore, the new file rolling feature in the HDFS Handler can be used to close HDFS writes streams, making all data visible.</p>
+<div class="infobox-note" id="GUID-5DC92AF0-8F64-4A85-B57A-21C06D1B2534__GUID-E11F8E54-1102-483E-A978-181B13D0A2F0">
+<p class="notep1">Important:</p>
+<p>The file rolling solution may present its own problems. Extensive use of file rolling can result in many small files in HDFS. Many small files in HDFS may result in performance issues in analytic tools.</p>
+</div>
+<p>You may also notice the HDFS inconsistency problem in the following scenarios.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The HDFS Handler process crashes.</p>
+</li>
+<li>
+<p>A forced shutdown is called on the HDFS Handler process.</p>
+</li>
+<li>
+<p>A network outage or other issue causes the HDFS Handler process to abend.</p>
+</li>
+</ul>
+<p>In each of these scenarios, it is possible for the HDFS Handler to end without explicitly closing the HDFS write stream and finalizing the writing block. HDFS in its internal process ultimately recognizes that the write stream has been broken, so HDFS finalizes the write block. In this scenario, you may experience a short term delay before the HDFS process finalizes the write block.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" title="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).">Using the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD396"></a>
+<div class="props_rev_3"><a id="GUID-938E6596-3113-473B-8CE7-39834E1A793D"></a>
+<h2 id="GADBD-GUID-938E6596-3113-473B-8CE7-39834E1A793D" class="sect2"><span class="enumeration_section">8.9</span> Best Practices</h2>
+<div>
+<div class="section">
+<p>It is considered a Big Data best practice for the HDFS cluster to operate on dedicated servers called cluster nodes. Edge nodes are server machines that host the applications to stream data to and retrieve data from the HDFS cluster nodes. Because the HDFS cluster nodes and the edge nodes are different servers, the following benefits are seen:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The HDFS cluster nodes do not compete for resources with the applications interfacing with the cluster.</p>
+</li>
+<li>
+<p>The requirements for the HDFS cluster nodes and edge nodes probably differ. This physical topology allows the appropriate hardware to be tailored to specific needs.</p>
+</li>
+</ul>
+<p>It is a best practice for the HDFS Handler to be installed and running on an edge node and streaming data to the HDFS cluster using network connection. The HDFS Handler can run on any machine that has network visibility to the HDFS cluster. The installation of the HDFS Handler on an edge node requires that the <code class="codeph">core-site.xml</code> files, and the dependency jars are copied to the edge node so that the HDFS Handler can access them. The HDFS Handler can also run collocated on a HDFS cluster node if required.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" title="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).">Using the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD386"></a>
+<div class="props_rev_3"><a id="GUID-4217D98D-D1B9-44BA-83D3-7250027DB38E"></a>
+<h2 id="GADBD-GUID-4217D98D-D1B9-44BA-83D3-7250027DB38E" class="sect2"><span class="enumeration_section">8.10</span> Troubleshooting the HDFS Handler</h2>
+<div>
+<p>Troubleshooting of the HDFS Handler begins with the contents for the Java <code class="codeph">log4j</code> file. Follow the directions in the Java Logging Configuration to configure the runtime to correctly generate the Java <code class="codeph">log4j</code> log file.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-76BEB6E7-D75B-4803-9C5F-128D8774B16B">Java Classpath</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-A8B48C14-A916-4C4F-A607-80C776F184CF">HDFS Connection Properties</a><br /></li>
+<li class="ulchildlink"><a href="using-hdfs-handler.htm#GUID-854BDCFA-A6B3-4AA6-8001-A9E36C4BFEE8">Handler and Formatter Configuration</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-85A82B2E-CD51-463A-8674-3D686C3C0EC0" title="Learn how to use the HDFS Handler, which is designed to stream change capture data into the Hadoop Distributed File System (HDFS).">Using the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+<a id="GADBD387"></a>
+<div class="props_rev_3"><a id="GUID-76BEB6E7-D75B-4803-9C5F-128D8774B16B"></a>
+<h3 id="GADBD-GUID-76BEB6E7-D75B-4803-9C5F-128D8774B16B" class="sect3"><span class="enumeration_section">8.10.1</span> Java Classpath</h3>
+<div>
+<p>Problems with the Java classpath are common. The usual indication of a Java classpath problem is a <code class="codeph">ClassNotFoundException</code> in the Java <code class="codeph">log4j</code> log file. The Java <code class="codeph">log4j</code> log file can be used to troubleshoot this issue. Setting the log level to <code class="codeph">DEBUG</code> allows for logging of each of the jars referenced in the <code class="codeph">gg.classpath</code> object to be logged to the log file. In this way, you can ensure that all of the required dependency jars are resolved by enabling <code class="codeph">DEBUG</code> level logging and search the log file for messages, as in the following:</p>
+<pre dir="ltr">
+2015-09-21 10:05:10 DEBUG ConfigClassPath:74 - ...adding to classpath: url="file:/ggwork/hadoop/hadoop-2.6.0/share/hadoop/common/lib/guava-11.0.2.jar
+</pre></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-4217D98D-D1B9-44BA-83D3-7250027DB38E">Troubleshooting the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD388"></a>
+<div class="props_rev_3"><a id="GUID-A8B48C14-A916-4C4F-A607-80C776F184CF"></a>
+<h3 id="GADBD-GUID-A8B48C14-A916-4C4F-A607-80C776F184CF" class="sect3"><span class="enumeration_section">8.10.2</span> HDFS Connection Properties</h3>
+<div>
+<p>The contents of the HDFS <code class="codeph">core-site.xml</code> file (including default settings) are output to the Java <code class="codeph">log4j</code> log file when the logging level is set to <code class="codeph">DEBUG</code> or <code class="codeph">TRACE</code>. This output shows the connection properties to HDFS. Search for the following in the Java <code class="codeph">log4j</code> log file:</p>
+<pre dir="ltr">
+2015-09-21 10:05:11 DEBUG HDFSConfiguration:58 - Begin - HDFS configuration object contents for connection troubleshooting.
+</pre>
+<p>If the <code class="codeph">fs.defaultFS</code> property points to the local file system, then the <code class="codeph">core-site.xml</code> file is not properly set in the <code class="codeph">gg.classpath</code> property.</p>
+<pre dir="ltr">
+  Key: [fs.defaultFS] Value: [file:///].  
+</pre>
+<p>This shows to the <code class="codeph">fs.defaultFS</code> property properly pointed at and HDFS host and port.</p>
+<pre dir="ltr">
+Key: [fs.defaultFS] Value: [hdfs://hdfshost:9000].
+</pre></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-4217D98D-D1B9-44BA-83D3-7250027DB38E">Troubleshooting the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD389"></a>
+<div class="props_rev_3"><a id="GUID-854BDCFA-A6B3-4AA6-8001-A9E36C4BFEE8"></a>
+<h3 id="GADBD-GUID-854BDCFA-A6B3-4AA6-8001-A9E36C4BFEE8" class="sect3"><span class="enumeration_section">8.10.3</span> Handler and Formatter Configuration</h3>
+<div>
+<p>The Java <code class="codeph">log4j</code> log file contains information on the configuration state of the HDFS Handler and the selected formatter. This information is output at the <code class="codeph">INFO</code> log level. The output resembles the following:</p>
+<pre dir="ltr">
+2015-09-21 10:05:11 INFO  AvroRowFormatter:156 - **** Begin Avro Row Formatter -
+ Configuration Summary ****
+  Operation types are always included in the Avro formatter output.
+    The key for insert operations is [I].
+    The key for update operations is [U].
+    The key for delete operations is [D].
+    The key for truncate operations is [T].
+  Column type mapping has been configured to map source column types to an
+ appropriate corresponding Avro type.
+  Created Avro schemas will be output to the directory [./dirdef].
+  Created Avro schemas will be encoded using the [UTF-8] character set.
+  In the event of a primary key update, the Avro Formatter will ABEND.
+  Avro row messages will not be wrapped inside a generic Avro message.
+  No delimiter will be inserted after each generated Avro message.
+**** End Avro Row Formatter - Configuration Summary ****
+ 
+2015-09-21 10:05:11 INFO  HDFSHandler:207 - **** Begin HDFS Handler -
+ Configuration Summary ****
+  Mode of operation is set to tx.
+  Data streamed to HDFS will be partitioned by table.
+  Tokens will be included in the output.
+  The HDFS root directory for writing is set to [/ogg].
+  The maximum HDFS file size has been set to 1073741824 bytes.
+  Rolling of HDFS files based on time is configured as off.
+  Rolling of HDFS files based on write inactivity is configured as off.
+  Rolling of HDFS files in the case of a metadata change event is enabled.
+  HDFS partitioning information:
+    The HDFS partitioning object contains no partitioning information.
+HDFS Handler Authentication type has been configured to use [none]
+**** End HDFS Handler - Configuration Summary ****
+</pre></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hdfs-handler.htm#GUID-4217D98D-D1B9-44BA-83D3-7250027DB38E">Troubleshooting the HDFS Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment64">
+<tr>
+<td class="cellalignment74">
+<table class="cellalignment69">
+<tr>
+<td class="cellalignment68"><a href="using-hbase-handler.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment68"><a href="using-jdbc-handler.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment76">
+<table class="cellalignment67">
+<tr>
+<td class="cellalignment68"><a href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment68"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment68"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

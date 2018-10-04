@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>GET_RECORD | GET_RECORD2</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="keywords" content="GET_RECORD function" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-46FA0EBE-37F8-4B9F-A34E-44B5ACF5A6A0.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-6F9A3800-BCC3-4FEC-9E97-C6B133F1C594.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA"></a> <span id="PAGE" style="display:none;">351/360</span> <!-- End Header -->
+<a id="GNSRF741"></a>
+<h1 id="GNSRF-GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA" class="sect1"><span class="enumeration_section">7.21</span> GET_RECORD | GET_RECORD2</h1>
+<div>
+<div class="section">
+<p>Data mapping from a source to a different target format is often required when extracting or replicating data. Although the <code class="codeph">COLMAP</code> specification supported by both Replicat and Extract works sufficiently for most, user exits may be necessary for some field conversions.</p>
+<p>Extract and Replicat pass data records to the exit after converting to the target format. In the event that a few fields do not convert, <code class="codeph">GET_RECORD</code> and <code class="codeph">GET_RECORD2</code> provide a way to obtain information for custom field conversions. For example, an exit could convert a proprietary date field (such as <code class="codeph">YYDDD</code>) in an Enscribe database to a standard SQL date in the target record, while other columns would be mapped by Extract.</p>
+<p><code class="codeph">GET_RECORD</code> is only valid for use with record less than 32767. <code class="codeph">GET_RECORD2</code> is valid for both these smaller records and the longer records defined with DDL2.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Formats</p>
+<p>Deletes, inserts and updates appear in the buffer as full record images. For SQL tables, this is the same format as produced by an <code class="codeph">INVOKE</code> of the table.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Compressed SQL updates</p>
+<p>Compressed SQL updates have the format:</p>
+<pre dir="ltr">
+<span class="italic">index</span> <span class="italic">length</span> <span class="italic">value</span> <span class="italic">index</span> <span class="italic">length</span> <span class="italic">value</span>&hellip;
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">index</code></span> is a two byte index into the list of columns of the table (first column is zero).</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">length</code></span> is the two byte length of the table.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">value</code></span> is the actual column value, including when applicable a two byte null indicator (<code class="codeph">0</code> for not null, <code class="codeph">-1</code> for null).</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Compressed Enscribe updates</p>
+<p>Compressed Enscribe updates have the format:</p>
+<pre dir="ltr">
+<span class="italic">offset</span> <span class="italic">length</span> <span class="italic">value</span> <span class="italic">offset</span> <span class="italic">length</span> <span class="italic">value</span>
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">offset</code></span> is the offset into the Enscribe record of the data fragment that changed.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">length</code></span> is the length of the fragment and value is the actual data. Fragments can span field boundaries, so full fields are not always retrieved (unless compression is off or <code class="codeph">FETCHCOMPS</code> is elected).</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Compressed Primary Key Updates</p>
+<p>Compressed primary key updates contain three parts:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The before-image key length</p>
+</li>
+<li>
+<p>The before-image key value in field comp format</p>
+</li>
+<li>
+<p>The after-image in field comp format</p>
+</li>
+</ul>
+<p>You can modify the record keeping the format intact, or use <code class="codeph">DECOMPRESS_RECORD</code> and <code class="codeph">COMPRESS_RECORD</code> to obtain a full record format. To use the callback functions, you will need to separate the before and after-images and use the callback on only one portion at a time.</p>
+<p>Use the following to move the record pointer so that you can manipulate the before-image up to the <code class="codeph">before_len</code>. Note that the size of key length fields must be a <code class="codeph">long</code>.</p>
+<pre dir="ltr">
+long before_len;
+long after_len;
+char *rec_ptr;
+memcpy (&amp;before_len, rec, sizeof(before_len));  /* get before len */
+rec_ptr = rec + sizeof (before_len);   /* move rec_ptr passed len */
+</pre>
+<p>For the after-image, use the following to manipulate the after-image up to the after_len.:</p>
+<pre dir="ltr">
+rec_ptr += before_len;
+after_len = exit_params-&gt;record_len - sizeof (before_len) - before_len;
+</pre>
+<p>To see an example of the trail record with its before and after-images, use Logdump with the <code class="codeph">Detail</code> option set on.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax GET_RECORD</p>
+<p><span class="bold"><tt>For C:</tt></span></p>
+<pre dir="ltr">
+#include "usrdecs"
+char     *buf;
+short    len;
+short    io_type;
+short    source_or_target;
+short    result;
+result = GET_RECORD (buf, &amp;len, &amp;io_type, source_or_target);
+</pre>
+<p><span class="bold"><tt>For TAL:</tt></span></p>
+<pre dir="ltr">
+?source usrdect
+int result;
+string .ext buf;
+int    .ext len;
+int    .ext io_type;
+int    source_or_target;
+result := GET_RECORD (buf, len, io_type, source_or_target);
+</pre>
+<p><span class="bold"><tt>For COBOL:</tt></span></p>
+<pre dir="ltr">
+?CONSULT =EXTRACT (or =REPLICAT)
+01 buf              PIC X(32767).
+01 len              PIC S9(4) COMP.
+01 io-type          PIC S9(4) COMP.
+01 source-or-target PIC S9(4) COMP.
+01 result           PIC S9(4) COMP.
+ENTER C "GET_RECORD" using buf, len, io-type, source-or-target
+                     giving result.
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA__GUID-0EB8A2E1-B81D-4688-90B3-63795BF23543"><!-- --></a><code class="codeph">buf</code></dt>
+<dd>
+<p>The record buffer for data returned by the Extract or Replicat programs. The memory for this buffer must be allocated by the user. Up to <code class="codeph">X(32767)</code> can be used for the buffer.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA__GUID-E7253D0E-3DE1-4B88-9B44-B7D2466FE530"><!-- --></a><code class="codeph">io_type</code></dt>
+<dt class="dlterm"><code class="codeph">io-type</code></dt>
+<dd>
+<p>Indicates the type of operation represented by the record, such as:</p>
+<p><code class="codeph">3</code> &mdash; Delete</p>
+<p><code class="codeph">5</code> &mdash; Insert</p>
+<p><code class="codeph">10</code> &mdash; Update</p>
+<p><code class="codeph">11</code> &mdash; Compressed Enscribe Update</p>
+<p><code class="codeph">15</code> &mdash; Compressed SQL Update</p>
+<p><code class="codeph">115</code> &mdash; Compressed primary key Update</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA__GUID-74B5373E-B0C3-4DB1-8CB2-B94016F86EAB"><!-- --></a><code class="codeph">len</code></dt>
+<dd>
+<p><code class="codeph">LEN</code> is the length of the data returned in <code class="codeph">BUF</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA__GUID-BEBE6A49-186B-4347-951F-DE13109EF3B0"><!-- --></a><code class="codeph">source_or_target</code></dt>
+<dt class="dlterm"><code class="codeph">source-or-target</code></dt>
+<dd>
+<p>Represented by either <code class="codeph">EXIT&#8208;FN&#8208;SOURCE&#8208;VAL</code> or <code class="codeph">EXIT-FN-TARGET-VAL</code> to indicate whether to retrieve the source or target record.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA__GUID-270C502B-B0C5-4F27-AD83-01B1A01AF06D"><!-- --></a><code class="codeph">result</code></dt>
+<dd>
+<p>A code indicating whether the call was successful or not.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax GET_RECORD2</p>
+<p><span class="bold"><tt>For C:</tt></span></p>
+<pre dir="ltr">
+#include "usrdecs"
+char     *buf;
+long    len;
+short    io_type;
+short    source_or_target;
+short    result;
+result = GET_RECORD2 (buf, &amp;len, &amp;io_type, source_or_target);
+</pre>
+<p><span class="bold"><tt>For TAL:</tt></span></p>
+<pre dir="ltr">
+?source usrdect
+int result;
+string .ext buf;
+int(32).ext len;
+int    .ext io_type;
+int    source_or_target;
+result := GET_RECORD2 (buf, len, io_type, source_or_target);
+</pre>
+<p><span class="bold"><tt>For COBOL:</tt></span></p>
+<pre dir="ltr">
+?CONSULT =EXTRACT (or =REPLICAT)
+01 buf              PIC X(128000).
+01 len              PIC S9(8) COMP.
+01 io-type          PIC S9(4) COMP.
+01 source-or-target PIC S9(4) COMP.
+01 result           PIC S9(4) COMP.
+ENTER C "GET_RECORD2" using buf, len, io-type, source-or-target
+                     giving result.
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA__GUID-B6F5A9AB-6D14-4FF4-B74F-295E4521BEE7"><!-- --></a><code class="codeph">buf</code></dt>
+<dd>
+<p>The record buffer for data returned by the Extract or Replicat programs. The memory for this buffer must be allocated by the user. Up to <code class="codeph">X(128000)</code> can be used in the buffer as long as it is declared in extended storage.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA__GUID-F7A1A203-9FFB-4715-B1BA-8C3107CBD5EE"><!-- --></a><code class="codeph">io_type</code></dt>
+<dt class="dlterm"><code class="codeph">io-type</code></dt>
+<dd>
+<p>Indicates the type of operation represented by the record, such as:</p>
+<p><code class="codeph">3</code> &mdash; Delete</p>
+<p><code class="codeph">5</code> &mdash; Insert</p>
+<p><code class="codeph">10</code> &mdash; Update</p>
+<p><code class="codeph">11</code> &mdash; Compressed Enscribe Update</p>
+<p><code class="codeph">15</code> &mdash; Compressed SQL Update</p>
+<p><code class="codeph">115</code> &mdash; Compressed primary key Update</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA__GUID-E4E094D6-FD67-4386-ACE1-0F8A4F39D652"><!-- --></a><code class="codeph">len</code></dt>
+<dd>
+<p><code class="codeph">LEN</code> is the length of the data returned in <code class="codeph">BUF</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA__GUID-0BDB50D3-2B7B-42E3-B214-75AFF6671B04"><!-- --></a><code class="codeph">source_or_target</code></dt>
+<dt class="dlterm"><code class="codeph">source-or-target</code></dt>
+<dd>
+<p>Represented by either <code class="codeph">EXIT&#8208;FN&#8208;SOURCE&#8208;VAL</code> or <code class="codeph">EXIT-FN-TARGET-VAL</code> to indicate whether to retrieve the source or target record.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-A59B332A-4BAE-40AE-A522-16CD3B3C19AA__GUID-97192C2B-A7D0-4BE3-9F84-5AA0FCFC4AB0"><!-- --></a><code class="codeph">result</code></dt>
+<dd>
+<p>A code indicating whether the call was successful or not.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-46FA0EBE-37F8-4B9F-A34E-44B5ACF5A6A0.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-6F9A3800-BCC3-4FEC-9E97-C6B133F1C594.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Oracle GoldenGate Veridata Server Configuration Parameters</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1071" />
+<meta name="description" content="This chapter describes parameters that adjust different aspects of the sort memory configuration when using server-side sorting." />
+<meta name="dcterms.created" content="2015-10-12T20:5:0Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Administering Oracle GoldenGate Veridata" />
+<meta name="dcterms.identifier" content="E60970-01" />
+<meta name="dcterms.isVersionOf" content="GVDAD" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="running_vgpp.htm" title="Previous" type="text/html" />
+<link rel="Next" href="test_to_production.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E60970-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="E60970-01.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="E60970-01.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><span id="PAGE" style="display:none;">10/13</span> <!-- End Header -->
+<div id="GVDAD215" class="chapter"><a id="i1025258"></a>
+<h1 class="chapter"><span class="secnum">7</span> Oracle GoldenGate Veridata Server Configuration Parameters</h1>
+<p><a id="GVDAD216"></a>This chapter describes parameters that adjust different aspects of the sort memory configuration when using server-side sorting.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#CIHHEGFG">Overview of the Server Memory</a></p>
+</li>
+<li>
+<p><a href="#CIHIBCAA">Estimating Memory Usage</a></p>
+</li>
+<li>
+<p><a href="#CIHGDIAE">How to Set a Parameter</a></p>
+</li>
+<li>
+<p><a href="#CIHBIDHB">Parameter Descriptions</a></p>
+</li>
+</ul>
+<a id="CIHHEGFG"></a>
+<div id="GVDAD217" class="sect1">
+<h2 class="sect1"><span class="secnum">7.1</span> Overview of the Server Memory</h2>
+<p>Oracle GoldenGate Veridata Server uses virtual memory in the following ways:</p>
+<ul>
+<li>
+<p><span class="bold">Server memory for basic operation</span>. This is the amount of virtual memory that the Veridata server and web components need to operate. It stores object pools, database access libraries, and other information. This is usually about 200 MB.</p>
+</li>
+<li>
+<p><span class="bold">Sort memory</span>. This is the memory that is used when server-side sorting is used. The virtual memory for sorting is allocated for the entire comparison, not per thread. The rows are read from the agent and submitted to be sorted. The sorting occurs in a thread that is separate from the thread that reads from the agent, and the sort may use more threads to work in parallel. Once all the rows from the agent are submitted to the sort process, the server process retrieves the sorted rows from the sort for comparison.</p>
+</li>
+<li>
+<p><span class="bold">Row hash queue memory</span>. This is the memory that buffers data between the agent processes, the sort process, and the server process. A comparison that uses database sorting requires a single queue each for the source and target. Each queue has a capacity of 20 MG. The memory usage by the queues is affected by the relative speed of the comparison and by the data coming from the agent. The relative speed between the two agents also affects the memory usage. A larger differential in speed increases the amount of memory that is used, because the queue needs to buffer the data.</p>
+</li>
+<li>
+<p><span class="bold">MOOS queue memory.</span> This is the memory that holds potentially out-of-sync records between the initial comparison and confirmation steps of a comparison. The size of the MOOS queue is limited to 50K of records. Memory usage is also dependent on the width of each record.</p>
+</li>
+<li>
+<p><span class="bold">IPC buffer memory</span>. This is the memory that is used to exchange messages between the server and the agent.</p>
+</li>
+<li>
+<p><span class="bold">Scratch runtime transient memory</span>. This is virtual memory space.</p>
+</li>
+</ul>
+<p>The amount of memory that can be used by the sort process cannot be greater than the minimum of:</p>
+<ul>
+<li>
+<p>System physical memory</p>
+</li>
+<li>
+<p>Available memory in swap</p>
+</li>
+<li>
+<p>Java boot option <code dir="ltr">-Xmx</code> maximum memory setting</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="CIHIBCAA"></a>
+<div id="GVDAD218" class="sect1">
+<h2 class="sect1"><span class="secnum">7.2</span> Estimating Memory Usage</h2>
+<p>The maximum amount of memory available to Oracle GoldenGate Veridata is specified by the Java boot option <code dir="ltr">-Xmx</code>. When server-side sorting is used, a large portion of this memory is reserved for sorting during comparisons. This reserved amount is controlled by the <code dir="ltr">server.max_sort_memory</code> configuration parameter.</p>
+<p>When a comparison is run, two buffers are allocated from the reserved sort memory. Each of these is equal to the size specified as <span class="gui-object-action">Maximum Memory Usage (MB)</span>. To access this setting click the <span class="gui-object-action">Edit</span> option from the Profile Configuration screen, then <span class="gui-object-action">Sorting Method</span> from the Profile settings categories.</p>
+<p class="subhead2"><a id="GVDAD219"></a>To Estimate Memory based on the Number of Concurrent Comparisons</p>
+<p>The maximum amount of memory that can be used for any comparison is set by the parameter <code dir="ltr">server.max_comparison_sort_memory</code>. The <code dir="ltr">-Xmx</code> Java boot option should be set large enough to allow the desired number of concurrent comparisons.</p>
+<p>The maximum number of concurrent comparisons is defined by the <code dir="ltr">server.max.concurrent_comparison_threads</code> configuration parameter. Therefore the maximum amount of sort memory can be as large as:</p>
+<p><code dir="ltr">server.max_comparison_sort_memory</code> * <code dir="ltr">server_max_comparison_threads</code></p>
+<p>For example, if you set <code dir="ltr">server.max_concurrent_comparison_threads</code> to allow 10 concurrent comparisons and leave <code dir="ltr">server.max_comparison_sort_memory</code> set to the default value of 100 MB, you will need 1 GB of available memory.</p>
+<p class="subhead2"><a id="GVDAD220"></a>To Estimate the Amount of Memory Used per Row</p>
+<p>Refer the section <a class="olink GVDIS981" href="../GVDIS/system_requirements.htm#GVDIS981">"Disk and Memory Requirements for the Server Component"</a> in <span class="italic">Installing and Configuring Oracle GoldenGate Veridata</span> for the calculation to estimate the amount of memory used per row.</p>
+</div>
+<!-- class="sect1" -->
+<a id="CIHGDIAE"></a>
+<div id="GVDAD221" class="sect1">
+<h2 class="sect1"><span class="secnum">7.3</span> How to Set a Parameter</h2>
+<p>To set a parameter, edit its entry in the <code dir="ltr">veridata.cfg</code> file. This file is stored in the <code dir="ltr">DOMAIN_HOME/config/veridata</code> directory within the Oracle GoldenGate Veridata Server installation directory.</p>
+<p>Open an Oracle service request before changing these parameters. For more information, go to <code dir="ltr"><a href="http://support.oracle.com.">http://support.oracle.com.</a></code></p>
+</div>
+<!-- class="sect1" -->
+<a id="CIHBIDHB"></a>
+<div id="GVDAD222" class="sect1">
+<h2 class="sect1"><span class="secnum">7.4</span> Parameter Descriptions</h2>
+<p>This section describes the parameters that can be set in the <code dir="ltr">veridata.cfg</code> file. These parameters are grouped under the following categories:</p>
+<ul>
+<li>
+<p><a href="#BABFFFCE">Server Parameters</a></p>
+</li>
+<li>
+<p><a href="#BABFIABI">Parameters for Configuring SSL Communication</a></p>
+</li>
+<li>
+<p><a href="#BABBIAAH">Parameters for Veridata Command-Line Utility</a></p>
+</li>
+<li>
+<p><a href="#BABCHDFE">Parameters for Report File Encryption</a></p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<div class="refentry"><a id="BABFFFCE"></a>
+<div id="GVDAD1027" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">Server Parameters</h2>
+<p>This section defines the following configurable parameters for your Veridata Server:</p>
+<ul>
+<li>
+<p><a href="#BABEFGDA">server.veridata_data</a></p>
+</li>
+<li>
+<p><a href="#BABFGICC">server.persistence_db_type</a></p>
+</li>
+<li>
+<p><a href="#BABBJHFJ">server.meta_session_handle_timeout</a></p>
+</li>
+<li>
+<p><a href="#BABJBCGJ">server.max_concurrent_jobs</a></p>
+</li>
+<li>
+<p><a href="#BABBBEDD">server.max_concurrent_comparison_threads</a></p>
+</li>
+<li>
+<p><a href="#BABFJGHB">server.max_sort_memory</a></p>
+</li>
+<li>
+<p><a href="#BABJECGB">server.concurrent.writers</a></p>
+</li>
+<li>
+<p><a href="#BABFCBIA">server.concurrent.readers</a></p>
+</li>
+<li>
+<p><a href="#BABEGEAB">server.number_sort_threads</a></p>
+</li>
+</ul>
+<div id="GVDAD1028" class="refsect2"><a id="BABEFGDA"></a>
+<h3 class="refsect2">server.veridata_data</h3>
+<p>The directory that contains Oracle GoldenGate Veridata reports.</p>
+<p class="subhead2"><a id="GVDAD1029"></a>Syntax</p>
+<pre dir="ltr">
+server.veridata_data <span class="italic">path</span>
+</pre>
+<p>where <code dir="ltr"><span class="codeinlineitalic">path</span></code> is a relative or absolute path for the directory where Veridata reports will be stored.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If you specify a relative path for the data directory, you need not start the path with a forward (/) or backward (\) slash. The path will be relative to the Veridata domain home directory.</div>
+<p class="subhead2"><a id="GVDAD1030"></a>Default Value</p>
+<p><code dir="ltr">veridata/reports</code></p>
+<p>That means the default data directory is <code dir="ltr"><span class="codeinlineitalic">VERIDATA_DOMAIN_HOME</span></code><code dir="ltr">/veridata/reports</code>.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1031" class="refsect2"><a id="BABFGICC"></a>
+<h3 class="refsect2">server.persistence_db_type</h3>
+<p>This parameter defines the persistence database type.</p>
+<p class="subhead2"><a id="GVDAD1032"></a>Syntax</p>
+<pre dir="ltr">
+server.veridata_data <span class="italic">database_type</span>
+</pre>
+<p>where <code dir="ltr"><span class="codeinlineitalic">database_type</span></code> is the persistence database type. The options are:</p>
+<ul>
+<li>
+<p>ORACLE_OCI</p>
+</li>
+<li>
+<p>MS_SQL</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GVDAD1033"></a>Default Value</p>
+<p>ORACLE_OCI</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1034" class="refsect2"><a id="BABBJHFJ"></a>
+<h3 class="refsect2">server.meta_session_handle_timeout</h3>
+<p>This parameter defines the meta-session handle timeout in seconds.</p>
+<p class="subhead2"><a id="GVDAD1035"></a>Syntax</p>
+<pre dir="ltr">
+server.meta_session_handle_timeout <span class="italic">seconds</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1036"></a>Example</p>
+<pre dir="ltr">
+server.meta_session_handle_timeout 600
+</pre>
+<p class="subhead2"><a id="GVDAD1037"></a>Default Value</p>
+<p>900</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1038" class="refsect2"><a id="BABJBCGJ"></a>
+<h3 class="refsect2">server.max_concurrent_jobs</h3>
+<p>This parameter specifies the maximum number of jobs that can be run simultaneously.</p>
+<p class="subhead2"><a id="GVDAD1039"></a>Syntax</p>
+<pre dir="ltr">
+server.max_concurrent_jobs <span class="italic">number_of_jobs</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1040"></a>Example</p>
+<pre dir="ltr">
+server.max_concurrent_jobs 200
+</pre>
+<p class="subhead2"><a id="GVDAD1041"></a>Default Value</p>
+<p>100</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1042" class="refsect2"><a id="BABBBEDD"></a>
+<h3 class="refsect2">server.max_concurrent_comparison_threads</h3>
+<p>Sets the maximum number of concurrent comparisons that can be executed. In general, the amount configured by the server is the optimal value, given the machines resources. You can lower this number to reduce the impact of the server on your system. When this limit is reached, no new comparisons will start until an active comparison completes.</p>
+<p class="subhead2"><a id="GVDAD1043"></a>Syntax</p>
+<pre dir="ltr">
+server.max_concurrent_comparison_threads {default | <span class="italic">number</span>}
+</pre>
+<ul>
+<li>
+<p><code dir="ltr">default</code> allows Oracle GoldenGate Veridata to compute the maximum number of concurrent threads and available resources. The default value is the <a href="#BABFJGHB">server.max_sort_memory</a>.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">number</span></code> is a positive integer that sets the maximum number of concurrent comparison threads.</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GVDAD1044"></a>Example</p>
+<pre dir="ltr">
+server.max_concurrent_comparison_threads 100
+</pre>
+<p class="subhead2"><a id="GVDAD1045"></a>Default Value</p>
+<p>The default value is the maximum of four or the number of available CPUs.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1127" class="refsect2"><a id="sthref128"></a>
+<h3 class="refsect2">server.mapped_sort_buffers</h3>
+<p>Indicates whether sort buffers are allocated as a memory mapped file or allocated on the JVM heap.</p>
+<p class="subhead2"><a id="GVDAD1128"></a>Syntax</p>
+<pre dir="ltr">
+server.mapped_sort_buffers [true|false]
+</pre>
+<p class="subhead2"><a id="GVDAD1129"></a>Example</p>
+<pre dir="ltr">
+server.mapped_sort_buffers true
+</pre>
+<p class="subhead2"><a id="GVDAD1130"></a>Default Value</p>
+<p>The default is <code dir="ltr">true</code>. If an error occurs during initialization, Oracle GoldenGate Veridata uses the JVM heap.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1046" class="refsect2"><a id="BABFJGHB"></a>
+<h3 class="refsect2">server.max_sort_memory</h3>
+<p>Sets the maximum amount of sort virtual memory that is available to all running comparisons that use server-side sorting. When a JVM heap sort is allocated using the Java boot option <code dir="ltr">-Xmx</code> maximum memory, the default setting is the available heap size less the 200 MB needed for basic tasks. When memory mapped file sort is used, the default is 2G. You can limit this amount to make more memory available for the Oracle GoldenGate Web User Interface.</p>
+<p>If a comparison does get enough virtual memory, the currently available sort virtual memory gets decremented by the amount that the comparison reserves. When a comparison completes, it increments the amount of available sort virtual memory by the amount of sort virtual memory that it had reserved.</p>
+<p class="subhead2"><a id="GVDAD1047"></a>Syntax</p>
+<pre dir="ltr">
+server.max_sort_memory {default | <span class="italic">number</span>{M | m}}
+</pre>
+<ul>
+<li>
+<p><code dir="ltr">default</code> allows Oracle GoldenGate Veridata to define a maximum value that is dependent on the operating system.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">number</span></code><code dir="ltr">{M | m}</code> specifies a value in megabytes. For example, 1000M means a limit of 1000 megabytes. If this number exceeds the amount of available memory, the value will be reduced to the amount of available memory.</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GVDAD1048"></a>Example</p>
+<pre dir="ltr">
+server.max_sort_memory 1000M
+</pre>
+<p class="subhead2"><a id="GVDAD1049"></a>Default Value</p>
+<p>The system calculates the default size based on the available virtual memory.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1058" class="refsect2"><a id="BABJECGB"></a>
+<h3 class="refsect2">server.concurrent.writers</h3>
+<p>This parameter specifies the number of writer threads per sort directory.</p>
+<p class="subhead2"><a id="GVDAD1059"></a>Syntax</p>
+<pre dir="ltr">
+server.concurent.writers <span class="italic">number</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1060"></a>Example</p>
+<pre dir="ltr">
+server.concurent.writers <span class="italic">number</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1061"></a>Default Value</p>
+<p>The maximum of 4 or one quarter of the number of available CPUs.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1062" class="refsect2"><a id="BABFCBIA"></a>
+<h3 class="refsect2">server.concurrent.readers</h3>
+<p>This parameter specifies the number of reader threads for the entire server.</p>
+<p class="subhead2"><a id="GVDAD1063"></a>Syntax</p>
+<pre dir="ltr">
+server.concurent.readers <span class="italic">number</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1064"></a>Example</p>
+<pre dir="ltr">
+server.concurent.readers <span class="italic">number</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1065"></a>Default Value</p>
+<p>The maximum of 4 or one quarter of the number of available CPUs.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1066" class="refsect2"><a id="BABEGEAB"></a>
+<h3 class="refsect2">server.number_sort_threads</h3>
+<p>This parameter specifies the number of threads used to sort input buffers from the Veridata Agent.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The value of <code dir="ltr">server.number_sort_threads</code> should not be greater than the number of available processes.</div>
+<p class="subhead2"><a id="GVDAD1067"></a>Syntax</p>
+<pre dir="ltr">
+server.number_sort_threads <span class="italic">number</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1068"></a>Example</p>
+<pre dir="ltr">
+server.number_sort_threads <span class="italic">number</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1069"></a>Default Value</p>
+<p>The maximum of 4 or one quarter of the number of available CPUs.</p>
+</div>
+<!-- class="refsect2" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="BABFIABI"></a>
+<div id="GVDAD1070" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">Parameters for Configuring SSL Communication</h2>
+<p>This section defines the parameters that you can use to configure SSL communication between your Veridata Server and Veridata Agents:</p>
+<ul>
+<li>
+<p><a href="#BABFIACB">server.useSsl</a></p>
+</li>
+<li>
+<p><a href="#BABEDADF">server.ssl.client.allowTrustedExpiredCertificates</a></p>
+</li>
+<li>
+<p><a href="#BABBIHEI">server.ssl.client.identitystore.keyfactory.alg.name</a></p>
+</li>
+<li>
+<p><a href="#BABEBGBI">server.ssl.client.truststore.keyfactory.alg.name</a></p>
+</li>
+<li>
+<p><a href="#BABBFHBH">server.ssl.algorithm.name</a></p>
+</li>
+</ul>
+<div id="GVDAD1071" class="refsect2"><a id="BABFIACB"></a>
+<h3 class="refsect2">server.useSsl</h3>
+<p>This parameter specifies whether SSL is enabled for communication between the Veridata Server and all Veridata Agents.</p>
+<p class="subhead2"><a id="GVDAD1072"></a>Syntax</p>
+<pre dir="ltr">
+server.useSsl [true|false]
+</pre>
+<p class="subhead2"><a id="GVDAD1073"></a>Example</p>
+<pre dir="ltr">
+server.useSsl true
+</pre>
+<p class="subhead2"><a id="GVDAD1074"></a>Default Value</p>
+<p>The default value is false.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1075" class="refsect2"><a id="BABEDADF"></a>
+<h3 class="refsect2">server.ssl.client.allowTrustedExpiredCertificates</h3>
+<p>If the value of this parameter is set to true, Veridata Server allows SSL communication between the agent and the server when a trusted certificate expires.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The parameter is not applicable if you are running IBM's JVM.</div>
+<p class="subhead2"><a id="GVDAD1076"></a>Syntax</p>
+<pre dir="ltr">
+server.ssl.client.allowTrustedExpiredCertificates [true|false]
+</pre>
+<p class="subhead2"><a id="GVDAD1077"></a>Example</p>
+<pre dir="ltr">
+server.ssl.client.allowTrustedExpiredCertificates false
+</pre>
+<p class="subhead2"><a id="GVDAD1078"></a>Default Value</p>
+<p>The default value is true.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1079" class="refsect2"><a id="BABBIHEI"></a>
+<h3 class="refsect2">server.ssl.client.identitystore.keyfactory.alg.name</h3>
+<p>This parameter specifies a name for the identity store key factory algorithm used for SSL communication.</p>
+<p class="subhead2"><a id="GVDAD1080"></a>Syntax</p>
+<pre dir="ltr">
+server.ssl.client.identitystore.keyfactory.alg.name=<span class="codeinlineitalic">algorithm_name</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1081"></a>Example</p>
+<pre dir="ltr">
+server.ssl.client.identitystore.keyfactory.alg.name=IbmX509
+</pre>
+<p>If you are running on IBM's JVM, set the value to IbmX509.</p>
+<p class="subhead2"><a id="GVDAD1082"></a>Default Value</p>
+<p>The default value is SunX509.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1083" class="refsect2"><a id="BABEBGBI"></a>
+<h3 class="refsect2">server.ssl.client.truststore.keyfactory.alg.name</h3>
+<p>This parameter specifies a name for the trust store key factory algorithm used for SSL communication.</p>
+<p class="subhead2"><a id="GVDAD1084"></a>Syntax</p>
+<pre dir="ltr">
+server.ssl.client.truststore.keyfactory.alg.name=<span class="codeinlineitalic">algorithm_name</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1085"></a>Example</p>
+<pre dir="ltr">
+server.ssl.client.truststore.keyfactory.alg.name=IbmX509
+</pre>
+<p>If you are running on IBM's JVM, set the value to IbmX509.</p>
+<p class="subhead2"><a id="GVDAD1086"></a>Default Value</p>
+<p>The default value is SunX509.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1087" class="refsect2"><a id="BABBFHBH"></a>
+<h3 class="refsect2">server.ssl.algorithm.name</h3>
+<p>This parameter specifies algorithm used for SSL communication.</p>
+<p class="subhead2"><a id="GVDAD1088"></a>Syntax</p>
+<pre dir="ltr">
+server.ssl.algorithm.name=<span class="codeinlineitalic">algorithm_name</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1089"></a>Example</p>
+<pre dir="ltr">
+server.ssl.algorithm.name=TLS
+</pre>
+<p class="subhead2"><a id="GVDAD1090"></a>Default Value</p>
+<p>The default value is TLS.</p>
+</div>
+<!-- class="refsect2" --></div>
+<!-- class="refsect1" -->
+<a id="BABBIAAH"></a>
+<div id="GVDAD1091" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">Parameters for Veridata Command-Line Utility</h2>
+<p>This section defines the following configurable parameters for your Veridata Server:</p>
+<ul>
+<li>
+<p><a href="#BABBGBFE">veridata.cli.run_from_managed_server</a></p>
+</li>
+<li>
+<p><a href="#BABHIHCE">veridata.cli.managed_server_name</a></p>
+</li>
+<li>
+<p><a href="#BABHEJAJ">veridata.cli.server.listenAddress</a></p>
+</li>
+<li>
+<p><a href="#BABGJAJJ">veridata.cli.server.timeout.seconds</a></p>
+</li>
+</ul>
+<div id="GVDAD1092" class="refsect2"><a id="BABBGBFE"></a>
+<h3 class="refsect2">veridata.cli.run_from_managed_server</h3>
+<p>To run the Veridata command-line utility from the Veridata Managed Server, set this parameter value to <code dir="ltr">true</code>.</p>
+<p class="subhead2"><a id="GVDAD1093"></a>Syntax</p>
+<pre dir="ltr">
+veridata.cli.run_from_managed_server [true|false]
+</pre>
+<p class="subhead2"><a id="GVDAD1094"></a>Example</p>
+<pre dir="ltr">
+veridata.cli.run_from_managed_server false
+</pre>
+<p class="subhead2"><a id="GVDAD1095"></a>Default Value</p>
+<p>The default value is true.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1096" class="refsect2"><a id="BABHIHCE"></a>
+<h3 class="refsect2">veridata.cli.managed_server_name</h3>
+<p>This parameter specifies the name of the Veridata Managed Server.</p>
+<p class="subhead2"><a id="GVDAD1097"></a>Syntax</p>
+<pre dir="ltr">
+veridata.cli.managed_server_name <span class="italic">server</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1098"></a>Example</p>
+<pre dir="ltr">
+veridata.cli.managed_server_name VERIDATA_server2
+</pre>
+<p class="subhead2"><a id="GVDAD1099"></a>Default Value</p>
+<p>The default name of the managed server is <code dir="ltr">VERIDATA_server1</code>.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1100" class="refsect2"><a id="BABHEJAJ"></a>
+<h3 class="refsect2">veridata.cli.server.listenAddress</h3>
+<p>This parameter specifies the listening address of the host machine for the Veridata Managed Server.</p>
+<p class="subhead2"><a id="GVDAD1101"></a>Syntax</p>
+<pre dir="ltr">
+veridata.cli.server.listenAddress <span class="italic">host</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1102"></a>Example</p>
+<pre dir="ltr">
+veridata.cli.server.listenAddress host.example.com
+</pre>
+<p class="subhead2"><a id="GVDAD1103"></a>Default Value</p>
+<p>The default name of the managed server is <code dir="ltr">localhost</code>.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1104" class="refsect2"><a id="BABGJAJJ"></a>
+<h3 class="refsect2">veridata.cli.server.timeout.seconds</h3>
+<p>This parameter specifies the time period (in seconds) Veridata CLI should wait for the JMX Server to respond to a CLI request.</p>
+<p class="subhead2"><a id="GVDAD1105"></a>Syntax</p>
+<pre dir="ltr">
+veridata.cli.server.timeout.seconds <span class="italic">seconds</span>
+</pre>
+<p class="subhead2"><a id="GVDAD1106"></a>Example</p>
+<pre dir="ltr">
+veridata.cli.server.timeout.seconds 90
+</pre>
+<p class="subhead2"><a id="GVDAD1107"></a>Default Value</p>
+<p>The default time-out is <code dir="ltr">60</code> seconds.</p>
+</div>
+<!-- class="refsect2" --></div>
+<!-- class="refsect1" -->
+<a id="BABCHDFE"></a>
+<div id="GVDAD1108" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">Parameters for Report File Encryption</h2>
+<p>This section defines the configurable parameters used for report file encryption:</p>
+<ul>
+<li>
+<p><a href="#BABDHBCC">server.encryption</a></p>
+</li>
+<li>
+<p><a href="#BABGDFDB">server.encryption.bits</a></p>
+</li>
+</ul>
+<div id="GVDAD1109" class="refsect2"><a id="BABDHBCC"></a>
+<h3 class="refsect2">server.encryption</h3>
+<p>When this parameter is set to true, the comparison report artifacts will be encrypted. Otherwise, the report contents will be in clear text.</p>
+<p class="subhead2"><a id="GVDAD1110"></a>Syntax</p>
+<pre dir="ltr">
+server.encryption=[true|false]
+</pre>
+<p class="subhead2"><a id="GVDAD1111"></a>Example</p>
+<pre dir="ltr">
+server.encryption=false
+</pre>
+<p class="subhead2"><a id="GVDAD1112"></a>Default Value</p>
+<p>The default value is false.</p>
+</div>
+<!-- class="refsect2" -->
+<div id="GVDAD1113" class="refsect2"><a id="BABGDFDB"></a>
+<h3 class="refsect2">server.encryption.bits</h3>
+<p>This parameter specifies the strength of the encryption algorithm. Valid values are 128, 192, and 256. If set to a value other than 128, you must install Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files.</p>
+<p class="subhead2"><a id="GVDAD1114"></a>Syntax</p>
+<pre dir="ltr">
+server.encryption.bits=[128|192|256]
+</pre>
+<p class="subhead2"><a id="GVDAD1115"></a>Example</p>
+<pre dir="ltr">
+server.encryption.bits=128
+</pre>
+<p class="subhead2"><a id="GVDAD1116"></a>Default Value</p>
+<p>The default value is 128.</p>
+</div>
+<!-- class="refsect2" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8">
+<table class="cellalignment6">
+<tr>
+<td class="cellalignment5"><a href="running_vgpp.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment5"><a href="test_to_production.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2005, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="../../index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

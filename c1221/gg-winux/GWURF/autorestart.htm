@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>AUTORESTART</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="assumetargetdefs.htm" title="Previous" type="text/html" />
+<link rel="Next" href="autostart.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-263B0CB9-5DA9-4C5E-B838-6A502D3CA8A7"></a> <span id="PAGE" style="display:none;">146/459</span> <!-- End Header -->
+<a id="GWURF402"></a>
+<h1 id="GWURF-GUID-263B0CB9-5DA9-4C5E-B838-6A502D3CA8A7" class="sect1"><span class="enumeration_section">3.13</span> AUTORESTART</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Manager</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">AUTORESTART</code> parameter to start one or more Extract and Replicat processes automatically after they fail. <code class="codeph">AUTORESTART</code> provides fault tolerance when something temporary interferes with a process, such as intermittent network outages or programs that interrupt access to transaction logs.</p>
+<p>You can use multiple <code class="codeph">AUTORESTART</code> statements in the same parameter file.</p>
+<p>To apply this parameter to an Extract group that is created in <code class="codeph">PASSIVE</code> mode, use it for the Manager that is on the target system where the associated alias Extract group resides. Oracle GoldenGate will send the start command to the source system. If <code class="codeph">AUTORESTART</code> is used locally for a passive Extract group, it is ignored.</p>
+<p>If Manager encounters an out-of-order transaction upon restart, it will not restart Extract. Instead, it will log a warning that notifies you to use the <code class="codeph">ETROLLOVER</code> option of <code class="codeph">SEND EXTRACT</code> to advance the trail to skip the transaction that caused the error.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Default</p>
+<p>Do not auto-restart</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+AUTORESTART {EXTRACT | REPLICAT | ER} <span class="italic">group_name</span>
+[, RETRIES <span class="italic">number</span>]
+[, WAITMINUTES <span class="italic">minutes</span>]
+[, WAITSECONDS <span class="italic">seconds</span>]
+[, RESETMINUTES <span class="italic">minutes</span>]
+[, RESETSECONDS <span class="italic">seconds</span>]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-263B0CB9-5DA9-4C5E-B838-6A502D3CA8A7__GUID-D09EF4FD-E382-4BC0-BBB3-68FA863654D7"><!-- --></a><code class="codeph">EXTRACT</code></dt>
+<dd>
+<p>Restarts Extract automatically.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-263B0CB9-5DA9-4C5E-B838-6A502D3CA8A7__GUID-781C8E76-BB4F-4E9C-8300-3EF399EE5C84"><!-- --></a><code class="codeph">REPLICAT</code></dt>
+<dd>
+<p>Restarts Replicat automatically.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-263B0CB9-5DA9-4C5E-B838-6A502D3CA8A7__GUID-B65D12D7-4045-4783-BA88-AD8255963B2C"><!-- --></a><code class="codeph">ER</code></dt>
+<dd>
+<p>Restarts Extract and Replicat automatically.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-263B0CB9-5DA9-4C5E-B838-6A502D3CA8A7__GUID-42198D18-30C4-42EF-B1B3-F827E9AA7ECC"><!-- --></a><span class="italic"><code class="codeph">group_name</code></span></dt>
+<dd>
+<p>A group name or wildcard specification for multiple groups. When wildcarding is used, Oracle GoldenGate starts all groups of the specified process type on the local system that satisfy the wildcard, except those in <code class="codeph">PASSIVE</code> mode.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-263B0CB9-5DA9-4C5E-B838-6A502D3CA8A7__GUID-73083CCE-8275-4D4F-A14F-6348E204B6C3"><!-- --></a><code class="codeph">RETRIES</code> <span class="italic"><code class="codeph">number</code></span></dt>
+<dd>
+<p>The maximum number of times that Manager should try to restart a process before aborting retry efforts. The default number of tries is 2.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-263B0CB9-5DA9-4C5E-B838-6A502D3CA8A7__GUID-E509F105-EF0D-4658-A7D6-1BD7FFD83581"><!-- --></a><code class="codeph">WAITMINUTES | WAITSECONDS</code> <span class="italic"><code class="codeph">{minutes</code></span> | <span class="italic"><code class="codeph">seconds</code></span>}</dt>
+<dd>
+<p>The amount of time, in minutes or seconds, to pause between discovering that a process has terminated abnormally and restarting the process. Use this option to delay restarting until a necessary resource becomes available or some other event occurs. The default delay is 2 minutes or 120 seconds.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-263B0CB9-5DA9-4C5E-B838-6A502D3CA8A7__GUID-C4966177-5DAC-46A1-9F84-C0BA79FB38FA"><!-- --></a><code class="codeph">RESETMINUTES | RESETSECONDS</code> <span class="italic"><code class="codeph">{minutes</code></span> | <span class="italic"><code class="codeph">seconds}</code></span></dt>
+<dd>
+<p>The window of time, in minutes or seconds, during which retries are counted. The default is 120 minutes (2 hours) or 7200 seconds. After the time expires, the number of retries reverts to zero.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Example</p>
+<p>In the following example, Manager tries to start all Extract processes three times after failure within a one hour time period, and it waits five minutes before each attempt.</p>
+<pre dir="ltr">
+AUTORESTART EXTRACT *, RETRIES 3, WAITMINUTES 5, RESETMINUTES 60
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="assumetargetdefs.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="autostart.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Configuring and Starting Monitor Server</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1071" />
+<meta name="description" content="This chapter describes the procedures for using the Configuration Wizard to create a WebLogic domain for both Oracle and non-Oracle databases (for this version, non-Oracle databases refers to SQL Server)." />
+<meta name="dcterms.created" content="2015-10-12T16:47:34Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Installing and Configuring Oracle GoldenGate Monitor" />
+<meta name="dcterms.identifier" content="E60964-01" />
+<meta name="dcterms.isVersionOf" content="GMINS" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="inst_mon_svr_oui.htm" title="Previous" type="text/html" />
+<link rel="Next" href="user_man.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GMINS.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="GMINS.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="GMINS.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><span id="PAGE" style="display:none;">7/11</span> <!-- End Header -->
+<div id="GMINS113" class="chapter"><a id="BGBCDHDJ"></a>
+<h1 class="chapter"><span class="secnum">4</span> Configuring and Starting Monitor Server</h1>
+<p><a id="GMINS114"></a>This chapter describes the procedures for using the Configuration Wizard to create a WebLogic domain for both Oracle and non-Oracle databases (for this version, <span class="italic">non-Oracle databases</span> refers to SQL Server). It also includes instructions for starting the server once these domains have been created.</p>
+<p>This chapter contains these sections:</p>
+<ul>
+<li>
+<p><a href="#BGBGFFFD">Configuring Oracle GoldenGate Monitor Server for Oracle Databases</a></p>
+</li>
+<li>
+<p><a href="#BGBHJIGF">Configuring Oracle GoldenGate Monitor Server for SQL Server Databases</a></p>
+</li>
+<li>
+<p><a href="#A1148206">Creating the Oracle WebLogic Server Domain</a></p>
+</li>
+<li>
+<p><a href="#BGBFIGGJ">Completing Monitor Server Configuration</a></p>
+</li>
+<li>
+<p><a href="#BGBIGBJJ">Starting Oracle GoldenGate Monitor Server</a></p>
+</li>
+</ul>
+<a id="BGBGFFFD"></a>
+<div id="GMINS139" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.1</span> Configuring Oracle GoldenGate Monitor Server for Oracle Databases</h2>
+<p>This section guides you through the steps required to set up a WebLogic domain if you are using an Oracle database. If you are running either a SQL Server database, see <a href="#BGBHJIGF">Section 4.2, "Configuring Oracle GoldenGate Monitor Server for SQL Server Databases"</a>.</p>
+<div id="GMINS245" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref20"></a>
+<h3 class="sect2"><span class="secnum">4.1.1</span> Create the Oracle Database Repository</h3>
+<p>To create a Oracle Database repository, use this procedure:</p>
+<ol>
+<li>
+<p>Follow the instructions in <a href="inst_mon_svr_oui.htm#BABDHECF">Section 3.2, "Creating a Repository"</a> to create a repository; however, note the following exceptions for SQL Server:</p>
+<ol>
+<li>
+<p>When you reach the <a href="install_screens.htm#BABCHFCH">Database Connection Details</a> screen, set Database Type to <span class="bold">Oracle Database</span> and set the appropriate connection information. Click <span class="bold">Next</span>.</p>
+<p>The Select Components screen appears.</p>
+</li>
+<li>
+<p>On the Select Components screen, select <span class="bold">Monitor Server</span> and <span class="bold">Service Table</span> (by default, this should already be selected).</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Follow the remaining repository creation process. You should have these schema generated:</p>
+<ul>
+<li>
+<p><code dir="ltr">OGGMON</code> (the product-specific schema)</p>
+</li>
+<li>
+<p><code dir="ltr">STB</code></p>
+</li>
+<li>
+<p><code dir="ltr">OPSS</code></p>
+</li>
+<li>
+<p><code dir="ltr">IAU</code></p>
+</li>
+<li>
+<p><code dir="ltr">IAU_APPEND</code></p>
+</li>
+<li>
+<p><code dir="ltr">IAU_VIEWER</code></p>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BGBHJIGF"></a>
+<div id="GMINS143" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.2</span> Configuring Oracle GoldenGate Monitor Server for SQL Server Databases</h2>
+<p>In addition to Oracle databases, Oracle GoldenGate Monitor also supports the SQL Server database. The configuration instructions covered in <a href="#BGBGFFFD">Section 4.1, "Configuring Oracle GoldenGate Monitor Server for Oracle Databases"</a> applies only to that database provider. For the SQL Server database, you need to use the same tools though follow somewhat different procedures. Those procedures are explained in this section:</p>
+<div id="GMINS250" class="sect2"><a id="sthref21"></a>
+<h3 class="sect2"><span class="secnum">4.2.1</span> Before You Begin</h3>
+<p>Before you begin, do the following:</p>
+<ul>
+<li>
+<p>Set:</p>
+<pre dir="ltr">
+ISOLATION LEVEL,ALTER DATABASE $(<span class="italic">DATABASE_NAME</span>) SET READ_COMMITTED_SNAPSHOT ON
+</pre></li>
+<li>
+<p>Ensure the database is case-sensitive:</p>
+<pre dir="ltr">
+DECLARE @collate sysname
+   select @collate = convert(sysname, serverproperty('Collation'))
+IF ( charindex(N'_CI', @collate) &gt; 0 )
+BEGIN
+   select @collate = replace(@collate, N'_CI', N'_CS')
+   exec ('ALTER database $(DATABASE_NAME) COLLATE ' + @collate)
+</pre></li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<a id="BGBBCDHH"></a>
+<div id="GMINS148" class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">4.2.2</span> Create the SQL Server Repository</h3>
+<p>To create a SQL Server repository, use this procedure:</p>
+<ol>
+<li>
+<p>Follow the instructions in <a href="inst_mon_svr_oui.htm#BABDHECF">Section 3.2, "Creating a Repository"</a> to create a repository; however, note the following exceptions for SQL Server:</p>
+<ol>
+<li>
+<p>When you reach the <a href="install_screens.htm#BABCHFCH">Database Connection Details</a> screen, set Database Type to <span class="bold">SQL Server database</span> and set the appropriate connection information. Click <span class="bold">Next</span>.</p>
+<p>The Select Components screen appears.</p>
+</li>
+<li>
+<p>On the Select Components screen, select <span class="bold">Monitor Server</span> and <span class="bold">Service Table</span> (by default, this should already be selected).</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Follow the remaining repository creation process. You should have these schema generated:</p>
+<ul>
+<li>
+<p>OGGMON (the product-specific schema)</p>
+</li>
+<li>
+<p>STB</p>
+</li>
+<li>
+<p>OPSS</p>
+</li>
+<li>
+<p>IAU</p>
+</li>
+<li>
+<p>IAU_APPEND</p>
+</li>
+<li>
+<p>IAU_VIEWER</p>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1148206"></a>
+<div id="GMINS141" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.3</span> Creating the Oracle WebLogic Server Domain</h2>
+<p>You will use the Oracle WebLogic Server Configuration Wizard to create the domain for all supported databases. This tool guides you through the process of creating a WebLogic domain by selecting the product components to include in your domain or by selecting template JAR files. If necessary, you can also customize the domain to suit your environment by adding and configuring Managed Servers, clusters, and machine definitions, or customizing predefined JDBC data sources and JMS file store directories. The procedures in this chapter will guide you through the simplest configuration scenario. To learn more about other capabilities of the Configuration Wizard, see <a class="olink WLDCW" href="http://www.oracle.com/pls/topic/lookup?ctx=E66316-01&amp;id=WLDCW"><span class="italic">Creating WebLogic Domains Using the Configuration Wizard</span></a>.</p>
+<p>Assuming Oracle WebLogic Server is installed properly (see <a href="prepare.htm#CHDBFIIH">Section 2.3, "Install Oracle WebLogic Server 12<span class="italic">c</span> (12.2.1)"</a>), launch the Configuration Wizard by doing the following:</p>
+<p>On Linux:</p>
+<pre dir="ltr">
+$ <span class="italic">ORACLE_HOME</span>/oracle_common/common/bin/config.sh
+</pre>
+<p>On Windows:</p>
+<pre dir="ltr">
+C:\<span class="italic">ORACLE_HOME</span>\oracle_common\common\bin\config.cmd
+</pre>
+<p>For specifics about <code dir="ltr"><span class="codeinlineitalic">ORACLE_HOME</span></code>, see <a href="prepare.htm#CHDBFIIH">Section 2.3, "Install Oracle WebLogic Server 12<span class="italic">c</span> (12.2.1)."</a></p>
+<p>The Configuration Wizard starts and the Configuration Type screen appears.</p>
+<p>To create the domain, navigate the Configuration Wizard screens providing the necessary information as described on the following table. For additional, generic information on each screen, click the screen name in the Screen column:</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment65" summary="Two column table listing the screen name in the left-hand column and an instruction for that screen in the right-hand column.">
+<thead>
+<tr class="cellalignment59">
+<th class="cellalignment66" id="r1c1-t2">Screen</th>
+<th class="cellalignment66" id="r1c2-t2">Configuration Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r2c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABHDBDE">Configuration Type</a></td>
+<td class="cellalignment67" headers="r2c1-t2 r1c2-t2">Ensure Create a new domain is selected then:
+<ul>
+<li>
+<p>In Domain location, enter the absolute path outside of <code dir="ltr"><span class="codeinlineitalic">ORACLE_HOME</span></code>.; for example:</p>
+<pre dir="ltr">
+/scratch/<span class="italic">my_user</span>/oggmon1221_domain
+</pre></li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r3c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABJCHHI">Templates</a></td>
+<td class="cellalignment67" headers="r3c1-t2 r1c2-t2">
+<ol>
+<li>Select <span class="bold">Oracle GoldenGate Monitor Server Domain-12.2.1 (oggmon)</span>. Additional packages are automatically selected.</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r4c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABEHHEA">Administrative Account</a></td>
+<td class="cellalignment67" headers="r4c1-t2 r1c2-t2">
+<ol>
+<li>Enter a Name and Password (and confirm the password). These are your WebLogic Server console log-in credentials.</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r5c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABCHDGJ">Domain Mode and JDK</a></td>
+<td class="cellalignment67" headers="r5c1-t2 r1c2-t2">
+<ol>
+<li>In Domain Mode, select <span class="bold">Production</span>.</li>
+<li>
+<p>In JDK, select your preferred JDK; for example:</p>
+<pre dir="ltr">
+Oracle HotSpot 1.8.0_40-ea /usr/java/jdk1.8.0_40
+</pre></li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r6c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABCHHJD">Database Configuration Type</a></td>
+<td class="cellalignment67" headers="r6c1-t2 r1c2-t2">
+<ol>
+<li>Ensure RCU data radio button is selected.</li>
+<li>
+<p>Enter the database connection information.</p>
+</li>
+<li>
+<p>Enter the Schema owner, which is the prefix you specified when creating your repository appended with <code dir="ltr">_STB</code>; for example, <code dir="ltr">DEV_STB</code>.</p>
+</li>
+<li>
+<p>Enter the Password.</p>
+</li>
+<li>
+<p>Click <span class="bold">Get RCU Configuration</span>.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r7c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABDHHID">JDBC Component Schema</a></td>
+<td class="cellalignment67" headers="r7c1-t2 r1c2-t2">Verify the schema information and click <span class="bold">Next</span>.</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r8c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABBJHGG">JDBC Component Schema Test</a></td>
+<td class="cellalignment67" headers="r8c1-t2 r1c2-t2">Verify the schema information and click <span class="bold">Next</span>.</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r9c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABFBDEI">Credentials</a></td>
+<td class="cellalignment67" headers="r9c1-t2 r1c2-t2">
+<ol>
+<li>For each Key Name, enter a Username and Password.</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r10c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABHHFFF">Advanced Configuration</a></td>
+<td class="cellalignment67" headers="r10c1-t2 r1c2-t2">
+<ol>
+<li>Select <span class="bold">Administrative Server</span> and <span class="bold">Managed Serves, Cluster, and Coherence</span>.</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r11c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABJEFBE">Administration Server</a></td>
+<td class="cellalignment67" headers="r11c1-t2 r1c2-t2">By default, the server name is AdminServer and the port is 7001, although you can always change default values. For example, you can change the server name AdminServer to OGGMONAdminServer.
+<p>If port 7001 is already in use, replace it with an unused port number.Make selections as necessary and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r12c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABEHCHG">Managed Servers</a></td>
+<td class="cellalignment67" headers="r12c1-t2 r1c2-t2">The managed server name is already populated with the default, <span class="italic">MONITORSERVER_server1</span>, and the port number with 7003. You can change these values, if desired. Also, if port 7003 is already in use, replace it with an unused port number.
+<p>Either accept the defaults of update the data and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r13c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABDGBDB">Clusters</a></td>
+<td class="cellalignment67" headers="r13c1-t2 r1c2-t2">Click <span class="bold">Next</span>.</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r14c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABJEFJF">Coherence Cluster</a></td>
+<td class="cellalignment67" headers="r14c1-t2 r1c2-t2">Click <span class="bold">Next</span>.</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r15c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABJHIAI">Machines</a></td>
+<td class="cellalignment67" headers="r15c1-t2 r1c2-t2">Click <span class="bold">Next</span>.</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r16c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABJACCA">Configuration Summary</a></td>
+<td class="cellalignment67" headers="r16c1-t2 r1c2-t2">Review the configuration details and click <span class="bold">Create</span>.</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r17c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABFHCFB">Configuration Progress</a></td>
+<td class="cellalignment67" headers="r17c1-t2 r1c2-t2">When configuration creation is complete, click <span class="bold">Next</span>.</td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r18c1-t2" headers="r1c1-t2"><a href="install_screens.htm#BABJGHAB">Configuration Success</a></td>
+<td class="cellalignment67" headers="r18c1-t2 r1c2-t2">
+<ol>
+<li>Make note of the Administration Server URL for MonitorServer administration.</li>
+<li>
+<p>Click <span class="bold">Finish</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>The WebLogic Server domain for the Monitor product with Oracle database is now configured.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BGBFIGGJ"></a>
+<div id="GMINS150" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.4</span> Completing Monitor Server Configuration</h2>
+<p>The final steps in configuring Oracle GoldenGate Monitor Server is setting properties as defined in this section.</p>
+<p class="subhead2"><a id="BGBJBIIB"></a><a id="GMINS152"></a>Configure the JMX Server Properties</p>
+<ol>
+<li>
+<p>At your server prompt, run the configuration utility as follows:</p>
+<p>On Linux:</p>
+<pre dir="ltr">
+$ ./updateOGGMonitorConfig.sh
+</pre>
+<p>On Windows:</p>
+<pre dir="ltr">
+C:\updateOGGMonitorConfig.bat
+</pre>
+<p>This configuration utility is used to update configuration information for Oracle GoldenGate Monitor Server. All fields are required; you can use Ctrl+C to exit.</p>
+</li>
+<li>
+<p>Enter the absolute path for your Oracle GoldenGate Monitor Server (oggmon) domain, for example:</p>
+<pre dir="ltr">
+/scratch/prod/OGGMON_INSTALLS/oggmon_stage9_domain
+</pre>
+<p>The system responds:</p>
+<pre dir="ltr">
+You have entered the domain path as : /scratch/prod/OGGMON_INSTALLS/oggmon_stage9_domain
+</pre></li>
+<li>
+<p>Enter your JMX hostname or IP address. For example, server1.us.domain.com.</p>
+</li>
+<li>
+<p>Enter your JMX Server Port. For example, 6502.</p>
+</li>
+<li>
+<p>Enter your JMX Server Username. For example, jmxuser.</p>
+</li>
+<li>
+<p>Enter the database type for your Oracle GoldenGate Monitor Server using <span class="bold">1</span> for Oracle Database and <span class="bold">2</span> for SQL Server.</p>
+<p>The utility completes. After successful execution of this script, the Secure Key properties file, <code dir="ltr">oggmon.properties</code>, is created in encoded format, and contains all of the configuration information you just provided. This Secure Key is added to your Oracle GoldenGate Monitor Server Oracle wallet.</p>
+</li>
+<li>
+<p>Copy the <code dir="ltr">oggmon.properties</code> file to the <code dir="ltr">cfg</code> directory of your Oracle GoldenGate Monitor Agent instance. For Oracle GoldenGate Monitor Server, the directory is <code dir="ltr"><span class="codeinlineitalic">MonitorServer_WLS_Domain</span></code><code dir="ltr">/config/monitorserver/cfg</code>; for Monitor Agent, the directory is <code dir="ltr"><span class="codeinlineitalic">MonitorAgent_Instance_Home</span></code><code dir="ltr">/cfg</code>.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="BGBIGBJJ"></a>
+<div id="GMINS158" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.5</span> Starting Oracle GoldenGate Monitor Server</h2>
+<p>To verify that you have successfully Oracle GoldenGate Monitor Server, start the server. This is a two-to-three-step process comprised of:</p>
+<ul>
+<li>
+<p><a href="#BGBEJFJA">Starting the Oracle WebLogic Administration Server</a></p>
+</li>
+<li>
+<p><a href="#BGBFJFBA">Update Oracle GoldenGate Monitor Server Credentials (Optional)</a></p>
+</li>
+<li>
+<p><a href="#BGBCFEGC">Start the WebLogic Managed Server</a></p>
+</li>
+</ul>
+<a id="BGBEJFJA"></a>
+<div id="GMINS159" class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">4.5.1</span> Starting the Oracle WebLogic Administration Server</h3>
+<p>To start the Administration Server, do the following:</p>
+<ol>
+<li>
+<p>Navigate to the <code dir="ltr"><span class="codeinlineitalic">MONITOR_DOMAIN</span></code> directory (for example, <code dir="ltr">/apps/oggmon_domain</code> or <code dir="ltr">apps\oggmon_domain</code> on Windows) and start the server:</p>
+<p>On Linux:</p>
+<pre dir="ltr">
+$./startWebLogic.sh
+</pre>
+<p>On Windows:</p>
+<pre dir="ltr">
+C:/<span class="italic">path</span>/<span class="italic">to</span>/<span class="italic">MONITOR_DOMAIN</span>&gt;startWebLogic.cmd
+</pre>
+<p>The server starts, with start-up information displayed on your screen,</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Server startup can take a few minutes.</div>
+</li>
+<li>
+<p>When prompted for the Oracle WebLogic Server Administrator username and password, enter the credentials you created on the <a href="install_screens.htm#BABEHHEA">Administrative Account</a> screen.</p>
+<p>Startup continues. When the server has started successfully, the server state will be <code dir="ltr">RUNNING</code>.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="BGBFJFBA"></a>
+<div id="GMINS160" class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">4.5.2</span> Update Oracle GoldenGate Monitor Server Credentials (Optional)</h3>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<span class="bold">This section is optional</span>. Do it <span class="italic">only</span> if you need to update your Oracle GoldenGate Monitor Server credentials. If you do not need to do so, proceed to <a href="#BGBCFEGC">Start the WebLogic Managed Server</a>).</div>
+<p>Use WLST to create or update your wallet's Oracle GoldenGate Monitor Server credentials:</p>
+<ol>
+<li>
+<p>From $<code dir="ltr"><span class="codeinlineitalic">ORACLE_HOME</span></code><code dir="ltr">/wlserver/common/bin</code> (<code dir="ltr"><span class="codeinlineitalic">ORACLE_HOME</span></code><code dir="ltr">\wlserver\common\bin</code> on Windows), run WLST:</p>
+<p>On Linux:</p>
+<pre dir="ltr">
+$<span class="italic">ORACLE_HOME/</span>wlserver/common/bin&gt;./wlst.sh
+</pre>
+<p>On Windows:</p>
+<pre dir="ltr">
+C:\<span class="italic">path</span>\<span class="italic">to</span>\<span class="italic">bin</span>&gt;wlst.cmd
+</pre></li>
+<li>
+<p>Then, do one of the following:</p>
+<div class="inftblinformal">
+<table class="cellalignment65" summary="Two-column decision table. The left-hand column lists a condition and the right-hand column contains instructions for attaining that condition.">
+<thead>
+<tr class="cellalignment59">
+<th class="cellalignment66" id="r1c1-t5">To...</th>
+<th class="cellalignment66" id="r1c2-t5">Use this WLST Function...</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r2c1-t5" headers="r1c1-t5">Create the new credentials</td>
+<td class="cellalignment67" headers="r2c1-t5 r1c2-t5"><code dir="ltr">createCred()</code>; for example:
+<pre dir="ltr">
+wls:/test_domain/serverConfig&gt;<span class="bold">createCred</span>(map="OGGMONITOR",key="WEB.JMX.PASSWORD",user="jmxuser",password="jmxuser1",desc="JMX Password")
+wls:/test_domain/serverConfig&gt;<span class="bold">createCred</span>(map="OGGMONITOR",key="MONITOR.KEYSTORE.PASSWORD",user="ksuser",password="ksuser1",desc="Keystore Password")
+wls:/test_domain/serverConfig&gt;<span class="bold">createCred</span>(map="OGGMONITOR",key="MONITOR.TRUSTSTORE.PASSWORD",user="tsuser",password="tsuser1",desc="Truststore Password")
+wls:/test_domain/serverConfig&gt;<span class="bold">createCred</span>(map="OGGMONITOR",key="WEB.SMTP.EMAIL.PASSWORD",user="smtpuser",password="smtpuser1",desc="SMTP Password")
+</pre></td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r3c1-t5" headers="r1c1-t5">Update an existing key</td>
+<td class="cellalignment67" headers="r3c1-t5 r1c2-t5"><code dir="ltr">updateCred()</code>; for example:
+<pre dir="ltr">
+wls:/test_domain/serverConfig&gt;<span class="bold">updateCred</span>(map="OGGMONITOR",key="MONITOR.TRUSTSTORE.PASSWORD",user="tsuser",password="tsuser1",desc="Truststore Password")
+</pre></td>
+</tr>
+<tr class="cellalignment59">
+<td class="cellalignment67" id="r4c1-t5" headers="r1c1-t5">Delete an existing key</td>
+<td class="cellalignment67" headers="r4c1-t5 r1c2-t5"><code dir="ltr">deleteCred()</code>; for example:
+<pre dir="ltr">
+wls:/test_domain/serverConfig&gt;<span class="bold">deleteCred</span>(map="OGGMONITOR", key="MONITOR.TRUSTSTORE.PASSWORD")
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" -->
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+For more information about WLST, see <a class="olink WLSTG" href="http://www.oracle.com/pls/topic/lookup?ctx=E66316-01&amp;id=WLSTG"><span class="italic">Understanding the WebLogic Scripting Tool</span></a></div>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="BGBCFEGC"></a>
+<div id="GMINS161" class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">4.5.3</span> Start the WebLogic Managed Server</h3>
+<p>Finally, start the WebLogic Managed Server:</p>
+<ol>
+<li>
+<p>Navigate to <code dir="ltr"><span class="codeinlineitalic">MONITOR_SERVER_DOMAIN</span></code><code dir="ltr">\bin</code> (<code dir="ltr"><span class="codeinlineitalic">MONITOR_SERVER_DOMAIN</span></code><code dir="ltr">\bin</code> on Windows) and enter:</p>
+<p>On Linux:</p>
+<pre dir="ltr">
+$./startManagedWebLogic.sh <span class="italic">MONITORSERVER_server1</span> http://<span class="italic">hostname</span>:7001
+</pre>
+<p>On Windows:</p>
+<pre dir="ltr">
+C:<span class="italic">path</span>\<span class="italic">to</span>\<span class="italic">bin</span>&gt;startManagedWebLogic.cmd <span class="italic">MONITORSERVER_server1</span> http://<span class="italic">hostname</span>:7001
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">MONITORSERVER_server1</span></code> is the managed server name entered in the Configuration Wizard when that server was configurated.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">hostname</span></code>:<code dir="ltr"><span class="codeinlineitalic">7001</span></code> is your specific hostname and listening port.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>When prompted, enter the Oracle WebLogic Server Administrator username and password.</p>
+</li>
+</ol>
+<p>If the Oracle GoldenGate Monitor Server is deployed successfully, you should see the managed server state as <code dir="ltr">RUNNING</code>.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment58">
+<tr>
+<td class="cellalignment67">
+<table class="cellalignment70">
+<tr>
+<td class="cellalignment62"><a href="inst_mon_svr_oui.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment62"><a href="user_man.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp; 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment69">
+<table class="cellalignment61">
+<tr>
+<td class="cellalignment62"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment62"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

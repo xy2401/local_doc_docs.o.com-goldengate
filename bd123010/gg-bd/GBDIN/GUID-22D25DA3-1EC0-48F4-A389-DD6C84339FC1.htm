@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Parsing the Message</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="keywords" content="parser, types, required data, transaction indicator, timestamp, formats for fixed width message, fixed width message, timestamp formats, header and record data translation, key identification, for fixth width messages, key identification, XML message, parsing rules, transaction rules, transaction identifier, for XML parsing, transaction, specifying boundary for, operation rules, column rules" />
+<meta name="dcterms.created" content="2016-12-07T13:15:22Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E79605-01" />
+<meta name="dcterms.isVersionOf" content="GBDIN" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="../index.htm" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-CCA5DFA8-BFD0-4E2F-9593-C32C2A73DC35.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-D48AEE3B-7024-4A93-9478-7C753BF09D9F.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GBDIN.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="GBDIN.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="GBDIN.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1"></a> <span id="PAGE" style="display:none;">10/21</span> <!-- End Header -->
+<a id="GBDIN138"></a>
+<h1 id="GBDIN-GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1" class="sect1"><span class="enumeration_chapter">5</span> Parsing the Message</h1>
+<div>
+<p>This chapter includes the following sections.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-137F6359-03EF-4E4B-9476-65B8F7E211A3">Parsing Overview</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-DD6B06B5-2F17-414E-A86A-4B09B3B50ED2">Fixed Width Parsing</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-386D70BC-C915-4DFA-9792-96D073E8814D">Delimited Parsing</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-DBA8D5F4-E249-4144-81A5-948DA8995EC5">XML Parsing</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-AA7EDCDD-F985-4163-B4E2-CAADF9D1AD1B">Source Definitions Generation Utility</a></strong><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="GUID-A11B0D90-7C50-4690-9FC6-1F9A26F406F1.htm">Capturing JMS Messages</a></p>
+</div>
+</div>
+</div>
+<a id="GBDIN139"></a>
+<div class="props_rev_3"><a id="GUID-137F6359-03EF-4E4B-9476-65B8F7E211A3"></a>
+<h2 id="GBDIN-GUID-137F6359-03EF-4E4B-9476-65B8F7E211A3" class="sect2"><span class="enumeration_section">5.1</span> Parsing Overview</h2>
+<div>
+<p>The role of the <a id="d4590e77" class="indexterm-anchor"></a>parser is to translate JMS text message data and header properties into an appropriate set of transactions and operations to pass into the VAM interface. To do this, the parser always must find certain data:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><a id="d4590e85" class="indexterm-anchor"></a>Transaction identifier</p>
+</li>
+<li>
+<p><a id="d4590e90" class="indexterm-anchor"></a>Sequence identifier</p>
+</li>
+<li>
+<p><a id="d4590e95" class="indexterm-anchor"></a>Timestamp</p>
+</li>
+<li>
+<p><a id="d4590e100" class="indexterm-anchor"></a>Table name</p>
+</li>
+<li>
+<p><a id="d4590e105" class="indexterm-anchor"></a>Operation type</p>
+</li>
+<li>
+<p><a id="d4590e110" class="indexterm-anchor"></a>Column data specific to a particular table name and operation type</p>
+</li>
+</ul>
+<p>Other data will be used if the configuration requires it:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><a id="d4590e118" class="indexterm-anchor"></a>Transaction indicator</p>
+</li>
+<li>
+<p><a id="d4590e123" class="indexterm-anchor"></a>Transaction name</p>
+</li>
+<li>
+<p><a id="d4590e128" class="indexterm-anchor"></a>Transaction owner</p>
+</li>
+</ul>
+<p>The parser can obtain this data from JMS header properties, system generated values, static values, or in some parser-specific way. This depends on the nature of the piece of information.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-F0119676-6EEF-46F5-AACF-F08B5F6C1303">Parser Types</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-4C34B534-F81C-4743-A010-92EAE3AF5DC5">Source and Target Data Definitions</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-AD9C105A-C50E-42E0-8FAD-7676F86AD578">Required Data</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-07A517E0-9824-4427-A059-834BECC18A87">Optional Data</a></strong><br /></li>
+</ul>
+</div>
+<a id="GBDIN140"></a>
+<div class="props_rev_3"><a id="GUID-F0119676-6EEF-46F5-AACF-F08B5F6C1303"></a>
+<h3 id="GBDIN-GUID-F0119676-6EEF-46F5-AACF-F08B5F6C1303" class="sect3"><span class="enumeration_section">5.1.1</span> Parser Types</h3>
+<div>
+<div class="section">
+<p>The Oracle GoldenGate message capture adapter supports three types of parsers:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Fixed &ndash; Messages contain data presented as fixed width fields in contiguous text.</p>
+</li>
+<li>
+<p>Delimited &ndash; Messages contain data delimited by field and end of record characters.</p>
+</li>
+<li>
+<p>XML &ndash; Messages contain XML data accessed through XPath expressions.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN141"></a>
+<div class="props_rev_3"><a id="GUID-4C34B534-F81C-4743-A010-92EAE3AF5DC5"></a>
+<h3 id="GBDIN-GUID-4C34B534-F81C-4743-A010-92EAE3AF5DC5" class="sect3"><span class="enumeration_section">5.1.2</span> Source and Target Data Definitions</h3>
+<div>
+<div class="section">
+<p>There are several ways source data definitions can be defined using a combination of properties and external files. The Oracle GoldenGate <a id="d4590e216" class="indexterm-anchor"></a><a id="d4590e218" class="indexterm-anchor"></a>Gendef utility generates a standard source definitions file based on these <a id="d4590e223" class="indexterm-anchor"></a>data definitions and parser properties. The options vary based on parser type:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Fixed &ndash; <a id="d4590e232" class="indexterm-anchor"></a>COBOL copybook, source definitions or user defined</p>
+</li>
+<li>
+<p>Delimited &ndash; source definitions or user defined</p>
+</li>
+<li>
+<p>XML &ndash; source definitions or user defined</p>
+</li>
+</ul>
+<p>There are several properties that configure how the selected parser gets data and how the source definitions are converted to target definitions.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN142"></a>
+<div class="props_rev_3"><a id="GUID-AD9C105A-C50E-42E0-8FAD-7676F86AD578"></a>
+<h3 id="GBDIN-GUID-AD9C105A-C50E-42E0-8FAD-7676F86AD578" class="sect3"><span class="enumeration_section">5.1.3</span> Required Data</h3>
+<div>
+<p>The following information is required for the parsers to translate the messages:</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-0C013AD8-1D82-41C1-8612-71E074BC7F0C">Transaction Identifier</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-BFA95B55-4B40-4DF0-897E-CB01BB593EE1">Sequence Identifier</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-AF0DD959-F6A1-4B73-92FA-3D7D4676CCA9">Timestamp</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-B2A222DF-16B1-4FBA-950F-5D73B6F35C12">Table Name</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-CA1CBFBE-8C6E-48D9-9340-111EF0D390C3">Operation Type</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-936AC649-AB15-47CE-AF42-B195F55CBEFE">Column Data</a></strong><br /></li>
+</ul>
+</div>
+<a id="GBDIN143"></a>
+<div class="props_rev_3"><a id="GUID-0C013AD8-1D82-41C1-8612-71E074BC7F0C"></a>
+<h4 id="GBDIN-GUID-0C013AD8-1D82-41C1-8612-71E074BC7F0C" class="sect4"><span class="enumeration_section">5.1.3.1</span> Transaction Identifier</h4>
+<div>
+<div class="section">
+<p>The <a id="d4590e328" class="indexterm-anchor"></a>transaction identifier (<code>txid</code>) groups operations into transactions as they are written to the Oracle GoldenGate trail file. The Oracle GoldenGate message capture adapter supports only contiguous, non-interleaved transactions. The transaction identifier can be any unique value that increases for each transaction. A system generated value can generally be used.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN144"></a>
+<div class="props_rev_3"><a id="GUID-BFA95B55-4B40-4DF0-897E-CB01BB593EE1"></a>
+<h4 id="GBDIN-GUID-BFA95B55-4B40-4DF0-897E-CB01BB593EE1" class="sect4"><span class="enumeration_section">5.1.3.2</span> Sequence Identifier</h4>
+<div>
+<div class="section">
+<p>The <a id="d4590e354" class="indexterm-anchor"></a>sequence identifier (<code>seqid</code>) identifies each operation internally. This can be used during recovery processing to identify operations that have already been written to the Oracle GoldenGate trail. The <a id="d4590e360" class="indexterm-anchor"></a>sequence identifier can be any unique value that increases for each operation. The length should be fixed.</p>
+<p>The JMS Message ID can be used as a sequence identifier if the message identifier for that provider increases and is unique. However, there are cases (for example, using clustering, failed transactions) where JMS does not guarantee message order or when the ID may be unique but not be increasing. The system generated Sequence ID can be used, but it can cause duplicate messages under some recovery situations. The recommended approach is to have the JMS client that adds messages to the queue set the Message ID, a header property, or some data element to an application-generated unique value that is increasing.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN145"></a>
+<div class="props_rev_3"><a id="GUID-AF0DD959-F6A1-4B73-92FA-3D7D4676CCA9"></a>
+<h4 id="GBDIN-GUID-AF0DD959-F6A1-4B73-92FA-3D7D4676CCA9" class="sect4"><span class="enumeration_section">5.1.3.3</span> Timestamp</h4>
+<div>
+<div class="section">
+<p>The <a id="d4590e384" class="indexterm-anchor"></a>timestamp (<code>timestamp</code>) is used as the commit timestamp of operations within the Oracle GoldenGate trail. It should be increasing but this is not required, and it does not have to be unique between transactions or operations. It can be any date format that can be parsed.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN146"></a>
+<div class="props_rev_3"><a id="GUID-B2A222DF-16B1-4FBA-950F-5D73B6F35C12"></a>
+<h4 id="GBDIN-GUID-B2A222DF-16B1-4FBA-950F-5D73B6F35C12" class="sect4"><span class="enumeration_section">5.1.3.4</span> Table Name</h4>
+<div>
+<div class="section">
+<p>The table <a id="d4590e409" class="indexterm-anchor"></a>name is used to identify the logical table to which the <a id="d4590e412" class="indexterm-anchor"></a>column data belongs. The adapter requires a two part table name in the form <code>SCHEMA_NAME.TABLE_NAME</code>. This can either be defined separately (<code>schema and table</code>) or as a combination of schema and table (<code>schemaandtable</code>).</p>
+<p>A single field may contain both schema and table name, they may be in separate fields, or the schema may be included in the software code so only the table name is required. How the schema and table names can be specified depends on the parser. In any case the two part logical table name is used to write records in the Oracle GoldenGate trail and to generate the source definitions file that describes the trail.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN147"></a>
+<div class="props_rev_3"><a id="GUID-CA1CBFBE-8C6E-48D9-9340-111EF0D390C3"></a>
+<h4 id="GBDIN-GUID-CA1CBFBE-8C6E-48D9-9340-111EF0D390C3" class="sect4"><span class="enumeration_section">5.1.3.5</span> Operation Type</h4>
+<div>
+<div class="section">
+<p>The <a id="d4590e446" class="indexterm-anchor"></a>operation type (<code>optype</code>) is used to determine whether an operation is an insert, update or delete when written to the Oracle GoldenGate trail. The operation type value for any specific operation is matched against the values defined for each operation type.</p>
+<p>The data written to the Oracle GoldenGate trail for each operation type depends on the Extract configuration:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Inserts</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The after values of all columns are written to the trail.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Updates</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Default &ndash; The after values of keys are written. The after values of columns that have changed are written if the before values are present and can be compared. If before values are not present then all columns are written.</p>
+</li>
+<li>
+<p><code>NOCOMPRESSUPDATES</code> &ndash; The after values of all columns are written to the trail.</p>
+</li>
+<li>
+<p><code>GETUPDATEBEFORES</code> &ndash; The before and after values of columns that have changed are written to the trail if the before values are present and can be compared. If before values are not present only after values are written.</p>
+</li>
+<li>
+<p>If both <code>NOCOMPRESSUPDATES</code> and <code>GETUPDATEBEFORES</code> are included, the before and after values of all columns are written to the trail if before values are present</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Deletes</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Default &ndash; The before values of all keys are written to the trail.</p>
+</li>
+<li>
+<p><code>NOCOMPRESSDELETES</code> &ndash; The before values of all columns are written to the trail.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Primary key update operations may also be generated if the before values of keys are present and do not match the after values.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN148"></a>
+<div class="props_rev_3"><a id="GUID-936AC649-AB15-47CE-AF42-B195F55CBEFE"></a>
+<h4 id="GBDIN-GUID-936AC649-AB15-47CE-AF42-B195F55CBEFE" class="sect4"><span class="enumeration_section">5.1.3.6</span> Column Data</h4>
+<div>
+<div class="section">
+<p>All parsers retrieve <a id="d4590e521" class="indexterm-anchor"></a><a id="d4590e523" class="indexterm-anchor"></a>column data from the message text and write it to the Oracle GoldenGate trail. In some cases the columns are read in index order as defined by the source definitions, in other cases they are accessed by name.</p>
+<p>Depending on the configuration and original message text, both before and after or only after images of the column data may be available. For updates, the data for non-updated columns may or may not be available.</p>
+<p>All column data is retrieved as text. It is converted internally into the correct data type for that column based on the source definitions. Any conversion problem will result in an error and the process will abend.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GBDIN149"></a>
+<div class="props_rev_3"><a id="GUID-07A517E0-9824-4427-A059-834BECC18A87"></a>
+<h3 id="GBDIN-GUID-07A517E0-9824-4427-A059-834BECC18A87" class="sect3"><span class="enumeration_section">5.1.4</span> Optional Data</h3>
+<div>
+<p>The following data may be included, but is not required.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-F1BE2AC3-DA2B-4547-9C67-E0A9AD625A0B">Transaction Indicator</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-9A0E299B-D048-4BED-B5CE-2646D1385756">Transaction Name</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-912F1356-FEFB-4ED8-BB87-EAF155B7D57A">Transaction Owner</a></strong><br /></li>
+</ul>
+</div>
+<a id="GBDIN150"></a>
+<div class="props_rev_3"><a id="GUID-F1BE2AC3-DA2B-4547-9C67-E0A9AD625A0B"></a>
+<h4 id="GBDIN-GUID-F1BE2AC3-DA2B-4547-9C67-E0A9AD625A0B" class="sect4"><span class="enumeration_section">5.1.4.1</span> Transaction Indicator</h4>
+<div>
+<div class="section">
+<p>The <a id="d4590e595" class="indexterm-anchor"></a>relationship of transactions to messages can be:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>One transaction per message</p>
+<p>This is determined automatically by the scope of the message.</p>
+</li>
+<li>
+<p>Multiple transactions per message</p>
+<p>This is determined by the transaction indicator (<code>txind</code>). If there is no transaction indicator, the XML parser can create transactions based on a matching transaction rule.</p>
+</li>
+<li>
+<p>Multiple messages per transaction</p>
+<p>The transaction indicator (<code>txind</code>) is required to specify whether the operation is the beginning, middle, end or the whole transaction. The transaction indicator value for any specific operation is matched against the values defined for each transaction indicator type. A transaction is started if the indicator value is beginning or whole, continued if it is middle, and ended if it is end or whole.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN151"></a>
+<div class="props_rev_3"><a id="GUID-9A0E299B-D048-4BED-B5CE-2646D1385756"></a>
+<h4 id="GBDIN-GUID-9A0E299B-D048-4BED-B5CE-2646D1385756" class="sect4"><span class="enumeration_section">5.1.4.2</span> Transaction Name</h4>
+<div>
+<div class="section">
+<p>The transaction <a id="d4590e642" class="indexterm-anchor"></a>name (<code>txname</code>) is optional data that can be used to associate an arbitrary name to a transaction. This can be added to the trail as a token using a <code>GETENV</code> function.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN152"></a>
+<div class="props_rev_3"><a id="GUID-912F1356-FEFB-4ED8-BB87-EAF155B7D57A"></a>
+<h4 id="GBDIN-GUID-912F1356-FEFB-4ED8-BB87-EAF155B7D57A" class="sect4"><span class="enumeration_section">5.1.4.3</span> Transaction Owner</h4>
+<div>
+<div class="section">
+<p>The transaction <a id="d4590e670" class="indexterm-anchor"></a>owner (<code>txowner</code>) is optional data that can be used to associate an arbitrary user name to a transaction. This can be added to the trail as a token using a <code>GETENV</code> function, or used to exclude certain transactions from processing using the <code>EXCLUDEUSER</code> Extract parameter.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+</div>
+<a id="GBDIN153"></a>
+<div class="props_rev_3"><a id="GUID-DD6B06B5-2F17-414E-A86A-4B09B3B50ED2"></a>
+<h2 id="GBDIN-GUID-DD6B06B5-2F17-414E-A86A-4B09B3B50ED2" class="sect2"><span class="enumeration_section">5.2</span> Fixed Width Parsing</h2>
+<div>
+<div class="section">
+<p><a id="d4590e701" class="indexterm-anchor"></a>Fixed width parsing is based on a data definition that defines the position and the length of each field. This is in the format of a Cobol <a id="d4590e706" class="indexterm-anchor"></a>copybook. A set of properties define rules for mapping the copybook to logical records in the Oracle GoldenGate trail and in the source definitions file.</p>
+<p>The incoming data should consist of a standard format header followed by a data segment. Both should contain fixed width fields. The data is parsed based on the PIC definition in the copybook. It is written to the trail translated as explained in <a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-CAB331A1-39B6-413F-AE3F-1DD6CD690D0E">Header and Record Data Type Translation</a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-B4DD378E-4208-4EAF-A3D8-8F9CB17AC3A0">Header</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-CAB331A1-39B6-413F-AE3F-1DD6CD690D0E">Header and Record Data Type Translation</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-A767645B-31A3-4E4F-9D3D-35D28A368107">Key identification</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-73FDE195-7CB5-4F2E-BEA2-17BEE4D66CDE">Using a Source Definition File</a></strong><br /></li>
+</ul>
+</div>
+<a id="GBDIN155"></a><a id="GBDIN154"></a>
+<div class="props_rev_3"><a id="GUID-B4DD378E-4208-4EAF-A3D8-8F9CB17AC3A0"></a>
+<h3 id="GBDIN-GUID-B4DD378E-4208-4EAF-A3D8-8F9CB17AC3A0" class="sect3"><span class="enumeration_section">5.2.1</span> Header</h3>
+<div>
+<div class="section">
+<p>The <a id="d4590e765" class="indexterm-anchor"></a><a id="d4590e769" class="indexterm-anchor"></a>header must be defined by a copybook 01 level record that includes the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>A commit <a id="d4590e778" class="indexterm-anchor"></a>timestamp or a change time for the record</p>
+</li>
+<li>
+<p>A code to indicate the type of operation: insert, update, or delete</p>
+</li>
+<li>
+<p>The copybook record name to use when parsing the data segment</p>
+</li>
+</ul>
+<p>Any fields in the header record that are not mapped to Oracle GoldenGate header fields are output as columns.</p>
+<p>The following example shows a copybook definition containing the required header values</p>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-B4DD378E-4208-4EAF-A3D8-8F9CB17AC3A0__GUID-0BD54010-A03D-42E5-86CE-A99D69A0CAFD">
+<p class="titleinexample">Example 5-1 Specifying a Header</p>
+<pre dir="ltr">
+01 HEADER.
+20 Hdr-Timestamp&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;PIC X(23)
+20 Hdr-Source-DB-Function PIC X
+20 Hdr-Source-DB-Rec-ID&ensp;&ensp;&ensp;&ensp;PIC X(8)
+</pre>
+<p>For the preceding example, you must set the following properties:</p>
+<pre dir="ltr">
+fixed.header=HEADER
+fixed.timestamp=Hdr-Timestamp
+fixed.optype=Hdr-Source-DB-Function
+fixed.table=Hdr-Source-DB-Rec-Id
+</pre>
+<p>The logical name table output in this case will be the value of <code>Hdr-Source-DB-Rec-Id</code>.</p>
+</div>
+<!-- class="example" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-7A586A4A-0A5C-4504-B3FF-F4F183434516">Specifying Compound Table Names</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-9407C7AE-4866-4008-B09D-D7A7E07DC3B4">Specifying timestamp Formats</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-53308B29-5B1C-4731-BCF0-D797F5C934B4">Specifying the Function</a></strong><br /></li>
+</ul>
+</div>
+<a id="GBDIN157"></a><a id="GBDIN156"></a>
+<div class="props_rev_3"><a id="GUID-7A586A4A-0A5C-4504-B3FF-F4F183434516"></a>
+<h4 id="GBDIN-GUID-7A586A4A-0A5C-4504-B3FF-F4F183434516" class="sect4"><span class="enumeration_section">5.2.1.1</span> Specifying Compound Table Names</h4>
+<div>
+<div class="section">
+<p>More than one field can be used for a<a id="d4590e847" class="indexterm-anchor"></a><a id="d4590e851" class="indexterm-anchor"></a> table name. For example, you can define the logical schema name through a static property such as:</p>
+<pre dir="ltr">
+fixed.schema=MYSCHEMA
+</pre>
+<p>You can then add a property that defines the data record as multiple fields from the copybook header definition.</p>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-7A586A4A-0A5C-4504-B3FF-F4F183434516__GUID-06ECB8B9-4B0A-4147-83A1-AB88A8F81D18">
+<p class="titleinexample">Example 5-2 Specifying Compound Table Names</p>
+<pre dir="ltr">
+01  HEADER.
+    20  Hdr-Source-DB              PIC X(8).
+    20  Hdr-Source-DB-Rec-Id       PIC X(8).
+    20  Hdr-Source-DB-Rec-Version  PIC 9(4).
+    20  Hdr-Source-DB-Function     PIC X.
+    20  Hdr-Timestamp              PIC X(22).
+</pre>
+<p>For the preceding example, you must set the following properties:</p>
+<pre dir="ltr">
+fixed.header=HEADER
+fixed.table=Hdr-Source-DB-Rec-Id,Hdr-Source-DB-Rec-Version
+fixed.schema=MYSCHEMA
+</pre>
+<p>The fields will be concatenated to result in logical schema and table names of the form:</p>
+<pre dir="ltr">
+MYSCHEMA.Hdr-Source-DB-Rec-Id+Hdr-Source-DB-Rec-Version
+</pre></div>
+<!-- class="example" --></div>
+</div>
+<a id="GBDIN159"></a><a id="GBDIN158"></a>
+<div class="props_rev_3"><a id="GUID-9407C7AE-4866-4008-B09D-D7A7E07DC3B4"></a>
+<h4 id="GBDIN-GUID-9407C7AE-4866-4008-B09D-D7A7E07DC3B4" class="sect4"><span class="enumeration_section">5.2.1.2</span> Specifying timestamp Formats</h4>
+<div>
+<div class="section">
+<p>A <a id="d4590e904" class="indexterm-anchor"></a>timestamp is parsed using the default format <code>YYYY-MM-DD HH:MM:SS.FFF</code>, with <code>FFF</code> depending on the size of the field.</p>
+<p>Specify different incoming formats by entering a <a id="d4590e915" class="indexterm-anchor"></a>comment before the datetime field as shown in the next example.</p>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-9407C7AE-4866-4008-B09D-D7A7E07DC3B4__GUID-B51627B2-7457-4B6D-82FA-AA4FF4ADC95E">
+<p class="titleinexample">Example 5-3 Specifying timestamp formats</p>
+<pre dir="ltr">
+01  HEADER. 
+* DATEFORMAT YYYY-MM-DD-HH.MM.SS.FF
+    20  Hdr-Timestamp&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;PIC X(23)
+</pre></div>
+<!-- class="example" --></div>
+</div>
+<a id="GBDIN161"></a><a id="GBDIN160"></a>
+<div class="sect4"><a id="GUID-53308B29-5B1C-4731-BCF0-D797F5C934B4"></a>
+<h4 id="GBDIN-GUID-53308B29-5B1C-4731-BCF0-D797F5C934B4" class="sect4"><span class="enumeration_section">5.2.1.3</span> Specifying the Function</h4>
+<div>
+<p>Use properties to map the standard Oracle GoldenGate <a id="d4590e944" class="indexterm-anchor"></a>operation types to the <a id="d4590e949" class="indexterm-anchor"></a><code>optype</code> values. The following example specifies that the operation type is in the <code>Hdr-Source-DB-Function</code> field and that the value for insert is <code>A</code>, update is <code>U</code> and delete is <code>D</code>.</p>
+<div class="example" id="GUID-53308B29-5B1C-4731-BCF0-D797F5C934B4__GUID-0F056ABC-1597-4840-A3BC-068A94880BA9">
+<p class="titleinexample">Example 5-4 Specifying the Function</p>
+<pre dir="ltr">
+fixed.optype=Hdr-Source-DB-Function
+fixed.optype.insert=A
+fixed.optype.update=U
+fixed.optype.delete=D
+</pre></div>
+<!-- class="example" --></div>
+</div>
+</div>
+<a id="GBDIN162"></a>
+<div class="props_rev_3"><a id="GUID-CAB331A1-39B6-413F-AE3F-1DD6CD690D0E"></a>
+<h3 id="GBDIN-GUID-CAB331A1-39B6-413F-AE3F-1DD6CD690D0E" class="sect3"><span class="enumeration_section">5.2.2</span> Header and Record Data Type Translation</h3>
+<div>
+<div class="section">
+<p>The data in the header and the record data are written to the trail based on the translated data type.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>A field definition preceded by a date format comment is translated to an Oracle GoldenGate datetime field of the specified size. If there is no date format comment, the field will be defined by its underlying data type.</p>
+</li>
+<li>
+<p>A <code>PIC X</code> field is translated to the <code>CHAR</code> data type of the indicated size.</p>
+</li>
+<li>
+<p>A <code>PIC 9</code> field is translated to a <code>NUMBER</code> data type with the defined precision and scale. Numbers that are signed or unsigned and those with or without decimals are supported.</p>
+</li>
+</ul>
+<p>The following examples show the translation for various <code>PIC</code> definitions.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformal" id="GUID-CAB331A1-39B6-413F-AE3F-1DD6CD690D0E__GUID-5F09DC8E-5913-46B7-95AB-600435634218">
+<hr />
+<table class="cellalignment8" summary="This two column table shows examples of the translation from PIC to Oracle GoldenGate datatypes.">
+<thead align="left">
+<tr>
+<th class="cellalignment18" id="d4590e1035">Input</th>
+<th class="cellalignment19" id="d4590e1038">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment18" id="d4590e1043" headers="d4590e1035">
+<pre dir="ltr">
+PIC XX
+</pre></td>
+<td class="cellalignment19" headers="d4590e1043 d4590e1038">
+<pre dir="ltr">
+CHAR(2)
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment18" id="d4590e1050" headers="d4590e1035">
+<pre dir="ltr">
+PIC X(16)
+</pre></td>
+<td class="cellalignment19" headers="d4590e1050 d4590e1038">
+<pre dir="ltr">
+CHAR(16)
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment18" id="d4590e1057" headers="d4590e1035">
+<pre dir="ltr">
+PIC 9(4)
+</pre></td>
+<td class="cellalignment19" headers="d4590e1057 d4590e1038">
+<pre dir="ltr">
+NUMBER(4)
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment18" id="d4590e1064" headers="d4590e1035">
+<pre dir="ltr">
+* YYMMDD
+PIC 9(6)
+</pre></td>
+<td class="cellalignment19" headers="d4590e1064 d4590e1038">
+<pre dir="ltr">
+DATE(10)
+YYYY-MM-DD
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment18" id="d4590e1071" headers="d4590e1035">
+<pre dir="ltr">
+PIC 99.99
+</pre></td>
+<td class="cellalignment19" headers="d4590e1071 d4590e1038">
+<pre dir="ltr">
+NUMBER(4,2)
+</pre></td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="section">
+<p>In the example an input <code>YYMMDD</code> date of 100522 is translated to 2010-05-22. The number 1234567 with the specified format <code>PIC 9(5)V99</code> is translated to a seven digit number with two decimal places, or 12345.67.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN163"></a>
+<div class="props_rev_3"><a id="GUID-A767645B-31A3-4E4F-9D3D-35D28A368107"></a>
+<h3 id="GBDIN-GUID-A767645B-31A3-4E4F-9D3D-35D28A368107" class="sect3"><span class="enumeration_section">5.2.3</span> Key identification</h3>
+<div>
+<div class="section">
+<p>A <a id="d4590e1115" class="indexterm-anchor"></a>comment is used to identify key columns within the data record. The <code>Gendef</code> utility that generates the source definitions uses the comment to locate a key column.</p>
+<p>In the following example <code>Account</code> has been marked as a key column for <code>TABLE1</code>.</p>
+<pre dir="ltr">
+01 TABLE1
+* KEY
+20  Account&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;PIC X(19)
+20  PAN_Seq_Num PIC 9(3)
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<div class="sect3"><a id="GUID-73FDE195-7CB5-4F2E-BEA2-17BEE4D66CDE"></a>
+<h3 id="GBDIN-GUID-73FDE195-7CB5-4F2E-BEA2-17BEE4D66CDE" class="sect3"><span class="enumeration_section">5.2.4</span> Using a Source Definition File</h3>
+<div>
+<p>You can use fixed width parsing based on a data definition that comes from an Oracle GoldenGate source definition file. This is similar to Cobol copybook because a source definition file contains the position and the length of each field of participating tables. To use a source definition file, you must set the following properties:</p>
+<pre dir="ltr">
+fixed.userdefs.tables=qasource.HEADER
+fixed.userdefs.qasource.HEADER.columns=optype,schemaandtable
+fixed.userdefs.qasource.HEADER.optype=vchar 3
+fixed.userdefs.qasource.HEADER.schemaandtable=vchar 30
+
+fixed.header=qasource.HEADER
+</pre>
+<p>The following example defines a header section of a total length of 33 characters; the first 3 characters are the operation type, and the last 30 characters is the table name. The layout of all records to be parsed must start with the complete header section as defined in the <code>fixed.userdefs</code> properties. For each record, the header section is immediately followed by the content of all column data for the corresponding table. The column data must be strictly laid out according to its offset and length defined in the source definition file. Specifically, the offset information is the fourth field (Fetch Offset) of the column definition and the length information is the third field (External Length) of the column definition. The following is an example of a definition for GG.JMSCAP_TCUSTMER:</p>
+<pre dir="ltr">
+Definition for table GG.JMSCAP_TCUSTMER
+Record length: 78
+Syskey: 0
+Columns: 4
+CUST_CODE   64      4        0  0  0 1 0      4      4      0 0 0 0 0 1    0 1 0
+NAME        64     30       10  0  0 1 0     30     30      0 0 0 0 0 1    0 0 0
+CITY        64     20       46  0  0 1 0     20     20      0 0 0 0 0 1    0 0 0
+STATE        0      2       72  0  0 1 0      2      2      0 0 0 0 0 1    0 0 0
+End of definition
+</pre>
+<p>The fixed width data for GG.JMSCAP_TCUSTMER may be similar to the following where the offset guides have been added to each section for clarity:</p>
+<pre dir="ltr">
+0         1         2         3  0         1         2         3         4         5         6         7         8
+012345678901234567890123456789012012345678901234567890123456789012345678901234567890123456789012345678901234567890
+I  GG.JMSCAP_TCUSTMER            WILL      BG SOFTWARE CO.                     SEATTLE                   WA    
+I  GG.JMSCAP_TCUSTMER            JANE      ROCKY FLYER INC.                    DENVER                    CO    
+I  GG.JMSCAP_TCUSTMER            DAVE      DAVE'S PLANES INC.                  TALLAHASSEE               FL    
+I  GG.JMSCAP_TCUSTMER            BILL      BILL'S USED CARS                    DENVER                    CO    
+I  GG.JMSCAP_TCUSTMER            ANN       ANN'S BOATS                         SEATTLE                   WA    
+U  GG.JMSCAP_TCUSTMER            ANN       ANN'S BOATS                         NEW YORK                  NY
+</pre>
+<p>You can choose to specify shorter data records, which means that only some of the earlier columns are present. To do this, the following requirements must be met:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>None of the missing or omitted columns are part of the key and</p>
+</li>
+<li>
+<p>all columns that are present contain complete data according to their respective External Length information</p>
+.</li>
+</ul>
+</div>
+</div>
+</div>
+<a id="GBDIN164"></a>
+<div class="props_rev_3"><a id="GUID-386D70BC-C915-4DFA-9792-96D073E8814D"></a>
+<h2 id="GBDIN-GUID-386D70BC-C915-4DFA-9792-96D073E8814D" class="sect2"><span class="enumeration_section">5.3</span> Delimited Parsing</h2>
+<div>
+<p><a id="d4590e1193" class="indexterm-anchor"></a>Delimited parsing is based a preexisting source definitions files and a set of properties. The properties specify the delimiters to use and other rules, such as whether there are column names and before values. The source definitions file determines the valid tables to be processed and the order and data type of the columns in the tables.</p>
+<p>The format of the <a id="d4590e1200" class="indexterm-anchor"></a>delimited message is:</p>
+<pre dir="ltr">
+<span class="italic">METACOLS</span><sup>n</sup>[,<span class="italic">COLNAMES</span>]<sup>m</sup>[,<span class="italic">COLBEFOREVALS</span>]<sup>m</sup>,{<span class="italic">COLVALUES</span>}<sup>m</sup>\n
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>There can be <span class="italic">n</span> metadata columns each followed by a field delimiter such as the comma shown in the format statement.</p>
+</li>
+<li>
+<p>There can be <span class="italic">m</span> column values. Each of these are preceded by a field delimiter such as a comma.</p>
+</li>
+<li>
+<p>The column name and before value are optional.</p>
+</li>
+<li>
+<p>Each record is terminated by an end of line delimiter, such as <code>\n</code>.</p>
+</li>
+</ul>
+<p>The message to be parsed <span class="italic">must</span> contain at least the header and metadata columns. If the number of columns is fewer than the number of header and meta columns, then the capture process terminates and provides an error message.</p>
+<p>The remaining number of columns after the header and metadata columns are the column data for the corresponding table, specified in the order of the columns in the resolved metadata. Ideally, the number of table columns present in the message is exactly the same as the expected number of columns according to the metadata. However, missing columns in the message towards the end of message is allowed and the parser marks those last columns (not present in the rest of the message) as missing column data.</p>
+<p>Although missing data is allowed from parser perspective, if the key @ column(s) is/are missing, then the capture process will also terminate.</p>
+<p>Oracle GoldenGate primary key updates and unified updates are not supported. The only supported operations are inserts, updates, deletes, and truncates.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-98242744-5B44-4DDB-BA0E-005DF9BC0333">Metadata Columns</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-D80430F8-43B9-4668-8943-F5D87237D312">Parsing Properties</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-A8EA4871-5EB0-43FE-8D78-F4F39DAF8672">Parsing Steps</a></strong><br /></li>
+</ul>
+</div>
+<a id="GBDIN165"></a>
+<div class="props_rev_3"><a id="GUID-98242744-5B44-4DDB-BA0E-005DF9BC0333"></a>
+<h3 id="GBDIN-GUID-98242744-5B44-4DDB-BA0E-005DF9BC0333" class="sect3"><span class="enumeration_section">5.3.1</span> Metadata Columns</h3>
+<div>
+<div class="section">
+<p>The <a id="d4590e1312" class="indexterm-anchor"></a><a id="d4590e1316" class="indexterm-anchor"></a>metadata columns correspond to the header and contain fields that have special meaning. Metadata columns should include the following information.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">optype</span> contains values indicating if the record is an insert, update, or delete. The default values are <code>I</code>, <code>U</code>, and <code>D</code>.</p>
+</li>
+<li>
+<p><span class="bold">timestamp</span> indicates type of value to use for the commit timestamp of the record. The format of the timestamp defaults to <code>YYYY-DD-MM HH:MM:SS.FFF</code>.</p>
+</li>
+<li>
+<p><span class="bold">schemaandtable</span> is the full <a id="d4590e1349" class="indexterm-anchor"></a>table name for the record in the format <code>SCHEMA.TABLE</code>.</p>
+</li>
+<li>
+<p><span class="bold">schema</span> is the record's schema name.</p>
+</li>
+<li>
+<p><span class="bold">table</span> is the record's <a id="d4590e1365" class="indexterm-anchor"></a>table name.</p>
+</li>
+<li>
+<p><span class="bold">txind</span> is a value that indicates whether the record is the beginning, middle, end or the only record in the transaction. The default values are 0, 1, 2, 3.</p>
+</li>
+<li>
+<p><span class="bold">id</span> is the value used as the sequence number (RSN or CSN) of the record. The id of the first record (operation) in the transaction is used for the sequence number of the transaction.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN166"></a>
+<div class="props_rev_3"><a id="GUID-D80430F8-43B9-4668-8943-F5D87237D312"></a>
+<h3 id="GBDIN-GUID-D80430F8-43B9-4668-8943-F5D87237D312" class="sect3"><span class="enumeration_section">5.3.2</span> Parsing Properties</h3>
+<div>
+<p>Properties can be set to describe delimiters, values, and date and time formats.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-2F18D0A9-8639-4E49-8612-F0162BD2D9C2">Properties to Describe Delimiters</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-C3E64CA6-D792-47FA-845E-8A3129A52C8A">Properties to Describe Values</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-E7E010B6-284A-45A6-A733-1FD9A55D79FD">Properties to Describe Date and Time</a></strong><br /></li>
+</ul>
+</div>
+<a id="GBDIN167"></a>
+<div class="props_rev_3"><a id="GUID-2F18D0A9-8639-4E49-8612-F0162BD2D9C2"></a>
+<h4 id="GBDIN-GUID-2F18D0A9-8639-4E49-8612-F0162BD2D9C2" class="sect4"><span class="enumeration_section">5.3.2.1</span> Properties to Describe Delimiters</h4>
+<div>
+<div class="section">
+<p>The following properties determine the <a id="d4590e1440" class="indexterm-anchor"></a>parsing rules for delimiting the record.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">fielddelim</span> specifies one or more ASCII or hexadecimal characters as the value for the field delimiter</p>
+</li>
+<li>
+<p><span class="bold">recorddelim</span> specifies one or more ASCII or hexadecimal characters as the value for the record delimiter</p>
+</li>
+<li>
+<p><span class="bold">quote</span> specifies one or more ASCII or hexadecimal characters to use for quoted values</p>
+</li>
+<li>
+<p><span class="bold">nullindicator</span> specifies one or more ASCII or hexadecimal characters to use for <code>NULL</code> values</p>
+</li>
+</ul>
+<p>You can define escape characters for the delimiters so they will be replaced if the characters are found in the text. For example if a backslash and apostrophe (\') are specified, then the input "They used Mike\'s truck" is translated to "They used Mike's truck". Or if two quotes ("") are specified, "They call him ""Big Al""" is translated to "They call him "Big Al"".</p>
+<p>Data values may be present in the record without quotes, but the system only removes escape characters within quoted values. A non-quoted string that matches a null indicator is treated as null.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN168"></a>
+<div class="props_rev_3"><a id="GUID-C3E64CA6-D792-47FA-845E-8A3129A52C8A"></a>
+<h4 id="GBDIN-GUID-C3E64CA6-D792-47FA-845E-8A3129A52C8A" class="sect4"><span class="enumeration_section">5.3.2.2</span> Properties to Describe Values</h4>
+<div>
+<div class="section">
+<p>The following properties provide more information:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">hasbefores</span> indicates before values are present for each record</p>
+</li>
+<li>
+<p><span class="bold">hasnames</span> indicates column names are present for each record</p>
+</li>
+<li>
+<p><span class="bold">afterfirst</span> indicates column after values come before column before values</p>
+</li>
+<li>
+<p><span class="bold">isgrouped</span> indicates all column names, before values and after values are grouped together in three blocks, rather than alternately per column</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GBDIN169"></a>
+<div class="props_rev_3"><a id="GUID-E7E010B6-284A-45A6-A733-1FD9A55D79FD"></a>
+<h4 id="GBDIN-GUID-E7E010B6-284A-45A6-A733-1FD9A55D79FD" class="sect4"><span class="enumeration_section">5.3.2.3</span> Properties to Describe Date and Time</h4>
+<div>
+<div class="section">
+<p>The default format <code>YYYY-DD-MM HH:MM:SS.FFF</code> is used to parse dates. You can use properties to override this on a global, table or column level. Examples of changing the format are shown below.</p>
+<pre dir="ltr">
+delim.dateformat.default=MM/DD/YYYY-HH:MM:SS
+delim.dateformat.MY.TABLE=DD/MMM/YYYY
+delim.dateformat.MY.TABLE.COL1=MMYYYY
+</pre></div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GBDIN170"></a>
+<div class="props_rev_3"><a id="GUID-A8EA4871-5EB0-43FE-8D78-F4F39DAF8672"></a>
+<h3 id="GBDIN-GUID-A8EA4871-5EB0-43FE-8D78-F4F39DAF8672" class="sect3"><span class="enumeration_section">5.3.3</span> Parsing Steps</h3>
+<div>
+<div class="section">
+<p>The steps in delimited parsing are:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li><span>The parser first reads and validates the metadata columns for each record.</span></li>
+<li><span>This provides the <a id="d4590e1564" class="indexterm-anchor"></a>table name, which can then be used to look up column definitions for that table in the source definitions file.</span></li>
+<li><span>If a definition cannot be found for a table, the processing will stop.</span></li>
+<li><span>Otherwise the columns are parsed and output to the trail in the order and format defined by the source definitions.</span></li>
+</ol>
+</div>
+</div>
+</div>
+<a id="GBDIN171"></a>
+<div class="props_rev_3"><a id="GUID-DBA8D5F4-E249-4144-81A5-948DA8995EC5"></a>
+<h2 id="GBDIN-GUID-DBA8D5F4-E249-4144-81A5-948DA8995EC5" class="sect2"><span class="enumeration_section">5.4</span> XML Parsing</h2>
+<div>
+<p><a id="d4590e1590" class="indexterm-anchor"></a>XML parsing is based on a preexisting source definitions file and a set of properties. The properties specify rules to determine XML elements and attributes that correspond to transactions, operations and columns. The source definitions file determines the valid tables to be processed and the ordering and data types of columns in those tables.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-B3D4A1E7-29A5-414C-A8F3-6AF979D12F31">Styles of XML</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-01F24EE0-9D64-4F66-A0D9-CF1544A3E72E">XML Parsing Rules</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-DE6DE8B1-0D7F-459B-8D87-07DBA58B0C00">XPath Expressions</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-3D15EA22-108E-4DCD-8FF0-B599FB5D5BA7">Other Value Expressions</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-3D677955-9F2D-4E38-B281-22B414CF2FC6">Transaction Rules</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-1B0CC776-3CC2-4FFA-9300-4073041212A1">Operation Rules</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-D6ABBB9C-8CD6-4E49-BFC2-B2B09C76E696">Column Rules</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-453476A9-6C39-4357-9D77-1DD16E8D88BB">Overall Rules Example</a></strong><br /></li>
+</ul>
+</div>
+<a id="GBDIN173"></a><a id="GBDIN174"></a><a id="GBDIN172"></a>
+<div class="sect3"><a id="GUID-B3D4A1E7-29A5-414C-A8F3-6AF979D12F31"></a>
+<h3 id="GBDIN-GUID-B3D4A1E7-29A5-414C-A8F3-6AF979D12F31" class="sect3"><span class="enumeration_section">5.4.1</span> Styles of XML</h3>
+<div>
+<p>The <a id="d4590e1667" class="indexterm-anchor"></a>XML message is formatted in either dynamic or static XML. At runtime the contents of dynamic XML are data values that cannot be predetermined using a sample XML or XSD document. The contents of <a id="d4590e1672" class="indexterm-anchor"></a>static XML that determine tables and column element or attribute names can be predetermined using those sample documents.</p>
+<p>The following two examples contain the same data.</p>
+<div class="example" id="GUID-B3D4A1E7-29A5-414C-A8F3-6AF979D12F31__GUID-76C2E499-7524-4CB9-A1C0-281FA3D17045">
+<p class="titleinexample">Example 5-5 An Example of Static XML</p>
+<pre dir="ltr">
+&lt;NewMyTableEntries&gt; 
+  &lt;NewMyTableEntry&gt; 
+    &lt;CreateTime&gt;2010-02-05:10:11:21&lt;/CreateTime&gt; 
+    &lt;KeyCol&gt;keyval&lt;/KeyCol&gt; 
+    &lt;Col1&gt;col1val&lt;/Col1&gt;
+  &lt;/NewMyTableEntry&gt;
+&lt;/NewMyTableEntries&gt;
+</pre>
+<p>The <code>NewMyTableEntries</code> element marks the transaction boundaries. The <code>NewMyTableEntry</code> indicates an insert to <code>MY.TABLE</code>. The timestamp is present in an element text value, and the column names are indicated by element names.</p>
+<p>You can define rules in the properties file to parse either of these two styles of XML through a set of XPath-like properties. The goal of the properties is to map the XML to a predefined source definitions file through XPath matches.</p>
+</div>
+<!-- class="example" -->
+<div class="example" id="GUID-B3D4A1E7-29A5-414C-A8F3-6AF979D12F31__GUID-0F4C8E80-1593-43BA-B5FB-965BD88644B2">
+<p class="titleinexample">Example 5-6 An Example of Dynamic XML</p>
+<pre dir="ltr">
+&lt;transaction id="1234" ts="2010-02-05:10:11:21"&gt;
+  &lt;operation table="MY.TABLE" optype="I"&gt;
+    &lt;column name="keycol" index="0"&gt;
+      &lt;aftervalue&gt;&lt;![CDATA[keyval]]&gt;&lt;/aftervalue&gt;
+    &lt;/column&gt;
+    &lt;column name="col1" index="1"&gt;
+      &lt;aftervalue&gt;&lt;![CDATA[col1val]]&gt;&lt;/aftervalue&gt;
+    &lt;/column&gt;
+  &lt;/operation&gt; 
+&lt;/transaction&gt;
+</pre>
+<p>Every operation to every table has the same basic message structure consisting of transaction, operation and column elements. The <a id="d4590e1704" class="indexterm-anchor"></a>table name, <a id="d4590e1709" class="indexterm-anchor"></a>operation type, <a id="d4590e1712" class="indexterm-anchor"></a>timestamp, column names, column values, etc. are obtained from attribute or element text values.</p>
+</div>
+<!-- class="example" --></div>
+</div>
+<a id="GBDIN175"></a>
+<div class="sect3"><a id="GUID-01F24EE0-9D64-4F66-A0D9-CF1544A3E72E"></a>
+<h3 id="GBDIN-GUID-01F24EE0-9D64-4F66-A0D9-CF1544A3E72E" class="sect3"><span class="enumeration_section">5.4.2</span> XML Parsing Rules</h3>
+<div>
+<p>Independent of the style of XML, the parsing process needs to determine:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Transaction boundaries</p>
+</li>
+<li>
+<p>Operation entries and metadata including:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><a id="d4590e1750" class="indexterm-anchor"></a>Table name</p>
+</li>
+<li>
+<p><a id="d4590e1757" class="indexterm-anchor"></a>Operation type</p>
+</li>
+<li>
+<p><a id="d4590e1764" class="indexterm-anchor"></a>Timestamp</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Column entries and metadata including:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Either the column name or index; if both are specified the system will check to see if the column with the specified data has the specified name.</p>
+</li>
+<li>
+<p>Column before or after values, sometimes both.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>This is done through a set of interrelated rules. For each type of XML message that is to be processed you name a rule that will be used to obtain the required data. For each of these named rules you add properties to:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Specify the rule as a transaction, operation, or column rule type. Rules of any type are required to have a specified name and type.</p>
+</li>
+<li>
+<p>Specify the XPath expression to match to see if the rule is active for the document being processed. This is optional; if not defined the parser will match the node of the parent rule or the whole document if this is the first rule.</p>
+</li>
+<li>
+<p>List detailed rules (<code>subrules</code>) that are to be processed in the order listed. Which <code>subrules</code> are valid is determined by the rule type. <code>Subrules</code> are optional.</p>
+</li>
+</ul>
+<p>In the following example the top-level rule is defined as <code>genericrule</code>. It is a <code>transaction</code> type rule. Its <code>subrules</code> are defined in <code>oprule</code> and they are of the type <code>operation</code>.</p>
+<pre dir="ltr">
+xmlparser.rules=genericrule
+xmlparser.rules.genericrule.type=tx
+xmlparser.rules.genericrule.subrules=oprule
+xmlparser.rules.oprule.type=op
+</pre></div>
+</div>
+<a id="GBDIN176"></a>
+<div class="sect3"><a id="GUID-DE6DE8B1-0D7F-459B-8D87-07DBA58B0C00"></a>
+<h3 id="GBDIN-GUID-DE6DE8B1-0D7F-459B-8D87-07DBA58B0C00" class="sect3"><span class="enumeration_section">5.4.3</span> XPath Expressions</h3>
+<div>
+<p>The XML parser supports a subset of <a id="d4590e1835" class="indexterm-anchor"></a>XPath expressions necessary to match elements and Extract data. An expression can be used to match a particular element or to Extract data.</p>
+<p>When doing data extraction most of the path is used to match. The tail of the expression is used for extraction.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-767A8C8E-5A96-4666-9EF9-A23764BAB9D4">Supported Constructs:</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-61D38D35-A6A5-4CA6-8D49-C2752185C52C">Supported Expressions</a></strong><br /></li>
+<li class="ulchildlink"><strong><a href="GUID-22D25DA3-1EC0-48F4-A389-DD6C84339FC1.htm#GUID-F4F4FA5E-1036-46CC-B8F8-2FF68A6305EC">Obtaining Data Values</a></strong><br /></li>
+</ul>
+</div>
+<a id="GBDIN177"></a>
+<div class="sect4"><a id="GUID-767A8C8E-5A96-4666-9EF9-A23764BAB9D4"></a>
+<h4 id="GBDIN-GUID-767A8C8E-5A96-4666-9EF9-A23764BAB9D4" class="sect4"><span class="enumeration_section">5.4.3.1</span> Supported Constructs:</h4>
+<div>
+<div class="tblformal" id="GUID-767A8C8E-5A96-4666-9EF9-A23764BAB9D4__GUID-0FD52BC0-11E9-44A6-BBFD-9B55F1ED79F0">
+<hr />
+<table class="cellalignment8" summary="This two column table lists and describes the supported constructs for XPath expressions.">
+<thead align="left">
+<tr>
+<th class="cellalignment20" id="d4590e1888">Supported Constructs</th>
+<th class="cellalignment21" id="d4590e1891">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment20" id="d4590e1896" headers="d4590e1888">
+<pre dir="ltr">
+/e
+</pre></td>
+<td class="cellalignment21" headers="d4590e1896 d4590e1891">
+<p>Use the absolute path from the root of the document to match <code>e</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment20" id="d4590e1906" headers="d4590e1888">
+<pre dir="ltr">
+./e or e
+</pre></td>
+<td class="cellalignment21" headers="d4590e1906 d4590e1891">
+<p>Use the relative path from current node being processed to match <code>e</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment20" id="d4590e1916" headers="d4590e1888">
+<pre dir="ltr">
+../e
+</pre></td>
+<td class="cellalignment21" headers="d4590e1916 d4590e1891">
+<p>Use a path based on the parent of the current node (can be repeated) to match <code>e</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment20" id="d4590e1926" headers="d4590e1888">
+<pre dir="ltr">
+//e
+</pre></td>
+<td class="cellalignment21" headers="d4590e1926 d4590e1891">
+<p>Match <code>e</code> wherever it occurs in a document.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment20" id="d4590e1936" headers="d4590e1888">
+<pre dir="ltr">
+*
+</pre></td>
+<td class="cellalignment21" headers="d4590e1936 d4590e1891">
+<p>Match any element. Note: Partially wild-carded names are not supported.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment20" id="d4590e1943" headers="d4590e1888">
+<pre dir="ltr">
+[n]
+</pre></td>
+<td class="cellalignment21" headers="d4590e1943 d4590e1891">
+<p>Match the nth occurrence of an expression.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment20" id="d4590e1950" headers="d4590e1888">
+<pre dir="ltr">
+[x=v]
+</pre></td>
+<td class="cellalignment21" headers="d4590e1950 d4590e1891">
+<p>Match when x is equal to some value v where x can be:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code>@att</code> - some attribute value</p>
+</li>
+<li>
+<p><code>text()</code> - some text value</p>
+</li>
+<li>
+<p><code>name()</code> - some name value</p>
+</li>
+<li>
+<p><code>position()</code> - the element position</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<a id="GBDIN178"></a>
+<div class="sect4"><a id="GUID-61D38D35-A6A5-4CA6-8D49-C2752185C52C"></a>
+<h4 id="GBDIN-GUID-61D38D35-A6A5-4CA6-8D49-C2752185C52C" class="sect4"><span class="enumeration_section">5.4.3.2</span> Supported Expressions</h4>
+<div>
+<div class="tblformal" id="GUID-61D38D35-A6A5-4CA6-8D49-C2752185C52C__GUID-34A3116A-2E28-4006-8996-77919D82CC60">
+<hr />
+<table class="cellalignment8" summary="This two column table lists the action and description of supported expressions for XPath expressions.">
+<thead align="left">
+<tr>
+<th class="cellalignment22" id="d4590e2002">Supported Expressions</th>
+<th class="cellalignment23" id="d4590e2005">Descriptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment22" id="d4590e2010" headers="d4590e2002">
+<p>Match root element</p>
+</td>
+<td class="cellalignment23" headers="d4590e2010 d4590e2005">
+<pre dir="ltr">
+/My/Element 
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment22" id="d4590e2017" headers="d4590e2002">
+<p>Match sub element to current node</p>
+</td>
+<td class="cellalignment23" headers="d4590e2017 d4590e2005">
+<pre dir="ltr">
+./Sub/Element 
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment22" id="d4590e2024" headers="d4590e2002">
+<p>Match nth element</p>
+</td>
+<td class="cellalignment23" headers="d4590e2024 d4590e2005">
+<pre dir="ltr">
+ /My/*[n] 
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment22" id="d4590e2031" headers="d4590e2002">
+<p>Match nth Some element</p>
+</td>
+<td class="cellalignment23" headers="d4590e2031 d4590e2005">
+<pre dir="ltr">
+/My/Some[n] 
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment22" id="d4590e2038" headers="d4590e2002">
+<p>Match any text value</p>
+</td>
+<td class="cellalignment23" headers="d4590e2038 d4590e2005">
+<pre dir="ltr">
+/My/*[text() ='value'] 
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment22" id="d4590e2045" headers="d4590e2002">
+<p>Match the text in Some element</p>
+</td>
+<td class="cellalignment23" headers="d4590e2045 d4590e2005">
+<pre dir="ltr">
+/My/Some[text() = 'value'] 
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment22" id="d4590e2052" headers="d4590e2002">
+<p>Match any attribute</p>
+</td>
+<td class="cellalignment23" headers="d4590e2052 d4590e2005">
+<pre dir="ltr">
+/My/*[@att = 'value'] 
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment22" id="d4590e2059" headers="d4590e2002">
+<p>Match the attribute in Some element</p>
+</td>
+<td class="cellalignment23" headers="d4590e2059 d4590e2005">
+<pre dir="ltr">
+/My/Some[@att = 'value'] 
+</pre></td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<a id="GBDIN180"></a><a id="GBDIN179"></a>
+<div class="sect4"><a id="GUID-F4F4FA5E-1036-46CC-B8F8-2FF68A6305EC"></a>
+<h4 id="GBDIN-GUID-F4F4FA5E-1036-46CC-B8F8-2FF68A6305EC" class="sect4"><span class="enumeration_section">5.4.3.3</span> Obtaining Data Values</h4>
+<div>
+<p>In addition to matching paths, the XPath expressions can also be used to obtain data values, either absolutely or relative to the current node being processed. Data value expressions can contain any of the path elements in the preceding table, but must end with one of the value accessors listed below.</p>
+<div class="tblformal" id="GUID-F4F4FA5E-1036-46CC-B8F8-2FF68A6305EC__GUID-84C8C02D-1073-4A00-90C2-946802C7C0C1">
+<hr />
+<table class="cellalignment8" summary="This two column table lists the name and description of value accessors present in the data value expressions.">
+<thead align="left">
+<tr>
+<th class="cellalignment24" id="d4590e2092">Value Accessors</th>
+<th class="cellalignment25" id="d4590e2095">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment24" id="d4590e2100" headers="d4590e2092">
+<pre dir="ltr">
+@att 
+</pre></td>
+<td class="cellalignment25" headers="d4590e2100 d4590e2095">
+<p>Some attribute value.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment24" id="d4590e2107" headers="d4590e2092">
+<pre dir="ltr">
+text() 
+</pre></td>
+<td class="cellalignment25" headers="d4590e2107 d4590e2095">
+<p>The text content (value) of an element.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment24" id="d4590e2114" headers="d4590e2092">
+<pre dir="ltr">
+content() 
+</pre></td>
+<td class="cellalignment25" headers="d4590e2114 d4590e2095">
+<p>The full content of an element, including any child XML nodes.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment24" id="d4590e2121" headers="d4590e2092">
+<pre dir="ltr">
+name() 
+</pre></td>
+<td class="cellalignment25" headers="d4590e2121 d4590e2095">
+<p>The name of an element.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment24" id="d4590e2128" headers="d4590e2092">
+<pre dir="ltr">
+position() 
+</pre></td>
+<td class="cellalignment25" headers="d4590e2128 d4590e2095">
+<p>The position of an element in its parent.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="example" id="GUID-F4F4FA5E-1036-46CC-B8F8-2FF68A6305EC__GUID-0599CA09-EE73-45FE-A3B2-A9CBBBA247E7">
+<p class="titleinexample">Example 5-7 Examples of Extracting Data Values</p>
+<p>To extract the relative element text value:</p>
+<pre dir="ltr">
+/My/Element/text()
+</pre>
+<p>To extract the absolute attribute value:</p>
+<pre dir="ltr">
+/My/Element/@att
+</pre>
+<p>To extract element text value with a match:</p>
+<pre dir="ltr">
+/My/Some[@att = 'value']/Sub/text()
+</pre></div>
+<!-- class="example" -->
+<div class="infobox-note" id="GUID-F4F4FA5E-1036-46CC-B8F8-2FF68A6305EC__GUID-ECD61593-FB36-4F26-A36D-3656AD4611CC">
+<p class="notep1">Note:</p>
+<p>Path accessors, such as ancestor/descendent/self, are not supported.</p>
+</div>
+</div>
+</div>
+</div>
+<a id="GBDIN181"></a>
+<div class="sect3"><a id="GUID-3D15EA22-108E-4DCD-8FF0-B599FB5D5BA7"></a>
+<h3 id="GBDIN-GUID-3D15EA22-108E-4DCD-8FF0-B599FB5D5BA7" class="sect3"><span class="enumeration_section">5.4.4</span> Other Value Expressions</h3>
+<div>
+<p>The values extracted by the XML parser are either column values or properties of the transaction or operation, such as table or timestamp. These values are either obtained from XML using XPath or through properties of the JMS message, system values, or hard coded values. The XML parser properties specify which of these options are valid for obtaining the values for that property.</p>
+<p>The following example specifies that <code>timestamp</code> can be an XPath expression, a JMS property, or the system generated timestamp.</p>
+<pre dir="ltr">
+{<span class="italic">txrule</span>}.timestamp={<span class="italic">xpath-expression</span>}|${<span class="italic">jms-property</span>}|*ts
+</pre>
+<p>The next example specifies that <code>table</code> can be an XPath expression, a JMS property, or hard coded value.</p>
+<pre dir="ltr">
+{<span class="italic">oprule</span>}.table={<span class="italic">xpath-expression</span>}|${<span class="italic">jms-property</span>}|"value"
+</pre>
+<p>The last example specifies that <code>name</code> can be a XPath expression or hard coded value.</p>
+<pre dir="ltr">
+{<span class="italic">colrule</span>}.timestamp={<span class="italic">xpath-expression</span>}|"value"
+</pre></div>
+</div>
+<a id="GBDIN183"></a><a id="GBDIN184"></a><a id="GBDIN182"></a>
+<div class="props_rev_3"><a id="GUID-3D677955-9F2D-4E38-B281-22B414CF2FC6"></a>
+<h3 id="GBDIN-GUID-3D677955-9F2D-4E38-B281-22B414CF2FC6" class="sect3"><span class="enumeration_section">5.4.5</span> Transaction Rules</h3>
+<div>
+<div class="section">
+<p>The rule that specifies the boundary for a transaction is at the highest level. Messages may contain a single transaction, multiple transactions, or a part of a transaction that spans messages. These are specified as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">single</span> - The transaction rule match is not defined.</p>
+</li>
+<li>
+<p><span class="bold">multiple</span> - Each transaction rule match defines new transaction.</p>
+</li>
+<li>
+<p><span class="bold">span</span> &ndash; No transaction rule is defined; instead a t<a id="d4590e2269" class="indexterm-anchor"></a>ransaction indicator is specified in an operation rule.</p>
+</li>
+</ul>
+<p>For a transaction rule, the following properties of the rule may also be defined through XPath or other expressions:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">timestamp</span> &ndash; The time at which the transaction occurred.</p>
+</li>
+<li>
+<p><span class="bold">txid</span> &ndash; The identifier for the transaction.</p>
+</li>
+</ul>
+<p>Transaction rules can have multiple <code>subrules</code>, but each must be of type operation.</p>
+<p>The following example specifies a transaction that is the whole message and includes a timestamp that comes from the JMS property.</p>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-3D677955-9F2D-4E38-B281-22B414CF2FC6__GUID-D8B30A5D-A22A-4585-924D-C3F81E1DD2BE">
+<p class="titleinexample">Example 5-8 JMS Timestamp</p>
+<pre dir="ltr">
+singletxrule.timestamp=$JMSTimeStamp
+</pre>
+<p>The following example matches the root element transaction and obtains the timestamp from the <code>ts</code> attribute.</p>
+</div>
+<!-- class="example" -->
+<div class="example" id="GUID-3D677955-9F2D-4E38-B281-22B414CF2FC6__GUID-7B05FCF8-1071-42BD-A610-B8D3F2A7F34B">
+<p class="titleinexample">Example 5-9 ts Timestamp</p>
+<pre dir="ltr">
+dyntxrule.match=/Transaction
+dyntxrule.timestamp=@ts
+</pre></div>
+<!-- class="example" --></div>
+</div>
+<a id="GBDIN186"></a><a id="GBDIN187"></a><a id="GBDIN185"></a>
+<div class="props_rev_3"><a id="GUID-1B0CC776-3CC2-4FFA-9300-4073041212A1"></a>
+<h3 id="GBDIN-GUID-1B0CC776-3CC2-4FFA-9300-4073041212A1" class="sect3"><span class="enumeration_section">5.4.6</span> Operation Rules</h3>
+<div>
+<div class="section">
+<p>An operation rule can either be a sub rule of a transaction rule, or a highest level rule (if the transaction is a property of the operation).</p>
+<p>In addition to the standard rule properties, an operation rule should also define the following through XPath or other expressions:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">timestamp</span> &ndash; The timestamp of the operation. This is optional if the transaction rule is defined.</p>
+</li>
+<li>
+<p><span class="bold">table</span> &ndash; The name of the table on which this is an operation. Use this with schema.</p>
+</li>
+<li>
+<p><span class="bold">schema</span> &ndash; The name of schema for the table.</p>
+</li>
+<li>
+<p><span class="bold">schemaandtable</span> &ndash; Both schema and <a id="d4590e2359" class="indexterm-anchor"></a>table name together in the form <code>SCHEMA.TABLE</code>. This can be used in place of the individual table and schema properties.</p>
+</li>
+<li>
+<p><span class="bold">optype</span> &ndash; Specifies whether this is an insert, update or delete operation based on <code>optype</code> values:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">optype.insertval</span> &ndash; The value indicating an insert. The default is <code>I</code>.</p>
+</li>
+<li>
+<p><span class="bold">optype.updateval</span> &ndash; The value indicating an update. The default is <code>U</code>.</p>
+</li>
+<li>
+<p><span class="bold">optype.deleteval</span> &ndash; The value indicating a delete. The default is <code>D</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><span class="bold">seqid</span> &ndash; The identifier for the operation. This will be the transaction identifier if <code>txid</code> has not already been defined at the transaction level.</p>
+</li>
+<li>
+<p><span class="bold">txind</span> &ndash; Specifies whether this operation is the beginning of a transaction, in the middle or at the end; or if it is the whole operation. This property is optional and not valid if the operation rule is a sub rule of a transaction rule.</p>
+</li>
+</ul>
+<p>Operation rules can have multiple sub rules of type operation or column.</p>
+<p>The following example dynamically obtains operation information from the <code>/Operation</code> element of a <code>/Transaction</code>.</p>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-1B0CC776-3CC2-4FFA-9300-4073041212A1__GUID-DCF5E88E-A7AB-4355-A7CC-47A12E20C130">
+<p class="titleinexample">Example 5-10 Operation</p>
+<pre dir="ltr">
+dynoprule.match=./Operation
+dynoprule.schemaandtable=@table
+dynoprule.optype=@type
+</pre>
+<p>The following example statically matches <code>/NewMyTableEntry</code> element to an insert operation on the <code>MY.TABLE</code> table.</p>
+</div>
+<!-- class="example" -->
+<div class="example" id="GUID-1B0CC776-3CC2-4FFA-9300-4073041212A1__GUID-4E17D2DB-EC87-4E4F-A67D-8D958C7D9E5B">
+<p class="titleinexample">Example 5-11 Operation example</p>
+<pre dir="ltr">
+statoprule.match=./NewMyTableEntry
+statoprule.schemaandtable="MY.TABLE"
+statoprule.optype="I"
+statoprule.timestamp=./CreateTime/text()
+</pre></div>
+<!-- class="example" --></div>
+</div>
+<a id="GBDIN189"></a><a id="GBDIN190"></a><a id="GBDIN188"></a>
+<div class="props_rev_3"><a id="GUID-D6ABBB9C-8CD6-4E49-BFC2-B2B09C76E696"></a>
+<h3 id="GBDIN-GUID-D6ABBB9C-8CD6-4E49-BFC2-B2B09C76E696" class="sect3"><span class="enumeration_section">5.4.7</span> Column Rules</h3>
+<div>
+<div class="section">
+<p>A column rule must be a sub rule of an operation rule. In addition to the standard rule properties, a column rule should also define the following through XPath or other expressions.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">name</span> &ndash; The name of the column within the table definition.</p>
+</li>
+<li>
+<p><span class="bold">index</span> &ndash; The index of the column within the table definition.</p>
+<div class="infobox-note" id="GUID-D6ABBB9C-8CD6-4E49-BFC2-B2B09C76E696__GUID-9AA0E234-0913-4592-BF93-3DD30D3B19C0">
+<p class="notep1">Note:</p>
+<p>If only one of <code>name</code> and <code>index</code> is defined, the other will be determined.</p>
+</div>
+</li>
+<li>
+<p><span class="bold">before.value</span> &ndash; The before value of the column. This is required for deletes, but is optional for updates.</p>
+</li>
+<li>
+<p><span class="bold">before.isnull</span> &ndash; Indicates whether the before value of the column is null.</p>
+</li>
+<li>
+<p><span class="bold">before.ismissing</span> &ndash; Indicates whether the before value of the column is missing.</p>
+</li>
+<li>
+<p><span class="bold">after.value</span> &ndash; The before value of the column. This is required for deletes, but is optional for updates.</p>
+</li>
+<li>
+<p><span class="bold">after.isnull</span> &ndash; Indicates whether the before value of the column is null.</p>
+</li>
+<li>
+<p><span class="bold">after.ismissing</span> &ndash; Indicates whether the before value of the column is missing.</p>
+</li>
+<li>
+<p><span class="bold">value</span> &ndash; An expression to use for both <code>before.value</code> and <code>after.value</code> unless overridden by specific before or after values. Note that this does not support different before values for updates.</p>
+</li>
+<li>
+<p><span class="bold">isnull</span> &ndash; An expression to use for both before.isnull and after.isnull unless overridden.</p>
+</li>
+<li>
+<p><span class="bold">ismissing</span> &ndash; An expression to use for both before.ismissing and after.ismissing unless overridden.</p>
+</li>
+</ul>
+<p>The following example dynamically obtains column information from the <code>/Column</code> element of an <code>/Operation</code></p>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-D6ABBB9C-8CD6-4E49-BFC2-B2B09C76E696__GUID-540112E7-B3B0-47CE-BB19-C2DD28661728">
+<p class="titleinexample">Example 5-12 Dynamic Extraction of Column Information</p>
+<pre dir="ltr">
+dyncolrule.match=./Column
+dyncolrule.name=@name
+dyncolrule.before.value=./beforevalue/text()
+dyncolrule.after.value=./aftervalue/text()
+</pre>
+<p>The following example statically matches the <code>/KeyCol</code> and <code>/Col1</code> elements to columns in <code>MY.TABLE</code>.</p>
+</div>
+<!-- class="example" -->
+<div class="example" id="GUID-D6ABBB9C-8CD6-4E49-BFC2-B2B09C76E696__GUID-694E31AA-BB70-4C96-BD3A-6E1747C2444A">
+<p class="titleinexample">Example 5-13 Static Matching of Elements to Columns</p>
+<pre dir="ltr">
+statkeycolrule.match=/KeyCol
+statkeycolrule.name="keycol"
+statkeycolrule.value=./text()
+statcol1rule.match=/Col1
+statcol1rule.name="col1"
+statcol1rule.value=./text()
+</pre></div>
+<!-- class="example" --></div>
+</div>
+<a id="GBDIN191"></a>
+<div class="props_rev_3"><a id="GUID-453476A9-6C39-4357-9D77-1DD16E8D88BB"></a>
+<h3 id="GBDIN-GUID-453476A9-6C39-4357-9D77-1DD16E8D88BB" class="sect3"><span class="enumeration_section">5.4.8</span> Overall Rules Example</h3>
+<div>
+<div class="section">
+<p>The following example uses the XML samples shown earlier with appropriate rules to generate the same resulting operation on the <code>MY.TABLE</code> table.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformal" id="GUID-453476A9-6C39-4357-9D77-1DD16E8D88BB__GUID-36D16FCF-1075-45B6-B4C6-0CFED3BFB589">
+<hr />
+<table class="cellalignment8" summary="This table lists the Dynamic and Static XML for the previous examples.">
+<thead align="left">
+<tr>
+<th class="cellalignment26" id="d4590e2596">Dynamic XML</th>
+<th class="cellalignment27" id="d4590e2599">Static XML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment26" id="d4590e2604" headers="d4590e2596">
+<pre dir="ltr">
+&lt;transaction id="1234"
+    ts="2010-02-05:10:11:21"&gt;
+  &lt;operation table="MY.TABLE" optype="I"&gt;
+    &lt;column name="keycol" index="0"&gt;
+      &lt;aftervalue&gt;
+&lt;![CDATA[keyval]]&gt;
+      &lt;/aftervalue&gt;
+    &lt;/column&gt;
+    &lt;column name="col1" index="1"&gt;
+      &lt;aftervalue&gt;
+         &lt;![CDATA[col1val]]&gt;
+      &lt;/aftervalue&gt;
+    &lt;/column&gt;
+  &lt;/operation&gt;
+&lt;/transaction&gt;
+</pre></td>
+<td class="cellalignment27" headers="d4590e2604 d4590e2599">
+<pre dir="ltr">
+NewMyTableEntries&gt;
+  &lt;NewMyTableEntry&gt;
+    &lt;CreateTime&gt;
+       2010-02-05:10:11:21
+    &lt;/CreateTime&gt;
+    &lt;KeyCol&gt;keyval&lt;/KeyCol&gt;
+    &lt;Col1&gt;col1val&lt;/Col1&gt;
+  &lt;/NewMyTableEntry&gt;
+&lt;/NewMyTableEntries&gt;
+</pre></td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="tblformalwide" id="GUID-453476A9-6C39-4357-9D77-1DD16E8D88BB__GUID-D4905B7A-7AA1-4009-AC33-9EB6F837BCD9">
+<hr />
+<table class="cellalignment28" summary="This table lists the Dynamic and Static XML rules for the previous examples.">
+<thead align="left">
+<tr>
+<th class="cellalignment26" id="d4590e2618">Dynamic</th>
+<th class="cellalignment27" id="d4590e2621">Static</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment26" id="d4590e2626" headers="d4590e2618">
+<pre dir="ltr">
+dyntxrule.match=/Transaction
+dyntxrule.timestamp=@ts 
+dyntxrule.subrules=dynoprule 
+dynoprule.match=./Operation 
+dynoprule.schemaandtable=@table
+dynoprule.optype=@type 
+dynoprule.subrules=dyncolrule
+dyncolrule.match=./Column 
+dyncolrule.name=@name 
+</pre></td>
+<td class="cellalignment27" headers="d4590e2626 d4590e2621">
+<pre dir="ltr">
+stattxrule.match=/NewMyTableEntries
+stattxrule.subrules= statoprule 
+statoprule.match=./NewMyTableEntry 
+statoprule.schemaandtable="MY.TABLE"
+statoprule.optype="I" 
+statoprule.timestamp=./CreateTime/text()
+statoprule.subrules= statkeycolrule,
+statcol1rule
+statkeycolrule.match=/KeyCol 
+</pre></td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="section">
+<pre dir="ltr">
+INSERT INTO MY.TABLE (KEYCOL, COL1)
+VALUES ('keyval', 'col1val')
+</pre></div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GBDIN192"></a>
+<div class="props_rev_3"><a id="GUID-AA7EDCDD-F985-4163-B4E2-CAADF9D1AD1B"></a>
+<h2 id="GBDIN-GUID-AA7EDCDD-F985-4163-B4E2-CAADF9D1AD1B" class="sect2"><span class="enumeration_section">5.5</span> Source Definitions Generation Utility</h2>
+<div>
+<div class="section">
+<p>By default, the JMS capture process writes metadata information in the produced trail files, allowing trail file consumers to understand the structure of the trail records without any help from an external definition file.</p>
+<p>In situations where the metadata in trail feature is disabled, the trail file consumers will still need the definition file to correctly parse the trail records. For this purpose Oracle GoldenGate for Java includes a <a id="d4590e2657" class="indexterm-anchor"></a><code>gendef</code> utility that generates an Oracle GoldenGate source definitions file from the properties defined in a properties file. It creates a normalized definition of tables based on the property settings and other parser-specific data definition values.</p>
+<p>The syntax to run this utility is:</p>
+<pre dir="ltr">
+gendef &ndash;prop {<span class="italic">property_file</span>} [-out {<span class="italic">output_file</span>}
+</pre>
+<p>This defaults to sending the source definitions to standard out, but it can be directed to a file using the <code>&ndash;out</code> parameter. For example:</p>
+<pre dir="ltr">
+gendef &ndash;prop dirprm/jmsvam.properties -out dirdef/msgdefs.def
+</pre>
+<p>The output <a id="d4590e2681" class="indexterm-anchor"></a>source definitions file can then be used in a pump or delivery process to interpret the trail data created through the VAM.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment11">
+<table class="cellalignment6">
+<tr>
+<td class="cellalignment5"><a href="GUID-CCA5DFA8-BFD0-4E2F-9593-C32C2A73DC35.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment5"><a href="GUID-D48AEE3B-7024-4A93-9478-7C753BF09D9F.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment13">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="../index.htm"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

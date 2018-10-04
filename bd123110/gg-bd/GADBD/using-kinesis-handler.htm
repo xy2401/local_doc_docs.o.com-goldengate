@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the Kinesis Streams Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2017-09-08T08:33:14Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Integrating Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E89478-02" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-kafka-connect-handler.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-mongodb-handler.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-4E4E0A52-9AE7-4E9F-84BA-32B18B63C4B0"></a> <span id="PAGE" style="display:none;">13/24</span> <!-- End Header -->
+<h1 id="GADBD-GUID-4E4E0A52-9AE7-4E9F-84BA-32B18B63C4B0" class="sect1"><span class="enumeration_chapter">10</span> Using the Kinesis Streams Handler</h1>
+<div>
+<p>This chapter explains the Kinesis Streams Handler and includes examples so that you can understand this functionality.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-D2B694E3-C29B-4BAB-BEE5-E568B2086918">Overview</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-32081993-9786-460D-B5FF-C641D4042CF5">Detailed Functionality</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-C0DAA527-96A1-43DB-A2E6-C39541C55E4D">Setting Up and Running the Kinesis Streams Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-152F3692-ECBD-43F0-BD70-8B5E5448AA1A">Kinesis Handler Performance Consideration</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-9F84B2BC-3B01-4DB7-BCB4-3D22DC922BFD">Troubleshooting</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-D2B694E3-C29B-4BAB-BEE5-E568B2086918"></a>
+<h2 id="GADBD-GUID-D2B694E3-C29B-4BAB-BEE5-E568B2086918" class="sect2"><span class="enumeration_section">10.1</span> Overview</h2>
+<div>
+<div class="section">
+<p>Amazon Kinesis is a messaging system that is hosted in the Amazon Cloud. Kinesis streams can be used to stream data to other Amazon Cloud applications such as Amazon S3 and Amazon Redshift. Using the Kinesis Streams Handler, you can also stream data to applications hosted on the Amazon Cloud or at your site. Amazon Kinesis streams provides functionality similar to Apache Kafka.</p>
+<p>The logical concepts map is as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Kafka Topics = Kinesis Streams</p>
+</li>
+<li>
+<p>Kafka Partitions = Kinesis Shards</p>
+</li>
+</ul>
+<p>A Kinesis stream must have at least one shard.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-32081993-9786-460D-B5FF-C641D4042CF5"></a>
+<h2 id="GADBD-GUID-32081993-9786-460D-B5FF-C641D4042CF5" class="sect2"><span class="enumeration_section">10.2</span> Detailed Functionality</h2>
+<div>
+<div class="section">
+<p class="subhead2"></p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-3DE02CFE-8A38-4407-86DF-81437D0CC4E2">Amazon Kinesis Java SDK</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-3C114CC8-FC53-4935-8FE9-CD662EC0EDA4">Kinesis Streams Input Limits</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-3DE02CFE-8A38-4407-86DF-81437D0CC4E2"></a>
+<h3 id="GADBD-GUID-3DE02CFE-8A38-4407-86DF-81437D0CC4E2" class="sect3"><span class="enumeration_section">10.2.1</span> Amazon Kinesis Java SDK</h3>
+<div>
+<div class="section">
+<p>The Oracle GoldenGate Kinesis Streams Handler uses the AWS Kinesis Java SDK to push data to Amazon Kinesis, see <a href="http://docs.aws.amazon.com/streams/latest/dev/developing-producers-with-sdk.html" target="_blank">http://docs.aws.amazon.com/streams/latest/dev/developing-producers-with-sdk.html</a> for more information.</p>
+<p>The Kinesis Steams Handler was designed and tested with the latest AWS Kinesis Java SDK version 1.11.107. The following are the dependencies:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Group ID: <code class="codeph">com.amazonaws</code></p>
+</li>
+<li>
+<p>Artifact ID: <code class="codeph">aws-java-sdk-kinesis</code></p>
+</li>
+<li>
+<p>Version: <code class="codeph">1.11.107</code></p>
+</li>
+</ul>
+<p>Oracle GoldenGate for Big Data does not ship with the AWS Kinesis Java SDK. Oracle recommends that you use the AWS Kinesis Java SDK identified in the Certification Matrix, see the certification document for your release on the <a class="olink fmwcert" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E89481-01&amp;id=fmwcert"><span class="italic">Oracle Fusion Middleware Supported System Configurations</span></a> page.</p>
+<div class="infobox-note" id="GUID-3DE02CFE-8A38-4407-86DF-81437D0CC4E2__GUID-D86855D4-58E2-48C2-AACD-5C04E39B64C2">
+<p class="notep1">Note:</p>
+It is assumed by moving to the latest AWS Kinesis Java SDK that there are no changes to the interface, which can break compatibility with the Kinesis Streams Handler.</div>
+<p>The AWS Java SDK, that includes Kinesis, can be downloaded from:</p>
+<p><a href="https://aws.amazon.com/sdk-for-java/" target="_blank">https://aws.amazon.com/sdk-for-java/</a></p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-3C114CC8-FC53-4935-8FE9-CD662EC0EDA4"></a>
+<h3 id="GADBD-GUID-3C114CC8-FC53-4935-8FE9-CD662EC0EDA4" class="sect3"><span class="enumeration_section">10.2.2</span> Kinesis Streams Input Limits</h3>
+<div>
+<div class="section">
+<p>The upper input limit for a Kinesis stream with a single shard is 1000 messages per second up to a total data size of 1MB per second. Adding streams or shards can increase the potential throughput such as the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>1 stream with 2 shards = 2000 messages per second up to a total data size of 2MB per second</p>
+</li>
+<li>
+<p>3 streams of 1 shard each = 3000 messages per second up to a total data size of 3MB per second</p>
+</li>
+</ul>
+<p>The scaling that you can achieve with the Kinesis Streams Handler depends on how you configure the handler. Kinesis stream names are resolved at runtime based on the configuration of the Kinesis Streams Handler.</p>
+<p>Shards are selected by the hash the partition key. The partition key for a Kinesis message cannot be null or an empty string (<code class="codeph">""</code>). A null or empty string partition key results in a Kinesis error that results in an abend of the Replicat process.</p>
+<p>Maximizing throughput requires that the Kinesis Streams Handler configuration evenly distributes messages across streams and shards.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-C0DAA527-96A1-43DB-A2E6-C39541C55E4D"></a>
+<h2 id="GADBD-GUID-C0DAA527-96A1-43DB-A2E6-C39541C55E4D" class="sect2"><span class="enumeration_section">10.3</span> Setting Up and Running the Kinesis Streams Handler</h2>
+<div>
+<div class="section">
+<p>Instructions for configuring the Kinesis Streams Handler components and running the handler are described in the following sections.</p>
+<p>Use the following steps to set up the Kinesis Streams Handler:</p>
+<ol>
+<li>
+<p>Create an Amazon AWS account at <a href="https://aws.amazon.com/" target="_blank">https://aws.amazon.com/</a>.</p>
+</li>
+<li>
+<p>Log into Amazon AWS.</p>
+</li>
+<li>
+<p>From the main page, select <span class="bold">Kinesis</span> (under the Analytics subsection).</p>
+</li>
+<li>
+<p>Select Amazon Kinesis Streams <span class="bold">Go to Streams</span> to create Amazon Kinesis streams and shards within streams.</p>
+</li>
+<li>
+<p>Create a client ID and secret to access Kinesis.</p>
+<p>The Kinesis Streams Handler requires these credentials at runtime to successfully connect to Kinesis.</p>
+</li>
+<li>
+<p>Create the client ID and secret:</p>
+<ol>
+<li>
+<p>Select your name in AWS (upper right), and then in the list select <span class="bold">My Security Credentials</span>.</p>
+</li>
+<li>
+<p>Select <span class="bold">Access Keys</span> to create and manage access keys.</p>
+<p>Note your client ID and secret upon creation.</p>
+<p>The client ID and secret can only be accessed upon creation. If lost, you have to delete the access key, and then recreate it.</p>
+</li>
+</ol>
+</li>
+</ol>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-576A3CED-B997-48AE-AE50-2C077513F951">Set the Classpath in Kinesis Streams Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-DAB962D4-9D44-4481-A42A-4028F4113565">Kinesis Streams Handler Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-851621F3-951D-4BE9-87D5-5026B433E94D">Using Templates to Resolve the Stream Name and Partition Name</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-94A27A2A-2016-4ED3-AB7E-D62C994226C2">Configuring the Client ID and Secret in Kinesis Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-53289E28-F09A-4D51-83AE-B1A65963538E">Configuring the Proxy Server for Kinesis Streams Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-4EBECB38-0A2B-4890-89DF-EE04B4938DF7">Configuring Security in Kinesis Streams Handler</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-576A3CED-B997-48AE-AE50-2C077513F951"></a>
+<h3 id="GADBD-GUID-576A3CED-B997-48AE-AE50-2C077513F951" class="sect3"><span class="enumeration_section">10.3.1</span> Set the Classpath in Kinesis Streams Handler</h3>
+<div>
+<div class="section">
+<p>You must configure the <code class="codeph">gg.classpath</code> property in the Java Adapter properties file to specify the JARs for the AWS Kinesis Java SDK as follows:</p>
+<code class="codeph">gg.classpath={<span class="codeinlineitalic">download_dir</span>}/aws-java-sdk-1.11.107/lib/*:{<span class="codeinlineitalic">download_dir</span>}/aws-java-sdk-1.11.107/third-party/lib/*</code></div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-DAB962D4-9D44-4481-A42A-4028F4113565"></a>
+<h3 id="GADBD-GUID-DAB962D4-9D44-4481-A42A-4028F4113565" class="sect3"><span class="enumeration_section">10.3.2</span> Kinesis Streams Handler Configuration</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the Kinesis Streams handler.</p>
+<div class="tblformal" id="GUID-DAB962D4-9D44-4481-A42A-4028F4113565__GUID-D9A8DB8F-BB51-4D27-9343-035157B21077">
+<p class="titleintable">Table 10-1 Kinesis Streams Handler Configuration Properties</p>
+<table class="cellalignment77" title="Kinesis Streams Handler Configuration Properties" summary="Five column table describing Kinesis Streams Handler Configuration Properties.">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment78" id="d32532e381">Properties</th>
+<th class="cellalignment78" id="d32532e384">Required/ Optional</th>
+<th class="cellalignment78" id="d32532e387">Legal Values</th>
+<th class="cellalignment78" id="d32532e390">Default</th>
+<th class="cellalignment78" id="d32532e393">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e398" headers="d32532e381"><code class="codeph">gg.handler.name.type</code></td>
+<td class="cellalignment62" headers="d32532e398 d32532e384">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d32532e398 d32532e387">
+<p><code class="codeph">kinesis_streams</code></p>
+</td>
+<td class="cellalignment62" headers="d32532e398 d32532e390">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d32532e398 d32532e393">
+<p>Selects the Kinesis Streams Handler for streaming change data capture into Kinesis.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e415" headers="d32532e381"><code class="codeph">gg.handler.name.region</code></td>
+<td class="cellalignment62" headers="d32532e415 d32532e384">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d32532e415 d32532e387">
+<p>The Amazon region name which is hosting your Kinesis instance.</p>
+</td>
+<td class="cellalignment62" headers="d32532e415 d32532e390">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d32532e415 d32532e393">
+<p>Setting of the Amazon AWS region name is required.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e431" headers="d32532e381"><code class="codeph">gg.handler.name.proxyServer</code></td>
+<td class="cellalignment62" headers="d32532e431 d32532e384">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d32532e431 d32532e387">
+<p>The host name of the proxy server.</p>
+</td>
+<td class="cellalignment62" headers="d32532e431 d32532e390">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d32532e431 d32532e393">
+<p>Set the host name of the proxy server if connectivity to AWS is required to go through a proxy server.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e447" headers="d32532e381"><code class="codeph">gg.handler.name.proxyPort</code></td>
+<td class="cellalignment62" headers="d32532e447 d32532e384">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d32532e447 d32532e387">
+<p>The port number of the proxy server.</p>
+</td>
+<td class="cellalignment62" headers="d32532e447 d32532e390">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d32532e447 d32532e393">
+<p>Set the port name of the proxy server if connectivity to AWS is required to go through a proxy server.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e463" headers="d32532e381"><code class="codeph">gg.handler.name.proxyUsername</code></td>
+<td class="cellalignment62" headers="d32532e463 d32532e384">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d32532e463 d32532e387">
+<p>The username of the proxy server (if credentials are required).</p>
+</td>
+<td class="cellalignment62" headers="d32532e463 d32532e390">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d32532e463 d32532e393">
+<p>Set the username of the proxy server if connectivity to AWS is required to go through a proxy server and the proxy server requires credentials.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e479" headers="d32532e381"><code class="codeph">gg.handler.name.proxyPassword</code></td>
+<td class="cellalignment62" headers="d32532e479 d32532e384">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d32532e479 d32532e387">
+<p>The password of the proxy server (if credentials are required).</p>
+</td>
+<td class="cellalignment62" headers="d32532e479 d32532e390">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d32532e479 d32532e393">
+<p>Set the password of the proxy server if connectivity to AWS is required to go through a proxy server and the proxy server requires credentials.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e495" headers="d32532e381"><code class="codeph">gg.handler.name.deferFlushAtTxCommit</code></td>
+<td class="cellalignment62" headers="d32532e495 d32532e384">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d32532e495 d32532e387">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d32532e495 d32532e390">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d32532e495 d32532e393">
+<p>When set to false, the Kinesis Streams Handler will flush data to Kinesis at transaction commit for write durability. However, it may be preferable to defer the flush beyond the transaction commit for performance purposes, see <a href="using-kinesis-handler.htm#GUID-152F3692-ECBD-43F0-BD70-8B5E5448AA1A">Kinesis Handler Performance Consideration</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e519" headers="d32532e381"><code class="codeph">gg.handler.name.deferFlushOpCount</code></td>
+<td class="cellalignment62" headers="d32532e519 d32532e384">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d32532e519 d32532e387">
+<p>Integer</p>
+</td>
+<td class="cellalignment62" headers="d32532e519 d32532e390">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d32532e519 d32532e393">
+<p>Only applicable if <code class="codeph">gg.handler.name.deferFlushAtTxCommit</code> is set to <code class="codeph">true</code>. This parameter marks the minimum number of operations that must be received before triggering a flush to Kinesis. Once this number of operations are received, a flush will occur on the next transaction commit and all outstanding operations will be moved from the Kinesis Streams Handler to AWS Kinesis.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e541" headers="d32532e381"><code class="codeph">gg.handler.name.formatPerOp</code></td>
+<td class="cellalignment62" headers="d32532e541 d32532e384">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d32532e541 d32532e387">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment62" headers="d32532e541 d32532e390">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment62" headers="d32532e541 d32532e393">
+<p>When set to <code class="codeph">true</code>, it will send messages to Kinesis, once per operation (insert, delete, update). When set to <code class="codeph">false</code>, operations messages will be concatenated for all the operations and a single message will be sent at the transaction level. Kinesis has a limitation of 1MB max massage size. If 1MB is exceeded then transaction level message will be broken up into multiple messages.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e568" headers="d32532e381"><code class="codeph">gg.handler.name.customMessageGrouper</code></td>
+<td class="cellalignment62" headers="d32532e568 d32532e384">
+<p>Optional</p>
+</td>
+<td class="cellalignment62" headers="d32532e568 d32532e387"><code class="codeph">oracle.goldengate.handler.kinesis.KinesisJsonTxMessageGrouper</code></td>
+<td class="cellalignment62" headers="d32532e568 d32532e390">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d32532e568 d32532e393">
+<p>This configuration parameter provides the ability to group Kinesis messages using custom logic. Only one implementation is included in the distribution at this time. The <code class="codeph">oracle.goldengate.handler.kinesis.KinesisJsonTxMessageGrouper</code>is a custom message which groups JSON operation messages representing operations into a wrapper JSON message that encompasses the transaction. Setting of this value overrides the setting of the <code class="codeph">gg.handler.formatPerOp</code> setting. Using this feature assumes that the customer is using the JSON formatter (that is <code class="codeph">gg.handler.name.format=json</code>).</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e593" headers="d32532e381"><code class="codeph">gg.handler.name.streamMappingTemplate</code></td>
+<td class="cellalignment62" headers="d32532e593 d32532e384">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d32532e593 d32532e387">
+<p>A template string value to resolve the Kinesis message partition key (message key) at runtime.</p>
+</td>
+<td class="cellalignment62" headers="d32532e593 d32532e390">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d32532e593 d32532e393">
+<p>See <a href="using-kinesis-handler.htm#GUID-851621F3-951D-4BE9-87D5-5026B433E94D">Using Templates to Resolve the Stream Name and Partition Name</a> for more information.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e613" headers="d32532e381"><code class="codeph">gg.handler.name.partitionMappingTemplate</code></td>
+<td class="cellalignment62" headers="d32532e613 d32532e384">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d32532e613 d32532e387">
+<p>A template string value to resolve the Kinesis message partition key (message key) at runtime.</p>
+</td>
+<td class="cellalignment62" headers="d32532e613 d32532e390">
+<p>None</p>
+</td>
+<td class="cellalignment62" headers="d32532e613 d32532e393">
+<p>See <a href="using-kinesis-handler.htm#GUID-851621F3-951D-4BE9-87D5-5026B433E94D">Using Templates to Resolve the Stream Name and Partition Name</a> for more information.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e632" headers="d32532e381"><code class="codeph">gg.hander.name.format</code></td>
+<td class="cellalignment62" headers="d32532e632 d32532e384">
+<p>Required</p>
+</td>
+<td class="cellalignment62" headers="d32532e632 d32532e387">
+<p>Any supported pluggable formatter.</p>
+</td>
+<td class="cellalignment62" headers="d32532e632 d32532e390">
+<p><code class="codeph">delimitedtext | json | json_row | xml | avro_row | avro_opt</code></p>
+</td>
+<td class="cellalignment62" headers="d32532e632 d32532e393">
+<p>Selects the operations message formatter. JSON is likely the best fit for Kinesis.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-851621F3-951D-4BE9-87D5-5026B433E94D"></a>
+<h3 id="GADBD-GUID-851621F3-951D-4BE9-87D5-5026B433E94D" class="sect3"><span class="enumeration_section">10.3.3</span> Using Templates to Resolve the Stream Name and Partition Name</h3>
+<div>
+<div class="section">
+<p>The Kinesis Streams Handler provides the functionality to resolve the stream name and the partition key at runtime using a template configuration value. Templates allow you to configure static values and keywords. Keywords are used to dynamically replace the keyword with the context of the current processing. Templates are applicable to the following configuration parameters:</p>
+<pre dir="ltr">
+gg.handler.name.streamMappingTemplate
+gg.handler.name.partitionMappingTemplate
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Template Modes</p>
+<p>Source database transactions are made up of 1 or more individual operations which are the individual inserts, updates, and deletes. The Kinesis Handler can be configured to send one message per operation (insert, update, delete, Alternatively, it can be configured to group operations into messages at the transaction level. Many of the template keywords resolve data based on the context of an individual source database operation. Therefore, many of the keywords <span class="italic">do not work</span> when sending messages at the transaction level. For example <code class="codeph">${fullyQualifiedTableName}</code> does not work when sending messages at the transaction level. The <code class="codeph">${<span class="codeinlineitalic">fullyQualifiedTableName</span>}</code> property resolves to the qualified source table name for an operation. Transactions can contain multiple operations for many source tables. Resolving the fully-qualified table name for messages at the transaction level is non-deterministic and so abends at runtime.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Template Keywords</p>
+<p>The following table lists the currently supported keyword templates and includes a column if the keyword is supported for transaction level messages:</p>
+<div class="tblformal" id="GUID-851621F3-951D-4BE9-87D5-5026B433E94D__GUID-DBF8DDF0-EC6E-40C3-B486-68B5719DE085">
+<table class="cellalignment84" summary="Three column table describing the Kinesis Handler keyword templates.">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment78" rowspan="1" colspan="1" id="d32532e700">Keyword</th>
+<th class="cellalignment78" rowspan="1" colspan="1" id="d32532e703">Explanation</th>
+<th class="cellalignment78" rowspan="1" colspan="1" id="d32532e706">Transaction Message Support</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e711" headers="d32532e700">
+<p><code class="codeph">${fullyQualifiedTableName}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e711 d32532e703">
+<p>Resolves to the fully qualified table name including the &ldquo;.&rdquo; Delimiter between the catalog, schema, and table names.</p>
+<p>i.e. test.dbo.table1</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e711 d32532e706">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e724" headers="d32532e700">
+<p><code class="codeph">${catalogName}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e724 d32532e703">
+<p>Resolves to the catalog name.</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e724 d32532e706">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e735" headers="d32532e700">
+<p><code class="codeph">${schemaName}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e735 d32532e703">
+<p>Resolves to the schema name</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e735 d32532e706">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e746" headers="d32532e700">
+<p><code class="codeph">${tableName}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e746 d32532e703">
+<p>Resolves to the short table name.</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e746 d32532e706">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e757" headers="d32532e700">
+<p><code class="codeph">${opType}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e757 d32532e703">
+<p>Resolves to the type of the operation: (INSERT, UPDATE, DELETE, or TRUNCATE)</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e757 d32532e706">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e768" headers="d32532e700">
+<p><code class="codeph">${primaryKeys}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e768 d32532e703">
+<p>Resolves to the concatenated primary key values delimited by a &ldquo;_&rdquo; character.</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e768 d32532e706">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e779" headers="d32532e700">
+<p><code class="codeph">${position}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e779 d32532e703">
+<p>The sequence number of the source trail file followed by the offset (RBA).</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e779 d32532e706">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e790" headers="d32532e700">
+<p><code class="codeph">${opTimestamp}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e790 d32532e703">
+<p>The operation timestamp from the source trail file.</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e790 d32532e706">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e801" headers="d32532e700">
+<p><code class="codeph">${emptyString}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e801 d32532e703">
+<p>Resolves to &ldquo;&rdquo;.</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e801 d32532e706">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e812" headers="d32532e700">
+<p><code class="codeph">${groupName}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e812 d32532e703">
+<p>Resolves to the name of the replicat process. If using coordinated delivery it resolves to the name of the replicat process with the replicate thread number appended.</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e812 d32532e706">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e823" headers="d32532e700">
+<p><code class="codeph">${staticMap[]}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e823 d32532e703">
+<p>Resolves to a static value where the key is the fully qualified table name. The keys and values are designated inside of the square brace in the following format:</p>
+<p>${staticMap[dbo.table1=value1,dbo.table2=value2]}</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e823 d32532e706">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e837" headers="d32532e700">
+<p><code class="codeph">${columnValue[]}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e837 d32532e703">
+<p>Resolves to a column value where the key is the fully qualified table name and the value is the column name to be resolved. For example:</p>
+<p>${staticMap[dbo.table1=col1,dbo.table2=col2]}</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e837 d32532e706">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e850" headers="d32532e700">
+<p><code class="codeph">${currentTimestamp}</code></p>
+<p>Or</p>
+<p><code class="codeph">${currentTimestamp[]}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e850 d32532e703">
+<p>Resolves to the current timestamp. The user can control the format of the current timestamp using the Java based formatting as described in the SimpleDateFormat class.</p>
+<p><a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html" target="_blank">https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html</a></p>
+<p>Examples:</p>
+<p>${currentDate}</p>
+<p>${currentDate[yyyy-mm-dd hh:MM:ss.SSS]}</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e850 d32532e706">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e876" headers="d32532e700">
+<p><code class="codeph">${null}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e876 d32532e703">
+<p>Resolves to a null string.</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e876 d32532e706">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d32532e887" headers="d32532e700">
+<p><code class="codeph">${custom[]}</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e887 d32532e703">
+<p>It is possible to write a custom value resolver. If required please contact Oracle Support.</p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d32532e887 d32532e706">
+<p>Depends on impl</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Example Templates</p>
+<p>The following describes example template configuration values and the resolved values.</p>
+<div class="tblformal" id="GUID-851621F3-951D-4BE9-87D5-5026B433E94D__GUID-02710733-FB5E-402A-9804-07F44F23D56F">
+<table class="cellalignment84" summary="A two column table describing example template configuration values.">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment78" id="d32532e910">Example Template</th>
+<th class="cellalignment78" id="d32532e913">Resolved Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e918" headers="d32532e910">
+<p><code class="codeph">${<span class="codeinlineitalic">groupName</span>}_{<span class="codeinlineitalic">fullyQualifiedTableName</span>}</code></p>
+</td>
+<td class="cellalignment62" headers="d32532e918 d32532e913">
+<p><code class="codeph">KINESIS001_dbo.table1</code></p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e933" headers="d32532e910">
+<p><code class="codeph">prefix_${<span class="codeinlineitalic">schemaName</span>}_${<span class="codeinlineitalic">tableName</span>}_suffix</code></p>
+</td>
+<td class="cellalignment62" headers="d32532e933 d32532e913">
+<p><code class="codeph">prefix_dbo_table1_suffix</code></p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" id="d32532e948" headers="d32532e910">
+<p><code class="codeph">${currentDate[yyyy-mm-dd hh:MM:ss.SSS]}</code></p>
+</td>
+<td class="cellalignment62" headers="d32532e948 d32532e913">
+<p><code class="codeph">2017-05-17 11:45:34.254</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-94A27A2A-2016-4ED3-AB7E-D62C994226C2"></a>
+<h3 id="GADBD-GUID-94A27A2A-2016-4ED3-AB7E-D62C994226C2" class="sect3"><span class="enumeration_section">10.3.4</span> Configuring the Client ID and Secret in Kinesis Handler</h3>
+<div>
+<div class="section">
+<p>A client ID and secret are required credentials for the Kinesis Streams Handler to interact with Amazon Kinesis. A client ID and secret are generated through the Amazon AWS website. The retrieval of these credentials and presentation to the Kinesis server are performed on the client side by the AWS Kinesis Java SDK. The AWS Kinesis Java SDK provides multiple ways that the client ID and secret can be resolved at runtime.</p>
+<p>The client ID and secret can be set</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>as Java properties so configured in the Java Adapter properties file as follows:</p>
+<pre dir="ltr">
+<span class="bold"> </span>javawriter.bootoptions=-Xmx512m -Xms32m 
+-Djava.class.path=ggjava/ggjava.jar 
+-Daws.accessKeyId=<span class="italic">your_access_key</span> 
+-Daws.secretKey=<span class="italic">your_secret_key</span>
+</pre></li>
+<li>
+<p>as environmental variables using the <code class="codeph">AWS_ACCESS_KEY_ID</code> and <code class="codeph">AWS_SECRET_ACCESS_KEY</code> variables.</p>
+</li>
+<li>
+<p>in the E2C environment on the local machine.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-53289E28-F09A-4D51-83AE-B1A65963538E"></a>
+<h3 id="GADBD-GUID-53289E28-F09A-4D51-83AE-B1A65963538E" class="sect3"><span class="enumeration_section">10.3.5</span> Configuring the Proxy Server for Kinesis Streams Handler</h3>
+<div>
+<div class="section">
+<p>Oracle GoldenGate can be used with a proxy server using the following parameters to enable the proxy server:</p>
+<ul style="list-style-type: disc;">
+<li><code class="codeph">gg.handler.kinesis.proxyServer=</code></li>
+<li>
+<p><code class="codeph">gg.handler.kinesis.proxyPort=80</code></p>
+</li>
+</ul>
+<p>Access to the proxy servers can be secured using credentials and the following configuration parameters:</p>
+<ul style="list-style-type: disc;">
+<li><code class="codeph">gg.handler.kinesis.proxyUsername=<span class="variable">username</span></code></li>
+<li><code class="codeph">gg.handler.kinesis.proxyPassword=<span class="variable">password</span></code></li>
+</ul>
+<p>Sample configurations:</p>
+<pre dir="ltr">
+gg.handlerlist=kinesis 
+gg.handler.kinesis.type=kinesis_streams 
+gg.handler.kinesis.mode=op 
+gg.handler.kinesis.format=json 
+gg.handler.kinesis.region=us-west-2 
+gg.handler.kinesis.partitionMappingTemplate=TestPartitionName
+gg.handler.kinesis.streamMappingTemplate=TestStream
+gg.handler.kinesis.deferFlushAtTxCommit=true 
+gg.handler.kinesis.deferFlushOpCount=1000 
+gg.handler.kinesis.formatPerOp=true 
+#gg.handler.kinesis.customMessageGrouper=oracle.goldengate.handler.kinesis.KinesisJsonTxMessageGrouper 
+gg.handler.kinesis.proxyServer=www-proxy.myhost.com 
+gg.handler.kinesis.proxyPort=80
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-4EBECB38-0A2B-4890-89DF-EE04B4938DF7"></a>
+<h3 id="GADBD-GUID-4EBECB38-0A2B-4890-89DF-EE04B4938DF7" class="sect3"><span class="enumeration_section">10.3.6</span> Configuring Security in Kinesis Streams Handler</h3>
+<div>
+<div class="section">
+<p>The AWS Kinesis Java SDK uses HTTPS to communicate with Kinesis. The Kinesis Streams Handler is authenticated by presenting the client ID and secret credentials at runtime using a trusted certificate.</p>
+<p>The Kinesis Streams Handler can also be configured to authenticate the server providing mutual authentication. You can do this by generating a certificate from the Amazon AWS website and configuring server authentication. A trust store must be generated on the machine hosting Oracle GoldenGate for Big Data. The trust store and trust store password must be configured in the Kinesis Streams Handler Java Adapter properties file.</p>
+<p>The following is an example configuration:</p>
+<pre dir="ltr">
+javawriter.bootoptions=-Xmx512m -Xms32m 
+-Djava.class.path=ggjava/ggjava.jar 
+&ndash;Djavax.net.ssl.trustStore=<span class="italic">path_to_trust_store_file</span> 
+&ndash;Djavax.net.ssl.trustStorePassword=<span class="italic">trust_store_password</span>
+</pre></div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-152F3692-ECBD-43F0-BD70-8B5E5448AA1A"></a>
+<h2 id="GADBD-GUID-152F3692-ECBD-43F0-BD70-8B5E5448AA1A" class="sect2"><span class="enumeration_section">10.4</span> Kinesis Handler Performance Consideration</h2>
+<div>
+<div class="section">
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-7D832331-2DA5-4F8E-B19B-0C8A6E1A4F85">Kinesis Streams Input Limitations</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-0B70B5DC-D8ED-4A49-8E8E-C8619A3A8DC7">Transaction Batching</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-8DCECD4F-B8CA-4162-8BCE-273349BA7576">Deferring Flush at Transaction Commit</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-7D832331-2DA5-4F8E-B19B-0C8A6E1A4F85"></a>
+<h3 id="GADBD-GUID-7D832331-2DA5-4F8E-B19B-0C8A6E1A4F85" class="sect3"><span class="enumeration_section">10.4.1</span> Kinesis Streams Input Limitations</h3>
+<div>
+<div class="section">
+<p>The maximum write rate to a Kinesis stream with a single shard to be 1000 messages per second up to a maximum of 1MB of data per second. You can scale input to Kinesis by adding additional Kinesis streams or adding shards to streams. Both adding streams and adding shards can linearly increase the Kinesis input capacity and thereby improve performance of the Oracle GoldenGate Kinesis Streams Handler.</p>
+<p>Adding streams or shards can linearly increase the potential throughput such as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>1 stream with 2 shards = 2000 messages per second up to a total data size of 2MB per second.</p>
+</li>
+<li>
+<p>3 streams of 1 shard each = 3000 messages per second up to a total data size of 3MB per second.</p>
+</li>
+</ul>
+<p>To fully take advantage of streams and shards, you must configure the Oracle GoldenGate Kinesis Streams Handler to distribute messages as evenly as possible across streams and shards.</p>
+<p>Adding additional Kinesis streams or shards does nothing to scale Kinesis input if all data is sent to using a static partition key into a single Kinesis stream. Kinesis streams are resolved at runtime using the selected mapping methodology. For example, mapping the source table name as the Kinesis stream name may provide good distribution of messages across Kinesis streams if operations from the source trail file are evenly distributed across tables. Shards are selected by a hash of the partition key. Partition keys are resolved at runtime using the selected mapping methodology. Therefore, it is best to choose a mapping methodology to a partition key that rapidly changes to ensure a good distribution of messages across shards.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-0B70B5DC-D8ED-4A49-8E8E-C8619A3A8DC7"></a>
+<h3 id="GADBD-GUID-0B70B5DC-D8ED-4A49-8E8E-C8619A3A8DC7" class="sect3"><span class="enumeration_section">10.4.2</span> Transaction Batching</h3>
+<div>
+<div class="section">
+<p>The Oracle GoldenGate Kinesis Streams Handler receives messages and then batches together messages by Kinesis stream before sending them via synchronous HTTPS calls to Kinesis. At transaction commit all outstanding messages are flushed to Kinesis. The flush call to Kinesis impacts performance. Therefore, deferring the flush call can dramatically improve performance.</p>
+<p>The recommended way to defer the flush call is to use the <code class="codeph">GROUPTRANSOPS</code> configuration in the replicat configuration. The <code class="codeph">GROUPTRANSOPS</code> groups multiple small transactions into a single larger transaction deferring the transaction commit call until the larger transaction is completed. The <code class="codeph">GROUPTRANSOPS</code> parameter works by counting the database operations (inserts, updates, and deletes) and only commits the transaction group when the number of operations equals or exceeds the <code class="codeph">GROUPTRANSOPS</code> configuration setting. The default <code class="codeph">GROUPTRANSOPS</code> setting for replicat is 1000.</p>
+<p>Interim flushes to Kinesis may be required with the <code class="codeph">GROUPTRANSOPS</code> setting set to a large amount. An individual call to send batch messages for a Kinesis stream cannot exceed 500 individual messages or 5MB. If the count of pending messages exceeds 500 messages or 5MB on a per stream basis then the Kinesis Handler is required to perform an interim flush.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-8DCECD4F-B8CA-4162-8BCE-273349BA7576"></a>
+<h3 id="GADBD-GUID-8DCECD4F-B8CA-4162-8BCE-273349BA7576" class="sect3"><span class="enumeration_section">10.4.3</span> Deferring Flush at Transaction Commit</h3>
+<div>
+<div class="section">
+<p>The messages are by default flushed to Kinesis at transaction commit to ensure write durability. However, it is possible to defer the flush beyond transaction commit. This is only advisable when messages are being grouped and sent to Kinesis at the transaction level (that is one transaction = one Kinesis message or chunked into a small number of Kinesis messages), when the user is trying to capture the transaction as a single messaging unit.</p>
+<p>This may require setting the <code class="codeph">GROUPTRANSOPS</code> replication parameter to 1 so as not to group multiple smaller transactions from the source trail file into a larger output transaction. This can impact performance as only one or few messages are sent per transaction and then the transaction commit call is invoked which in turn triggers the flush call to Kinesis.</p>
+<p>In order to maintain good performance the Oracle GoldenGate Kinesis Streams Handler allows the user to defer the Kinesis flush call beyond the transaction commit call. The Oracle GoldenGate replicat process maintains the checkpoint in the <code class="codeph">.cpr</code> file in the <code class="codeph">{GoldenGate Home}/dirchk</code> directory. The Java Adapter also maintains a checkpoint file in this directory named <code class="codeph">.cpj</code>. The Replicat checkpoint is moved beyond the checkpoint for which the Oracle GoldenGate Kinesis Handler can guarantee message loss will not occur. However, in this mode of operation the GoldenGate Kinesis Streams Handler maintains the correct checkpoint in the <code class="codeph">.cpj</code> file. Running in this mode will not result in message loss even with a crash as on restart the checkpoint in the <code class="codeph">.cpj</code> file is parsed if it is before the checkpoint in the <code class="codeph">.cpr</code> file.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-9F84B2BC-3B01-4DB7-BCB4-3D22DC922BFD"></a>
+<h2 id="GADBD-GUID-9F84B2BC-3B01-4DB7-BCB4-3D22DC922BFD" class="sect2"><span class="enumeration_section">10.5</span> Troubleshooting</h2>
+<div>
+<div class="section">
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-7B547654-4F79-4034-BA8D-43EDA8CD1202">Java Classpath</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-C660581F-F6C9-4885-8429-2FCF1E369BF4">Kinesis Handler Connectivity Issues</a><br /></li>
+<li class="ulchildlink"><a href="using-kinesis-handler.htm#GUID-A936E95D-B39C-4223-A8DB-1D94E4D56025">Logging</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-7B547654-4F79-4034-BA8D-43EDA8CD1202"></a>
+<h3 id="GADBD-GUID-7B547654-4F79-4034-BA8D-43EDA8CD1202" class="sect3"><span class="enumeration_section">10.5.1</span> Java Classpath</h3>
+<div>
+<div class="section">
+<p>The most common initial error is an incorrect classpath to include all the required AWS Kinesis Java SDK client libraries and creates a <code class="codeph">ClassNotFound</code> exception in the log file.</p>
+<p>You can troubleshoot by setting the Java Adapter logging to <code class="codeph">DEBUG</code>, and then rerun the process. At the debug level, the logging includes information about which JARs were added to the classpath from the <code class="codeph">gg.classpath</code> configuration variable.</p>
+<p>The <code class="codeph">gg.classpath</code> variable supports the wildcard asterisk (<code class="codeph">*</code>) character to select all JARs in a configured directory. For example, <code class="codeph">/usr/kinesis/sdk/*</code>, see <a href="using-kinesis-handler.htm#GUID-C0DAA527-96A1-43DB-A2E6-C39541C55E4D">Setting Up and Running the Kinesis Streams Handler</a>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-C660581F-F6C9-4885-8429-2FCF1E369BF4"></a>
+<h3 id="GADBD-GUID-C660581F-F6C9-4885-8429-2FCF1E369BF4" class="sect3"><span class="enumeration_section">10.5.2</span> Kinesis Handler Connectivity Issues</h3>
+<div>
+<div class="section">
+<p>If the Kinesis Streams Handler is unable to connect to Kinesis when running on premise, the problem can be the connectivity to the public Internet is protected by a proxy server. Proxy servers act a gateway between the private network of a company and the public Internet. Contact your network administrator to get the URLs of your proxy server, and then follow the directions in <a href="using-kinesis-handler.htm#GUID-53289E28-F09A-4D51-83AE-B1A65963538E">Configuring the Proxy Server for Kinesis Streams Handler</a>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-A936E95D-B39C-4223-A8DB-1D94E4D56025"></a>
+<h3 id="GADBD-GUID-A936E95D-B39C-4223-A8DB-1D94E4D56025" class="sect3"><span class="enumeration_section">10.5.3</span> Logging</h3>
+<div>
+<div class="section">
+<p>The Kinesis Streams Handler logs the state of its configuration to the Java log file.</p>
+<p>This is helpful because you can review the configuration values for the handler. Following is a sample of the logging of the state of the configuration:</p>
+<div class="p">
+<pre dir="ltr">
+**** Begin Kinesis Streams Handler - Configuration Summary ****   
+Mode of operation is set to op.   
+   The AWS region name is set to [us-west-2].   
+   A proxy server has been set to [www-proxy.us.oracle.com] using port [80].   
+   The Kinesis Streams Handler will flush to Kinesis at transaction commit.  
+    Messages from the GoldenGate source trail file will be sent at the operation level. 
+   One operation = One Kinesis Message   
+The stream mapping template of [${<span class="italic">fullyQualifiedTableName</span>}] resolves to [<span class="italic">fully qualified table name</span>].  
+ The partition mapping template of [${<span class="italic">primaryKeys</span>}] resolves to [<span class="italic">primary keys</span>].   
+**** End Kinesis Streams Handler - Configuration Summary ****
+</pre></div>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment61">
+<tr>
+<td class="cellalignment79">
+<table class="cellalignment66">
+<tr>
+<td class="cellalignment65"><a href="using-kafka-connect-handler.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment65"><a href="using-mongodb-handler.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment81">
+<table class="cellalignment64">
+<tr>
+<td class="cellalignment65"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment65"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

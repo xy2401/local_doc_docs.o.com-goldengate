@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Manager commands</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="keywords" content="CHILDSTATUS option, SEND MANAGER, Manager, information, viewing, START command, MANAGER, starting, STATUS command, MANAGER, status, STOP command, stopping" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-DECBD91E-5CDB-4E74-AFC7-5F0102AFAAD2.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-FF18DD13-65C0-4EA7-824E-D4E57270D6D9.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-F608A1CA-3A6F-4C37-96BD-7199A4CECAA8"></a> <span id="PAGE" style="display:none;">9/360</span> <!-- End Header -->
+<a id="GNSRF112"></a>
+<h1 id="GNSRF-GUID-F608A1CA-3A6F-4C37-96BD-7199A4CECAA8" class="sect1"><span class="enumeration_section">1.1</span> Manager commands</h1>
+<div>
+<div class="section">
+<p>The Manager module must be running for other Oracle GoldenGate components to operate. The process ensures proper startup, monitoring, and other activities. Once you start the Manager process, you can:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Determine whether the Manager process is running</p>
+</li>
+<li>
+<p>Retrieve information about the running Manager process</p>
+</li>
+<li>
+<p>Stop the process</p>
+</li>
+</ul>
+<p>The Manager process (<code class="codeph">$GGMGR</code>), runs as a NonStop process pair that includes the process (<code class="codeph">$GGMGR</code>) and a child process (<code class="codeph">$GGMGX</code>).</p>
+<p>You can change the default process name from <code class="codeph">$GGMGR</code> to another name. To change this and other default settings, see <a class="olink GNSAD-GUID-ADF49456-6567-484F-BD1E-D5C77878DC34" target="_blank" href="../GNSAD/planning-configuration.htm#GNSAD-GUID-ADF49456-6567-484F-BD1E-D5C77878DC34">Changing Default Component Names</a>.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GNSRF114"></a><a id="GNSRF115"></a><a id="GNSRF116"></a><a id="GNSRF113"></a>
+<div class="props_rev_3"><a id="GUID-3D5B4525-1DEE-484E-85F3-776EE2270CFF"></a>
+<h2 id="GNSRF-GUID-3D5B4525-1DEE-484E-85F3-776EE2270CFF" class="sect2"><span class="enumeration_section">1.1.1</span> INFO MANAGER</h2>
+<div>
+<div class="section">
+<p>Use <code class="codeph">INFO MANAGER</code> to determine whether the Manager process is running. If Manager is running, the process name, port number, TCPIP process, and IP address may be displayed depending on the parameters set for Manager.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+INFO MANAGER
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<p>The following examples show different displays for the <code class="codeph">INFO MANAGER</code> command.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-3D5B4525-1DEE-484E-85F3-776EE2270CFF__GUID-80FE6A5C-F3D7-4855-92FB-7CADAD07E5E3"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>If the IP port is not configured, the display will be similar to:</p>
+<pre dir="ltr">
+Manager process $GGMGR is running.
+(IP port not configured).
+</pre></dd>
+<dt class="dlterm"><a id="GUID-3D5B4525-1DEE-484E-85F3-776EE2270CFF__GUID-F933FF75-4F04-4E88-A37D-0D4940FD3E70"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>If the TCPIP process name and port are configured, the display will be similar to:</p>
+<pre dir="ltr">
+Manager process $GGMGR is running 
+(Process \NY.$ZTC1, port 7830).
+</pre></dd>
+<dt class="dlterm"><a id="GUID-3D5B4525-1DEE-484E-85F3-776EE2270CFF__GUID-B0E9CC2A-D129-40CF-8247-453B95DA75A8"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>If the IP port, TCPIP process name, and <code class="codeph">IPINTERFACE</code> are all configured, the display will be similar to one of the following:</p>
+<pre dir="ltr">
+Manager process $GGMGR is running 
+(Process \NY.$ZTC1, IP 192.0.2.1 port 7830).
+</pre>
+<pre dir="ltr">
+Manager process $GGMGR is running 
+(Process \NY.$ZTC1, IP 2001:db8:2010:5040:4fff:ffff:ffff:28 port 7830).
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF118"></a><a id="GNSRF119"></a><a id="GNSRF117"></a>
+<div class="props_rev_3"><a id="GUID-557043FF-F331-4FDF-AB9D-64ECFDBCC55E"></a>
+<h2 id="GNSRF-GUID-557043FF-F331-4FDF-AB9D-64ECFDBCC55E" class="sect2"><span class="enumeration_section">1.1.2</span> SEND MANAGER</h2>
+<div>
+<div class="section">
+<p>Use <code class="codeph">SEND MANAGER</code> to communicate with the current Manager process.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+SEND MANAGER 
+{CHILDSTATUS | 
+<a id="d6444e157" class="indexterm-anchor"></a>GETPORTINFO [DETAIL] | 
+GETPURGEOLDEXTRACTS |
+KILL <span class="italic">process_name</span>}
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-557043FF-F331-4FDF-AB9D-64ECFDBCC55E__GUID-5F8C6626-7F12-4D89-A3B3-B7FF268136D3"><!-- --></a><code class="codeph">CHILDSTATUS</code></dt>
+<dd>
+<p>Displays information about all processes started by Manager.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-557043FF-F331-4FDF-AB9D-64ECFDBCC55E__GUID-C5B2F014-B8E6-483D-8A13-3CD23A12BC35"><!-- --></a><code class="codeph">GETPORTINFO [DETAIL]</code></dt>
+<dd>
+<p>Retrieves the status of ports in use. Also returns statistical information about port sessions.</p>
+<p>Include <code class="codeph">DETAIL</code> with <code class="codeph">GETPORTINFO</code> to retrieve information about all dynamically allocated ports, regardless of whether they are in use, as in:</p>
+<pre dir="ltr">
+SEND MANAGER, GETPORTINFO DETAIL
+</pre></dd>
+<dt class="dlterm"><a id="GUID-557043FF-F331-4FDF-AB9D-64ECFDBCC55E__GUID-E86CE853-30AD-4D00-BDCE-06F396F3C5B6"><!-- --></a><code class="codeph">GETPURGEOLDEXTRACTS</code></dt>
+<dd>
+<p>Displays information about trail maintenance rules set with the <code class="codeph">PURGEOLDEXTRACTS</code> parameter in the Manager parameter file. For more information about <code class="codeph">PURGEOLDEXTRACTS</code>, see <span class="q">"<a href="GUID-F2CE6A0B-E010-4CE6-9782-ECDF784333B6.htm#GUID-F2CE6A0B-E010-4CE6-9782-ECDF784333B6">PRIORITY</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-557043FF-F331-4FDF-AB9D-64ECFDBCC55E__GUID-8A8A8C7A-D7AC-4711-B5F2-66810347FD6A"><!-- --></a><code class="codeph">KILL</code> <span class="italic"><code class="codeph">process_name</code></span></dt>
+<dd>
+<p>Stops a process that was previously created by Manager. Manager returns an error if the process is not one it created.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-557043FF-F331-4FDF-AB9D-64ECFDBCC55E__GUID-475FC867-1D6B-428F-B33B-92005D84516E"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p><code class="codeph">SEND MANAGER CHILDSTATUS</code> returns a child process status similar to the following.</p>
+<pre dir="ltr">
+ID  Process         Retry   Retry Time         When added
+--- --------------- ------- ----- ------------ -------------------
+  3 \NY.$GGS03      0,0512      0 None         2014/08/16 14:39:07
+</pre></dd>
+<dt class="dlterm"><a id="GUID-557043FF-F331-4FDF-AB9D-64ECFDBCC55E__GUID-96B32D92-2863-4050-914A-7FA0E55E6691"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p><code class="codeph">SEND</code> <code class="codeph">MANAGER</code> <code class="codeph">GETPURGEOLDEXTRACTS</code> returns a report similar to the following:</p>
+<pre dir="ltr">
+PurgeOldExtracts Rules
+Fileset                       MinHours  MinFiles     UseCP
+$DATA04.GGSDAT.HT*                   0         1       Y
+$DATA04.GGSDAT.ET*                   0         1       Y
+
+Extract Trails
+Filename                    Group    Oldest Seqno MinHours 
+\NY.$DATA04.GGSDAT.ET       REPACL              0        0 
+\NY.$DATA04.GGSDAT.HT       ACTHIST             0        0 
+\NY.$DATA04.GGSDAT.LT       ACRLOG              0        0 
+\NY.$DATA04.GGSLOG.LT       ACELOG              0        0 
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF120"></a>
+<div class="props_rev_3"><a id="GUID-D994F33C-8A5C-4AD3-B941-835DDFDA6632"></a>
+<h2 id="GNSRF-GUID-D994F33C-8A5C-4AD3-B941-835DDFDA6632" class="sect2"><span class="enumeration_section">1.1.3</span> START MANAGER</h2>
+<div>
+<div class="section">
+<p>Use <code class="codeph">START</code> <code class="codeph">MANAGER</code> to start the Manager process.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+START MANAGER 
+[, CPU <span class="italic">primary_cpu</span>]
+[, BACKUPCPU <span class="italic">backup_cpu</span>] 
+[, PRI <span class="italic">priority</span>]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-D994F33C-8A5C-4AD3-B941-835DDFDA6632__GUID-FB1A8A3D-7FF4-4C54-BFA2-3F0A6A3E1F4A"><!-- --></a><code class="codeph">CPU</code> <span class="italic"><code class="codeph">primary_cpu</code></span></dt>
+<dd>
+<p>The primary CPU name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D994F33C-8A5C-4AD3-B941-835DDFDA6632__GUID-DF4C5844-FEAA-4D97-9195-3C41F46D1739"><!-- --></a><code class="codeph">BACKUPCPU</code> <span class="italic"><code class="codeph">backup_cpu</code></span></dt>
+<dd>
+<p>The backup CPU name. If a backup CPU is specified in the Manager parameter file, it overrides any <code class="codeph">START MANAGER</code> backup CPU specification.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D994F33C-8A5C-4AD3-B941-835DDFDA6632__GUID-A929F284-A211-41CC-9B41-486D640A8D60"><!-- --></a><code class="codeph">PRI</code> <span class="italic"><code class="codeph">priority</code></span></dt>
+<dd>
+<p>Sets the NonStop priority of the process.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<pre dir="ltr">
+ START MANAGER, CPU 1, BACKUPCPU 3, PRI 170
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF121"></a>
+<div class="props_rev_3"><a id="GUID-607664A7-8E34-4F7B-AB17-41077E1C6745"></a>
+<h2 id="GNSRF-GUID-607664A7-8E34-4F7B-AB17-41077E1C6745" class="sect2"><span class="enumeration_section">1.1.4</span> STATUS MANAGER</h2>
+<div>
+<div class="section">
+<p>Use <code class="codeph">STATUS</code> <code class="codeph">MANAGER</code> to determine whether the Manager process is running and to identify its characteristics.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+STATUS MANAGER
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Example</p>
+<p>The command <code class="codeph">STATUS MANAGER</code> will display the Manager process name, the running process, and the port number as shown below.</p>
+<pre dir="ltr">
+Manager process $ACMGR is running (IP \NY.$ZTC1 port 7670)
+</pre>
+<p>If a specific IP address or DNS name has been assigned using <code class="codeph">IPINTERFACE</code>, it will be included as shown below.</p>
+<pre dir="ltr">
+Manager process $ACMGR is running (IP \NY.$ZTC1 192.0.2.2 port 7670)
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<a id="GNSRF122"></a>
+<div class="props_rev_3"><a id="GUID-78D34AC1-F7A2-4CA7-8F79-39A7E717D38F"></a>
+<h2 id="GNSRF-GUID-78D34AC1-F7A2-4CA7-8F79-39A7E717D38F" class="sect2"><span class="enumeration_section">1.1.5</span> STOP MANAGER</h2>
+<div>
+<div class="section">
+<p>Use <code class="codeph">STOP</code> <code class="codeph">MANAGER</code> to stop the Manager process. You will be asked to confirm this command, since stopping Manager eliminates important activities. GGSCI logs <code class="codeph">STOP MANAGER</code> commands to the Oracle GoldenGate event log.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Syntax</p>
+<pre dir="ltr">
+STOP MANAGER [!]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-78D34AC1-F7A2-4CA7-8F79-39A7E717D38F__GUID-27BB3E66-FD24-462D-A3C8-AEC369F7F155"><!-- --></a><code class="codeph">!</code></dt>
+<dd>
+<p>Unless you specify the exclamation point (!), you must confirm this operation.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-DECBD91E-5CDB-4E74-AFC7-5F0102AFAAD2.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-FF18DD13-65C0-4EA7-824E-D4E57270D6D9.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

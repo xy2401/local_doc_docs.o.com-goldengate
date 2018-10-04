@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Evaluating Transaction Size</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2016-08-17T10:30:55Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Logdump Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E66976-03" />
+<meta name="dcterms.isVersionOf" content="GLOGD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-637931F4-9707-4682-B1E0-70FB8D4D12CA.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-D350B3D6-A1EB-4E00-9ABA-E2CC22AF1890.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GLOGD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-C137AEA7-936D-4A9D-98FD-8550910A8578"></a> <span id="PAGE" style="display:none;">12/88</span> <!-- End Header -->
+<a id="GLOGD130"></a>
+<h1 id="GLOGD-GUID-C137AEA7-936D-4A9D-98FD-8550910A8578" class="sect1"><span class="enumeration_section">1.4</span> Evaluating Transaction Size</h1>
+<div>
+<div class="section">
+<p>Use Logdump's <code>TRANSHIST</code> command in conjunction with other Logdump commands to determine whether or not your applications generate large transactions and to identify their relative size. <code>TRANSHIST</code> causes Logdump to track the size of transactions contained in a trail file or extract file in an internal history table. The transactions are ranked in descending order of size, in bytes. When the history table is full, the smallest transaction is removed to allow a larger transaction to be added to the list.</p>
+<p>To use statistics generated by <code>TRANSHIST</code>, issue the following series of commands in Logdump:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Use <code>TRANSHIST</code> to set the size of the history table that tracks transaction size. The maximum size is 200 bytes. A value of 0 turns off the tracking.</span>
+<div>
+<pre dir="ltr">
+TRANSHIST <span class="italic">n</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Use either the <code>TRANSRECLIMIT</code> or <code>TRANSBYTELIMIT</code> command to set a lower boundary for what is considered a normal sized transaction. These commands prevent normal-sized transactions from being tracked. Eliminating normal-sized transactions reduces the amount of data that must be reviewed.</span>
+<div>
+<pre dir="ltr">
+{TRANSBYTELIMIT <span class="italic">n</span> <span class="italic">bytes</span> | TRANSRECLIMIT <span class="italic">n</span> <span class="italic">records</span>}
+</pre></div>
+</li>
+<li class="stepexpand"><span>Use Logdump's <code>COUNT</code> command to display the statistics on transaction size, which appear at the end of the output and look like the following excerpt:</span>
+<div>
+<pre dir="ltr">
+Transactions with at least 100 records or 100000 bytes
+2011/02/01 09:31:24.000.000    00:00:00.000, Seq 0, RBA 13101
+   Bytes/Trans .....    1168167
+   Records/Trans ...       1001
+   Files/Trans .....          1
+2011/02/01 09:31:35.000.000    00:00:11.000, Seq 0, RBA 1205292
+   Bytes/Trans .....    1168167
+   Records/Trans ...       1001
+   Files/Trans .....          1
+</pre>
+<p>Logdump scans the file(s) and reports the information.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Use Logdump's <code>POSITION</code> <span class="italic"><code>RBA</code></span> command to go to each RBA listed in the <code>COUNT</code> output to find out the name of the table that generated the transaction. You can group these tables into their own processing group so that they do not affect processing of other tables that generate normal sized transactions.</span></li>
+</ol>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment344">
+<tr>
+<td class="cellalignment351">
+<table class="cellalignment349">
+<tr>
+<td class="cellalignment348"><a href="GUID-637931F4-9707-4682-B1E0-70FB8D4D12CA.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment348"><a href="GUID-D350B3D6-A1EB-4E00-9ABA-E2CC22AF1890.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment353">
+<table class="cellalignment347">
+<tr>
+<td class="cellalignment348"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment348"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

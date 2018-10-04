@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>GET_MARKER_INFO</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-09-07T12:04:07Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81608-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="get_gmt_timestamp.htm" title="Previous" type="text/html" />
+<link rel="Next" href="get_object_name.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF"></a> <span id="PAGE" style="display:none;">332/356</span> <!-- End Header -->
+<a id="GWURF860"></a>
+<h1 id="GWURF-GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF" class="sect1"><span class="enumeration_section">8.27</span> GET_MARKER_INFO</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract (data pump only) and Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">GET_MARKER_INFO</code> function to retrieve marker information sent from a NonStop source system when Replicat is applying data. Use markers to trigger custom processing within a user exit.</p>
+<p>If the character session of the user exit is set with <code class="codeph">SET_SESSION_CHARSET</code> to a value other than the default character set of the operating system, as defined in <code class="codeph">ULIB_CS_DEFAULT</code> in the <code class="codeph">ucharset.h</code> file, all of the returned marker data is interpreted in the session character set.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+#include "usrdecs.h"
+short result_code;
+marker_info_def marker_info;
+ERCALLBACK (GET_MARKER_INFO, &amp;marker_info, &amp;result_code);
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Buffer</p>
+<pre dir="ltr">
+typedef struct
+{
+char *processed;
+char *added;
+char *text;
+char *group;
+char *program;
+char *node;
+} marker_info_def;
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Input</p>
+<dl>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-57092CCB-1CB0-48A0-AF87-59761166D0CB"><!-- --></a><code class="codeph">processed</code></dt>
+<dd>
+<p>A pointer to a buffer to accept the <code class="codeph">processed</code> return value.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-6F014295-7DA7-419E-BC4F-CF44ECE474BF"><!-- --></a><code class="codeph">added</code></dt>
+<dd>
+<p>A pointer to a buffer to accept the <code class="codeph">added</code> return value.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-DBD73F2C-6C8E-43DD-B01C-4A7D0C06C12E"><!-- --></a><code class="codeph">text</code></dt>
+<dd>
+<p>A pointer to a buffer to accept the <code class="codeph">text</code> return value.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-662C28EC-002D-4718-B200-C9A4260AB52F"><!-- --></a><code class="codeph">group</code></dt>
+<dd>
+<p>A pointer to a buffer to accept the <code class="codeph">group</code> return value.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-162B47E2-B59B-4874-85EC-AC3758CF53CD"><!-- --></a><code class="codeph">program</code></dt>
+<dd>
+<p>A pointer to a buffer to accept the <code class="codeph">program</code> return value.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-452A4981-1D87-4D44-8809-8832BC4BE66E"><!-- --></a><code class="codeph">node</code></dt>
+<dd>
+<p>A pointer to a buffer to accept the <code class="codeph">node</code> return value.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Output</p>
+<dl>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-EC4EAA75-EB1A-4493-9F47-559E13564D0F"><!-- --></a><code class="codeph">processed</code></dt>
+<dd>
+<p>A null-terminated string in the format of <code class="codeph">YYYY-MM-DD HH:MI:SS</code> indicating the local date and time that the marker was processed.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-45DCBD4E-8884-4BD8-AEF8-F03E02C5A437"><!-- --></a><code class="codeph">added</code></dt>
+<dd>
+<p>A null-terminated string in the format of <code class="codeph">YYYY-MM-DD HH:MI:SS</code> indicating the local date and time that the marker was added.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-87C60B01-456C-4553-A575-5CE74B58A677"><!-- --></a><code class="codeph">text</code></dt>
+<dd>
+<p>A null-terminated string containing the text associated with the marker.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-2BD8E424-B506-4734-8B6F-80A2ED2CAD5E"><!-- --></a><code class="codeph">group</code></dt>
+<dd>
+<p>A null-terminated string indicating the Replicat group that processed the marker.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-AFBA8F09-A76B-4C4F-8E1C-3D2ED60F2BC1"><!-- --></a><code class="codeph">program</code></dt>
+<dd>
+<p>A null-terminated string indicating the program that processed the marker.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-1B2CD781-69FE-4FFE-9C09-C93AFEE69CBF__GUID-9061FB68-C7AC-4AE7-8EF8-208F5C69419D"><!-- --></a><code class="codeph">node</code></dt>
+<dd>
+<p>A null-terminated string representing the Himalaya node on which the marker was originated.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Return Values</p>
+<pre dir="ltr">
+EXIT_FN_RET_INVALID_CONTEXT
+EXIT_FN_RET_OK
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment350">
+<tr>
+<td class="cellalignment357">
+<table class="cellalignment355">
+<tr>
+<td class="cellalignment354"><a href="get_gmt_timestamp.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment354"><a href="get_object_name.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment359">
+<table class="cellalignment353">
+<tr>
+<td class="cellalignment354"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment354"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment354"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

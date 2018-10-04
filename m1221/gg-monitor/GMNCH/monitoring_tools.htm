@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Monitoring an Oracle GoldenGate Instance</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1071" />
+<meta name="description" content="This topic describes how to monitor and Oracle GoldenGate instance. It contains the following information:" />
+<meta name="dcterms.created" content="2015-10-12T17:58:1Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Using Oracle GoldenGate Monitor" />
+<meta name="dcterms.identifier" content="E60967-01" />
+<meta name="dcterms.isVersionOf" content="GMNCH" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="interface_overview.htm" title="Previous" type="text/html" />
+<link rel="Next" href="security.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GMNCH.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="GMNCH.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="GMNCH.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><span id="PAGE" style="display:none;">6/11</span> <!-- End Header -->
+<div id="GMNCH141" class="chapter"><a id="sthref11"></a>
+<h1 class="chapter"><span class="secnum">3</span> Monitoring an Oracle GoldenGate Instance</h1>
+<p><a id="GMNCH142"></a>This topic describes how to monitor and Oracle GoldenGate instance. It contains the following information:</p>
+<ul>
+<li>
+<p><a href="#CIHDHEHE">Section 3.1, "Overview of the Monitoring Workspace"</a></p>
+</li>
+<li>
+<p><a href="#CIHEGJFF">Section 3.2, "Monitoring the Oracle GoldenGate System"</a></p>
+</li>
+<li>
+<p><a href="#CIHJBCCC">Section 3.3, "Viewing Warning or Error Conditions"</a></p>
+</li>
+<li>
+<p><a href="#CIHHBDGF">Section 3.4, "Viewing Logged Information"</a></p>
+</li>
+<li>
+<p><a href="#CIHBGIIB">Section 3.5, "Working with History Information"</a></p>
+</li>
+<li>
+<p><a href="#CIHHFEJI">Section 3.6, "Purging Historical Data"</a></p>
+</li>
+<li>
+<p><a href="#CIHFGBGG">Section 3.7, "Viewing Alerts"</a></p>
+</li>
+<li>
+<p><a href="#A1002866311">Section 3.8, "Running GGSCI Commands"</a></p>
+</li>
+</ul>
+<a id="CIHDHEHE"></a>
+<div id="GMNCH143" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">3.1</span> Overview of the Monitoring Workspace</h2>
+<p>The following tabs show real-time monitoring information and historical data to use for troubleshooting and tuning the Oracle GoldenGate replication solution. Anyone with any security role can view these tabs.</p>
+<ul>
+<li>
+<p>The Metrics and Alerts tab is the main monitoring console of Oracle GoldenGate Monitor. It focuses on objects that are not in a normal state, such as those that have an error status. See <a href="#CIHEGJFF">Monitoring the Oracle GoldenGate System</a>.</p>
+</li>
+<li>
+<p>The History tab focuses on historical and logged data for the attributes that are associated with a selected Oracle GoldenGate object. <a href="#CIHBGIIB">Working with History Information</a>.</p>
+</li>
+</ul>
+<p class="related-topics"><a id="GMNCH144"></a>Related Topics</p>
+<p><a href="alerts.htm#BABHDEDE">Working with Alerts</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="CIHEGJFF"></a>
+<div id="GMNCH145" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">3.2</span> Monitoring the Oracle GoldenGate System</h2>
+<p>Use the Metrics and Alerts tab as your main monitoring area within Oracle GoldenGate Monitor. This tab combines all of the Oracle GoldenGate Monitor tools to provide several different ways to get information about your configuration quickly. You can view:</p>
+<ul>
+<li>
+<p>All of your Oracle GoldenGate Instances, their processes, their files, and their associated databases.</p>
+</li>
+<li>
+<p>The logical relationship of the Oracle GoldenGate components to one another.</p>
+</li>
+<li>
+<p>Information about each component, such as process status, performance statistics, and error conditions. This information is captured in a set of attributes that, together, provide an accurate view of the overall condition of the Oracle GoldenGate environment. See <a href="interface_overview.htm#CJAGBHFI">About the Metrics</a>.</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GMNCH146"></a>To monitor Oracle GoldenGate:</p>
+<ol>
+<li>
+<p>Expand the Navigation Tree nodes to navigate to the Oracle GoldenGate object or group of objects that you want to monitor. See <a href="interface_overview.htm#CJABFFCI">About the Objects</a>.</p>
+</li>
+<li>
+<p>On the tree nodes, check for alerts and status indicators that indicate whether there is a potential problem or state change that applies to the selected node. An alert or status indicator on any container node or Oracle GoldenGate Instance node indicates that you should drill down further to locate the object that is affected. See <a href="interface_overview.htm#CJAIIGCB">About the Status Indicators</a>.</p>
+</li>
+<li>
+<p>Select any object in the tree for which you want more information. The Navigation Tree works with the Diagram View to show the selected object along with other objects to which it has a logical relationship. For example, if you selected a Host node, you will see all of the Oracle GoldenGate components on that system, in their correct context. You can use the toolbar to navigate the diagram, if needed. See <a href="interface_overview.htm#CJABIIJE">About the Diagram View</a>.</p>
+</li>
+<li>
+<p>In the diagram, check for alerts and status indicators, and evaluate the summary attributes, not only for the selected object but also for the other objects. Those objects might be the cause of, or might also be affected by, the condition that you are observing.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+You can click any area of the Overview panel to focus on a specific part of the diagram.</div>
+</li>
+<li>
+<p>Select any object in the diagram (or tree) and then view the Metrics Panel to get detailed data for all of the attributes that are associated with the object. See <a href="interface_overview.htm#CJAGBHFI">About the Metrics</a>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+You can sort the attributes by the Name column. You can double-click the header area, or click the embedded arrow, to expand or collapse the panel.</div>
+</li>
+<li>
+<p>(Optional) In the Metrics Panel, click the history icon ( <img width="15" height="15" src="img/history.gif" alt="history icon" />) next to any attribute. This will open the History tab and show historical data for that attribute. See <a href="#CIHBGIIB">Working with History Information</a>.</p>
+</li>
+<li>
+<p>Select any object in the diagram (or tree) and then view the Alerts Panel to get details about any active alerts that were triggered for the object, including the text of the alert, the time that it occurred, and the condition that triggered it. See <a href="alerts.htm#BABGJDHI">About Alerts</a>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+You might have to double-click the Alerts header area to expand the panel to view it. You can double-click the header area, or click the embedded arrow, to expand or collapse the panel.</div>
+</li>
+<li>
+<p>(Optional) Focus on objects that have warning or error conditions. See <a href="#CIHJBCCC">Viewing Warning or Error Conditions</a>.</p>
+</li>
+</ol>
+<p class="related-topics"><a id="GMNCH306"></a>Related Topics</p>
+<p><a href="#CIHJBCCC">Viewing Warning or Error Conditions</a></p>
+<p><a href="#CIHBGIIB">Working with History Information</a></p>
+<p><a href="#CIHFGBGG">Viewing Alerts</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="CIHJBCCC"></a>
+<div id="GMNCH148" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">3.3</span> Viewing Warning or Error Conditions</h2>
+<p>Use the Metrics and Alerts tab get a quick overview of Oracle GoldenGate components that have warning or error conditions, without the need to drill down through the Navigation Tree. The objects are displayed in a large Diagram View, so that you can quickly identify the ones that need the most attention. The Diagram view shows the objects in their logical relationship to one another.</p>
+<p class="subhead2"><a id="GMNCH149"></a>To view information about a problem:</p>
+<ol>
+<li>
+<p>Select any object in the diagram. You can click any area of the Overview panel to focus on a specific part of the diagram. Use the diagram tools in the toolbar to interact with the diagram. See <a href="interface_overview.htm#CJABIIJE">About the Diagram View</a>.</p>
+</li>
+<li>
+<p>View the Metrics Panel to get detailed data for all of the attributes that are associated with the object. See <a href="interface_overview.htm#CJAGBHFI">About the Metrics</a>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+You can sort the attributes by the Name column. You can double-click the header area, or click the embedded arrow, to expand or collapse the panel.</div>
+</li>
+<li>
+<p>(Optional) In the Metrics Panel, click the history icon next to any metric for which you want to view historical data on the History tab. See <a href="#CIHBGIIB">Working with History Information</a>.</p>
+</li>
+<li>
+<p>View the Alerts Panel to get details about any active alerts that were triggered for the object, including the text of the alert, the time that it occurred, and the condition that triggered it. See <a href="alerts.htm#BABGJDHI">About Alerts</a>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+You might have to double-click the Alerts header area to expand the panel to view it. You can double-click the header area, or click the embedded arrow, to expand or collapse the panel.</div>
+</li>
+</ol>
+<p class="related-topics"><a id="GMNCH307"></a>Related Topics</p>
+<p><a href="#CIHEGJFF">Monitoring the Oracle GoldenGate System</a></p>
+<p><a href="#CIHBGIIB">Working with History Information</a></p>
+<p><a href="#CIHFGBGG">Viewing Alerts</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="CIHHBDGF"></a>
+<div id="GMNCH278" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">3.4</span> Viewing Logged Information</h2>
+<p>You can view logged information about an instance from the Metrics subtab of the History tab. This display shows the report and discard files generated for each Extract or Replicat session. Every time you start an Extract or Replicat session, data is collected and a report generated and stored. You can view these reports from the Metrics and Alert tab in the Report subtab of the Logs subtab. Meanwhile, a runtime error log is also compiled and is displayed in the Ggserr Log subtab. The report location on your local system is specified at the bottom of this tab. The Logs subtab contains these three tabs (not all tabs must appear):</p>
+<ul>
+<li>
+<p><a href="#CIHECABA">Report Subtab</a></p>
+</li>
+<li>
+<p><a href="#CIHGEHBI">Ggserr Log Subtab</a></p>
+</li>
+<li>
+<p><a href="#CIHJFCJG">Discard File Subtab</a></p>
+</li>
+</ul>
+<a id="CIHECABA"></a>
+<div id="GMNCH279" class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">3.4.1</span> Report Subtab</h3>
+<p>The Report tab shows run-time reports generated for a specific Extract or Replicat instance. These reports contain the following information:</p>
+<ul>
+<li>
+<p>Version information and select environmental settings</p>
+</li>
+<li>
+<p>Runtime parameters</p>
+</li>
+<li>
+<p>Runtime Messages and statistics</p>
+</li>
+</ul>
+<p>The Report tab is divided into two sections:</p>
+<ul>
+<li>
+<p>The report list, on the left, which lists each report (where the naming format is <span class="italic">GROUPNAMEnn</span>.rpt, where <span class="italic">GROUPNAME</span> represents Extract (EXT) or Replicat (REP), and <span class="italic">nn</span> is a sequential number identifying the where report falls among all reports collected; for example, EXTAA.rpt, EXTAA0.rpt. EXTAA1.rpt and so on. Note that, as demonstrated in the preceding examples, the most current report <span class="italic">will not</span> have a sequence number).</p>
+</li>
+<li>
+<p>The actual report content on the right.</p>
+</li>
+</ul>
+<p>Additionally, the bottom of the panel shows the full path and file name, size of the file in bytes, and a time stamp for when the data was collected is displayed.</p>
+<p class="subhead2"><a id="GMNCH280"></a><span class="bold">To see a report:</span></p>
+<ol>
+<li>
+<p>Select the Extract or Replicat instance from either the Navigation Tree or the Diagram Area.</p>
+</li>
+<li>
+<p>Select the <span class="bold">Logs</span> subtab on the Metrics and Alerts tab; the default sub tab of the Logs subtab is the Report subtab.</p>
+</li>
+<li>
+<p>Select the specific report from the reports list.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="CIHJFCJG"></a>
+<div id="GMNCH283" class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">3.4.2</span> Discard File Subtab</h3>
+<p>Discard files contains information about data that failed the respective Extract or Replicat session.</p>
+<p>The Discard subtab is divided into two sections:</p>
+<ul>
+<li>
+<p>The discard disk, on the left, which lists each report (where the naming format is <span class="italic">GROUPNAMEnn</span>.rpt, where <span class="italic">GROUPNAME</span> represents Extract (ext) or Replicat (rep) and <span class="italic">nn</span> is a sequential number identifying the where report falls among all reports collected; for example, repaa.dsc, repaa0.dsc, repaa1.dsc, and so on. Note that, as demonstrated in the preceding examples, the most current report <span class="italic">will not</span> have a sequence number).</p>
+</li>
+<li>
+<p>The actual report content on the right; for example:</p>
+<pre dir="ltr">
+Oracle GoldenGate Delivery for Oracle process started, group REPAA discard file opened: 2014-04-14 17:43:49.382279
+Oracle GoldenGate Delivery for Oracle process stopped, group REPAA : 2014-04-14 17:52:20.212009
+</pre></li>
+</ul>
+<p>Additionally, bottom of the panel shows the full path and file name, size of the file in bytes, and a time stamp for when the data was collected.</p>
+</div>
+<!-- class="sect2" -->
+<a id="CIHGEHBI"></a>
+<div id="GMNCH281" class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">3.4.3</span> Ggserr Log Subtab</h3>
+<p>This subtab displays the Oracle GoldenGate error log file; for example:</p>
+<pre dir="ltr">
+2014-04-15 05:42:08 INFO OGG-01738 Oracle GoldenGate Capture for Oracle, extaa.prm: BOUNDED RECOVERY: CHECKPOINT: for object pool 1: p31714_extr: start=SeqNo: 263, RBA: 29534736, SCN: 0.6146203 (6146203), Timestamp: 2014-04-15 05:41:09.000000, Thread: 1, end=SeqNo: 263, RBA: 29536256, SCN: 0.6146203 (6146203), Timestamp: 2014-04-15 05:41:09.000000, Thread: 1.
+2014-04-15 01:42:00 INFO OGG-01738 Oracle GoldenGate Capture for Oracle, extaa.prm: BOUNDED RECOVERY: CHECKPOINT: for object pool 1: p31714_extr: start=SeqNo: 263, RBA: 23313936, SCN: 0.6138834 (6138834), Timestamp: 2014-04-15 01:40:11.000000, Thread: 1, end=SeqNo: 263, RBA: 23316480, SCN: 0.6138834 (6138834), Timestamp: 2014-04-15 01:40:11.000000, Thread: 1.
+2014-04-14 21:41:54 INFO OGG-01738 Oracle GoldenGate Capture for Oracle, extaa.prm: BOUNDED RECOVERY: CHECKPOINT: for object pool 1: p31714_extr: start=SeqNo: 262, RBA: 23449104, SCN: 0.6123109 (6123109), Timestamp: 2014-04-14 21:40:57.000000, Thread: 1, end=SeqNo: 262, RBA: 23450112, SCN: 0.6123109 (6123109), Timestamp: 2014-04-14 21:40:57.000000, Thread: 1.
+2014-04-14 17:54:50 INFO OGG-00987 Oracle GoldenGate Command Interpreter for Oracle: GGSCI command (espear): info repaa detail.
+2014-04-14 17:52:24 INFO OGG-03522 Oracle GoldenGate Delivery for Oracle, repaa.prm: Setting session time zone to source database time zone 'GMT'.
+</pre>
+<p>Each line of the error log contains time stamp, severity, error code, process reporting the message, and the actual message. This enables you to track an error or warning to data on the associated report.</p>
+<p class="subhead2"><a id="GMNCH282"></a>To download the Ggserr.log file:</p>
+<p>You can download the error log file in order to save or view it by clicking <span class="bold">Download complete Ggserr.log</span>, at the bottom of the Ggserr Log subtab. The parenthetical number next to the download link indicates the current size of the error log file.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CIHBGIIB"></a>
+<div id="GMNCH151" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">3.5</span> Working with History Information</h2>
+<p>The History tab contains the Metrics and Alerts subtabs that enable you to view performance statistics, event messages, lag, and other information that occurred over a specific time period. You can analyze this data to identify persistent trouble spots or processes that need performance tuning. Historical data can be obtained for any metric of an Oracle GoldenGate component. See <a href="interface_overview.htm#CJAGBHFI">About the Metrics</a>.</p>
+<p>The historical data of an metric can be represented either as a chart, as a table, or both, depending on the type of metric.</p>
+<ul>
+<li>
+<p>The table view displays the selected metric data in a tabular format. The column names vary, depending on the metric that was selected.</p>
+</li>
+<li>
+<p>The chart view has two independent charts to allow comparison between different date ranges for the given metric. The tools on the tool bar control the navigation in this view and the display format of the historical data. See <a href="#CIHJAHJJ">History Tab Toolbar</a>.</p>
+</li>
+</ul>
+<p>You can use the following icons, located at the top right-hand corner of the tab, to toggle between chart and table view (if valid for the metric).</p>
+<div class="inftblsimple">
+<table class="cellalignment50" summary="This is a two-column list table that shows an icon in the left column and its name in the right column.">
+<tbody>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="18" height="18" src="img/chart-passive.gif" alt="Chart View icon" /></td>
+<td class="cellalignment51"><span class="bold">Chart View</span></td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="18" height="18" src="img/table-passive.gif" alt="Table View icon" /></td>
+<td class="cellalignment51"><span class="bold">Table View</span></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblsimple" -->
+<p class="subhead2"><a id="GMNCH152"></a>To work with history information:</p>
+<ol>
+<li>
+<p>Select an Oracle GoldenGate object in the Navigation Tree. The name of that object will be displayed in the header area of the Metrics subtab. See <a href="interface_overview.htm#CJABFFCI">About the Objects</a>.</p>
+</li>
+<li>
+<p>For Attribute, select an metric for which you want historical data to be retrieved. The Attribute list contains only the appropriate attributes for the selected object, and only those for which there is historical data. If an metric cannot be displayed in chart view, it will not be displayed in the Attribute list when chart view is enabled. To view that metric, switch to table view. (Any metric that can be displayed in chart view can be displayed in table view.)</p>
+</li>
+<li>
+<p>For Date Range Type, select the date range for which you want the history to be retrieved. If you select <span class="bold">Custom</span>, additional From and To fields are displayed, where you can type a date range or select dates by clicking the calendar icon. The date format is MM/DD/YYYY HH:MM {AM | PM}. (If you click in a field, an example of the correct format is displayed.)</p>
+</li>
+<li>
+<p>Click <span class="bold">Get Data</span>.</p>
+</li>
+</ol>
+<p class="related-topics"><a id="GMNCH308"></a>Related Topics</p>
+<p><a href="#CIHEGJFF">Monitoring the Oracle GoldenGate System</a></p>
+<p><a href="#CIHJBCCC">Viewing Warning or Error Conditions</a></p>
+<p><a href="#CIHFGBGG">Viewing Alerts</a></p>
+<a id="CIHJAHJJ"></a>
+<div id="GMNCH154" class="sect2">
+<h3 class="sect2"><span class="secnum">3.5.1</span> History Tab Toolbar</h3>
+<p class="subhead2"><a id="GMNCH155"></a>Navigation Tools on the Metrics Subtab</p>
+<div class="inftblsimple">
+<table class="cellalignment50" summary="This is a two-column description table. The left column contains an image of an icon that appears on the screen. The right column identifies the icon.">
+<tbody>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="22" height="22" src="img/zoomhist.gif" alt="zoom icon" /></td>
+<td class="cellalignment51"><span class="bold">Zoom-in</span>
+<p>Zooms in to focus on an area.</p>
+</td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="33" height="33" src="img/zoom-out.gif" alt="zoom-out icon" /></td>
+<td class="cellalignment51"><span class="bold">Zoom-out</span>
+<p>Zooms out to view a larger area.</p>
+</td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="19" height="19" src="img/zoomfit.gif" alt="Fit-to-screen icon" /></td>
+<td class="cellalignment51"><span class="bold">Fit-to-screen</span>
+<p>Fits the image to your monitor screen.</p>
+</td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="22" height="22" src="img/zoomrect.gif" alt="Zoom-to-area icon" /></td>
+<td class="cellalignment51"><span class="bold">Zoom-to-area</span>
+<p>Zooms in to a specific area when you depress and hold the mouse button, and then drag the selection box to enclose the zoom area.</p>
+</td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="33" height="33" src="img/pan.gif" alt="Pan icon" /></td>
+<td class="cellalignment51"><span class="bold">Pan</span>
+<p>Moves the image within the visible area when you depress and hold the mouse button, and then drag the mouse.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblsimple" -->
+<p class="subhead2"><a id="GMNCH156"></a>Chart Styles</p>
+<p>The following are the chart styles that you can use to view the trend of the historical data over time. You can switch between chart styles as needed.</p>
+<div class="inftblsimple">
+<table class="cellalignment50" summary="This is a two-column description table. The left column contains an image of an icon that appears on the screen. The right column identifies the icon.">
+<tbody>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="22" height="22" src="img/pline.gif" alt="Line chart graph style icon" /></td>
+<td class="cellalignment51"><span class="bold">Line chart style</span></td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="22" height="22" src="img/area.gif" alt="Area chart style icon" /></td>
+<td class="cellalignment51"><span class="bold">Area chart style</span></td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="22" height="22" src="img/bar.gif" alt="Histogram style icon" /></td>
+<td class="cellalignment51"><span class="bold">Histogram chart style</span></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblsimple" -->
+<p>You can choose the following color schemes for the chart style that you selected.</p>
+<div class="inftblsimple">
+<table class="cellalignment50" summary="This is a two-column description table. The left column contains an image of an icon that appears on the screen. The right column identifies the icon.">
+<tbody>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="22" height="22" src="img/complement.png" alt="Complementary colors icon" /></td>
+<td class="cellalignment51"><span class="bold">Complementary colors</span></td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="22" height="22" src="img/monochrom.gif" alt="Monochromatic color scheme icon" /></td>
+<td class="cellalignment51"><span class="bold">Monochromatic colors</span></td>
+</tr>
+<tr class="cellalignment44">
+<td class="cellalignment51"><img width="22" height="22" src="img/contrast.gif" alt="Contrasting color scheme icon" /></td>
+<td class="cellalignment51"><span class="bold">Contrasting colors</span></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblsimple" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CIHHFEJI"></a>
+<div id="GMNCH160" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">3.6</span> Purging Historical Data</h2>
+<p>Over time, historical data and old alerts will accumulate in the database repository. A user with at least the Power User role can purge old metrics and alerts with the Purge Data control.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Purge Data removes the metrics and alerts permanently from the Oracle GoldenGate Monitor database.</div>
+<p class="subhead2"><a id="GMNCH161"></a>To purge old data:</p>
+<ol>
+<li>
+<p>Log in with at least the Power User role.</p>
+</li>
+<li>
+<p>On the Utility Bar, click <span class="bold">Purge Data</span>.</p>
+<p>The Purge Data dialog box appears.</p>
+<img width="381" height="215" src="img/purge_data.gif" alt="Description of purge_data.gif follows" /><br />
+<a id="sthref12" href="img_text/purge_data.htm">Description of the illustration ''purge_data.gif''</a><br />
+<br /></li>
+<li>
+<p>Select the kind of data to purge: <span class="bold">Historical Data</span>, <span class="bold">Alert Notices</span>, or both.</p>
+</li>
+<li>
+<p>For Purge Before Date, enter a date that represents the oldest data that you want to keep (using the date-time format shown), or click the calendar icon to select the date from a calendar. All of the selected data before that date will be deleted permanently. You can purge just one kind of data the first time, and then you can purge the other kind using a different purge date.</p>
+</li>
+<li>
+<p>Click <span class="bold">Purge</span>. You are not prompted to confirm this action.</p>
+</li>
+<li>
+<p>Click <span class="bold">OK</span> on the confirmation. You are returned to the Purge Data dialog box to do additional purging, if desired.</p>
+</li>
+</ol>
+<p class="related-topics"><a id="GMNCH310"></a>Related Topics</p>
+<p><a href="#CIHBGIIB">Working with History Information</a></p>
+<p><a href="#CIHFGBGG">Viewing Alerts</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="CIHFGBGG"></a>
+<div id="GMNCH157" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">3.7</span> Viewing Alerts</h2>
+<p>Use the Alerts subtab of the History tab to view a history of alerts. By analyzing alert history, you can determine how often certain conditions occur, so that you can make adjustments to the Oracle GoldenGate configuration or the underlying hosts.</p>
+<p>The alert history goes back in time to the point where it was last purged by the Super Administrator, Administrator, or Power User.</p>
+<p class="subhead2"><a id="GMNCH158"></a>To view alert information:</p>
+<ol>
+<li>
+<p>Select an object in the Navigation Tree. The closer to the root level of the tree that you go, the more alerts that will be displayed, because the selection encompasses alerts for all of the objects within the sub-nodes.</p>
+</li>
+<li>
+<p>View the alerts on the Alerts subtab. This table displays the name of the alert (as specified in the alert definition), the actual notification message (which is the same as that which is sent to email, SNMP, or CLI clients if active), and the time that the alert was generated. You can sort the Alert Name column in ascending or descending order.</p>
+</li>
+</ol>
+<p class="related-topics"><a id="GMNCH309"></a>Related Topics</p>
+<p><a href="interface_overview.htm#CJABFFCI">About the Objects</a></p>
+<p><a href="#CIHHFEJI">Purging Historical Data</a></p>
+<p><a href="alerts.htm#BABGJDHI">About Alerts</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="A1002866311"></a>
+<div id="GMNCH325" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">3.8</span> Running GGSCI Commands</h2>
+<p>Use the GGSCI subtab of the Metrics and Alerts tab to run any supported commands without leaving within Oracle GoldenGate Monitor. Enter the command you want to run with any associated options in the GGSCI Command field the click <span class="bold">Run</span>. The results are displayed for you to review.</p>
+<p>You cannot edit parameter files using GGSCI commands with this subtab.</p>
+<p>The list of unsupported GGSCI Commands follows:</p>
+<ul>
+<li>
+<p><code dir="ltr">sh</code></p>
+</li>
+<li>
+<p><code dir="ltr">edit</code></p>
+</li>
+<li>
+<p><code dir="ltr">view</code></p>
+</li>
+<li>
+<p><code dir="ltr">stop jagent</code></p>
+</li>
+<li>
+<p><code dir="ltr">start jagent</code></p>
+</li>
+<li>
+<p><code dir="ltr">obey</code></p>
+</li>
+<li>
+<p><code dir="ltr">fc</code></p>
+</li>
+<li>
+<p><code dir="ltr">set editor</code></p>
+</li>
+<li>
+<p><code dir="ltr">shell</code></p>
+</li>
+<li>
+<p><code dir="ltr">info marker</code></p>
+</li>
+<li>
+<p><code dir="ltr">edit params</code></p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment43">
+<tr>
+<td class="cellalignment51">
+<table class="cellalignment48">
+<tr>
+<td class="cellalignment47"><a href="interface_overview.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment47"><a href="security.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment53">
+<table class="cellalignment46">
+<tr>
+<td class="cellalignment47"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment47"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

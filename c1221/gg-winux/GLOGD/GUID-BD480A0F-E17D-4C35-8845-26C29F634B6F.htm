@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>FILTER</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2016-08-17T10:30:55Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Logdump Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E66976-03" />
+<meta name="dcterms.isVersionOf" content="GLOGD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-6F09582F-330B-4AED-B07C-51D0FD5E1EE5.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-2FFFBCBF-61C1-4212-BA3A-436584059E98.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GLOGD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F"></a> <span id="PAGE" style="display:none;">40/88</span> <!-- End Header -->
+<a id="GLOGD176"></a><a id="GLOGD175"></a>
+<h1 id="GLOGD-GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F" class="sect1"><span class="enumeration_section">2.25</span> FILTER</h1>
+<div>
+<div class="section">
+<p>Use <code>FILTER</code> to filter the display based on one or more criteria.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>You can string multiple <code>FILTER</code> commands together, separating each one with a semi-colon, as in:</p>
+<pre dir="ltr">
+FILTER INCLUDE FILENAME fin.act*; FILTER RECTYPE 5; FILTER MATCH ALL
+</pre>
+<p>Or...</p>
+<pre dir="ltr">
+FILTER INCLUDE FILENAME $QA01.QAESRC.ACCTN; FILTER SYSKEY 4294967302; FILTER MATCH ALL
+</pre></li>
+<li>
+<p>To avoid unexpected results, avoid stringing filter options together with one <code>FILTER</code> command. For example, the following would be <span class="italic">incorrect</span>:</p>
+<pre dir="ltr">
+FILTER INCLUDE FILENAME fin.act*; RECTYPE 5; MATCH ALL
+</pre>
+<p>Or...</p>
+<pre dir="ltr">
+FILTER INCLUDE FILENAME $QA01.QAESRC.ACCTN; SYSKEY 4294967302
+</pre></li>
+</ul>
+<p>Without arguments, <code>FILTER</code> displays the current filter status (<code>ON</code> or <code>OFF</code>) and any filter criteria that are in effect.</p>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__I1395608">
+<p class="subhead1">Comparison Operators</p>
+<p>For options that take comparison operators, the following standard operators may be used. The absence of an operator implies <code>Equal</code>.</p>
+<div class="tblformal" id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-09D7C95B-AFE0-45FB-9ED4-6159570A2F2A">
+<hr />
+<p class="titleintable">Table 2-9 Filter Option Comparison Operators</p>
+<table class="cellalignment355" title="Filter Option Comparison Operators" summary="This table lists the filter option comparison operators and gives an example of each.">
+<thead align="left">
+<tr>
+<th class="cellalignment356" id="d13208e78">Operator</th>
+<th class="cellalignment357" id="d13208e81">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment356" id="d13208e86" headers="d13208e78">
+<p>Equal</p>
+</td>
+<td class="cellalignment357" headers="d13208e86 d13208e81">
+<p><code>=</code></p>
+<p><code>EQ</code></p>
+<p><code>==</code></p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment356" id="d13208e100" headers="d13208e78">
+<p>Less than</p>
+</td>
+<td class="cellalignment357" headers="d13208e100 d13208e81">
+<pre dir="ltr">
+&lt;
+LT
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment356" id="d13208e111" headers="d13208e78">
+<p>Less than or equal</p>
+</td>
+<td class="cellalignment357" headers="d13208e111 d13208e81">
+<pre dir="ltr">
+&lt;=
+LE
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment356" id="d13208e122" headers="d13208e78">
+<p>Greater than</p>
+</td>
+<td class="cellalignment357" headers="d13208e122 d13208e81">
+<pre dir="ltr">
+&gt;
+GT
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment356" id="d13208e133" headers="d13208e78">
+<p>Greater than or equal</p>
+</td>
+<td class="cellalignment357" headers="d13208e133 d13208e81">
+<pre dir="ltr">
+&gt;=
+GE
+</pre></td>
+</tr>
+<tr>
+<td class="cellalignment356" id="d13208e144" headers="d13208e78">
+<p>Not equal</p>
+</td>
+<td class="cellalignment357" headers="d13208e144 d13208e81">
+<pre dir="ltr">
+&lt;&gt;
+NE
+!=
+</pre></td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Default</p>
+<p>Shows current filter settings</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILTER [INCLUDE] [EXCLUDE] <span class="italic">filter_option</span>
+</pre>
+<p>Where:</p>
+<p><span class="italic"><code>filter_option</code></span> can be one of:</p>
+<pre dir="ltr">
+{
+ANSINAME <span class="italic">name</span> [, <span class="italic">name</span>] |
+AUDITRBA <span class="italic">rba</span> [<span class="italic">comparison_operator</span>] |
+CLEAR {<span class="italic">filter_spec</span> | ALL} |
+CSN | LogCSN [<span class="italic">comparison_operator</span>] [<span class="italic">value</span>]
+ENDTIME <span class="italic">time_string</span> |
+FILENAME <span class="italic">name</span> [, <span class="italic">name</span>] |
+GGSTOKEN <span class="italic">token_name</span> [<span class="italic">comparison_operator</span>] [<span class="italic">token_value</span>] |
+HEX "<span class="italic">hex_string</span>" [<span class="italic">byte_range</span>][, "<span class="italic">hex_string</span>" [<span class="italic">byte_range</span>]] [...] |
+INT16 <span class="italic">16_bit_integer</span> |
+INT32 <span class="italic">32_bit_integer</span> |
+IOTYPE <span class="italic">operation_type</span> [, <span class="italic">operation_type</span>] |
+MATCH {ANY | ALL} |
+OFF |
+ON |
+PROCESS <span class="italic">process_name</span> |
+RBA <span class="italic">byte_address</span> [<span class="italic">comparison_operator</span>] [...] |
+RECLEN <span class="italic">length</span> [<span class="italic">comparison_operator</span>] |
+RECTYPE {<span class="italic">type_number</span> | <span class="italic">type_name</span>} |
+SHOW |
+STARTTIME <span class="italic">time_string</span> |
+STRING [BOTH] [B],<span class="italic">text</span> [       <span class="italic">column_range</span>   ]
+    [[B],<span class="italic">text</span> [<span class="italic">column_range</span>]] [...] |
+SYSKEY <span class="italic">system_key</span> [<span class="italic">comparison_operator</span>] [...] |
+TRANSID <span class="italic">transaction_identifier</span> |
+TRANSIND <span class="italic">indicator</span> [<span class="italic">comparison_operator</span>] |
+TYPE <span class="italic">type</span> |
+UNDOFLAG <span class="italic">type</span> [<span class="italic">comparison_operator</span>] |
+USERTOKEN <span class="italic">token_name</span> [<span class="italic">comparison_operator</span>] [<span class="italic">token_value</span>]
+}
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-9E643026-470D-466E-9830-8BDC2FC0E17C"><!-- --></a><code>ANSINAME</code> <span class="italic"><code>name</code></span> <code>[,</code> <span class="italic"><code>name</code></span><code>]</code></dt>
+<dd>
+<p>Filters based on the ANSI name of a SQL/MX table or a table from a Windows or UNIX source system. For use on NonStop systems. The format for <span class="italic"><code>name</code></span> is:</p>
+<p><span class="italic"><code>catalog.schema.table</code></span></p>
+<p>Up to eight name specifications may be supplied. The command is case-sensitive.</p>
+<p>To filter based on the name of a data file, use the <code>FILENAME</code> option.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-9FEC5118-7E96-4786-8AEA-3608FF69FF60"><!-- --></a><code>AUDITRBA</code> <span class="italic"><code>rba</code></span> <code>[</code><span class="italic"><code>comparison_operator</code></span><code>]</code></dt>
+<dd>
+<p>Filters based on the relative byte address of a commit record. For <span class="italic"><code>comparison_operator</code></span>, see <span class="q">"<a href="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F.htm#GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__I1395608">Comparison Operators</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-CD9EC343-F306-4ADB-949D-0B264C278B2D"><!-- --></a><code>CLEAR {</code><span class="italic"><code>filter_spec</code></span> <code>| ALL}</code></dt>
+<dd>
+<p>Removes filtering criteria.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code>ALL</code> removes all filter criteria.</p>
+</li>
+<li>
+<p><span class="italic"><code>filter_spec</code></span> removes only the specified criterion. Specify any <code>FILTER</code> option, but not the value. The following example is valid:</p>
+<pre dir="ltr">
+FILTER CLEAR STRING
+</pre>
+<p>The following example is not valid:</p>
+<pre dir="ltr">
+FILTER CLEAR STRING "Denver"
+</pre></li>
+</ul>
+<p>An alias for <code>CLEAR</code> is <code>RESET</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-3FF8A978-AB6B-4DCF-9EBD-2CDBCE87AA9F"><!-- --></a><code>CSN | LogCSN [</code><span class="italic"><code>comparison_operator</code></span><code>] [</code><span class="italic"><code>value</code></span><code>]</code></dt>
+<dd>
+<p>Filters based on a commit sequence value.</p>
+<p>For <span class="italic"><code>comparison_operator</code></span>, see <span class="q">"<a href="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F.htm#GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__I1395608">Comparison Operators</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-77FC89D6-E8DF-4938-91CB-2DC75BB8FF61"><!-- --></a><code>ENDTIME time_string</code></dt>
+<dd>
+<p>Ends the filter at the last record written at the specified time. For the time string, use the format of:</p>
+<pre dir="ltr">
+[[<span class="italic">yy</span>]<span class="italic">yy</span>-<span class="italic">mm</span>-<span class="italic">dd</span>] [<span class="italic">hh</span>[:<span class="italic">mm</span>][:<span class="italic">ss</span>]]
+</pre>
+<p>Example:</p>
+<pre dir="ltr">
+ENDTIME 2011-01-31 23:59:59
+</pre>
+<p>This command can be shortened to <code>ENDTS</code> or <code>END</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-FEB9CEE1-0400-4D66-989F-756A5BD3F8E1"><!-- --></a><code>FILENAME</code> <span class="italic"><code>name</code></span> <code>[,</code> <span class="italic"><code>name</code></span><code>]</code></dt>
+<dd>
+<p>Filters based on the name of a SQL table, or a group of names, with the name format being:</p>
+<pre dir="ltr">
+[<span class="italic">catalog</span>.]<span class="italic">owner</span>.<span class="italic">table</span>
+[<span class="italic">catalog</span>.]<span class="italic">owner</span>.<span class="italic">string</span>*
+</pre>
+<p>Also filters on the name of a NonStop data file, or a group of names, with the name format being:</p>
+<pre dir="ltr">
+<span class="italic">volume</span>.<span class="italic">subvolume</span>.<span class="italic">file</span>
+<span class="italic">volume</span>.<span class="italic">subvolume</span>.<span class="italic">string</span>*
+</pre>
+<p>On Windows and UNIX, both types of objects are supported. On NonStop, only viewing NonStop files is supported. To view SQL tables on NonStop, use the <code>ANSINAME</code> option.</p>
+<p><code>FILENAME</code> is case-sensitive on Windows and UNIX systems. If the database requires quote marks around a name If opening a NonStop data file on Windows or UNIX, the file name is converted to upper case. <code>FILENAME</code> can be shortened to <code>FILE</code> or <code>FI</code>.</p>
+<p>Up to eight name specifications may be supplied.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-2CD00A91-5517-493E-9EB7-A6FC90ADC694"><!-- --></a><code>GGSTOKEN</code> <span class="italic"><code>token_name</code></span> <code>[</code><span class="italic"><code>comparison_operator</code></span>] [<span class="italic"><code>token_value</code></span>]</dt>
+<dd>
+<p>Filters based on a specific token in the record header.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For <span class="italic"><code>token_name</code></span>, provide the name of the token, such as <code>TRANSID</code>.</p>
+<p>To view a list of possible tokens and values, see <span class="q">"<a href="GUID-F1255DA2-0738-4E30-B5C8-3D8AEA38CEBD.htm#GUID-F1255DA2-0738-4E30-B5C8-3D8AEA38CEBD">GGSTOKEN</a>"</span>.</p>
+</li>
+<li>
+<p>For <span class="italic"><code>token_value</code></span> provide the actual value for this token that is to be the filter string.</p>
+</li>
+</ul>
+<p>For <span class="italic"><code>comparison_operator</code></span>, see <span class="q">"<a href="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F.htm#GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__I1395608">Comparison Operators</a>"</span></p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-35790396-9C52-4206-A775-B77AA8D1C9D1"><!-- --></a><code>HEX "</code><span class="italic"><code>hex_string</code></span><code>" [</code><span class="italic"><code>byte_range</code></span><code>] [, "</code><span class="italic"><code>hex_string</code></span><code>" [</code><span class="italic"><code>byte_range</code></span><code>]] [...]</code></dt>
+<dd>
+<p>Filters based on a hex string and, optionally, a range of columns. To specify a range of columns, use the format of:</p>
+<pre dir="ltr">
+<span class="italic">start_column</span>:<span class="italic">end_column</span> 
+</pre>
+<p>Example:</p>
+<p><code>10:35</code></p>
+<p>This option allows up to eight hex string and column arguments. Hex strings must be enclosed within quotes.</p>
+<p>Hex filter strings must be in double quotes.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-4744B1EC-9AC1-4210-9F85-B2CC9E04CC00"><!-- --></a><code>INCLUDE</code></dt>
+<dd>
+<p>Specifies that the filter will include the information specified with other options in the current <code>FILTER</code> statement. Can be shortened to <code>INC</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-624C325E-5085-4DDD-968B-44488E95189E"><!-- --></a><code>EXCLUDE</code></dt>
+<dd>
+<p>Specifies that the filter will exclude the information specified with other options in the current <code>FILTER</code> statement. Can be shortened to <code>EXC</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-3A0C3421-B0C5-474B-9DCD-AA6BF60BFA4C"><!-- --></a><code>INT16</code> <span class="italic"><code>16_bit_integer</code></span></dt>
+<dd>
+<p>Filters based on a 16-bit integer. Use with 16-bit processors.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-68795F21-C713-48D5-811D-90F1F9E262AD"><!-- --></a><code>INT32</code> <span class="italic"><code>32_bit_integer</code></span></dt>
+<dd>
+<p>Filters based on a 32-bit integer. Use with 32-bit processors.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-0C09794D-158F-4AA2-8B2F-BC7A570AB948"><!-- --></a><code>IOTYPE</code> <span class="italic"><code>operation_type</code></span> <code>[,</code> <span class="italic"><code>operation_type</code></span><code>]</code></dt>
+<dd>
+<p>Filters based on the type of operation. A list of record types can be viewed with the <code>SHOW RECTYPE</code> command in Logdump. Up to 32 operation types can be specified with <code>IOTYPE</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-F0AF3457-3CFD-42D0-99C5-1C52C0DC8FD4"><!-- --></a><code>MATCH {ANY | ALL}</code></dt>
+<dd>
+<p>Controls filtering response when multiple filters have been specified. Can be shortened to <code>MAT</code> or <code>MA</code>.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code>ANY</code> includes a record for display or counts if the condition matches any of the filter conditions. This is the default.</p>
+</li>
+<li>
+<p><code>ALL</code> includes a record for display or counts only if the condition matches all of the filter conditions.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-6F21AB9B-FA7B-4F0E-A2CE-29E69DADD6F8"><!-- --></a><code>OFF</code></dt>
+<dd>
+<p>Disables record filtering. By default, filtering is disabled. An alias for this option is <code>DISABLE</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-B71F2BBD-C687-4575-872D-24BEE9883E89"><!-- --></a><code>ON</code></dt>
+<dd>
+<p>Enables record filtering. An alias for this option is <code>ENABLE</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-96101016-106B-4671-A77F-B503C8377AB7"><!-- --></a><code>RBA</code> <span class="italic"><code>byte_address</code></span> <code>[</code><span class="italic"><code>comparison_operator</code></span><code>] [...]</code></dt>
+<dd>
+<p>Filters based on a relative byte address. Accepts either a 32-bit or 64-bit value. Up to 32 specifications can be supplied.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-265E7228-F1E7-453C-A884-2EB55ABCC834"><!-- --></a><code>RECLEN</code> <span class="italic"><code>length</code></span> <code>[</code><span class="italic"><code>comparison_operator</code></span>]</dt>
+<dd>
+<p>Filters based on a record length, in bytes. For <span class="italic"><code>comparison_operator</code></span>, see <span class="q">"<a href="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F.htm#GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__I1395608">Comparison Operators</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-CE081663-BBC9-4DB9-9E7C-ED5ED007C54B"><!-- --></a><code>RECTYPE {</code><span class="italic"><code>type_number</code></span> <code>|</code> <span class="italic"><code>type_name</code></span>}</dt>
+<dd>
+<p>Filters based on the type of record. Can be either of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The number assigned to the record type.</p>
+<pre dir="ltr">
+FILTER RECTYPE 10
+</pre></li>
+<li>
+<p>The name of the record type.</p>
+<pre dir="ltr">
+FILTER RECTYPE Update
+</pre></li>
+</ul>
+<p>To view the record type names and numbers, issue the <code>SHOW RECTYPE</code> command. (See <span class="q">"<a href="GUID-C9C9A23E-F517-426C-A674-22AD4712DE2A.htm#GUID-C9C9A23E-F517-426C-A674-22AD4712DE2A">SHOW</a>"</span>.)</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-77240B6A-4A04-4541-A5EB-05F74E8B9346"><!-- --></a><code>SHOW</code></dt>
+<dd>
+<p>Displays filter settings. Same as using <code>FILTER</code> without any options.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-B770A840-082B-46BE-A7B5-7404688D982C"><!-- --></a><code>STARTTIME</code> <span class="italic"><code>time_string</code></span></dt>
+<dd>
+<p>Starts the filter with the first record written at the specified time. For the time string, use the format of:</p>
+<pre dir="ltr">
+[[<span class="italic">yy</span>]<span class="italic">yy</span>-<span class="italic">mm</span>-<span class="italic">dd</span>] [<span class="italic">hh</span>[:<span class="italic">mm</span>][:<span class="italic">ss</span>]] 
+</pre>
+<p>Example:</p>
+<pre dir="ltr">
+STARTTIME 2011-01-01 00:00:00
+</pre>
+<p>Can be shortened to <code>STARTTS</code> or <code>START</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-1BC88EEC-9BCC-40A5-89DB-A7D144D76632"><!-- --></a><code>STRING [BOTH] [B], "</code><span class="italic"><code>text</code></span><code>" [</code><span class="italic"><code>column_range</code></span><code>] [[B],</code> <span class="italic"><code>text</code></span> <code>[</code><span class="italic"><code>column_range</code></span><code>]] [...]</code></dt>
+<dd>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code>text</code></span> filters based on a string. Enclose the string within double quotes.</p>
+</li>
+<li>
+<p><span class="italic"><code>column_range</code></span> filters based on a range of columns. Use the format of:</p>
+<p><span class="italic"><code>start_column</code></span>:<span class="italic"><code>end_column</code></span></p>
+<p>Example:</p>
+<pre dir="ltr">
+10:35
+</pre></li>
+<li>
+<p><code>BOTH</code> filters on both a string and a column range.</p>
+</li>
+<li>
+<p><code>[B]</code> specifies a case-insensitive match. You can match up to eight string and column arguments.</p>
+</li>
+</ul>
+<p>If the trail data is EBCDIC, issue the <code>EBCDICDATA ON</code> or <code>ASCIIDATA OFF</code> command before using <code>FILTER STRING</code> to ensure the correct matching.</p>
+<p><code>STRING</code> can be shortened to <code>STR</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-748D5336-3549-43DC-989E-4B28D9DB5B58"><!-- --></a><code>SYSKEY</code> <span class="italic"><code>system_key</code></span> <code>[</code><span class="italic"><code>comparison_operator</code></span><code>] [...]</code></dt>
+<dd>
+<p>Filters based on a NonStop source key. Accepts either a 32-bit or 64-bit value. Up to 32 specifications can be supplied.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-99F7E450-D015-4756-A85A-0DF2A009D458"><!-- --></a><code>TRANSIND</code> <span class="italic"><code>indicator</code></span> <code>[</code><span class="italic"><code>comparison_operator</code></span>]</dt>
+<dd>
+<p>Filters based on the <code>TransInd</code> field of the record header. Valid values:</p>
+<p><tt>0</tt> = start of transaction</p>
+<p><tt>1</tt> = middle of transaction</p>
+<p><tt>2</tt> = end of transaction</p>
+<p><tt>3</tt> = only record in transaction</p>
+<p>For example, to filter for the end of a transaction, use the following command, including the spaces in the syntax:</p>
+<pre dir="ltr">
+FILTER INCLUDE TransInd &gt; = 2
+</pre>
+<p>For <span class="italic"><code>comparison_operator</code></span>, see <span class="q">"<a href="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F.htm#GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__I1395608">Comparison Operators</a>"</span></p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-9F2F962E-10AD-455C-81B4-038559A1EF51"><!-- --></a><code>TRANSID '</code><span class="italic"><code>transaction_identifier</code></span>'</dt>
+<dd>
+<p>Filters on the TMF transaction identifier when reading a TMF trail, for example:</p>
+<pre dir="ltr">
+FILTER INCLUDE TRANSID \GGQA(2).0.12792182.
+</pre></dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-217769AF-1785-4F31-A1C9-DD5A5C104157"><!-- --></a><code>UNDOFLAG</code> <span class="italic"><code>type</code></span> <code>[</code><span class="italic"><code>comparison_operator</code></span><code>]</code></dt>
+<dd>
+<p>Filters based on the NonStop undo flag. The undo flag is set for records that are undone when a TMF transaction is aborted. Normally, <code>UndoFlag</code> is set to zero, but if the record is the backout of a previously successful operation, then <code>UndoFlag</code> will be set to 1. An undo that is performed by the disc process because of a constraint violation is not marked as an undo.</p>
+<p>For <span class="italic"><code>comparison_operator</code></span>, see <span class="q">"<a href="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F.htm#GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__I1395608">Comparison Operators</a>"</span></p>
+</dd>
+<dt class="dlterm"><a id="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__GUID-3BE919D4-D5BC-48F2-A31D-C9CED90860F6"><!-- --></a><code>USERTOKEN</code> <span class="italic"><code>token_name</code></span> <code>[</code><span class="italic"><code>comparison_operator</code></span><code>] [</code><span class="italic"><code>token_value</code></span><code>]</code></dt>
+<dd>
+<p>Filters based on a specific user token in the trail file header.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code>token_name</code></span> is the name of any token that is defined with the <code>TOKENS</code> clause of a <code>TABLE</code> statement of the Extract parameter file. It is not case-sensitive.</p>
+</li>
+<li>
+<p><span class="italic"><code>token_value</code></span> is either a constant that is enclosed within double quotes or the result of an column-conversion function, depending on what was specified in the <code>TOKENS</code> clause for <span class="italic"><code>token_name</code></span>.</p>
+</li>
+<li>
+<p>For <span class="italic"><code>comparison_operator</code></span>, see <span class="q">"<a href="GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F.htm#GUID-BD480A0F-E17D-4C35-8845-26C29F634B6F__I1395608">Comparison Operators</a>"</span></p>
+</li>
+</ul>
+</dd>
+</dl>
+<p>The following shows filter options modified by comparison operators.</p>
+<pre dir="ltr">
+FILTER INCLUDE RECLEN &gt; 400
+FILTER INCLUDE RECLEN &lt; 200
+FILTER INCLUDE TRANSIND &lt;&gt; 1
+FILTER INCLUDE SYSKEY &gt; 202172700557313
+</pre>
+<p>The following filters for a data file name and for a relative key 19446, which has a hex value of 00004bf6. Because <code>MATCH ALL</code> is used, a record must meet all of the filter specifications to be included in the filter.</p>
+<pre dir="ltr">
+FILTER INCLUDE FILENAME $QA01.QAESRC.ACCT*
+FILTER INCLUDE HEX "00004bf6" 0:3
+FILTER MATCH ALL
+</pre>
+<p>The following filters for tables that start with <code>ACC</code> except for the <code>ACCDET</code> table, and for records that contain a timestamp between the specified start and stop times. By default, if a record matches any of the <code>INCLUDE</code> specifications, it is included in the filter.</p>
+<pre dir="ltr">
+FILTER INCLUDE FILENAME SALES.ACC*
+FILTER EXCLUDE FILENAME SALES.ACCDET
+FILTER INCLUDE STARTTIME 2011-01-11 17:00:00
+FILTER INCLUDE ENDTIME 2011-01-11 19:00:00
+</pre>
+<p>The following shows filter options with multiple specifications. By default, a record that matches any of these specifications will be included in the filter. Note that in the <code>STRING</code> filter, two of the criteria are not case-sensitive, while one is, and the filter is confined to a column range.</p>
+<pre dir="ltr">
+FILTER INCLUDE IOTYPE insert,update,delete
+FILTER INCLUDE STRING b"String1" "string2" b"String3" 25:50
+FILTER INCLUDE FILENAME $QA01.QAESRC.ACCT1, $QA01.QAESRC.ACCT2, $QA01.QAESRC.ACCT3
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment344">
+<tr>
+<td class="cellalignment351">
+<table class="cellalignment349">
+<tr>
+<td class="cellalignment348"><a href="GUID-6F09582F-330B-4AED-B07C-51D0FD5E1EE5.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment348"><a href="GUID-2FFFBCBF-61C1-4212-BA3A-436584059E98.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment353">
+<table class="cellalignment347">
+<tr>
+<td class="cellalignment348"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment348"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

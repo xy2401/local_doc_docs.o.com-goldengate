@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>4 Preparing the Transaction Logs for Oracle GoldenGate</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This section contains information that helps you configure database settings and supplemental logging to support capture of source transaction data by Oracle GoldenGate." />
+<meta name="dcterms.created" content="2015-05-21T9:28:44Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for SQL Server" />
+<meta name="dcterms.identifier" content="E29288-06" />
+<meta name="dcterms.isVersionOf" content="GIMSS" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="setup_preparation.htm" title="Previous" type="text/html" />
+<link rel="Next" href="uninstalling.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIMSS.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIMSS.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIMSS.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">7/9</span>
+<!-- End Header -->
+<div id="GIMSS227" class="chapter"><a id="CBDDHGFF"></a>
+<h1 class="chapter"><span class="secnum">4</span> Preparing the Transaction Logs for Oracle GoldenGate</h1>
+<p><a id="GIMSS249"></a>This section contains information that helps you configure database settings and supplemental logging to support capture of source transaction data by Oracle GoldenGate.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#CBDDCDAD">Section 4.1, "Setting the Database to Full Recovery Model"</a></p>
+</li>
+<li>
+<p><a href="#CBDCICJJ">Section 4.2, "Backing Up the Transaction Log"</a></p>
+</li>
+<li>
+<p><a href="#CBDDJGCB">Section 4.3, "Retaining the Log Backups"</a></p>
+</li>
+<li>
+<p><a href="#CBDGDBGB">Section 4.4, "Enabling Supplemental Logging"</a></p>
+</li>
+<li>
+<p><a href="#CBDBIJIG">Section 4.5, "Managing the Secondary Truncation Point"</a></p>
+</li>
+<li>
+<p><a href="#CBDBDDGF">Section 4.6, "Making a Full Database Backup Before You Start Oracle GoldenGate"</a></p>
+</li>
+</ul>
+<a id="CBDDCDAD"></a>
+<div id="GIMSS228" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.1</span> Setting the Database to Full Recovery Model</h2>
+<p>Oracle GoldenGate requires a SQL Server source database to be set to the full recovery model.</p>
+<p><a id="GIMSS229"></a>To verify or set the recovery model:</p>
+<ol>
+<li>
+<p>Connect to the SQL Server instance with SQL Server Management Studio for SQL Server.</p>
+</li>
+<li>
+<p>Expand the Databases folder.</p>
+</li>
+<li>
+<p>Right-click the source database, and then select <span class="bold">Properties</span>.</p>
+</li>
+<li>
+<p>Select the <span class="bold">Options</span> tab.</p>
+</li>
+<li>
+<p>Under <span class="bold">Recovery</span>, set <span class="gui-object-action">Model</span> to <span class="bold">Full if not already</span>.</p>
+</li>
+<li>
+<p>If the database was in <span class="gui-object-action">Simple</span> recovery or never had a <span class="gui-object-action">Full</span> database backup, take a <span class="gui-object-action">Full</span> database backup before starting Extract. See <a href="#CBDBDDGF">Section 4.6, "Making a Full Database Backup Before You Start Oracle GoldenGate."</a></p>
+</li>
+<li>
+<p>Click <span class="bold">OK</span>.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="CBDCICJJ"></a>
+<div id="GIMSS230" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.2</span> Backing Up the Transaction Log</h2>
+<p>Depending on how you configure the management of the secondary truncation-point (see <a href="#CBDBIJIG">Section 4.5</a>), the Extract process may occasionally require access to a log backup on the source system. This happens when the required log records are no longer available in the online log and have been moved to log backups.</p>
+<p>Oracle GoldenGate requires the log backup files on a source system to meet the following conditions:</p>
+<ul>
+<li>
+<p>The log backup file must remain in the original location where the backup was made. If the backup is moved, see the <code dir="ltr">ALTARCHIVELOGDEST</code> option in the <code dir="ltr">TRANLOGOPTIONS</code> section of the <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> to configure this option. This parameter enables Oracle GoldenGate to search for the backup file in a different location, but must only be used when the backup files are not in the original location.</p>
+</li>
+<li>
+<p>The backup must be made to a <code dir="ltr">DISK</code> device.</p>
+</li>
+<li>
+<p>The backup must be a native SQL Server backup made by issuing the <code dir="ltr">BACKUP LOG</code> command (or the corresponding GUI command) and can be compressed using the native SQL Server compression features using the native SQL server compression feature (SQL Server 2012 only). Third-party log backup tools are not supported.</p>
+</li>
+<li>
+<p>Do not overwrite backup files to the same name as old ones.</p>
+</li>
+<li>
+<p>Striped log backups are not supported.</p>
+</li>
+</ul>
+<p>For optimal performance of the Extract process, do the following:</p>
+<ul>
+<li>
+<p>Make only one log backup per backup file.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="CBDDJGCB"></a>
+<div id="GIMSS231" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.3</span> Retaining the Log Backups</h2>
+<p>Retain enough log backups so that if you stop Extract or there is an unplanned outage, Extract can start again from its checkpoints. Extract must have access to the data in the transaction log or a log backup that contains the start of the oldest uncommitted unit of work, and all log backups thereafter.</p>
+<p>If data that Extract needs during processing is not retained, either in online logs or in the backups, one of the following corrective actions might be required:</p>
+<ul>
+<li>
+<p>Alter Extract to capture from a later point in time for which log data is available (and accept possible data loss on the target).</p>
+</li>
+<li>
+<p>Resynchronize the source and target tables, and then start the Oracle GoldenGate environment over again.</p>
+</li>
+</ul>
+<p>To enable Extract to maintain without user intervention the truncation point so that it always has the logs it needs, see <a href="#CBDIGGGB">Section 4.5.3, "Keeping the Secondary Truncation Point in Sync With Extract."</a></p>
+<p>To determine where the Extract checkpoints are, use the <code dir="ltr">INFO EXTRACT</code> command. For more information, see <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="CBDGDBGB"></a>
+<div id="GIMSS232" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.4</span> Enabling Supplemental Logging</h2>
+<p>These instructions apply to new installations of Oracle GoldenGate for all supported SQL Server versions. You will enable supplemental logging with the ADD <code dir="ltr">TRANDATA</code> command so that Extract can capture the information that is required to reconstruct SQL operations on the target. This is more information than what SQL Server logs by default.</p>
+<p><code dir="ltr">ADD TRANDATA</code> must be issued for all tables that will be replicated with Oracle GoldenGate. <code dir="ltr">ADD TRANDATA</code> enables Change Data Capture (CDC) and creates a minimal Change Data Capture on the specified table.</p>
+<ul>
+<li>
+<p>Oracle GoldenGate does not use the CDC tables other than as necessary to enable supplemental logging.</p>
+</li>
+<li>
+<p>As part of enabling CDC, SQL Server creates two jobs per database: <code dir="ltr"><span class="codeinlineitalic">dbname</span></code><code dir="ltr">_capture</code> and <code dir="ltr"><span class="codeinlineitalic">dbname</span></code><code dir="ltr">_cleanup</code>. The <code dir="ltr"><span class="codeinlineitalic">dbname</span></code><code dir="ltr">_capture</code> job adjusts the secondary truncation point and captures data from the log to store in the CDC tables. The <code dir="ltr"><span class="codeinlineitalic">dbname</span></code><code dir="ltr">_cleanup</code> job ages and deletes data captured by CDC.</p>
+</li>
+<li>
+<p>Using the <code dir="ltr">TRANLOGOPTIONS</code> parameter with the <code dir="ltr">MANAGESECONDARYTRUNCATIONPOINT</code> or <code dir="ltr">ACTIVEMANAGESECONDARYTRUNCATIONPOINT</code> option for Extract removes the <code dir="ltr"><span class="codeinlineitalic">dbname</span></code><code dir="ltr">_capture</code> job, preventing the overhead of the job loading the CDC tables.</p>
+</li>
+<li>
+<p>The alternative (using <code dir="ltr">TRANLOGOPTIONS</code> with <code dir="ltr">NOMANAGESECONDARYTRUNCATIONPOINT</code>) requires the SQL Server Agent to be running and requires the <code dir="ltr"><span class="codeinlineitalic">dbname</span></code><code dir="ltr">_capture</code> and <code dir="ltr"><span class="codeinlineitalic">dbname</span></code><code dir="ltr">_cleanup</code> jobs to be retained. You will probably need to adjust the <code dir="ltr"><span class="codeinlineitalic">dbname</span></code><code dir="ltr">_cleanup</code> data retention period if the default of three days is not acceptable for storage concerns.</p>
+</li>
+<li>
+<p>For more information on <code dir="ltr">TRANLOGOPTIONS</code>, see<a href="#CBDBIJIG">Section 4.5, "Managing the Secondary Truncation Point."</a></p>
+</li>
+</ul>
+<p class="subhead2"><a id="GIMSS2350"></a>To enable supplemental logging:</p>
+<p>This procedure requires a database user who is a member of the SQL Server System Administrators (<code dir="ltr">sysadmin</code>) role.</p>
+<ol>
+<li>
+<p>On the source system, run GGSCI.</p>
+</li>
+<li>
+<p>Issue the following command to log into the database.</p>
+<pre dir="ltr">
+DBLOGIN SOURCEDB <span class="codeinlineitalic">DSN</span>[, {USERID <span class="codeinlineitalic">user</span>, PASSWORD <span class="codeinlineitalic">password</span> | USERIDALIAS <span class="codeinlineitalic">alias</span>}]
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr">SOURCEDB</code> <code dir="ltr"><span class="codeinlineitalic">DSN</span></code> is the name of the SQL Server data source.</p>
+</li>
+<li>
+<p><code dir="ltr">USERID</code> <code dir="ltr"><span class="codeinlineitalic">user</span></code> is the Extract login and <code dir="ltr">PASSWORD</code> <code dir="ltr"><span class="codeinlineitalic">password</span></code> is the password that is required if Extract uses SQL Server authentication. Alternatively, <code dir="ltr">USERIDALIAS</code> <code dir="ltr"><span class="codeinlineitalic">alias</span></code> is the alias for the credentials if they are stored in a credentials store. If using <code dir="ltr">DBLOGIN</code> with a DSN that is using Integrated Windows authentication, the connection to the database for the GGSCI session will be that of the user running GGSCI. In order to issue <code dir="ltr">ADD TRANDATA</code> or <code dir="ltr">DELETE TRANDATA</code>, this user must be a member of the SQL Server <code dir="ltr">sysadmin</code> server role.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>In GGSCI, issue the following command for each table that is, or will be, in the Extract configuration. You can use a wildcard to specify multiple table names.</p>
+<pre dir="ltr">
+ADD TRANDATA <span class="codeinlineitalic">owner.table</span>
+</pre></li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="CBDBIJIG"></a>
+<div id="GIMSS233" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.5</span> Managing the Secondary Truncation Point</h2>
+<p>When you enable supplemental logging with the <code dir="ltr">ADD TRANDATA</code> command for at least one table in a SQL Server database, a secondary truncation point is created in the transaction log that has to be moved for log space to be released as needed, following subsequent log backups. Use the <code dir="ltr">TRANLOGOPTIONS</code> parameter to control how the secondary truncation point is managed. This is a required parameter and it gives you the following options for managing the secondary truncation point:</p>
+<ul>
+<li>
+<p><a href="#CBDFGICA">Section 4.5.1, "Oracle GoldenGate Manages the Secondary Truncation Point"</a></p>
+</li>
+<li>
+<p><a href="#CBDECDGB">Section 4.5.2, "SQL Server Manages the Secondary Truncation Point"</a></p>
+</li>
+<li>
+<p><a href="#CBDIGGGB">Section 4.5.3, "Keeping the Secondary Truncation Point in Sync With Extract"</a></p>
+</li>
+</ul>
+<a id="CBDFGICA"></a>
+<div id="GIMSS2343" class="sect2">
+<h3 class="sect2"><span class="secnum">4.5.1</span> Oracle GoldenGate Manages the Secondary Truncation Point</h3>
+<p>Use <code dir="ltr">TRANLOGOPTIONS</code> with the <code dir="ltr">MANAGESECONDARYTRUNCATIONPOINT</code> option if Extract <span class="italic">will not</span> be running concurrently (for the same source database) with SQL Server transactional replication and/or CDC that is configured for applications other than Oracle GoldenGate.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Using <code dir="ltr">TRANLOGOPTIONS</code> <code dir="ltr">MANAGESECONDARYTRUNCATIONPOINT</code> for Extract when either SQL Server transactional replication and/or CDC for applications other than Oracle GoldenGate are running at the same time causes the SQL Server log reader agent or CDC capture job to fail.</div>
+<p><code dir="ltr">MANAGESECONDARYTRUNCATIONPOINT</code> has the following advantages:</p>
+<ul>
+<li>
+<p>Extract manages the secondary truncation point. Extract moves the secondary truncation point forward at a defined interval by issuing the following T-SQL statement:</p>
+<p><code dir="ltr">EXEC sp_repldone @xactid = NULL, @xact_segno = NULL, @numtrans = 0, @time = 0, @reset = 1</code></p>
+</li>
+<li>
+<p>The logs are routinely truncated to conserve storage space, but Extract is able to capture from the transaction log backups to capture data it did not process by the time of the truncation point. This ability requires the logs to be backed up only with a native SQL Server backup utility. Third-party backup software cannot be used in this scenario.</p>
+</li>
+</ul>
+<p><code dir="ltr">MANAGESECONDARYTRUNCATIONPOINT</code> also routinely checks and deletes the CDC capture job. This prevents change data from being collected for all of the tables in the database, resulting in:</p>
+<ul>
+<li>
+<p>better performance by Extract</p>
+</li>
+<li>
+<p>less storage space used by captured data in the CDC tables</p>
+</li>
+<li>
+<p>fewer records in the transaction log</p>
+</li>
+</ul>
+<p>If Extract manages the secondary truncation point but is stopped for a longer period of time than the log backup frequency, Extract cannot free up the data in the transaction log after a log backup. This causes the transaction log to grow. To allow space to be freed from the log after backups, you need to explicitly mark the data as 'distributed'. Before starting this Extract group again, retain all of the log backups that contain data that still needs to be processed by performing the following steps:</p>
+<ol>
+<li>
+<p>To determine the log-read checkpoint that shows the oldest log that Extract needs, use the <code dir="ltr">INFO EXTRACT</code> command with the <code dir="ltr">SHOWCH</code> option in <code dir="ltr">GGSCI</code>.</p>
+<pre dir="ltr">
+INFO EXTRACT <span class="codeinlineitalic">group</span>, SHOWCH
+</pre></li>
+<li>
+<p>Either manually or from within a SQL Server Agent job, move the secondary truncation point by issuing the following T-SQL command against the source database. Run this command approximately every minute until you start Extract.</p>
+<pre dir="ltr">
+EXEC sp_repldone @xactid = NULL, @xact_segno = NULL, @numtrans = 0, @time = 0, @reset = 1
+</pre></li>
+<li>
+<p>Stop and disable the SQL Server Agent job or disconnect the query session prior to restarting Extract.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="CBDECDGB"></a>
+<div id="GIMSS239" class="sect2">
+<h3 class="sect2"><span class="secnum">4.5.2</span> SQL Server Manages the Secondary Truncation Point</h3>
+<p>Use <code dir="ltr">TRANLOGOPTIONS</code> with the <code dir="ltr">NOMANAGESECONDARYTRUNCATIONPOINT</code> option if Extract will run concurrently (for the same source database) with SQL Server transactional replication and/or CDC that is configured for applications other than Oracle GoldenGate. SQL Server will manage the secondary truncation point.</p>
+</div>
+<!-- class="sect2" -->
+<a id="CBDIGGGB"></a>
+<div id="GIMSS238" class="sect2">
+<h3 class="sect2"><span class="secnum">4.5.3</span> Keeping the Secondary Truncation Point in Sync With Extract</h3>
+<p>Use <code dir="ltr">TRANLOGOPTIONS</code> with the <code dir="ltr">ACTIVESECONDARYTRUNCATIONPOINT</code> option to keep the secondary truncation point in sync with Extract. The advantage of this method is that you can use third-party transaction-log backup software without concern that Extract may need to access the log backups to retrieve unprocessed transaction data.</p>
+<p><code dir="ltr">ACTIVESECONDARYTRUNCATIONPOINT</code> prevents the truncation of the active log until Extract is finished capturing the data that is marked for truncation. Because no online data is ever missed, Extract is never required to read the backup logs.</p>
+<p>Using <code dir="ltr">ACTIVESECONDARYTRUNCATIONPOINT</code> may cause larger log files if Extract has any significant lag. This happens because transaction log backups will not immediately truncate the logs. Truncation occurs only after Extract has finished capturing the data. Thus, you may need to adjust your storage parameters to accommodate the increased log size.</p>
+<p>If you use this option, only one Extract group can be allowed to capture from the source database. Using multiple Extract groups risks severe data loss, and this condition can be resolved only by a full reinstantiation of the target data.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CBDBDDGF"></a>
+<div id="GIMSS240" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.6</span> Making a Full Database Backup Before You Start Oracle GoldenGate</h2>
+<p>These instructions are for making a full database backup according to the Oracle GoldenGate requirements listed in <a href="system_requirements.htm#BABCGIEG">System Requirements and Preinstallation&nbsp;Instructions</a>.</p>
+<p>To make a full backup of the database:</p>
+<ol>
+<li>
+<p>Configure Oracle GoldenGate to your requirements, and then return to this procedure when you are ready to begin initial synchronization and start change replication. To configure Oracle GoldenGate, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Connect to the SQL Server instance with SQL Server Management Studio.</p>
+</li>
+<li>
+<p>Expand the <span class="bold">Databases</span> folder.</p>
+</li>
+<li>
+<p>Right click the source database name, and then select <span class="gui-object-action">All Tasks</span>, then <span class="gui-object-action">Backup Database</span>.</p>
+</li>
+<li>
+<p>Select <span class="bold">Database - Complete</span>. This option makes a full database backup and ensures that no transaction information is lost when Oracle GoldenGate starts.</p>
+</li>
+<li>
+<p>Under <span class="bold">Destination</span>, click <span class="bold">Add</span> to specify the backup file name and location.</p>
+</li>
+<li>
+<p>Click <span class="bold">OK</span>. The backup file is added to the <span class="bold">Destination</span> list box in the <span class="bold">SQL Server Backup</span> dialog box.</p>
+</li>
+<li>
+<p>Click <span class="bold">OK</span> to start the backup.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8"><table class="cellalignment12">
+<tr>
+<td class="cellalignment5"><a href="setup_preparation.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment5"><a href="uninstalling.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment11">
+<tr>
+<td class="cellalignment5"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

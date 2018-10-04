@@ -1,0 +1,2622 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Field Conversion Functions</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.24" />
+<meta name="description" content="This chapter explains the field conversion functions that Oracle GoldenGate supplies." />
+<meta name="dcterms.created" content="2014-08-05T11:23:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate for Mainframe Reference Guide for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E28905-01" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="collector_parameters.htm" title="Previous" type="text/html" />
+<link rel="Next" href="defgen_arguments.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E28905-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">8/13</span> <!-- End Header --><a id="sthref1506"></a>
+<h1 class="chapter"><span class="secnum">4</span> Field Conversion Functions</h1>
+<p>This chapter explains the field conversion functions that Oracle GoldenGate supplies.</p>
+<p>Using field conversion functions, you can manipulate numbers, strings and source columns or field values into the appropriate format for target columns. Oracle GoldenGate supplies field conversion functions for:</p>
+<ul>
+<li>
+<p>Working with columns</p>
+</li>
+<li>
+<p>Working with dates</p>
+</li>
+<li>
+<p>Working with numbers and arithmetic expressions</p>
+</li>
+<li>
+<p>Working with conditional statements</p>
+</li>
+<li>
+<p>Working with character and numerical strings</p>
+</li>
+<li>
+<p>Working with stored procedures</p>
+</li>
+<li>
+<p>Returning error and lag information</p>
+</li>
+</ul>
+<a id="i961692"></a>
+<div class="sect1">
+<h2 class="sect1">Overview of Functions</h2>
+<p>This section provides an overview of Oracle GoldenGate functions for the NonStop platform.</p>
+<div class="sect2"><a id="sthref1507"></a>
+<h3 class="sect2">Function Syntax</h3>
+<p>Field conversion functions use the following general syntax:</p>
+<pre>
+@FUNCTION (expression)
+</pre>
+<dl>
+<dt><code>@FUNCTION</code></dt>
+<dd>
+<p>The function name, such as <code>@DATE</code> or <code>@IF</code>.</p>
+</dd>
+<dt><code>(expression)</code></dt>
+<dd>
+<p>The operations for the function to perform. The operations depend on the function.</p>
+</dd>
+</dl>
+</div>
+<!-- class="sect2" -->
+<a id="i961697"></a>
+<div class="sect2">
+<h3 class="sect2">Function Summaries</h3>
+<p>This section summarizes the Oracle GoldenGate functions for NonStop, based on their functionality. An alphabetized reference of the functions follows this section.</p>
+<div class="sect3"><a id="sthref1508"></a>
+<h4 class="sect3">Working with Columns</h4>
+<div class="inftblhruleinformal">
+<table class="cellalignment20" summary="This table lists the name and description for functions that work with columns" dir="ltr">
+<thead>
+<tr class="cellalignment11">
+<th class="cellalignment21" id="r1c1-t2">Function</th>
+<th class="cellalignment21" id="r1c2-t2">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r2c1-t2" headers="r1c1-t2">
+<pre>
+<a href="#i935192">COLSTAT</a>
+</pre></td>
+<td class="cellalignment17" headers="r2c1-t2 r1c2-t2">
+<p>Returns whether a column is missing, <code>NULL</code> or an invalid value.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r3c1-t2" headers="r1c1-t2">
+<pre>
+<a href="#i935199">COLTEST</a>
+</pre></td>
+<td class="cellalignment17" headers="r3c1-t2 r1c2-t2">
+<p>Tests whether a column is present in a record, missing, <code>NULL</code> or an invalid value.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r4c1-t2" headers="r1c1-t2">
+<pre>
+<a href="#i936084">VALONEOF</a>
+</pre></td>
+<td class="cellalignment17" headers="r4c1-t2 r1c2-t2">
+<p>Returns <code>TRUE</code> if a column contains one of a list of values.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect3" -->
+<div class="sect3"><a id="sthref1509"></a>
+<h4 class="sect3">Working with Dates</h4>
+<div class="inftblhruleinformal">
+<table class="cellalignment20" summary="This table lists the name and description for functions that work with dates" dir="ltr">
+<thead>
+<tr class="cellalignment11">
+<th class="cellalignment21" id="r1c1-t3">Function</th>
+<th class="cellalignment21" id="r1c2-t3">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r2c1-t3" headers="r1c1-t3">
+<pre>
+<a href="#i935250">DATE</a>
+</pre></td>
+<td class="cellalignment17" headers="r2c1-t3 r1c2-t3">
+<p>Returns a date from a variety of sources in a variety of output formats.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r3c1-t3" headers="r1c1-t3">
+<pre>
+<a href="#i935422">DATEDIFF</a>
+</pre></td>
+<td class="cellalignment17" headers="r3c1-t3 r1c2-t3">
+<p>Returns the difference between two dates or datetimes, in days or seconds</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r4c1-t3" headers="r1c1-t3">
+<pre>
+<a href="#i935448">DATENOW</a>
+</pre></td>
+<td class="cellalignment17" headers="r4c1-t3 r1c2-t3">
+<p>Returns the current date and time.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect3" -->
+<div class="sect3"><a id="sthref1510"></a>
+<h4 class="sect3">Working with Numbers and Arithmetic Expressions</h4>
+<div class="inftblhruleinformal">
+<table class="cellalignment20" summary="This table lists the name and description for functions that work with numbers and arithmetic expressions" dir="ltr">
+<thead>
+<tr class="cellalignment11">
+<th class="cellalignment21" id="r1c1-t4">Function</th>
+<th class="cellalignment21" id="r1c2-t4">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r2c1-t4" headers="r1c1-t4">
+<pre>
+<a href="#i997741">COMPUTE</a>
+</pre></td>
+<td class="cellalignment17" headers="r2c1-t4 r1c2-t4">
+<p>Returns the result of an arithmetic expression.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r3c1-t4" headers="r1c1-t4">
+<pre>
+<a href="#CJAEFADF">CONVERTFLOAT</a>
+</pre></td>
+<td class="cellalignment17" headers="r3c1-t4 r1c2-t4">
+<p>Converts Tandem float numbers from the HP NonStop to and from the IEEE format used for Windows and UNIX.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect3" -->
+<div class="sect3"><a id="sthref1511"></a>
+<h4 class="sect3">Working with Conditional Statements</h4>
+<div class="inftblhruleinformal">
+<table class="cellalignment20" summary="This table lists the name and description for functions that work with conditional statements" dir="ltr">
+<thead>
+<tr class="cellalignment11">
+<th class="cellalignment21" id="r1c1-t5">Function</th>
+<th class="cellalignment21" id="r1c2-t5">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r2c1-t5" headers="r1c1-t5">
+<pre>
+<a href="#i995119">CASE</a>
+</pre></td>
+<td class="cellalignment17" headers="r2c1-t5 r1c2-t5">
+<p>Selects a value depending on a series of value tests.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r3c1-t5" headers="r1c1-t5">
+<pre>
+<a href="#i935453">EVAL</a>
+</pre></td>
+<td class="cellalignment17" headers="r3c1-t5 r1c2-t5">
+<p>Selects a value depending on a series of independent tests.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r4c1-t5" headers="r1c1-t5">
+<pre>
+<a href="#i997917">GETVAL</a>
+</pre></td>
+<td class="cellalignment17" headers="r4c1-t5 r1c2-t5">
+<p>Extracts parameters from a stored procedure as input to a <code>FILTER</code> or <code>COLMAP</code> clause.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r5c1-t5" headers="r1c1-t5">
+<pre>
+<a href="#i935707">IF</a>
+</pre></td>
+<td class="cellalignment17" headers="r5c1-t5 r1c2-t5">
+<p>Selects one of two values depending on whether a conditional statement returns <code>TRUE</code> or <code>FALSE</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect3" -->
+<div class="sect3"><a id="sthref1512"></a>
+<h4 class="sect3">Working with Character and Numeric Strings</h4>
+<div class="inftblhruleinformal">
+<table class="cellalignment20" summary="This table lists the name and description for functions that work with character and numeric strings" dir="ltr">
+<thead>
+<tr class="cellalignment11">
+<th class="cellalignment21" id="r1c1-t6">Function</th>
+<th class="cellalignment21" id="r1c2-t6">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r2c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i992039">BINARY</a>
+</pre></td>
+<td class="cellalignment17" headers="r2c1-t6 r1c2-t6">
+<p>Keeps source data in its original binary format in the target column when the source column is defined as a character column.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r3c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i993342">HIGHVAL | LOWVAL</a>
+</pre></td>
+<td class="cellalignment17" headers="r3c1-t6 r1c2-t6">
+<p>Emulates the COBOL high and low value functions. Sets COBOL-type group level to either a high or low values when specified conditions are met.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r4c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i935745">NUMBIN</a><a href="#i935745">NUMBIN</a>
+</pre></td>
+<td class="cellalignment17" headers="r4c1-t6 r1c2-t6">
+<p>Converts a binary string into a number (for example, a 48-bit Himalaya timestamp).</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r5c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i935750">NUMSTR</a>
+</pre></td>
+<td class="cellalignment17" headers="r5c1-t6 r1c2-t6">
+<p>Converts a string into a number.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r6c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i935822">STRCAT</a>
+</pre></td>
+<td class="cellalignment17" headers="r6c1-t6 r1c2-t6">
+<p>Concatenates one or more strings.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r7c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i993731">STRCMP</a>
+</pre></td>
+<td class="cellalignment17" headers="r7c1-t6 r1c2-t6">
+<p>Compares two strings and returns a result of less than, equal, or greater than.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r8c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i994944">STREQ</a>
+</pre></td>
+<td class="cellalignment17" headers="r8c1-t6 r1c2-t6">
+<p>Compares two strings and returns a Boolean result of equal or not equal.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r9c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i993747">STREXT</a>
+</pre></td>
+<td class="cellalignment17" headers="r9c1-t6 r1c2-t6">
+<p>Extracts selected characters from a string.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r10c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i935869">STRFIND</a>
+</pre></td>
+<td class="cellalignment17" headers="r10c1-t6 r1c2-t6">
+<p>Finds the occurrence of a string within a string.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r11c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i935895">STRLEN</a>
+</pre></td>
+<td class="cellalignment17" headers="r11c1-t6 r1c2-t6">
+<p>Returns the length of a string.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r12c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i935910">STRLTRIM</a>
+</pre></td>
+<td class="cellalignment17" headers="r12c1-t6 r1c2-t6">
+<p>Trims leading spaces in a column.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r13c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i935924">STRNCAT</a>
+</pre></td>
+<td class="cellalignment17" headers="r13c1-t6 r1c2-t6">
+<p>Concatenates one or more strings up to a limited number of characters per string.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r14c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i935944">STRNCMP</a>
+</pre></td>
+<td class="cellalignment17" headers="r14c1-t6 r1c2-t6">
+<p>Compares two strings up to a certain number of characters.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r15c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i935969">STRNUM</a>
+</pre></td>
+<td class="cellalignment17" headers="r15c1-t6 r1c2-t6">
+<p>Converts a number into a string, with justification and zero-fill options.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r16c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i936009">STRRTRIM</a>
+</pre></td>
+<td class="cellalignment17" headers="r16c1-t6 r1c2-t6">
+<p>Trims trailing spaces in a column.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r17c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i936023">STRSUB</a>
+</pre></td>
+<td class="cellalignment17" headers="r17c1-t6 r1c2-t6">
+<p>Substitutes one string for another within a column.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r18c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i936049">STRTRIM</a>
+</pre></td>
+<td class="cellalignment17" headers="r18c1-t6 r1c2-t6">
+<p>Trims leading and trailing spaces in a column.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r19c1-t6" headers="r1c1-t6">
+<pre>
+<a href="#i936063">STRUP</a>
+</pre></td>
+<td class="cellalignment17" headers="r19c1-t6 r1c2-t6">
+<p>Changes a string to uppercase.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect3" -->
+<div class="sect3"><a id="sthref1513"></a>
+<h4 class="sect3">Environmental Information</h4>
+<div class="inftblhruleinformal">
+<table class="cellalignment20" summary="This table lists the name and description for functions that provide environmental information" dir="ltr">
+<thead>
+<tr class="cellalignment11">
+<th class="cellalignment21" id="r1c1-t7">Function</th>
+<th class="cellalignment21" id="r1c2-t7">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r2c1-t7" headers="r1c1-t7">
+<pre>
+<a href="#i935480">GETENV</a>
+</pre></td>
+<td class="cellalignment17" headers="r2c1-t7 r1c2-t7">
+<p>Returns information about the Oracle GoldenGate environment.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="i992039"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">BINARY</h2>
+<p>Use the <code>@BINARY</code> function when a source column referenced by a column-conversion function is defined as a character column but contains binary data that must remain binary on the target. By default, once a column is referenced by a column function, the data is converted (if necessary) to ASCII and assumed to be a null terminated string. The <code>@BINARY()</code> function copies arbitrary binary data to the target column.</p>
+<p class="titleinrefsubsect"><a id="sthref1514"></a>Syntax</p>
+<pre>
+@BINARY (<span class="codeinlineitalic">column_name</span>) 
+</pre>
+<p class="titleinrefsubsect"><a id="sthref1515"></a>Example</p>
+<p>This example shows how the binary data in the source column <code>ACCT_CREATE_DATE</code> will be copied to the target column <code>ACCT_CHIEF_COMPLAINT</code>.</p>
+<pre>
+MAP \PROD.$DATA1.FINANCE.ACCTOLD, TARGET $DATA01.REPT.ACCT, 
+COLMAP (USEDEFAULTS, 
+ACCT-CHIEF-COMPLAINT = @IF (@NUMBIN (ACCT-CREATE-DATE) &lt; 12345, "xxxxxx", @BINARY(ACCT-CHIEF-COMPLAINT)          
+); 
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i995119"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">CASE</h2>
+<p>Allows the user to select a value depending on a series of value tests. There is no practical limit to the number of cases; however, for numerous cases, it is beneficial to list the most frequently encountered conditions first.</p>
+<p class="titleinrefsubsect"><a id="sthref1516"></a>Syntax</p>
+<pre>
+@CASE (<span class="codeinlineitalic">value</span>, <span class="codeinlineitalic">test_value1</span>, <span class="codeinlineitalic">test_result1</span> 
+[, <span class="codeinlineitalic">test_value2</span>, <span class="codeinlineitalic">test_result2</span>] [, ...] [, <span class="codeinlineitalic">default_result</span>])
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">value</span></code></dt>
+<dd>
+<p>The column you are testing values for.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">test_value1</span></code></dt>
+<dd>
+<p>The value to test against the value you are reading.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">test_result1</span></code></dt>
+<dd>
+<p>The result to return.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">default_result</span></code></dt>
+<dd>
+<p>The result returned when <code><span class="codeinlineitalic">test_values</span></code> are not entered.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1517"></a>Examples</p>
+<dl>
+<dd><a id="sthref1518"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following returns "A car" if <code>PRODUCT_CODE</code> is <code>"CAR</code>" and "A truck" if <code>PRODUCT_CODE</code> is <code>"TRUCK</code>". In this case, if <code>PRODUCT_CODE</code> fits neither of the first two cases, a <code>FIELD_MISSING</code> indication is returned.</p>
+<pre>
+@CASE (PRODUCT_CODE, "CAR", "A car", "TRUCK", "A truck")
+</pre></dd>
+<dd><a id="sthref1519"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>In this modified case, assuming <code>PRODUCT_CODE</code> is neither <code>"CAR</code>" nor <code>"TRUCK</code>", <code>"A vehicle</code>" is returned.</p>
+<pre>
+@CASE (PRODUCT_CODE, "CAR", "A car", "TRUCK", "A truck", "A vehicle")
+</pre></dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i935192"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">COLSTAT</h2>
+<p><code>COLSTAT</code> returns an indicator to the Extract and Replicat programs that a field is <code>MISSING</code>, <code>NULL</code>, or <code>INVALID</code>.</p>
+<p class="titleinrefsubsect"><a id="sthref1520"></a>Syntax</p>
+<pre>
+@COLSTAT (MISSING | INVALID | NULL)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref1521"></a>Example</p>
+<p>The following example returns a <code>NULL</code> into target column <code>DATE1</code>.</p>
+<pre>
+DATE1 = @COLSTAT (NULL)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i935199"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">COLTEST</h2>
+<p>Use <code>COLTEST</code> to perform conditional calculations. <code>COLTEST</code> can check for one or more of the following column conditions and returns <code>TRUE</code> if one of the following column conditions are met.</p>
+<ul>
+<li>
+<p><code>PRESENT</code>, which indicates a column is present in the source record and not null. In a compressed record, columns may be missing, but this not the same as null.</p>
+</li>
+<li>
+<p><code>NULL</code>, indicating the column is present and <code>NULL</code>.</p>
+</li>
+<li>
+<p><code>MISSING</code>, indicating that the column is not present.</p>
+</li>
+<li>
+<p><code>INVALID</code>, indicating the column is present but contains invalid data. For example, a <code>PIC 9(3)</code> field that contains spaces yields an <code>INVALID</code> condition.</p>
+</li>
+</ul>
+<p class="titleinrefsubsect"><a id="sthref1522"></a>Syntax</p>
+<pre>
+@COLTEST (<span class="codeinlineitalic">source_field</span>, <span class="codeinlineitalic">test_item</span> [, <span class="codeinlineitalic">test_item</span>] [, ...])
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">source_field</span></code></dt>
+<dd>
+<p>The name of the field or column that is the source of the data being tested.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">test_item</span></code></dt>
+<dd>
+<p>One of: <code>PRESENT</code>, <code>MISSING</code>, <code>INVALID</code>, or <code>NULL</code>.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1523"></a>Examples</p>
+<dl>
+<dd><a id="sthref1524"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>This example shows how you can calculate the value of a <code>HIGH_SALARY</code> column only if the <code>SALARY</code> field in the source record is both present and greater than a certain number. Set up a test condition with the <code>@IF</code> function to return the result of <code>SALARY</code> when part of the current record and exceeding <code>250000</code>, otherwise return <code>NULL</code>:</p>
+<pre>
+HIGH_SALARY = @IF(@COLTEST(BASE_SALARY, PRESENT) AND BASE_SALARY &gt; 250000, 
+    BASE_SALARY, @COLSTAT(NULL))
+</pre>
+<p>In this example, the condition <code>BASE_SALARY &gt; 250000</code> is evaluated only when <code>SALARY</code> is present in the source record and not null. If the presence of the column was not tested first, the column would not have been mapped, because the result would have been missing.</p>
+</dd>
+<dd><a id="sthref1525"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>In the following example, 0 is returned when <code>AMT</code> field is missing or invalid, otherwise <code>AMT</code> is returned.</p>
+<pre>
+AMOUNT = @IF (@COLTEST (AMT, MISSING, INVALID), 0, AMT)
+</pre></dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i997741"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">COMPUTE</h2>
+<p><code>@COMPUTE</code> returns the value of an arithmetic expression to a target column. The value returned from the function is in the form of a string.</p>
+<p>You can omit <code>@COMPUTE</code> when returning the value of an arithmetic expression to another function.</p>
+<p class="titleinrefsubsect"><a id="sthref1526"></a>Syntax</p>
+<pre>
+@COMPUTE (<span class="codeinlineitalic">value</span> <span class="codeinlineitalic">operator</span> <span class="codeinlineitalic">value</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">value</span></code></dt>
+<dd>
+<p>One or more values on which you are performing calculations.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">operator</span></code></dt>
+<dd>
+<p>A valid arithmetic or logical operator.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1527"></a>Examples</p>
+<dl>
+<dd><a id="sthref1528"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>This example adds <code>AMT</code> and <code>AMT2</code> and returns the total to <code>AMOUNT_TOTAL</code>.</p>
+<pre>
+AMOUNT_TOTAL = @COMPUTE (AMT + AMT2)
+</pre></dd>
+<dd><a id="sthref1529"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>This example is invalid because the expression is not enclosed in parentheses.</p>
+<pre>
+AMOUNT_TOTAL = AMT + AMT2
+</pre></dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="CJAEFADF"></a>
+<hr />
+<div class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">CONVERTFLOAT</h2>
+<p><code>@CONVERTFLOAT</code> converts HP NonStop Tandem (TDM) float numbers to Windows and UNIX Institute of Electrical and Electronics Engineers (IEEE) format or from IEEE float format to TDM float format.</p>
+<p>The <code>@CONVERTFLOAT</code> function always converts if you map the column; it does not check whether it is a 32 or 64 bit float data type. However, it is not necessary or wise to use <code>@CONVERTFLOAT</code> to map 32 bit float columns for conversion to IEEE, because Oracle GoldenGate for Windows and UNIX automatically does this conversion.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>To use <code>@CONVERTFLOAT</code>, the operating system must be G06.06 or later, and the Extract and Replicat must be native objects; not TNS.</p>
+</div>
+<p class="titleinrefsubsect"><a id="sthref1530"></a>Syntax</p>
+<pre>
+@CONVERTFLOAT (<span class="codeinlineitalic">col_name</span>, (TOIEEE | TOTDM))
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">col_name</span></code></dt>
+<dd>
+<p>The name of the column containing the float numbers to be converted.</p>
+</dd>
+<dt><code>TOIEEE</code> | <code>TOTDM</code></dt>
+<dd>
+<p>The format to which to convert; IEEE or TDM.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1531"></a>Example</p>
+<pre>
+COLMAP <span class="codeinlineitalic">num01</span> = @CONVERTFLOAT (<span class="codeinlineitalic">num01</span>, TOIEEE)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i935250"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">DATE</h2>
+<p><code>@DATE</code> returns dates and times in a variety of formats to the target column based on the format passed into the source. <code>@DATE</code> converts virtually any type of input into a valid SQL date. <code>@DATE</code> can also be used to extract portions of a date field, or to compute a numeric timestamp field based on a date.</p>
+<p class="titleinrefsubsect"><a id="sthref1532"></a>Syntax</p>
+<pre>
+@DATE ("<span class="codeinlineitalic">output_descriptor</span>", "<span class="codeinlineitalic">input_descriptor</span>", <span class="codeinlineitalic">source_field</span>
+[, "<span class="codeinlineitalic">input_descriptor</span>", <span class="codeinlineitalic">source_field</span>] [, ...])
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">output_descriptor</span></code></dt>
+<dd>
+<p>A string containing date descriptors and optional literal values. For example, the descriptor <code>YYYY</code> corresponds to a four-digit year, the descriptor <code>MI</code> describes minutes, while spaces, colons or other literals are output as is. See <a href="#i935283">"Date Descriptors"</a> for descriptions.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">input_descriptor</span></code></dt>
+<dd>
+<p>A string containing a series of date descriptors and optional literal values. For example, the descriptor <code>YYYY</code> corresponds to a four-digit year, the descriptor <code>MI</code> describes minutes. Date descriptors are strung together to describe the field or column that follows in the next parameter. See <a href="#i935283">"Date Descriptors"</a> for descriptions.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">source_field</span></code></dt>
+<dd>
+<p>The name of a source field supplying the preceding input.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="i935283"></a>Date Descriptors</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment20" summary="This table lists the name and description of date descriptors" dir="ltr">
+<thead>
+<tr class="cellalignment11">
+<th class="cellalignment21" id="r1c1-t9">Descriptor</th>
+<th class="cellalignment21" id="r1c2-t9">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r2c1-t9" headers="r1c1-t9">
+<pre>
+CC
+</pre></td>
+<td class="cellalignment17" headers="r2c1-t9 r1c2-t9">
+<p>Century</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r3c1-t9" headers="r1c1-t9">
+<pre>
+YY
+</pre></td>
+<td class="cellalignment17" headers="r3c1-t9 r1c2-t9">
+<p>Two-digit year</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r4c1-t9" headers="r1c1-t9">
+<pre>
+YYYY
+</pre></td>
+<td class="cellalignment17" headers="r4c1-t9 r1c2-t9">
+<p>Four-digit year</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r5c1-t9" headers="r1c1-t9">
+<pre>
+MM
+</pre></td>
+<td class="cellalignment17" headers="r5c1-t9 r1c2-t9">
+<p>Numeric month</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r6c1-t9" headers="r1c1-t9">
+<pre>
+MMM
+</pre></td>
+<td class="cellalignment17" headers="r6c1-t9 r1c2-t9">
+<p>Alphanumeric month, such as <code>APR</code>, <code>OCT</code></p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r7c1-t9" headers="r1c1-t9">
+<pre>
+DD
+</pre></td>
+<td class="cellalignment17" headers="r7c1-t9 r1c2-t9">
+<p>Numeric day of month</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r8c1-t9" headers="r1c1-t9">
+<pre>
+DDD
+</pre></td>
+<td class="cellalignment17" headers="r8c1-t9 r1c2-t9">
+<p>Numeric day of the year, such as <code>001</code>, or <code>365</code></p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r9c1-t9" headers="r1c1-t9">
+<pre>
+DOW0
+</pre></td>
+<td class="cellalignment17" headers="r9c1-t9 r1c2-t9">
+<p>Numeric day of the week where Sunday = <code>0.</code></p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r10c1-t9" headers="r1c1-t9">
+<pre>
+DOW1
+</pre></td>
+<td class="cellalignment17" headers="r10c1-t9 r1c2-t9">
+<p>Numeric day of the week where Sunday = <code>1</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r11c1-t9" headers="r1c1-t9">
+<pre>
+DOWA
+</pre></td>
+<td class="cellalignment17" headers="r11c1-t9 r1c2-t9">
+<p>Alphanumeric day of the week, such as <code>SUN</code>, <code>MON</code>, <code>TUE</code></p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r12c1-t9" headers="r1c1-t9">
+<pre>
+HH
+</pre></td>
+<td class="cellalignment17" headers="r12c1-t9 r1c2-t9">
+<p>Hour</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r13c1-t9" headers="r1c1-t9">
+<pre>
+MI
+</pre></td>
+<td class="cellalignment17" headers="r13c1-t9 r1c2-t9">
+<p>Minute</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r14c1-t9" headers="r1c1-t9">
+<pre>
+SS
+</pre></td>
+<td class="cellalignment17" headers="r14c1-t9 r1c2-t9">
+<p>Seconds</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r15c1-t9" headers="r1c1-t9">
+<pre>
+JTSLCT
+</pre></td>
+<td class="cellalignment17" headers="r15c1-t9 r1c2-t9">
+<p>Use for a Julian timestamp that is already local time, or to keep local time when converting to a Julian timestamp.</p>
+<p>An example of a 48-bit NonStop to 64-bit Julian for LCT to LCT time is:</p>
+<pre>
+date = @date ("JTSLCT", "TTS", @numbin(date));
+</pre>
+<p>An example of a NonStop 64-bit Julian for LCT to date type in Oracle:</p>
+<pre>
+date = @date ("YYY-MM-DD HH:MI:SS", "JTSLCT", date);
+</pre></td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r16c1-t9" headers="r1c1-t9">
+<pre>
+JTSGMT
+</pre></td>
+<td class="cellalignment17" headers="r16c1-t9 r1c2-t9">
+<p>Julian timestamp, the same as <code>JTS</code></p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r17c1-t9" headers="r1c1-t9">
+<pre>
+JTS
+</pre></td>
+<td class="cellalignment17" headers="r17c1-t9 r1c2-t9">
+<p>Julian timestamp. For more information see <a href="#i935386">"Using JUL and JTS"</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r18c1-t9" headers="r1c1-t9">
+<pre>
+JUL
+</pre></td>
+<td class="cellalignment17" headers="r18c1-t9 r1c2-t9">
+<p>Julian day</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r19c1-t9" headers="r1c1-t9">
+<pre>
+TTS
+</pre></td>
+<td class="cellalignment17" headers="r19c1-t9 r1c2-t9">
+<p>NonStop 48-bit timestamp</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r20c1-t9" headers="r1c1-t9">
+<pre>
+PHAMIS
+</pre></td>
+<td class="cellalignment17" headers="r20c1-t9 r1c2-t9">
+<p>PHAMIS application date format</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r21c1-t9" headers="r1c1-t9">
+<pre>
+FFFFFF
+</pre></td>
+<td class="cellalignment17" headers="r21c1-t9 r1c2-t9">
+<p>Fraction (up to microseconds)</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r22c1-t9" headers="r1c1-t9">
+<pre>
+STRATUS
+</pre></td>
+<td class="cellalignment17" headers="r22c1-t9 r1c2-t9">
+<p>STRATUS application timestamp that returns microseconds since 1/1/1980.</p>
+</td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r23c1-t9" headers="r1c1-t9">
+<pre>
+CDATE
+</pre></td>
+<td class="cellalignment17" headers="r23c1-t9 r1c2-t9">
+<p>C timestamp in seconds since the Epoch.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p class="titleinrefsubsect"><a id="i935386"></a>Using JUL and JTS</p>
+<p><code>JUL</code> and <code>JTS</code> produce numbers you can use in numeric expressions.</p>
+<p class="titleinrefsubsect2"><a id="sthref1533"></a>Example</p>
+<p>The following expression produces the time at which an order is filled.</p>
+<pre>
+ORDER_FILLED = @DATE ("YYYY-MM-DD:HH:MI:SS", "JTS", @DATE 
+("JTS", "YYMMDDHHMISS", ORDER-TAKEN-TIME) + ORDER-MINUTES * 60 * 1000000)
+</pre>
+<p>The above expression changes <code>ORDER-TAKEN-TIME</code> into a Julian timestamp, then adds <code>ORDER-MINUTES</code> converted into microseconds to this timestamp (the inner <code>@DATE</code> expression). This expression is passed back as a new Julian timestamp to the outer <code>@DATE</code> expression, which converts it back to a more readable date and time.</p>
+<p class="titleinrefsubsect"><a id="sthref1534"></a>Working with Date Strings</p>
+<p>Descriptor string <code>"YYYYMMDD</code>" indicates that the following numeric or character field contains (in order) a four-digit year (<code>YYYY</code>), month (<code>MM</code>), and day (<code>DD</code>).</p>
+<p>Descriptor string <code>"DD/MM/YY</code>" indicates that the field contains the day, a slash, the month, a slash, and the two digit year.</p>
+<p class="titleinrefsubsect2"><a id="sthref1535"></a>Converting Two-digit Years into Four-digit Values</p>
+<p>In an instance where a two-digit year is supplied, but a four-digit year is required in the output, several options exist.</p>
+<ul>
+<li>
+<p>A century is hard-coded, as in the <code>"CC</code>", <code>19</code> or <code>"CC</code>", <code>20</code>.</p>
+</li>
+<li>
+<p>The <code>@IF</code> function is used, as in <code>"CC</code>", <code>@IF</code> <code>(YY &gt; 70, 19, 20)</code>. This causes century to be set to <code>19</code> when year is greater than <code>70</code>, otherwise <code>20</code>.</p>
+</li>
+<li>
+<p>The system calculates the century automatically. If the year is less than <code>50</code>, the system calculates a century of <code>20</code>; otherwise, the century calculates to <code>19</code>.</p>
+</li>
+</ul>
+<p class="titleinrefsubsect3"><a id="sthref1536"></a>Example</p>
+<p>The following show some ways to use date conversions.</p>
+<ul>
+<li>
+<p>Converting year, month and day fields into a SQL date.</p>
+<pre>
+DATE_COL = @DATE ("YYYY-MM-DD", "YY", date1.yr, "MM", date1.mm, "DD", date1.dd)
+</pre></li>
+<li>
+<p>Converting the date at the group level (assuming year, month, and day are part of <code>date1</code>).</p>
+<pre>
+DATE_COL = @DATE ("YYYY-MM-DD", "YYMMDD", date1)
+</pre></li>
+<li>
+<p>Converting to a date and time, defaulting seconds to zero.</p>
+<pre>
+DATE_COL = @DATE ("YYYY-MM-DD:HH:MI:00", "YYMMDD", date1, "HHMI", time1)
+</pre></li>
+<li>
+<p>Converting a numeric field stored as <code>YYYYMMDDHHMISS</code> to a SQL date.</p>
+<pre>
+DATETIME_COL = @DATE ("YYYY-MM-DD:HH:MI:SS", "YYYYMMDDHHMISS", NUMERIC-DATE)
+</pre></li>
+<li>
+<p>Converting a numeric field stored as <code>YYYYMMDDHHMISS</code> to a Julian timestamp.</p>
+<pre>
+JULIAN_TS_COL = @DATE ("JTS", "YYYYMMDDHHMISS", NUMERIC-DATE)
+</pre></li>
+<li>
+<p>Converting a Julian timestamp field to two columns: a datetime field in the format <code>YYYYMMDDHHMISS</code>, and a fraction field, which holds the microseconds portion of the timestamp.</p>
+<pre>
+DATETIME_COL = @DATE ("YYYY-MM-DD:HH:MI:SS", "JTS", JTS-FIELD),
+FRACTION_COL = @DATE ("FFFFFF", "JTS", JTS-FIELD)
+</pre></li>
+</ul>
+</div>
+<!-- class="refsect1" -->
+<a id="i935422"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">DATEDIFF</h2>
+<p><code>@DATEDIFF</code> calculates the difference between two dates or datetimes, in days or seconds.</p>
+<p class="titleinrefsubsect"><a id="sthref1537"></a>Syntax</p>
+<pre>
+@DATEDIFF ("<span class="codeinlineitalic">difference</span>", <span class="codeinlineitalic">date</span>, <span class="codeinlineitalic">date</span>)
+</pre>
+<dl>
+<dt>"<code><span class="codeinlineitalic">difference"</span></code></dt>
+<dd>
+<p>The difference between the specified dates. Valid values can be:</p>
+<ul>
+<li>
+<p><code>DD</code> to compute the difference in days.</p>
+</li>
+<li>
+<p><code>SS</code> to compute the difference in seconds.</p>
+</li>
+</ul>
+</dd>
+<dt><code><span class="codeinlineitalic">date</span></code></dt>
+<dd>
+<p>A string in the format of <code>YYYY-MM-DD[*HH:MI[:SS]]</code>, where * can be a colon <code>(:)</code> or a blank space.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1538"></a>Examples</p>
+<dl>
+<dd><a id="sthref1539"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>To calculate the number of days since the beginning of the year <code>2000</code>:</p>
+<pre>
+differential = (@DATEDIFF("DD","2000-01-01",@DATENOW()))
+</pre></dd>
+<dd><a id="sthref1540"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>To calculate the actual day of the year in the above example (<code>@DATEDIFF</code> returns <code>0</code> for <code>2000-01-01</code>):</p>
+<pre>
+todays_day = @COMPUTE(@DATEDIFF("DD","2000-01-01",@DATENOW()))+1)
+</pre></dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i935448"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">DATENOW</h2>
+<p><code>@DATENOW</code> takes no arguments and returns the current date and time in the format <code>YYYY-MM-DD HH:MI:SS</code>. The date and time are returned in local time, including adjustments for daylight savings time.</p>
+<p class="titleinrefsubsect"><a id="sthref1541"></a>Syntax</p>
+<pre>
+@DATENOW ()
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i935453"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">EVAL</h2>
+<p>Allows the user to select a value depending on a series of independent tests. There is no practical limit to the number of conditions. If the number of cases is large, it is beneficial to list the most frequently encountered conditions first.</p>
+<p class="titleinrefsubsect"><a id="sthref1542"></a>Syntax</p>
+<pre>
+@EVAL (<span class="codeinlineitalic">condition1</span>, <span class="codeinlineitalic">result1</span> [, <span class="codeinlineitalic">condition2</span>, <span class="codeinlineitalic">result2</span>] [, ...] 
+[, <span class="codeinlineitalic">default_result</span>])
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">condition</span></code></dt>
+<dd>
+<p>A conditional test using standard conditional operators.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">result</span></code></dt>
+<dd>
+<p>A value or string to return based on the results of the conditional test. Enclose literals within double quotes.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">default_result</span></code></dt>
+<dd>
+<p>A default result to return if none of the conditions is satisfied. A default result is optional.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1543"></a>Examples</p>
+<dl>
+<dd><a id="sthref1544"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>In the following example, if <code>AMOUNT</code> is greater than 10000, <code>"high amount</code>" is returned. If <code>AMOUNT</code> is greater than <code>5000</code> (and less than or equal to <code>10000</code>), <code>"somewhat high</code>" is returned (unless the prior condition was satisfied). If neither condition is satisfied, a <code>COLUMN_MISSING</code> indicator is returned because a default result is not specified.</p>
+<pre>
+AMOUNT_DESC = @EVAL (AMOUNT &gt; 10000, "high amount", AMOUNT &gt; 5000, 
+"somewhat high")
+</pre></dd>
+<dd><a id="sthref1545"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following is a modification of the preceding example. It returns the same results, except that a default value is specified, and a result of <code>"lower</code>" is returned if <code>AMOUNT</code> is less than or equal to <code>5000</code>.</p>
+<pre>
+@EVAL (AMOUNT &gt; 10000, "high amount", AMOUNT &gt; 5000, "somewhat high", "lower")
+</pre></dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i935480"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">GETENV</h2>
+<p><code>@GETENV</code> returns a variety of information about Oracle GoldenGate processing, including lag information, the last replicated operation, and Oracle GoldenGate environment information.</p>
+<p class="titleinrefsubsect"><a id="sthref1546"></a>Syntax</p>
+<pre>
+@GETENV (<span class="codeinlineitalic">info_type</span>)
+</pre>
+<p><code><span class="codeinlineitalic">info_type</span></code> is one of the following.</p>
+<dl>
+<dt><code>"COMMITTIMESTAMP"</code></dt>
+<dd>
+<p>Returns the timestamp when the transaction was committed as an integer representing the Julian GMT.</p>
+</dd>
+<dt><code>"JULIANTIMESTAMP"</code></dt>
+<dd>
+<p>Returns the current Julian GMT timestamp in the form of an integer such as <code>211919385876765584</code>.</p>
+</dd>
+<dt><code>"LOCALTIMESTAMP"</code></dt>
+<dd>
+<p>Returns the current system time as an integer representing the Julian LCT.</p>
+</dd>
+<dt><code>("LAG", "</code><code><span class="codeinlineitalic">unit</span></code><code>")</code></dt>
+<dd>
+<p>Returns lag information. See <a href="#i935538">"Reporting Lag Information"</a>.</p>
+</dd>
+<dt>("<code>LASTERR</code>","<code><span class="codeinlineitalic">option</span></code>")</dt>
+<dd>
+<p>Returns information about the last replicated operation, including detailed error information. See <a href="#i935564">"Returning Information from Replicat"</a>.</p>
+</dd>
+<dt>("<code>GGENVIRONMENT</code>", "<code><span class="codeinlineitalic">option</span></code>")</dt>
+<dd>
+<p>Returns Oracle GoldenGate environment information. See <a href="#i935607">"Returning Oracle GoldenGate Environment Information"</a>.</p>
+</dd>
+<dt>("<code>GGFILEHEADER</code>", "<code><span class="codeinlineitalic">option</span></code>")</dt>
+<dd>
+<p>Returns the format and properties of an Oracle GoldenGate trail file, which is stored in the file header record sent from open systems.</p>
+</dd>
+<dt>("<code>GGHEADER</code>", "<code><span class="codeinlineitalic">option</span></code>")</dt>
+<dd>
+<p>Returns Oracle GoldenGate record header information. See <a href="#i998500">"Returning Record Header Information"</a>.</p>
+</dd>
+<dt>("<code>RECORD</code>", "<code><span class="codeinlineitalic">option</span></code>")</dt>
+<dd>
+<p>Returns information about the records that are being processed (such as the sequence number of the trail file), or the name of the source application program that altered the Enscribe file record. See <a href="#CJAEIJBA">"Returning Record Location and Source Application Information"</a>.</p>
+</dd>
+<dt><code>"RECSOUTPUT"</code></dt>
+<dd>
+<p>Returns the total number of records processed.</p>
+</dd>
+<dt>("<code>TLFKEY</code>", <code>SYSKEY</code> <code><span class="codeinlineitalic">unique_key</span></code>)</dt>
+<dd>
+<p>Enables a unique key to be associated with <code>TLF/PTLF</code> records in the ACI BASE24 application. See <a href="#i935676">"Associating BASE24 Keys and Records"</a>.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="i935538"></a>Reporting Lag Information</p>
+<p>Use the <code>"LAG</code>" option of <code>@GETENV</code> to return lag information. Lag is the difference between the time a record was processed by the Extract or Replicat program and the timestamp of that record in the data source. Both <code>LAG</code> and <code><span class="codeinlineitalic">unit</span></code> must be enclosed within double quotes.</p>
+<p class="titleinrefsubsect2"><a id="sthref1547"></a>Syntax</p>
+<pre>
+@GETENV ("LAG", "<span class="codeinlineitalic">unit</span>")
+</pre>
+<p><code><span class="codeinlineitalic">"unit"</span></code> is one of the following.</p>
+<dl>
+<dt><code>"SEC"</code></dt>
+<dd>
+<p>Returns the lag in seconds. This is the default when a unit is not explicitly provided for <code>LAG</code>.</p>
+</dd>
+<dt><code>"MSEC"</code></dt>
+<dd>
+<p>Returns the lag in milliseconds.</p>
+</dd>
+<dt><code>"MIN"</code></dt>
+<dd>
+<p>Returns the lag in minutes.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="i935564"></a>Returning Information from Replicat</p>
+<p>Use the <code>"LASTERR"</code> option of <code>@GETENV</code> to return information about the last operation processed by the Replicat program. Options provide error information. Both <code>LASTERR</code> and <code><span class="codeinlineitalic">option</span></code> must be enclosed within double quotes.</p>
+<p class="titleinrefsubsect2"><a id="sthref1548"></a>Syntax</p>
+<pre>
+@GETENV ("LASTERR", "<span class="codeinlineitalic">option</span>")
+</pre>
+<p><code><span class="codeinlineitalic">"option"</span></code> is one of the following.</p>
+<dl>
+<dt><code>"DBERRNUM"</code></dt>
+<dd>
+<p>Returns the database error number associated with the failed operation.</p>
+</dd>
+<dt><code>"DBERRMSG"</code></dt>
+<dd>
+<p>Returns the database error message associated with the failed operation.</p>
+</dd>
+<dt><code>"OPTYPE"</code></dt>
+<dd>
+<p>Returns the operation type that was attempted.</p>
+</dd>
+<dt><code>"OSERRNUM"</code></dt>
+<dd>
+<p>Specifies a NonStop operating system error.</p>
+</dd>
+<dt><code>"ERRTYPE"</code></dt>
+<dd>
+<p>Returns the type of error. Possible results are:</p>
+<ul>
+<li>
+<p><code>DB</code> (for database errors)</p>
+</li>
+<li>
+<p><code>MAP</code> (for errors in mapping before replicating the record).</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="i935607"></a>Returning Oracle GoldenGate Environment Information</p>
+<p>Use the <code>GGENVIRONMENT</code> option of <code>@GETENV</code> to return information about the Oracle GoldenGate environment. This option is valid for the Extract and Replicat program processing.</p>
+<p class="titleinrefsubsect2"><a id="sthref1549"></a>Syntax</p>
+<pre>
+@GETENV ("GGENVIRONMENT", "<span class="codeinlineitalic">option</span>")
+</pre>
+<p><code><span class="codeinlineitalic">"option"</span></code> is one of the following.</p>
+<dl>
+<dt><code>GROUPNAME</code></dt>
+<dd>
+<p>Returns the Extract or Replicat group name.</p>
+</dd>
+<dt><code>HOSTNAME</code></dt>
+<dd>
+<p>Returns the name of the host running the Extract or Replicat programs.</p>
+</dd>
+<dt><code>OSUSERNAME</code></dt>
+<dd>
+<p>Returns the operating system user name that started the process.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="i998500"></a>Returning Record Header Information</p>
+<p>Use the <code>GGHEADER</code> option of <code>@GETENV</code> to return record header information. This option is valid for the Extract and Replicat processes.</p>
+<p class="titleinrefsubsect2"><a id="sthref1550"></a>Syntax</p>
+<pre>
+@GETENV ("GGHEADER", "<span class="codeinlineitalic">option</span>")
+</pre>
+<p><code><span class="codeinlineitalic">"option"</span></code> is one of the following.</p>
+<dl>
+<dt><code>BEFOREAFTERINDICATOR</code></dt>
+<dd>
+<p>Returns the before or after indicator indicating whether the record is a before-image or after-image. Possible results are:</p>
+<ul>
+<li>
+<p><code>BEFORE</code> (before-image)</p>
+</li>
+<li>
+<p><code>AFTER</code> (after-image)</p>
+</li>
+</ul>
+</dd>
+<dt><code>COMMITTIMESTAMP</code></dt>
+<dd>
+<p>Returns the transaction timestamp (the time when the transaction committed) converted to the local time zone as a string in the format of <code>YYYY-MM-DD HH:MI:SS.FFFFFF</code>, for example:</p>
+<pre>
+2010-01-24 17:08:59.000000
+</pre></dd>
+<dt><code>LOGPOSITION</code></dt>
+<dd>
+<p>Returns the audit log position.</p>
+</dd>
+<dt><code>LOGRBA</code></dt>
+<dd>
+<p>Returns the relative byte address for the audit log.</p>
+</dd>
+<dt><code>TABLENAME</code></dt>
+<dd>
+<p>Returns the table name.</p>
+</dd>
+<dt><code>OPTYPE</code></dt>
+<dd>
+<p>Returns the type of operation. Possible results are:</p>
+<ul>
+<li>
+<p><code>INSERT</code></p>
+</li>
+<li>
+<p><code>UPDATE</code></p>
+</li>
+<li>
+<p><code>DELETE</code></p>
+</li>
+<li>
+<p><code>ENSCRIBE COMPUPDATE</code></p>
+</li>
+<li>
+<p><code>SQL COMPUPDATE</code></p>
+</li>
+<li>
+<p><code>PK UPDATE</code></p>
+</li>
+<li>
+<p><code>TRUNCATE</code></p>
+</li>
+</ul>
+<p>If the operation is not one of the above types, then the function returns the word <code>TYPE</code> with the number assigned to the type. For more information about possible record types, see the file format information in <span class="italic">Logdump Reference for Oracle GoldenGate</span>.</p>
+</dd>
+<dt><code>RECORDLENGTH</code></dt>
+<dd>
+<p>Returns the record length.</p>
+</dd>
+<dt><code>TRANSACTIONINDICATOR</code></dt>
+<dd>
+<p>Returns the transaction indicator. Possible results are:</p>
+<ul>
+<li>
+<p><code>BEGIN</code> - Returned when the record header <code>TransInD</code> is <code>0</code> indicating the first statement in the transaction.</p>
+</li>
+<li>
+<p><code>MIDDLE</code> - Returned when the header <code>TransInD</code> is <code>1</code> indicating a statement in the middle of the transaction.</p>
+</li>
+<li>
+<p><code>END</code> - Returned when the <code>TransInD</code> is <code>2</code> indicating the last statement in the transactions</p>
+</li>
+<li>
+<p><code>WHOLE</code> - Returned when the <code>TransInD</code> is <code>3</code> indicating only one statement in the transaction.</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1551"></a>Returning File Header Information</p>
+<p>Use the <code>GGFILEHEADER</code> option of <code>@GETENV</code> to return attributes of an Oracle GoldenGate extract file or trail file that are stored in the file header sent from an Oracle GoldenGate system on Windows or UNIX. Every file in such a trail contains this header. The header describes the file itself and the environment in which it is used.</p>
+<p>The file header is stored as a record at the beginning of a trail file preceding the data records. The information that is stored in the trail header provides enough information about the records to enable an Oracle GoldenGate process to determine whether the records are in a format that the current version of Oracle GoldenGate supports.</p>
+<p>The trail header fields are stored as tokens, where the token format remains the same across all versions of Oracle GoldenGate. If a version of Oracle GoldenGate does not support any given token, that token is ignored. Deprecated tokens are assigned a default value to preserve compatibility with previous versions of Oracle GoldenGate.</p>
+<p>This option is valid for the Replicat process. Both <code>GGFILEHEADER</code> and <code><span class="codeinlineitalic">return_value</span></code> must be enclosed within double quotes.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>If a given database, operating system, or Oracle GoldenGate version does not provide information that relates to a given token, a <code>NULL</code> value will be returned.</p>
+</div>
+<p class="titleinrefsubsect2"><a id="sthref1552"></a>Syntax</p>
+<pre>
+@GETENV ("GGFILEHEADER", "<span class="codeinlineitalic">return_value</span>")
+</pre>
+<p>The following sections describe the valid values for <code><span class="codeinlineitalic">"return_value"</span></code>:</p>
+<ul>
+<li>
+<p><a href="#CJAFJBHA">TrailInfo: Information about the trail file</a></p>
+</li>
+<li>
+<p><a href="#CJAJCIGD">ProducerInfo: Information about the Oracle GoldenGate for Mainframe process that created the trail file</a></p>
+</li>
+<li>
+<p><a href="#CJABHBHD">MachineInfo: Information about the local host of the trail file</a></p>
+</li>
+<li>
+<p><a href="#CJAEDAEF">DatabaseInfo: Information about the database that produced the data in the trail file</a></p>
+</li>
+<li>
+<p><a href="#CJAIEBAG">ContinuityInfo: Recovery information carried over from the previous trail file</a></p>
+</li>
+</ul>
+<p class="titleinrefsubsect3"><a id="CJAFJBHA"></a>TrailInfo: Information about the trail file</p>
+<dl>
+<dt><code>"COMPATIBILITY"</code></dt>
+<dd>
+<p>The Oracle GoldenGate compatibility level of the trail file. The compatibility level of the current Oracle GoldenGate version must be greater than, or equal to, the compatibility level of the trail file to be able to read the data records in that file. Current valid values are 0 or 1.</p>
+<ul>
+<li>
+<p>1 means that the trail file is of Oracle GoldenGate version 10.0 or later, which supports file headers that contain file versioning information.</p>
+</li>
+<li>
+<p>0 means that the trail file is of an Oracle GoldenGate version that is older than 10.0. File headers are not supported in those releases. The 0 value is used for compatibility to those Oracle GoldenGate versions.</p>
+</li>
+</ul>
+</dd>
+<dt><code>"CHARSET"</code></dt>
+<dd>
+<p>The global character set of the trail file. For example:</p>
+<p><code>WCP1252-1</code></p>
+</dd>
+<dt><code>"CREATETIMESTAMP"</code></dt>
+<dd>
+<p>The time that the trail was created, in local GMT Julian time in INT64.</p>
+</dd>
+<dt><code>"URI"</code></dt>
+<dd>
+<p>The universal resource identifier of the process that created the trail file, in the format of:</p>
+<pre>
+<span class="codeinlineitalic">host_name</span>:dir[:dir][:dir_n] <span class="codeinlineitalic">group_name</span>
+</pre>
+<ul>
+<li>
+<p><code>host_name</code> is the name of the server that hosts the process</p>
+</li>
+<li>
+<p><code>dir</code> is a subdirectory of the Oracle GoldenGate installation path.</p>
+</li>
+<li>
+<p><code>group_name</code> is the name of the process group that is linked with the process.</p>
+</li>
+</ul>
+<p>Example:</p>
+<p><code>sys1:home:oracle:v9.5:extora</code></p>
+<p>Shows where the trail was processed and by which process. This includes a history of previous runs.</p>
+</dd>
+<dt><code>"URIHISTORY"</code></dt>
+<dd>
+<p>List of the URIs of processes that wrote to the trail file before the current process.</p>
+<ul>
+<li>
+<p>For a primary Extract, this field is empty.</p>
+</li>
+<li>
+<p>For a data pump, this field is <code>URIHistory</code> + <code>URI</code> of the input trail file.</p>
+</li>
+</ul>
+</dd>
+<dt><code>"FILENAME"</code></dt>
+<dd>
+<p>Name of the trail file. Can be absolute or relative path, with forward or backward slash depending on the file system.</p>
+</dd>
+<dt><code>"FILEISTRAIL"</code></dt>
+<dd>
+<p><code>True/false</code> flag indicating whether the trail file is a single file (such as one created for a batch run) or a sequentially numbered file that is part of a trail for online, continuous processing. If <code>false</code>, the <code>SeqNum</code> subtoken is not valid.</p>
+</dd>
+<dt><code>"FILESEQNO"</code></dt>
+<dd>
+<p>The sequence number of the trail file, without any leading zeros. For example, if a file sequence number is <code>aa000026</code>, <code>FILESEQNO</code> returns <code>26</code>.</p>
+</dd>
+<dt><code>"FILESIZE"</code></dt>
+<dd>
+<p>Size of the trail file. It returns <code>NULL</code> on an active file and returns a size value when the file is full and the trail rolls over.</p>
+</dd>
+<dt><code>"FIRSTRECCSN"</code></dt>
+<dd>
+<p>The commit sequence number (CSN) of the first record in the trail file.Value is <code>NULL</code> until the trail file is completed.</p>
+</dd>
+<dt><code>"LASTRECCSN"</code></dt>
+<dd>
+<p>Returns the commit sequence number (CSN) of the last record in the trail file.Value is <code>NULL</code> until the trail file is completed.</p>
+</dd>
+<dt><code>"FIRSTRECIOTIME"</code></dt>
+<dd>
+<p>The time that the first record was written to the trail file. Value is <code>NULL</code> until the trail file is completed.</p>
+</dd>
+<dt><code>"LASTRECIOTIME"</code></dt>
+<dd>
+<p>The time that the last record was written to the trail file. Value is <code>NULL</code> until the trail file is completed.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect3"><a id="CJAJCIGD"></a>ProducerInfo: Information about the Oracle GoldenGate for Mainframe process that created the trail file</p>
+<dl>
+<dt><code>"GROUPNAME"</code></dt>
+<dd>
+<p>The group name that is associated with the Extract process that created the trail. The group name is that which was given in the <code>ADD EXTRACT</code> command. For example, "gg<code>ext</code>."</p>
+</dd>
+<dt><code>"DATASOURCE"</code></dt>
+<dd>
+<p>The data source that was read by the process. Can be one of:</p>
+<ul>
+<li>
+<p><code>DS_EXTRACT_TRAILS</code> (source was an Oracle GoldenGate extract file, populated with change data)</p>
+</li>
+<li>
+<p><code>DS_LOG_TABLE</code> (source was an Oracle GoldenGate log table, used for trigger-based extraction)</p>
+</li>
+<li>
+<p><code>DS_DATABASE</code> (source was a direct select from database table written to a trail, used for <code>SOURCEISTABLE</code>-driven initial load)</p>
+</li>
+<li>
+<p><code>DS_TRAN_LOGS</code> (source was the database transaction log)</p>
+</li>
+<li>
+<p><code>DS_INITIAL_DATA_LOAD</code> (source was Extract; data taken directly from source tables)</p>
+</li>
+<li>
+<p><code>DS_VAM_EXTRACT</code> (source was a vendor access module)</p>
+</li>
+<li>
+<p><code>DS_VAM_TWO_PHASE_COMMIT</code> (source was a VAM trail)</p>
+</li>
+</ul>
+</dd>
+<dt><code>"GGMAJORVERSION"</code></dt>
+<dd>
+<p>The major version of the Extract process that created the trail, expressed as an integer (<code>xx).</code></p>
+</dd>
+<dt><code>"GGMINORVERSION"</code></dt>
+<dd>
+<p>The minor version of the Extract process that created the trail, expressed as an integer (<code>xx.xx</code>).</p>
+</dd>
+<dt><code>"GGMAINTENANCELEVEL"</code></dt>
+<dd>
+<p>The maintenance version of the process (<code>xx.xx.xx)</code>.</p>
+</dd>
+<dt><code>"GGBUGFIXLEVEL"</code></dt>
+<dd>
+<p>The patch version of the process (<code>xx.xx.xx.xx)</code>.</p>
+</dd>
+<dt><code>"GGBUILDNUMBER"</code></dt>
+<dd>
+<p>The build number of the process.</p>
+</dd>
+<dt><code>"GGVERSIONSTRING"</code></dt>
+<dd>
+<p>The version string of the process. For example <code>11.1.1.17A not for production</code>.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect3"><a id="CJABHBHD"></a>MachineInfo: Information about the local host of the trail file</p>
+<dl>
+<dt><code>"HOSTNAME"</code></dt>
+<dd>
+<p>The DNS name of the computer where the Extract that wrote the trail is running. For example:</p>
+<ul>
+<li>
+<p><code>sysa</code></p>
+</li>
+<li>
+<p><code>sysb</code></p>
+</li>
+<li>
+<p><code>paris</code></p>
+</li>
+<li>
+<p><code>hq25</code></p>
+</li>
+</ul>
+</dd>
+<dt><code>"OSVERSION"</code></dt>
+<dd>
+<p>The major version of the operating system of the computer where the Extract that wrote the trail is running. For example:</p>
+<ul>
+<li>
+<p><code>Version s10_69</code></p>
+</li>
+<li>
+<p><code>#1 SMP Fri Feb 24 16:56:28 EST 2006</code></p>
+</li>
+<li>
+<p><code>5.00.2195 Service Pack 4</code></p>
+</li>
+</ul>
+</dd>
+<dt><code>"OSRELEASE"</code></dt>
+<dd>
+<p>The release version of the operating system of the computer where the Extract that wrote the trail is running. For example, release versions of the examples given for <code>OSVERSION</code> could be:</p>
+<ul>
+<li>
+<p><code>5.10</code></p>
+</li>
+<li>
+<p><code>2.6.9-34.ELsmp</code></p>
+</li>
+<li>
+<p><code>2000 Advanced Server</code></p>
+</li>
+</ul>
+</dd>
+<dt><code>"OSTYPE"</code></dt>
+<dd>
+<p>The type of operating system of the computer where the Extract that wrote the trail is running. For example:</p>
+<ul>
+<li>
+<p><code>SunOS</code></p>
+</li>
+<li>
+<p><code>Linux</code></p>
+</li>
+<li>
+<p><code>Microsoft Windows</code></p>
+</li>
+</ul>
+</dd>
+<dt><code>"HARDWARETYPE"</code></dt>
+<dd>
+<p>The type of hardware of the computer where the Extract that wrote the trail is running. For example:</p>
+<ul>
+<li>
+<p><code>sun4u</code></p>
+</li>
+<li>
+<p><code>x86_64</code></p>
+</li>
+<li>
+<p><code>x86</code></p>
+</li>
+</ul>
+</dd>
+</dl>
+<p class="titleinrefsubsect3"><a id="CJAEDAEF"></a>DatabaseInfo: Information about the database that produced the data in the trail file</p>
+<dl>
+<dt><code>"DBTYPE"</code></dt>
+<dd>
+<p>The type of database that produced the data in the trail file. Some examples are:</p>
+<pre>
+DB2 UDB
+DB2 ZOS
+CTREE
+MSSQL
+MYSQL
+ORACLE
+SQLMX
+SYBASE
+TERADATA
+TIMESTEN
+NONSTOP
+</pre></dd>
+<dt><code>"DBNAME"</code></dt>
+<dd>
+<p>The name of the database, for example <code>findb</code>.</p>
+</dd>
+<dt><code>"DBINSTANCE"</code></dt>
+<dd>
+<p>The name of the database instance, if applicable to the database type, for example <code>ORA1022A</code>.</p>
+</dd>
+<dt><code>"DBCHARSET"</code></dt>
+<dd>
+<p>The character set that is used by the database that produced the data in the trail file. (For some databases, this will be empty.)</p>
+</dd>
+<dt><code>"DBMAJORVERSION"</code></dt>
+<dd>
+<p>The major version of the database that produced the data in the trail file.</p>
+</dd>
+<dt><code>"DBMINORVERSION"</code></dt>
+<dd>
+<p>The minor version of the database that produced the data in the trail file.</p>
+</dd>
+<dt><code>"DBVERSIONSTRING"</code></dt>
+<dd>
+<p>The maintenance (patch) level of the database that produced the data in the trail file.</p>
+</dd>
+<dt><code>"DBCLIENTCHARSET"</code></dt>
+<dd>
+<p>The character set of the database client.</p>
+</dd>
+<dt><code>"DBCLIENTVERSIONSTRING"</code></dt>
+<dd>
+<p>Returns the maintenance (patch) level of the database client. (For some databases, this will be empty.)</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect3"><a id="CJAIEBAG"></a>ContinuityInfo: Recovery information carried over from the previous trail file</p>
+<dl>
+<dt><code>"RECOVERYMODE"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+<dt><code>"LASTCOMPLETECSN"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+<dt><code>"LASTCOMPLETEXIDS"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+<dt><code>"LASTCSN"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+<dt><code>"LASTXiD"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+<dt><code>"LASTCSNTS"</code></dt>
+<dd>
+<p>Internal use</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="CJAEIJBA"></a>Returning Record Location and Source Application Information</p>
+<p>Use the <code>RECORD</code> option of <code>@GETENV</code> to return location information of a record in the Oracle GoldenGate trail file or source application process information. The location information uniquely identifies a record through the sequence number of the trail file and the relative byte address or the transaction identifier. Source application information identifies the source program that alters the Enscribe file record.</p>
+<p class="titleinrefsubsect2"><a id="sthref1553"></a>Syntax</p>
+<pre>
+@GETENV ("RECORD", "<span class="codeinlineitalic">option</span>")
+</pre>
+<p>"<code>option</code>" is one of options described in the following sections:</p>
+<ul>
+<li>
+<p><a href="#CJAHHHCA">"Record Location Options"</a></p>
+</li>
+<li>
+<p><a href="#CJADHJCJ">"Source Application Options"</a></p>
+</li>
+</ul>
+<p class="titleinrefsubsect3"><a id="CJAHHHCA"></a>Record Location Options</p>
+<dl>
+<dt><code>FILERBA</code></dt>
+<dd>
+<p>Returns the relative byte address (RBA) of the record within the <code>FILESEQNO</code> trail file.</p>
+</dd>
+<dt><code>FILESEQNO</code></dt>
+<dd>
+<p>Returns the sequence number of the trail file without any leading zeros.</p>
+</dd>
+<dt><code>TRANSID</code></dt>
+<dd>
+<p>Returns the TMF transaction identifier for which the record was altered.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect3"><a id="CJADHJCJ"></a>Source Application Options</p>
+<dl>
+<dt><code>PROGRAMNAME</code></dt>
+<dd>
+<p>Returns the name of the source application program that altered the Enscribe file record.</p>
+</dd>
+<dt><code>PROCESSNAME</code></dt>
+<dd>
+<p>Returns the process identifier (PID) of the source application process that altered the Enscribe file record.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="i935676"></a>Associating BASE24 Keys and Records</p>
+<p>Use the <code>TLFKEY</code> option of <code>@GETENV</code> to associate a unique key with <code>TLF/PTLF</code> records in the ACI BASE24 application. The 64-bit key is composed of the following concatenated items:</p>
+<ul>
+<li>
+<p>the number of seconds since <code>2000</code>.</p>
+</li>
+<li>
+<p>the block number of the record in the <code>TLF/PTLF</code> block multiplied by ten.</p>
+</li>
+<li>
+<p>the node specified by the user (must be between <code>0</code> and <code>255)</code>.</p>
+</li>
+</ul>
+<p>This option is valid for the Extract and Replicat processes.</p>
+<p class="titleinrefsubsect2"><a id="sthref1554"></a>Syntax</p>
+<pre>
+@GETENV ("TLFKEY", SYSKEY, <span class="codeinlineitalic">unique_key</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">unique_key</span></code></dt>
+<dd>
+<p>The NonStop node number of the source <code>TLF</code>/<code>PTLF</code> file.</p>
+<p>Example: <code>@GETENV ("TLFKEY", SYSKEY</code>, <code>7)</code></p>
+</dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i997917"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">GETVAL</h2>
+<p>Use the <code>@</code><code>GETVAL</code> function to extract values from a query so that they can be used as input to a <code>FILTER</code> or <code>COLMAP</code> clause of a <code>MAP</code> or <code>TABLE</code> statement.</p>
+<p>Whether or not a parameter value can be extracted with <code>@GETVAL</code> depends upon the following:</p>
+<ol>
+<li>
+<p>Whether or not the query executed successfully.</p>
+</li>
+<li>
+<p>Whether or not the query results have expired.</p>
+</li>
+</ol>
+<p class="titleinrefsubsect"><a id="sthref1555"></a>Handling Missing Column Values</p>
+<p>When a value cannot be extracted, the <code>@GETVAL</code> function results in a "column missing" condition. Typically, this occurs for update operations if the database only logs values for columns that were changed.</p>
+<p>Usually this means that the column cannot be mapped. To test for missing column values, use the <code>@COLTEST</code> function to test the result of <code>@GETVAL</code>, and then map an alternative value for the column to compensate for missing values, if desired. Or, to ensure that column values are available, you can use the <code>FETCHCOLS</code> or <code>FETCHCOLSEXCEPT</code> option of the <code>TABLE</code> or <code>MAP</code> parameter to fetch the values from the database if they are not present in the log. (Enabling supplemental logging for the necessary columns also would work.)</p>
+<p class="titleinrefsubsect"><a id="sthref1556"></a>Syntax</p>
+<pre>
+@GETVAL (<span class="codeinlineitalic">name</span>.<span class="codeinlineitalic">parameter</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">name</span></code></dt>
+<dd>
+<p>The name of the query. When using <code>SQLEXEC</code> to execute the query, the valid value is the logical name specified with the <code>ID</code> option of the <code>SQLEXEC</code> clause. <code>ID</code> is a required <code>SQLEXEC</code> argument for queries.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">parameter</span></code></dt>
+<dd>
+<p>Valid values are one of the following.</p>
+<ul>
+<li>
+<p>The name of the parameter in the query from which the data will be extracted and passed to the column map.</p>
+</li>
+<li>
+<p><code>RETURN_VALUE</code>, if extracting values returned by a query.</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1557"></a>Example</p>
+<p>The following example enables the <code>COMPUTE</code> statements to call two stored procedures <code>selectbal</code> and <code>selecttran</code> by referencing the logical name within the <code>@GETVAL</code> function and referring appropriately to the results of each.</p>
+<pre>
+MAP \NY.$DATA1.GGSDAT.ACCTTR, TARGET \NY.$DATA1.GGSDAT.ACCTBL
+SQLEXEC (ID selecttran, ON UPDATES, ON INSERTS, 
+QUERY " select tran_type, tran_amt from $DATA1.GGSDAT.ACCTTR "
+" where ACCT_NUM = ?P1 ",
+PARAMS (P1 = ACCT_NUM), ERROR REPORT)
+
+SQLEXEC (ID selectbal, ON UPDATES, ON INSERTS, 
+QUERY " select acct_balance from $DATA1.GGSDAT.ACCTBL "
+" where ACCT_NUM = ?P1 ",
+PARAMS (P1 = ACCT_NUM), ERROR REPORT)
+
+COLMAP (USEDEFAULTS,
+acct_balance = 
+@IF (@GETVAL (selecttran.tran_type) = 1
+@COMPUTE (@GETVAL (selectbal.acct_balance) - selecttran.tran_amt),
+@COMPUTE (@GETVAL (selectbal.acct_balance) + selecttran.tran_amt))
+);
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i993342"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">HIGHVAL | LOWVAL</h2>
+<p>Use the <code>@</code><code>HIGHVAL</code> and <code>@LOWVAL</code> functions when you need to generate a value, but you want to constrain it within an upper or lower limit. These functions emulate the COBOL functions of the same name.</p>
+<p>Use <code>@HIGHVAL</code> and <code>@LOWVAL</code> only with string and binary data types. Using them with decimal or date data types, or with SQLEXEC, can cause errors.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Invalid maps to incorrect type will result in a mapping error 222.</p>
+</div>
+<p class="titleinrefsubsect"><a id="sthref1558"></a>Syntax</p>
+<pre>
+@HIGHVAL ([<span class="codeinlineitalic">length</span>]) | @LOWVAL ([<span class="codeinlineitalic">length</span>]) 
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">length</span></code></dt>
+<dd>
+<p>Optional. Specifies the binary output length in bytes. The maximum value of <code><span class="codeinlineitalic">length</span></code> is the length of the target column.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1559"></a>Examples</p>
+<dl>
+<dd><a id="sthref1560"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>This example sets COBOL-type group level to low values if key is less than <code>50</code>, and it sets COBOL-type group level to high values if the key is greater than <code>50</code>.</p>
+<pre>
+MAP \PROD.$DATA.MASTER.CUSTOMER, TARGET \BACK.$DATA.MASTER.CUSTOMER, DEF CUSTOMER-REC,
+TARGETDEF NEW_CUSTOMER_REC,
+COLMAP (USEDEFAULTS, CUST-KEY = CUST-KEY,
+    GROUP-LEVEL = @IF (CUST-KEY &lt; 50,@LOWVAL(), @HIGHVAL()));
+</pre></dd>
+<dd><a id="sthref1561"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following example assumes that the size of the <code>GROUP-LEVEL</code> field is 5 bytes.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment20" summary="This table lists function statements that set high and low values and their result" dir="ltr">
+<thead>
+<tr class="cellalignment11">
+<th class="cellalignment21" id="r1c1-t12">Function statement</th>
+<th class="cellalignment21" id="r1c2-t12">Results</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r2c1-t12" headers="r1c1-t12">
+<pre>
+GROUP-LEVEL = @HIGHVAL ()
+</pre></td>
+<td class="cellalignment17" headers="r2c1-t12 r1c2-t12">
+<pre>
+{0xFF, 0xFF, 0xFF, 0xFF, 0xFF}
+</pre></td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r3c1-t12" headers="r1c1-t12">
+<pre>
+GROUP-LEVEL = @LOWVAL ()
+</pre></td>
+<td class="cellalignment17" headers="r3c1-t12 r1c2-t12">
+<pre>
+{0x00, 0x00, 0x00, 0x00, 0x00}
+</pre></td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r4c1-t12" headers="r1c1-t12">
+<pre>
+GROUP-LEVEL = @HIGHVAL (3)
+</pre></td>
+<td class="cellalignment17" headers="r4c1-t12 r1c2-t12">
+<pre>
+{0xFF, 0xFF, 0xFF}
+</pre></td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r5c1-t12" headers="r1c1-t12">
+<pre>
+GROUP-LEVEL = @LOWVAL (3)
+</pre></td>
+<td class="cellalignment17" headers="r5c1-t12 r1c2-t12">
+<pre>
+{0x00, 0x00, 0x00}
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i935707"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">IF</h2>
+<p><code>@IF</code> returns one of two values, based upon a condition.</p>
+<p class="titleinrefsubsect"><a id="sthref1562"></a>Syntax</p>
+<pre>
+@IF (<span class="codeinlineitalic">conditional_expression</span>, <span class="codeinlineitalic">nonzero_value</span>, <span class="codeinlineitalic">zero_value</span>)
+     
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">conditional_expression</span></code></dt>
+<dd>
+<p>The conditional expression.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">non-zero_value</span></code></dt>
+<dd>
+<p>The value if the expression is non-zero. A non-zero result is considered <code>TRUE</code>.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">zero_value</span></code></dt>
+<dd>
+<p>The value if the expression is zero. A zero result is considered <code>FALSE</code>.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1563"></a>Examples</p>
+<dl>
+<dd><a id="sthref1564"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following returns <code>AMT</code> only if <code>AMT</code> is greater than zero, otherwise zero is returned.</p>
+<pre>
+AMOUNT_COL = @IF (AMT &lt;= 0, 0, AMT)
+</pre></dd>
+<dd><a id="sthref1565"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following returns <code>WEST</code> if <code>STATE</code> is <code>CA</code>, <code>AZ</code> or <code>NV</code>, otherwise returns <code>EAST</code>.</p>
+<pre>
+REGION = @IF (@VALONEOF (STATE, "CA", "AZ", "NV"), "WEST", "EAST")
+</pre></dd>
+<dd><a id="sthref1566"></a></dd>
+<dt class="seghead">Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following returns <code>NULL</code> unless both <code>PRICE</code> and <code>QUANTITY</code> are greater than zero.</p>
+<pre>
+ORDER_TOTAL = @IF (PRICE &gt; 0 AND QUANTITY &gt; 0, PRICE * QUANTITY, @COLSTAT(NULL)
+</pre></dd>
+<dd><a id="sthref1567"></a></dd>
+<dt class="seghead">Example 4&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following returns <code>NULL</code> unless both <code>PRICE</code> and <code>QUANTITY</code> are greater than zero. <code>COLSTAT(NULL)</code> creates a null value in the target column.</p>
+<pre>
+ORDER_TOTAL = @IF (PRICE &gt; 0 AND QUANTITY &gt; 0, PRICE * QUANTITY,
+    @COLSTAT(NULL)
+</pre></dd>
+<dd><a id="sthref1568"></a></dd>
+<dt class="seghead">Example 5&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following returns <code>NULL</code> if either <code>PRICE</code> or <code>QUANTITY</code> is <code>NULL</code>. When any columns in an expression are <code>NULL</code>, this is the default action.</p>
+<pre>
+ORDER_TOTAL = @IF (@COLTEST (PRICE, NULL) OR @COLTEST(QUANTITY, NULL), @COLSTAT(NULL), PRICE * QUANTITY)
+</pre></dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i935745"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">NUMBIN</h2>
+<p><code>@NUMBIN</code> turns a binary string of eight or fewer bytes, into a number. Use this when the source DDL defines a byte stream that is actually a number as a string.</p>
+<p class="titleinrefsubsect"><a id="sthref1569"></a>Syntax</p>
+<pre>
+@NUMBIN (<span class="codeinlineitalic">source_column</span>)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i935750"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">NUMSTR</h2>
+<p><code>@NUMSTR</code> converts a string (character) field or value into a number. Use this to map a string field into a number, or to use a string field that contains only numbers in an arithmetic expression.</p>
+<p class="titleinrefsubsect"><a id="sthref1570"></a>Syntax</p>
+<pre>
+@NUMSTR (<span class="codeinlineitalic">convert_field</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">convert_field</span></code></dt>
+<dd>
+<p>A character column or a literal string.</p>
+</dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i994121"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">RANGE</h2>
+<p>The <code>@RANGE</code> function, used within the <code>FILTER</code> option, helps divide workload into multiple, randomly distributed groups of data, while guaranteeing that the same row will always be processed by the same program. For example, <code>@RANGE</code> can be used to split the workload by different key ranges for a heavily accessed table into different Replicat processes.</p>
+<p>The user specifies both a range that applies to the current process, and the total number of ranges (generally the number of processes), and optionally a list of column names to use to calculate the range against.</p>
+<p><code>@RANGE</code> computes a hash value of all the columns specified, or if no columns are specified, the primary key columns of the source table. A remainder of the hash and the total number of ranges is compared with the ownership range to determine whether or not <code>@RANGE</code> produces true or false results. Oracle GoldenGate adjusts the total number of ranges so that they are evenly distributed.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Calculating ranges in an Extract parameter file is more efficient that doing so in a Replicat parameter file. Calculating ranges on the target requires Replicat to read all of the Oracle GoldenGate trail data to find the data meeting each range specification.</p>
+</div>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Using the <code>@RANGE</code> function within a <code>FILTER</code> provides different capabilities, such as specifying columns, than using the <code>RANGE</code> option of <code>FILE</code> or <code>MAP</code>. And both of these are different than the <code>RANGE</code> option of <code>ALTINPUT</code>.</p>
+</div>
+<p class="titleinrefsubsect"><a id="sthref1571"></a>Syntax</p>
+<pre>
+@RANGE (<span class="codeinlineitalic">range</span>, <span class="codeinlineitalic">total_ranges</span> [, <span class="codeinlineitalic">column</span>] [, <span class="codeinlineitalic">column</span>] [, ...]))
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">range</span></code></dt>
+<dd>
+<p>The range assigned to the specified process or trail. Valid values are <code>1</code>, <code>2</code>, <code>3</code>, and so forth, with the maximum value being the value defined by <code><span class="codeinlineitalic">total_ranges</span></code>.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">total_ranges</span></code></dt>
+<dd>
+<p>The total number of ranges allocated. For example, to divide data into three groups, use the value <code>3</code>.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">column</span></code></dt>
+<dd>
+<p>The name of a column, or columns, on which to base the range allocation. This argument is optional. If not used, Oracle GoldenGate calculates ranges based on the table's primary key.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1572"></a>Examples</p>
+<dl>
+<dd><a id="sthref1573"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>In the following example, the workload is split into three ranges, between three Replicat processes, based on the <code>ID</code> column of the <code>SRCTAB</code> table.</p>
+<p>Replicat parameter file #1 contains:</p>
+<pre>
+MAP $PRODSRC.PRODMSTR.SRCTAB, TARGET $PROD.MASTER.TARGTAB, 
+FILTER (@RANGE(1,3, ID));
+</pre>
+<p>Replicat parameter file #2 contains:</p>
+<pre>
+MAP $PRODSRC.PRODMSTR.SRCTAB, TARGET $PROD.MASTER.TARGTAB,
+FILTER (@RANGE(2,3, ID);
+</pre>
+<p>Replicat parameter file #3 contains:</p>
+<pre>
+MAP $PRODSRC.PRODMSTR.SRCTAB, TARGET $PROD.MASTER.TARGTAB, FILTER (@RANGE(3,3, ID)); 
+</pre></dd>
+<dd><a id="sthref1574"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>In the following example, the <code>TABLE</code> parameter in the Extract parameter file splits the processing load into two trails. Since no columns were defined on which to base the range calculation, Oracle GoldenGate will use the primary key columns.</p>
+<pre>
+RMTTRAIL $DATA.GGSDAT.AA
+TABLE ACCOUNT, FILTER (@RANGE (1, 2));
+RMTTRAIL $DATA.GGSDAT.BB
+TABLE ACCOUNT, FILTER (@RANGE (2, 2));
+</pre></dd>
+<dd><a id="sthref1575"></a></dd>
+<dt class="seghead">Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>In the following example, the <code>ORDMASTR</code> table has a key of <code>ORDERID</code> and the <code>ORDDETL</code> table has a key of <code>ITEMNUM</code>. Because the key <code>ORDERID</code> establishes relativity, it is used in <code>@RANGE</code> filters for both tables to preserve referential integrity. The load is split into two ranges.</p>
+<p>(Parameter file #1)</p>
+<pre>
+MAP $PRODSRC.PRODMSTR.ORDMASTR, TARGET $PROD.MASTER.ORDMASTR,
+FILTER (@RANGE (1, 2, ORDERID));
+MAP $PRODSRC.PRODMSTR.ORDDETL, TARGET $PROD.MASTER.ORDDETL,
+FILTER (@RANGE (1, 2, ORDERID));
+</pre>
+<p>(Parameter file #2)</p>
+<pre>
+MAP $PRODSRC.PRODMSTR.ORDMASTR, TARGET $PROD.MASTER.ORDMASTR,
+FILTER (@RANGE (2, 2, ORDERID));
+MAP $PRODSRC.PRODMSTR.ORDDETL, TARGET $PROD.MASTER.ORDDETL,
+FILTER (@RANGE (2, 2, ORDERID));
+</pre></dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i935822"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRCAT</h2>
+<p>Use the <code>@STRCAT</code> function to concatenate one or more strings. The string can be either the name of a column or a literal string. Enclose literals within quotes.</p>
+<p class="titleinrefsubsect"><a id="sthref1576"></a>Syntax</p>
+<pre>
+result = @STRCAT (<span class="codeinlineitalic">string1</span>, <span class="codeinlineitalic">string2</span> [,...])
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string1</span></code></dt>
+<dd>
+<p>The first string to be concatenated.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">string2</span></code></dt>
+<dd>
+<p>The second string to be concatenated.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1577"></a>Example</p>
+<p>The following creates a phone number from three fields and includes the constant values.</p>
+<pre>
+PHONE_NO = @STRCAT ("(", AREA_CODE,")",PREFIX,"-", PHONE)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i993731"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRCMP</h2>
+<p>Use the <code>@STRCMP</code> function to compare two character columns or literal strings. Enclose literals within quotes.</p>
+<p><code>@STRCMP</code> returns the following:</p>
+<ul>
+<li>
+<p><code>-1</code> if the first string is less than the second.</p>
+</li>
+<li>
+<p><code>0</code> if the strings are equal.</p>
+</li>
+<li>
+<p><code>1</code> if the first string is greater than the second.</p>
+</li>
+</ul>
+<p>Trailing spaces are truncated before comparing the strings.</p>
+<p class="titleinrefsubsect"><a id="sthref1578"></a>Syntax</p>
+<pre>
+@STRCMP (<span class="codeinlineitalic">string1</span>, <span class="codeinlineitalic">string2</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string1</span></code></dt>
+<dd>
+<p>The first column or literal string to be compared.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">string2</span></code></dt>
+<dd>
+<p>The second column or literal string to be compared.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1579"></a>Example</p>
+<p>The following example compares two literal strings and returns <code>1</code> because the first string is greater than the second.</p>
+<pre>
+<a id="i935843"></a>
+@STRCMP ("JOHNSON", "JONES")
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i994944"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STREQ</h2>
+<p>Use <code>@STREQ</code> to determine if two strings are equal. The result is either:</p>
+<ul>
+<li>
+<p><code>0</code> = strings are not equal</p>
+</li>
+<li>
+<p><code>1</code> = strings are equal</p>
+</li>
+</ul>
+<p class="titleinrefsubsect"><a id="sthref1580"></a>Syntax</p>
+<pre>
+result = @STREQ (<span class="codeinlineitalic">string1</span>, <span class="codeinlineitalic">string2</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string1</span></code></dt>
+<dd>
+<p>The first string to compare.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">string2</span></code></dt>
+<dd>
+<p>The second string to compare.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1581"></a>Example</p>
+<p>The following filter clause compares the value of the variable <code>REGION</code> to the literal value <code>"EAST</code>". If <code>Region = EAST</code>, the record passes the filter.</p>
+<pre>
+FILTER (@STREQ (REGION, "EAST"))
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i993747"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STREXT</h2>
+<p>Use the <code>@STREXT</code> function to extract a portion of a string.</p>
+<p class="titleinrefsubsect"><a id="sthref1582"></a>Syntax</p>
+<pre>
+result = @STREXT (<span class="codeinlineitalic">string</span>, <span class="codeinlineitalic">begin_position</span>, <span class="codeinlineitalic">end_position</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string</span></code></dt>
+<dd>
+<p>The string from which to extract. The string can be either the name of a column or a literal string. Enclose literals within quotes.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">begin_position</span></code></dt>
+<dd>
+<p>The character position at which to begin extracting.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">end_position</span></code></dt>
+<dd>
+<p>The character position at which to end extracting. The end position is included in the extraction.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1583"></a>Example</p>
+<p>The following example uses three <code>@STREXT</code> functions to extract a phone number into three different columns.</p>
+<pre>
+AREA_CODE = @STREXT (PHONE, 1, 3),
+PREFIX    = @STREXT (PHONE, 4, 6),
+PHONE_NO  = @STREXT (PHONE, 7, 10)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i935869"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRFIND</h2>
+<p>Use the <code>@STRFIND</code> function to determine the position of a string within a string column or else return zero if not found. Optionally, <code>@STRFIND</code> can accept a starting position to search within the string.</p>
+<p class="titleinrefsubsect"><a id="sthref1584"></a>Syntax</p>
+<pre>
+result = @STRFIND (<span class="codeinlineitalic">string</span>, "<span class="codeinlineitalic">search_string</span>" [, <span class="codeinlineitalic">begin_position</span>])
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string</span></code></dt>
+<dd>
+<p>The string from which to extract. The string can be either the name of a column or a literal string. Enclose literals within quotes.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">"search_string"</span></code></dt>
+<dd>
+<p>The string for which to search within the string. Enclose the search string within quotes.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">begin_position</span></code></dt>
+<dd>
+<p>The character position at which to begin searching.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1585"></a>Example</p>
+<p>Assuming the string for <code>ACCT</code> is <code>ABC123ABC</code>, the following are possible results.</p>
+<pre>
+result = @STRFIND (ACCT, "23") returns 5. 
+result = @STRFIND (ACCT, "ZZ") returns 0. 
+result = @STRFIND (ACCT, "ABC", 2) returns 7. 
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i935895"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRLEN</h2>
+<p>Use the <code>@STRLEN</code> function to return the length of a string, in number of characters.</p>
+<p class="titleinrefsubsect"><a id="sthref1586"></a>Syntax</p>
+<pre>
+result = @STRLEN (<span class="codeinlineitalic">string</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string</span></code></dt>
+<dd>
+<p>Can be the name of a column or a literal string. Enclose literals within quotation marks.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1587"></a>Example</p>
+<pre>
+@STRLEN (ID_NO)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i935910"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRLTRIM</h2>
+<p>Use the <code>@STRLTRIM</code> function to trim leading spaces.</p>
+<p class="titleinrefsubsect"><a id="sthref1588"></a>Syntax</p>
+<pre>
+@STRLTRIM (<span class="codeinlineitalic">string</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string</span></code></dt>
+<dd>
+<p>Can be the name of a character column or a literal string. Enclose literals within quotes.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1589"></a>Example</p>
+<pre>
+  birth_state = @strltrim(state)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i935924"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRNCAT</h2>
+<p>Use the <code>@STRNCAT</code> function to concatenate one or more strings to a maximum length.</p>
+<p class="titleinrefsubsect"><a id="sthref1590"></a>Syntax</p>
+<pre>
+result = @STRNCAT (<span class="codeinlineitalic">string</span>, <span class="codeinlineitalic">max_length</span> [, <span class="codeinlineitalic">string</span>, <span class="codeinlineitalic">max_length</span>, ...])
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string</span></code></dt>
+<dd>
+<p>Can be the name of a column or a literal string. Enclose literals within quotation marks.</p>
+</dd>
+<dt><code>max_length</code></dt>
+<dd>
+<p>The maximum string length, in characters.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1591"></a>Example</p>
+<p>The following concatenates two strings and results in <code>"ABC123</code>."</p>
+<pre>
+PHONE_NO = @STRNCAT ("ABCDEF", 3, "123", 3)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i935944"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRNCMP</h2>
+<p>Use <code>@STRNCMP</code> to compare two strings, up to a specified number of characters in each string. Trailing spaces are truncated before comparing the strings. The compare returns:</p>
+<ul>
+<li>
+<p>0 if the strings are equal.</p>
+</li>
+<li>
+<p>-1 if the first string is less than the second string.</p>
+</li>
+<li>
+<p>1 if the first string is greater than the second string.</p>
+</li>
+</ul>
+<p class="titleinrefsubsect"><a id="sthref1592"></a>Syntax</p>
+<pre>
+@STRNCMP (<span class="codeinlineitalic">compare_data</span>, <span class="codeinlineitalic">compare_data</span>, <span class="codeinlineitalic">max_compare_length</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">compare_data</span></code></dt>
+<dd>
+<p>The data to compare. Can be a character column or literal string.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">max_compare_length</span></code></dt>
+<dd>
+<p>Specifies a number of characters to be compared in each string. For example, if you specify <code>2</code>, the first two characters of each string are compared. If they are equal, <code>0</code> (zero) is returned.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1593"></a>Example</p>
+<p>This example returns <code>0</code>, since the first two characters of both strings are equal.</p>
+<pre>
+result = @STRNCMP ("JOHNSON", "JONES", 2)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i935969"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRNUM</h2>
+<p>Use <code>@STRNUM</code> to convert a number into a string and specify the output format and padding.</p>
+<p class="titleinrefsubsect"><a id="sthref1594"></a>Syntax</p>
+<pre>
+@STRNUM (<span class="codeinlineitalic">field</span>, {LEFT | LEFTSPACE | RIGHT | RIGHTZERO} [<span class="codeinlineitalic">length</span>])
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">field</span></code></dt>
+<dd>
+<p>The name of the source numeric field.</p>
+</dd>
+<dt><code>LEFT</code></dt>
+<dd>
+<p>Left justify, fill the rest of the target column with spaces</p>
+</dd>
+<dt><code>LEFTSPACE</code></dt>
+<dd>
+<p>Left justify, fill the rest of the target column.</p>
+</dd>
+<dt><code>RIGHT</code></dt>
+<dd>
+<p>Right justify, fill with spaces</p>
+</dd>
+<dt><code>RIGHTZERO</code></dt>
+<dd>
+<p>Right justify, fill the rest of the target column with zeros</p>
+</dd>
+<dt><code><span class="codeinlineitalic">length</span></code></dt>
+<dd>
+<p>Specifies the output length, when any of the options are used that specify padding (all but <code>LEFT</code>).</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1595"></a>Example</p>
+<p>If field <code>NUM</code> has the value 15 and the target column <code>CHAR1</code> is a maximum of 5 characters, the following examples show the different types of results obtained with formatting options.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment20" summary="This table list examples of function statements and their result using NUM with different justifications" dir="ltr">
+<thead>
+<tr class="cellalignment11">
+<th class="cellalignment21" id="r1c1-t15">Function statement</th>
+<th class="cellalignment21" id="r1c2-t15">Results (<code>-</code> denotes a space)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r2c1-t15" headers="r1c1-t15">
+<pre>
+CHAR1 = @STRNUM (NUM, LEFT)
+</pre></td>
+<td class="cellalignment17" headers="r2c1-t15 r1c2-t15">
+<pre>
+15
+</pre></td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r3c1-t15" headers="r1c1-t15">
+<pre>
+CHAR1 = @STRNUM (NUM, LEFTSPACE)
+</pre></td>
+<td class="cellalignment17" headers="r3c1-t15 r1c2-t15">
+<pre>
+15---
+</pre></td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r4c1-t15" headers="r1c1-t15">
+<pre>
+CHAR1 = @STRNUM (NUM, RIGHTZERO)
+</pre></td>
+<td class="cellalignment17" headers="r4c1-t15 r1c2-t15">
+<pre>
+00015
+</pre></td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r5c1-t15" headers="r1c1-t15">
+<pre>
+CHAR1 = @STRNUM (NUM, RIGHT)
+</pre></td>
+<td class="cellalignment17" headers="r5c1-t15 r1c2-t15">
+<pre>
+---15
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>If an output <code><span class="codeinlineitalic">length</span></code> of 4 is specified in the preceding example, the following shows the different types of results.</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment20" summary="This table list examples of function statements and their result using NUM with different justifications and using a length of 4" dir="ltr">
+<thead>
+<tr class="cellalignment11">
+<th class="cellalignment21" id="r1c1-t16">Function statement</th>
+<th class="cellalignment21" id="r1c2-t16">Results (<code>-</code> denotes a space)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r2c1-t16" headers="r1c1-t16">
+<pre>
+CHAR1 = @STRNUM (NUM, LEFTSPACE, 4)
+</pre></td>
+<td class="cellalignment17" headers="r2c1-t16 r1c2-t16">
+<pre>
+15--
+</pre></td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r3c1-t16" headers="r1c1-t16">
+<pre>
+CHAR1 = @STRNUM (NUM, RIGHTZERO, 4)
+</pre></td>
+<td class="cellalignment17" headers="r3c1-t16 r1c2-t16">
+<pre>
+0015
+</pre></td>
+</tr>
+<tr class="cellalignment11">
+<td class="cellalignment17" id="r4c1-t16" headers="r1c1-t16">
+<pre>
+CHAR1 = @STRNUM (NUM, RIGHT, 4)
+</pre></td>
+<td class="cellalignment17" headers="r4c1-t16 r1c2-t16">
+<pre>
+--15
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="refsect1" -->
+<a id="i936009"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRRTRIM</h2>
+<p>Use the <code>@STRRTRIM</code> function to trim trailing spaces.</p>
+<p class="titleinrefsubsect"><a id="sthref1596"></a>Syntax</p>
+<pre>
+@STRRTRIM (<span class="codeinlineitalic">string</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string</span></code></dt>
+<dd>
+<p>Can be the name of a character column or a literal string. Enclose literals within quotes.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1597"></a>Example</p>
+<pre>
+ street_address = @strrtrim(address)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i936023"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRSUB</h2>
+<p>Use <code>STRSUB</code> to substitute one string within another string field or constant.</p>
+<p class="titleinrefsubsect"><a id="sthref1598"></a>Syntax</p>
+<pre>
+@STRSUB (<span class="codeinlineitalic">source_string_or_col</span>, <span class="codeinlineitalic">search_string</span>, <span class="codeinlineitalic">substitute_string</span>, ...)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">source_string_or_col</span></code></dt>
+<dd>
+<p>The string or column to replace.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">search_string</span></code></dt>
+<dd>
+<p>The value to be replaced.</p>
+</dd>
+<dt><code><span class="codeinlineitalic">substitute_string</span></code></dt>
+<dd>
+<p>The replacement value.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1599"></a>Examples</p>
+<dl>
+<dd><a id="sthref1600"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>For this example, the source string is <code>"123ABC123"</code>. The value <code>"123"</code> is to be replaced with <code>"xx"</code>. The result is <code>xxABCxx</code>.</p>
+<pre>
+result = @STRSUB ("123ABC123", "123", "xx")
+</pre></dd>
+<dd><a id="sthref1601"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>For this example, the source string is "<code>123ABC123</code>". The value "<code>A</code>" is to be replaced with "<code>z</code>" and the value <code>"1</code>" is replaced with <code>"0</code>". The result is <code>023zBC023</code>.</p>
+<pre>
+result = @STRSUB ("123ABC123", "A", "z", "1", "0")
+</pre></dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i936049"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRTRIM</h2>
+<p>Use the <code>@STRTRIM</code> function to trim leading and trailing spaces.</p>
+<p class="titleinrefsubsect"><a id="sthref1602"></a>Syntax</p>
+<pre>
+@STRTRIM (<span class="codeinlineitalic">string</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string</span></code></dt>
+<dd>
+<p>Can be the name of a character column or a literal string. Enclose literals within quotes.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1603"></a>Example</p>
+<pre>
+ pin_no = @strtrim(custpin)
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i936063"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">STRUP</h2>
+<p>Use <code>@STRUP</code> to change a character string or field to uppercase.</p>
+<p class="titleinrefsubsect"><a id="sthref1604"></a>Syntax</p>
+<pre>
+@STRUP (<span class="codeinlineitalic">string</span>)
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">string</span></code></dt>
+<dd>
+<p>Can be the name of a character field or a literal string. Enclose literals within quotes.</p>
+</dd>
+</dl>
+<p class="titleinrefsubsect"><a id="sthref1605"></a>Example</p>
+<p>The following changes the string, <code>"aaaaa</code>" to <code>"AAAAA</code>".</p>
+<pre>
+result = @STRUP ("aaaaa")
+</pre></div>
+<!-- class="refsect1" -->
+<a id="i936070"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">TOKEN</h2>
+<p>Use the <code>@TOKEN</code> function to retrieve data that is stored in the user token area of the Oracle GoldenGate trail record header. Tokens are defined in the Extract parameter file by means of the <code>TOKENS</code> clause of the <code>FILE</code> or <code>TABLE</code> parameter. The token data can be mapped to a target column by means of a <code>COLMAP</code> clause or used within a SQLEXEC statement or Oracle GoldenGate macro or user exit.</p>
+<p class="titleinrefsubsect"><a id="sthref1606"></a>Syntax</p>
+<pre>
+@TOKEN ("<span class="codeinlineitalic">token_name</span>")
+</pre>
+<dl>
+<dt><code><span class="codeinlineitalic">"</span></code><code><span class="codeinlineitalic">token_name</span></code><code><span class="codeinlineitalic">"</span></code></dt>
+<dd>
+<p>The name of the token for which data is to be retrieved.</p>
+</dd>
+</dl>
+</div>
+<!-- class="refsect1" -->
+<a id="i936084"></a>
+<hr />
+<div class="refsect1">
+<h2 class="refsect1">VALONEOF</h2>
+<p>Use <code>@VALONEOF</code> to compare a field or string to a list of values. If the field is in the list, <code>1</code> is returned, otherwise <code>0</code> is returned.</p>
+<p class="titleinrefsubsect"><a id="sthref1607"></a>Syntax</p>
+<pre>
+@VALONEOF (<span class="codeinlineitalic">expression</span>, <span class="codeinlineitalic">value</span> [, <span class="codeinlineitalic">value</span>] [, ...])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref1608"></a>Example</p>
+<p>If <code>STATE</code> is <code>CA</code> or <code>NY</code>, this expression returns <code>"COAST</code>".</p>
+<pre>
+@IF (@VALONEOF (STATE, "CA", "NY"), "COAST", "MIDDLE")
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment10">
+<tr>
+<td class="cellalignment17">
+<table class="cellalignment15">
+<tr>
+<td class="cellalignment14"><a href="collector_parameters.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment14"><a href="defgen_arguments.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment19">
+<table class="cellalignment13">
+<tr>
+<td class="cellalignment14"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment14"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

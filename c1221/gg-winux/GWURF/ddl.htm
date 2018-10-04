@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>DDL</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="dboptions.htm" title="Previous" type="text/html" />
+<link rel="Next" href="ddlerror.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED"></a> <span id="PAGE" style="display:none;">174/459</span> <!-- End Header -->
+<a id="GWURF444"></a><a id="GWURF445"></a><a id="GWURF446"></a><a id="GWURF1109"></a><a id="GWURF1110"></a><a id="GWURF443"></a>
+<h1 id="GWURF-GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED" class="sect1"><span class="enumeration_section">3.41</span> DDL</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract and Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">DDL</code> parameter to:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>enable DDL support</p>
+</li>
+<li>
+<p>filter DDL operations</p>
+</li>
+<li>
+<p>configure a processing action based on a DDL record</p>
+</li>
+</ul>
+<p>When used without options, the <code class="codeph">DDL</code> parameter performs no filtering, and it causes all DDL operations to be propagated as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>As an Extract parameter, it captures all supported DDL operations that are generated on all supported database objects and sends them to the trail.</p>
+</li>
+<li>
+<p>As a Replicat parameter, it replicates all DDL operations from the Oracle GoldenGate trail and applies them to the target. This is the same as the default behavior without this parameter.</p>
+</li>
+</ul>
+<p>When used with options, the <code class="codeph">DDL</code> parameter acts as a filtering agent to include or exclude DDL operations based on:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>scope</p>
+</li>
+<li>
+<p>object type</p>
+</li>
+<li>
+<p>operation type</p>
+</li>
+<li>
+<p>object name</p>
+</li>
+<li>
+<p>strings in the DDL command syntax or comments, or both</p>
+</li>
+</ul>
+<p>Only one DDL parameter can be used in a parameter file, but you can combine multiple inclusion and exclusion options to filter the DDL to the required level.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The filtering options of the <code class="codeph">DDL</code> parameter are valid for a primary Extract that captures from the transaction source, but not for a data-pump Extract.</p>
+</li>
+<li>
+<p>When combined, multiple filter option specifications are linked logically as <code class="codeph">AND</code> statements.</p>
+</li>
+<li>
+<p>All filter criteria specified with multiple options must be satisfied for a DDL statement to be replicated.</p>
+</li>
+<li>
+<p>When using complex filtering criteria in a <code class="codeph">DDL</code> parameter statement, it is recommended that you test your configuration in a test environment before using it in production.</p>
+</li>
+<li>
+<p>See <a href="ddl.htm#GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__BABHBHBA">Example 1, "Example"</a> for more information.</p>
+</li>
+</ul>
+<p>Do not use the <code class="codeph">DDL</code> parameter for:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>an Extract data pump</p>
+</li>
+<li>
+<p>a VAM-sort Extract (Teradata source databases)</p>
+</li>
+</ul>
+<p>These process types do not permit the mapping or conversion of DDL and will propagate DDL records automatically in pass-through mode. DDL that is performed on a source table (for example <code class="codeph">ALTER TABLE TableA...</code>) will be applied by Replicat with the same table name (<code class="codeph">ALTER TABLE TableA</code>). It cannot be mapped as <code class="codeph">ALTER TABLE TableB</code>.</p>
+<p>For additional information about how to use Oracle GoldenGate DDL support, see <a class="olink GIORA-GUID-0A230601-A447-499C-B31F-C9431E1FF034" target="_blank" href="../GIORA/configuring-ddl-support.htm#GIORA-GUID-0A230601-A447-499C-B31F-C9431E1FF034">Installing and Configuring Oracle GoldenGate for Oracle Database</a> or <span class="italic"><span id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GITER"><cite>Installing and Configuring Oracle GoldenGate for Teradata</cite></span></span>, as applicable.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+DDL [
+{INCLUDE | EXCLUDE}
+  [, MAPPED | UNMAPPED | OTHER | ALL]
+  [, OPTYPE <span class="italic">type</span>]
+  [, OBJTYPE '<span class="italic">type</span>']
+  [, SOURCECATALOG <span class="italic">catalog</span> | ALLCATALOGS]
+  [, ALLOWEMPTYOBJECT]
+  [, ALLOWEMPTYOWNER]
+  [, OBJNAME <span class="italic">name</span>]
+  [, INSTR '<span class="italic">string</span>']
+  [, INSTRWORDS '<span class="italic">word_list</span>']
+  [, INSTRCOMMENTS '<span class="italic">comment_string</span>']
+  [, INSTRCOMMENTSWORDS '<span class="italic">word_list</span>']
+  [, STAYMETADATA]
+  [, EVENTACTIONS (<span class="italic">action</span>)
+]
+[...]
+</pre></div>
+<!-- class="section" -->
+<div class="section" id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__BABCEIDG">
+<p class="subhead1">DDL Filtering Options</p>
+<p>The following are the syntax options for filtering and operating upon the DDL that is replicated by Oracle GoldenGate. These options apply to the <code class="codeph">INCLUDE</code> and <code class="codeph">EXCLUDE</code> clauses of the DDL parameter and other parameters that support DDL replication.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-43A3A42E-A48C-4ACA-A440-30038A413A00"><!-- --></a><code class="codeph">INCLUDE | EXCLUDE</code></dt>
+<dd>
+<p>Use <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to identify the beginning of an inclusion or exclusion clause.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>An inclusion clause contains filtering criteria that identifies the DDL that this parameter will affect.</p>
+</li>
+<li>
+<p>An exclusion clause contains filtering criteria that excludes specific DDL from this parameter.</p>
+</li>
+</ul>
+<p>The inclusion or exclusion clause must consist of the <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> keyword followed by any valid combination of the other filtering options of the <code class="codeph">DDL</code> parameter.</p>
+<p>If you use <code class="codeph">EXCLUDE</code>, you must create a corresponding <code class="codeph">INCLUDE</code> clause. For example, the following is invalid:</p>
+<pre dir="ltr">
+DDL EXCLUDE OBJNAME "hr".*
+</pre>
+<p>However, you can use either of the following:</p>
+<pre dir="ltr">
+DDL INCLUDE ALL, EXCLUDE OBJNAME "hr"."*"
+DDL INCLUDE OBJNAME fin.* EXCLUDE OBJNAME "fin.ss"
+</pre>
+<p>An <code class="codeph">EXCLUDE</code> takes priority over any <code class="codeph">INCLUDEs</code> that contain the same criteria. You can use multiple inclusion and exclusion clauses.</p>
+<p>Do not include any Oracle GoldenGate installed DDL objects in a <code class="codeph">DDL</code> parameter, in a <code class="codeph">TABLE</code> parameter, or in a <code class="codeph">MAP</code> parameter, nor in a <code class="codeph">TABLEEXCLUDE</code> or <code class="codeph">MAPEXCLUDE</code> parameter. Make certain that wildcard specifications in those parameters do not include Oracle GoldenGate-installed DDL objects. These objects must not be part of the Oracle GoldenGate configuration, but the Extract process must be aware of operations on them, and that is why you must <span class="italic">not</span> explicitly exclude them from the configuration with an <code class="codeph">EXCLUDE</code>, <code class="codeph">TABLEEXCLUDE</code>, or <code class="codeph">MAPEXCLUDE</code> parameter statement.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-9E1930F8-A570-470F-9C8D-DE2BB3A4A77C"><!-- --></a><code class="codeph">MAPPED | UNMAPPED | OTHER | ALL</code></dt>
+<dd>
+<p>Use <code class="codeph">MAPPED</code>, <code class="codeph">UNMAPPED</code>, <code class="codeph">OTHER</code>, and <code class="codeph">ALL</code> to apply <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> based on the DDL operation scope.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">MAPPED</code> applies <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to DDL operations that are of <code class="codeph">MAPPED</code> scope. <code class="codeph">MAPPED</code> filtering is performed before filtering that is specified with other <code class="codeph">DDL</code> parameter options.</p>
+</li>
+<li>
+<p><code class="codeph">UNMAPPED</code> applies <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to DDL operations that are of <code class="codeph">UNMAPPED</code> scope.</p>
+</li>
+<li>
+<p><code class="codeph">OTHER</code> applies <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to DDL operations that are of <code class="codeph">OTHER</code> scope.</p>
+</li>
+<li>
+<p><code class="codeph">ALL</code> applies <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to DDL operations of all scopes.</p>
+</li>
+</ul>
+<p><code class="codeph">DDL EXCLUDE ALL</code> is a special processing option that maintains up-to-date object metadata for Oracle GoldenGate, while blocking the replication of the DDL operations themselves. You can use <code class="codeph">DDL EXCLUDE ALL</code> when using a method other than Oracle GoldenGate to apply DDL to the target, but you want Oracle GoldenGate to replicate data changes to the target objects. It provides the current metadata to Oracle GoldenGate as objects change, thus preventing the need to stop and start the Oracle GoldenGate processes. The following special conditions apply to <code class="codeph">DDL EXCLUDE ALL</code>:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">DDL EXCLUDE ALL</code> does not require the use of an <code class="codeph">INCLUDE</code> clause.</p>
+</li>
+<li>
+<p>When using <code class="codeph">DDL EXCLUDE ALL</code>, you can set the <code class="codeph">WILDCARDRESOLVE</code> parameter to <code class="codeph">IMMEDIATE</code> to allow immediate DML resolution if required.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-BFDB6BFD-02DD-4383-B39F-4D5BAF67A325"><!-- --></a><code class="codeph">OPTYPE</code> <span class="italic"><code class="codeph">type</code></span></dt>
+<dd>
+<p>Use <code class="codeph">OPTYPE</code> to apply <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to a specific type of DDL operation, such as <code class="codeph">CREATE</code>, <code class="codeph">ALTER</code>, and <code class="codeph">RENAME</code>. For <span class="italic"><code class="codeph">type</code></span>, use any DDL command that is valid for the database. For example, to include <code class="codeph">ALTER</code> operations, the correct syntax is:</p>
+<pre dir="ltr">
+DDL INCLUDE OPTYPE ALTER
+</pre></dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-06B4495E-BDA5-43F3-8230-AECA47D70367"><!-- --></a><code class="codeph">OBJTYPE '</code><span class="italic"><code class="codeph">type'</code></span></dt>
+<dd>
+<p>Use <code class="codeph">OBJTYPE</code> to apply <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to a specific type of database object. For <span class="italic"><code class="codeph">type</code></span>, use any object type that is valid for the database, such as <code class="codeph">TABLE</code>, <code class="codeph">INDEX</code>, and <code class="codeph">TRIGGER</code>. For an Oracle materialized view and materialized views log, the correct types are <code class="codeph">snapshot</code> and <code class="codeph">snapshot log</code>, respectively. Enclose the name of the object type within single quotes. For example:</p>
+<pre dir="ltr">
+DDL INCLUDE OBJTYPE 'INDEX'
+DDL INCLUDE OBJTYPE 'SNAPSHOT'
+</pre>
+<p>For Oracle object type <code class="codeph">USER</code>, do not use the <code class="codeph">OBJNAME</code> option, because <code class="codeph">OBJNAME</code> expects <code class="codeph">owner.object</code> or <span class="italic"><code class="codeph">container.owner.object</code></span> whereas <code class="codeph">USER</code> only has a schema.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-9AA7D8BF-0AD6-40C3-91CA-5EB3E1D37BA2"><!-- --></a><code class="codeph">SOURCECATALOG</code> <span class="italic"><code class="codeph">catalog</code></span> <code class="codeph">| ALLCATALOGS</code></dt>
+<dd>
+<p>Use these options to specify how unqualified object names in an <code class="codeph">OBJNAME</code> clause are resolved to the correct container. Use these options when the source database is an Oracle container database.</p>
+<p><code class="codeph">SOURCECATALOG</code> specifies a default container for all of the object names that are specified in the same <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> clause. To take effect, <code class="codeph">SOURCECATALOG</code> must be specified before the <code class="codeph">OBJNAME</code> specification. See <span class="q">"<a href="sourcecatalog.htm#GUID-C2D88643-6839-432D-A7E4-63B874859566">SOURCECATALOG</a>"</span> for more information including using statements that contain two-part names, where three-part object names are required to fully identify an object.</p>
+<p><code class="codeph">ALLCATALOGS</code> specifies that all of the containers of the database should be considered when resolving object names that are specified in the same <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> clause. <code class="codeph">ALLCATALOGS</code> can be placed before or after the <code class="codeph">OBJNAME</code> specification.</p>
+<p>The following is the order of precedence that is given when there are different catalog specifications in a parameter file:</p>
+<ol>
+<li>
+<p><code class="codeph">ALLCATALOGS</code> in an <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> clause overrides all <code class="codeph">SOURCECATALOG</code> specifications in the <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> clause and at the root of the parameter file, and it overrides the container specification of a fully qualified object name in the <code class="codeph">OBJNAME</code> clause.</p>
+</li>
+<li>
+<p>An explicit catalog specification in the <code class="codeph">OBJNAME</code> clause overrides all instances of <code class="codeph">SOURCECATALOG</code> (but not <code class="codeph">ALLCATALOGS</code>).</p>
+</li>
+<li>
+<p><code class="codeph">SOURCECATALOG</code> in an <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> clause overrides the global <code class="codeph">SOURCECATALOG</code> parameter that is specified at the root of the <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement.</p>
+</li>
+<li>
+<p>The global <code class="codeph">SOURCECATALOG</code> parameter takes effect for any unqualified object names in <code class="codeph">OBJNAME</code> clauses if the <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> clause does not specify <code class="codeph">SOURCECATALOG</code> or <code class="codeph">ALLCATALOGS</code>.</p>
+</li>
+<li>
+<p>In the absence of any of the preceding parameters, all catalogs are considered.</p>
+</li>
+</ol>
+</dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-004C5671-1F7F-429C-A59A-6DF4446CF0E2"><!-- --></a><code class="codeph">ALLOWEMPTYOBJECT</code></dt>
+<dd>
+<p>Use <code class="codeph">ALLOWEMPTYOBJECT</code> to allow an <code class="codeph">OBJNAME</code> specification to process DDL that contains no object name. For example:</p>
+<pre dir="ltr">
+DDL INCLUDE OBJNAME sch.* ALLOWEMPTYOBJECT
+</pre></dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-0326E22A-7E79-459C-AC71-4F7BDAE3B2CF"><!-- --></a><code class="codeph">ALLOWEMPTYOWNER</code></dt>
+<dd>
+<p>Use <code class="codeph">ALLOWEMPTYOWNER</code> to allow an <code class="codeph">OBJNAME</code> specification to process DDL that contains no owner name. For example:</p>
+<pre dir="ltr">
+DDL INCLUDE OBJNAME pdb.sch.* ALLOWEMPTYOWNER
+</pre></dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-2115EB26-D6C7-4DD9-9B15-871CE7570793"><!-- --></a><code class="codeph">OBJNAME</code> <span class="italic"><code class="codeph">name</code></span></dt>
+<dd>
+<p>Use <code class="codeph">OBJNAME</code> to apply <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to the fully qualified name of an object. To specify two-part and three-part object names and wildcards correctly, see <a class="olink GWUAD192" target="_blank" href="../GWUAD/getting-started-oracle-goldengate-process-interfaces.htm#GWUAD192"><span class="italic"><span id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GWUAD"><cite>Administering Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+<p>Enclose case-sensitive object names within double quote marks.</p>
+<p>Case-insensitive example:</p>
+<pre dir="ltr">
+DDL INCLUDE OBJNAME accounts.*
+</pre>
+<p>Case-sensitive example:</p>
+<pre dir="ltr">
+DDL INCLUDE OBJNAME accounts."cust"
+</pre>
+<p>Do not use <code class="codeph">OBJNAME</code> for the Oracle <code class="codeph">USER</code> object, because <code class="codeph">OBJNAME</code> expects <span class="italic"><code class="codeph">owner.object</code></span> or <span class="italic"><code class="codeph">container.owner.object</code></span>, whereas <code class="codeph">USER</code> only has a schema.</p>
+<p>When using <code class="codeph">OBJNAME</code> with <code class="codeph">MAPPED</code> in a Replicat parameter file, the value for <code class="codeph">OBJNAME</code> must refer to the name specified with the <code class="codeph">TARGET</code> clause of the <code class="codeph">MAP</code> statement. For example, given the following <code class="codeph">MAP</code> statement, the correct value is <code class="codeph">OBJNAME fin2.*</code>.</p>
+<pre dir="ltr">
+MAP fin.exp_*, TARGET fin2.*;
+</pre>
+<p>In the following example, a <code class="codeph">CREATE TABLE</code> statement executes as follows on the source:</p>
+<pre dir="ltr">
+CREATE TABLE fin.exp_phone;
+</pre>
+<p>That same statement executes as follows on the target:</p>
+<pre dir="ltr">
+CREATE TABLE fin2.exp_phone;
+</pre>
+<p>If a target owner is not specified in the <code class="codeph">MAP</code> statement, Replicat maps it to the database user that is specified with the <code class="codeph">USERID</code> or <code class="codeph">USERIDALIAS</code> parameter.</p>
+<p>For DDL that creates derived objects, such as a trigger, the value for <code class="codeph">OBJNAME</code> must be the name of the base object, not the name of the derived object.</p>
+<p>For example, to include the following DDL statement, the correct value is <code class="codeph">hr.accounts</code>, not <code class="codeph">hr.insert_trig</code>.</p>
+<pre dir="ltr">
+CREATE TRIGGER hr.insert_trig ON hr.accounts;
+</pre>
+<p>For <code class="codeph">RENAME</code> operations, the value for <code class="codeph">OBJNAME</code> must be the new table name. For example, to include the following DDL statement, the correct value is <code class="codeph">hr.acct</code>.</p>
+<pre dir="ltr">
+ALTER TABLE hr.accounts RENAME TO acct;
+</pre></dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-E6D4E041-07FD-4F12-A0FC-C2D369F0E5E5"><!-- --></a><code class="codeph">INSTR '</code><span class="italic"><code class="codeph">string'</code></span></dt>
+<dd>
+<p>Use <code class="codeph">INSTR</code> to apply <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to DDL statements that contain a specific character string within the command syntax itself, but not within comments. For example, the following excludes DDL that creates an index.</p>
+<pre dir="ltr">
+DDL INCLUDE ALL EXCLUDE INSTR 'CREATE INDEX'
+</pre>
+<p>Enclose the string within single quotes. The string search is not case sensitive.</p>
+<p><code class="codeph">INSTR</code> does not support single quotation marks (' ') that are within the string, nor does it support <code class="codeph">NULL</code> values.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-75B6A480-EB4D-428D-BA25-39E0ABDDB18D"><!-- --></a><code class="codeph">INSTRCOMMENTS '</code><span class="italic"><code class="codeph">comment_string'</code></span></dt>
+<dd>
+<p>(Valid for Oracle) Use <code class="codeph">INSTRCOMMENTS</code> to apply <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to DDL statements that contain a specific character string within a comment, but not within the DDL command itself. By using <code class="codeph">INSTRCOMMENTS</code>, you can use comments as a filtering agent.</p>
+<p>For example, the following excludes DDL statements that include the string 'source only' in the comments.</p>
+<pre dir="ltr">
+DDL INCLUDE ALL EXCLUDE INSTRCOMMENTS 'SOURCE ONLY'
+</pre>
+<p>In this example, DDL statements such as the following are not replicated.</p>
+<pre dir="ltr">
+CREATE USER john IDENTIFIED BY john /*source only*/;
+</pre>
+<p>Enclose the string within single quotes. The string search is not case sensitive. You can combine <code class="codeph">INSTR</code> and <code class="codeph">INSTRCOMMENTS</code> to filter on a string in the command syntax and in the comments of the same DDL statement.</p>
+<p><code class="codeph">INSTRCOMMENTS</code> does not support single quotation marks (' ') that are within the string, nor does it support <code class="codeph">NULL</code> values.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-15102E0F-1A09-4164-9937-EC38F5634714"><!-- --></a><code class="codeph">INSTRWORDS '</code><span class="italic"><code class="codeph">word_list'</code></span></dt>
+<dd>
+<p>Use <code class="codeph">INSTRWORDS</code> to apply <code class="codeph">INCLUDE</code> or <code class="codeph">EXCLUDE</code> to DDL statements that contain the specified words.</p>
+<p>For <span class="italic"><code class="codeph">word_list</code></span>, supply the words in any order, within single quotes. To include spaces, put the space (and the word, if applicable) in double quotes. Double quotes also can be used to enclose sentences.</p>
+<p>All specified words must be present in the DDL for <code class="codeph">INSTRWORDS</code> to take effect.</p>
+<p>Example:</p>
+<pre dir="ltr">
+DDL INCLUDE OPTYPE ALTER OBJTEYP 'TABLE' INSTRWORDS 'ALTER CONSTRAINT " xyz"'
+</pre>
+<p>This example matches the following DDL statements:</p>
+<pre dir="ltr">
+ALTER TABLE ADD CONSTRAINT xyz CHECK
+</pre>
+<pre dir="ltr">
+ALTER TABLE DROP CONSTRAINT xyz
+</pre>
+<p><code class="codeph">INSTRWORDS</code> does not support single quotation marks (' ') that are within the string, nor does it support <code class="codeph">NULL</code> values.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-ECB11D24-9DB5-4FD1-908D-E834106A84F0"><!-- --></a><code class="codeph">INSTRCOMMENTSWORDS '</code><span class="italic"><code class="codeph">word_list'</code></span></dt>
+<dd>
+<p>(Valid for Oracle) Works the same way as <code class="codeph">INSTRWORDS</code>, but only applies to comments within a DDL statement, not the DDL syntax itself. By using <code class="codeph">INSTRCOMMENTS</code>, you can use comments as a filtering agent.</p>
+<p><code class="codeph">INSTRCOMMENTSWORDS</code> does not support single quotation marks (' ') that are within the string, nor does it support <code class="codeph">NULL</code> values.</p>
+<p>You can combine <code class="codeph">INSTRWORDS</code> and <code class="codeph">INSTRCOMMENTSWORDS</code> to filter on a string in the command syntax and in the comments of the same DDL statement.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-2ACEA02F-8384-4579-9554-F12132C791AC"><!-- --></a><code class="codeph">STAYMETADATA</code></dt>
+<dd>
+<p>(Valid for Oracle). Prevents metadata from being captured by Extract or applied by Replicat.</p>
+<p>When Extract first encounters DML on a table, it retrieves the metadata for that table. When DDL is encountered on that table, the old metadata is invalidated. The next DML on that table is matched to the new metadata so that the target table structure always is up-to-date with that of the source.</p>
+<p>However, if you know that a particular DDL operation will not affect the table's metadata, you can use <code class="codeph">STAYMETADATA</code> so that the current metadata is not retrieved or replicated. This is a performance improvement that has benefit for such operations as imports and exports, where such DDL as truncates and the disabling of constraints are often performed. These operations do not affect table structure, as it relates to the integrity of subsequent data replication, so they can be ignored in such cases. For example <code class="codeph">ALTER TABLE ADD FOREIGN KEY</code> does not affect table metadata.</p>
+<p>An example of how this can be applied selectively is as follows:</p>
+<pre dir="ltr">
+DDL INCLUDE ALL INCLUDE STAYMETADATA OBJNAME xyz
+</pre>
+<p>This example states that all DDL is to be included for replication, but only DDL that operates on object <code class="codeph">xyz</code> will be subject to <code class="codeph">STAYMETADATA</code>.</p>
+<p><code class="codeph">STAYMETADATA</code> also can be used the same way in an <code class="codeph">EXCLUDE</code> clause.</p>
+<p><code class="codeph">STAYMETADATA</code> must be used the same way on the source and target to ensure metadata integrity.</p>
+<p>When <code class="codeph">STAYMETADATA</code> is in use, a message is added to the report file. DDL reporting is controlled by the <code class="codeph">DDLOPTIONS</code> parameter with the <code class="codeph">REPORT</code> option.</p>
+<p>This same functionality can be applied globally to all DDL that occurs on the source by using the <code class="codeph">@ddl_staymetadata</code> scripts:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">@ddl_staymetadata_on</code> globally turns off metadata versioning.</p>
+</li>
+<li>
+<p><code class="codeph">@ddl_staymetadata_off</code> globally enables metadata versioning again.</p>
+</li>
+</ul>
+<p>This option should be used with the assistance of Oracle GoldenGate technical support staff, because it might not always be apparent which DDL affects object metadata. If improperly used, it can compromise the integrity of the replication environment.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-1F83DC87-D9FF-4545-85AA-E29459E3BB05"><!-- --></a><code class="codeph">EVENTACTIONS (</code><span class="italic"><code class="codeph">action)</code></span></dt>
+<dd>
+<p>Causes the Extract or Replicat process take a defined action based on a DDL record in the transaction log or trail, which is known as the <span class="italic">event record</span>. The DDL event is triggered if the DDL record is eligible to be written to the trail by Extract or a data pump, or to be executed by Replicat, as determined by the other filtering options of the <code class="codeph">DDL</code> parameter. You can use this system to customize processing based on database events.</p>
+<p>For <span class="italic"><code class="codeph">action</code></span>, see <code class="codeph">EVENTACTIONS</code> under the <code class="codeph">MAP</code> and <code class="codeph">TABLE</code> parameters.</p>
+<p>Guidelines for using <code class="codeph">EVENTACTIONS</code> on DDL records:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">CHECKPOINTBEFORE</code>: Since each DDL record is autonomous, the DDL record is guaranteed to be the start of a transaction; therefore, the <code class="codeph">CHECKPOINT BEFORE</code> event action is implied for a DDL record.</p>
+</li>
+<li>
+<p><code class="codeph">IGNORE</code>: This option is not valid for DDL records. Because DDL operations are autonomous, ignoring a record is equivalent to ignoring the entire transaction.</p>
+</li>
+</ul>
+<p><code class="codeph">EVENTACTIONS</code> does not support the following DDL objects because they are derived objects:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>indexes</p>
+</li>
+<li>
+<p>triggers</p>
+</li>
+<li>
+<p>synonyms</p>
+</li>
+<li>
+<p><code class="codeph">RENAME</code> on a table and <code class="codeph">ALTER TABLE RENAME</code></p>
+</li>
+</ul>
+<p>In a Teradata configuration where Extract is configured in maximum protection mode, use <code class="codeph">EVENTACTIONS</code> only in the VAM-sort Extract group. It is not supported by the primary Extract in this configuration because concurrent changes are not sorted in transaction order at this point in the processing stream. For more information, see <span class="italic"><span><cite>Installing and Configuring Oracle GoldenGate for Teradata</cite></span></span>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__BABHBHBA"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;Combining DDL Parameter Options</dt>
+<dd>
+<p>The following is an example of how to combine the options of the <code class="codeph">DDL</code> parameter.</p>
+<pre dir="ltr">
+DDL  &amp;
+INCLUDE UNMAPPED &amp;
+    OPTYPE alter &amp;
+    OBJTYPE 'table' &amp;
+    OBJNAME users.tab* &amp;
+INCLUDE MAPPED OBJNAME * &amp;
+EXCLUDE MAPPED OBJNAME temporary.tab
+</pre>
+<p>The combined filter criteria in this statement specify the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">INCLUDE</code> all <code class="codeph">ALTER TABLE</code> statements for tables that are not mapped with a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement (<code class="codeph">UNMAPPED</code> scope), but only if those tables are owned by <code class="codeph">users</code> and their names start with <code class="codeph">tab</code>,</p>
+</li>
+<li>
+<p><code class="codeph">INCLUDE</code> all DDL operation types for all tables that are mapped with a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement (<code class="codeph">MAPPED</code> scope),</p>
+</li>
+<li>
+<p><code class="codeph">EXCLUDE</code> all DDL operation types for all tables that are <code class="codeph">MAPPED</code> in scope, but only if those tables are owned by <code class="codeph">temporary</code> and only if their names begin with <code class="codeph">tab</code>.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-6C356B5D-E57F-423F-8997-A3911EDC3DD3"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;Including an Event Action</dt>
+<dd>
+<p>The following example specifies an event action of <code class="codeph">REPORT</code> for all DDL records.</p>
+<pre dir="ltr">
+DDL INCLUDE ALL EVENTACTIONS (REPORT)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-BCD8D363-653A-4E54-A329-990D282FB6D2"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;Using an Event Action on a Subset of DDL</dt>
+<dd>
+<p>The following example shows how <code class="codeph">EVENTACTIONS</code> can be used on a subset of the DDL. All DDL is to be replicated, but only the DDL that is executed on explicitly named objects qualifies to trigger the event actions of <code class="codeph">REPORT</code> and <code class="codeph">LOG</code>.</p>
+<pre dir="ltr">
+DDL INCLUDE ALL &amp;
+    INCLUDE OBJNAME sales.t* EVENTACTIONS (REPORT) &amp;
+    INCLUDE OBJNAME fin.my_tab EVENTACTIONS (LOG) &amp;
+</pre></dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-E0BB07A2-A3FB-4ACF-9767-2256D25BE6C8"><!-- --></a>Example 4&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following example demonstrates the different ways to specify catalog names for DDL that is issued on objects in a source Oracle container database.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>This includes <code class="codeph">pdb1.sch1.obj1</code> and <code class="codeph">pdb2.sch2.obj2</code> for DDL processing.</p>
+<pre dir="ltr">
+SOURCECATALOG pdb1 
+DDL INCLUDE OBJNAME sch1.obj1 INCLUDE SOURCECATALOG pdb2 OBJNAME sch2.obj2
+</pre></li>
+<li>
+<p>This includes all objects with the name <code class="codeph">sch.obj</code> in any catalog for DDL processing.</p>
+<pre dir="ltr">
+DDL INCLUDE ALLCATALOGS OBJNAME sch.obj
+</pre></li>
+<li>
+<p>This also includes all objects with the name <code class="codeph">sch.obj</code> in any catalog for DDL processing, because <code class="codeph">ALLCATALOGS</code> overrides any other catalog specification.</p>
+<pre dir="ltr">
+DDL INCLUDE ALLCATALOGS OBJNAME pdb.sch.obj
+</pre></li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-CB9AC9C7-C702-4891-8CEB-963BF3F182ED__GUID-57824700-4E00-43D4-9FAD-ABFBE013B4A3"><!-- --></a>Example 5&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following shows the combined use of <code class="codeph">ALLOWEMPTYOBJECT</code> and <code class="codeph">ALLOWEMPTYOWNER</code>.</p>
+<pre dir="ltr">
+DDL INCLUDE pdb.*.* ALLOWEMPTYOWNER ALLOWEMPTYOBJECT 
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="dboptions.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="ddlerror.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

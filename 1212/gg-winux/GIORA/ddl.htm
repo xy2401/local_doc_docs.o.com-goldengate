@@ -1,0 +1,1873 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>13 Configuring DDL Support</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This chapter contains information to help you understand and configure DDL support in Oracle GoldenGate." />
+<meta name="dcterms.created" content="2015-06-05T14:9:49Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E29644-07" />
+<meta name="dcterms.isVersionOf" content="GIORA" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="nonint_replicat.htm" title="Previous" type="text/html" />
+<link rel="Next" href="processes_creating.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIORA.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIORA.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIORA.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">16/27</span>
+<!-- End Header -->
+<script  >
+<!-- // <![CDATA[
+window.name='ddl'
+// ]]> -->
+</script> <script  >
+// <![CDATA[
+function footdisplay(footnum,footnote) {
+    var msg = window.open('', 'NewWindow' + footnum,
+        'directories=no,height=120,location=no,menubar=no,resizable=yes,' +
+        'scrollbars=yes,status=no,toolbar=no,width=598');
+    msg.document.open('text/html');
+    msg.document.write('<!DOCTYPE html ');
+    msg.document.write('PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ');
+
+    msg.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
+    msg.document.write('<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>');
+    msg.document.write('Footnote ' + footnum);
+    msg.document.write('<\/title><meta http-equiv="Content-Type" ');
+    msg.document.write('content="text/html; charset=utf-8" />');
+    msg.document.write('');
+    msg.document.write('<style> <![CDATA[ ');
+    msg.document.write('h1 {text-align: center; font-size: 14pt;}');
+    msg.document.write('fieldset {border: none;}');
+    msg.document.write('form {text-align: center;}');
+    msg.document.write(' ]]\u003e <\/style>');
+    msg.document.write('<\/head><body><h1>Footnote ' + footnum + '<\/h1><p>');
+    msg.document.write(footnote);
+    msg.document.write('<\/p><form action="" method="post"><fieldset>');
+    msg.document.write('<input type="button" value="OK" ');
+    msg.document.write('onclick="window.close();" />');
+    msg.document.write('<\/fieldset><\/form><\/body><\/html>');
+    msg.document.close();
+    msg.focus();
+}
+// ]]>
+</script> <noscript>
+<p>The script content on this page is for navigation purposes only and does not alter the content in any way.</p>
+</noscript>
+<div id="GIORA285" class="chapter"><a id="CHDHJEDE"></a>
+<h1 class="chapter"><span class="secnum">13</span> Configuring DDL Support</h1>
+<p><a id="GIORA566"></a>This chapter contains information to help you understand and configure DDL support in Oracle GoldenGate.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#A2932289">Prerequisites for Configuring DDL</a></p>
+</li>
+<li>
+<p><a href="#A1676240">Overview of DDL Synchronization</a></p>
+</li>
+<li>
+<p><a href="#A1676251">Limitations of Oracle GoldenGate DDL Support</a></p>
+</li>
+<li>
+<p><a href="#A1786238">Configuration Guidelines for DDL Support</a></p>
+</li>
+<li>
+<p><a href="#A1966596">Understanding DDL Scopes</a></p>
+</li>
+<li>
+<p><a href="#CHDCDDDD">Correctly Identifying Unqualified Object Names in DDL</a></p>
+</li>
+<li>
+<p><a href="#BABFGJFE">Enabling DDL Support</a></p>
+</li>
+<li>
+<p><a href="#A2258775">Filtering DDL Replication</a></p>
+</li>
+<li>
+<p><a href="#A2696081">Special Filter Cases</a></p>
+</li>
+<li>
+<p><a href="#A2727959">How Oracle GoldenGate Handles Derived Object Names</a></p>
+</li>
+<li>
+<p><a href="#A2790387">Using DDL String Substitution</a></p>
+</li>
+<li>
+<p><a href="#A2809209">Controlling the Propagation of DDL to Support Different Topologies</a></p>
+</li>
+<li>
+<p><a href="#A2838123">Adding Supplemental Log Groups Automatically</a></p>
+</li>
+<li>
+<p><a href="#A2838765">Removing Comments from Replicated DDL</a></p>
+</li>
+<li>
+<p><a href="#A2839299">Replicating an IDENTIFIED BY Password</a></p>
+</li>
+<li>
+<p><a href="#BABJEGBE">How DDL is Evaluated for Processing</a></p>
+</li>
+<li>
+<p><a href="#A2858872">Handling DDL Processing Errors</a></p>
+</li>
+<li>
+<p><a href="#A2863316">Viewing DDL Report Information</a></p>
+</li>
+<li>
+<p><a href="#A2873754">Tracing DDL Processing</a></p>
+</li>
+<li>
+<p><a href="#A2930991">Using Tools that Support Trigger-Based DDL Capture</a></p>
+</li>
+<li>
+<p><a href="#CHDIECHD">Using Edition-Based Redefinition</a></p>
+</li>
+</ul>
+<a id="A2932289"></a>
+<div id="GIORA959" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">13.1</span> Prerequisites for Configuring DDL</h2>
+<p>Extract can capture DDL operations from a source Oracle database through the use of a special DDL trigger or natively through the Oracle logmining server. Which of these methods you can use depends on the Extract capture mode and the version of the source Oracle database. This section describes the available support in each capture mode. See <a href="process_mode.htm#CACCDCEA">Section 5, "Choosing Capture and Apply Modes"</a> for more information about these modes.</p>
+<div id="GIORA1002" class="sect2"><a id="sthref128"></a>
+<h3 class="sect2"><span class="secnum">13.1.1</span> Support for DDL capture in integrated capture mode</h3>
+<p>The integrated capture mode of Extract supports two DDL capture methods:</p>
+<ul>
+<li>
+<p><span class="bold">Oracle 11.2.0.4 or later</span>: Oracle databases that have the database <code dir="ltr">COMPATIBLE</code> parameter set to 11.2.0.4 or higher support DDL capture through the database logmining server. This method is known as <span class="italic">native DDL capture</span> (also known as <span class="italic">triggerless DDL capture</span>). No trigger or installed supportive objects are required. Native DDL capture is the only supported method for capturing DDL from a multitenant container database.</p>
+</li>
+<li>
+<p><span class="bold">Versions earlier than 11.2.0.4</span>: Oracle databases that have the <code dir="ltr">COMPATIBLE</code> parameter set to anything earlier than 11.2.0.4 require the use of the Oracle GoldenGate DDL trigger. To use trigger-based DDL capture, you must install the DDL trigger and supporting database objects before you configure Extract for DDL support. See <a href="ddl_install.htm#CHDDIBBE">Appendix D, "Installing Trigger-Based DDL Capture"</a> for instructions.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA1003" class="sect2"><a id="sthref129"></a>
+<h3 class="sect2"><span class="secnum">13.1.2</span> Support for DDL capture in classic capture mode</h3>
+<p>Classic capture mode requires the use of the Oracle GoldenGate DDL trigger to capture DDL from an Oracle database. Native DDL capture is not supported by classic capture mode. DDL capture from a multitenant container database is not supported by classic capture mode.</p>
+<p>To use trigger-based DDL capture, you must install the DDL trigger and supporting database objects before you configure Extract for DDL support. See <a href="ddl_install.htm#CHDDIBBE">Appendix D, "Installing Trigger-Based DDL Capture"</a> for instructions.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1676240"></a>
+<div id="GIORA286" class="sect1">
+<h2 class="sect1"><span class="secnum">13.2</span> Overview of DDL Synchronization</h2>
+<p>Oracle GoldenGate supports the synchronization of DDL operations from one database to another. DDL synchronization can be active when:</p>
+<ul>
+<li>
+<p>business applications are actively accessing and updating the source and target objects.</p>
+</li>
+<li>
+<p>Oracle GoldenGate transactional data synchronization is active.</p>
+</li>
+</ul>
+<p>The components that support the replication of DDL and the replication of transactional data changes (DML) are independent of each other. Therefore, you can synchronize:</p>
+<ul>
+<li>
+<p>just DDL changes</p>
+</li>
+<li>
+<p>just DML changes</p>
+</li>
+<li>
+<p>both DDL and DML</p>
+</li>
+</ul>
+<p>For a list of supported objects and operations for DDL support for Oracle, see <a href="system_requirements.htm#BABBDGBH">Section 1.8.1, "Supported Objects and Operations in Oracle DDL"</a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A1676251"></a>
+<div id="GIORA287" class="sect1">
+<h2 class="sect1"><span class="secnum">13.3</span> Limitations of Oracle GoldenGate DDL Support</h2>
+<p>This topic contains some limitations of the DDL feature. For any additional limitations that were found after this documentation was published, see the <a class="olink GRLWU" href="../../gg-winux/GRLWU/toc.htm"><span class="italic">Release Notes for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div id="GIORA288" class="sect2"><a id="sthref130"></a>
+<h3 class="sect2"><span class="secnum">13.3.1</span> DDL Statement Length</h3>
+<p>Oracle GoldenGate measures the length of a DDL statement in bytes, not in characters. The supported length is approximately 4 MB, allowing for some internal overhead that can vary in size depending on the name of the affected object and its DDL type, among other characteristics. If the DDL is longer than the supported size, Extract will issue a warning and ignore the DDL operation.</p>
+<p>If Extract is capturing DDL by means of the DDL trigger, the ignored DDL is saved in the marker table. You can capture Oracle DDL statements that are ignored, as well as any other Oracle DDL statement, by using the <code dir="ltr">ddl_ddl2file.sql</code> script, which saves the DDL operation to a text file in the <code dir="ltr">USER_DUMP_DEST</code> directory of Oracle. The script prompts for the following input:</p>
+<ul>
+<li>
+<p>The name of the schema that contains the Oracle GoldenGate DDL objects, which is specified in the <code dir="ltr">GLOBALS</code> file.</p>
+</li>
+<li>
+<p>The Oracle GoldenGate marker sequence number, which is recorded in the Extract report file when <code dir="ltr">DDLOPTIONS</code> with the <code dir="ltr">REPORT</code> option is used in the Extract parameter file.</p>
+</li>
+<li>
+<p>A name for the output file.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA289" class="sect2"><a id="sthref131"></a>
+<h3 class="sect2"><span class="secnum">13.3.2</span> Supported Topologies</h3>
+<p>Oracle GoldenGate supports DDL synchronization only in a like-to-like configuration. The source and target object definitions must be identical.</p>
+<p>Oracle GoldenGate does not support DDL on a standby database.</p>
+<p>Oracle GoldenGate supports DDL replication in all supported unidirectional configurations, and in bidirectional configurations between two, and only two, systems. For special considerations in an Oracle active-active configuration, see <a href="#BABIJBIA">Section 13.12.1, "Propagating DDL in Active-Active (Bidirectional) Configurations"</a>.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA290" class="sect2"><a id="sthref132"></a>
+<h3 class="sect2"><span class="secnum">13.3.3</span> Filtering, Mapping, and Transformation</h3>
+<p>DDL operations cannot be transformed by any Oracle GoldenGate process. However, source DDL can be mapped and filtered to a different target object by a primary Extract or a Replicat process. Mapping or filtering of DDL by a data-pump Extract is not permitted, and the DDL is passed as it was received from the primary Extract. This is known as <code dir="ltr">PASSTHRU</code> mode.</p>
+<p>For example, <code dir="ltr">ALTER TABLE TableA</code> is processed by a data pump as <code dir="ltr">ALTER TABLE TableA</code>. It cannot be mapped by that process as <code dir="ltr">ALTER TABLE TableB</code>, regardless of any <code dir="ltr">TABLE</code> statements that specify otherwise.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA291" class="sect2"><a id="sthref133"></a>
+<h3 class="sect2"><span class="secnum">13.3.4</span> Renames</h3>
+<p><code dir="ltr">RENAME</code> operations on tables are converted to the equivalent <code dir="ltr">ALTER TABLE RENAME</code> so that a schema name can be included in the target DDL statement. For example <code dir="ltr">RENAME tab1 TO tab2</code> could be changed to <code dir="ltr">ALTER TABLE schema.tab1 RENAME TO schema.tab2</code>. The conversion is reported in the Replicat process report file.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA292" class="sect2"><a id="sthref134"></a>
+<h3 class="sect2"><span class="secnum">13.3.5</span> Interactions Between Fetches from a Table and DDL</h3>
+<p>Oracle GoldenGate supports some data types by identifying the modified row from the redo stream and then querying the underlying table to fetch the changed columns. For instance, in classic capture, partial updates on LOBs (modifications done via <code dir="ltr">dbms_lob package</code>) are supported by identifying the modified row and the LOB column from the redo log, and then querying for the LOB column value for the row from the base table. A similar technique is employed to support UDT (both in classic and integrated capture).</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Integrated capture only requires fetch for UDT when <span class="italic">not</span> using native object support.</div>
+<p>Such fetch-based support is implemented by issuing a flashback query to the database based on the SCN (System Change Number) at which the transaction committed. The flashback query feature has certain limitations. Certain DDL operations act as barriers such that flashback queries to get data prior to these DDLs do not succeed. Examples of such DDL are <code dir="ltr">ALTER TABLE MODIFY COLUMN</code> and <code dir="ltr">ALTER TABLE DROP COLUMN</code>.</p>
+<p>Thus, in cases where there is Extract capture lag, an intervening DDL may cause fetch requests for data prior to the DDL to fail. In such cases, Extract falls back and fetches the current snapshot of the data for the modified column. There are several limitations to this approach: First, the DDL could have modified the column that Extract needs to fetch (for example, suppose the intervening DDL added a new attribute to the UDT that is being captured). Second, the DDL could have modified one of the columns that Extract uses as a logical row identifier. Third, the table could have been renamed before Extract had a chance to fetch the data.</p>
+<p>To prevent fetch-related inconsistencies such as these, take the following precautions while modifying columns.</p>
+<ol>
+<li>
+<p>Pause all DML to the table.</p>
+</li>
+<li>
+<p>Wait for Extract to finish capturing all remaining redo, and wait for Replicat to finish processing the captured data from trail. To determine whether Replicat is finished, issue the following command in GGSCI until you see a message that there is no more data to process.</p>
+<pre dir="ltr">
+INFO REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Execute the DDL on the source.</p>
+</li>
+<li>
+<p>Resume source DML operations.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA293" class="sect2"><a id="sthref135"></a>
+<h3 class="sect2"><span class="secnum">13.3.6</span> Comments in SQL</h3>
+<p>If a source DDL statement contains a comment in the middle of an object name, that comment will appear at the end of the object name in the target DDL statement. For example:</p>
+<p><span class="bold">Source:</span></p>
+<pre dir="ltr">
+CREATE TABLE hr./*comment*/emp ...
+</pre>
+<p><span class="bold">Target:</span></p>
+<pre dir="ltr">
+CREATE TABLE hr.emp /*comment*/ ...
+</pre>
+<p>This does not affect the integrity of DDL synchronization. Comments in any other area of a DDL statement remain in place when replicated.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA294" class="sect2"><a id="sthref136"></a>
+<h3 class="sect2"><span class="secnum">13.3.7</span> Compilation Errors</h3>
+<p>If a <code dir="ltr">CREATE</code> operation on a trigger, procedure, function, or package results in compilation errors, Oracle GoldenGate executes the DDL operation on the target anyway. Technically, the DDL operations themselves completed successfully and should be propagated to allow dependencies to be executed on the target, for example in recursive procedures.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA295" class="sect2"><a id="sthref137"></a>
+<h3 class="sect2"><span class="secnum">13.3.8</span> Interval Partitioning</h3>
+<p>DDL replication is unaffected by interval partitioning, because the DDL is implicit. However, this is system generated name so Replicat cannot convert this to the target.I believe this is expected behavior. You must drop the partition on the source. For example:</p>
+<pre dir="ltr">
+alter table t2 drop partition for (20); 
+</pre></div>
+<!-- class="sect2" -->
+<div id="GIORA296" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref138"></a>
+<h3 class="sect2"><span class="secnum">13.3.9</span> DML or DDL Performed Inside a DDL Trigger</h3>
+<p>DML or DDL operations performed from within a DDL trigger are not captured.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA1012" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref139"></a>
+<h3 class="sect2"><span class="secnum">13.3.10</span> LogMiner Data Dictionary Query Errors</h3>
+<p>Oracle recommends that you gather dictionary statistics <span class="italic">after</span> the Extract is registered (logminer session) and the logminer dictionary is loaded, or after any significant DDL activity on the database.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1786238"></a>
+<div id="GIORA297" class="sect1">
+<h2 class="sect1"><span class="secnum">13.4</span> Configuration Guidelines for DDL Support</h2>
+<p>The following are guidelines to take into account when configuring Oracle GoldenGate processes to support DDL replication.</p>
+<div id="GIORA298" class="sect2"><a id="sthref140"></a>
+<h3 class="sect2"><span class="secnum">13.4.1</span> Database Privileges</h3>
+<p>See <a href="user_assignment.htm#BABHFBDB">Chapter 4, "Establishing Oracle GoldenGate Credentials"</a> for database privileges that are required for Oracle GoldenGate to support DDL capture and replication.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA299" class="sect2"><a id="sthref141"></a>
+<h3 class="sect2"><span class="secnum">13.4.2</span> Parallel Processing</h3>
+<p>If using parallel Extract and/or Replicat processes, keep related DDL and DML together in the same process stream to ensure data integrity. Configure the processes so that:</p>
+<ul>
+<li>
+<p>all DDL and DML for any given object are processed by the same Extract group and by the same Replicat group.</p>
+</li>
+<li>
+<p>all objects that are relational to one another are processed by the same process group.</p>
+</li>
+</ul>
+<p>For example, if <code dir="ltr">ReplicatA</code> processes DML for <code dir="ltr">Table1</code>, then it should also process the DDL for <code dir="ltr">Table1</code>. If <code dir="ltr">Table2</code> has a foreign key to <code dir="ltr">Table1</code>, then its DML and DDL operations also should be processed by <code dir="ltr">ReplicatA</code>.</p>
+<p>If an Extract group writes to multiple trails that are read by different Replicat groups, Extract sends all of the DDL to all of the trails. Use each Replicat group to filter the DDL by using the filter options of the <code dir="ltr">DDL</code> parameter in the Replicat parameter file.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA300" class="sect2"><a id="sthref142"></a>
+<h3 class="sect2"><span class="secnum">13.4.3</span> DDL and DML in Data Pumps</h3>
+<p>If using a data pump, configure DML for <code dir="ltr">PASSTHRU</code> mode if the objects are using DDL support. DDL is passed through a data pump in <code dir="ltr">PASSTHRU</code> mode, so the same must be true of the DML. Any filtering, mapping, or transformation of the DML must be done by the primary Extract or by Replicat. However, tables that do not use DDL support can be configured in <code dir="ltr">NOPASSTHRU</code> mode to allow data filtering, and manipulation by a data pump.</p>
+<p>To configure tables for <code dir="ltr">PASSTHRU</code>, <code dir="ltr">NOPASSTHRU</code>, or both, do the following:</p>
+<ol>
+<li>
+<p>In the parameter file of the data pump, place the <code dir="ltr">PASSTHRU</code> parameter before all of the <code dir="ltr">TABLE</code> statements that contain tables that use DDL support.</p>
+</li>
+<li>
+<p>In the same parameter file, you can place the <code dir="ltr">NOPASSTHRU</code> parameter before any <code dir="ltr">TABLE</code> statements that contain tables that do not use DDL support, if you want data filtering, mapping, or transformation to be performed for them.</p>
+</li>
+<li>
+<p>Do not use any of the DDL configuration parameters for a data pump: <code dir="ltr">DDL</code>, <code dir="ltr">DDLOPTIONS</code>, <code dir="ltr">DDLSUBST</code>, <code dir="ltr">DDLERROR</code>, or any of the Oracle GoldenGate tracing parameters with DDL-related options.</p>
+</li>
+</ol>
+<p>For more information about <code dir="ltr">PASSTHRU</code> and <code dir="ltr">NOPASSTHRU</code>, see <a class="olink GWURF591" href="../../gg-winux/GWURF/gg_parameters116.htm#GWURF591"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA301" class="sect2"><a id="sthref143"></a>
+<h3 class="sect2"><span class="secnum">13.4.4</span> Object Names</h3>
+<p>Oracle GoldenGate preserves the database-defined object name, case, and character set. This support preserves single-byte and multibyte names, symbols, and accent characters at all levels of the database hierarchy. For more information about support for object names, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>Object names must be fully qualified with their two-part or three-part names when supplied as input to any parameters that support DDL synchronization. You can use the question mark (<span class="bold">?</span>) and asterisk (<span class="bold">*</span>) wildcards to specify object names in configuration parameters that support DDL synchronization, but the wildcard specification also must be fully qualified as a two-part or three-part name. For more information about support for wildcards, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>. To process wildcards correctly, the <code dir="ltr">WILDCARDRESOLVE</code> parameter is set to <code dir="ltr">DYNAMIC</code> by default. If <code dir="ltr">WILDCARDRESOLVE</code> is set to anything else, the Oracle GoldenGate process that is processing DDL operations will abend and write the error to the process report.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA302" class="sect2"><a id="sthref144"></a>
+<h3 class="sect2"><span class="secnum">13.4.5</span> Data Definitions</h3>
+<p>Because DDL support requires a like-to-like configuration, the <code dir="ltr">ASSUMETARGETDEFS</code> parameter must be used in the Replicat parameter file. Replicat will abend if objects are configured for DDL support and the <code dir="ltr">SOURCEDEFS</code> parameter is being used. For more information about <code dir="ltr">ASSUMETARGETDEFS</code>, see <a class="olink GWURF401" href="../../gg-winux/GWURF/gg_parameters008.htm#GWURF401"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>For more information about using a definitions file, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA303" class="sect2"><a id="sthref145"></a>
+<h3 class="sect2"><span class="secnum">13.4.6</span> Truncates</h3>
+<p><code dir="ltr">TRUNCATE</code> statements can be supported as follows:</p>
+<ul>
+<li>
+<p>As part of the Oracle GoldenGate full DDL support, which supports <code dir="ltr">TRUNCATE TABLE</code>, <code dir="ltr">ALTER TABLE TRUNCATE PARTITION</code>, and other DDL. This is controlled by the DDL parameter (see <a href="#BABFGJFE">Section 13.7, "Enabling DDL Support"</a>.)</p>
+</li>
+<li>
+<p>As standalone <code dir="ltr">TRUNCATE</code> support. This support enables you to replicate <code dir="ltr">TRUNCATE TABLE</code>, but no other DDL. The <code dir="ltr">GETTRUNCATES</code> parameter controls the standalone <code dir="ltr">TRUNCATE</code> feature. For more information, see <a class="olink GWURF513" href="../../gg-winux/GWURF/gg_parameters075.htm#GWURF513"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+</ul>
+<p>To avoid errors from duplicate operations, only one of these features can be active at the same time.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA304" class="sect2"><a id="sthref146"></a>
+<h3 class="sect2"><span class="secnum">13.4.7</span> Initial Synchronization</h3>
+<p>To configure DDL replication, start with a target database that is synchronized with the source database. DDL support is compatible with the Replicat initial load method.</p>
+<p>Before executing an initial load, disable DDL extraction and replication. DDL processing is controlled by the DDL parameter in the Extract and Replicat parameter files.</p>
+<p>After initial synchronization of the source and target data, use all of the source sequence values at least once with <code dir="ltr">NEXTVAL</code> before you run the source applications. You can use a script that selects <code dir="ltr">NEXTVAL</code> from every sequence in the system. This must be done while Extract is running.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA305" class="sect2"><a id="sthref147"></a>
+<h3 class="sect2"><span class="secnum">13.4.8</span> Data Continuity After CREATE or RENAME</h3>
+<p>To replicate DML operations on new Oracle tables resulting from a <code dir="ltr">CREATE</code> or <code dir="ltr">RENAME</code> operation, the names of the new tables must be specified in <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements in the parameter files. You can use wildcards to make certain that they are included.</p>
+<p>To create a new user with <code dir="ltr">CREATE USER</code> and then move new or renamed tables into that schema, the new user name must be specified in <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements. To create a new user <code dir="ltr">fin2</code> and move new or renamed tables into that schema, the parameter statements could look as follows, depending on whether you want the <code dir="ltr">fin2</code> objects mapped to the same, or different, schema on the target:</p>
+<p><span class="bold">Extract</span>:</p>
+<pre dir="ltr">
+TABLE fin2.*;
+</pre>
+<p><span class="bold">Replicat</span>:</p>
+<pre dir="ltr">
+MAP fin2.*, TARGET <span class="codeinlineitalic">different_schema</span>.*;
+</pre></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1966596"></a>
+<div id="GIORA306" class="sect1">
+<h2 class="sect1"><span class="secnum">13.5</span> Understanding DDL Scopes</h2>
+<p>Database objects are classified into scopes. A scope is a category that defines how DDL operations on an object are handled by Oracle GoldenGate. The scopes are:</p>
+<ul>
+<li>
+<p><code dir="ltr">MAPPED</code></p>
+</li>
+<li>
+<p><code dir="ltr">UNMAPPED</code></p>
+</li>
+<li>
+<p><code dir="ltr">OTHER</code></p>
+</li>
+</ul>
+<p>The use of scopes enables granular control over the filtering of DDL operations, string substitutions, and error handling.</p>
+<div id="GIORA307" class="sect2"><a id="sthref148"></a>
+<h3 class="sect2"><span class="secnum">13.5.1</span> Mapped Scope</h3>
+<p>Objects that are specified in <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements are of <code dir="ltr">MAPPED</code> scope. Extraction and replication instructions in those statements apply to both data (DML) and DDL on the specified objects, unless override rules are applied.</p>
+<p>For objects in <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements, the DDL operations listed in the following table are supported.</p>
+<div id="GIORA308" class="tblhruleformal"><p class="titleintable"><a id="sthref149"></a><a id="sthref150"></a>Table 13-1 Objects That Can be Mapped in MAP and TABLE Statements</p>
+<table class="cellalignment245" title="Objects That Can be Mapped in MAP and TABLE Statements" summary="This table lists objects that can be mapped in MAP and TABLE statements.">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t3">Operations</th>
+<th class="cellalignment246" id="r1c2-t3">On any of these Objects<a id="sthref151" href="#sthref151" onclick='footdisplay(1,"\u003ccode dir=\"ltr\"\u003eTABLE\u003c/code\u003e and \u003ccode dir=\"ltr\"\u003eMAP\u003c/code\u003e do not support some special characters that could be used in an object name affected by these operations. Objects with non-supported special characters are supported by the scopes of \u003ccode dir=\"ltr\"\u003eUNMAPPED\u003c/code\u003e and \u003ccode dir=\"ltr\"\u003eOTHER\u003c/code\u003e.")'><sup class="tablefootnote">Foot&nbsp;1&nbsp;</sup></a></th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">CREATE</code></p>
+<p><code dir="ltr">ALTER</code></p>
+<p><code dir="ltr">DROP</code></p>
+<p><code dir="ltr">RENAME</code></p>
+<p><code dir="ltr">COMMENT ON</code><a id="sthref152" href="#sthref152" onclick='footdisplay(2,"Applies to \u003ccode dir=\"ltr\"\u003eCOMMENT ON TABLE\u003c/code\u003e, \u003ccode dir=\"ltr\"\u003eCOMMENT ON COLUMN\u003c/code\u003e")'><sup class="tablefootnote">Foot&nbsp;2&nbsp;</sup></a></p>
+</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c2-t3">
+<p><code dir="ltr">TABLE</code><a id="sthref153" href="#sthref153" onclick='footdisplay(3,"Includes \u003ccode dir=\"ltr\"\u003eAS SELECT\u003c/code\u003e")'><sup class="tablefootnote">Foot&nbsp;3&nbsp;</sup></a></p>
+<p><code dir="ltr">INDEX</code></p>
+<p><code dir="ltr">TRIGGER</code></p>
+<p><code dir="ltr">SEQUENCE</code></p>
+<p><code dir="ltr">MATERIALIZED VIEW</code></p>
+<p><code dir="ltr">VIEW</code></p>
+<p><code dir="ltr">FUNCTION</code></p>
+<p><code dir="ltr">PACKAGE</code></p>
+<p><code dir="ltr">PROCEDURE</code></p>
+<p><code dir="ltr">SYNONYM</code></p>
+<p><code dir="ltr">PUBLIC SYNONYM</code><a id="sthref154" href="#sthref154" onclick='footdisplay(4,"Table name must be qualified with schema name.")'><sup class="tablefootnote">Foot&nbsp;4&nbsp;</sup></a></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r3c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">GRANT</code></p>
+<p><code dir="ltr">REVOKE</code></p>
+</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c2-t3">
+<p><code dir="ltr">TABLE</code></p>
+<p><code dir="ltr">SEQUENCE</code></p>
+<p><code dir="ltr">MATERIALIZED VIEW</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r4c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">ANALYZE</code></p>
+</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c2-t3">
+<p><code dir="ltr">TABLE</code></p>
+<p><code dir="ltr">INDEX</code></p>
+<p><code dir="ltr">CLUSTER</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="tablefootnote"><sup class="tablefootnote">Footnote&nbsp;1&nbsp;</sup><code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> do not support some special characters that could be used in an object name affected by these operations. Objects with non-supported special characters are supported by the scopes of <code dir="ltr">UNMAPPED</code> and <code dir="ltr">OTHER</code>.</p>
+<p class="tablefootnote"><sup class="tablefootnote">Footnote&nbsp;2&nbsp;</sup>Applies to <code dir="ltr">COMMENT ON TABLE</code>, <code dir="ltr">COMMENT ON COLUMN</code></p>
+<p class="tablefootnote"><sup class="tablefootnote">Footnote&nbsp;3&nbsp;</sup>Includes <code dir="ltr">AS SELECT</code></p>
+<p class="tablefootnote"><sup class="tablefootnote">Footnote&nbsp;4&nbsp;</sup>Table name must be qualified with schema name.</p>
+<p>For Extract, <code dir="ltr">MAPPED</code> scope marks an object for DDL capture according to the instructions in the <code dir="ltr">TABLE</code> statement. For Replicat, <code dir="ltr">MAPPED</code> scope marks DDL for replication and maps it to the object specified by the schema and name in the <code dir="ltr">TARGET</code> clause of the <code dir="ltr">MAP</code> statement. To perform this mapping, Replicat issues <code dir="ltr">ALTER SESSION</code> to set the schema of the Replicat session to the schema that is specified in the <code dir="ltr">TARGET</code> clause. If the DDL contains unqualified objects, the schema that is assigned on the target depends on circumstances described in <a href="#CHDCDDDD">Section 13.6, "Correctly Identifying Unqualified Object Names in DDL"</a>.</p>
+<p>Assume the following <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements:</p>
+<p><span class="bold">Extract (source)</span></p>
+<pre dir="ltr">
+TABLE fin.expen;
+TABLE hr.tab*;
+</pre>
+<p><span class="bold">Replicat (target)</span></p>
+<pre dir="ltr">
+MAP fin.expen, TARGET fin2.expen2;
+MAP hr.tab*, TARGET hrBackup.bak_*;
+</pre>
+<p>Also assume a source DDL statement of:</p>
+<pre dir="ltr">
+ALTER TABLE fin.expen ADD notes varchar2(100);
+</pre>
+<p>In this example, because the source table <code dir="ltr">fin.expen</code> is in a <code dir="ltr">MAP</code> statement with a <code dir="ltr">TARGET</code> clause that maps to a different schema and table name, the target DDL statement becomes:</p>
+<pre dir="ltr">
+ALTER TABLE fin2.expen2 ADD notes varchar2(100);
+</pre>
+<p>Likewise, the following source and target DDL statements are possible for the second set of <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements in the example:</p>
+<p><span class="bold">Source</span>:</p>
+<pre dir="ltr">
+CREATE TABLE hr.tabPayables ... ;
+</pre>
+<p><span class="bold">Target</span>:</p>
+<pre dir="ltr">
+CREATE TABLE hrBackup.bak_tabPayables ...;
+</pre>
+<p>When objects are of <code dir="ltr">MAPPED</code> scope, you can omit their names from the DDL configuration parameters, unless you want to refine their DDL support further. If you ever need to change the object names in <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements, the changes will apply automatically to the DDL on those objects.</p>
+<p>If you include an object in a <code dir="ltr">TABLE</code> statement, but not in a <code dir="ltr">MAP</code> statement, the DDL for that object is <code dir="ltr">MAPPED</code> in scope on the source but <code dir="ltr">UNMAPPED</code> in scope on the target.</p>
+<div id="GIORA309" class="sect3"><a id="sthref155"></a>
+<h4 class="sect3"><span class="secnum">13.5.1.1</span> Mapping Oracle Cluster Tables and UDTs</h4>
+<p>An Oracle clustered table or Oracle user defined type (UDT) cannot be mapped to a different target name, but it can be mapped to a different target schema. Because these special kinds of objects can consist of underlying tables that, themselves, could be a mix of both <code dir="ltr">MAPPED</code> and <code dir="ltr">UNMAPPED</code> scope, name mapping cannot be used.</p>
+</div>
+<!-- class="sect3" -->
+<div id="GIORA310" class="sect3"><a id="sthref156"></a>
+<h4 class="sect3"><span class="secnum">13.5.1.2</span> Mapping ALTER INDEX</h4>
+<p>An <code dir="ltr">ALTER INDEX...RENAME</code> command cannot be mapped to a different target index name, but it can be mapped to a different target schema.</p>
+<p><span class="bold">Valid example:</span></p>
+<pre dir="ltr">
+ALTER INDEX src.ind RENAME TO indnew; 
+</pre>
+<p>This DDL can be mapped with wildcards as:</p>
+<pre dir="ltr">
+MAP src.* TARGET tgt.*; 
+</pre>
+<p>Alternatively, it can be mapped explicitly as the following, making sure to use the original index name in the source and target specifications:</p>
+<pre dir="ltr">
+MAP src.ind TARGET tgt.ind; 
+</pre>
+<p>In either of the preceding cases, the target DDL will be:</p>
+<pre dir="ltr">
+ALTER INDEX tgt.ind RENAME TO indnew; 
+</pre>
+<p><span class="bold">Invalid example:</span></p>
+<p>A <code dir="ltr">MAP</code> statement such as the following is not valid:</p>
+<pre dir="ltr">
+MAP src.ind TARGET tgt.indnew; 
+</pre>
+<p>That statement maps the old name to the new name, and the target DDL will become:</p>
+<pre dir="ltr">
+ALTER INDEX tgt.indnew RENAME TO indnew; 
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<div id="GIORA311" class="sect2"><a id="sthref157"></a>
+<h3 class="sect2"><span class="secnum">13.5.2</span> Unmapped Scope</h3>
+<p>If a DDL operation is supported for use in a <code dir="ltr">TABLE</code> or <code dir="ltr">MAP</code> statement, but its base object name is not included in one of those parameters, it is of <code dir="ltr">UNMAPPED</code> scope.</p>
+<p>An object name can be of <code dir="ltr">UNMAPPED</code> scope on the source (not in an Extract <code dir="ltr">TABLE</code> statement), but of <code dir="ltr">MAPPED</code> scope on the target (in a Replicat <code dir="ltr">MAP</code> statement), or the other way around. When Oracle DDL is of <code dir="ltr">UNMAPPED</code> scope in the Replicat configuration, Replicat will by default do the following:</p>
+<ol>
+<li>
+<p>Set the current schema of the Replicat session to the schema of the source DDL object.</p>
+</li>
+<li>
+<p>Execute the DDL as that schema.</p>
+</li>
+<li>
+<p>Restore Replicat as the current schema of the Replicat session.</p>
+</li>
+</ol>
+<p>See <a href="#CHDCDDDD">Section 13.6, "Correctly Identifying Unqualified Object Names in DDL"</a>.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA312" class="sect2"><a id="sthref158"></a>
+<h3 class="sect2"><span class="secnum">13.5.3</span> Other Scope</h3>
+<p>DDL operations that cannot be mapped are of <code dir="ltr">OTHER</code> scope. When DDL is of <code dir="ltr">OTHER</code> scope in the Replicat configuration, it is applied to the target with the same schema and object name as in the source DDL.</p>
+<p>An example of <code dir="ltr">OTHER</code> scope is a DDL operation that makes a system-specific reference, such as DDL that operates on data file names.</p>
+<p>Some other examples of <code dir="ltr">OTHER</code> scope:</p>
+<pre dir="ltr">
+CREATE USER joe IDENTIFIED by joe;
+CREATE ROLE ggs_gguser_role IDENTIFIED GLOBALLY;
+ALTER TABLESPACE gg_user TABLESPACE GROUP gg_grp_user;
+</pre>
+<p>See <a href="#CHDCDDDD">Section 13.6, "Correctly Identifying Unqualified Object Names in DDL"</a>.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CHDCDDDD"></a>
+<div id="GIORA313" class="sect1">
+<h2 class="sect1"><span class="secnum">13.6</span> Correctly Identifying Unqualified Object Names in DDL</h2>
+<p>Extract captures the current schema (also called session schema) that is in effect when a DDL operation is executed. The current container is also captured if the source is a multitenant container database. The container and schema are used to resolve unqualified object names in the DDL.</p>
+<p>Consider the following example:</p>
+<pre dir="ltr">
+CONNECT SCOTT/TIGER
+CREATE TABLE TAB1 (X NUMBER);
+CREATE TABLE SRC1.TAB2(X NUMBER) AS SELECT * FROM TAB1;
+</pre>
+<p>In both of those DDL statements, the unqualified table <code dir="ltr">TAB1</code> is resolved as <code dir="ltr">SCOTT.TAB1</code> based on the current schema <code dir="ltr">SCOTT</code> that is in effect during the DDL execution.</p>
+<p>There is another way of setting the current schema, which is to set the <code dir="ltr">current_schema</code> for the session, as in the following example:</p>
+<pre dir="ltr">
+CONNECT SCOTT/TIGER
+ALTER SESSION SET CURRENT_SCHEMA=SRC;
+CREATE TABLE TAB1 (X NUMBER);
+CREATE TABLE SRC1.TAB2(X NUMBER) AS SELECT * FROM TAB1;
+</pre>
+<p>In both of those DDL statements, the unqualified table <code dir="ltr">TAB1</code> is resolved as <code dir="ltr">SRC.TAB1</code> based on the current schema <code dir="ltr">SRC</code> that is in effect during the DDL execution.</p>
+<p>In both classic and integrated capture modes, Extract captures the current schema that is in effect during DDL execution, and it resolves the unqualified object names (if any) by using the current schema. As a result, <code dir="ltr">MAP</code> statements specified for Replicat work correctly for DDL with unqualified object names.</p>
+<p>You can also map a source session schema to a different target session schema, if that is required for the DDL to succeed on the target. This mapping is global and overrides any other mappings that involve the same schema names. To map session schemas, use the <code dir="ltr">DDLOPTIONS</code> parameter with the <code dir="ltr">MAPSESSIONSCHEMA</code> option. For more information, see <a class="olink GWURF451" href="../../gg-winux/GWURF/gg_parameters037.htm#GWURF451"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>If the default or mapped session schema mapping fails, you can handle the error with the following <code dir="ltr">DDLERROR</code> parameter statement, where error 1435 means that the schema does not exist.</p>
+<pre dir="ltr">
+DDLERROR 1435 IGNORE INCLUDE OPTYPE ALTER OBJTYPE SESSION
+</pre></div>
+<!-- class="sect1" -->
+<a id="BABFGJFE"></a>
+<div id="GIORA314" class="sect1">
+<h2 class="sect1"><span class="secnum">13.7</span> Enabling DDL Support</h2>
+<p>By default, the status of DDL replication support is as follows:</p>
+<ul>
+<li>
+<p>On the source, Oracle GoldenGate DDL support is disabled by default. You must configure Extract to capture DDL by using the <code dir="ltr">DDL</code> parameter.</p>
+</li>
+<li>
+<p>On the target, DDL support is enabled by default, to maintain the integrity of transactional data that is replicated. By default, Replicat will process all DDL operations that the trail contains. If needed, you can use the <code dir="ltr">DDL</code> parameter to configure Replicat to ignore or filter DDL operations.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="A2258775"></a>
+<div id="GIORA315" class="sect1">
+<h2 class="sect1"><span class="secnum">13.8</span> Filtering DDL Replication</h2>
+<p>You can use the following methods to filter DDL operations so that specific (or all) DDL is applied to the target database according to your requirements. By default, all DDL is passed to Extract.</p>
+<ul>
+<li>
+<p><a href="#CHDDCHEH">Filtering with PL/SQL Code</a>: Valid only for trigger-based DDL capture. This method makes use of an Oracle function that is called by the DDL trigger when a DDL operation occurs, to compute whether or not to send the DDL to Extract. Filtering with PL/SQL code should only be used to improve the performance of the source database when the DDL trigger is in use. It can be combined with built-in rules and DDL parameter filtering (see the following). Any DDL that is passed to Extract after it is filtered by the DDL trigger or filter rules can be filtered further with the <code dir="ltr">DDL</code> parameter to meet specific needs.</p>
+</li>
+<li>
+<p><a href="#CHDEHDIG">Filtering With Built-in Filter Rules</a>: Valid only for trigger-based DDL capture. This method makes use of some procedures that you run to build filter rules into the Oracle GoldenGate trigger logic. This method allows discreet control over the types of objects that are sent to Extract, and it allows the ordering of rule evaluation. This method should only be used to improve the performance of the source database when the DDL trigger is in use. You can combine built-in rules with PL/SQL and DDL parameter filtering. Any DDL that is passed to Extract after it is filtered by the DDL trigger or filter rules can be filtered further with the <code dir="ltr">DDL</code> parameter to meet specific needs.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Filtering with PL/SQL or built-in filter rules is unnecessary for an Extract that operates in integrated-capture mode. If Extract must operate in classic mode and you use these filtering methods, the same filtering must happen for any transactional data (DML) that is associated with the filtered objects. For example, if you filter out the DDL that creates a table named <code dir="ltr">ACCOUNTS</code>, make certain the <code dir="ltr">ACCOUNTS</code> table is not specified in any <code dir="ltr">TABLE</code> or <code dir="ltr">MAP</code> statements, or use the appropriate exclusion parameter to exclude it from wildcard resolution. See <a class="olink GWURF978" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF978"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for a list of wildcard exclusion parameters.</div>
+</li>
+<li>
+<p><a href="#CHDGAIID">Filtering with the DDL Parameter</a>:Valid for both trigger-based and native DDL capture. This is the preferred method of filtering and is performed within Oracle GoldenGate, and both Extract and Replicat can execute filter criteria. Extract can perform filtering, or it can send all of the DDL to a trail, and then Replicat can perform the filtering. Alternatively, you can filter in a combination of different locations. The <code dir="ltr">DDL</code> parameter gives you control over where the filtering is performed, and it also offers more filtering options than the trigger method, including the ability to filter collectively based on the DDL scope (for example, include all <code dir="ltr">MAPPED</code> scope).</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If a DDL operation fails in the middle of a <code dir="ltr">TRANSACTION</code>, it forces a commit, which means that the transaction spanning the DDL is split into two. The first half is committed and the second half can be restarted. If a recovery occurs, the second half of the transaction cannot be filtered since the information contained in the header of the transaction is no longer there.</div>
+</li>
+</ul>
+<a id="CHDDCHEH"></a>
+<div id="GIORA316" class="sect2">
+<h3 class="sect2"><span class="secnum">13.8.1</span> Filtering with PL/SQL Code</h3>
+<p>This method is only valid for trigger-based capture.</p>
+<p>You can write PL/SQL code to pass information about the DDL to a function that computes whether or not the DDL is passed to Extract. By sending fewer DDL operations to Extract, you can improve capture performance.</p>
+<ol>
+<li>
+<p>Copy the <code dir="ltr">ddl_filter.sql</code> file that is in the Oracle GoldenGate installation directory to a test machine where you can test the code that you will be writing.</p>
+</li>
+<li>
+<p>Open the file for editing. It contains a PL/SQL function named <code dir="ltr">filterDDL</code>, which you can modify to specify <code dir="ltr">if/then</code> filter criteria. The information that is passed to this function includes:</p>
+<ul>
+<li>
+<p><code dir="ltr">ora_owner</code>: the schema of the DDL object</p>
+</li>
+<li>
+<p><code dir="ltr">ora_name</code>: the defined name of the object</p>
+</li>
+<li>
+<p><code dir="ltr">ora_objtype</code>: the type of object, such as <code dir="ltr">TABLE</code> or <code dir="ltr">INDEX</code></p>
+</li>
+<li>
+<p><code dir="ltr">ora_optype</code>: the operation type, such as <code dir="ltr">CREATE</code> or <code dir="ltr">ALTER</code></p>
+</li>
+<li>
+<p><code dir="ltr">ora_login_user</code>: The user that executed the DDL</p>
+</li>
+<li>
+<p><code dir="ltr">retVal</code>: can be either <code dir="ltr">INCLUDE</code> to include the DDL, or <code dir="ltr">EXCLUDE</code> to exclude the DDL from Extract processing.</p>
+</li>
+</ul>
+<p>In the location after the <code dir="ltr">'compute retVal here'</code> comment, write filter code for each type of DDL that you want to be filtered. The following is an example:</p>
+<pre dir="ltr">
+if ora_owner='SYS' then
+retVal:='EXCLUDE';
+end if;
+if ora_objtype='USER' and ora_optype ='DROP' then
+retVal:='EXCLUDE';
+end if;
+if ora_owner='JOE' and ora_name like 'TEMP%' then
+retVal:='EXCLUDE';
+end if;
+</pre>
+<p>In this example, the following DDL is excluded from being processed by the DDL trigger:</p>
+<ul>
+<li>
+<p>DDL for objects owned by <code dir="ltr">SYS</code></p>
+</li>
+<li>
+<p>any <code dir="ltr">DROP USER</code></p>
+</li>
+<li>
+<p>any DDL on <code dir="ltr">JOE.TEMP%</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>(Optional) To trace the filtering, you can add the following syntax to each <code dir="ltr">if/then</code> statement in the PL/SQL:</p>
+<pre dir="ltr">
+if ora_owner='JOE' and ora_name like 'TEMP%' then
+retVal:='EXCLUDE';
+if "&amp;gg_user" .DDLReplication.trace_level &gt;= 1 then
+"&amp;gg_user" .trace_put_line ('DDLFILTER', 'excluded JOE.TEMP%');
+end if;
+ 
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr">&amp;gg_user</code> is the schema of the Oracle GoldenGate DDL support objects.</p>
+</li>
+<li>
+<p><code dir="ltr">.DDLReplication.trace_level</code> is the level of DDL tracing. To use trigger tracing, the <code dir="ltr">TRACE</code> or <code dir="ltr">TRACE2</code> parameter must be used with the <code dir="ltr">DDL</code> or <code dir="ltr">DDLONLY</code> option in the Extract parameter file. The <code dir="ltr">.DDLReplication.trace_level</code> parameter must be set to <code dir="ltr">&gt;=1</code>.</p>
+</li>
+<li>
+<p><code dir="ltr">trace_put_line</code> is a user-defined text string that Extract writes to the trace file that represents the type of DDL that was filtered.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Save the code.</p>
+</li>
+<li>
+<p>Stop DDL activity on the test system.</p>
+</li>
+<li>
+<p>In SQL*Plus, compile the <code dir="ltr">ddl_filter.sql</code> file as follows, where <code dir="ltr">schema_name</code> is the schema where the Oracle GoldenGate DDL objects are installed.</p>
+<pre dir="ltr">
+@ddl_filter schema_name
+</pre></li>
+<li>
+<p>Test in the test environment to make certain that the filtering works. It is important to perform this testing, because any errors in the code could cause source and target DDL to become out of synchronization.</p>
+</li>
+<li>
+<p>After a successful test, copy the file to the Oracle GoldenGate installation directory on the source production system.</p>
+</li>
+<li>
+<p>Stop DDL activity on the source system.</p>
+</li>
+<li>
+<p>Compile the <code dir="ltr">ddl_filter.sql</code> file as you did before.</p>
+<pre dir="ltr">
+@ddl_filter schema_name
+</pre></li>
+<li>
+<p>Resume DDL activity on the source system.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="CHDEHDIG"></a>
+<div id="GIORA317" class="sect2">
+<h3 class="sect2"><span class="secnum">13.8.2</span> Filtering With Built-in Filter Rules</h3>
+<p>This method is only valid for trigger-based capture.</p>
+<p>You can add inclusion and exclusion rules to control the DDL operations that are sent to Extract by the DDL trigger. By storing rules and sending fewer DDL operations to Extract, you can improve capture performance.</p>
+<ol>
+<li>
+<p>Use the <code dir="ltr">DDLAUX.addRule()</code> function to define your rules according to the following instructions. This function is installed in the Oracle GoldenGate DDL schema after the DDL objects are installed with the <code dir="ltr">ddl_setup.sql</code> script.</p>
+</li>
+<li>
+<p>To activate the rules, execute the function in SQL*Plus or enter a collection of rules in a SQL file and execute that file in SQL*Plus.</p>
+</li>
+</ol>
+<div id="GIORA318" class="sect3"><a id="sthref159"></a>
+<h4 class="sect3"><span class="secnum">13.8.2.1</span> <code dir="ltr">DDLAUX.addRule()</code> Function Definition</h4>
+<pre dir="ltr">
+FUNCTION addRule( obj_name IN VARCHAR2 DEFAULT NULL,
+base_obj_name IN VARCHAR2 DEFAULT NULL,
+owner_name IN VARCHAR2 DEFAULT NULL,
+base_owner_name IN VARCHAR2 DEFAULT NULL,
+base_obj_property IN NUMBER DEFAULT NULL,
+obj_type IN NUMBER DEFAULT NULL,
+command IN VARCHAR2 DEFAULT NULL,
+inclusion IN boolean DEFAULT NULL ,
+sno IN NUMBER DEFAULT NULL)
+RETURN NUMBER;
+</pre></div>
+<!-- class="sect3" -->
+<div id="GIORA319" class="sect3"><a id="sthref160"></a>
+<h4 class="sect3"><span class="secnum">13.8.2.2</span> Parameters for <code dir="ltr">DDLAUX.addRule()</code></h4>
+<p>The information passed to this function are the following parameters, which correlate to the attributes of an object. All parameters are optional, and more than one parameter can be specified.</p>
+<ul>
+<li>
+<p><code dir="ltr">sno</code>: Specifies a serial number that identifies the rule. The order of evaluation of rules is from the lowest serial number to the highest serial number, until a match is found. The <code dir="ltr">sno</code> can be used to place inclusion rules ahead of an exclusion rule, so as to make an exception to the exclusion rule. Because this is a function and not a procedure, it returns the serial number of the rule, which should be used for the drop rule specified with <code dir="ltr">DDLAUX.dropRule()</code>. The serial number is generated automatically unless you specify one with this statement at the beginning of your code: <code dir="ltr">DECLARE sno NUMBER; BEGIN sno :=</code></p>
+<p>For example:</p>
+<pre dir="ltr">
+DECLARE 
+  sno NUMBER; 
+BEGIN 
+  sno := tkggadmin..DDLAUX.ADDRULE(obj_name =&gt; 'GGS%' , 
+                                   obj_type =&gt; TYPE_TABLE); 
+END;
+/
+</pre></li>
+<li>
+<p><code dir="ltr">obj_name</code>: Specifies the object name. If the name is case-sensitive, enclose it within double quotes.</p>
+</li>
+<li>
+<p><code dir="ltr">owner_name</code>: Specifies the name of the object schema</p>
+</li>
+<li>
+<p><code dir="ltr">base_obj_name</code>: Specifies the base object name of the DDL object (such as the base table if the object is an index). If the name is case-sensitive, enclose it within double quotes.</p>
+</li>
+<li>
+<p><code dir="ltr">base_owner_name</code>: Specifies the base object schema name.</p>
+</li>
+<li>
+<p><code dir="ltr">base_obj_property</code>: Specifies the base object property. See <a href="#CHDDGJCE">Section 13.8.2.3, "Valid DDL Components for DDLAUX.addRule()"</a></p>
+</li>
+<li>
+<p><code dir="ltr">obj_type</code>: Specifies the object type. See <a href="#CHDDGJCE">Section 13.8.2.3, "Valid DDL Components for DDLAUX.addRule()"</a></p>
+</li>
+<li>
+<p><code dir="ltr">command</code>: Specifies the command. See <a href="#CHDDGJCE">Section 13.8.2.3, "Valid DDL Components for DDLAUX.addRule()"</a></p>
+</li>
+<li>
+<p><code dir="ltr">inclusion = TRUE</code>: Indicates that the specified objects are to be captured by the DDL trigger. If this parameter is not specified, the rule becomes an exclusion rule, and the specified objects are not captured. You can specify both an exclusion rule and an inclusion rule. If a DDL does not match any of the rules, it is included (passed to Extract) by default. Calling <code dir="ltr">DDLAUX.addRule()</code> without any parameters generates an <span class="italic">empty rule</span> that excludes all DDL on all the objects.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect3" -->
+<a id="CHDDGJCE"></a>
+<div id="GIORA320" class="sect3">
+<h4 class="sect3"><span class="secnum">13.8.2.3</span> Valid DDL Components for DDLAUX.addRule()</h4>
+<p>The following are the defined DDL object types, base object properties, and DDL commands that can be specified in the function code.</p>
+<p>Valid object types are:</p>
+<br />
+<code dir="ltr">TYPE_INDEX</code><br />
+<code dir="ltr">TYPE_TABLE</code><br />
+<code dir="ltr">TYPE_VIEW</code><br />
+<code dir="ltr">TYPE_SYNONYM</code><br />
+<code dir="ltr">TYPE_SEQUENCE</code><br />
+<code dir="ltr">TYPE_PROCEDURE</code><br />
+<code dir="ltr">TYPE_FUNCTION</code><br />
+<code dir="ltr">TYPE_PACKAGE</code><br />
+<code dir="ltr">TYPE_TRIGGER</code><br />
+<p>Valid base object properties are:</p>
+<br />
+<code dir="ltr">TB_IOT</code><br />
+<code dir="ltr">TB_CLUSTER</code><br />
+<code dir="ltr">TB_NESTED</code><br />
+<code dir="ltr">TB_TEMP</code><br />
+<code dir="ltr">TB_EXTERNAL</code><br />
+<p>Valid commands are:</p>
+<br />
+<code dir="ltr">CMD_CREATE</code><br />
+<code dir="ltr">CMD_DROP</code><br />
+<code dir="ltr">CMD_TRUNCATE</code><br />
+<code dir="ltr">CMD_ALTER</code></div>
+<!-- class="sect3" -->
+<div id="GIORA321" class="sect3"><a id="sthref161"></a>
+<h4 class="sect3"><span class="secnum">13.8.2.4</span> Examples of Rule-based Trigger Filtering</h4>
+<p>The following example excludes all temporary tables, except tables with names that start with <code dir="ltr">IMPTEMP</code>.</p>
+<pre dir="ltr">
+1. DDLAUX.ADDRULE(obj_name =&gt; 'IMPTEMP%', base_obj_property =&gt; TB_TEMP, obj_type =&gt; TYPE_TABLE, INCLUSION =&gt; TRUE);
+2. DDLAUX.ADDRULE(base_obj_property =&gt; TB_TEMP, obj_type =&gt; TYPE_TABLE); 
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Since the <code dir="ltr">IMPTEMP%</code> tables must be included, that rule should come first.</div>
+<p>The following example excludes all tables with name '<code dir="ltr">GGS%</code>'</p>
+<pre dir="ltr">
+DECLARE sno NUMBER; BEGIN sno := DDLAUX.ADDRULE(obj_name =&gt; 'GGS%' , obj_type =&gt; TYPE_TABLE); END 
+</pre>
+<p>The following example excludes all temporary tables.</p>
+<pre dir="ltr">
+DDLAUX.ADDRULE(base_obj_property =&gt; TB_TEMP, obj_type =&gt; TYPE_TABLE); 
+</pre>
+<p>The following example excludes all indexes on <code dir="ltr">TEMP</code> tables.</p>
+<pre dir="ltr">
+DDLAUX.ADDRULE(base_obj_property =&gt; TB_TEMP, obj_type =&gt; TYPE_INDEX); 
+</pre>
+<p>The following example excludes all objects in schema <code dir="ltr">TKGGADMIN</code>.</p>
+<pre dir="ltr">
+DDLAUX.ADDRULE(owner_name =&gt; 'TKGGADMIN'); 
+</pre>
+<p>The following example excludes all objects in <code dir="ltr">TRUNCATE</code> operations made to <code dir="ltr">TEMP</code> tables.</p>
+<pre dir="ltr">
+DDLAUX.ADDRULE(base_obj_property =&gt; TB_TEMP, obj_type =&gt; TYPE_TABLE, command =&gt; CMD_TRUNCATE)
+</pre></div>
+<!-- class="sect3" -->
+<div id="GIORA322" class="sect3"><!-- infolevel="all" infotype="General" --><a id="sthref162"></a>
+<h4 class="sect3"><span class="secnum">13.8.2.5</span> Dropping Filter Rules</h4>
+<p>Use the <code dir="ltr">DDLAUX.dropRule()</code> function with the drop rule. This function is installed in the Oracle GoldenGate DDL schema after the DDL objects are installed with the <code dir="ltr">ddl_setup.sql</code> script. As input, specify the serial number of the rule that you want to drop.</p>
+<pre dir="ltr">
+FUNCTION dropRule(sno IN NUMBER) RETURN BOOLEAN;
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="CHDGAIID"></a>
+<div id="GIORA323" class="sect2">
+<h3 class="sect2"><span class="secnum">13.8.3</span> Filtering with the DDL Parameter</h3>
+<p>This method is valid for trigger-based and integrated capture modes.</p>
+<p>The <code dir="ltr">DDL</code> parameter is the main Oracle GoldenGate parameter for filtering DDL within the Extract and Replicat processes.</p>
+<p>When used without options, the <code dir="ltr">DDL</code> parameter performs no filtering, and it causes all DDL operations to be propagated as follows:</p>
+<ul>
+<li>
+<p>As an Extract parameter, it captures all supported DDL operations that are generated on all supported database objects and sends them to the trail.</p>
+</li>
+<li>
+<p>As a Replicat parameter, it replicates all DDL operations from the Oracle GoldenGate trail and applies them to the target. This is the same as the default behavior without this parameter.</p>
+</li>
+</ul>
+<p>When used with options, the <code dir="ltr">DDL</code> parameter acts as a filtering agent to include or exclude DDL operations based on:</p>
+<ul>
+<li>
+<p>scope</p>
+</li>
+<li>
+<p>object type</p>
+</li>
+<li>
+<p>operation type</p>
+</li>
+<li>
+<p>object name</p>
+</li>
+<li>
+<p>strings in the DDL command syntax or comments, or both</p>
+</li>
+</ul>
+<p>Only one <code dir="ltr">DDL</code> parameter can be used in a parameter file, but you can combine multiple inclusion and exclusion options, along with other options, to filter the DDL to the required level.</p>
+<ul>
+<li>
+<p><code dir="ltr">DDL</code> filtering options are valid for a primary Extract that captures from the transaction source, but not for a data-pump Extract.</p>
+</li>
+<li>
+<p>When combined, multiple filter option specifications are linked logically as <code dir="ltr">AND</code> statements.</p>
+</li>
+<li>
+<p>All filter criteria specified with multiple options must be satisfied for a DDL statement to be replicated.</p>
+</li>
+<li>
+<p>When using complex DDL filtering criteria, it is recommended that you test your configuration in a test environment before using it in production.</p>
+</li>
+</ul>
+<p>For <code dir="ltr">DDL</code> parameter syntax and additional usage guidelines, see <a class="olink GWURF443" href="../../gg-winux/GWURF/gg_parameters035.htm#GWURF443"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Before you configure DDL support, it might help to review <a href="#BABJEGBE">Section 13.16, "How DDL is Evaluated for Processing"</a>.</div>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A2696081"></a>
+<div id="GIORA324" class="sect1">
+<h2 class="sect1"><span class="secnum">13.9</span> Special Filter Cases</h2>
+<p>The following are special cases that you should be aware of when creating your filter conditions.</p>
+<div id="GIORA325" class="sect2"><a id="sthref163"></a>
+<h3 class="sect2"><span class="secnum">13.9.1</span> DDL EXCLUDE ALL</h3>
+<p><code dir="ltr">DDL EXCLUDE ALL</code> is a special processing option that is intended primarily for Extract when using trigger-based DDL capture. <code dir="ltr">DDL EXCLUDE ALL</code> blocks the replication of DDL operations, but ensures that Oracle GoldenGate continues to keep the object metadata current. When Extract receives DDL directly from the logmining server (triggerless DDL capture mode), current metadata is always maintained.</p>
+<p>You can use <code dir="ltr">DDL EXCLUDE ALL</code> when using a method other than Oracle GoldenGate to apply DDL to the target and you want Oracle GoldenGate to replicate data changes to the target objects. It provides the current metadata to Oracle GoldenGate as objects change, thus preventing the need to stop and start the Oracle GoldenGate processes. The following special conditions apply to <code dir="ltr">DDL EXCLUDE ALL</code>:</p>
+<ul>
+<li>
+<p><code dir="ltr">DDL EXCLUDE ALL</code> does not require the use of an <code dir="ltr">INCLUDE</code> clause.</p>
+</li>
+<li>
+<p>When using <code dir="ltr">DDL EXCLUDE ALL</code>, you can set the <code dir="ltr">WILDCARDRESOLVE</code> parameter to <code dir="ltr">IMMEDIATE</code> to allow immediate DML resolution if required. For more information, see <a class="olink GWURF741" href="../../gg-winux/GWURF/gg_parameters194.htm#GWURF741"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+</ul>
+<p>To prevent all DDL metadata and operations from being replicated, omit the <code dir="ltr">DDL</code> parameter entirely.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA326" class="sect2"><a id="sthref164"></a>
+<h3 class="sect2"><span class="secnum">13.9.2</span> Implicit DDL</h3>
+<p>User-generated DDL operations can generate implicit DDL operations. For example, the following statement generates two distinct DDL operations.</p>
+<pre dir="ltr">
+CREATE TABLE customers (custID number, name varchar2(50), address varchar2(75), address2 varchar2(75), city varchar2(50), state (varchar2(2), zip number, contact varchar2(50), areacode number(3), phone number(7), primary key (custID));
+</pre>
+<p>The first (explicit) DDL operation is the <code dir="ltr">CREATE TABLE</code> statement itself.</p>
+<p>The second DDL operation is an implicit <code dir="ltr">CREATE UNIQUE INDEX</code> statement that creates the index for the primary key. This operation is generated by the database engine, not a user application.</p>
+<p class="subhead2"><a id="GIORA327"></a>Guidelines for Filtering Implicit DDL</p>
+<p>How to filter implicit DDL depends on the mechanism that you are using to filter DDL. See <a href="#A2258775">Section 13.8, "Filtering DDL Replication"</a> for more information.</p>
+<ul>
+<li>
+<p>When the <code dir="ltr">DDL</code> parameter is used to filter DDL operations, Oracle GoldenGate filters out any implicit DDL by default, because the explicit DDL will generate the implicit DDL on the target. For example, the target database will create the appropriate index when the <code dir="ltr">CREATE TABLE</code> statement in the preceding example is applied by Replicat.</p>
+</li>
+<li>
+<p>When the DDL trigger is being used to filter DDL operations, you must handle the implicit DDL in your filter rules based on the following:</p>
+<ul>
+<li>
+<p>If your filtering rules exclude the explicit DDL from being propagated, you must also create a rule to exclude the implicit DDL. For example, if you exclude the <code dir="ltr">CREATE TABLE</code> statement in the following example, but do not exclude the implicit <code dir="ltr">CREATE UNIQUE INDEX</code> statement, the target database will try to create the index on a non-existent table.</p>
+<pre dir="ltr">
+CREATE TABLE customers (custID number, name varchar2(50), address varchar2(75), address2 varchar2(75), city varchar2(50), state (varchar2(2), zip number, contact varchar2(50), areacode number(3), phone number(7), primary key (custID));
+</pre></li>
+<li>
+<p>If your filtering rules permit the propagation of the explicit DDL, you do not need to exclude the implicit DDL. It will be handled correctly by Oracle GoldenGate and the target database.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A2727959"></a>
+<div id="GIORA328" class="sect1">
+<h2 class="sect1"><span class="secnum">13.10</span> How Oracle GoldenGate Handles Derived Object Names</h2>
+<p>DDL operations can contain a <span class="italic">base object</span> name and also a <span class="italic">derived object</span> name. A base object is an object that contains data. A derived object is an object that inherits some attributes of the base object to perform a function related to that object. DDL statements that have both base and derived objects are:</p>
+<ul>
+<li>
+<p><code dir="ltr">RENAME</code> and <code dir="ltr">ALTER RENAME</code></p>
+</li>
+<li>
+<p><code dir="ltr">CREATE</code> and <code dir="ltr">DROP</code> on an index, synonym, or trigger</p>
+</li>
+</ul>
+<p>Consider the following DDL statement:</p>
+<pre dir="ltr">
+CREATE INDEX hr.indexPayrollDate ON TABLE hr.tabPayroll (payDate);
+</pre>
+<p>In this case, the table is the base object. Its name (<code dir="ltr">hr.tabPayroll</code>) is the <span class="italic">base name</span> and is subject to mapping with <code dir="ltr">TABLE</code> or <code dir="ltr">MAP</code> under the <code dir="ltr">MAPPED</code> scope. The derived object is the index, and its name (<code dir="ltr">hr.indexPayrollDate</code>) is the <span class="italic">derived name</span>.</p>
+<p>You can map a derived name in its own <code dir="ltr">TABLE</code> or <code dir="ltr">MAP</code> statement, separately from that of the base object. Or, you can use one <code dir="ltr">MAP</code> statement to handle both. In the case of <code dir="ltr">MAP</code>, the conversion of derived object names on the target works as follows.</p>
+<div id="GIORA329" class="sect2"><a id="sthref165"></a>
+<h3 class="sect2"><span class="secnum">13.10.1</span> MAP Exists for Base Object, But Not Derived Object</h3>
+<p>If there is a <code dir="ltr">MAP</code> statement for the base object, but not for the derived object, the result is an <span class="italic">implicit mapping</span> of the derived object. Assuming the DDL statement includes <code dir="ltr">MAPPED</code>, Replicat gives the derived object the same target schema as that of the base object. The name of the derived object stays the same as in the source statement. For example, assume the following:</p>
+<p><span class="bold">Extract (source)</span></p>
+<pre dir="ltr">
+Table hr.tab*;
+</pre>
+<p><span class="bold">Replicat (target)</span></p>
+<pre dir="ltr">
+MAP hr.tab*, TARGET hrBackup.*;
+</pre>
+<p>Assume the following source DDL statement:</p>
+<pre dir="ltr">
+CREATE INDEX hr.indexPayrollDate ON TABLE hr.tabPayroll (payDate);
+</pre>
+<p>The <code dir="ltr">CREATE INDEX</code> statement is executed by Replicat on the target as follows:</p>
+<pre dir="ltr">
+CREATE INDEX hrBackup.indexPayrollDate ON TABLE hrBackup.tabPayroll (payDate);
+</pre>
+<p>The rule for the implicit mapping is based the typical practice of giving derived objects the same schema as the base object. It ensures the correct name conversion even if the name of the derived object is not fully qualified in the source statement. Also, when indexes are owned by the same target schema as the base object, an implicit mapping eliminates the need to map derived object names explicitly.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA330" class="sect2"><a id="sthref166"></a>
+<h3 class="sect2"><span class="secnum">13.10.2</span> MAP Exists for Base and Derived Objects</h3>
+<p>If there is a <code dir="ltr">MAP</code> statement for the base object and also one for the derived object, the result is an explicit mapping. Assuming the DDL statement includes <code dir="ltr">MAPPED</code>, Replicat converts the schema and name of each object according to its own <code dir="ltr">TARGET</code> clause. For example, assume the following:</p>
+<p><span class="bold">Extract (source)</span></p>
+<pre dir="ltr">
+TABLE hr.tab*;  TABLE hr.index*;
+</pre>
+<p><span class="bold">Replicat (target)</span></p>
+<pre dir="ltr">
+MAP hr.tab*, TARGET hrBackup.*;MAP hr.index*, TARGET hrIndex.*;
+</pre>
+<p>Assume the following source DDL statement:</p>
+<pre dir="ltr">
+CREATE INDEX hr.indexPayrollDate ON TABLE hr.tabPayroll (payDate);
+</pre>
+<p>The <code dir="ltr">CREATE INDEX</code> statement is executed by Replicat on the target as follows:</p>
+<pre dir="ltr">
+CREATE INDEX hrIndex.indexPayrollDate ON TABLE hrBackup.tabPayroll (payDate);
+</pre>
+<p>Use an explicit mapping when the index on the target must be owned by a different schema from that of the base object, or when the name on the target must be different from that of the source.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA331" class="sect2"><a id="sthref167"></a>
+<h3 class="sect2"><span class="secnum">13.10.3</span> MAP Exists for Derived Object, But Not Base Object</h3>
+<p>If there is a <code dir="ltr">MAP</code> statement for the derived object, but not for the base object, Replicat does not perform any name conversion for either object. The target DDL statement is the same as that of the source. To map a derived object, the choices are:</p>
+<ul>
+<li>
+<p>Use an explicit <code dir="ltr">MAP</code> statement for the base object.</p>
+</li>
+<li>
+<p>If names permit, map both base and derived objects in the same <code dir="ltr">MAP</code> statement by means of a wildcard.</p>
+</li>
+<li>
+<p>Create a <code dir="ltr">MAP</code> statement for each object, depending on how you want the names converted.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<div id="GIORA332" class="sect2"><a id="sthref168"></a>
+<h3 class="sect2"><span class="secnum">13.10.4</span> New Tables as Derived Objects</h3>
+<p>The following explains how Oracle GoldenGate handles new tables that are created from:</p>
+<ul>
+<li>
+<p><code dir="ltr">RENAME</code> and <code dir="ltr">ALTER RENAME</code></p>
+</li>
+<li>
+<p><code dir="ltr">CREATE TABLE AS SELECT</code></p>
+</li>
+</ul>
+<div id="GIORA333" class="sect3"><a id="sthref169"></a>
+<h4 class="sect3"><span class="secnum">13.10.4.1</span> RENAME and ALTER TABLE RENAME</h4>
+<p>In <code dir="ltr">RENAME</code> and <code dir="ltr">ALTER TABLE RENAME</code> operations, the base object is always the new table name. In the following example, the base object name is considered to be <code dir="ltr">index_paydate</code>.</p>
+<pre dir="ltr">
+ALTER TABLE hr.indexPayrollDate RENAME TO index_paydate;
+</pre>
+<p>or...</p>
+<pre dir="ltr">
+RENAME hr.indexPayrollDate TO index_paydate;
+</pre>
+<p>The derived object name is <code dir="ltr">hr.indexPayrollDate</code>.</p>
+</div>
+<!-- class="sect3" -->
+<a id="CHDBCFIB"></a>
+<div id="GIORA334" class="sect3">
+<h4 class="sect3"><span class="secnum">13.10.4.2</span> CREATE TABLE AS SELECT</h4>
+<p>The <code dir="ltr">CREATE TABLE AS SELECT</code> (CTAS) statements include <code dir="ltr">SELECT</code> statements and <code dir="ltr">INSERT</code> statements that reference any number of underlying objects. By default, Oracle GoldenGate obtains the data for the <code dir="ltr">AS SELECT</code> clause from the target database. You can force the CTAS operation to preserve the original inserts using this parameter.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+For this reason, Oracle <code dir="ltr">XMLType</code> tables created from a <code dir="ltr">CTAS</code> (<code dir="ltr">CREATE TABLE AS SELECT</code>) statement cannot be supported. For <code dir="ltr">XMLType</code> tables, the row object IDs must match between source and target, which cannot be maintained in this scenario. <code dir="ltr">XMLType</code> tables created by an empty <code dir="ltr">CTAS</code> statement (that does not insert data in the new table) can be maintained correctly.
+<p>In addition, you could use the <code dir="ltr">GETCTASDML</code> parameter that allows CTAS to replay the inserts of the CTAS thus preserving OIDs during replication. This parameter is only supported with Integrated Dictionary and any downstream Replicat must be 12.1.2.1 or greater to consume the trail otherwise, there may be divergence.</p>
+</div>
+<p>The objects in the <code dir="ltr">AS SELECT</code> clause must exist in the target database, and their names must be identical to the ones on the source.</p>
+<p>In a <code dir="ltr">MAP</code> statement, Oracle GoldenGate only maps the name of the new table (<code dir="ltr">CREATE TABLE name</code>) to the <code dir="ltr">TARGET</code> specification, but does not map the names of the underlying objects from the <code dir="ltr">AS</code> <code dir="ltr">SELECT</code> clause. There could be dependencies on those objects that could cause data inconsistencies if the names were converted to the <code dir="ltr">TARGET</code> specification.</p>
+<p>The following shows an example of a <code dir="ltr">CREATE TABLE AS SELECT</code> statement on the source and how it would be replicated to the target by Oracle GoldenGate.</p>
+<pre dir="ltr">
+CREATE TABLE a.tab1 AS SELECT * FROM a.tab2;
+</pre>
+<p>The <code dir="ltr">MAP</code> statement for Replicat is as follows:</p>
+<pre dir="ltr">
+MAP a.tab*, TARGET a.x*;
+</pre>
+<p>The target DDL statement that is applied by Replicat is the following:</p>
+<pre dir="ltr">
+CREATE TABLE a.xtab1 AS SELECT * FROM a.tab2;
+</pre>
+<p>The name of the table in the <code dir="ltr">AS SELECT * FROM</code> clause remains as it was on the source: <code dir="ltr">tab2</code> (rather than <code dir="ltr">xtab2</code>).</p>
+<p>To keep the data in the underlying objects consistent on source and target, you can configure them for data replication by Oracle GoldenGate. In the preceding example, you could use the following statements to accommodate this requirement:</p>
+<p><span class="bold">Source</span></p>
+<pre dir="ltr">
+TABLE a.tab*;
+</pre>
+<p><span class="bold">Target</span></p>
+<pre dir="ltr">
+MAPEXCLUDE a.tab2
+MAP a.tab*, TARGET a.x*;
+MAP a.tab2, TARGET a.tab2;
+</pre>
+<p>See <a href="#CHDCDDDD">Section 13.6, "Correctly Identifying Unqualified Object Names in DDL"</a>.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<div id="GIORA335" class="sect2"><a id="sthref170"></a>
+<h3 class="sect2"><span class="secnum">13.10.5</span> Disabling the Mapping of Derived Objects</h3>
+<p>Use the <code dir="ltr">DDLOPTIONS</code> parameter with the <code dir="ltr">NOMAPDERIVED</code> option to prevent the conversion of the name of a derived object according to a <code dir="ltr">TARGET</code> clause of a <code dir="ltr">MAP</code> statement that includes it. <code dir="ltr">NOMAPDERIVED</code> overrides any explicit <code dir="ltr">MAP</code> statements that contain the name of the base or derived object. Source DDL that contains derived objects is replicated to the target with the same schema and object names as on the source.</p>
+<p>The following table shows the results of <code dir="ltr">MAPDERIVED</code> compared to <code dir="ltr">NOMAPDERIVED</code>, based on whether there is a <code dir="ltr">MAP</code> statement just for the base object, just for the derived object, or for both.</p>
+<div id="GIORA336" class="tblhruleformalwide"><p class="titleintable"><a id="sthref171"></a><a id="sthref172"></a>Table 13-2 [NO]MAPDERIVED Results on Target Based on Mapping Configuration</p>
+<table class="cellalignment245" title="[NO]MAPDERIVED Results on Target Based on Mapping Configuration" summary="This table lists the [NO]MAPDERIVED results on target based on mapping configuration.">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t9">Base Object</th>
+<th class="cellalignment246" id="r1c2-t9">Derived Object</th>
+<th class="cellalignment246" id="r1c3-t9">MAP/NOMAP DERIVED?</th>
+<th class="cellalignment246" id="r1c4-t9">Derived object converted per a MAP?</th>
+<th class="cellalignment246" id="r1c5-t9">Derived object gets schema of base object?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t9" headers="r1c1-t9">
+<p>mapped<a id="sthref173" href="#sthref173" onclick='footdisplay(1,"Mapped means included in a \u003ccode dir=\"ltr\"\u003eMAP\u003c/code\u003e statement.")'><sup class="tablefootnote">Foot&nbsp;1&nbsp;</sup></a></p>
+</td>
+<td class="cellalignment240" headers="r2c1-t9 r1c2-t9">
+<p>mapped</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t9 r1c3-t9">
+<p><code dir="ltr">MAPDERIVED</code></p>
+</td>
+<td class="cellalignment240" headers="r2c1-t9 r1c4-t9">
+<p>yes</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t9 r1c5-t9">
+<p>no</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r3c1-t9" headers="r1c1-t9">
+<p>mapped</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t9 r1c2-t9">
+<p>not mapped</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t9 r1c3-t9">
+<p><code dir="ltr">MAPDERIVED</code></p>
+</td>
+<td class="cellalignment240" headers="r3c1-t9 r1c4-t9">
+<p>no</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t9 r1c5-t9">
+<p>yes</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r4c1-t9" headers="r1c1-t9">
+<p>not mapped</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t9 r1c2-t9">
+<p>mapped</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t9 r1c3-t9">
+<p><code dir="ltr">MAPDERIVED</code></p>
+</td>
+<td class="cellalignment240" headers="r4c1-t9 r1c4-t9">
+<p>no</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t9 r1c5-t9">
+<p>no</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r5c1-t9" headers="r1c1-t9">
+<p>not mapped</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t9 r1c2-t9">
+<p>not mapped</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t9 r1c3-t9">
+<p><code dir="ltr">MAPDERIVED</code></p>
+</td>
+<td class="cellalignment240" headers="r5c1-t9 r1c4-t9">
+<p>no</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t9 r1c5-t9">
+<p>no</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r6c1-t9" headers="r1c1-t9">
+<p>mapped</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t9 r1c2-t9">
+<p>mapped</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t9 r1c3-t9">
+<p><code dir="ltr">NOMAPDERIVED</code></p>
+</td>
+<td class="cellalignment240" headers="r6c1-t9 r1c4-t9">
+<p>no</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t9 r1c5-t9">
+<p>no</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r7c1-t9" headers="r1c1-t9">
+<p>mapped</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t9 r1c2-t9">
+<p>not mapped</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t9 r1c3-t9">
+<p><code dir="ltr">NOMAPDERIVED</code></p>
+</td>
+<td class="cellalignment240" headers="r7c1-t9 r1c4-t9">
+<p>no</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t9 r1c5-t9">
+<p>no</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r8c1-t9" headers="r1c1-t9">
+<p>not mapped</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t9 r1c2-t9">
+<p>mapped</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t9 r1c3-t9">
+<p><code dir="ltr">NOMAPDERIVED</code></p>
+</td>
+<td class="cellalignment240" headers="r8c1-t9 r1c4-t9">
+<p>no</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t9 r1c5-t9">
+<p>no</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r9c1-t9" headers="r1c1-t9">
+<p>not mapped</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t9 r1c2-t9">
+<p>not mapped</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t9 r1c3-t9">
+<p><code dir="ltr">NOMAPDERIVED</code></p>
+</td>
+<td class="cellalignment240" headers="r9c1-t9 r1c4-t9">
+<p>no</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t9 r1c5-t9">
+<p>no</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" -->
+<p class="tablefootnote"><sup class="tablefootnote">Footnote&nbsp;1&nbsp;</sup>Mapped means included in a <code dir="ltr">MAP</code> statement.</p>
+<p>The following examples illustrate the results of <code dir="ltr">MAPDERIVED</code> as compared to <code dir="ltr">NOMAPDERIVED</code>.In <a href="#BABBADCG">Table 13-3</a>, both trigger and table are owned by <code dir="ltr">rpt</code> on the target because both base and derived names are converted by means of <code dir="ltr">MAPDERIVED</code>.</p>
+<div id="GIORA337" class="tblhruleformalwide"><p class="titleintable"><a id="sthref174"></a><a id="BABBADCG"></a>Table 13-3 Default Mapping of Derived Object Names (MAPDERIVED)</p>
+<table class="cellalignment245" title="Default Mapping of Derived Object Names (MAPDERIVED)" summary="This table shows the default mapping of derived object names (MAPDERIVED).">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t10">MAP statement</th>
+<th class="cellalignment246" id="r1c2-t10">Source DDL statement<br />
+captured by Extract</th>
+<th class="cellalignment246" id="r1c3-t10">Target DDL statement<br />
+applied by Replicat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t10" headers="r1c1-t10">
+<p><code dir="ltr">MAP fin.*, TARGET rpt.*;</code></p>
+</td>
+<td class="cellalignment240" headers="r2c1-t10 r1c2-t10">
+<p><code dir="ltr">CREATE TRIGGER fin.act_trig ON fin.acct;</code></p>
+</td>
+<td class="cellalignment240" headers="r2c1-t10 r1c3-t10">
+<p><code dir="ltr">CREATE TRIGGER rpt.act_trig ON rpt.acct;</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" -->
+<p>In <a href="#BABEAJEA">Table 13-4</a>, the trigger is owned by <code dir="ltr">fin</code>, because conversion is prevented by means of <code dir="ltr">NOMAPDERIVED</code>.</p>
+<div id="GIORA338" class="tblhruleformalwide"><p class="titleintable"><a id="sthref175"></a><a id="BABEAJEA"></a>Table 13-4 Mapping of derived object names when using NOMAPDERIVED</p>
+<table class="cellalignment245" title="Mapping of derived object names when using NOMAPDERIVED" summary="This table lists the default mapping of derived object names (MAPDERIVED).">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t11">MAP statement</th>
+<th class="cellalignment246" id="r1c2-t11">Source DDL statement<br />
+captured by Extract</th>
+<th class="cellalignment246" id="r1c3-t11">Target DDL statement<br />
+applied by Replicat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t11" headers="r1c1-t11">
+<p><code dir="ltr">MAP fin.*, TARGET rpt.*;</code></p>
+</td>
+<td class="cellalignment240" headers="r2c1-t11 r1c2-t11">
+<p><code dir="ltr">CREATE TRIGGER fin.act_trig ON fin.acct;</code></p>
+</td>
+<td class="cellalignment240" headers="r2c1-t11 r1c3-t11">
+<p><code dir="ltr">CREATE TRIGGER fin.act_trig ON rpt.acct;</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" -->
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+In the case of a <code dir="ltr">RENAME</code> statement, the new table name is considered to be the base table name, and the old table name is considered to be the derived table name.</div>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A2790387"></a>
+<div id="GIORA339" class="sect1">
+<h2 class="sect1"><span class="secnum">13.11</span> Using DDL String Substitution</h2>
+<p>You can substitute strings within a DDL operation while it is being processed by Oracle GoldenGate. This feature provides a convenience for changing and mapping directory names, comments, and other things that are not directly related to data structures. For example, you could substitute one tablespace name for another, or substitute a string within comments. String substitution is controlled by the <code dir="ltr">DDLSUBST</code> parameter. For more information, see <a class="olink GWURF454" href="../../gg-winux/GWURF/gg_parameters038.htm#GWURF454"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Before you create a <code dir="ltr">DDLSUBST</code> parameter statement, it might help to review <a href="#BABJEGBE">Section 13.16, "How DDL is Evaluated for Processing"</a> in this chapter.</div>
+</div>
+<!-- class="sect1" -->
+<a id="A2809209"></a>
+<div id="GIORA340" class="sect1">
+<h2 class="sect1"><span class="secnum">13.12</span> Controlling the Propagation of DDL to Support Different Topologies</h2>
+<p>To support bidirectional and cascading replication configurations, it is important for Extract to be able to identify the DDL that is performed by Oracle GoldenGate and by other applications, such as the local business applications. Depending on the configuration that you want to deploy, it might be appropriate to capture one or both of these sources of DDL on the local system.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Oracle GoldenGate DDL consists of <code dir="ltr">ALTER TABLE</code> statements performed by Extract to create log groups and the DDL that is performed by Replicat to replicate source DDL changes.</div>
+<p>The following options of the <code dir="ltr">DDLOPTIONS</code> parameter control whether DDL on the local system is captured by Extract and then sent to a remote system, assuming Oracle GoldenGate DDL support is configured and enabled:</p>
+<ul>
+<li>
+<p>The <code dir="ltr">GETREPLICATES</code> and <code dir="ltr">IGNOREREPLICATES</code> options control whether Extract captures or ignores the DDL that is generated by Oracle GoldenGate. The default is <code dir="ltr">IGNOREREPLICATES</code>, which does not propagate the DDL that is generated by Oracle GoldenGate. To identify the DDL operations that are performed by Oracle GoldenGate, the following comment is part of each Extract and Replicat DDL statement:</p>
+<pre dir="ltr">
+/* GOLDENGATE_DDL_REPLICATION */
+</pre></li>
+<li>
+<p>The <code dir="ltr">GETAPPLOPS</code> and <code dir="ltr">IGNOREAPPLOPS</code> options control whether Extract captures or ignores the DDL that is generated by applications other than Oracle GoldenGate. The default is <code dir="ltr">GETAPPLOPS</code>, which propagates the DDL from local applications (other than Oracle GoldenGate).</p>
+</li>
+</ul>
+<p>The result of these default settings is that Extract ignores its own DDL and the DDL that is applied to the local database by a local Replicat, so that the DDL is not sent back to its source, and Extract captures all other DDL that is configured for replication. The following is the default <code dir="ltr">DDLOPTIONS</code> configuration.</p>
+<pre dir="ltr">
+DDLOPTIONS GETAPPLOPS, IGNOREREPLICATES
+</pre>
+<p>This behavior can be modified. See the following topics:</p>
+<ul>
+<li>
+<p><a href="#BABIJBIA">Section 13.12.1, "Propagating DDL in Active-Active (Bidirectional) Configurations"</a></p>
+</li>
+<li>
+<p><a href="#BABCAFDA">Section 13.12.2, "Propagating DDL in a Cascading Configuration"</a></p>
+</li>
+</ul>
+<a id="BABIJBIA"></a>
+<div id="GIORA341" class="sect2">
+<h3 class="sect2"><span class="secnum">13.12.1</span> Propagating DDL in Active-Active (Bidirectional) Configurations</h3>
+<p>Oracle GoldenGate supports active-active DDL replication between two systems. For an active-active bidirectional replication, the following must be configured in the Oracle GoldenGate processes:</p>
+<ol>
+<li>
+<p>DDL that is performed by a business application on one system must be replicated to the other system to maintain synchronization. To satisfy this requirement, include the <code dir="ltr">GETAPPLOPS</code> option in the <code dir="ltr">DDLOPTIONS</code> statement in the Extract parameter files on both systems.</p>
+</li>
+<li>
+<p>DDL that is applied by Replicat on one system must be captured by the local Extract and sent back to the other system. To satisfy this requirement, use the <code dir="ltr">GETREPLICATES</code> option in the <code dir="ltr">DDLOPTIONS</code> statement in the Extract parameter files on both systems.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+An internal Oracle GoldenGate token will cause the actual Replicat DDL statement itself to be ignored to prevent loopback. The purpose of propagating Replicat DDL back to the original system is so that the Replicat on that system can update its object metadata cache, in preparation to receive incoming DML, which will have the new metadata. See <a href="#BABJCEFD">Figure 13-1</a>.</div>
+</li>
+<li>
+<p>Each Replicat must be configured to update its object metadata cache whenever the remote Extract sends over a captured Replicat DDL statement. To satisfy this requirement, use the <code dir="ltr">UPDATEMETADATA</code> option in the <code dir="ltr">DDLOPTIONS</code> statement in the Replicat parameter files on both systems.</p>
+</li>
+</ol>
+<p>The resultant <code dir="ltr">DDLOPTIONS</code> statements should look as follows:</p>
+<p><span class="bold">Extract (primary and secondary)</span></p>
+<pre dir="ltr">
+DDLOPTIONS GETREPLICATES, GETAPPLOPS 
+</pre>
+<p><span class="bold">Replicat (primary and secondary)</span></p>
+<pre dir="ltr">
+DDLOPTIONS UPDATEMETADATA
+</pre>
+<div class="infoboxnotewarn">
+<p class="notep1">Caution:</p>
+<p class="warnsp">Before you allow new DDL or DML to be issued for the same object(s) as the original DDL, allow time for the original DDL to be replicated to the remote system and then captured again by the Extract on that system. This will ensure that the operations arrive in correct order to the Replicat on the original system, to prevent DML errors caused by metadata inconsistencies. See <a href="#BABJCEFD">Figure 13-1</a> for more information.</p>
+</div>
+<div id="GIORA342" class="figure"><p class="titleinfigure"><a id="BABJCEFD"></a>Figure 13-1 Path of DDL in Round Trip to Update Replicat Object Metadata Cache</p>
+<img width="2224" height="1058" src="img/ddl_update_metadata.png" alt="Description of Figure 13-1 follows" /><br />
+<a id="sthref176" href="img_text/ddl_update_metadata.htm">Description of "Figure 13-1 Path of DDL in Round Trip to Update Replicat Object Metadata Cache"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>For more information about <code dir="ltr">DDLOPTIONS</code>, see <a class="olink GWURF451" href="../../gg-winux/GWURF/gg_parameters037.htm#GWURF451"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>For more information about configuring a bidirectional configuration, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect2" -->
+<a id="BABCAFDA"></a>
+<div id="GIORA343" class="sect2">
+<h3 class="sect2"><span class="secnum">13.12.2</span> Propagating DDL in a Cascading Configuration</h3>
+<p>In a cascading configuration, use the following setting for <code dir="ltr">DDLOPTIONS</code> in the Extract parameter file on each intermediary system. This configuration forces Extract to capture the DDL from Replicat on an intermediary system and cascade it to the next system downstream.</p>
+<pre dir="ltr">
+DDLOPTIONS GETREPLICATES, IGNOREAPPLOPS
+</pre>
+<p>For more information about <code dir="ltr">DDLOPTIONS</code>, see <a class="olink GWURF451" href="../../gg-winux/GWURF/gg_parameters037.htm#GWURF451"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a></p>
+<p>For more information about configuring a cascading configuration, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a></p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A2838123"></a>
+<div id="GIORA344" class="sect1">
+<h2 class="sect1"><span class="secnum">13.13</span> Adding Supplemental Log Groups Automatically</h2>
+<p>Use the <code dir="ltr">DDLOPTIONS</code> parameter with the <code dir="ltr">ADDTRANDATA</code> option to do the following:</p>
+<ul>
+<li>
+<p>enable Oracle's supplemental logging automatically for new tables created with a <code dir="ltr">CREATE TABLE</code>.</p>
+</li>
+<li>
+<p>update Oracle's supplemental logging for tables affected by an <code dir="ltr">ALTER TABLE</code> to add or drop columns.</p>
+</li>
+<li>
+<p>update Oracle's supplemental logging for tables that are renamed.</p>
+</li>
+<li>
+<p>update Oracle's supplemental logging for tables where unique or primary keys are added or dropped.</p>
+</li>
+</ul>
+<p>To use <code dir="ltr">DDLOPTIONS ADDSCHEMATRANDATA</code>, the <code dir="ltr">ADD SCHEMATRANDATA</code> command must be issued in GGSCI to enable schema-level supplemental logging.</p>
+<p>By default, the <code dir="ltr">ALTER TABLE</code> that adds the supplemental logging is not replicated to the target unless the <code dir="ltr">GETREPLICATES</code> parameter is in use.</p>
+<p><code dir="ltr">DDLOPTIONS ADDTRANDATA</code> is not supported for multitenant container databases.</p>
+<p>See <a href="setup.htm#BABFJCCC">Section 3.2, "Configuring Logging Properties"</a> for more information.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A2838765"></a>
+<div id="GIORA345" class="sect1">
+<h2 class="sect1"><span class="secnum">13.14</span> Removing Comments from Replicated DDL</h2>
+<p>You can use the <code dir="ltr">DDLOPTIONS</code> parameter with the <code dir="ltr">REMOVECOMMENTS BEFORE</code> and <code dir="ltr">REMOVECOMMENTS AFTER</code> options to prevent comments that were used in the source DDL from being included in the target DDL. By default, comments are not removed, so that they can be used for string substitution.</p>
+<p>For more information about <code dir="ltr">DDLOPTIONS</code>, see <a class="olink GWURF451" href="../../gg-winux/GWURF/gg_parameters037.htm#GWURF451"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A2839299"></a>
+<div id="GIORA346" class="sect1">
+<h2 class="sect1"><span class="secnum">13.15</span> Replicating an IDENTIFIED BY Password</h2>
+<p>Use the <code dir="ltr">DDLOPTIONS</code> parameter with the <code dir="ltr">DEFAULTUSERPASSWORDALIAS</code> and <code dir="ltr">REPLICATEPASSWORD | NOREPLICATEPASSWORD</code> options to control how the password of a replicated <code dir="ltr">{CREATE | ALTER} USER</code> <code dir="ltr"><span class="codeinlineitalic">name</span></code> <code dir="ltr">IDENTIFIED BY</code> <code dir="ltr"><span class="codeinlineitalic">password</span></code> statement is handled. These options must be used together.</p>
+<p>See the <code dir="ltr">USEPASSWORDVERIFIERLEVEL</code> option of <code dir="ltr">DDLOPTIONS</code> for important information about specifying the password verifier when Replicat operates against an Oracle 10<span class="italic">g</span> or 11<span class="italic">g</span> database.</p>
+<p>For more information about <code dir="ltr">DDLOPTIONS</code>, see <a class="olink GWURF451" href="../../gg-winux/GWURF/gg_parameters037.htm#GWURF451"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABJEGBE"></a>
+<div id="GIORA347" class="sect1">
+<h2 class="sect1"><span class="secnum">13.16</span> How DDL is Evaluated for Processing</h2>
+<p>The following explains how Oracle GoldenGate processes DDL statements on the source and target systems. It shows the order in which different criteria in the Oracle GoldenGate parameters are processed, and it explains the differences between how Extract and Replicat each process the DDL.</p>
+<p class="orderedlisttitle">Extract&nbsp;</p>
+<ol>
+<li>
+<p>Extract captures a DDL statement.</p>
+</li>
+<li>
+<p>Extract separates comments, if any, from the main statement.</p>
+</li>
+<li>
+<p>Extract searches for the <code dir="ltr">DDL</code> parameter. (This example assumes it exists.)</p>
+</li>
+<li>
+<p>Extract searches for the <code dir="ltr">IGNOREREPLICATES</code> parameter. If it is present, and if Replicat produced this DDL on this system, Extract ignores the DDL statement. (This example assumes no Replicat operations on this system.)</p>
+</li>
+<li>
+<p>Extract determines whether the DDL statement is a <code dir="ltr">RENAME</code>. If so, the rename is flagged internally.</p>
+</li>
+<li>
+<p>Extract gets the base object name and, if present, the derived object name.</p>
+</li>
+<li>
+<p>If the statement is a <code dir="ltr">RENAME</code>, Extract changes it to <code dir="ltr">ALTER TABLE RENAME</code>.</p>
+</li>
+<li>
+<p>Extract searches for the <code dir="ltr">DDLOPTIONS REMOVECOMMENTS BEFORE</code> parameter. If it is present, Extract removes the comments from the DDL statement, but stores them in case there is a <code dir="ltr">DDL INCLUDE</code> or <code dir="ltr">DDL EXCLUDE</code> clause that uses <code dir="ltr">INSTR</code> or <code dir="ltr">INSTRCOMMENTS</code>.</p>
+</li>
+<li>
+<p>Extract determines the DDL scope: <code dir="ltr">MAPPED</code>, <code dir="ltr">UNMAPPED</code> or <code dir="ltr">OTHER</code>:</p>
+<ul>
+<li>
+<p>It is <code dir="ltr">MAPPED</code> if the operation and object types are supported for mapping, and the base object name and/or derived object name (if <code dir="ltr">RENAME</code>) is in a <code dir="ltr">TABLE</code> parameter.</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>It is <code dir="ltr">UNMAPPED</code> if the operation and object types are not supported for mapping, and the base object name and/or derived object name (if <code dir="ltr">RENAME</code>) is not in a <code dir="ltr">TABLE</code> parameter.</p>
+</li>
+<li>
+<p>Otherwise the operation is identified as <code dir="ltr">OTHER</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Extract checks the <code dir="ltr">DDL</code> parameter for <code dir="ltr">INCLUDE</code> and <code dir="ltr">EXCLUDE</code> clauses, and it evaluates the <code dir="ltr">DDL</code> parameter criteria in those clauses. All options must evaluate to <code dir="ltr">TRUE</code> in order for the <code dir="ltr">INCLUDE</code> or <code dir="ltr">EXCLUDE</code> to evaluate to <code dir="ltr">TRUE</code>. The following occurs:</p>
+<ul>
+<li>
+<p>If an <code dir="ltr">EXCLUDE</code> clause evaluates to <code dir="ltr">TRUE</code>, Extract discards the DDL statement and evaluates another DDL statement. In this case, the processing steps start over.</p>
+</li>
+<li>
+<p>If an <code dir="ltr">INCLUDE</code> clause evaluates to <code dir="ltr">TRUE</code>, or if the <code dir="ltr">DDL</code> parameter does not have any <code dir="ltr">INCLUDE</code> or <code dir="ltr">EXCLUDE</code> clauses, Extract includes the DDL statement, and the processing logic continues.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Extract searches for a <code dir="ltr">DDLSUBST</code> parameter and evaluates the <code dir="ltr">INCLUDE</code> and <code dir="ltr">EXCLUDE</code> clauses. If the criteria in those clauses add up to <code dir="ltr">TRUE</code>, Extract performs string substitution. Extract evaluates the DDL statement against each <code dir="ltr">DDLSUBST</code> parameter in the parameter file. For all true <code dir="ltr">DDLSUBST</code> specifications, Extract performs string substitution in the order that the <code dir="ltr">DDLSUBST</code> parameters are listed in the file.</p>
+</li>
+<li>
+<p>Now that <code dir="ltr">DDLSUBT</code> has been processed, Extract searches for the <code dir="ltr">REMOVECOMMENTS AFTER</code> parameter. If it is present, Extract removes the comments from the DDL statement.</p>
+</li>
+<li>
+<p>Extract searches for <code dir="ltr">DDLOPTIONS ADDTRANDATA</code>. If it is present, and if the operation is <code dir="ltr">CREATE TABLE</code>, Extract issues the <code dir="ltr">ALTER TABLE</code> <code dir="ltr"><span class="codeinlineitalic">name</span></code> <code dir="ltr">ADD SUPPLEMENTAL LOG GROUP</code> command on the table.</p>
+</li>
+<li>
+<p>Extract writes the DDL statement to the trail.</p>
+</li>
+</ol>
+<p class="orderedlisttitle">Replicat&nbsp;</p>
+<ol>
+<li>
+<p>Replicat reads the DDL statement from the trail.</p>
+</li>
+<li>
+<p>Replicat separates comments, if any, from the main statement.</p>
+</li>
+<li>
+<p>Replicat searches for <code dir="ltr">DDLOPTIONS REMOVECOMMENTS BEFORE</code>. If it is present, Replicat removes the comments from the DDL statement.</p>
+</li>
+<li>
+<p>Replicat evaluates the DDL synchronization scope to determine if the DDL qualifies for name mapping. Anything else is of <code dir="ltr">OTHER</code> scope.</p>
+</li>
+<li>
+<p>Replicat evaluates the <code dir="ltr">MAP</code> statements in the parameter file. If the source base object name for this DDL (as read from the trail) appears in any of the <code dir="ltr">MAP</code> statements, the operation is marked as <code dir="ltr">MAPPED</code> in scope. Otherwise it is marked as <code dir="ltr">UNMAPPED</code> in scope.</p>
+</li>
+<li>
+<p>Replicat replaces the source base object name with the base object name that is specified in the <code dir="ltr">TARGET</code> clause of the <code dir="ltr">MAP</code> statement.</p>
+</li>
+<li>
+<p>If there is a derived object, Replicat searches for <code dir="ltr">DDLOPTIONS MAPDERIVED</code>. If it is present, Replicat replaces the source derived name with the target derived name from the <code dir="ltr">MAP</code> statement.</p>
+</li>
+<li>
+<p>Replicat checks the <code dir="ltr">DDL</code> parameter for <code dir="ltr">INCLUDE</code> and <code dir="ltr">EXCLUDE</code> clauses, and it evaluates the <code dir="ltr">DDL</code> parameter criteria contained in them. All options must evaluate to <code dir="ltr">TRUE</code> in order for the <code dir="ltr">INCLUDE</code> or <code dir="ltr">EXCLUDE</code> to evaluate to <code dir="ltr">TRUE</code>. The following occurs:</p>
+<ul>
+<li>
+<p>If any <code dir="ltr">EXCLUDE</code> clause evaluates to <code dir="ltr">TRUE</code>, Replicat discards the DDL statement and starts evaluating another DDL statement. In this case, the processing steps start over.</p>
+</li>
+<li>
+<p>If any <code dir="ltr">INCLUDE</code> clause evaluates to <code dir="ltr">TRUE</code>, or if the <code dir="ltr">DDL</code> parameter does not have any <code dir="ltr">INCLUDE</code> or <code dir="ltr">EXCLUDE</code> clauses, Replicat includes the DDL statement, and the processing logic continues.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Replicat searches for the <code dir="ltr">DDLSUBST</code> parameter and evaluates the <code dir="ltr">INCLUDE</code> and <code dir="ltr">EXCLUDE</code> clauses. If the options in those clauses add up to <code dir="ltr">TRUE</code>, Replicat performs string substitution. Replicat evaluates the DDL statement against each <code dir="ltr">DDLSUBST</code> parameter in the parameter file. For all true <code dir="ltr">DDLSUBST</code> specifications, Replicat performs string substitution in the order that the <code dir="ltr">DDLSUBST</code> parameters are listed in the file.</p>
+</li>
+<li>
+<p>Now that <code dir="ltr">DDLSUBT</code> has been processed, Replicat searches for the <code dir="ltr">REMOVECOMMENTS AFTER</code> parameter. If it is present, Replicat removes the comments from the DDL statement.</p>
+</li>
+<li>
+<p>Replicat executes the DDL statement on the target database.</p>
+</li>
+<li>
+<p>If there are no errors, Replicat processes the next DDL statement. If there are errors, Replicat performs the following steps.</p>
+</li>
+<li>
+<p>Replicat analyzes the <code dir="ltr">INCLUDE</code> and <code dir="ltr">EXCLUDE</code> rules in the Replicat <code dir="ltr">DDLERROR</code> parameters in the order that they appear in the parameter file. If Replicat finds a rule for the error code, it applies the specified error handling; otherwise, it applies <code dir="ltr">DEFAULT</code> handling.</p>
+</li>
+<li>
+<p>If the error handling does not enable the DDL statement to succeed, Replicat does one of the following: abends, ignores the operation, or discards it as specified in the rules.</p>
+</li>
+</ol>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If there are multiple targets for the same source in a <code dir="ltr">MAP</code> statement, the processing logic executes for each one.</div>
+</div>
+<!-- class="sect1" -->
+<a id="A2858872"></a>
+<div id="GIORA348" class="sect1">
+<h2 class="sect1"><span class="secnum">13.17</span> Handling DDL Processing Errors</h2>
+<p>Use the <code dir="ltr">DDLERROR</code> parameter to handle errors on objects found by Extract for which metadata cannot be found, and for Replicat errors that occur when DDL is applied to the target database. With <code dir="ltr">DDLERROR</code> options, you can handle most errors in a default manner, for example to stop processing, and also handle other errors in a specific manner. You can use multiple instances of <code dir="ltr">DDLERROR</code> in the same parameter file to handle all errors that are anticipated.</p>
+<p>For options and usage, see <a class="olink GWURF448" href="../../gg-winux/GWURF/gg_parameters036.htm#GWURF448"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A2863316"></a>
+<div id="GIORA350" class="sect1">
+<h2 class="sect1"><span class="secnum">13.18</span> Viewing DDL Report Information</h2>
+<p>By default, Oracle GoldenGate shows basic statistics about DDL at the end of the Extract and Replicat reports. To enable expanded DDL reporting, use the <code dir="ltr">DDLOPTIONS</code> parameter with the <code dir="ltr">REPORT</code> option. Expanded reporting includes the following information about DDL processing:</p>
+<ul>
+<li>
+<p>A step-by-step history of the DDL operations that were processed by Oracle GoldenGate.</p>
+</li>
+<li>
+<p>The DDL filtering and processing parameters that are being used.</p>
+</li>
+</ul>
+<p>Expanded DDL report information increases the size of the report file, but it might be useful in certain situations, such as for troubleshooting or to determine when an <code dir="ltr">ADDTRANDATA</code> to add supplemental logging was applied.</p>
+<p>To view a report, use the <code dir="ltr">VIEW REPORT</code> command in GGSCI.</p>
+<pre dir="ltr">
+VIEW REPORT <span class="codeinlineitalic">group</span>
+</pre>
+<div id="GIORA351" class="sect2"><a id="sthref179"></a>
+<h3 class="sect2"><span class="secnum">13.18.1</span> Viewing DDL Reporting in Replicat</h3>
+<p>The Replicat report lists:</p>
+<ul>
+<li>
+<p>The entire syntax and source Oracle GoldenGate SCN of each DDL operation that Replicat processed from the trail. You can use the source SCN for tracking purposes, especially when there are restores from backup and Replicat is positioned backward in the trail.</p>
+</li>
+<li>
+<p>A subsequent entry that shows the scope of the operation (<code dir="ltr">MAPPED</code>, <code dir="ltr">UNMAPPED</code>, <code dir="ltr">OTHER</code>) and how object names were mapped in the target DDL statement, if applicable.</p>
+</li>
+<li>
+<p>Another entry that shows how processing criteria was applied.</p>
+</li>
+<li>
+<p>Additional entries that show whether the operation succeeded or failed, and whether or not Replicat applied error handling rules.</p>
+</li>
+</ul>
+<p>The following excerpt from a Replicat report illustrates a sequence of steps, including error handling:</p>
+<pre dir="ltr">
+2011-01-20 15:11:45  GGS INFO     2104  DDL found, operation [drop table myTableTemp ], Source SCN [1186713.0].
+ 2011-01-20 15:11:45  GGS INFO     2100  DDL is of mapped scope, after mapping new operation [drop table "QATEST2"."MYTABLETEMP" ].
+ 2011-01-20 15:11:45  GGS INFO     2100  DDL operation included [include objname myTable*], optype [DROP], objtype [TABLE], objname [QATEST2.MYTABLETEMP].
+ 2011-01-20 15:11:45  GGS INFO     2100  Executing DDL operation.
+ 2011-01-20 15:11:48  GGS INFO     2105  DDL error ignored for next retry: error code [942], filter [include objname myTableTemp], error text [ORA-00942: table or view does not exist], retry [1].
+ 2011-01-20 15:11:48  GGS INFO     2100  Executing DDL operation , trying again due to RETRYOP parameter.
+ 2011-01-20 15:11:51  GGS INFO     2105  DDL error ignored for next retry: error code [942], filter [include objname myTableTemp], error text [ORA-00942: table or view does not exist], retry [2].
+ 2011-01-20 15:11:51  GGS INFO     2100  Executing DDL operation, trying again due to RETRYOP parameter.
+ 2011-01-20 15:11:54  GGS INFO     2105  DDL error ignored for next retry: error code [942], filter [include objname myTableTemp], error text [ORA-00942: table or view does not exist], retry [3].
+ 2011-01-20 15:11:54  GGS INFO     2100  Executing DDL operation, trying again due to RETRYOP parameter.
+ 2011-01-20 15:11:54  GGS INFO     2105  DDL error ignored: error code [942], filter [include objname myTableTemp], error text [ORA-00942: table or view does not exist].
+</pre></div>
+<!-- class="sect2" -->
+<div id="GIORA352" class="sect2"><a id="sthref180"></a>
+<h3 class="sect2"><span class="secnum">13.18.2</span> Viewing DDL Reporting in Extract</h3>
+<p>The Extract report lists the following:</p>
+<ul>
+<li>
+<p>The entire syntax of each captured DDL operation, the start and end SCN, the Oracle instance, the DDL sequence number (from the <code dir="ltr">SEQNO</code> column of the history table), and the size of the operation in bytes.</p>
+</li>
+<li>
+<p>A subsequent entry that shows how processing criteria was applied to the operation, for example string substitution or <code dir="ltr">INCLUDE</code> and <code dir="ltr">EXCLUDE</code> filtering.</p>
+</li>
+<li>
+<p>Another entry showing whether the operation was written to the trail or excluded.</p>
+</li>
+</ul>
+<p>The following, taken from an Extract report, shows an included operation and an excluded operation. There is a report message for the included operation, but not for the excluded one.</p>
+<pre dir="ltr">
+2011-01-20 15:11:41  GGS INFO     2100  DDL found, operation [create table myTable (
+    myId number (10) not null,
+    myNumber number,
+    myString varchar2(100),
+    myDate date,
+    primary key (myId)
+) ], start SCN [1186754], commit SCN [1186772] instance [test11g (1)], DDL seqno [4134].
+ 
+2011-01-20 15:11:41  GGS INFO     2100  DDL operation included [INCLUDE OBJNAME myTable*], optype [CREATE], objtype [TABLE], objname [QATEST1.MYTABLE].
+ 
+2011-01-20 15:11:41  GGS INFO     2100  DDL operation written to extract trail file.
+ 
+2011-01-20 15:11:42  GGS INFO     2100  Successfully added TRAN DATA for table with the key, table [QATEST1.MYTABLE], operation [ALTER TABLE "QATEST1"."MYTABLE" ADD SUPPLEMENTAL LOG GROUP "GGS_MYTABLE_53475" (MYID) ALWAYS  /* GOLDENGATE_DDL_REPLICATION */ ].
+ 
+2011-01-20 15:11:43  GGS INFO     2100  DDL found, operation [create table myTableTemp (
+    vid varchar2(100),
+    someDate date,
+    primary key (vid)
+) ], start SCN [1186777], commit SCN [1186795] instance [test11g (1)], DDL seqno [4137].
+ 
+2011-01-20 15:11:43  GGS INFO     2100  DDL operation excluded [EXCLUDE OBJNAME myTableTemp OPTYPE CREATE], optype [CREATE], objtype [TABLE], objname [QATEST1.MYTABLETEMP].
+</pre></div>
+<!-- class="sect2" -->
+<div id="GIORA353" class="sect2"><a id="sthref181"></a>
+<h3 class="sect2"><span class="secnum">13.18.3</span> Statistics in the Process Reports</h3>
+<p>You can send current statistics for DDL processing to the Extract and Replicat reports by using the <code dir="ltr">SEND</code> command in GGSCI.</p>
+<pre dir="ltr">
+SEND {EXTRACT | REPLICAT} <span class="codeinlineitalic">group</span> REPORT
+</pre>
+<p>The statistics show totals for:</p>
+<ul>
+<li>
+<p>All DDL operations</p>
+</li>
+<li>
+<p>Operations that are <code dir="ltr">MAPPED</code> in scope</p>
+</li>
+<li>
+<p>Operations that are <code dir="ltr">UNMAPPED</code> in scope</p>
+</li>
+<li>
+<p>Operations that are <code dir="ltr">OTHER</code> in scope</p>
+</li>
+<li>
+<p>Operations that were excluded (number of operations minus included ones)</p>
+</li>
+<li>
+<p>Errors (Replicat only)</p>
+</li>
+<li>
+<p>Retried errors (Replicat only)</p>
+</li>
+<li>
+<p>Discarded errors (Replicat only)</p>
+</li>
+<li>
+<p>Ignored operations (Replicat only)</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A2873754"></a>
+<div id="GIORA355" class="sect1">
+<h2 class="sect1"><span class="secnum">13.19</span> Tracing DDL Processing</h2>
+<p>If you open a support case with Oracle GoldenGate Technical Support, you might be asked to turn on tracing. <code dir="ltr">TRACE</code> and <code dir="ltr">TRACE2</code> control DDL tracing. See <a class="olink GWURF703" href="../../gg-winux/GWURF/gg_parameters168.htm#GWURF703"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A2930991"></a>
+<div id="GIORA960" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">13.20</span> Using Tools that Support Trigger-Based DDL Capture</h2>
+<p>This section documents the additional tools available to support trigger-based capture.</p>
+<a id="A2874241"></a>
+<div id="GIORA356" class="sect2">
+<h3 class="sect2"><span class="secnum">13.20.1</span> Tracing the DDL Trigger</h3>
+<p>To trace the activity of the Oracle GoldenGate DDL trigger, use the following tools.</p>
+<ul>
+<li>
+<p><code dir="ltr">ggs_ddl_trace.log</code> trace file: Oracle GoldenGate creates a trace file in the <code dir="ltr">USER_DUMP_DEST</code> directory of Oracle. On RAC, each node has its own trace file that captures DDL tracing for that node. You can query the trace file as follows:</p>
+<pre dir="ltr">
+select value from sys.v_$parameter where name = 'user_dump_dest';
+</pre></li>
+<li>
+<p><code dir="ltr">ddl_tracelevel</code> script: Edit and run this script to set the trace level. A value of <code dir="ltr">None</code> generates no DDL tracing, except for fatal errors and installation logging. The default value of <code dir="ltr">0</code> generates minimal tracing information. A value of <code dir="ltr">1</code> or <code dir="ltr">2</code> generates a much larger amount of information in the trace file. Do not use <code dir="ltr">1</code> or <code dir="ltr">2</code> unless requested to do so by a Oracle GoldenGate Technical Support analyst as part of a support case.</p>
+</li>
+<li>
+<p><code dir="ltr">ddl_cleartrace</code> script: Run this script on a regular schedule to prevent the trace file from consuming excessive disk space as it expands. It deletes the file, but Oracle GoldenGate will create another one. The DDL trigger stops writing to the trace file when the Oracle directory gets low on space, and then resumes writing when space is available again. This script is in the Oracle GoldenGate directory. Back up the trace file before running the script.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<a id="A2873337"></a>
+<div id="GIORA354" class="sect2">
+<h3 class="sect2"><span class="secnum">13.20.2</span> Viewing Metadata in the DDL History Table</h3>
+<p>Use the <code dir="ltr">DUMPDDL</code> command in GGSCI to view the information that is contained in the DDL history table. This information is stored in proprietary format, but you can export it in human-readable form to the screen or to a series of SQL tables that you can query. The information in the DDL history table is the same as that used by the Extract process. For more information, see <a class="olink GWURF298" href="../../gg-winux/GWURF/ggsci_commands061.htm#GWURF298"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect2" -->
+<a id="A2861699"></a>
+<div id="GIORA349" class="sect2">
+<h3 class="sect2"><span class="secnum">13.20.3</span> Handling DDL Trigger Errors</h3>
+<p>Use the <code dir="ltr">params.sql</code> non-executable script to handle failures of the Oracle GoldenGate DDL trigger in relation to whether the source DDL fails or succeeds. The <code dir="ltr">params.sql script</code> is in the root Oracle GoldenGate directory. The parameters to use are the following:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlinebold">ddl_fire_error_in_trigger</span></code>: If set to <code dir="ltr">TRUE</code>, failures of the Oracle GoldenGate DDL trigger are raised with a Oracle GoldenGate error message and a database error message to the source end-user application. The source operations fails.</p>
+<p>If set to <code dir="ltr">FALSE</code>, no errors are raised, and a message is written to the trigger trace file in the Oracle GoldenGate directory. The source operation succeeds, but no DDL is replicated. The target application will eventually fail if subsequent data changes do not match the old target object structure. The default is <code dir="ltr">FALSE</code>.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlinebold">ddl_cause_error</span></code>: If set to <code dir="ltr">TRUE</code>, tests the error response of the trigger by deliberately causing an error. To generate the error, Oracle GoldenGate attempts to <code dir="ltr">SELECT</code> zero rows without exception handling. Revert this flag to the default of <code dir="ltr">FALSE</code> after testing is done.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CHDIECHD"></a>
+<div id="GIORA1004" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">13.21</span> Using Edition-Based Redefinition</h2>
+<p>Oracle GoldenGate supports the use of Edition-based Redefinition (EBR) with Oracle Databases enabling you to upgrade the database component of an application while it is in use, thereby minimizing or eliminating down time.</p>
+<p>Editions are non-schema objects that Editioned objects belong to. Editions can be thought of as owning editioned objects or as a namespace. Every database starts with one edition named, <code dir="ltr">ORA$BASE</code>; this includes upgraded databases. More than one edition can exist in a database and each can only have one child. For example, if you create three editions in succession, edition1, edition2, edition3, then edition1 is the parent of edition2 which is the parent of edition3. This is irrespective of the user or database session that creates them or which edition was current when the new one is created. When you create an edition, it inherits all the editioned objects of its parent. To use editions with Oracle GoldenGate, you must create them. For more information about creating and managing editions, see <a class="olink ADMIN" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=ADMIN"><span class="italic">Oracle Database Administrator's Guide</span></a> .</p>
+<p>An object is considered editioned if it is an editionable type, it is created with the <code dir="ltr">EDITIONABLE</code> attribute, and the schema is enabled for editioning of that object type. When you create, alter, or drop an editioned object, the redo log will contain the name of the edition in which it belongs. In a container database, editions belong to the container and each container has its own default edition.</p>
+<p>The <code dir="ltr">CREATE | DROP EDITION</code> DDLs are captured for all Extract configurations. They fall into the <code dir="ltr">OTHER</code> category and assigned an <code dir="ltr">OBJTYPE</code> option value of <code dir="ltr">EDITION</code>. The <code dir="ltr">OBJTYPE</code> option can be used for filtering, for example:</p>
+<pre dir="ltr">
+DDL EXCLUDE OBJTYPE EDITION
+DDL EXCLUDE OBJTYPE EDITION OPTYPE CREATE
+DDL EXCLUDE OBJTYPE EDITION OPTYPE DROP
+DDL EXCLUDE OBJTYPE EDITION OPTYPE DROP ALLOWEMPTYOWNER OBJNAME <span class="italic">edition_name</span>
+</pre>
+<p>You must use the following syntax to exclude an edition from Extract or Replicat:</p>
+<pre dir="ltr">
+EXCLUDE OBJTYPE EDITION, ALLOWEMPTYOWNER OBJNAME <span class="italic">edition_name</span>
+</pre>
+<p>Editions fall into the <code dir="ltr">OTHER</code> category so no mapping is performed on the edition name. When applied, the <code dir="ltr">USE</code> permission is automatically granted to the Replicat user. Replicat will also perform a <code dir="ltr">grant use on edition</code> <code dir="ltr"><span class="codeinlineitalic">name</span></code> <code dir="ltr">with grant option</code> to the original creating user if that user exists on the target database. Because editions are not mappable operations, they do not have owners so the standard <code dir="ltr">EXCLUDE</code> statement does not work.</p>
+<p>The DDLs used to create or alter editions does not actually enable the user for editions, rather they enable the schema for editions. This is an important distinction because it means that the Replicat user does not need to be enabled for editions to apply DDLs to editioned objects. When Replicat applies a <code dir="ltr">CREATE EDITION</code> DDL, it grants the original creating user permission to <code dir="ltr">USE</code> it if the original user exists on the target database. For any unreplicated <code dir="ltr">CREATE EDITION</code> statements, you must issue a <code dir="ltr">USE WITH GRANT OPTION</code> grant to the Replicat user.</p>
+<p>Whether or not an editionable objects becomes editioned is controlled by the schema it is applied in. Replicat switches its current session Edition before applying a DDL if the edition name attribute exists in the trail file and it is not empty.</p>
+<p>Container database environments are supported for both Extract and Replicat. No additional configuration is necessary. The Replicat user's schema can not be enabled for editions if it is a common user. The Replicat user's schema does not need to be enabled for editions when applying DDLs to editioned objects in other schemas.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment233">
+<tr>
+<td class="cellalignment240"><table class="cellalignment238">
+<tr>
+<td class="cellalignment237"><a href="nonint_replicat.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment237"><a href="processes_creating.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment242">
+<table class="cellalignment236">
+<tr>
+<td class="cellalignment237"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment237"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment237"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>FILE</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="keywords" content="filter clause, in Logger rules, audited files, including or excluding for extraction, GETAUDITED, option, FILE, IGNOREAUDITED option, GETBULKIO option, IGNOREBULKIO option, GETUNSTRUCTURED option, IGNOREUNSTRUCTURED option, unstructured files, including or omitting, OMITINSERTS option, OMITUPDATES option, OMITDELETES option, updates, omitting, inserts, deletes, SUSPENDED option, ACTIVE option" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-E2A7B85A-C708-48A1-8545-83247F71BEDA.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B"></a> <span id="PAGE" style="display:none;">101/360</span> <!-- End Header -->
+<a id="GNSRF392"></a>
+<h1 id="GNSRF-GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B" class="sect1"><span class="enumeration_section">2.75</span> FILE</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid for</p>
+<p>Logger</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use <code class="codeph">FILE</code> to specify file sets and record types to the current log. You can also use the <code class="codeph">EXCLUDEFILE</code> parameter to subsequently exclude files that have been included by <code class="codeph">FILE</code>.</p>
+<p>You can include files in the current log by:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Specifying file sets</p>
+</li>
+<li>
+<p>Specifying filtering values</p>
+</li>
+<li>
+<p>Optionally, you can specify a variety of attributes to enhance file processing.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_set</span> [, <span class="italic">attribute</span>...][, <span class="italic">filter</span>];
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-A04ADD58-459C-4634-8F86-026FE599814E"><!-- --></a><span class="italic"><code class="codeph">file_set</code></span></dt>
+<dd>
+<p>The name of the file, or file set to be processed.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-BA822E8D-1165-4B83-80DA-BBE3BA23E941"><!-- --></a><span class="italic"><code class="codeph">attribute</code></span></dt>
+<dd>
+<p>For details about the attributes you can specify as <code class="codeph">FILE</code> options see <span class="q">"<a href="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B.htm#GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__I941246">Using parameters as FILE options</a>"</span>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-7A7FC39F-40BA-43D9-BFAB-B12681BB0900"><!-- --></a><span class="italic"><code class="codeph">filter</code></span></dt>
+<dd>
+<p>Can be one or more of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">PROCESS</code> <span class="italic"><code class="codeph">process_file_set</code></span></p>
+</li>
+<li>
+<p><code class="codeph">PROGRAM</code> <span class="italic"><code class="codeph">program_file_set</code></span></p>
+</li>
+<li>
+<p><code class="codeph">USER</code> <span class="italic"><code class="codeph">user_id</code></span></p>
+</li>
+</ul>
+<p>If more than one filter is specified, <span class="italic">all</span> of the specified criteria must be met. See <span class="q">"<a href="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B.htm#GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__I941256">Including with filters</a>"</span> for details about using filters.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Specifying file sets</p>
+<p><code class="codeph">FILE</code> can explicitly name a file set, as in <code class="codeph">$DATA3.DAT.TRANS</code>, or specify <a id="d52852e214" class="indexterm-anchor"></a>wildcard arguments as in <code class="codeph">$DATA4.*.*</code>.</p>
+<p>When multiple <code class="codeph">FILE</code> statements are included in a parameter file, only the first match is logged. The following is an example:</p>
+<pre dir="ltr">
+FILE $DATA4.GGSDAT.FIN*
+FILE $DATA4.GGSDAT.*
+</pre>
+<p>In this case, the file set <code class="codeph">$DATA4.GGSDAT.FIN*</code> is logged only once, to the corresponding log, even if a subsequent <code class="codeph">FILE</code> (such as <code class="codeph">$DATA4.GGSDAT.*</code>) implicitly includes it in a wildcard argument.</p>
+<p>The primary partition of the file must be satisfied by a <code class="codeph">FILE</code> entry for extraction to take place. Also, excluding secondary partitions has no effect.</p>
+<p>If you wish to retrieve a file set from a remote node, Logger must be configured and running on that node locally.</p>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__I941246">
+<p class="subhead1">Using parameters as FILE options</p>
+<p>You can use other parameters as options with <code class="codeph">FILE</code>; this lets you apply a parameter to a single file or file set, rather than all the files in your Logger group. Parameters that can be set as an option in <code class="codeph">FILE</code> include:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">COMPRESSUPDATES | NOCOMPRESSUPDATES</code> (default)</p>
+</li>
+<li>
+<p><code class="codeph">GETAUDITED | IGNOREAUDITED</code> (default)</p>
+</li>
+<li>
+<p><code class="codeph">GETBEFOREUPDATES | IGNOREBEFOREUPDATES</code> (default)</p>
+</li>
+<li>
+<p><code class="codeph">GETBULKIO | IGNOREBULKIO</code> (default)</p>
+</li>
+<li>
+<p><code class="codeph">GETUNSTRUCTURED | IGNOREUNSTRUCTURED</code> (default)</p>
+</li>
+<li>
+<p><code class="codeph">RENAMEDELAY</code> <span class="italic"><code class="codeph">delay_seconds</code></span></p>
+</li>
+<li>
+<p><code class="codeph">SUSPENDED | ACTIVE</code> (default)</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__I941256">
+<p class="subhead1">Including with filters</p>
+<p>A file can also be included based on filters. If you specify more than one filter, <span class="italic">all</span> of the filter criteria must be met to include the file for logging. For example, the following only includes the specified file set when both the process and user ID filter criteria are met.</p>
+<pre dir="ltr">
+FILE $DATA3.APPL.TL*, PROCESS $APP*, USER SUPER.*
+</pre>
+<p>If a file is included by <code class="codeph">FILE</code> without filters, then excluded according to one or more filters, the file is excluded when the filter criteria are met.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_set</span> 
+[, <a id="d52852e325" class="indexterm-anchor"></a>PROCESS <span class="italic">process_file_set</span>] 
+[, <a id="d52852e334" class="indexterm-anchor"></a>PROGRAM <span class="italic">program_file_set</span>] 
+[, <a id="d52852e344" class="indexterm-anchor"></a>USER <span class="italic">user_id</span>]
+;
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-D8DAB3C3-125B-4F19-9391-FB845BC6208B"><!-- --></a><code class="codeph">PROCESS</code> <span class="italic"><code class="codeph">process_file_set</code></span></dt>
+<dd>
+<p>Includes files sets that are opened by the specified process.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-A7068ECF-88C6-4E9D-AE85-8ACC42E1EB80"><!-- --></a><code class="codeph">PROGRAM</code> <span class="italic"><code class="codeph">program_file_set</code></span></dt>
+<dd>
+<p>Includes file sets that are opened by the specified program.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-5B0CEF3D-5E9C-4C5F-988E-0E3451FE2613"><!-- --></a><code class="codeph">USER</code> <span class="italic"><code class="codeph">user_id</code></span></dt>
+<dd>
+<p>Includes file sets when the creator ID of the opening process or program is associated with the specified user ID.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Specifying attributes</p>
+<p>You can optionally specify attributes for:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Compressing updates</p>
+</li>
+<li>
+<p>Capturing or omitting record types</p>
+</li>
+<li>
+<p>Supporting file renaming</p>
+</li>
+<li>
+<p>Suspending and resuming logging</p>
+</li>
+</ul>
+<p>To specify multiple attributes, include each attribute in a separate <code class="codeph">FILE</code> statement, similar to:</p>
+<pre dir="ltr">
+COMPRESSUPDATES
+FILE $DATA1.DAT.PAYMENT, NOCOMPRESSUPDATES
+FILE $DATA1.DAT.ACCOUNT, GETBULKIO
+FILE $DATA1.DAT.TRANS, RENAMEDELAY 10
+</pre>
+<p>This example does the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Compresses updates for subsequent <code class="codeph">FILE</code> statements.</p>
+</li>
+<li>
+<p>Turns compression off for the <code class="codeph">PAYMENT</code> file.</p>
+</li>
+<li>
+<p>Logs bulk I/O for the <code class="codeph">ACCOUNT</code> file.</p>
+</li>
+<li>
+<p>Supports file renaming by delaying the actual rename of the <code class="codeph">TRANS</code> file until the name is changed in the log.</p>
+</li>
+</ul>
+<p>See the following subsections for details about using the <code class="codeph">FILE</code> parameter attributes.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Compressing updates</p>
+<p>You can compress and decompress update records using the <code class="codeph">COMPRESSUPDATES</code> and <a id="d52852e453" class="indexterm-anchor"></a><code class="codeph">NOCOMPRESSUPDATES</code> options.</p>
+<p>By default, update records are not compressed. The default can result in lower throughput, especially across Wide Area Networks, due to the additional traffic load. For example, consider an application that updates a 1000-byte customer record with a key 20 bytes long. If typically only the balance field within the customer record is changed, and that field is 10 bytes long, only 38 bytes rather than 1000 need to be transmitted across the network to execute a replicated update (20 bytes for the key, 10 bytes for the balance field, and 8 bytes to indicate the position within the record of the changed bytes and the key).</p>
+<p>If you wish to use a field in <code class="codeph">KEYCOLS</code> which is not part of the source file's primary key, you cannot use <code class="codeph">COMPRESSUPDATES</code>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_set</span>, {COMPRESSUPDATES | NOCOMPRESSUPDATES}
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-019320CF-225E-4D59-B40F-E3864E0F7E4D"><!-- --></a><code class="codeph">NOCOMPRESSUPDATES</code></dt>
+<dd>
+<p>No compression (the default).</p>
+</dd>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-C5F39B83-A118-484F-A4F6-5775646DE649"><!-- --></a><code class="codeph">COMPRESSUPDATES</code></dt>
+<dd>
+<p><code class="codeph">COMPRESSUPDATES</code> directs Logger to compress update record images by comparing before and <a id="d52852e496" class="indexterm-anchor"></a>after-images. Compressed images include the key of the changed record and only the changed bytes within the record. Note that if you wish to use a field in <code class="codeph">KEYCOLS</code> which is not part of the source file's primary key, you cannot use <code class="codeph">COMPRESSUPDATES</code>.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Capturing or omitting record types</p>
+<p>You can specify that Logger include or omit the following record types:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>TMF audited records</p>
+</li>
+<li>
+<p>Before updates</p>
+</li>
+<li>
+<p>Bulk I/O updates</p>
+</li>
+<li>
+<p>Unstructured file changes</p>
+</li>
+<li>
+<p>Omit inserts, updates, or deletes.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_set</span> 
+[, GETAUDITED | IGNOREAUDITED]
+[, GETBEFOREUPDATES | IGNOREBEFOREUPDATES]
+[, GETBULKIO | IGNOREBULKIO]
+[, GETUNSTRUCTURED | IGNOREUNSTRUCTURED]
+[, OMITINSERTS | OMITUPDATES | OMITDELETES] ;
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-7FA2433F-880A-4DCB-9555-4830557A27B2"><!-- --></a><code class="codeph">GETAUDITED | IGNOREAUDITED</code></dt>
+<dd>
+<p>Retrieves or omits data from files that are TMF audited.</p>
+<div class="infobox-note" id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-7EE7D0E1-D063-4CE3-8049-71C5AB0664D3">
+<p class="notep1">Note:</p>
+<p>Carefully consider possible outcomes before using <code class="codeph">GETAUDITED.</code> Logger cannot capture TMF abort operations. When <code class="codeph">GETAUDITED</code> is used, Logger will capture operations that it will not be able to back out if TMF aborts them.</p>
+</div>
+</dd>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-CC789B60-5110-4D84-B440-5394C19BFEC2"><!-- --></a><code class="codeph">GETBEFOREUPDATES | IGNOREBEFOREUPDATES</code></dt>
+<dd>
+<p>Retrieves or omits the <a id="d52852e562" class="indexterm-anchor"></a><a id="d52852e566" class="indexterm-anchor"></a><a id="d52852e570" class="indexterm-anchor"></a><a id="d52852e574" class="indexterm-anchor"></a>before-images of records.</p>
+<p><code class="codeph">GETBEFOREUPDATES</code> retrieves images of records before they are changed in addition to capturing the after record image. For example, if an account balance was $100 before a transaction, and after it was $1000, both records will be written to the log trail. This information can be useful for data warehousing, archival, and other applications. When records are deleted, before-images are always logged. The default is to not extract before-images.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-E6F4EFC1-E9ED-45BB-930E-549B07398F04"><!-- --></a><code class="codeph">GETBULKIO | IGNOREBULKIO</code></dt>
+<dd>
+<p>Retrieves or omits <a id="d52852e592" class="indexterm-anchor"></a>bulk I/O updates. <code class="codeph">IGNOREBULKIO</code> (omit bulk I/O updates) is the default. Bulk I/O occurs when Guardian <code class="codeph">SETMODE 141</code> is invoked by a program, such as during <code class="codeph">FUP LOAD</code> or <code class="codeph">FUP DUP</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-D604FE3F-B05A-468D-9B51-DD7E0B3C6E3C"><!-- --></a><code class="codeph">GETUNSTRUCTURED | IGNOREUNSTRUCTURED</code></dt>
+<dd>
+<p>Retrieves or omits unstructured file changes. <code class="codeph">IGNOREUNSTRUCTURED</code> (omit unstructured file changes) is the default.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-3EB343C9-9808-4194-A8EB-7F5589BBC37A"><!-- --></a><code class="codeph">OMITINSERTS | OMITUPDATES | OMITDELETES</code></dt>
+<dd>
+<p>Excludes the specified record operation from being captured. You can combine these options.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Supporting file renaming</p>
+<p>If your application renames database <a id="d52852e633" class="indexterm-anchor"></a>files while they are still open and being updated, the <code class="codeph">RENAMEDELAY</code> option ensures that the new file name changes in the log trail. For <code class="codeph">RENAMEDELAY</code>, specify a delay interval to give the system time to detect and record the new name.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_set</span>, <a id="d52852e653" class="indexterm-anchor"></a>RENAMEDELAY <span class="italic">delay_seconds</span>
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-D4BE5495-F27D-4B31-AF30-8A1AB994CA84"><!-- --></a><span class="italic"><code class="codeph">delay_seconds</code></span></dt>
+<dd>
+<p>Represents the delay interval, as in <code class="codeph">RENAMEDELAY</code> <code class="codeph">10</code>. The interval should range from 5-15 seconds, depending on overall system resource usage and hardware capacity. In general, more powerful systems require less delay. Use this feature with caution, since the process invoking the rename will be delayed before being allowed to continue.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Suspending and resuming logging</p>
+<p>You can temporarily suspend, then resume <a id="d52852e682" class="indexterm-anchor"></a><a id="d52852e686" class="indexterm-anchor"></a><a id="d52852e690" class="indexterm-anchor"></a>logging for a specified file set by using the <code class="codeph">SUSPENDED</code> and <code class="codeph">ACTIVE</code> options.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FILE <span class="italic">file_set</span>, {SUSPENDED | ACTIVE} ;
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-BD8558F2-B560-45DD-9167-80CEFE92DCAE"><!-- --></a><code class="codeph">SUSPENDED</code></dt>
+<dd>
+<p>Temporarily suspends logging for the particular file set.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-00911D7D-AE4C-4A16-99E8-F38EB4C9143B__GUID-9EFF865E-C55A-49A1-B410-9589390EBA99"><!-- --></a><code class="codeph">ACTIVE</code></dt>
+<dd>
+<p>Resumes logging for the file set.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-E2A7B85A-C708-48A1-8545-83247F71BEDA.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-A9B89B55-6224-4107-A8A0-0148FE9946D9.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

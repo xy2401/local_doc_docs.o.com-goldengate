@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Configuring Initial Data Synchronization</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.24" />
+<meta name="description" content="Before running Oracle GoldenGate for NonStop for the first time you must synchronize the source and target databases. This chapter addresses initial data synchronization when the source is TMF-enabled." />
+<meta name="dcterms.created" content="2014-08-06T9:43:49Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate for Mainframe Administering Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E28904-01" />
+<meta name="dcterms.isVersionOf" content="GNSAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="configuring.htm" title="Previous" type="text/html" />
+<link rel="Next" href="security.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E28904-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">7/17</span> <!-- End Header --><a id="i952858"></a><a id="GNSAD230"></a>
+<h1 class="chapter"><span class="secnum">4</span> Configuring Initial Data Synchronization</h1>
+<p><a id="GNSAD231"></a>Before running Oracle GoldenGate for NonStop for the first time you must synchronize the source and target databases. This chapter addresses initial data synchronization when the source is TMF-enabled. Initial load for non-TMF is performed through a trail; it acts as any other change extract.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#i952974">Section 4.1, "Initial Data Synchronization"</a></p>
+</li>
+<li>
+<p><a href="#A1001110">Section 4.2, "Controlling the IP Process for Replicat"</a></p>
+</li>
+<li>
+<p><a href="#i952657">Section 4.3, "Loading Oracle, Microsoft, or Sybase SQL Server Tables"</a></p>
+</li>
+<li>
+<p><a href="#A1002350">Section 4.4, "Limiting the Enscribe Source Key Range for Initial Load"</a></p>
+</li>
+<li>
+<p><a href="#A1002473">Section 4.5, "Restarting an Initial Load"</a></p>
+</li>
+<li>
+<p><a href="#i934507">Section 4.6, "Loading Initial Data from Windows and Unix"</a></p>
+</li>
+<li>
+<p><a href="#i934515">Section 4.7, "Integrating Source and Target Data"</a></p>
+</li>
+<li>
+<p><a href="#i934529">Section 4.8, "Distributing Extracted Data"</a></p>
+</li>
+<li>
+<p><a href="#i934545">Section 4.9, "Direct File Extraction"</a></p>
+</li>
+<li>
+<p><a href="#i934569">Section 4.10, "Batch Processing"</a></p>
+</li>
+</ul>
+<a id="i952974"></a><a id="GNSAD232"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.1</span> Initial Data Synchronization</h2>
+<p>You can use Oracle GoldenGate to load data in any of the following ways.</p>
+<ul>
+<li>
+<p>Using database utilities. The utility program performs the initial load. Examples include loading the target using FUP or SQL and using back up and restore.</p>
+</li>
+<li>
+<p>Loading from a file to a database utility. Extract writes records to an extract file in external ASCII format. The files are used as input to a bulk load utility that writes to target. Replicat creates the run and control files.</p>
+</li>
+<li>
+<p>Loading from a file to Replicat. Extract writes records to an extract file and Replicat applies them to the target tables.</p>
+</li>
+<li>
+<p>Using an Oracle GoldenGate direct load. Extract communicates with Replicat directly without using a Collector process or files. Replicat applies the data to the target.</p>
+</li>
+<li>
+<p>Using direct bulk load. Extract writes records in external ASCII format and delivers them directly to Replicat, which delivers them to the Oracle SQL*Loader bulk load utility. This is the fastest method of loading Oracle data with Oracle GoldenGate.</p>
+</li>
+</ul>
+<p>The method you choose depends, in part, on the database types of your source and target. For example, if you are replicating from a NonStop source to an Oracle target, your choices include direct bulk load, which interacts with SQL*Loader.</p>
+<p>Regardless of the method chosen, the initial data synchronization should be run after initiating change capture and before configuring delivery. The steps are:</p>
+<ol>
+<li>
+<p>Configure and run Extract to capture all active database changes to an Oracle GoldenGate trail.</p>
+</li>
+<li>
+<p>Perform initial load.</p>
+</li>
+<li>
+<p>Configure and run Replicat.</p>
+</li>
+</ol>
+<a id="GNSAD233"></a>
+<div class="sect2"><a id="sthref83"></a>
+<h3 class="sect2"><span class="secnum">4.1.1</span> Example Steps for Initial Data Load</h3>
+<p>This example shows how you might follow these three steps to configure change capture and delivery and perform an initial data load.</p>
+<a id="i944761"></a><a id="GNSAD234"></a>
+<div class="sect3">
+<h4 class="sect3"><span class="secnum">4.1.1.1</span> Configure and Run Extract</h4>
+<p>You can configure this Extract process to read change records from a TMF audit trail, log trail, or flat file, and process them to an Oracle GoldenGate trail. This step is necessary before doing the initial load because it extracts and delivers ongoing changes to the source database, preserving data integrity for your business operations.</p>
+<p>Instructions for configuring and running Extract can be found in <a href="configuring.htm#g1008245">"Planning the Configuration"</a>.</p>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD235"></a>
+<div class="sect3"><a id="sthref84"></a>
+<h4 class="sect3"><span class="secnum">4.1.1.2</span> Perform Initial Load Using the File to Replicat Method</h4>
+<p>You can perform your initial load using any of the methods; however this example addresses how to use Oracle GoldenGate to do the initial load by queuing data to an Oracle GoldenGate file that will be picked up by Replicat.</p>
+<ol>
+<li>
+<p>Create one Extract parameter file to read directly from each source database.</p>
+</li>
+<li>
+<p>Use the NonStop text editor to set up an Extract parameter file to include the following information.</p>
+<ul>
+<li>
+<p>The <code>SOURCEISFILE</code> parameter to indicate that data should be retrieved directly from the table.</p>
+</li>
+<li>
+<p>The format for the target file, usually <code>FORMATASCII</code> (for example, <code>FORMATASCII</code>, <code>SQLLOADER</code> or <code>FORMATASCII</code>, <code>BCP</code>).</p>
+</li>
+<li>
+<p>If you are transmitting data to a system other than NonStop, or to a NonStop system over TCP/IP, include the name of the remote TCP/IP host and port number of the remote Collector.</p>
+</li>
+<li>
+<p>The name of the local output file (<code>EXTFILE</code>) or the remote file (<code>RMTFILE</code>) to which the Extract program writes extract information. If you need to write to a series of trails, then add the <code>MAXFILES 2</code> to the remote trail's parameter file. <code>MAXFILES</code> will append a six-digit trail sequence to the remote trail's file name.</p>
+</li>
+<li>
+<p>The name of the file or table to extract (<code>FILE</code> or <code>TABLE</code> parameter).</p>
+</li>
+<li>
+<p>Other optional parameters, including clauses for selecting records, column mapping, or data conversion.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Configure Replicat as a batch task, specifying the <code>SPECIALRUN</code> and <code>BEGIN</code> and <code>END</code> parameters.</p>
+</li>
+<li>
+<p>Start the initial data load:</p>
+<pre>
+TACL&gt; RUN EXTRACT /IN <span class="variable">parameter_file</span>/
+TACL&gt; RUN REPLICAT /IN <span class="variable">parameter_file</span>/
+</pre></li>
+</ol>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD236"></a>
+<div class="sect3"><a id="sthref85"></a>
+<h4 class="sect3"><span class="secnum">4.1.1.3</span> Configure and Run Replicat</h4>
+<p>When your initial data load finishes writing to its trails, configure Replicat on the target system. This can be the same parameter file you use for ongoing Replicat work, however, you will need to add <code>HANDLECOLLISIONS</code> and <code>END</code> parameters, run the batch, then remove those parameters before beginning ongoing change extract.</p>
+<ol>
+<li>
+<p>Configure Replicat on the target system, including <code>HANDLECOLLISIONS</code> and <code>END</code> in the parameter file. The <code>END</code> parameter is the time recorded for the completion of the Extract process.</p>
+</li>
+<li>
+<p>Start Replicat with the <code>START REPLICAT</code> command.</p>
+</li>
+<li>
+<p>When Replicat stops, remove the <code>HANDLECOLLISIONS</code> and <code>END</code> parameters.</p>
+</li>
+<li>
+<p>Start Replicat for incremental data synchronization.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="i952475"></a><a id="GNSAD237"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">4.1.2</span> Direct Load</h3>
+<p>Using direct load, you can extract data directly from the source tables and send it, in a large block, to Replicat. You may do this on any operating system and database combination Oracle GoldenGate supports (such as NonStop to NonStop, NonStop to Oracle, Oracle to NonStop).</p>
+<a id="GNSAD238"></a>
+<div class="sect3"><!-- infolevel="all" infotype="General" --><a id="i944511"></a>
+<h4 class="sect3"><span class="secnum">4.1.2.1</span> To run direct load:</h4>
+<ol>
+<li>
+<p>Define an Extract group:</p>
+<pre>
+GGSCI&gt; ADD EXTRACT <span class="variable">group_name</span>, SOURCEISFILE
+</pre></li>
+<li>
+<p>Define a Replicat group:</p>
+<pre>
+GGSCI&gt; ADD REPLICAT <span class="variable">group_name</span>, SPECIALRUN
+</pre>
+<p>Replicat is automatically started by Manager, at Extract's request.</p>
+</li>
+<li>
+<p>Create the parameter files.</p>
+<p><span class="bold">For the Extract parameter file:</span></p>
+<pre>
+EXTRACT INITEXT
+RMTHOST targethost, MGRPORT 7809
+RMTTASK REPLICAT, GROUP INITREP
+TABLE $DATA.MASTER.ACCOUNT, AUTOTRUNCATE;
+TABLE $DATA.MASTER.PRODUCT, AUTOTRUNCATE;
+TABLE $DATA.MASTER.CUSTOMER AUTOTRUNCATE;
+</pre>
+<ul>
+<li>
+<p><code>AUTOTRUNCATE</code> sends a <code>PURGEDATA</code> command to Replicat before any data is processed. This ensures the target is clean and ready to receive data.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Use <code>AUTOTRUNCATE</code> with extreme caution, as it causes all existing data to be purged from the target file. Refer to <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> for more information.</p>
+</div>
+</li>
+<li>
+<p><code>RMTHOST</code> establishes the remote TCP/IP host and port number.</p>
+</li>
+<li>
+<p><code>RMTTASK</code> instructs Manager on the target system to start Replicat with the specified <code>GROUP</code> name.</p>
+</li>
+<li>
+<p>The <code>TABLE</code> parameters identify the source tables.</p>
+</li>
+<li>
+<p>Specify <code>SOURCEISFILE</code> in the parameter if you want to include a <code>SOURCEISFILE</code> option:</p>
+<ul>
+<li>
+<p><code>SELECTVIEW</code>: Selects data from a specified SQL view in the file parameter. Without <code>SELECTVIEW</code>, Extract selects data from the base table of the view, then maps the base table columns to the view columns (This also occurs when processing audit trails and a view is specified.)</p>
+</li>
+<li>
+<p><code>FASTUNLOAD</code>: Processes the file or table several times faster than the default method. Records are written out in random order, rather than primary key order. <code>FASTUNLOAD</code> has no effect when an SQL view is specified. The file parameter option <code>PARTITIONS</code> can restrict the data retrieved to a certain subset of the file or table</p>
+</li>
+<li>
+<p><code>FASTUNLOADSHARED</code>: Allows a shared open of the source file or table. Use this only on files that are not receiving updates at the same time data is being extracted.</p>
+</li>
+</ul>
+<p><span class="bold">For the Replicat parameter file:</span></p>
+<pre>
+REPLICAT INITREP
+USERID GoldenUser, PASSWORD pass
+SOURCEDEFS $DATA.DIRDEF.SRCDEF
+MAP $DATA.MASTER.ACCOUNT, TARGET $DATA3.MASTER.ACCOUNT;
+MAP $DATA.MASTER.PRODUCT, TARGET $DATA3.MASTER.PRODUCT;
+MAP $DATA.MASTER.CUSTOMER, TARGET $DATA3.MASTER.CUSTOMER;
+</pre>
+<p>In the above example:</p>
+<ul>
+<li>
+<p><code>USERID</code> and <code>PASSWORD</code> are required to access the target database.</p>
+</li>
+<li>
+<p><code>SOURCEDEFS</code> identifies the file containing the source data definitions.</p>
+</li>
+<li>
+<p>The <code>MAP</code> parameters map the source tables to the target tables, based on the data definitions in <code>SOURCEDEFS</code>.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Start Extract:</p>
+<pre>
+GGSCI&gt; START EXTRACT INITEXT
+</pre></li>
+</ol>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD239"></a>
+<div class="sect3"><a id="sthref86"></a>
+<h4 class="sect3"><span class="secnum">4.1.2.2</span> Using Wildcards</h4>
+<p>Wildcards can be used for the <code>FILE</code> and <code>TABLE</code> statements in direct load parameter files, but not for views.</p>
+<p>Refer back to the example of an Extract group added with the <code>SOURCEISFILE</code> parameter in <a href="#i944511">"To run direct load:"</a>. If the <code>ACCOUNT</code>, <code>PRODUCT</code> and <code>CUSTOMER</code> files are the only files on <code>$DATA.MASTER</code>, the Extract parameters could be changed to use wildcards. This use of wildcards is shown in the following direct load parameter file:</p>
+<pre>
+EXTRACT INITEXT
+RMTHOST targethost, MGRPORT 7809
+RMTTASK REPLICAT, GROUP INITREP
+TABLE $DATA.MASTER.*, AUTOTRUNCATE;
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="i934331"></a><a id="GNSAD240"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">4.1.3</span> Direct Bulk Load</h3>
+<p>If you are loading to an Oracle target, you may choose to use direct bulk load. Direct bulk load is the fastest technique for capturing and delivering data to SQL*Loaders. Extract sends the data, in a large block, to Replicat. Manager dynamically starts Replicat, which communicates directly with SQL*Loader using an API.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>You can only use this direct bulk load from NonStop to Oracle.</p>
+</div>
+<a id="GNSAD241"></a>
+<div class="sect3"><a id="sthref87"></a>
+<h4 class="sect3"><span class="secnum">4.1.3.1</span> To run direct bulk load:</h4>
+<ol>
+<li>
+<p>Define an Extract group:</p>
+<pre>
+GGSCI&gt; ADD EXTRACT <span class="variable">group_name</span>, SOURCEISFILE
+</pre></li>
+<li>
+<p>Define a Replicat group:</p>
+<pre>
+GGSCI&gt; ADD REPLICAT <span class="variable">group_name</span>, SPECIALRUN
+</pre>
+<p>Replicat is automatically started by Manager, at Extract's request.</p>
+</li>
+<li>
+<p>Create the Extract and Replicat parameter files.</p>
+<p>Following are the examples of sample direct bulk load parameter files.</p>
+<p><span class="bold">Sample Extract parameter file:</span></p>
+<pre>
+EXTRACT INITEXT
+RMTHOST targethost, MGRPORT 7809
+RMTTASK REPLICAT, GROUP INITREP
+TABLE $DATA.MASTER.ACCOUNT;
+TABLE $DATA.MASTER.PRODUCT;
+TABLE $DATA.MASTER.CUSTOMER;
+</pre>
+<ul>
+<li>
+<p><code>RMTHOST</code> establishes the remote TCP/IP host and port number.</p>
+</li>
+<li>
+<p><code>RMTTASK</code> instructs Manager on the target system to start Replicat with the specified group name.</p>
+</li>
+<li>
+<p>The <code>TABLE</code> parameters identify the source tables.</p>
+</li>
+</ul>
+<p><span class="bold">Sample Replicat parameter file</span>:</p>
+<pre>
+REPLICAT INITREP
+USERID GoldenUser, PASSWORD pass
+BULKLOAD
+SOURCEDEFS /GGS/DIRDEF/SRCDEF
+MAP $DATA.MASTER.ACCOUNT, TARGET master.account;
+MAP $DATA.MASTER.PRODUCT, TARGET master.product;
+MAP $DATA.MASTER.CUSTOMER, TARGET master.customer;
+</pre>
+<ul>
+<li>
+<p><code>USERID</code> and <code>PASSWORD</code> are required to access the target database.</p>
+</li>
+<li>
+<p><code>BULKLOAD</code> tells Replicat that SQL*Loader will load the target tables.</p>
+</li>
+<li>
+<p><code>SOURCEDEFS</code> identifies the file containing the source data definitions.</p>
+</li>
+<li>
+<p>The <code>MAP</code> parameters map the source tables to the target tables, based on the data definitions in <code>SOURCEDEFS</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Start Extract:</p>
+<pre>
+GGSCI&gt; START EXTRACT <span class="variable">group_name</span>
+</pre></li>
+</ol>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="GNSAD242"></a>
+<div class="sect2"><a id="sthref88"></a>
+<h3 class="sect2"><span class="secnum">4.1.4</span> Synchronizing Nonstop Databases Using Database Utilities Through TCP/IP</h3>
+<p>You can synchronize two NonStop tables or files on different systems over a TCP/IP connection using the trail to database utility method. Use the following steps:</p>
+<ol>
+<li>
+<p>Start the Collector on the target system.</p>
+</li>
+<li>
+<p>Create a parameter file to perform initial file extraction over TCP/IP.</p>
+<p><span class="bold">Sample Extract parameter file</span>:</p>
+<pre>
+SOURCEISFILE, FASTUNLOAD
+FORMATLOAD
+RMTHOST 192.0.2.12, PORT 7829
+RMTFILE $D3.INIDAT.TRANSTAB, PURGE
+FILE \SRC.$D2.MYDB.TRANSTAB;
+</pre>
+<p>For this example parameter file, named <code>GGSPARM.TRANINI</code>, you are identifying the Collector on the remote system.</p>
+<ul>
+<li>
+<p><code>SOURCEISFILE, FASTUNLOAD</code> directs Extract to retrieve data directly from the blocks of the table.</p>
+</li>
+<li>
+<p><code>FORMATLOAD</code> directs Extract to format the data compatible with FUP or SQLCI <code>LOAD</code>.</p>
+</li>
+<li>
+<p><code>RMTHOST</code> identifies the IP address and port of the Collector process. When NonStop is the receiver, a separate Collector is required for each simultaneously active session.</p>
+</li>
+<li>
+<p><code>RMTFILE</code> identifies a flat file that holds the extracted data until the load is finished.</p>
+</li>
+<li>
+<p><code>FILE</code> identifies the source file or table from which to extract the data.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Run Extract to extract the data into a flat file on the target system.</p>
+</li>
+<li>
+<p>Use FUP or SQLCI to insert the data into the target system, similar to:</p>
+<pre>
+SQLCI&gt; LOAD $D3.INIDAT.TRANSTAB, $D4.MYDB.TRANSTAB, RECIN 236, RECOUT 236;
+</pre>
+<p>The figures for <code>RECIN</code> and <code>RECOUT</code> are derived from Extract's recordings in <code>$S.#TRAN</code>, which includes the physical length of the records in the target. For Enscribe, this is the same as the record length returned by <code>FUP INFO</code>. For SQL, the size will vary and can be returned from <code>RECORDSIZE</code> column in the <code>FILE</code> table from the source table's catalog.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1001110"></a><a id="GNSAD243"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.2</span> Controlling the IP Process for Replicat</h2>
+<p>Although you can configure multiple initial-load Extracts and Replicats, by default the Replicats will inherit the IP process of the Manager running on the target. This results in a single IP channel that does not spread the load across the processors.</p>
+<p>To configure the Extract and Replicat pairs to use different channels, you can use static Replicats as shown in the next example.</p>
+<ol>
+<li>
+<p>Configure multiple Extracts to use the <code>PORT</code> parameter, rather than <code>MGRPORT</code>. Assign a different port to each.</p>
+<pre>
+EXTRACT extl1
+RMTHOST 192.0.2.1, PORT 12345
+RMTTASK REPLICAT, GROUP repl1
+EXTRACT extl2
+RMTHOST 192.0.2.2, PORT 12346
+RMTTASK REPLICAT, GROUP repl2
+</pre></li>
+<li>
+<p>Start static Replicats using the run-time parameter <code>INITIALDATALOAD</code> with the <code>-p</code> option to assign the port from the parameter file.</p>
+<pre>
+TACL&gt; ASSIGN STDERR, $0
+TACL&gt; ADD DEFINE =TCPIP^PROCESS^NAME, FILES $ZTC1
+TACL&gt; RUN REPLICAT/IN GGSPARM.REPL1,OUT GGSRPT.REPL1/INITIALDATALOAD -p 12345
+TACL&gt; ASSIGN STDERR, $0
+TACL&gt; ADD DEFINE =TCPIP^PROCESS^NAME, FILES $ZTC2
+TACL&gt; RUN REPLICAT/IN GGSPARM.REPL2,OUT GGSRPT.REPL2/INITIALDATALOAD -p 12346
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Since the Replicats are started statically, they will not be restarted by Manager if there is a system problem.</p>
+</div>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="i952657"></a><a id="GNSAD244"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.3</span> Loading Oracle, Microsoft, or Sybase SQL Server Tables</h2>
+<p>NonStop tables and files can be synchronized with Oracle or SQL Server tables in very much the same way as NonStop-to-NonStop synchronization.</p>
+<a id="GNSAD245"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref89"></a>
+<h3 class="sect2"><span class="secnum">4.3.1</span> Loading to Oracle or SQL Server</h3>
+<p class="orderedlisttitle">To load to Oracle or SQL Server:&nbsp;</p>
+<ol>
+<li>
+<p>Run <code>DEFGEN</code> to export source data definitions to the target system. Be sure to satisfy any other prerequisites.</p>
+</li>
+<li>
+<p>Start the Collector on the target system:</p>
+<p>For UNIX:</p>
+<pre>
+$server &ndash;d /ggs/mydb.def 2&gt; server.log &amp;
+</pre>
+<p>For Windows:</p>
+<pre>
+server &ndash;d \ggs\mydb.def 2&gt; server.log
+</pre>
+<p>Use the &ndash;d option to specify the definitions file created by <code>DEFGEN</code> (<code>mydb.def</code>).</p>
+</li>
+<li>
+<p>Create an Extract parameter file to perform initial table extract over TCP/IP.</p>
+</li>
+<li>
+<p>Run the Extract program to extract the data into a flat file on the target system:</p>
+<pre>
+TACL&gt; RUN GGS.EXTRACT /IN GGSPARM.TRANINI, OUT $S.#TRAN/
+</pre>
+<p>This command creates a flat file on the target. If you specified the <code>FORMATASCII, SQLLOADER</code> in a parameter file for Oracle, Oracle GoldenGate generates the flat file in a format that SQL*Loader can read. If you specified <code>FORMATASCII</code>, <code>BCP</code> in the parameter file for SQL Server, Oracle GoldenGate generates a flat file that is compatible with the BCP utility.</p>
+</li>
+<li>
+<p>Create a Replicat parameter file using the <code>MAP</code> parameter to map between source and target tables.</p>
+</li>
+<li>
+<p>Run Replicat to create files called <code>TRANSTAB.ctl</code> and <code>TRANSTAB.run</code> for Oracle, and <code>TRANSTAB.bat</code> and <code>TRANSTAB.fmt</code> for SQL Server. These files contain mapping definitions and run commands required to load.</p>
+<p>For UNIX:</p>
+<pre>
+replicat paramfile/ggs/dirprm/tranini.prm
+</pre>
+<p>For Windows:</p>
+<pre>
+C:\replicat paramfile\ggs\dirprm\tranini
+</pre></li>
+<li>
+<p>Load the data.</p>
+<p>For UNIX:</p>
+<pre>
+$TRANSTAB.run
+</pre>
+<p>For Windows:</p>
+<pre>
+TRANSTAB.bat
+</pre></li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD246"></a>
+<div class="sect2"><a id="sthref91"></a>
+<h3 class="sect2"><span class="secnum">4.3.2</span> Initial Sync Parameter File Examples</h3>
+<p>This sections contains these examples:</p>
+<ul>
+<li>
+<p>An Extract parameter file example for Oracle running on UNIX</p>
+</li>
+<li>
+<p>A Replicat parameter file example for Oracle running on UNIX</p>
+</li>
+<li>
+<p>An Extract parameter file example for SQL Server running on Windows</p>
+</li>
+<li>
+<p>A Replicat parameter file example for SQL Server running on Windows</p>
+</li>
+</ul>
+<a id="GNSAD247"></a>
+<div class="sect3"><a id="sthref92"></a>
+<h4 class="sect3"><span class="secnum">4.3.2.1</span> Sample NonStop to Oracle Parameter Files</h4>
+<p>Following are examples of NonStop to Oracle Extract parameter files.</p>
+<p><span class="bold">Extract Parameter File GGSPARM.ORAINI:</span></p>
+<pre>
+SOURCEISFILE, FASTUNLOAD
+FORMATASCII, SQLLOADER
+RMTHOST ntbox12, MGRPORT 7809, PARAMS "-d c:\ggs\dirdef\source.def"
+RMTFILE TRANSTAB.dat, PURGE
+FILE \SRC.$D2.MYDB.TRANSTAB;
+</pre>
+<ul>
+<li>
+<p><code>FORMATASCII, SQLLOADER</code> specifies the data format is compatible with Oracle's SQL*Loader utility.</p>
+</li>
+<li>
+<p><code>RMTFILE</code> identifies <code>TRANSTAB.dat</code> as the source table.</p>
+</li>
+</ul>
+<p><span class="bold">Replicat Parameter File /ggs/dirprm/tranini.prm:</span></p>
+<pre>
+GENLOADFILES
+USERID me, PASSWORD orapw
+SOURCEDEFS /ggs/mydb.def
+MAP $D2.MYDB.TRANSTAB, TARGET ORATRANS;
+RMTFILE /ggsdat/tranini, PURGE
+FILE \SRC.$D2.MYDB.TRANSTAB;
+</pre>
+<ul>
+<li>
+<p><code>GENLOADFILES</code> generates load control files and then quits. These control files generate maps, even between dissimilar tables.</p>
+</li>
+<li>
+<p><code>USERID</code> and <code>PASSWORD</code> specify the database log on.</p>
+</li>
+<li>
+<p><code>SOURCEDEFS</code> specifies the location of the NonStop definitions exported by <code>DEFGEN</code> (These are required to generate a load map.)</p>
+</li>
+<li>
+<p><code>MAP</code> specifies the source to target relationship of the NonStop to Oracle table.</p>
+</li>
+<li>
+<p>Errors are displayed to the screen and detailed messages are written to the <code>TRANSTAB.err</code> and <code>TRANSTAB.log</code> files</p>
+</li>
+</ul>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD248"></a>
+<div class="sect3"><!-- infolevel="all" infotype="General" --><a id="sthref93"></a>
+<h4 class="sect3"><span class="secnum">4.3.2.2</span> Sample SQL Server Parameter Files</h4>
+<p>Following are examples of parameter files for SQL Server.</p>
+<p><span class="bold">Extract parameter file GGSPARM.SQLINI:</span></p>
+<pre>
+SOURCEISFILE, FASTUNLOAD
+FORMATASCII, BCP
+RMTHOST ntbox12, MGRPORT 7809, PARAMS "-d c:\ggs\dirdef\source.def"
+RMTFILE C:\GGS\TRANSTAB.dat, PURGE
+TABLE $DATA.MASTER.TRANS
+</pre>
+<ul>
+<li>
+<p><code>FORMATASCII, BCP</code> specifies the data format is compatible with the Microsoft <code>BCP</code> utility.</p>
+</li>
+<li>
+<p><code>RMTFILE</code> identifies <code>TRANSTAB.dat</code> as the source table. Using the <code>dat</code> extension makes it compatible with the load functions.</p>
+</li>
+</ul>
+<p>To load data to SQL Server, you must use the <code>BCP</code> template provided by Oracle GoldenGate. You can call <code>BCP</code> from your Replicat parameter file or run it interactively from the operating system shell. The template tells Replicat how data is laid out in the SQL Server target.</p>
+<p><span class="bold">Replicat parameter file for GGSPARM.TRANINI</span></p>
+<pre>
+GENLOADFILES BCPFMT.TPLTARGETDB
+TARGETDB MYAPP, USERID MYNAME, PASSWORD MSPW
+SOURCEDEFS c:\ggs\mydb.def
+MAP $D2.MYDB.TRANSTAB, TARGET SCHEMA.ORATRANS;
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1002350"></a><a id="GNSAD249"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.4</span> Limiting the Enscribe Source Key Range for Initial Load</h2>
+<p>If your parameters meet the requirements, the <code>FILE</code> parameter options <code>STARTKEY</code> and <code>ENDKEY</code> can be used to limit the range of Enscribe records selected for a <code>SOURCEISFILE</code> initial-load process. This allows you to load subsets of the data for different purposes or to break up the a large initial data load. Refer to <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> <code>FILE | TABLE</code> parameter for specifics on the requirements and how to use <code>STARTKEY</code> and <code>ENDKEY</code>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A1002473"></a><a id="GNSAD250"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.5</span> Restarting an Initial Load</h2>
+<p>You can restart initial loads using the <code>RESTARTCHECKPOINTS</code> option of the <code>SOURCEISFILE</code> or <code>SOURCEISTABLE</code> parameter if your Extract is added from GGSCI.</p>
+<p>You can use <code>RESTARTCHECKPOINTS</code> for:</p>
+<ul>
+<li>
+<p>SQL/MP source tables with or without the <code>SQLPREDICATE</code> option</p>
+</li>
+<li>
+<p>Enscribe whether or not you use the <code>FILE</code> <code>STARTKEY</code> and <code>ENDKEY</code> options</p>
+</li>
+<li>
+<p>Both SQL/MP and Enscribe with or without <code>FASTUNLOAD</code>.</p>
+</li>
+</ul>
+<p>Refer to <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> for additional conditions and restrictions for using the <code>SOURCEISFILE</code> <code>RESTARTCHECKPOINTS</code> option.</p>
+<p>The messages generated when the <code>SOURCEISFILE</code> Extract restarts vary based on the type of database and the parameters and options that are used. Some different types of examples are shown next.</p>
+<dl>
+<dd><a id="sthref94"></a></dd>
+<dt class="seghead">Example 1&nbsp;&nbsp;&nbsp;SQL/MP tables produced without using FASTUNLOAD</dt>
+<dd>
+<p>A message similar to the following is produced for SQL/MP source tables without <code>FASTUNLOAD</code>. In this example the option <code>SQLPREDICATE</code> is being used and <code>WHERE (STATE = "CA")</code> is the user's predicate. <code>AC_KEY</code> is the multi-column key for the restart.</p>
+<pre>
+Output extract file \NY.$DATA02.ACDAT.PA000009 Write Position: RBA 19126
+Extract SourceIsFile process is restartable
+Processing File \NY.$DATA02.ACDAT.ACCT
+Using this SQL statement to retrieve data:
+SELECT * FROM \NY.$DATA02.ACDAT.ACCT WHERE (STATE = "CA") AND AC_KEY1, AC_KEY2, AC_KEY3 &gt; 13 ,4781 ,27 BROWSE ACCESS
+</pre></dd>
+<dd><a id="sthref95"></a></dd>
+<dt class="seghead">Example 2&nbsp;&nbsp;&nbsp;SQL/MP or Enscribe tables produced using FASTUNLOAD</dt>
+<dd>
+<p>A message similar to the following is produced for SQL/MP or Enscribe source tables using <code>FASTUNLOAD</code>. The restart key is <code>RBA 9555968</code> of partition <code>$DATA03</code>.</p>
+<pre>
+Output extract file \NY.$DATA02.ACDAT.PA000009 Write Position: RBA 19126
+Extract SourceIsFile process is restartable
+Processing File \NY.$DATA02.ACDAT.ACCT2
+Processing Partition \NY.$DATA03.ACDAT.ACCT2
+Positioning Restart at RBA 9555968 
+</pre></dd>
+<dd><a id="sthref96"></a></dd>
+<dt class="seghead">Example 3&nbsp;&nbsp;&nbsp;Enscribe tables produced without FASTUNLOAD or STARTKEY</dt>
+<dd>
+<p>A message similar to the following is produced for Enscribe that is not using <code>FASTUNLOAD</code> and without <code>STARTKEY</code>. The <code>CUST-KEY</code> used for the restart is <code>1234</code>.</p>
+<pre>
+Output extract file \NY.$DATA02.ACDAT.PA000009 Write Position: RBA 19126
+ExtractSourceIsFile process is restartable
+Processing File \NY.$DATA02.ACDAT.ALTPART
+Processing using restart values ( CUST-KEY = 1234 )
+</pre></dd>
+<dd><a id="sthref97"></a></dd>
+<dt class="seghead">Example 4&nbsp;&nbsp;&nbsp;Enscribe tables produced without FASTLOAD and with a STARTKEY</dt>
+<dd>
+<p>A message similar to the following is produced for Enscribe without <code>FASTUNLOAD</code> and with <code>STARTKEY</code>. The <code>CUST-KEY</code> used for the restart is <code>1234</code>.</p>
+<pre>
+file $data02.acdat.altpart, startkey (CUST-key = 0000), def ens-rec,
+                          endkey   (CUST-key = 5555);
+file $data02.acdat.altpart, startkey (CUST-key = 5556), def ens-rec,
+                          endkey   (CUST-key = 999999);
+Output extract file \NY.$DATA02.ACDAT.PA000009 Write Position: RBA 19126
+Extract SourceIsFile process is restartable
+Processing File \NY.$DATA02.ACDAT.ALTPART
+Processing using restart values ( CUST-KEY = 1234 )
+Finished to EndKey ( CUST-KEY = 5555 )
+Processing from StartKey ( CUST-KEY = 5556 )
+Finished to EndKey ( CUST-KEY = 999999 )
+</pre></dd>
+</dl>
+</div>
+<!-- class="sect1" -->
+<a id="i934507"></a><a id="GNSAD251"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.6</span> Loading Initial Data from Windows and Unix</h2>
+<p>Use Replicat to load data from a Windows or UNIX system into a NonStop target database. See <span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span> for details.</p>
+</div>
+<!-- class="sect1" -->
+<a id="i934515"></a><a id="GNSAD252"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.7</span> Integrating Source and Target Data</h2>
+<p>When only a subset of source rows or columns are needed in the target, you can use one of the following techniques to integrate selected data into your target:</p>
+<ul>
+<li>
+<p>Selecting on the source with <code>WHERE</code> or <code>FILTER</code></p>
+</li>
+<li>
+<p>Mapping columns on the target with <code>COLMAP</code></p>
+</li>
+</ul>
+<p>When the data source is a SQL table, you can specify SQL Views. This allows automatic filtering of columns before transmission. You can also specify a view that joins multiple tables for denormalization purposes.</p>
+<p>Data transformation (such as six-to-eight digit date conversion) takes a little extra effort during the load process. There are a couple of ways to achieve initial loads in this situation.</p>
+<p>The first solution involves extracting the entire table into a flat file. In this case, do not specify <code>FORMATASCII</code>. Next use Replicat to load the table using the <code>SPECIALRUN</code> parameter. This method, while slower than native loads, is often sufficient and allows field conversion functions to be used during replication.</p>
+<p>The second solution is to perform all data mapping on the NonStop before transmission on the target side. This means that all conversion work is performed by Extract. Using this strategy can result in less network traffic, since filtering can be performed before data reaches the pipe. However, this can also require the creation of a dummy table or DDL definition on the NonStop side that mimics the structure of the real target table.</p>
+</div>
+<!-- class="sect1" -->
+<a id="i934529"></a><a id="GNSAD253"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.8</span> Distributing Extracted Data</h2>
+<p>In addition to extracting and replicating database changes, Extract can forward and distribute changes that have already been extracted. This process is known as <span class="italic">data pumping</span>.</p>
+<p>Use data pumping in the following scenarios:</p>
+<ul>
+<li>
+<p>A network or target system may be down for an extended time, but extraction or logging activities must occur constantly.</p>
+</li>
+<li>
+<p>Data extracted by Logger must be forwarded over TCP/IP to non-NonStop systems.</p>
+</li>
+</ul>
+<p>Running Extract for these purposes is nearly identical to capturing data from TMF audit trails. To run Extract in this manner, perform the following tasks.</p>
+<ol>
+<li>
+<p>Using the <code>EXTTRAILSOURCE</code> or <code>LOGTRAILSOURCE</code> option, create an initial Extract checkpoint with the GGSCI <code>ADD EXTRACT</code> command.</p>
+</li>
+<li>
+<p>Add a local or remote Oracle GoldenGate trail with the GGSCI <code>ADD EXTTRAIL</code> or <code>ADD RMTTRAIL</code> command. By adding the trails, you direct Extract where to write the data you need.</p>
+</li>
+<li>
+<p>Set up an Extract parameter file.</p>
+</li>
+<li>
+<p>Start Extract using the GGSCI <code>START EXTRACT</code> command.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="i934545"></a><a id="GNSAD254"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.9</span> Direct File Extraction</h2>
+<p>Rather than capturing from trails, you can extract directly from a file or a sequence of files. You can read a file directly only when the following conditions are true:</p>
+<ul>
+<li>
+<p>The file or sequence of files is entry-sequenced.</p>
+</li>
+<li>
+<p>Only inserts occur against the files (no updates).</p>
+</li>
+<li>
+<p>Records are inserted only at the end of the file.</p>
+</li>
+</ul>
+<p>Use this feature when:</p>
+<ul>
+<li>
+<p>The method of logging is non-TMF.</p>
+</li>
+<li>
+<p>The files are BASE24 <code>TLF</code> or <code>PTLF.</code></p>
+</li>
+<li>
+<p>The input files meet the conditions described above.</p>
+</li>
+<li>
+<p>You want to transfer the batch file contents a little at a time throughout the day ("trickle" transfer), rather than all at once at the end of the day.</p>
+</li>
+</ul>
+<p class="orderedlisttitle">To extract directly from a file:&nbsp;</p>
+<ol>
+<li>
+<p>Enter a GGSCI <code>ADD EXTRACT</code> command, specifying the <code>FILETYPE</code> parameter. <code>FILETYPE</code> indicates the type of file from which you are reading.</p>
+</li>
+<li>
+<p>If more than one file in a sequence might be open at a time, start Extract for each file in use simultaneously. Enter an <code>ALTINPUT</code> parameter in each process's parameter file with a <code>RANGE</code> option to distribute the files among the processes. For further details, see <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span>.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="i934569"></a><a id="GNSAD255"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">4.10</span> Batch Processing</h2>
+<p>You can configure Extract and Replicat to run in batch when capturing and delivering incremental changes is not appropriate for the application. You can configure ongoing batch runs for a specific time daily, or special, one-time batch runs.</p>
+<a id="i945063"></a><a id="GNSAD256"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">4.10.1</span> One-Time Database Extraction</h3>
+<p>You can run Extract against a specified period of audit trail or Oracle GoldenGate trail data a single time. Do this, for example, to extract changes to a particular account in a database over the course of a day.</p>
+<p>To extract changes for a specific period, perform the following steps.</p>
+<ol>
+<li>
+<p>Set up a parameter file using the NonStop editor.</p>
+</li>
+<li>
+<p>Use <code>SPECIALRUN</code> to capture data from TMF-audit trails. <code>SPECIALRUN</code> indicates that no checkpoints are maintained.</p>
+</li>
+<li>
+<p>To extract data from an Oracle GoldenGate trail, use the <code>SPECIALRUN</code>, <code>EXTTRAILSOURCE</code> or <code>LOGTRAILSOURCE</code> option.</p>
+</li>
+<li>
+<p>Set up <code>BEGIN</code> and <code>END</code> parameters to designate the period of activity to extract.</p>
+</li>
+<li>
+<p>Designate an <code>EXTFILE</code> or <code>RMTFILE</code> rather than an extract trail. If you require multiple trails, add the <code>MAXFILE</code> argument to the <code>EXTFILE</code> or <code>RMTFILE</code> parameter.</p>
+</li>
+<li>
+<p>Specify additional parameters as needed.</p>
+</li>
+<li>
+<p>Start Extract from TACL, as in this example.</p>
+<pre>
+TACL&gt; RUN EXTRACT /IN GGSPARM.SPECEXT, OUT GGSRPT.SPECEXT/
+</pre></li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD257"></a>
+<div class="sect2"><a id="sthref99"></a>
+<h3 class="sect2"><span class="secnum">4.10.2</span> Trickle Batch Processing</h3>
+<p>When you are extracting batch files using <code>RMTBATCH</code>, you may need to perform the following steps:</p>
+<ol>
+<li>
+<p>Use the <code>SYSKEYCONVERT</code> parameter in the Extract parameter file if the input record's length is variable. This specifies the format of the <code>SYSKEY</code> in the output.</p>
+</li>
+<li>
+<p>Use the <code>POSITIONFIRSTRECORD</code> parameter to reread an input file when you have used <code>SYSKEYCONVERT</code>. <code>POSITIONFIRSTRECORD</code> resets Extract to read from the beginning of the input file.</p>
+</li>
+</ol>
+<a id="GNSAD258"></a>
+<div class="sect3"><a id="sthref100"></a>
+<h4 class="sect3"><span class="secnum">4.10.2.1</span> Determining the Next File</h4>
+<p>Use <code>ALTINPUT</code> for direct file extraction. With ACI files, multiple files can be in use at one time. For example, processing can continue for Monday's file after midnight, while Tuesday's file is opened for new data. To handle a multiple file situation, run more than one Extract process for the file sequence. Use the <code>ALTINPUT RANGE</code> option to distribute the files across the processes so that Extract never processes two files in sequence. You can also use <code>ALTINPUT</code> to specify the access mode of the file open, and to move Extract to the next sequential file if an application has a file open that it is not updating.</p>
+<p>By default, Extract looks for the next alphabetical file name. The file name must conform to a template for the file type, which defaults to predefined characteristics. You can also specify the template by parameter.</p>
+<p>If the file type is <code>ACITLF</code> or <code>ACIPTLF</code>, the template is in the form <code>$VOL.SUBVOL.XXYYMMDD</code>, where <code><span class="codeinlineitalic">XX</span></code> is a two character prefix, followed by a six digit date.</p>
+<p>If the file type is <code>ACITLFX</code> or <code>ACIPTLFX</code>, the template is in the form <code>$VOL.SUBVOL.XMMDDNNN</code>, where <code>X</code> is a one character prefix, followed by a month, day and three digit sequence number.</p>
+<p>When specifying any of the ACI file types in the <code>FILETYPE</code> option, do not include the date or sequence number. The next file is the one following the current file in name order, and must also satisfy any <code>RANGE</code> criteria in the <code>ALTINPUT</code> parameter.</p>
+<p>If the file type is <code>ENTRY</code>, you specify the template in the <code>ALTINPUT</code> parameter <code>TEMPLATE</code> option. NonStop wildcards are acceptable. For example, the template <code>$DATA*.MYDAT.FL*</code> processes files starting with <code>FL</code> residing on different <code>$Data</code> volumes.</p>
+<p>When using <code>FILETYPE</code> <code>ENTRY</code>, specify the first file to process, not the file prefix. By default, the next file is the next file name to fit the template. As an alternative, you can use <code>FILETYPE</code> <code>USENEXTMODIFIED</code>. This option selects the next file modified after the current file that also fits the template.</p>
+</div>
+<!-- class="sect3" -->
+<a id="GNSAD259"></a>
+<div class="sect3"><a id="sthref101"></a>
+<h4 class="sect3"><span class="secnum">4.10.2.2</span> When the Next File is Processed</h4>
+<p>Before moving to the next file in a sequence, Extract must process the entire contents of the current file. By default, Extract uses the following rules to determine that the current file has been exhausted and the next file is ready for processing.</p>
+<ul>
+<li>
+<p>End-of-file was reached in current file at least five seconds earlier, and no new data has appeared since.</p>
+</li>
+<li>
+<p>No processes have the current file open for write access.</p>
+</li>
+<li>
+<p>The next file exists and has at least one record in it.</p>
+</li>
+<li>
+<p>The next file was modified after the current file.</p>
+</li>
+</ul>
+<p>You can modify these rules with the <code>NOWAITNEXTMODIFIED</code>, <code>WAITNEXTRBA</code>, and <code>OPENTIMEOUT</code> options for the <code>ALTINPUT</code> parameter.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment25">
+<tr>
+<td class="cellalignment34">
+<table class="cellalignment30">
+<tr>
+<td class="cellalignment29"><a href="configuring.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment29"><a href="security.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment36">
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment29"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment29"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

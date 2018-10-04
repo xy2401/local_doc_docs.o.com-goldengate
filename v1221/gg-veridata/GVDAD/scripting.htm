@@ -1,0 +1,2380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Using the Veridata Import and Export Utilities</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1071" />
+<meta name="description" content="This chapter describes how to use the Veridata Import and Export utilities. In addition to using the Oracle GoldenGate Veridata Web User Interface, you can use the import and export utilities provided with the Veridata installation to define portions of your configuration." />
+<meta name="dcterms.created" content="2015-10-12T20:5:0Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Administering Oracle GoldenGate Veridata" />
+<meta name="dcterms.identifier" content="E60970-01" />
+<meta name="dcterms.isVersionOf" content="GVDAD" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="running_comparisons.htm" title="Previous" type="text/html" />
+<link rel="Next" href="running_vgpp.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E60970-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="E60970-01.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="E60970-01.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><span id="PAGE" style="display:none;">8/13</span> <!-- End Header -->
+<div id="GVDAD169" class="chapter"><a id="CHDCGJGF"></a>
+<h1 class="chapter"><span class="secnum">5</span> Using the Veridata Import and Export Utilities</h1>
+<p><a id="GVDAD1013"></a>This chapter describes how to use the Veridata Import and Export utilities. In addition to using the Oracle GoldenGate Veridata Web User Interface, you can use the import and export utilities provided with the Veridata installation to define portions of your configuration.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#A1006501">Introduction to the Import and Export Utilities</a></p>
+</li>
+<li>
+<p><a href="#BABEHAID">Running the Import and Export Utilities</a></p>
+</li>
+<li>
+<p><a href="#A1045723">Configuration File Element Reference</a></p>
+</li>
+</ul>
+<a id="A1006501"></a>
+<div id="GVDAD170" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">5.1</span> Introduction to the Import and Export Utilities</h2>
+<p>Using the import and export utilities, you can create XML documents that are used to configure Oracle GoldenGate Veridata. The DTD (Document Type Definition) that governs these XML documents is stored in the <code dir="ltr">ORACLE_HOME/veridata/clilib/lib/veridata-scripting.jar</code> file.</p>
+<p>The import utility allows you to configure database connections, comparison groups including compare pairs, comparison jobs, and profiles. It takes an XML document as input then creates comparison objects in Veridata. Typically, the XML document matches the inputs on the configuration pages in the user interface.</p>
+<p>The export utility helps you to either selectively or completely export the compare configuration data to an XML file. It can be used to export configurations from your current Veridata configuration or from other Veridata configurations using the <code dir="ltr">-repoUrl</code> option. Additionally, you can use it to export configurations between different Veridata repository types using the import functionality. For example, from a SQL Server configuration to an Oracle configuration.</p>
+<p>You should have an understanding of basic XML and its rules.</p>
+<p>These utilities provide the following advantages:</p>
+<ul>
+<li>
+<p>It can reduce the time required to define repetitive tasks</p>
+</li>
+<li>
+<p>It allows you to create reusable configurations</p>
+</li>
+<li>
+<p>It can ensure that your test configuration mirrors the one you use for production</p>
+</li>
+</ul>
+<div id="GVDAD171" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref41"></a>
+<h3 class="sect2"><span class="secnum">5.1.1</span> Supported Configurations</h3>
+<p>Oracle GoldenGate Veridata import and export utilities support configuring:</p>
+<ul>
+<li>
+<p>Database connections</p>
+</li>
+<li>
+<p>Comparison groups (jobs, groups, and compare pairs)</p>
+</li>
+<li>
+<p>Profiles</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABEHAID"></a>
+<div id="GVDAD1133" class="sect1">
+<h2 class="sect1"><span class="secnum">5.2</span> Running the Import and Export Utilities</h2>
+<p>The import and export utilities run from the <code dir="ltr"><span class="codeinlineitalic">DOMAIN_HOME/</span></code><code dir="ltr">veridata/bin</code> directory of the Oracle GoldenGate Veridata installation location. The Windows programs are <code dir="ltr">veridata_export.bat</code> and <code dir="ltr">veridata_import.bat</code>; the UNIX and Linux scripts are <code dir="ltr">veridata_export.sh</code> and <code dir="ltr">veridata_import.sh</code>.</p>
+<div id="GVDAD1134" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref42"></a>
+<h3 class="sect2"><span class="secnum">5.2.1</span> Using the Export Utility</h3>
+<p>The syntax for running the export utility is:</p>
+<pre dir="ltr">
+veridata_export[.sh | .bat] -export <span class="italic">filePath</span> -wluser <span class="codeinlineitalic">commandlineUusername </span>  [-wlport <span class="italic">portNo</span>] [&ndash;jobs <span class="italic">jobName</span> | - groups <span class="italic">groupName</span> | -connections <span class="italic">connName</span> | -profiles <span class="italic">profileName</span> | -all | -exportPassword] [[-repoUrl <span class="italic">jdbc_url</span>] [-u <span class="italic">username</span>&gt;][-schema <span class="italic">schema_name</span>][-vdtPath <span class="codeinlineitalic">VERIDATA_PRODUCT_HOME</span>]]
+</pre>
+<ul>
+<li>
+<p><code dir="ltr">-wlport</code>: Represents the port for Veridata web server. The default value is 8830.</p>
+</li>
+<li>
+<p><code dir="ltr">-wluser</code>: Specifies a user <code dir="ltr"><span class="codeinlineitalic">commandlineUsername</span></code> with Veridata configuration privileges and command-line privileges.</p>
+</li>
+<li>
+<p>One of these optional operations can be requested at run time:</p>
+<ul>
+<li>
+<p><code dir="ltr">-jobs:</code> Export all jobs, by name, including the associated groups, connections and profiles. You can specify one or more jobs by separating the names with a space, such as <code dir="ltr">job1</code> <code dir="ltr">job2</code> <code dir="ltr">job3</code>. If no job name is specified, all jobs with associated objects are exported.</p>
+</li>
+<li>
+<p><code dir="ltr">-groups:</code> Export all groups in the repository or add group names separated by a space, such as <code dir="ltr">group1</code> <code dir="ltr">group2</code> <code dir="ltr">group3</code>.</p>
+</li>
+<li>
+<p><code dir="ltr">-connections:</code> Export all connections in the repository or add connections separated by a space, such as <code dir="ltr">conn1</code> <code dir="ltr">conn2</code> <code dir="ltr">conn3</code>.</p>
+</li>
+<li>
+<p><code dir="ltr">-profiles:</code> Export all profiles in the repository or add profiles separated by a space, such as <code dir="ltr">profile1</code> <code dir="ltr">profile2</code> <code dir="ltr">profile3</code>.</p>
+</li>
+<li>
+<p><code dir="ltr">-all:</code> Export objects that are not part of any job. Takes precedence over all optional operations. This is the default when no other options are specified.</p>
+</li>
+<li>
+<p><code dir="ltr">-exportPassword</code>: Export the passwords for connections. By default, passwords for connections are not exported.</p>
+</li>
+<li>
+<p><code dir="ltr">-repoUrl:</code> Set the remote Veridata repository database JDBC URL for the export to use. You must set the -u option when using <code dir="ltr">-repoUrl</code>.</p>
+<dl>
+<dt>For Oracle Database:</dt>
+<dd>
+<pre dir="ltr">
+  jdbc:oracle:thin:@<span class="italic">hostname</span>/<span class="italic">ip</span>:<span class="italic">port</span>:<span class="italic">SID</span> 
+</pre>
+<p><span class="italic">or</span></p>
+<pre dir="ltr">
+ jdbc:oracle:thin:@<span class="italic">hostname</span>/<span class="italic">ip</span>:<span class="italic">port</span>/<span class="italic">serviceName</span>
+</pre></dd>
+<dt>For SQL Server:</dt>
+<dd>
+<pre dir="ltr">
+ jdbc:weblogic:sqlserver://<span class="italic">hostname</span>/<span class="italic">ip</span>:<span class="italic">port</span>;<span class="italic">databaseName</span>= <span class="italic">databaseName</span>
+</pre>
+<p>The <code dir="ltr">repoUrl</code> may require double quotes.</p>
+</dd>
+</dl>
+</li>
+<li>
+<p><code dir="ltr">-u</code>: Set the remote Veridata database username from which the configuration export is requested. Use with the <code dir="ltr">-repoUrl</code> option.</p>
+</li>
+<li>
+<p><code dir="ltr">-schema</code>: Set the remote Veridata schema name from which the configuration export is requested.</p>
+</li>
+<li>
+<p><code dir="ltr">-vdtPath</code> <code dir="ltr"><span class="codeinlineitalic">veridataLocation</span></code>: Set the Veridata domain location for the 12c release and later. For 11g release, it is the installation location.</p>
+</li>
+<li>
+<p><code dir="ltr">-help</code>: Provides command line syntax.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>I f you want to export data from a Veridata repository database that is not part of your existing installation, you must provide the URL, username, and schema name. You will be prompted to enter the external Veridata repository password during run time. The Connection passwords are not exported by default, use the <code dir="ltr">-exportPassword</code> option for exporting passwords.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GVDAD172" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref43"></a>
+<h3 class="sect2"><span class="secnum">5.2.2</span> Using the Import Utility</h3>
+<p>The syntax for running the import utility is:</p>
+<pre dir="ltr">
+veridata_import[.sh | .bat] [-wlport <span class="italic">portNo</span>] -wluser <span class="codeinlineitalic">commandlineUusername </span>[-create | -update | -delete | -replace] <span class="codeinlineitalic">configuration.xml</span>
+</pre>
+<ul>
+<li>
+<p><code dir="ltr">-wlport</code>: Represents the port for Veridata web server. The default value is 8830.</p>
+</li>
+<li>
+<p><code dir="ltr">-wluser</code>: Specifies a user <code dir="ltr"><span class="codeinlineitalic">commandlineUsername</span></code> with Veridata configuration privileges and command-line privileges.</p>
+</li>
+<li>
+<p>One of these optional operations can be requested at run time:</p>
+<ul>
+<li>
+<p><code dir="ltr">-create:</code> All items listed in the configuration are new. If any item in the list exists in the repository, nothing is added.</p>
+</li>
+<li>
+<p><code dir="ltr">-update:</code> New items are added to the repository and existing items are modified. Items existing in the repository and not listed in the configuration are deleted.</p>
+</li>
+<li>
+<p><code dir="ltr">-delete:</code> All named items that exist for the configuration are removed from the repository.</p>
+</li>
+<li>
+<p><code dir="ltr">-replace:</code> All items listed to be replaced in the configuration are replaced as specified.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">configuration.xml:</span></code> The name of the import XML configuration file that you created to describe the configuration. This is a required option.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<div id="GVDAD173" class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref44"></a>
+<h3 class="sect2"><span class="secnum">5.2.3</span> Processing the Configuration</h3>
+<p>The import utility first parses the <code dir="ltr"><span class="codeinlineitalic">configuration.xml</span></code> file attempting to complete the entire file before aborting due to the errors. Any errors it finds are logged in the <code dir="ltr"><span class="codeinlineitalic">DOMAIN_HOME/</span></code><code dir="ltr">veridata/logs/veridata_import.log</code>. If it does not abort because of errors, it makes a second parsing pass, this time processing the configuration.</p>
+<p class="subhead2"><a id="GVDAD174"></a>Matching Object Names</p>
+<p>Database object names, such as catalogs, schema, tables, indexes, and columns will be matched according to these rules:</p>
+<ul>
+<li>
+<p>The matching is case insensitive</p>
+</li>
+<li>
+<p>The hyphen (-) is considered a match to the underscore (_) to support matching Enscribe DDL and SQL columns</p>
+</li>
+<li>
+<p>Wildcard expressions for table names and source column names match against the exact name and against the uppercase version of the name.</p>
+</li>
+<li>
+<p>Quoted names for schemas and wildcards match everything within the quotations must be matched exactly. A wildcard character within quotes is treated as an ordinary character. An example of a quoted name as it would appear in the XML is:</p>
+<pre dir="ltr">
+source-table="&amp;quot;CHAR_TYPES&amp;quot;*"
+</pre>
+<p>This would match <code dir="ltr">CHAR_TYPES</code>, <code dir="ltr">CHAR_TYPES2</code>, and <code dir="ltr">CHAR_TYPES_NOTNULL</code>.</p>
+</li>
+<li>
+<p>Filters can either include or exclude schemas and tables. If include filters are used, at least one filter must be matched before a table can be included in a compare pair. If exclude filters are used, a table is excluded if it matches any exclude filter. Include filters can include a <code dir="ltr">COLFILTER</code> element that contains a list of columns to include or exclude. When a table matches a include filter, the include filter's <code dir="ltr">COLFILTER</code> is used to specify the columns for the generated compare pair. The schema and table name can use wildcards.</p>
+<p>For NonStop Enscribe files, file pattern filters are used. The file pattern is any valid NonStop file name pattern.</p>
+</li>
+<li>
+<p>A compare pair may have a column specification with the Boolean attribute "optional". When this attribute is true, the column is only included in the compare pair if the source table includes the specified source column.</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GVDAD175"></a>Determining Key Columns</p>
+<p>The key columns are selected in the following order:</p>
+<ol>
+<li>
+<p>Explicit key column definitions if they are available. In this case if <code dir="ltr">source-pkey</code> and <code dir="ltr">target-pkey</code> <code dir="ltr">compare-pair</code> element attributes are set it will generate an error.</p>
+</li>
+<li>
+<p>Columns in the index specified by <code dir="ltr">source-pkey</code> and <code dir="ltr">target-pkey</code> attributes of the <code dir="ltr">compare-pair</code> element. The number of columns and all data types must match and the data types must be compatible.</p>
+</li>
+<li>
+<p>Columns in the system-selected primary key.</p>
+</li>
+</ol>
+<p class="subhead2"><a id="GVDAD176"></a>Generating Compare Pairs</p>
+<p>Compare pair generation has the following characteristics:</p>
+<ul>
+<li>
+<p>Generating from wild cards works the same as the user interface generation except that regular expressions can be used.</p>
+</li>
+<li>
+<p>Compare pairs are processed in the order specified in the <code dir="ltr"><span class="codeinlineitalic">configuration.xml</span></code> file</p>
+</li>
+<li>
+<p>The compare pairs generated by a single compare pair element are generated in alphabetical order of the source table name.</p>
+</li>
+<li>
+<p>When compare pairs are generated by more than one compare pair element, the first one will be used.</p>
+</li>
+</ul>
+<p>As a general rule, the order of the compare pair elements should be:</p>
+<ol>
+<li>
+<p>Compare pairs with specialized configuration requirements, such as user-defined keys.</p>
+</li>
+<li>
+<p>Compare pairs that match general patterns.</p>
+</li>
+<li>
+<p>Exclusions of compare pairs that would otherwise match general patterns.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1045723"></a>
+<div id="GVDAD1014" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">5.3</span> Configuration File Element Reference</h2>
+<p>The configuration is defined by the top level <code dir="ltr">configuration</code> element and several nested elements. Most of these elements have attributes that define their characteristics, such as the <code dir="ltr">operation</code> attribute for the <code dir="ltr">configuration</code> element or the <code dir="ltr">port</code> attribute for the <code dir="ltr">connection</code> element.</p>
+<p>The following is the high-level element hierarchy in the configuration XML file. For more information about an element and its attributes, click the element name in the hierarchy.</p>
+<pre dir="ltr">
+<span class="bold"><a href="#CHDHHFCA"><span class="xreftitlebold">configuration</span></a></span>
+    <a href="#CHDBAIDD">connection</a>
+       <a href="#BABDGIHH">conn-properties</a>
+    <a href="#CHDBAHDJ">group</a>
+       <a href="#CHDJIHHC">description</a>
+       <a href="#BABIBBAC">filter</a>
+       <a href="#CHDDAGHC">sql-partition</a>
+       <a href="#CHDHGDCG">enscribe-key</a>
+       <a href="#CHDBGBAI">compare-pair</a>
+          <a href="#CHDIJGGB">enscribe-info</a>
+          <a href="#CHDHGDCG">enscribe-key</a>
+          <a href="#CHDDAGHC">sql-partition</a>
+          <a href="#CHDECHGA">column</a>
+          <a href="#CHDFJACF">excluded-column</a>
+          <a href="#BABFDDAA">delta-config</a>
+    <a href="#CHDBJBFG">job</a>
+    <a href="#BABJEEIC">profile</a>
+    
+</pre>
+<p><a href="sample.htm#CHDGGCBJ">Appendix B</a> provides a sample configuration file.</p>
+<p><a href="profile_param.htm#BABFBJAC">Appendix C</a> provides a description of the profile parameters that you can use to configure your profiles.</p>
+</div>
+<!-- class="sect1" -->
+<div class="refentry"><a id="CHDHHFCA"></a>
+<div id="GVDAD1015" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">configuration</h2>
+<p>The root element is <code dir="ltr">configuration</code>.</p>
+<p>The following elements can be nested within the <code dir="ltr">configuration</code> element:</p>
+<div id="GVDAD179" class="tblhruleformal">
+<p class="titleintable"><a id="sthref45"></a><a id="sthref46"></a>Table 5-1 configuration Elements</p>
+<table class="cellalignment13" title="configuration Elements" summary="This table lists and describes the elements used within the configuration element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t2">Elements</th>
+<th class="cellalignment12" id="r1c2-t2">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+connection
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t2 r1c2-t2">
+<p>One or more Veridata database connection definitions.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+group
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t2 r1c2-t2">
+<p>One or more Veridata comparison group definitions.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t2" headers="r1c1-t2">
+<pre dir="ltr">
+job
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t2 r1c2-t2">
+<p>One or more comparison job definitions.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">profile</code></p>
+</td>
+<td class="cellalignment8" headers="r5c1-t2 r1c2-t2">
+<p>One or more profile definitions.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>The following attributes describe the <code dir="ltr">configuration</code> element:</p>
+<div id="GVDAD180" class="tblhruleformal">
+<p class="titleintable"><a id="sthref47"></a><a id="BABHFEEI"></a>Table 5-2 configuration Attributes</p>
+<table class="cellalignment13" title="configuration Attributes" summary="This table lists and describes the attributes for the configuration element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t3">Attribute</th>
+<th class="cellalignment12" id="r1c2-t3">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+validation
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t3 r1c2-t3">
+<p>Specifies the type of validation that is used for the configuration. The options are:</p>
+<p>"<code dir="ltr">required</code>" - All compare pairs must be successfully validated before any pairs are added to the repository. This is the <span class="italic">default</span> value.</p>
+<p>"<code dir="ltr">omit-failures</code>" - Successfully validated compare pairs are added to the repository and compare pairs that cannot be validated are ignored.</p>
+<p>"<code dir="ltr">none</code>" - Compare pairs are added to the repository without any validation. If this option is selected, the Oracle GoldenGate Veridata Web User Interface should be used to review and fix validation problems.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+operation
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t3 r1c2-t3">
+<p>Specifies how data is applied to the repository. The options are:</p>
+<p>"<code dir="ltr">create</code>" - All items listed in the configuration are new. If any item in the list exists in the repository, nothing is added. This can be used to prevent unintended modification to existing repository items. This is the <span class="italic">default</span> value.</p>
+<p>"<code dir="ltr">update</code>" - New items are added to the repository and existing items modified. Items existing in the repository and not listed in the configuration are deleted.</p>
+<p>"<code dir="ltr">delete</code>" - All named items in the configuration are removed from the repository.</p>
+<p>You can use a command line flag to override the value entered for this attribute.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t3" headers="r1c1-t3">
+<pre dir="ltr">
+wildcard
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t3 r1c2-t3">
+<p>Specifies the pattern matching method that is used. The options are:</p>
+<p>"<code dir="ltr">ggs</code>" - Use the typical Oracle GoldenGate pattern using an asterisk (*). See the Oracle GoldenGate Veridata Web User Interface help for details on this type of matching. This is the default value.</p>
+<p>"<code dir="ltr">regex</code>" - Use regular expressions for matching.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="subhead2"><a id="GVDAD181"></a>Example</p>
+<p>The following example adds compare pairs that can be validated and ignores those that cannot; uses regular expressions for wild carding; and uses the <code dir="ltr">"create"</code> default to adds all items as new items, adding nothing if any item already exists.</p>
+<pre dir="ltr">
+&lt;configuration validation="omit-failures" wildcard="regex"&gt;
+.
+.
+.
+&lt;/configuration&gt;
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="CHDECHGA"></a>
+<div id="GVDAD1016" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">column</h2>
+<p>The <code dir="ltr">column</code> element defines a set of columns to be included or excluded from the compare pair. The <code dir="ltr">column</code> element has no nested elements or text data.</p>
+<p>The following attributes describe the <code dir="ltr">column</code> element:</p>
+<div id="GVDAD183" class="tblhruleformal">
+<p class="titleintable"><a id="sthref48"></a><a id="sthref49"></a>Table 5-3 column attributes</p>
+<table class="cellalignment13" title="column attributes" summary="This table lists and describes the attributes of the column element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t4">Attribute</th>
+<th class="cellalignment12" id="r1c2-t4">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+source-name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t4 r1c2-t4">
+<p>A regular expression that defines a set of source column names. This value is required.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+target-name
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t4 r1c2-t4">
+<p>A regular expression that defines a set of target column names. It can include references to groups captured by the <code dir="ltr">source-name</code> expression.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+exclude
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t4 r1c2-t4">
+<p>Indicates whether or not the matched columns should be excluded from the compare pair. The options are:</p>
+<p><code dir="ltr">"true"</code> - The matched columns should be excluded.</p>
+<p><code dir="ltr">"false"</code> - The matched columns should be included. This is the default.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+type
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t4 r1c2-t4">
+<p>Indicates the type of the column. The options are:</p>
+<p><code dir="ltr">"key"</code> - The column is used as a key.</p>
+<p><code dir="ltr">"hash"</code> - The column is compared using a hash value. This is the default value.</p>
+<p><code dir="ltr">"literal"</code>- The column is a literal value.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+format
+</pre></td>
+<td class="cellalignment8" headers="r6c1-t4 r1c2-t4">
+<p>Specifies a format to override the comparison format that would normally be used.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+scale
+</pre></td>
+<td class="cellalignment8" headers="r7c1-t4 r1c2-t4">
+<p>Specifies a scale to override the default scale for the comparison.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r8c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+precision
+</pre></td>
+<td class="cellalignment8" headers="r8c1-t4 r1c2-t4">
+<p>Specifies a precision to override the default precision used for the comparison.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r9c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+timezone
+</pre></td>
+<td class="cellalignment8" headers="r9c1-t4 r1c2-t4">
+<p>Specifies a time zone to override the default time zone of the comparison.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r10c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">optional</code></p>
+</td>
+<td class="cellalignment8" headers="r10c1-t4 r1c2-t4">
+<p>Indicates whether the column mapping is optional. For example, mapping will not fail if the base tables do not have the column patterns specified. Default is <code dir="ltr">"false"</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry">
+<div id="GVDAD1135" class="refsect1"><!-- infolevel="all" infotype="General" --><a id="sthref50"></a>
+<h2 class="refsect1">colfilter</h2>
+<p>The <code dir="ltr">colfilter</code> element defines a set of columns to be included or excluded. It is used to specify the names of the columns to use as filtering criteria.</p>
+<p>The following element describes the <code dir="ltr">colfilter</code> element:</p>
+<div id="GVDAD1182" class="tblhruleformal">
+<p class="titleintable"><a id="sthref51"></a><a id="sthref52"></a>Table 5-4 colfilter Element</p>
+<table class="cellalignment13" title="colfilter Element" summary="This table lists and describes the elements of the colfilter element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t5">Attribute</th>
+<th class="cellalignment12" id="r1c2-t5">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t5" headers="r1c1-t5">
+<pre dir="ltr">
+colfiltercol
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t5 r1c2-t5">
+<p>Specifies a set of columns to be included or excluded.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>The following attribute describes the <code dir="ltr">colfilter</code> element:</p>
+<div id="GVDAD1136" class="tblhruleformal">
+<p class="titleintable"><a id="sthref53"></a><a id="sthref54"></a>Table 5-5 colfilter Attribute</p>
+<table class="cellalignment13" title="colfilter Attribute" summary="This table lists and describes the attributes of the colfilter element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t6">Attribute</th>
+<th class="cellalignment12" id="r1c2-t6">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t6" headers="r1c1-t6">
+<pre dir="ltr">
+type
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t6 r1c2-t6">
+<p>Specifies whether to include the columns or exclude them. The options are <code dir="ltr">include</code> or <code dir="ltr">exclude</code>; the default is <code dir="ltr">include</code>. This is a required attribute.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="subhead2"><a id="GVDAD1183"></a>Example</p>
+<p>This example excludes <code dir="ltr">COL3</code> and <code dir="ltr">COL5</code> for the table <code dir="ltr">TABLE_NAME</code> from the generated compare pair.</p>
+<pre dir="ltr">
+&lt;filter type="include" table="TABLE_NAME"&gt;
+    &lt;colfilter type ="exclude"&gt;
+        &lt;colfiltercol name="COL3" /&gt;
+        &lt;colfiltercol name="COL5" /&gt;
+    &lt;/colfilter&gt;
+&lt;/filter&gt;
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry">
+<div id="GVDAD1137" class="refsect1"><!-- infolevel="all" infotype="General" --><a id="sthref55"></a>
+<h2 class="refsect1">colfiltercol</h2>
+<p>The <code dir="ltr">colfiltercol</code> element defines a set of columns to be included or excluded. It is used to specify the names of the columns to use as filtering criteria.</p>
+<p>The following attribute describes the <code dir="ltr">colfiltercol</code> element:</p>
+<div id="GVDAD1139" class="tblhruleformal">
+<p class="titleintable"><a id="sthref56"></a><a id="sthref57"></a>Table 5-6 colfiltercol Attribute</p>
+<table class="cellalignment13" title="colfiltercol Attribute" summary="This table lists and describes the attributes of the colfiltercol element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t7">Attribute</th>
+<th class="cellalignment12" id="r1c2-t7">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t7" headers="r1c1-t7">
+<pre dir="ltr">
+name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t7 r1c2-t7">
+<p>A regular expression that defines a set of source column names. This is a required attribute.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="CHDBGBAI"></a>
+<div id="GVDAD1017" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">compare-pair</h2>
+<p>The <code dir="ltr">compare-pair</code> element specifies a set of compare pair items. As in the Oracle GoldenGate Veridata Web User Interface, the compare pairs default to system mapped keys and columns.</p>
+<p>The following elements can be nested within the <code dir="ltr">compare-pair</code> element:</p>
+<div id="GVDAD185" class="tblhruleformal">
+<p class="titleintable"><a id="sthref58"></a><a id="sthref59"></a>Table 5-7 compare-pair Elements</p>
+<table class="cellalignment13" title="compare-pair Elements" summary="This table lists and describes the elements used within the compare-pair element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t8">Element</th>
+<th class="cellalignment12" id="r1c2-t8">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t8" headers="r1c1-t8">
+<pre dir="ltr">
+enscribe-info
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t8 r1c2-t8">
+<p>One or more sets of information used when comparing NonStop Enscribe files.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t8" headers="r1c1-t8">
+<pre dir="ltr">
+sql-partition
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t8 r1c2-t8">
+<p>One or more specifications of a subset of rows within the table.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t8" headers="r1c1-t8">
+<pre dir="ltr">
+enscribe-key
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t8 r1c2-t8">
+<p>One or more specifications of a subset of records within an Enscribe file.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t8" headers="r1c1-t8">
+<pre dir="ltr">
+key-column
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t8 r1c2-t8">
+<p>A set of columns to be used as the user-defined key for the comparison.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t8" headers="r1c1-t8">
+<pre dir="ltr">
+column
+</pre></td>
+<td class="cellalignment8" headers="r6c1-t8 r1c2-t8">
+<p>One or more definitions of a set of columns to be included.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t8" headers="r1c1-t8">
+<pre dir="ltr">
+excluded-column
+</pre></td>
+<td class="cellalignment8" headers="r7c1-t8 r1c2-t8">
+<p>Defines a set of columns to excluded from the a compare pair when the compare pair uses system mapped columns.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r8c1-t8" headers="r1c1-t8">
+<p><code dir="ltr">delta-config</code></p>
+</td>
+<td class="cellalignment8" headers="r8c1-t8 r1c2-t8">
+<p>Defines the delta processing configuration for the compare pair. The maximum is to add it once per compare pair.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>The following attributes describe the <code dir="ltr">compare-pair</code> element:</p>
+<div id="GVDAD186" class="tblhruleformal">
+<p class="titleintable"><a id="sthref60"></a><a id="sthref61"></a>Table 5-8 compare-pair Attributes</p>
+<table class="cellalignment13" title="compare-pair Attributes" summary="This table lists and describes the attributes of the compare-pair element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t9">Attribute</th>
+<th class="cellalignment12" id="r1c2-t9">Element</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t9 r1c2-t9">
+<p>An expression defining the name of the compare pair. This expression can include groups captured with <code dir="ltr">source-table</code> expressions and target table group <code dir="ltr">$0</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+source-table
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t9 r1c2-t9">
+<p>A regular expression that defines the table or tables to be compared. See <a href="#BABJFDDH">"Regular Expression Grouping"</a> later in this section for more detail. The default is to match all tables.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+target-table
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t9 r1c2-t9">
+<p>A regular expression that defines the target tables for the comparison. This may contain references to groups captured by the source table expression. The default is $0 for the full source table name.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+source-schema
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t9 r1c2-t9">
+<p>The name of the default schema for the source tables referenced for the compare pair. The default is the value specified for the <code dir="ltr">group</code>. For SQL/MP, this is the subvolume of the SQL catalog. This is not used with Enscribe files.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+target-schema
+</pre></td>
+<td class="cellalignment8" headers="r6c1-t9 r1c2-t9">
+<p>The name of the default schema for the target tables referenced for the compare pair. The default is the value specified for the <code dir="ltr">group</code>. For SQL/MP, this is the subvolume of the SQL catalog. This is not used with Enscribe files.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+source-catalog
+</pre></td>
+<td class="cellalignment8" headers="r7c1-t9 r1c2-t9">
+<p>The default catalog for the source tables referenced in this compare pair. For SQL/MP, this is the volume of the SQL catalog. This is not used for Oracle, DB2, Enscribe, or Teradata.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r8c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+target-catalog
+</pre></td>
+<td class="cellalignment8" headers="r8c1-t9 r1c2-t9">
+<p>The default catalog for the source tables referenced in this compare pair. For SQL/MP, this is the volume of the SQL catalog. This is not used for Oracle, DB2, Enscribe, or Teradata.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r9c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+exclude
+</pre></td>
+<td class="cellalignment8" headers="r9c1-t9 r1c2-t9">
+<p>Indicates whether or not the compare pair should be included in the <code dir="ltr">group</code> element. This can be used to remove a compare pair generated by an earlier compare pair element. The options are:</p>
+<p><code dir="ltr">"true"</code> - Exclude the compare pair.</p>
+<p><code dir="ltr">"false"</code> - Include the compare pair. This is the default.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r10c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+source-file-pattern
+</pre></td>
+<td class="cellalignment8" headers="r10c1-t9 r1c2-t9">
+<p>The default file pattern for the source if the data source is Enscribe or SQL/MP.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r11c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+target-file-pattern
+</pre></td>
+<td class="cellalignment8" headers="r11c1-t9 r1c2-t9">
+<p>The default file pattern for the target if the data target is Enscribe or SQL/MP.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r12c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+source-pkey
+</pre></td>
+<td class="cellalignment8" headers="r12c1-t9 r1c2-t9">
+<p>The name of the unique index to use as the source portion of the user-specified primary key. The default is no user-specified index name.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r13c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+target-pkey
+</pre></td>
+<td class="cellalignment8" headers="r13c1-t9 r1c2-t9">
+<p>The name of the unique index to use as the target portion of the user-specified primary key. The default is the value of the <code dir="ltr">source-pkey</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r14c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+delta-processing
+</pre></td>
+<td class="cellalignment8" headers="r14c1-t9 r1c2-t9">
+<p>Indicates whether or not delta processing is enabled for this compare pair. The options are:</p>
+<p><code dir="ltr">"true"</code> - delta processing is enabled.</p>
+<p><code dir="ltr">"false"</code> - delta processing is not enabled. This is the default.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r15c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+profile-name
+</pre></td>
+<td class="cellalignment8" headers="r15c1-t9 r1c2-t9">
+<p>The name of the profile to use when running the compare-pair comparison.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r16c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+system-key
+</pre></td>
+<td class="cellalignment8" headers="r16c1-t9 r1c2-t9">
+<p>If the compare pair has no column elements and no specified source-pkey, Oracle GoldenGate Veridata will select the most appropriate primary key or unique index to use. The options are:</p>
+<p>"<code dir="ltr">true"</code> - Oracle GoldenGate Veridata selects the key if it is not defined. This is the default.</p>
+<p><code dir="ltr">"false"</code> - Oracle GoldenGate Veridata does not select the key.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r17c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+system-columns
+</pre></td>
+<td class="cellalignment8" headers="r17c1-t9 r1c2-t9">
+<p>Indicates that the compare pair contains column elements with the type attribute set to <code dir="ltr">key</code>, so the generated compare pair will have user-defined columns for the key. The options are:</p>
+<p><code dir="ltr">"true"</code> - Compare pair has <code dir="ltr">key</code> column elements. This is the default.</p>
+<p><code dir="ltr">"false"</code> - Compare pair does not have <code dir="ltr">key</code> column elements.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r18c1-t9" headers="r1c1-t9">
+<pre dir="ltr">
+wildcard
+</pre></td>
+<td class="cellalignment8" headers="r18c1-t9 r1c2-t9">
+<p>Specifies the pattern matching method that is used. The options are:</p>
+<p>"<code dir="ltr">ggs</code>" - Use the typical Oracle GoldenGate pattern that matches an asterisk (*) to any number of characters.</p>
+<p>"<code dir="ltr">regex</code>" - Use regular expressions for matching.</p>
+<p><code dir="ltr">"default"</code> - Use the setting for the <code dir="ltr">configuration</code>. This is the default.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="subhead2"><a id="BABJFDDH"></a><a id="GVDAD187"></a>Regular Expression Grouping</p>
+<p>Regular expression grouping can be used to capture the parts of the source table names to be used for matching the target table name. You can do this by changing the <code dir="ltr">wildcard</code> attribute should be changed to <code dir="ltr">regex</code>. Groups to be matched are referenced as <code dir="ltr">$1</code>, <code dir="ltr">$2</code>, <code dir="ltr">$3</code> and so on. Group <code dir="ltr">$0</code> matches the entire source table name.</p>
+<p>Examples of matching groups include:</p>
+<ul>
+<li>
+<p><code dir="ltr">P(.*)</code> - Matches table names that begin with <code dir="ltr">P</code>. It captures the variable portion in <code dir="ltr">$1</code>. This matches table <code dir="ltr">PROSPECTS.</code></p>
+</li>
+<li>
+<p><code dir="ltr">[^PV].*</code> - Matches table names that do <span class="italic">not</span> begin with <code dir="ltr">P</code> or <code dir="ltr">V</code>. This does not match the table <code dir="ltr">PROSPECTS</code>, but does match the table <code dir="ltr">REGIONS</code>.</p>
+</li>
+<li>
+<p><code dir="ltr">([P-R])(.*)</code> - Matches table names starting with <code dir="ltr">P</code>, <code dir="ltr">Q</code>, or <code dir="ltr">R</code> and captures the initial letter in group <code dir="ltr">$1</code> and the rest of the name in group <code dir="ltr">$2</code>. Groups are defined by parenthesis pairs. Group numbers are defined by the count of left parenthesis. Group <code dir="ltr">$1</code> starts at the first left parenthesis and group <code dir="ltr">$2</code> starts at the second parenthesis.</p>
+</li>
+</ul>
+<p>Captured groups (<code dir="ltr">$</code><code dir="ltr"><span class="codeinlineitalic">n</span></code>) are then used in expressions for selecting the target tables.</p>
+<p class="subhead2"><a id="GVDAD188"></a>Example</p>
+<p>The following example describes the <code dir="ltr">key-only</code> compare-pair. It's source tables are defined in the <code dir="ltr">"test"</code> schema and target tables in the <code dir="ltr">"other"</code> schema. It creates a compare pair in which the source table name begins with <code dir="ltr">S</code> and target table name begins with <code dir="ltr">T</code>. For example, <code dir="ltr">S_TABLE</code> and <code dir="ltr">T_TABLE</code>, where <code dir="ltr">S_TABLE</code> is a table in schema "test" and <code dir="ltr">T_TABLE</code> is table in schema "other". It also excludes all non-key columns in the generated compare pairs.</p>
+<pre dir="ltr">
+&lt;configuration&gt; 
+    &lt;connection name="source" host="somehost"
+               .... use-ssl="true"&gt;
+        &lt;description&gt;
+             &lt;![CDATA[
+                Group SQL Scripting Source Connection
+              ]]&gt;
+          &lt;/description&gt;
+     &lt;/connection&gt;
+...
+...
+&lt;/configuration&gt;
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="CHDBAIDD"></a>
+<div id="GVDAD1018" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">connection</h2>
+<p>The <code dir="ltr">connection</code> element defines a connection to a source or target comparison database through an Oracle GoldenGate Veridata agent.</p>
+<p>The following elements can be nested within the <code dir="ltr">connection</code> element:</p>
+<div id="GVDAD190" class="tblhruleformal">
+<p class="titleintable"><a id="sthref62"></a><a id="sthref63"></a>Table 5-9 connection Elements</p>
+<table class="cellalignment13" title="connection Elements" summary="This table lists and describes the elements used within the connection element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t10">Element</th>
+<th class="cellalignment12" id="r1c2-t10">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t10" headers="r1c1-t10">
+<pre dir="ltr">
+description
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t10 r1c2-t10">
+<p>Provides a description of the connection.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t10" headers="r1c1-t10">
+<p><code dir="ltr">conn-properties</code></p>
+</td>
+<td class="cellalignment8" headers="r3c1-t10 r1c2-t10">
+<p>Defines the connection properties for a connection.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>The following attributes describe the <code dir="ltr">connection</code> element:</p>
+<div id="GVDAD191" class="tblhruleformal">
+<p class="titleintable"><a id="sthref64"></a><a id="sthref65"></a>Table 5-10 connection Attributes</p>
+<table class="cellalignment13" title="connection Attributes" summary="The table lists and describes the attributes used to describe the connection element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t11">Attribute</th>
+<th class="cellalignment12" id="r1c2-t11">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t11 r1c2-t11">
+<p>A name that identifies the connection. This is a required attribute.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+host
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t11 r1c2-t11">
+<p>The name of the system on which the Oracle GoldenGate Veridata agent is running.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+port
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t11 r1c2-t11">
+<p>The port number of the system on which the agent is running.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+user
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t11 r1c2-t11">
+<p>The user name the agent uses to connect to the database.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+password
+</pre></td>
+<td class="cellalignment8" headers="r6c1-t11 r1c2-t11">
+<p>The password the agent uses to connect to the database.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+repairUser
+</pre></td>
+<td class="cellalignment8" headers="r7c1-t11 r1c2-t11">
+<p>The database user with privileges to perform repair operations. See <a class="olink GVDIS" href="../GVDIS/toc.htm"><span class="italic">Installing and Configuring Oracle GoldenGate Veridata</span></a>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r8c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+repairPassword
+</pre></td>
+<td class="cellalignment8" headers="r8c1-t11 r1c2-t11">
+<p>The password for the repairUser.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r9c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+agent-timeout
+</pre></td>
+<td class="cellalignment8" headers="r9c1-t11 r1c2-t11">
+<p>The amount of time Oracle GoldenGate Veridata will wait before timing out when sending requests to the agent.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r10c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+truncate-spaces
+</pre></td>
+<td class="cellalignment8" headers="r10c1-t11 r1c2-t11">
+<p>Either <code dir="ltr">"true"</code> or <code dir="ltr">"false"</code> to indicate whether or not spaces will be removed from the end of character columns. The default is <code dir="ltr">"true"</code> to truncate spaces.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r11c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+fetch-size
+</pre></td>
+<td class="cellalignment8" headers="r11c1-t11 r1c2-t11">
+<p>(Oracle only) The number of rows fetched in each batch.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r12c1-t11" headers="r1c1-t11">
+<p><code dir="ltr">use-ssl</code></p>
+</td>
+<td class="cellalignment8" headers="r12c1-t11 r1c2-t11">
+<p>Defines using SSL communication between the Veridata Agent and the Server. The default is <code dir="ltr">"true"</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="subhead2"><a id="GVDAD192"></a>Example</p>
+<p>The following example identifies the connection named <code dir="ltr">source</code>.</p>
+<pre dir="ltr">
+&lt;configuration&gt;
+   &lt;connection name="source" host="somehost"
+    port="7850" user="somename" password="somepw"repairUser="veridata1" repairPassword="veridata1" agent-timeout="4000" truncate-spaces="false" fetch-size="3" use-ssl="true"&gt;
+      &lt;description&gt;
+             &lt;![CDATA[
+                Group SQL Scripting Source Connection
+            ]]&gt;
+...
+...
+      &lt;/description&gt;
+   &lt;/connection&gt;
+.
+.
+&lt;/configuration&gt;
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="BABDGIHH"></a>
+<div id="GVDAD1140" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">conn-properties</h2>
+<p>The <code dir="ltr">conn-properties</code> element provides additional connection to a source or target comparison database elements.</p>
+<p>The following attributes can be nested within the <code dir="ltr">conn-properties</code> element:</p>
+<div id="GVDAD1141" class="tblformal">
+<p class="titleintable"><a id="sthref66"></a><a id="sthref67"></a>Table 5-11 conn-properties</p>
+<table class="cellalignment11" title="conn-properties" summary="two column table">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t12">Element</th>
+<th class="cellalignment12" id="r1c2-t12">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t12" headers="r1c1-t12">
+<p><code dir="ltr">datatype-name</code></p>
+</td>
+<td class="cellalignment8" headers="r2c1-t12 r1c2-t12">
+<p>Specifies the data type for which properties have changed.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t12" headers="r1c1-t12">
+<p><code dir="ltr">format</code></p>
+</td>
+<td class="cellalignment8" headers="r3c1-t12 r1c2-t12">
+<p>Specifies the Veridata comparison format to be used for comparison.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t12" headers="r1c1-t12">
+<p><code dir="ltr">precision</code></p>
+</td>
+<td class="cellalignment8" headers="r4c1-t12 r1c2-t12">
+<p>Specifies the precision to be applied to the comparison.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t12" headers="r1c1-t12">
+<p><code dir="ltr">scale</code></p>
+</td>
+<td class="cellalignment8" headers="r5c1-t12 r1c2-t12">
+<p>Specifies the scale to be applied to the comparison.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t12" headers="r1c1-t12">
+<p><code dir="ltr">timezone</code></p>
+</td>
+<td class="cellalignment8" headers="r6c1-t12 r1c2-t12">
+<p>Timezone name is same as in the Veridata GUI.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="BABFDDAA"></a>
+<div id="GVDAD1142" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">delta-config</h2>
+<p>The <code dir="ltr">delta-config</code> element defines the delta processing configuration for the specified compare pair. It can be used once per compare pair. This element can appear once or not at all depending on the type of configuration you want. When the source or target configuration specified, the corresponding column-name attribute and query element are mandatory.</p>
+<p>The following elements describe the <code dir="ltr">delta-config</code>:</p>
+<div id="GVDAD1143" class="tblformal">
+<p class="titleintable"><a id="sthref68"></a><a id="sthref69"></a>Table 5-12 delta-config Elements</p>
+<table class="cellalignment11" title="delta-config Elements" summary="two column table">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t13">Attribute</th>
+<th class="cellalignment12" id="r1c2-t13">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t13" headers="r1c1-t13">
+<p><code dir="ltr">source-config</code></p>
+</td>
+<td class="cellalignment8" headers="r2c1-t13 r1c2-t13">
+<p>Provides source side configuration for delta processing.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t13" headers="r1c1-t13">
+<p><code dir="ltr">target-config</code></p>
+</td>
+<td class="cellalignment8" headers="r3c1-t13 r1c2-t13">
+<p>Provides target side configuration for delta processing.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t13" headers="r1c1-t13">
+<p><code dir="ltr">query</code></p>
+</td>
+<td class="cellalignment8" headers="r4c1-t13 r1c2-t13">
+<p>Specifies the query for delta processing.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblformal" -->
+<p class="subhead2"><a id="GVDAD1184"></a>Example</p>
+<p>This example creates a compare pair with delta processing enabled. Delta processing is enabled on <code dir="ltr">COL1</code> of <code dir="ltr">SYSMAPPING1</code> table for both source and target side. The SQL query is defined within the "query" tag.</p>
+<pre dir="ltr">
+&lt;configuration validation="required"&gt;
+   .
+   .
+   &lt;group name="testGroup" source-conn="sourceConn" target-conn="targetConn" source-schema="sourceSchema" target-schema="targetSchema"&gt;
+        &lt;compare-pair source-table="SYSMAPPING1" target-table="SYSMAPPING1" name="sameTables" delta-processing="true" &gt;
+                  &lt;delta-config&gt;
+                        &lt;source-config column-name="COL1"&gt;
+                              &lt;query&gt;&lt;![CDATA[ SELECT MAX(COL1) from SYSMAPPING1 ]]&gt;&lt;/query&gt;
+                        &lt;/source-config&gt;
+                        &lt;target-config column-name="COL1"&gt;
+                              &lt;query&gt;&lt;![CDATA[ SELECT MAX(COL1) from SYSMAPPING1 ]]&gt;&lt;/query&gt;
+                        &lt;/target-config&gt;
+                  &lt;/delta-config&gt;
+            &lt;/compare-pair&gt; 
+    &lt;/group&gt;
+      .
+      .
+&lt;/configuration&gt;
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="CHDJIHHC"></a>
+<div id="GVDAD1019" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">description</h2>
+<p>The <code dir="ltr">description</code> element is free-form text that can be used to attach a description to the containing element. It has no associated attributes.</p>
+<p class="subhead2"><a id="GVDAD194"></a>Example</p>
+<p>The following example provides a description for the connection named <code dir="ltr">source</code>.</p>
+<pre dir="ltr">
+&lt;configuration&gt;
+   &lt;connection name="source" host="somehost"
+    port="7850" user="somename" password="somepw"
+      &lt;description&gt;
+         &lt;![CDATA[
+           This connection is used when the Veridata agent connects
+           to the source.
+         ]]&gt;
+      &lt;/description&gt;
+   &lt;/connection&gt;
+.
+.
+.
+&lt;/configuration&gt;
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="CHDIJGGB"></a>
+<div id="GVDAD1020" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">enscribe-info</h2>
+<p>The <code dir="ltr">enscribe-info</code> element provides additional information used to compare NonStop Enscribe records at the field level.</p>
+<p>The following elements can be nested within the <code dir="ltr">enscribe-info</code> element:</p>
+<div id="GVDAD196" class="tblhruleformal">
+<p class="titleintable"><a id="sthref70"></a><a id="sthref71"></a>Table 5-13 enscribe-info Elements</p>
+<table class="cellalignment13" title="enscribe-info Elements" summary="This table lists and describes the elements used within the enscribe-info element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t14">Element</th>
+<th class="cellalignment12" id="r1c2-t14">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t14" headers="r1c1-t14">
+<pre dir="ltr">
+expandddl
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t14 r1c2-t14">
+<p>Describes the rules that are used when applying the DDL.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>The following attributes describe the <code dir="ltr">enscribe-info</code> element:</p>
+<div id="GVDAD197" class="tblformal">
+<p class="titleintable"><a id="sthref72"></a><a id="sthref73"></a>Table 5-14 enscribe-info Attributes</p>
+<table class="cellalignment11" title="enscribe-info Attributes" summary="This table lists and describes the attributes used to describe the enscribe-info element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t15">Attribute</th>
+<th class="cellalignment12" id="r1c2-t15">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t15" headers="r1c1-t15">
+<p><code dir="ltr">side</code></p>
+</td>
+<td class="cellalignment8" headers="r2c1-t15 r1c2-t15">
+<p>Indicates whether the information applies to the source or the target table. The options are:</p>
+<p><code dir="ltr">"source"</code> to specify the source table. This is the <span class="italic">default</span>.</p>
+<p><code dir="ltr">"target"</code> to specify the target table.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t15" headers="r1c1-t15">
+<pre dir="ltr">
+dictionary
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t15 r1c2-t15">
+<p>The volume and subvolume containing the data dictionary.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t15" headers="r1c1-t15">
+<pre dir="ltr">
+record
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t15 r1c2-t15">
+<p>The name of the record in the data dictionary.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="CHDHGDCG"></a>
+<div id="GVDAD1021" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">enscribe-key</h2>
+<p>The <code dir="ltr">enscribe-key</code> element defines the key that is to be used for Enscribe files. The <code dir="ltr">enscribe-key</code> element defines a delta processing that can used in a where clause on the initial comparison query.</p>
+<p>The following attributes describe the <code dir="ltr">enscribe-key</code>:</p>
+<div id="GVDAD199" class="tblhruleformal">
+<p class="titleintable"><a id="sthref74"></a><a id="sthref75"></a>Table 5-15 enscribe-key Attributes</p>
+<table class="cellalignment13" title="enscribe-key Attributes" summary="This table lists and describes the attributes of the enscribe-key element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t16">Attribute</th>
+<th class="cellalignment12" id="r1c2-t16">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t16" headers="r1c1-t16">
+<pre dir="ltr">
+name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t16 r1c2-t16">
+<p>A name that identifies the key. This is a required attribute.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t16" headers="r1c1-t16">
+<pre dir="ltr">
+start-key
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t16 r1c2-t16">
+<p>The key that is to be used to begin reading the Enscribe file. This is a required entry.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t16" headers="r1c1-t16">
+<pre dir="ltr">
+end-key
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t16 r1c2-t16">
+<p>The key of the last Enscribe record that should be read. This is a required entry.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t16" headers="r1c1-t16">
+<pre dir="ltr">
+format
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t16 r1c2-t16">
+<p>Specifies the format of the Enscribe key. The options are:</p>
+<p><code dir="ltr">"ascii"</code> - The format of the key is ASCII. This is the default.</p>
+<p><code dir="ltr">"hexadecimal"</code> - The format of the key is hexadecimal.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t16" headers="r1c1-t16">
+<pre dir="ltr">
+side
+</pre></td>
+<td class="cellalignment8" headers="r6c1-t16 r1c2-t16">
+<p>Indicates whether the partition should be applied at the source database, the target database, or both databases.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t16" headers="r1c1-t16">
+<pre dir="ltr">
+default
+</pre></td>
+<td class="cellalignment8" headers="r7c1-t16 r1c2-t16">
+<p>Indicates whether this is the default partition. This is equivalent to the "use at run time" indicator on the UI. The default is <code dir="ltr">both</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="subhead2"><a id="GVDAD1121"></a>Examples</p>
+<pre dir="ltr">
+&lt;enscribe-key name = "Part1" end-key ="1000" format ="hexadecimal" default ="false" side="source"/&gt;
+&lt;enscribe-key name = "Part1" start-key ="001" format ="hexadecimal" default ="false" side="target"/&gt;
+&lt;enscribe-key name = "Both" start-key ="001" end-key ="1000" default ="true"/&gt; 
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="CHDFJACF"></a>
+<div id="GVDAD1124" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">excluded-column</h2>
+<p>The <code dir="ltr">excluded-column</code> element defines a set of columns to be excluded from a compare pair when the compare pair uses system mapped columns.</p>
+<p>The following attribute describes the <code dir="ltr">excluded-column</code> element:</p>
+<div id="GVDAD1125" class="tblhruleformal">
+<p class="titleintable"><a id="sthref76"></a><a id="sthref77"></a>Table 5-16 excluded-column Attributes</p>
+<table class="cellalignment13" title="excluded-column Attributes" summary="This table lists and describes the attributes of the expandddl element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t17">Attribute</th>
+<th class="cellalignment12" id="r1c2-t17">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t17" headers="r1c1-t17">
+<pre dir="ltr">
+name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t17 r1c2-t17">
+<p>A regular expression that defines a set of source column names. This is a required attribute.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry">
+<div id="GVDAD1022" class="refsect1"><!-- infolevel="all" infotype="General" --><a id="sthref78"></a>
+<h2 class="refsect1">expandddl</h2>
+<p>The <code dir="ltr">expandddl</code> element describes the rules used when applying the DDL.</p>
+<p>The following attributes describe the <code dir="ltr">expandddl</code> element:</p>
+<div id="GVDAD201" class="tblhruleformal">
+<p class="titleintable"><a id="sthref79"></a><a id="sthref80"></a>Table 5-17 expandddl Attributes</p>
+<table class="cellalignment13" title="expandddl Attributes" summary="This table lists and describes the attributes of the expandddl element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t18">Attribute</th>
+<th class="cellalignment12" id="r1c2-t18">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+expandGroupArrays
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t18 r1c2-t18">
+<p>Whether or not to expand group arrays. The options are:</p>
+<p><code dir="ltr">"true"</code> to expand the array. This is the default.</p>
+<p><code dir="ltr">"false"</code> not to expand the array.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+redefined-columns
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t18 r1c2-t18">
+<p>Whether or not to include redefined columns. The options are:</p>
+<p><code dir="ltr">"include"</code> - Includes redefined columns</p>
+<p><code dir="ltr">"omit"</code> - Leaves out redefined columns. This is the default.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+resolvedups
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t18 r1c2-t18">
+<p>Specifies how to resolve duplicates that result when the array is expanded. The options are:</p>
+<p><code dir="ltr">"appendIndex"</code> - Adds a unique numeric index to the end of the duplicate. This is the default.</p>
+<p><code dir="ltr">"appendAlphaIndex"</code> - Adds an alpha character index to the end of the duplicate.</p>
+<p><code dir="ltr">"prependGroup"</code> - Prefixes the name of the array group to the duplicate.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+ddl-separator
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t18 r1c2-t18">
+<p>The character separator for defining array output into columns. An example is the dash used in FIELDX-3, which is the third occurrence of <code dir="ltr">FIELDX</code> in the array. The options are:</p>
+<p><code dir="ltr">"none"</code> - There is no separator. This is the <span class="italic">default</span>.</p>
+<p><code dir="ltr">"dash"</code> - Use a dash (-) as the separator.</p>
+<p><code dir="ltr">"bracket"</code> - Use brackets [] as the separator.</p>
+<p><code dir="ltr">"underscore"</code> - Use underscore (_) as the separator.</p>
+<p><code dir="ltr">"double-underscore"</code> - Use double underscore (__) as the separator.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+zero-fill-length
+</pre></td>
+<td class="cellalignment8" headers="r6c1-t18 r1c2-t18">
+<p>Prepends zeros to adjust the number of the occurrence. The value is the number of digits enclosed in quotation marks. "0" is the default.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+fix-long-names
+</pre></td>
+<td class="cellalignment8" headers="r7c1-t18 r1c2-t18">
+<p>Whether to fix the names that result from resolving duplicates if they exceed the <code dir="ltr">max-col-name-length</code>. The options are:</p>
+<p><code dir="ltr">"true"</code> - Fix the names that exceed the maximum. This is the default.</p>
+<p><code dir="ltr">"false"</code> - Do not change the names that exceed the maximum.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r8c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+max-col-name-length
+</pre></td>
+<td class="cellalignment8" headers="r8c1-t18 r1c2-t18">
+<p>The maximum length allowed for a column name. The entry is a number within quotation marks. The default is <code dir="ltr">"120"</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="BABIBBAC"></a>
+<div id="GVDAD1144" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">filter</h2>
+<p>The <code dir="ltr">filter</code> element defines a set of schemas and tables to either be included or excluded.</p>
+<p>When using include filters, at least one filter must be matched before a table can be included in a compare pair. When a table matches a include filter, the include filter's <code dir="ltr">colfilter</code> is used to specify the columns for the generated compare pair.</p>
+<p>When using exclude filters, a table is excluded if it matches any exclude filter. Include filters can include a <code dir="ltr">colfilter</code> element, which contains a list of columns to include or exclude.</p>
+<p>Instead of schema and table filters, NonStop platforms use file pattern filters. The file pattern is any valid NonStop platform file name pattern.</p>
+<p>The schema and table name can use wildcards.</p>
+<p>The following attribute describes the <code dir="ltr">filter</code> element:</p>
+<div id="GVDAD1145" class="tblhruleformal">
+<p class="titleintable"><a id="sthref81"></a><a id="sthref82"></a>Table 5-18 filter Attributes</p>
+<table class="cellalignment13" title="filter Attributes" summary="This table lists and describes the attributes of the filter element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t19">Attribute</th>
+<th class="cellalignment12" id="r1c2-t19">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t19" headers="r1c1-t19">
+<pre dir="ltr">
+type
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t19 r1c2-t19">
+<p>Specifies either to include or exclude schemas and tables. Valid values are <code dir="ltr">include</code> or <code dir="ltr">exclude</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t19" headers="r1c1-t19">
+<p><code dir="ltr">catalog</code></p>
+</td>
+<td class="cellalignment8" headers="r3c1-t19 r1c2-t19">
+<p>Specifies the default catalog name.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t19" headers="r1c1-t19">
+<p><code dir="ltr">schema</code></p>
+</td>
+<td class="cellalignment8" headers="r4c1-t19 r1c2-t19">
+<p>Specifies the schema name.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t19" headers="r1c1-t19">
+<p><code dir="ltr">table</code></p>
+</td>
+<td class="cellalignment8" headers="r5c1-t19 r1c2-t19">
+<p>Specifies the table name.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t19" headers="r1c1-t19">
+<p><code dir="ltr">file-pattern</code></p>
+</td>
+<td class="cellalignment8" headers="r6c1-t19 r1c2-t19">
+<p>For NonStop platforms only, specifies the file patter filter.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="subhead2"><a id="GVDAD1185"></a>Example</p>
+<p>When the source and target schemas have <code dir="ltr">CHAR_TYPES3</code>, <code dir="ltr">INT_TYPE1</code>, and <code dir="ltr">INT_TYPE2</code> tables, then the following filters only create compare pairs for tables <code dir="ltr">CHAR_TYPES1</code> and <code dir="ltr">CHAR_TYPES3</code>. The <code dir="ltr">CHAR_TYPES2</code> table is excluded because of exclude filter and I<code dir="ltr">NT_TYPE1</code> and <code dir="ltr">INT_TYPE2</code> are excluded because they were not part of include filter.</p>
+<pre dir="ltr">
+&lt;group 
+      ..
+        &lt;filter type="include" table="CHAR_TYPES*" /&gt;
+        &lt;filter type="exclude" table="CHAR_TYPES2" /&gt;
+        &lt;compare-pair source-table="*" target-table="*"&gt;
+        &lt;/compare-pair&gt;
+      ..
+&lt;/group&gt;
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="CHDBAHDJ"></a>
+<div id="GVDAD1023" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">group</h2>
+<p>The <code dir="ltr">group</code> element defines a set of compare pairs that all have the same source and target database connections. These compare pairs also have other properties in common.</p>
+<p>The following elements can be nested within the <code dir="ltr">group</code> element.:</p>
+<div id="GVDAD203" class="tblhruleformal">
+<p class="titleintable"><a id="sthref83"></a><a id="sthref84"></a>Table 5-19 Group Elements</p>
+<table class="cellalignment13" title="Group Elements" summary="This table lists elements used within the group element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t20">Element</th>
+<th class="cellalignment12" id="r1c2-t20">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t20" headers="r1c1-t20">
+<pre dir="ltr">
+description
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t20 r1c2-t20">
+<p>Provides a description of the group.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t20" headers="r1c1-t20">
+<p><code dir="ltr">filter</code></p>
+</td>
+<td class="cellalignment8" headers="r3c1-t20 r1c2-t20">
+<p>One or more filter specifications, which allows table name filtering at the group level.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t20" headers="r1c1-t20">
+<pre dir="ltr">
+sql-partition
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t20 r1c2-t20">
+<p>One or more specifications of a subset of rows within the table.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t20" headers="r1c1-t20">
+<pre dir="ltr">
+enscribe-key
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t20 r1c2-t20">
+<p>One or more specifications of a subset of records within an Enscribe file.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t20" headers="r1c1-t20">
+<pre dir="ltr">
+compare-pair
+</pre></td>
+<td class="cellalignment8" headers="r6c1-t20 r1c2-t20">
+<p>Defines one or more compare pairs. The <code dir="ltr">compare-pair</code> elements are added to the group in the order they are specified. If the same compare pair fits the criteria of another specification in the group, the first compare pair will be used.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>The following attributes describe the <code dir="ltr">group</code> element:</p>
+<div id="GVDAD204" class="tblhruleformal">
+<p class="titleintable"><a id="sthref85"></a><a id="sthref86"></a>Table 5-20 Group Attributes</p>
+<table class="cellalignment13" title="Group Attributes" summary="This table lists and describes the attributes for the group element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t21">Attribute</th>
+<th class="cellalignment12" id="r1c2-t21">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t21" headers="r1c1-t21">
+<pre dir="ltr">
+name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t21 r1c2-t21">
+<p>A name that identifies the group. This value is required.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t21" headers="r1c1-t21">
+<pre dir="ltr">
+source-conn
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t21 r1c2-t21">
+<p>The name of the connection to the source database. This can reference an existing connection in the Oracle GoldenGate Veridata repository or a connection previously defined in this configuration. This attribute is required if it references an existing connection in the repository.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t21" headers="r1c1-t21">
+<pre dir="ltr">
+target-conn
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t21 r1c2-t21">
+<p>The name of the connection to the target database. This can reference an existing connection in the Oracle GoldenGate Veridata repository or a connection previously defined in this configuration. This attribute is required if it references an existing connection in the repository.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t21" headers="r1c1-t21">
+<pre dir="ltr">
+source-schema
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t21 r1c2-t21">
+<p>The name of the default schema for the source tables referenced in the compare pairs that make up the group.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t21" headers="r1c1-t21">
+<pre dir="ltr">
+target-schema
+</pre></td>
+<td class="cellalignment8" headers="r6c1-t21 r1c2-t21">
+<p>The name of the default schema for the target tables referenced in the compare pairs that make up the group.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t21" headers="r1c1-t21">
+<p><code dir="ltr">source-catalog</code></p>
+</td>
+<td class="cellalignment8" headers="r7c1-t21 r1c2-t21">
+<p>The default catalog for the source tables referenced in this group.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r8c1-t21" headers="r1c1-t21">
+<p><code dir="ltr">target-catalog</code></p>
+</td>
+<td class="cellalignment8" headers="r8c1-t21 r1c2-t21">
+<p>The default catalog for the target tables referenced in this group.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r9c1-t21" headers="r1c1-t21">
+<p><code dir="ltr">validation</code></p>
+</td>
+<td class="cellalignment8" headers="r9c1-t21 r1c2-t21">
+<p>Specifies the type of validation that will be used for the configurations. The options are:</p>
+<p>"<code dir="ltr">required</code>" - All compare pairs must be successfully validated before any pairs are added to the repository.</p>
+<p>"<code dir="ltr">omit-failures</code>" - Successfully validated compare pairs are added to the repository and compare pairs that cannot be validated are ignored.</p>
+<p>"<code dir="ltr">none</code>" - Compare pairs are added to the repository without any validation. If this option is selected the Oracle GoldenGate Veridata Web User Interface should be used to review and fix validation problems.</p>
+<p><code dir="ltr">"default"</code> - Use the type of validation specified for a higher level, such as the <code dir="ltr">configuration</code> element. This is the default.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r10c1-t21" headers="r1c1-t21">
+<p><code dir="ltr">source-file-pattern</code></p>
+</td>
+<td class="cellalignment8" headers="r10c1-t21 r1c2-t21">
+<p>The default file pattern for the source if the data source is Enscribe or SQL/MP.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r11c1-t21" headers="r1c1-t21">
+<p><code dir="ltr">target-file-pattern</code></p>
+</td>
+<td class="cellalignment8" headers="r11c1-t21 r1c2-t21">
+<p>The default file pattern for the target if the data target is Enscribe or SQL/MP.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="subhead2"><a id="GVDAD205"></a>Example</p>
+<pre dir="ltr">
+&lt;group name="weekly-tables" source-conn="source" target-conn"="target"&gt;
+   &lt;description&gt;
+   .
+    .
+    .
+   &lt;/description&gt;
+   &lt;sql-partition&gt;
+    .
+    .
+   &lt;/sql-partition&gt;
+   &lt;compare-pair&gt;
+    .
+    .
+    .
+&lt;/compare-pair&gt;
+&lt;/group&gt;
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="CHDBJBFG"></a>
+<div id="GVDAD1024" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">job</h2>
+<p>The <code dir="ltr">job</code> element defines an Oracle GoldenGate Veridata comparison job.</p>
+<p>The following elements can be nested within the <code dir="ltr">job</code> element:</p>
+<div id="GVDAD207" class="tblhruleformal">
+<p class="titleintable"><a id="sthref87"></a><a id="sthref88"></a>Table 5-21 job Elements</p>
+<table class="cellalignment13" title="job Elements" summary="This table lists and describes the elements used within the job element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t22">Element</th>
+<th class="cellalignment12" id="r1c2-t22">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t22" headers="r1c1-t22">
+<pre dir="ltr">
+description
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t22 r1c2-t22">
+<p>Provides a description of the job.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t22" headers="r1c1-t22">
+<pre dir="ltr">
+group
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t22 r1c2-t22">
+<p>The name of the group associated with the job. This can be a new group or a previously defined group.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>The following attributes describe the <code dir="ltr">job</code> element:</p>
+<div id="GVDAD208" class="tblhruleformal">
+<p class="titleintable"><a id="sthref89"></a><a id="sthref90"></a>Table 5-22 job Attributes</p>
+<table class="cellalignment13" title="job Attributes" summary="This table lists and describes the attributes used within the job element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t23">Attribute</th>
+<th class="cellalignment12" id="r1c2-t23">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t23" headers="r1c1-t23">
+<pre dir="ltr">
+name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t23 r1c2-t23">
+<p>A name that identifies the job. This is a <span class="italic">required</span> attribute.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t23" headers="r1c1-t23">
+<pre dir="ltr">
+source-conn
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t23 r1c2-t23">
+<p>The name of the connection to the source database. This can reference an existing connection in the Oracle GoldenGate Veridata repository or a connection previously defined in this configuration. This attribute is required if it references an existing connection in the repository.</p>
+<p>The job <code dir="ltr">source-conn</code> is used to override the source connection specified for the groups included in the job.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t23" headers="r1c1-t23">
+<pre dir="ltr">
+target-conn
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t23 r1c2-t23">
+<p>The name of the connection to the target database. This can reference an existing connection in the Oracle GoldenGate Veridata repository or a connection previously defined in this configuration. This attribute is used to override the target connection for the groups included in the job.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t23" headers="r1c1-t23">
+<pre dir="ltr">
+profile
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t23 r1c2-t23">
+<p>The default profile to use when running the job.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="subhead2"><a id="GVDAD209"></a>Example</p>
+<pre dir="ltr">
+&lt;job name="all-groups" profile="server-sort"&gt;
+    &lt;group name="all-tables"/&gt;
+    &lt;group name="selected-tables"/&gt;
+&lt;/job&gt; 
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="BABJEEIC"></a>
+<div id="GVDAD1146" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">profile</h2>
+<p>The <code dir="ltr">profile</code> element defines the connection properties of a comparison job connection.</p>
+<p>The following elements can be nested within the <code dir="ltr">profile</code> element:</p>
+<div id="GVDAD1147" class="tblhruleformal">
+<p class="titleintable"><a id="sthref91"></a><a id="sthref92"></a>Table 5-23 profile Elements</p>
+<table class="cellalignment13" title="profile Elements" summary="This table lists and describes the elements used within the job element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t24">Element</th>
+<th class="cellalignment12" id="r1c2-t24">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t24" headers="r1c1-t24">
+<pre dir="ltr">
+description
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t24 r1c2-t24">
+<p>Provides a description of the profile.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t24" headers="r1c1-t24">
+<pre dir="ltr">
+profile-general
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t24 r1c2-t24">
+<p>Defines the profile parameters that control the output options.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t24" headers="r1c1-t24">
+<p><code dir="ltr">sorting-method</code></p>
+</td>
+<td class="cellalignment8" headers="r4c1-t24 r1c2-t24">
+<p>Defines the profile parameters that control the sorting method and memory management. The data is sorted to match keys (or a key specification) so that the correct source and target rows are compared.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t24" headers="r1c1-t24">
+<p><code dir="ltr">initial-compare</code></p>
+</td>
+<td class="cellalignment8" headers="r5c1-t24 r1c2-t24">
+<p>Defines the profile parameters that control the parameters for the job that performs the initial compare step</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t24" headers="r1c1-t24">
+<p><code dir="ltr">confirm-out-of-sync</code></p>
+</td>
+<td class="cellalignment8" headers="r6c1-t24 r1c2-t24">
+<p>Specifies the profile parameters that control the parameters for the job that performs the confirmation step</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t24" headers="r1c1-t24">
+<p><code dir="ltr">repair</code></p>
+</td>
+<td class="cellalignment8" headers="r7c1-t24 r1c2-t24">
+<p>Specifies the profile parameters that control the parameters for the repair job.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>The following attributes describe the <code dir="ltr">profile</code> element:</p>
+<div id="GVDAD1148" class="tblhruleformal">
+<p class="titleintable"><a id="sthref93"></a><a id="sthref94"></a>Table 5-24 profile Attributes</p>
+<table class="cellalignment13" title="profile Attributes" summary="This table lists and describes the attributes of the profile element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t25">Attribute</th>
+<th class="cellalignment12" id="r1c2-t25">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t25" headers="r1c1-t25">
+<pre dir="ltr">
+name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t25 r1c2-t25">
+<p>A name that identifies the profile. This is a required attribute.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="subhead2"><a id="GVDAD1186"></a>Example</p>
+<p>This example creates profile named "userDefinedProfile". The parameter names like "oos-format", "sort-method" are described in the table (link for table is in another pin)</p>
+<pre dir="ltr">
+&lt;configuration validation="required"&gt;
+   .
+   .
+&lt;profile name="userDefinedProfile"&gt;
+    &lt;profile-general&gt;
+        &lt;param name="oos-format" value="xml" /&gt;
+        &lt;param name="oos-xml-chunk-size" value="1000" /&gt;
+    &lt;/profile-general&gt;
+    &lt;sorting-method&gt;
+        &lt;param name="sort-method" value="server" /&gt;
+    &lt;/sorting-method&gt;
+&lt;/profile&gt;
+      .
+      .
+&lt;/configuration&gt;
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry">
+<div id="GVDAD1149" class="refsect1"><!-- infolevel="all" infotype="General" --><a id="sthref95"></a>
+<h2 class="refsect1">key-column</h2>
+<p>The <code dir="ltr">key-column</code> element defines a set of columns to be used as the user defined key for the comparison job.</p>
+<p>The following attributes describe the <code dir="ltr">key-column</code> element:</p>
+<div id="GVDAD1150" class="tblhruleformal">
+<p class="titleintable"><a id="sthref96"></a><a id="sthref97"></a>Table 5-25 profile Attributes</p>
+<table class="cellalignment13" title="profile Attributes" summary="This table lists and describes the attributes of the profile element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t26">Attribute</th>
+<th class="cellalignment12" id="r1c2-t26">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t26" headers="r1c1-t26">
+<pre dir="ltr">
+source-name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t26 r1c2-t26">
+<p>A regular expression that defines a set of source column names. This value is required.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t26" headers="r1c1-t26">
+<pre dir="ltr">
+target-name
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t26 r1c2-t26">
+<p>A regular expression that defines a set of target column names. It can include references to groups captured by the <code dir="ltr">source-name</code> expression.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t26" headers="r1c1-t26">
+<pre dir="ltr">
+format
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t26 r1c2-t26">
+<p>Specifies a format to override the comparison format that would normally be used.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t26" headers="r1c1-t26">
+<pre dir="ltr">
+scale
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t26 r1c2-t26">
+<p>Specifies a scale to override the default scale for the comparison.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r6c1-t26" headers="r1c1-t26">
+<pre dir="ltr">
+precision
+</pre></td>
+<td class="cellalignment8" headers="r6c1-t26 r1c2-t26">
+<p>Specifies a precision to override the default precision used for the comparison.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r7c1-t26" headers="r1c1-t26">
+<pre dir="ltr">
+timezone
+</pre></td>
+<td class="cellalignment8" headers="r7c1-t26 r1c2-t26">
+<p>Specifies a time zone to override the default time zone of the comparison.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry">
+<div id="GVDAD1151" class="refsect1"><!-- infolevel="all" infotype="General" --><a id="sthref98"></a>
+<h2 class="refsect1">profile-general</h2>
+<p>The <code dir="ltr">profile-general</code> element provides parameters to control the output options.</p>
+<p>The data is sorted to match keys (or a key specification) so that the correct source and target rows are compared.</p>
+<p>The following elements can be nested within the <code dir="ltr">profile-general</code> element:</p>
+<div id="GVDAD1152" class="tblhruleformal">
+<p class="titleintable"><a id="sthref99"></a><a id="sthref100"></a>Table 5-26 profile-general Element</p>
+<table class="cellalignment13" title="profile-general Element" summary="This table lists and describes the elements used within the job element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t27">Element</th>
+<th class="cellalignment12" id="r1c2-t27">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t27" headers="r1c1-t27">
+<pre dir="ltr">
+param
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t27 r1c2-t27">
+<p>Defines the parameter to change for the profile.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry">
+<div id="GVDAD1153" class="refsect1"><!-- infolevel="all" infotype="General" --><a id="sthref101"></a>
+<h2 class="refsect1">sorting-method</h2>
+<p>The <code dir="ltr">sorting-method</code> element provides parameters for sorting method and memory management. The data is sorted to match keys (or a key specification) so that the correct source and target rows are compared.</p>
+<p>The following elements can be nested within the <code dir="ltr">sorting-method</code> element:</p>
+<div id="GVDAD1154" class="tblhruleformal">
+<p class="titleintable"><a id="sthref102"></a><a id="sthref103"></a>Table 5-27 sorting-method Element</p>
+<table class="cellalignment13" title="sorting-method Element" summary="This table lists and describes the elements used within the job element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t28">Element</th>
+<th class="cellalignment12" id="r1c2-t28">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t28" headers="r1c1-t28">
+<pre dir="ltr">
+param
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t28 r1c2-t28">
+<p>Defines the parameter to change for the profile.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry">
+<div id="GVDAD1155" class="refsect1"><!-- infolevel="all" infotype="General" --><a id="sthref104"></a>
+<h2 class="refsect1">initial-compare</h2>
+<p>The <code dir="ltr">initial-compare</code> element provides parameters for the process that performs the initial compare step.</p>
+<p>The following elements can be nested within the <code dir="ltr">initial-compare</code> element:</p>
+<div id="GVDAD1156" class="tblhruleformal">
+<p class="titleintable"><a id="sthref105"></a><a id="sthref106"></a>Table 5-28 initial-compare Element</p>
+<table class="cellalignment13" title="initial-compare Element" summary="This table lists and describes the elements used within the job element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t29">Element</th>
+<th class="cellalignment12" id="r1c2-t29">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t29" headers="r1c1-t29">
+<pre dir="ltr">
+param
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t29 r1c2-t29">
+<p>Defines the parameter to change for the profile.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry">
+<div id="GVDAD1157" class="refsect1"><!-- infolevel="all" infotype="General" --><a id="sthref107"></a>
+<h2 class="refsect1">confirm-out-of-sync</h2>
+<p>The <code dir="ltr">confirm-out-of-sync</code> element provides parameters for the process that performs the confirmation step.</p>
+<p>The following elements can be nested within the <code dir="ltr">confirm-out-of-sync</code> element:</p>
+<div id="GVDAD1158" class="tblhruleformal">
+<p class="titleintable"><a id="sthref108"></a><a id="sthref109"></a>Table 5-29 confirm-out-of-sync Element</p>
+<table class="cellalignment13" title="confirm-out-of-sync Element" summary="This table lists and describes the elements used within the job element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t30">Element</th>
+<th class="cellalignment12" id="r1c2-t30">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t30" headers="r1c1-t30">
+<pre dir="ltr">
+param
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t30 r1c2-t30">
+<p>Defines the parameter to change for the profile.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry">
+<div id="GVDAD1187" class="refsect1"><!-- infolevel="all" infotype="General" --><a id="sthref110"></a>
+<h2 class="refsect1">param</h2>
+<p>The <code dir="ltr">param</code> element defines the parameters that are used for configuring profile options.</p>
+<p>The following attributes describe the <code dir="ltr">repair</code> element:</p>
+<div id="GVDAD1188" class="tblhruleformal">
+<p class="titleintable"><a id="sthref111"></a><a id="sthref112"></a>Table 5-30 param Attributes</p>
+<table class="cellalignment13" title="param Attributes" summary="This table lists and describes the attributes of the profile element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t31">Attribute</th>
+<th class="cellalignment12" id="r1c2-t31">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t31" headers="r1c1-t31">
+<pre dir="ltr">
+name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t31 r1c2-t31">
+<p>The name of the parameter. This is a required attribute.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t31" headers="r1c1-t31">
+<p><code dir="ltr">value</code></p>
+</td>
+<td class="cellalignment8" headers="r3c1-t31 r1c2-t31">
+<p>The value of the parameter</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry">
+<div id="GVDAD1159" class="refsect1"><!-- infolevel="all" infotype="General" --><a id="sthref113"></a>
+<h2 class="refsect1">repair</h2>
+<p>The <code dir="ltr">repair</code> element provides parameters for the repair process.</p>
+<p>The following elements can be nested within the <code dir="ltr">repair</code> element:</p>
+<div id="GVDAD1160" class="tblhruleformal">
+<p class="titleintable"><a id="sthref114"></a><a id="sthref115"></a>Table 5-31 repair Element</p>
+<table class="cellalignment13" title="repair Element" summary="This table lists and describes the elements used within the job element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t32">Element</th>
+<th class="cellalignment12" id="r1c2-t32">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t32" headers="r1c1-t32">
+<pre dir="ltr">
+param
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t32 r1c2-t32">
+<p>Defines the parameters that are used to configure the profile options.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"><a id="CHDDAGHC"></a>
+<div id="GVDAD1025" class="refsect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="refsect1">sql-partition</h2>
+<p>The <code dir="ltr">sql-partition</code> element defines a boolean SQL expression that can be used in a <code dir="ltr">where</code> clause in the initial comparison query.</p>
+<p>The following attributes describe the <code dir="ltr">sql-partition</code> element:</p>
+<div id="GVDAD212" class="tblhruleformal">
+<p class="titleintable"><a id="sthref116"></a><a id="sthref117"></a>Table 5-32 sql-partition Attributes</p>
+<table class="cellalignment13" title="sql-partition Attributes" summary="This table lists and describes the attributes of the partition element.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment12" id="r1c1-t33">Attribute</th>
+<th class="cellalignment12" id="r1c2-t33">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t33" headers="r1c1-t33">
+<pre dir="ltr">
+name
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t33 r1c2-t33">
+<p>A name that identifies the partition. This is a required attribute.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t33" headers="r1c1-t33">
+<pre dir="ltr">
+side
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t33 r1c2-t33">
+<p>Indicates whether the partition should be applied at the source database, the target database, or both databases. The default is <code dir="ltr">"both"</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t33" headers="r1c1-t33">
+<pre dir="ltr">
+default
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t33 r1c2-t33">
+<p>Indicates whether this is the default partition. This is equivalent to the "use at run time" indicator on the UI. The default is <code dir="ltr">"false"</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="subhead2"><a id="GVDAD213"></a>Example</p>
+<pre dir="ltr">
+&lt;sql-partition name="replicate" default="true" side="source"&gt;
+  &lt;![CDATA[ replicated='false']]&gt;
+&lt;/sql-partition&gt;
+&lt;sql-partition name="replicate" default="true" side="source"&gt;
+  &lt;![CDATA[ replicated='true']]&gt;
+&lt;/sql-partition&gt;
+</pre></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8">
+<table class="cellalignment6">
+<tr>
+<td class="cellalignment5"><a href="running_comparisons.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment5"><a href="running_vgpp.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2005, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="../../index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

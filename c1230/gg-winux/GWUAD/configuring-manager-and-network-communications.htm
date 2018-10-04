@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Configuring Manager and Network Communications</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter describes how to configure the Manager process and specify ports for local and remote network communications." />
+<meta name="dcterms.created" content="2018-09-07T14:17:29Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81607-07" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="1.htm" title="Previous" type="text/html" />
+<link rel="Next" href="getting-started-oracle-goldengate-process-interfaces.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-5005AF6D-76D2-4C72-80E2-AD33C24F0C26"></a> <span id="PAGE" style="display:none;">7/30</span> <!-- End Header -->
+<a id="GWUAD139"></a><a id="GWUAD138"></a>
+<h1 id="GWUAD-GUID-5005AF6D-76D2-4C72-80E2-AD33C24F0C26" class="sect1"><span class="enumeration_chapter">3</span> Configuring Manager and Network Communications</h1>
+<div>
+<div><span>This chapter describes how to configure the Manager process and specify ports for local and remote network communications.</span></div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<a id="GWUAD140"></a>
+<div class="props_rev_3"><a id="GUID-AADB75E9-2C38-4441-8EC6-E86D35BA3973"></a>
+<h2 id="GWUAD-GUID-AADB75E9-2C38-4441-8EC6-E86D35BA3973" class="sect2"><span class="enumeration_section">3.1</span> Overview of the Manager Process</h2>
+<div>
+<p>To configure and run Oracle GoldenGate, a Manager process must be running on all Oracle GoldenGate source and target systems, and any intermediary systems if used in your configuration. Manager is the controller process that instantiates the Oracle GoldenGate processes, allocates port numbers, and performs file maintenance. Together, the Manager process and its child processes, and their related programs and files comprise an Oracle GoldenGate instance. The Manager process performs the following functions:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Start Oracle GoldenGate processes</p>
+</li>
+<li>
+<p>Start dynamic processes</p>
+</li>
+<li>
+<p>Start the Collector process</p>
+</li>
+<li>
+<p>Manage the port numbers for processes. (All Oracle GoldenGate ports are configurable.)</p>
+</li>
+<li>
+<p>Perform trail management</p>
+</li>
+<li>
+<p>Create event, error, and threshold reports</p>
+</li>
+</ul>
+<p>There is one Manager per Oracle GoldenGate installation. One Manager can support multiple Oracle GoldenGate extraction and replication processes.</p>
+</div>
+</div>
+<a id="GWUAD141"></a>
+<div class="props_rev_3"><a id="GUID-EE8E7730-89B1-4FDA-93A4-F57863CADD2E"></a>
+<h2 id="GWUAD-GUID-EE8E7730-89B1-4FDA-93A4-F57863CADD2E" class="sect2"><span class="enumeration_section">3.2</span> Assigning Manager a Port for Local Communication</h2>
+<div>
+<div class="section">
+<p>The Manager process in each Oracle GoldenGate installation requires a dedicated port for communication between itself and other local Oracle GoldenGate processes. To specify this port, use the <code class="codeph">PORT</code> parameter in the Manager parameter file. Follow these guidelines:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>The default port number for Manager is 7809. You must specify either the default port number (recommended, if available) or a different one of your choice.</p>
+</li>
+<li>
+<p>The port must be unreserved and unrestricted.</p>
+</li>
+<li>
+<p>Each Manager instance on a system must use a different port number.</p>
+</li>
+</ul>
+<p>See <a class="olink GWURF593" target="_blank" href="../GWURF/port.htm#GWURF593"><code class="codeph">PORT</code></a> in <span id="GUID-EE8E7730-89B1-4FDA-93A4-F57863CADD2E__GWURF"><cite>Reference for Oracle GoldenGate</cite></span>for more information.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD142"></a>
+<div class="props_rev_3"><a id="GUID-3DDB99AD-97D1-4A18-8C7E-0FB8BBC4D754"></a>
+<h2 id="GWUAD-GUID-3DDB99AD-97D1-4A18-8C7E-0FB8BBC4D754" class="sect2"><span class="enumeration_section">3.3</span> Maintaining Ports for Remote Connections through Firewalls</h2>
+<div>
+<div class="section">
+<p>If a firewall is being used at an Oracle GoldenGate target location, additional ports are required on the target system to receive dynamic TCP/IP communications from remote Oracle GoldenGate processes. These ports are:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>One port for <span class="italic">each</span> Collector process that is started by the local Manager to receive propagated transaction data from remote online Extract processes. When an Extract process sends data to a target, the Manager on the target starts a dedicated Collector process.</p>
+</li>
+<li>
+<p>One port for <span class="italic">each</span> Replicat process that is started by the local Manager as part of a remote task. A remote task is used for initial loads and is specified with the <code class="codeph">RMTTASK</code> parameter. This port is used to receive incoming requests from the remote Extract process. See <a class="olink GWURF636" target="_blank" href="../GWURF/rmttask.htm#GWURF636"><code class="codeph">RMTTASK</code></a> in <span id="GUID-3DDB99AD-97D1-4A18-8C7E-0FB8BBC4D754__GWURF"><cite>Reference for Oracle GoldenGate</cite></span>for more information.</p>
+</li>
+<li>
+<p>Some extra ports in case they are needed for expansion of the local Oracle GoldenGate configuration.</p>
+</li>
+<li>
+<p>Ports for the other Oracle GoldenGate products if they interact with the local Oracle GoldenGate instance, as stated in the documentation of those products.</p>
+</li>
+</ul>
+<p>To specify these ports, use the <code class="codeph">DYNAMICPORTLIST</code> parameter in the Manager parameter file. Follow these guidelines:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>You can specify up to 5000 ports in any combination of the following formats:</p>
+<pre dir="ltr">
+7830, 7833, 7835
+7830-7835
+7830-7835, 7839
+</pre></li>
+<li>
+<p>The ports must be unreserved and unrestricted.</p>
+</li>
+<li>
+<p>Each Manager instance on a system must use a different port list.</p>
+</li>
+</ul>
+<p>Although not a required parameter, <code class="codeph">DYNAMICPORTLIST</code> is strongly recommended for best performance. The Collector process is responsible for finding and binding to an available port, and having a known list of qualified ports speeds this process. In the absence of <code class="codeph">DYNAMICPORTLIST</code> (or if not enough ports are specified with it), Collector tries to use port 7840 for remote requests. If 7840 is not available, Collector increments by one until it finds an available port. This can delay the acceptance of the remote request. If Collector runs out of ports in the <code class="codeph">DYNAMICPORTLIST</code> list, the following occurs:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Manager reports an error in its process report and in the Oracle GoldenGate <code class="codeph">ggserr</code> log.</p>
+</li>
+<li>
+<p>Collector retries based on the rules in the Oracle GoldenGate <code class="codeph">tcperrs</code> file. For more information about the <code class="codeph">tcperrs</code> file, see <a href="handling-processing-errors.htm#GUID-B8369716-9C33-472B-BAEE-0D5F933A5A55">Handling TCP/IP Errors</a>.</p>
+</li>
+</ul>
+<p>See <a class="olink GWURF470" target="_blank" href="../GWURF/dynamicportlist.htm#GWURF470"><code class="codeph">DYNAMICPORTLIST</code></a> in <span><cite>Reference for Oracle GoldenGate</cite></span> for more information.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD143"></a>
+<div class="props_rev_3"><a id="GUID-68ABC23D-EFA1-49CC-BF37-BF7FD8C093F4"></a>
+<h2 id="GWUAD-GUID-68ABC23D-EFA1-49CC-BF37-BF7FD8C093F4" class="sect2"><span class="enumeration_section">3.4</span> Choosing an Internet Protocol</h2>
+<div>
+<div class="section">
+<p>By default, Oracle GoldenGate selects a socket in the following order of priority to ensure the best chance of connection success:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>IPv6 dual-stack</p>
+</li>
+<li>
+<p>IPv4 if IPv6 dual-stack is not available</p>
+</li>
+<li>
+<p>IPv6</p>
+</li>
+</ul>
+<p>If your network has IPv6 network devices that do not support dual-stack mode, you can use the <code class="codeph">USEIPV6</code> parameter to force Oracle GoldenGate to use IPv6 for all connections. This is a <code class="codeph">GLOBALS</code> parameter that applies to all processes of an Oracle GoldenGate instance. When <code class="codeph">USEIPV6</code> is used, the entire network must be IPv6 compatible to avoid connection failures. See <a class="olink GWURF729" target="_blank" href="../GWURF/useipv4.htm#GWURF729"><code class="codeph">USEIPV6</code></a> in <span id="GUID-68ABC23D-EFA1-49CC-BF37-BF7FD8C093F4__GWURF"><cite>Reference for Oracle GoldenGate</cite></span>for more information.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD144"></a>
+<div class="props_rev_3"><a id="GUID-5F348AE1-E9FD-4DB5-A734-3B6EA662693E"></a>
+<h2 id="GWUAD-GUID-5F348AE1-E9FD-4DB5-A734-3B6EA662693E" class="sect2"><span class="enumeration_section">3.5</span> Using the Recommended Manager Parameters</h2>
+<div>
+<div class="section">
+<p>The following parameters are optional, but recommended, for the Manager process.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">AUTOSTART</code>: Starts Extract and Replicat processes when Manager starts. This parameter is required in a cluster configuration, and is useful when Oracle GoldenGate activities must begin immediately at system startup. (Requires Manager to be part of the startup routine.) You can use multiple <code class="codeph">AUTOSTART</code> statements in the same parameter file. See <a class="olink GWURF403" target="_blank" href="../GWURF/autostart.htm#GWURF403"><code class="codeph">AUTOSTART</code></a>in <span id="GUID-5F348AE1-E9FD-4DB5-A734-3B6EA662693E__GWURF"><cite>Reference for Oracle GoldenGate</cite></span>for more information.</p>
+</li>
+<li>
+<p><code class="codeph">AUTORESTART</code>: Starts Extract and Replicat processes again after abnormal termination. This parameter is required in a cluster configuration, but is also useful in any configuration to ensure continued processing. See <a class="olink GWURF402" target="_blank" href="../GWURF/autorestart.htm#GWURF402"><code class="codeph">AUTORESTART</code></a>in <span><cite>Reference for Oracle GoldenGate</cite></span>for more information.</p>
+</li>
+<li>
+<p><code class="codeph">PURGEOLDEXTRACTS</code>: Purges trail files when Oracle GoldenGate is finished processing them. Without <code class="codeph">PURGEOLDEXTRACTS</code>, no purging is performed and trail files can consume significant disk space. For best results, use <code class="codeph">PURGEOLDEXTRACTS</code> as a Manager parameter, not as an Extract or Replicat parameter. See <a class="olink GWURF597" target="_blank" href="../GWURF/purgeoldextracts-extract-and-replicat.htm#GWURF597"><code class="codeph">PURGEOLDEXTRACTS</code></a>in <span><cite>Reference for Oracle GoldenGate</cite></span>for more information.</p>
+</li>
+<li>
+<p><code class="codeph">STARTUPVALIDATIONDELAY</code> | <code class="codeph">STARTUPVALIDATIONDELAYCSECS</code>: Sets a delay time after which Manager validates the run status of a process. Startup validation makes Oracle GoldenGate users aware of processes that fail before they can generate an error message or process report. See <a class="olink GWURF666" target="_blank" href="../GWURF/startupvalidationdelay-csecs.htm#GWURF666"><code class="codeph">STARTUPVALIDATIONDELAYCSECS</code></a>in <span><cite>Reference for Oracle GoldenGate</cite></span>for more information.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD146"></a><a id="GWUAD145"></a>
+<div class="props_rev_3"><a id="GUID-03D652E1-0EE4-4050-B1A0-7F2552C6DEFD"></a>
+<h2 id="GWUAD-GUID-03D652E1-0EE4-4050-B1A0-7F2552C6DEFD" class="sect2"><span class="enumeration_section">3.6</span> Creating the Manager Parameter File</h2>
+<div>
+<div class="section">
+<p>To configure Manager with required port information and optional parameters, create a parameter file by following these steps. See <span class="q">"<a href="getting-started-oracle-goldengate-process-interfaces.htm#GUID-629DFF70-F942-45A3-80ED-459C925E8879" title="This chapter describes how Oracle GoldenGate users provide instructions to the processes through the GGSCI (Oracle GoldenGate Software Command Interface), batch and shell scripts, and parameter files.">Getting Started with the Oracle GoldenGate Process Interfaces</a>"</span> for more information about Oracle GoldenGate parameter files.</p>
+<div class="infobox-note" id="GUID-03D652E1-0EE4-4050-B1A0-7F2552C6DEFD__GUID-BF490C6E-2A36-4373-BE6C-075BC2321004">
+<p class="notep1">Note:</p>
+<p>If Oracle GoldenGate resides in a cluster, configure the Manager process within the cluster application as directed by the vendor's documentation, so that Oracle GoldenGate fails over properly with other applications.For more information about installing Oracle GoldenGate in a cluster, see the Oracle GoldenGate documentation for your database.</p>
+</div>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>From the Oracle GoldenGate directory, run the GGSCI program to open the Oracle GoldenGate Software Command Interface (GGSCI).</span></li>
+<li class="stepexpand"><span>In GGSCI, issue the following command to edit the Manager parameter file.</span>
+<div>
+<pre dir="ltr">
+EDIT PARAMS MGR
+</pre></div>
+</li>
+<li class="stepexpand"><span>Add the parameters that you want to use for the Manager process, each on one line.</span></li>
+<li class="stepexpand"><span>Save, then close the file.</span></li>
+</ol>
+<div class="example" id="GUID-03D652E1-0EE4-4050-B1A0-7F2552C6DEFD__GUID-325F5225-46B1-463A-B298-26F682C8F507">
+<p class="titleinexample">Example 3-1 Sample manager file on a UNIX system</p>
+<pre dir="ltr">
+PORT 7809
+DYNAMICPORTLIST 7810-7820, 7830
+AUTOSTART ER t*
+AUTORESTART ER t*, RETRIES 4, WAITMINUTES 4
+STARTUPVALIDATIONDELAY 5
+USERIDALIAS mgr1
+PURGEOLDEXTRACTS /ogg/dirdat/tt*, USECHECKPOINTS, MINKEEPHOURS 2
+</pre></div>
+<!-- class="example" -->
+<div class="example" id="GUID-03D652E1-0EE4-4050-B1A0-7F2552C6DEFD__GUID-CC10A1B3-D42F-4430-9329-936A30D1FBAC">
+<p>The following is a sample Manager parameter file on a UNIX system using required and recommended parameters.</p>
+</div>
+<!-- class="example" --></div>
+</div>
+<a id="GWUAD147"></a>
+<div class="props_rev_3"><a id="GUID-FB78AB5A-025A-49AC-AAEC-0A92A9253A18"></a>
+<h2 id="GWUAD-GUID-FB78AB5A-025A-49AC-AAEC-0A92A9253A18" class="sect2"><span class="enumeration_section">3.7</span> Starting Manager</h2>
+<div>
+<div class="section">
+<p>Manager must be running before you start other Oracle GoldenGate processes. You can start Manager from:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>The command line of the operating system. See <span class="q">"<a href="configuring-manager-and-network-communications.htm#GUID-6F449E17-79D6-42F0-AF45-6A51CCB510E3">Starting Manager from the Command Shell of the Operating System</a>"</span> for instructions.</p>
+</li>
+<li>
+<p>The GGSCI command interface. See <span class="q">"<a href="configuring-manager-and-network-communications.htm#GUID-FE8D9212-0082-4557-840A-1DEB9AE2B677">Starting Manager from GGSCI</a>"</span> for instructions.</p>
+</li>
+<li>
+<p>The Services applet on a Windows system if Manager is installed as a service. See the Windows documentation or your system administrator.</p>
+</li>
+<li>
+<p>The Cluster Administrator tool if the system is part of a Windows cluster. This is the recommended way to bring the Manager resource online. See the cluster documentation or your system administrator.</p>
+</li>
+<li>
+<p>The cluster software of a UNIX or Linux cluster. Refer to the documentation provided by the cluster vendor to determine whether to start Manager from the cluster or by using GGSCI or the command line of the operating system.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<a id="GWUAD148"></a>
+<div class="props_rev_3"><a id="GUID-6F449E17-79D6-42F0-AF45-6A51CCB510E3"></a>
+<h3 id="GWUAD-GUID-6F449E17-79D6-42F0-AF45-6A51CCB510E3" class="sect3"><span class="enumeration_section">3.7.1</span> Starting Manager from the Command Shell of the Operating System</h3>
+<div>
+<div class="section">
+<p>To start Manager from the command shell of the operating system, issue the following command.</p>
+<pre dir="ltr">
+mgr paramfile <span class="italic">parameter_file</span> [reportfile <span class="italic">report_file</span>]
+</pre>
+<p>The <code class="codeph">reportfile</code> argument is optional and can be used to store the Manager process report in a location other than the default of the <code class="codeph">dirrpt</code> directory in the Oracle GoldenGate installation location.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD149"></a>
+<div class="props_rev_3"><a id="GUID-FE8D9212-0082-4557-840A-1DEB9AE2B677"></a>
+<h3 id="GWUAD-GUID-FE8D9212-0082-4557-840A-1DEB9AE2B677" class="sect3"><span class="enumeration_section">3.7.2</span> Starting Manager from GGSCI</h3>
+<div>
+<div class="section">
+<p>To start Manager from GGSCI, run GGSCI from the Oracle GoldenGate directory, and then issue the following command.</p>
+<pre dir="ltr">
+START MANAGER
+</pre>
+<div class="infobox-note" id="GUID-FE8D9212-0082-4557-840A-1DEB9AE2B677__GUID-A75DB4EC-11A6-4C16-B5C5-050586C07706">
+<p class="notep1">Note:</p>
+<p>When starting Manager from the command line or GGSCI with User Account Control enabled, you will receive a UAC prompt requesting you to allow or deny the program to run.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GWUAD150"></a>
+<div class="props_rev_3"><a id="GUID-BE4BA470-8B17-4D68-8D47-72FF11DE7965"></a>
+<h2 id="GWUAD-GUID-BE4BA470-8B17-4D68-8D47-72FF11DE7965" class="sect2"><span class="enumeration_section">3.8</span> Stopping Manager</h2>
+<div>
+<div class="section">
+<p>Manager runs indefinitely or until stopped by a user. In general, Manager should remain running when there are synchronization activities being performed. Manager performs important monitoring and maintenance functions, and processes cannot be started unless Manager is running.</p>
+</div>
+<!-- class="section" --></div>
+<a id="GWUAD151"></a>
+<div class="props_rev_3"><a id="GUID-497F71DD-FA51-4CEB-829D-23B380FA4C37"></a>
+<h3 id="GWUAD-GUID-497F71DD-FA51-4CEB-829D-23B380FA4C37" class="sect3"><span class="enumeration_section">3.8.1</span> Stopping Manager on UNIX and Linux</h3>
+<div>
+<div class="section">
+<p>On UNIX and Linux (including USS on z/OS), Manager must be stopped by using the <code class="codeph">STOP MANAGER</code> command in GGSCI.</p>
+<pre dir="ltr">
+STOP MANAGER [!]
+</pre>
+<p>Where:</p>
+<p><code class="codeph">!</code> stops Manager without user confirmation.</p>
+<p>In a UNIX or Linux cluster, refer to the documentation provided by the cluster vendor to determine whether Manager should be stopped from the cluster or by using GGSCI.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD152"></a>
+<div class="props_rev_3"><a id="GUID-5628CD36-BD19-4E6A-BD31-EDEE38352360"></a>
+<h3 id="GWUAD-GUID-5628CD36-BD19-4E6A-BD31-EDEE38352360" class="sect3"><span class="enumeration_section">3.8.2</span> Stopping Manager on Windows</h3>
+<div>
+<div class="section">
+<p>On Windows, you can stop Manager from the Services applet (if Manager is installed as a service). See the Windows documentation or your system administrator.</p>
+<p>If Manager is not installed as a service, you can stop it with the <code class="codeph">STOP MANAGER</code> command in GGSCI.</p>
+<pre dir="ltr">
+STOP MANAGER [!]
+</pre>
+<p>In a Windows cluster, you must take the Manager resource offline from the Cluster Administrator. If you attempt to stop Manager from the GGSCI interface, the cluster monitor interprets it as a resource failure and attempts to bring the resource online again. Multiple start requests through GGSCI eventually will exceed the start threshold of the Manager cluster resource, and the cluster monitor will mark the Manager resource as failed.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8">
+<table class="cellalignment6">
+<tr>
+<td class="cellalignment5"><a href="1.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment5"><a href="getting-started-oracle-goldengate-process-interfaces.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

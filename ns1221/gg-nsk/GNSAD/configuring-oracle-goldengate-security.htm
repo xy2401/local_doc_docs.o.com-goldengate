@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Configuring Oracle GoldenGate Security</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="keywords" content="data, encrypting, trails, configuring, data security, database, login password, encrypting, encryption,database password, password, database, encrypting, security, database password, TCP/IP, data encryption, network, commands, GGSCI commands, GGSCI" />
+<meta name="dcterms.created" content="2018-06-07T00:11:41Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57712-04" />
+<meta name="dcterms.isVersionOf" content="GNSAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="configuring-initial-data-synchronization.htm" title="Previous" type="text/html" />
+<link rel="Next" href="configuring-manager-and-collector.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-8744A503-008C-49B8-9F67-CBC924AADEDF"></a> <span id="PAGE" style="display:none;">7/15</span> <!-- End Header -->
+<a id="GNSAD261"></a><a id="GNSAD262"></a><a id="GNSAD260"></a>
+<h1 id="GNSAD-GUID-8744A503-008C-49B8-9F67-CBC924AADEDF" class="sect1"><span class="enumeration_chapter">4</span> Configuring <span>Oracle GoldenGate</span> Security</h1>
+<div>
+<p>This topic discusses the security features that you can use to protect your <span>Oracle GoldenGate</span> for HP NonStop environment as well as the data that is being processed.</p>
+<p>This topic includes the following sections:</p>
+<p>The following tables summarizes the security features that are available in <span>Oracle GoldenGate</span> for HP NonStop:</p>
+<div class="tblformal" id="GUID-8744A503-008C-49B8-9F67-CBC924AADEDF__GUID-288893AF-29DB-4777-AD5B-483876298231">
+<p class="titleintable">Table 4-1 Oracle GoldenGate Security Features</p>
+<table class="cellalignment198" title="Oracle GoldenGate Security Features" summary="This table summarizes the Oracle GoldenGate security features.">
+<thead>
+<tr class="cellalignment192">
+<th class="cellalignment249" id="d11180e44">Security feature</th>
+<th class="cellalignment250" id="d11180e47">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment192">
+<td class="cellalignment251" id="d11180e52" headers="d11180e44">
+<p>Encryption</p>
+</td>
+<td class="cellalignment252" headers="d11180e52 d11180e47">
+<p>Options are available for encrypting and decrypting:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>data in an extract file or trail</p>
+</li>
+<li>
+<p>database passwords</p>
+</li>
+<li>
+<p>data sent across TCP/IP</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment192">
+<td class="cellalignment251" id="d11180e69" headers="d11180e44">
+<p>Command security</p>
+</td>
+<td class="cellalignment252" headers="d11180e69 d11180e47">
+<p>Sets user-level permissions for accessing <span>Oracle GoldenGate</span> commands through GGSCI.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-security.htm#GUID-73832A8B-938A-40A2-B265-D70855EEA840">Using Encryption</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-security.htm#GUID-30DF1054-EA64-4B77-909F-D673FF87B7AC">Generating Encryption Keys</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-security.htm#GUID-59CAABD6-124B-47A7-B817-DB55C4DA7CC2">Using Command Security</a><br /></li>
+</ul>
+</div>
+<a id="GNSAD263"></a>
+<div class="props_rev_3"><a id="GUID-73832A8B-938A-40A2-B265-D70855EEA840"></a>
+<h2 id="GNSAD-GUID-73832A8B-938A-40A2-B265-D70855EEA840" class="sect2">Using Encryption</h2>
+<div>
+<p>This section contains instructions for encrypting and decrypting the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The trail or extract file that holds data being processed by Oracle GoldenGate</p>
+</li>
+<li>
+<p>A database password</p>
+</li>
+<li>
+<p>The data sent across TCP/IP</p>
+</li>
+</ul>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-security.htm#GUID-B6DB7333-3622-4500-A3C2-17067C8845CE">How Data is Encrypted</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-security.htm#GUID-CE81F752-B9DC-4B65-AD15-95217B5A8A78">Encrypting Trail or Extract Files</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-security.htm#GUID-47D7C5D3-DEDA-40F2-936E-FA388A4AF8AA">Encrypting a Database Password</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-security.htm#GUID-57D148E9-5211-4FA6-854C-FC02B3BA17DB">Encrypting Data Sent Across TCP/IP</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-security.htm#GUID-8744A503-008C-49B8-9F67-CBC924AADEDF">Configuring Oracle GoldenGate Security</a></p>
+</div>
+</div>
+</div>
+<a id="GNSAD264"></a>
+<div class="props_rev_3"><a id="GUID-B6DB7333-3622-4500-A3C2-17067C8845CE"></a>
+<h3 id="GNSAD-GUID-B6DB7333-3622-4500-A3C2-17067C8845CE" class="sect3">How Data is Encrypted</h3>
+<div>
+<p>The following encryption methods are used:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>To encrypt trail or extract files, Oracle GoldenGate uses 256-key byte substitution. All records going into those files are encrypted both across any data links and within the files themselves.</p>
+</li>
+<li>
+<p>To encrypt the database password or data sent across TCP/IP, Oracle GoldenGate uses Blowfish<a id="d11180e193" class="indexterm-anchor"></a> encryption. Blowfish is a symmetric block cipher that can be used as a drop-in replacement for <a id="d11180e196" class="indexterm-anchor"></a>DES or <a id="d11180e199" class="indexterm-anchor"></a>IDEA. The Oracle GoldenGate implementation of Blowfish can take a variable-length key from 32 bits to 128 bits. Blowfish encryption can be combined with Oracle GoldenGate trail encryption.</p>
+<div class="infobox-note" id="GUID-B6DB7333-3622-4500-A3C2-17067C8845CE__GUID-F1E005F3-5CD0-4129-94CE-830E96CE0215">
+<p class="notep1">Note:</p>
+<p>AES encryption is currently not supported on the HP NonStop.</p>
+</div>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-security.htm#GUID-73832A8B-938A-40A2-B265-D70855EEA840">Using Encryption</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD265"></a>
+<div class="props_rev_3"><a id="GUID-CE81F752-B9DC-4B65-AD15-95217B5A8A78"></a>
+<h3 id="GNSAD-GUID-CE81F752-B9DC-4B65-AD15-95217B5A8A78" class="sect3">Encrypting Trail or Extract Files</h3>
+<div>
+<div class="section">
+<p>You can encrypt the data in any local or remote trail or file.</p>
+<div class="infobox-note" id="GUID-CE81F752-B9DC-4B65-AD15-95217B5A8A78__GUID-003ACC45-61AA-40DD-9C59-805176FE88CF">
+<p class="notep1">Note:</p>
+<p>This feature cannot be used when <code class="codeph">FORMATASCII</code> is used to write data to a file in ASCII format. The trail or file must be written in default canonical format.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To encrypt trail or extract files</p>
+<ol>
+<li>
+<p>In the Extract parameter file, list the following parameter before all trails or files that you want to be encrypted. You can list multiple trails or files after one instance of this parameter.</p>
+<pre dir="ltr">
+<a id="d11180e258" class="indexterm-anchor"></a>ENCRYPTTRAIL
+</pre></li>
+<li>
+<p>To disable encryption for any files or trails listed in the Extract parameter file, precede their entries with the following parameter:</p>
+<pre dir="ltr">
+<a id="d11180e265" class="indexterm-anchor"></a>NOENCRYPTTRAIL
+</pre></li>
+<li>
+<p>In the Replicat parameter file, include the following parameter so that Replicat decrypts the data for processing.</p>
+<pre dir="ltr">
+<a id="d11180e272" class="indexterm-anchor"></a>DECRYPTTRAIL
+</pre>
+<p>You also can use <code class="codeph">DECRYPTTRAIL</code> for an Extract data pump to decrypt the data for column mapping, filtering, transformation, and so forth. You can then leave it decrypted for downstream trails or files, or you can use <code class="codeph">ENCRYPTTRAIL</code> to encrypt the data again before it is written to those files.</p>
+</li>
+</ol>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-security.htm#GUID-73832A8B-938A-40A2-B265-D70855EEA840">Using Encryption</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD266"></a>
+<div class="props_rev_3"><a id="GUID-47D7C5D3-DEDA-40F2-936E-FA388A4AF8AA"></a>
+<h3 id="GNSAD-GUID-47D7C5D3-DEDA-40F2-936E-FA388A4AF8AA" class="sect3">Encrypting a Database Password</h3>
+<div>
+<div class="section">
+<p>Use the following steps to encrypt the database password used by the Oracle GoldenGate processes.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Run GGSCI and issue the <code class="codeph">ENCRYPT PASSWORD</code> command to generate an encrypted password. The command provides the following options.</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>The default <code class="codeph">ENCRYPT PASSWORD</code> command, without any options, generates an encrypted password using a default <a id="d11180e342" class="indexterm-anchor"></a>key that is randomly generated by Oracle GoldenGate.</p>
+<pre dir="ltr">
+ENCRYPT PASSWORD <span class="variable">password</span>
+</pre></li>
+<li>
+<p><code class="codeph">ENCRYPT PASSWORD</code> with the <code class="codeph">ENCRYPTKEY</code><a id="d11180e359" class="indexterm-anchor"></a> <span class="variable">keyname</span> generates an encrypted password using a user-defined key contained in the <code class="codeph">ENCKEYS</code> lookup file.</p>
+<pre dir="ltr">
+<a id="d11180e369" class="indexterm-anchor"></a>ENCRYPT PASSWORD password ENCRYPTKEY <span class="variable">keyname</span>
+</pre>
+<p>For <span class="italic"><code class="codeph">keyname</code></span>, specify the logical name for the key you want to use, as it appears in the local <code class="codeph">ENCKEYS</code> file. To use this option, you must first generate a key, create an <code class="codeph">ENCKEYS</code> file on the local system, and create an entry in the file for the generated key. For instructions, see <span class="q">"<a href="configuring-oracle-goldengate-security.htm#GUID-30DF1054-EA64-4B77-909F-D673FF87B7AC">Generating Encryption Keys</a>"</span>.</p>
+</li>
+</ul>
+<p>The encrypted password is displayed to the screen when you run the <code class="codeph">ENCRYPT PASSWORD</code> command.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Copy the encrypted password and paste it into the Oracle GoldenGate parameter file as follows.</span>
+<div>
+<pre dir="ltr">
+USERID <span class="variable">user_id</span>, PASSWORD <span class="variable">password</span>, &amp;
+[ENCRYPTKEY {DEFAULT | <span class="variable">keyname</span>}]
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">user_id</code></span> is the database user name for the Oracle GoldenGate process.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">password</code></span> is the encrypted password that is copied from the <code class="codeph">ENCRYPT PASSWORD</code> command results.</p>
+</li>
+<li>
+<p><code class="codeph">ENCRYPTKEY DEFAULT</code> is required if the password was encrypted using <code class="codeph">ENCRYPT PASSWORD</code> without the <code class="codeph">ENCRYPTKEY</code> option.</p>
+</li>
+<li>
+<p><code class="codeph">ENCRYPTKEY</code> <span class="italic"><code class="codeph">keyname</code></span> is required if the password was encrypted using <code class="codeph">ENCRYPT PASSWORD</code> with the <code class="codeph">ENCRYPTKEY</code> <span class="variable">keyname</span> option. Specify the logical name of the key as it appears in the <code class="codeph">ENCKEYS</code> lookup file.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-security.htm#GUID-73832A8B-938A-40A2-B265-D70855EEA840">Using Encryption</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD267"></a>
+<div class="props_rev_3"><a id="GUID-57D148E9-5211-4FA6-854C-FC02B3BA17DB"></a>
+<h3 id="GNSAD-GUID-57D148E9-5211-4FA6-854C-FC02B3BA17DB" class="sect3">Encrypting Data Sent Across TCP/IP</h3>
+<div>
+<div class="section">
+<p>You can encrypt captured data before Oracle GoldenGate sends it across the TCP/IP network to the target system. On the target system, Oracle GoldenGate decrypts the data before writing it to the Oracle GoldenGate trails (unless trail encryption also is specified). By default, data sent across a network is not encrypted.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To encrypt data sent across TCP/IP</p>
+<ol>
+<li>
+<p>On the source system, generate one or more encryption keys and create an <code class="codeph">ENCKEYS</code> file. See <span class="q">"<a href="configuring-oracle-goldengate-security.htm#GUID-30DF1054-EA64-4B77-909F-D673FF87B7AC">Generating Encryption Keys</a>"</span> for more information.</p>
+</li>
+<li>
+<p>Copy the finished <code class="codeph">ENCKEYS</code> file to the Oracle GoldenGate installation location on all target systems. The key names and values in the source <code class="codeph">ENCKEYS</code> file must match those of the target <code class="codeph">ENCKEYS</code> file, or else the data exchange will fail and Extract and Collector will abort with the following message:</p>
+<pre dir="ltr">
+GGS error 118 &ndash; TCP/IP Server with invalid data.
+</pre></li>
+<li>
+<p>In the Extract parameter file, use the <a id="d11180e534" class="indexterm-anchor"></a><code class="codeph">ENCRYPT</code> option of the <code class="codeph">RMTHOST</code> parameter to specify the type of encryption and the logical key name as shown:</p>
+<pre dir="ltr">
+RMTHOST <span class="variable">hostname</span>, MGRPORT <span class="variable">port</span>, ENCRYPT BLOWFISH, KEYNAME <span class="variable">keyname</span>
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">BLOWFISH</code> specifies Blowfish encryption.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">keyname</code></span> is the logical name for the encryption key you want to use, as it appears in the <code class="codeph">ENCKEYS</code> file.</p>
+</li>
+</ul>
+<p>An example of encrypting data sent across TCP/IP:</p>
+<pre dir="ltr">
+RMTHOST sys1, MGRPORT 7840, ENCRYPT BLOWFISH, KEYNAME superkey
+</pre></li>
+<li>
+<p>If using a static Collector and Blowfish encryption, append the following additional parameters in the Collector startup string:</p>
+<pre dir="ltr">
+-KEYNAME <span class="variable">name</span>
+-ENCRYPT BLOWFISH
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">KEYNAME</code> <span class="italic"><code class="codeph">name</code></span> specifies the name of the key.</p>
+</li>
+<li>
+<p><code class="codeph">ENCRYPT BLOWFISH</code> specifies Blowfish encryption.</p>
+</li>
+</ul>
+<p>Collector matches these parameters to those specified with the <code class="codeph">KEYNAME</code> and <code class="codeph">ENCRYPT</code> options of <code class="codeph">RMTHOST</code>.</p>
+</li>
+</ol>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-security.htm#GUID-73832A8B-938A-40A2-B265-D70855EEA840">Using Encryption</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD269"></a><a id="GNSAD270"></a><a id="GNSAD268"></a>
+<div class="props_rev_3"><a id="GUID-30DF1054-EA64-4B77-909F-D673FF87B7AC"></a>
+<h2 id="GNSAD-GUID-30DF1054-EA64-4B77-909F-D673FF87B7AC" class="sect2">Generating Encryption Keys</h2>
+<div>
+<div class="section">
+<p>You must create at least one encryption key and two <code class="codeph">ENCKEYS</code> lookup files, one on the source and one on the target, if you want to:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>Encrypt data sent across TCP/IP</p>
+</li>
+<li>
+<p>Use a <span>user-defined</span> key to encrypt the database password</p>
+</li>
+</ul>
+<p>This procedure is <span class="italic">not required</span> if:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>You are using a default key to encrypt the database password.</p>
+</li>
+<li>
+<p>You are encrypting a trail or extract file.</p>
+</li>
+</ul>
+<p>You can define your own key or run the Oracle GoldenGate <code class="codeph">KEYGEN</code> utility to create a key randomly.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To define your own key</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The key name can be a string of 1 to 24 alphanumeric characters without spaces or quotation marks.</p>
+</li>
+<li>
+<p>The key value can be up to 128 bits (16 bytes) as a quoted alphanumeric string (for example <code class="codeph">"Dailykey")</code> or a hex string with the prefix 0x (for example <code class="codeph">0x420E61BE7002D63560929CCA17A4E1FB</code>).</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To Use KEYGEN to Generate a Key</p>
+<p>Change subvolumes to the Oracle GoldenGate installation location on the source system, and issue the following shell command. You can create multiple keys, if needed. The key values are returned to your screen.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<pre dir="ltr">
+TACL&gt; RUN KEYGEN <span class="variable">key_length</span> <span class="variable">number</span>
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">key_length</code></span> is the encryption key length, up to 128 bits.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">number</code></span> represents the number of keys to generate.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To store the keys for use by Oracle GoldenGate</p>
+<ol>
+<li>
+<p>On the source system, open a new ASCII text file.</p>
+<p>For each key that you generated, enter a logical name followed by the key value itself. Place multiple key definitions on separate lines. Do not enclose a key name or value within quotation marks; otherwise it will be interpreted as text. Use the following sample file as a guide.</p>
+<pre dir="ltr">
+## Key name            Key Value
+superkey               0x420E61BE7002D63560929CCA17A4E1FB
+secretkey              0x027742185BBF232D7C664A5E1A76B040
+superkey1              0x42DACD1B0E94539763C6699D3AE8E200
+superkey2              0x0343AD757A50A08E7F9A17313DBAB045
+superkey3              0x43AC8DCE660CED861B6DC4C6408C7E8A
+</pre></li>
+<li>
+<p>Save the file as <code class="codeph">ENCKEYS</code> without an extension in the Oracle GoldenGate installation location. The name must be in upper case.</p>
+</li>
+<li>
+<p>Copy the <code class="codeph">ENCKEYS</code> file to the target Oracle GoldenGate installation location. The key names and values in the source <code class="codeph">ENCKEYS</code> file must match those of the target <code class="codeph">ENCKEYS</code> file, or else the data exchange will fail and Extract and Collector will abort with the following message:</p>
+<pre dir="ltr">
+GGS error 118 &ndash; TCP/IP Server with invalid data.
+</pre></li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-30DF1054-EA64-4B77-909F-D673FF87B7AC__GUID-66F730F9-631D-4645-8A55-2224B44C009F">
+<p class="titleinexample">Example 4-1 Using KEYGEN to Generate a Key</p>
+<pre dir="ltr">
+TACL&gt; RUN KEYGEN 128 4
+</pre></div>
+<!-- class="example" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-security.htm#GUID-8744A503-008C-49B8-9F67-CBC924AADEDF">Configuring Oracle GoldenGate Security</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD272"></a><a id="GNSAD273"></a><a id="GNSAD271"></a>
+<div class="props_rev_3"><a id="GUID-59CAABD6-124B-47A7-B817-DB55C4DA7CC2"></a>
+<h2 id="GNSAD-GUID-59CAABD6-124B-47A7-B817-DB55C4DA7CC2" class="sect2">Using Command Security</h2>
+<div>
+<div class="section">
+<p>You can establish command security for Oracle GoldenGate to control which users have access to which Oracle GoldenGate functions. For example, you can allow certain users to issue <code class="codeph">INFO</code> and <code class="codeph">STATUS</code> commands, while preventing their use of <code class="codeph">START</code> and <code class="codeph">STOP</code> commands. Security levels are defined by the operating system's user groups.</p>
+<p>To implement security for Oracle GoldenGate commands, you create a <code class="codeph">CMDSEC</code> file in the Oracle GoldenGate installation location. Without this file, access to all Oracle GoldenGate commands is granted to all users.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To implement command security</p>
+<ol>
+<li>
+<p>Open a new ASCII text file.</p>
+</li>
+<li>
+<p>Referring to the following syntax and the example on <span class="q">"<a href="configuring-oracle-goldengate-security.htm#GUID-59CAABD6-124B-47A7-B817-DB55C4DA7CC2__G1071346" title="This table lists and explains the sample CMDSEC files.">Table 4-2</a>"</span>, create one or more security rules for each command that you want to restrict, one rule per line. Order the rules from the most specific (those with no <a id="d11180e830" class="indexterm-anchor"></a>wildcards) to the least specific. Security rules are processed from the top of the <code class="codeph">CMDSEC</code> file downward. The first rule satisfied is the one that determines whether access is allowed.</p>
+<p>Separate each of the following components with spaces or tabs.</p>
+<pre dir="ltr">
+command_name command_object user_group user YES|NO
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">command_name</code></span> is a GGSCI command name or a wildcard, for example <code class="codeph">START</code> or <code class="codeph">STOP</code> or *. Command names are not validated for accuracy.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">command_object</code></span> is any GGSCI command object or a wildcard, for example <code class="codeph">EXTRACT</code> or <code class="codeph">REPLICAT</code> or <code class="codeph">MANAGER</code>. Command objects are not validated for accuracy.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">user_group</code></span> is the numeric ID of the Guardian user group, such as 100 or 255. You can use a wildcard to specify all groups.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">user</code></span> is the Guardian user numeric ID, such as 2 or 255. You can use a wildcard to specify all users.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">YES|NO</code></span> specifies whether access to the command is granted or prohibited.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Save the file as <code class="codeph">CMDSEC</code> in the Oracle GoldenGate installation location</p>
+</li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>The following example illustrates the correct implementation of a <code class="codeph">CMDSEC</code> file on a NonStop system.</p>
+<div class="tblformal" id="GUID-59CAABD6-124B-47A7-B817-DB55C4DA7CC2__G1071346">
+<p class="titleintable">Table 4-2 Sample Cmdsec File with Explanations</p>
+<table class="cellalignment198" title="Sample Cmdsec File with Explanations" summary="This table lists and explains the sample CMDSEC files.">
+<thead>
+<tr class="cellalignment192">
+<th class="cellalignment293" id="d11180e914">File Contents</th>
+<th class="cellalignment294" id="d11180e917">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment192">
+<td class="cellalignment295" id="d11180e922" headers="d11180e914">
+<pre dir="ltr">
+--GG command security
+</pre></td>
+<td class="cellalignment296" headers="d11180e922 d11180e917">
+<p>Comment line</p>
+</td>
+</tr>
+<tr class="cellalignment192">
+<td class="cellalignment295" id="d11180e929" headers="d11180e914">
+<pre dir="ltr">
+STATUS REPLICAT 100 15 NO
+</pre></td>
+<td class="cellalignment296" headers="d11180e929 d11180e917">
+<p><code class="codeph">STATUS REPLICAT</code> is denied to user <code class="codeph">15</code> of group <code class="codeph">100</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment192">
+<td class="cellalignment295" id="d11180e944" headers="d11180e914">
+<pre dir="ltr">
+STATUS * 100 * YES
+</pre></td>
+<td class="cellalignment296" headers="d11180e944 d11180e917">
+<p>Except for the preceding rule, all users in <code class="codeph">100</code> are granted all <code class="codeph">STATUS</code> commands.</p>
+</td>
+</tr>
+<tr class="cellalignment192">
+<td class="cellalignment295" id="d11180e957" headers="d11180e914">
+<pre dir="ltr">
+START REPLICAT 255 * YES
+</pre></td>
+<td class="cellalignment296" headers="d11180e957 d11180e917">
+<p><code class="codeph">START REPLICAT</code> is granted to all members of the <code class="codeph">Super</code> (255) group.</p>
+</td>
+</tr>
+<tr class="cellalignment192">
+<td class="cellalignment295" id="d11180e969" headers="d11180e914">
+<pre dir="ltr">
+START REPLICAT * * NO
+</pre></td>
+<td class="cellalignment296" headers="d11180e969 d11180e917">
+<p>Except for the preceding rule, <code class="codeph">START REPLICAT</code> is denied to all users.</p>
+</td>
+</tr>
+<tr class="cellalignment192">
+<td class="cellalignment295" id="d11180e979" headers="d11180e914">
+<pre dir="ltr">
+* EXTRACT 200 * NO
+</pre></td>
+<td class="cellalignment296" headers="d11180e979 d11180e917">
+<p>All <code class="codeph">EXTRACT</code> commands are denied to all groups with ID of 200.</p>
+</td>
+</tr>
+<tr class="cellalignment192">
+<td class="cellalignment295" id="d11180e989" headers="d11180e914">
+<pre dir="ltr">
+* * 255 255 YES
+</pre></td>
+<td class="cellalignment296" headers="d11180e989 d11180e917">
+<p>Grants the <code class="codeph">Super.Super</code> user any command.</p>
+</td>
+</tr>
+<tr class="cellalignment192">
+<td class="cellalignment295" id="d11180e999" headers="d11180e914">
+<pre dir="ltr">
+* * * * NO
+</pre></td>
+<td class="cellalignment296" headers="d11180e999 d11180e917">
+<p>Denies all commands to all users. This line covers security for any other users that were not explicitly granted or denied access by preceding rules. Without it, all commands would be granted to all users except for preceding explicit grants or denials.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="tblformal" id="GUID-59CAABD6-124B-47A7-B817-DB55C4DA7CC2__G1071377">
+<p class="titleintable">Table 4-3 Incorrect CMDSEC Entries</p>
+<table class="cellalignment198" title="Incorrect CMDSEC Entries" summary="This table lists and describes the incorrect CMDSEC entries.">
+<thead>
+<tr class="cellalignment192">
+<th class="cellalignment261" id="d11180e1015">File Contents</th>
+<th class="cellalignment262" id="d11180e1018">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment192">
+<td class="cellalignment263" id="d11180e1023" headers="d11180e1015">
+<pre dir="ltr">
+STATUS REPLICAT 100 15 NO
+</pre></td>
+<td class="cellalignment264" headers="d11180e1023 d11180e1018">
+<p><code class="codeph">STATUS REPLICAT</code> is denied to user <code class="codeph">15</code> of group <code class="codeph">100.</code></p>
+</td>
+</tr>
+<tr class="cellalignment192">
+<td class="cellalignment263" id="d11180e1037" headers="d11180e1015">
+<pre dir="ltr">
+STOP * 100 * NO
+</pre></td>
+<td class="cellalignment264" headers="d11180e1037 d11180e1018">
+<p>All <code class="codeph">STOP</code> commands are denied to everyone in group <code class="codeph">100</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment192">
+<td class="cellalignment263" id="d11180e1050" headers="d11180e1015">
+<pre dir="ltr">
+STOP * * 15 YES
+</pre></td>
+<td class="cellalignment264" headers="d11180e1050 d11180e1018">
+<p>All <code class="codeph">STOP</code> commands are granted to user <code class="codeph">15</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>The above <span class="italic">incorrect</span> example illustrates what to avoid when creating a <code class="codeph">CMDSEC</code> file. The order of the entries in <a href="configuring-oracle-goldengate-security.htm#GUID-59CAABD6-124B-47A7-B817-DB55C4DA7CC2__G1071377" title="This table lists and describes the incorrect CMDSEC entries.">Table 4-3</a> causes a logical error. From the first rule (line 1), you can see that user <code class="codeph">15</code> is a member of group <code class="codeph">100</code>. The second rule (line 2) denies all <code class="codeph">STOP</code> commands to all members of group <code class="codeph">100</code>. The third rule (line 3) grants all <code class="codeph">STOP</code> commands to user <code class="codeph">15</code>. However, because <code class="codeph">15</code> is a member of the <code class="codeph">100</code> group, he has been denied access to all <code class="codeph">STOP</code> commands by the second rule.</p>
+<p>The proper way to configure this security rule is to set the user-specific rule before the more general rules. Thus, to correct the error, you would reverse the order of the two <code class="codeph">STOP</code> rules.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-security.htm#GUID-6AB204A1-2BC9-44C8-A8B0-C7D2818C2E33">Securing the CMDSEC File</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-security.htm#GUID-8744A503-008C-49B8-9F67-CBC924AADEDF">Configuring Oracle GoldenGate Security</a></p>
+</div>
+</div>
+</div>
+<a id="GNSAD274"></a>
+<div class="props_rev_3"><a id="GUID-6AB204A1-2BC9-44C8-A8B0-C7D2818C2E33"></a>
+<h3 id="GNSAD-GUID-6AB204A1-2BC9-44C8-A8B0-C7D2818C2E33" class="sect3">Securing the CMDSEC File</h3>
+<div>
+<p>Because the <code class="codeph">CMDSEC</code> file is a source of security, it must be secured. You can grant read access as needed, but Oracle GoldenGate recommends denying write and delete access to everyone but the Oracle GoldenGate administrator. For example, a proper security string might be <code class="codeph">"NUUU</code>".</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-security.htm#GUID-59CAABD6-124B-47A7-B817-DB55C4DA7CC2">Using Command Security</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment191">
+<tr>
+<td class="cellalignment228">
+<table class="cellalignment196">
+<tr>
+<td class="cellalignment195"><a href="configuring-initial-data-synchronization.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment195"><a href="configuring-manager-and-collector.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment230">
+<table class="cellalignment194">
+<tr>
+<td class="cellalignment195"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment195"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment195"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment195"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

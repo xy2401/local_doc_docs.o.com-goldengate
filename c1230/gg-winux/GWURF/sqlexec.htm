@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>SQLEXEC</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-09-07T12:04:07Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81608-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="sqlduperr.htm" title="Previous" type="text/html" />
+<link rel="Next" href="statoptions.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC"></a> <span id="PAGE" style="display:none;">223/356</span> <!-- End Header -->
+<a id="GWURF660"></a>
+<h1 id="GWURF-GUID-34A0589B-1450-4BC9-A573-683895AAA1EC" class="sect1"><span class="enumeration_section">6.154</span> SQLEXEC</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract and Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">SQLEXEC</code> parameter to execute a stored procedure, query, or database command within the context of Oracle GoldenGate processing. <code class="codeph">SQLEXEC</code> enables Oracle GoldenGate to communicate directly with the database to perform any work that is supported by the database. This work can be part of the synchronization process, such as retrieving values for column conversion, or it can be independent of extracting or replicating data, such as executing a stored procedure that executes an action within the database.</p>
+<div class="infobox-note" id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-32AC7F78-78A8-402C-9812-BD39F2DA4774">
+<p class="notep1">Note:</p>
+<code class="codeph">SQLEXEC</code> provides minimal globalization support. To use <code class="codeph">SQLEXEC</code> in the capture parameter file of the source capture, make sure that the client character set in the source <code class="codeph">.prm</code> file is either the same or a superset of the source database character set.</div>
+<p><code class="codeph">SQLEXEC</code> works as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>As a standalone statement at the root level of a parameter file to execute a SQL stored procedure or query or to execute a database command. As a standalone statement, <code class="codeph">SQLEXEC</code> executes independently of a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement during Oracle GoldenGate processing. When used in a standalone <code class="codeph">SQLEXEC</code> parameter, a query or procedure cannot include parameters. See <span class="q">"<a href="sqlexec.htm#GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__BABHACGI">Standalone SQLEXEC</a>"</span>.</p>
+</li>
+<li>
+<p>As part of a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> parameter to execute a stored procedure or query with or without parameters. When used with parameters, the procedure or query that is executed can accept input parameters from source or target rows and pass output parameters. See <span class="q">"<a href="sqlexec.htm#GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__BABICGDA">SQLEXEC in a TABLE or MAP Parameter</a>"</span>.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<div class="infobox-note" id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-45023494-42CA-4237-8986-E1BB1A84C3D4">
+<p class="notep1">Caution:</p>
+<p>Use caution when executing <code class="codeph">SQLEXEC</code> procedures against the database, especially against the production database. Any changes that are committed by the procedure can result in overwriting existing data.</p>
+</div>
+<div class="infobox-note" id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-9486EF6C-8A52-4F57-92D5-2E834F3951B0">
+<p class="notep1">Note:</p>
+The <code class="codeph">SQLEXECONBEFOREIMAGE</code> parameter supports <code class="codeph">SQLEXEC</code> execution on Before Image records.</div>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__BABHACGI">
+<p class="subhead1">Standalone SQLEXEC</p>
+<p>A standalone <code class="codeph">SQLEXEC</code> parameter is one that is used at the root level of a parameter file and acts independently of a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> parameter. The following are guidelines for using a standalone <code class="codeph">SQLEXEC</code> parameter.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>A standalone <code class="codeph">SQLEXEC</code> statement executes in the order in which it appears in the parameter file relative to other parameters.</p>
+</li>
+<li>
+<p>A <code class="codeph">SQLEXEC</code> procedure or query must contain all exception handling.</p>
+</li>
+<li>
+<p>A query or procedure must be structured correctly when executing a <code class="codeph">SQLEXEC</code> statement, with legal SQL syntax for the database; otherwise Replicat will abend, regardless of any error-handling rules that are in place. Refer to the SQL reference guide provided by the database vendor for permissible SQL syntax.</p>
+</li>
+<li>
+<p>A database credential for the Oracle GoldenGate user must precede the <code class="codeph">SQLEXEC</code> clause. For Extract, use the <code class="codeph">SOURCEDB</code> and <code class="codeph">USERID</code> or <code class="codeph">USERIDALIAS</code> parameters as appropriate for the database. For Replicat, use the <code class="codeph">TARGETDB</code> and <code class="codeph">USERID</code> or <code class="codeph">USERIDALIAS</code> parameters, as appropriate.</p>
+</li>
+<li>
+<p>The database credential that the Oracle GoldenGate process uses is the one that executes the SQL. This credential must have the privilege to execute commands and stored procedures and call database-supplied procedures.</p>
+</li>
+<li>
+<p>A standalone <code class="codeph">SQLEXEC</code> statement cannot be used to get input parameters from records or pass output parameters. You can use stored procedures and queries with parameters by using a <code class="codeph">SQLEXEC</code> statement within a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement. See <span class="q">"<a href="sqlexec.htm#GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__BABICGDA">SQLEXEC in a TABLE or MAP Parameter</a>"</span>.</p>
+</li>
+<li>
+<p>All objects affected by a standalone <code class="codeph">SQLEXEC</code> statement must exist before the Oracle GoldenGate processes start. Because of this, DDL support must be disabled for those objects; otherwise, DDL operations could change the structure of, or delete an object, before the <code class="codeph">SQLEXEC</code> procedure or query executes on it.</p>
+</li>
+<li>
+<p>Object names must be fully qualified in their two-part or three-part name format.</p>
+</li>
+<li>
+<p>For DB2 on z/OS, Oracle GoldenGate uses the ODBC <code class="codeph">SQLExecDirect</code> function to execute a SQL statement dynamically. ODBC prepares the SQL statement every time that it is executed, at a specified interval. To support this function, the connected database server must be configured to prepare SQL dynamically. See the DB2 for z/OS documentation for more information.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Getting More Information about Using Standalone SQLEXEC</p>
+<p>See <a class="olink GWUAD574" target="_blank" href="../GWUAD/customizing-oracle-goldengate-processing.htm#GWUAD574"><span class="italic"><span id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></span></a> for more information about how to use <code class="codeph">SQLEXEC</code>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax for Standalone SQLEXEC</p>
+<pre dir="ltr">
+SQLEXEC 
+{'call <span class="italic">procedure_name</span>()' | '<span class="italic">SQL_query</span>' | '<span class="italic">database_command</span>'}
+[EVERY <span class="italic">n</span> {SECONDS | MINUTES | HOURS | DAYS}]
+[ONEXIT]
+[, THREADS (<span class="italic">threadID</span>[, <span class="italic">threadID</span>][, ...][, <span class="italic">thread_range</span>[, <span class="italic">thread_range</span>][, ...])]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-250F3B55-B3DA-4752-8B62-4D2F6C1ACFB7"><!-- --></a><code class="codeph">'call</code> <span class="italic"><code class="codeph">procedure_name ()'</code></span></dt>
+<dd>
+<p>Specifies the name of a stored procedure to execute. Enclose the statement within single quotes. The <code class="codeph">call</code> keyword is required. The following is an example of how to execute a procedure with standalone <code class="codeph">SQLEXEC</code>:</p>
+<pre dir="ltr">
+SQLEXEC 'call prc_job_count ()'
+</pre></dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-9B7500A4-704E-4863-A7C5-0E0DA160DA22"><!-- --></a><span class="italic"><code class="codeph">'SQL_query'</code></span></dt>
+<dd>
+<p>Specifies the name of a query to execute. Enclose the query within single quotes. Specify case-sensitive object names in the same format required by the database. The following is an example of how to execute a query with standalone <code class="codeph">SQLEXEC</code>:</p>
+<pre dir="ltr">
+SQLEXEC ' select x from dual '
+</pre>
+<p>For a multi-line query, use the single quotes on each line. For best results, type a space after each begin quote and before each end quote (or at least before each end quote).</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-AE074243-EA23-40EC-81D3-69D400B580A3"><!-- --></a><span class="italic"><code class="codeph">'database_command'</code></span></dt>
+<dd>
+<p>Executes a database command. The following is an example of how to execute a database command with standalone <code class="codeph">SQLEXEC</code>:</p>
+<pre dir="ltr">
+SQLEXEC 'SET TRIGGERS OFF'
+</pre></dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-40A4D910-E698-4401-9953-4A045E727574"><!-- --></a><code class="codeph">EVERY</code> <span class="italic"><code class="codeph">n</code></span> <code class="codeph">{SECONDS | MINUTES | HOURS | DAYS}</code></dt>
+<dd>
+<p>Causes a standalone stored procedure or query to execute at a defined interval, for example:</p>
+<pre dir="ltr">
+SQLEXEC 'call prc_job_count ()' EVERY 30 SECONDS
+</pre>
+<p>The interval must be a whole, positive integer.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-F36D9FD0-0FB6-4C9B-B18D-979F7EE3FCE2"><!-- --></a><code class="codeph">ONEXIT</code></dt>
+<dd>
+<p>Executes the SQL when the Extract or Replicat process stops gracefully, for example:</p>
+<pre dir="ltr">
+SQLEXEC 'call prc_job_count ()' ONEXIT
+</pre></dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-C5E6EEE0-BFC4-4F91-891C-BA0957244749"><!-- --></a><code class="codeph">THREADS (</code><span class="italic"><code class="codeph">threadID</code></span><code class="codeph">[,</code> <span class="italic"><code class="codeph">threadID</code></span><code class="codeph">][, ...][,</code> <span class="italic"><code class="codeph">thread_range</code></span><code class="codeph">[,</code> <span class="italic"><code class="codeph">thread_range</code></span><code class="codeph">][, ...]</code><code class="codeph">)</code></dt>
+<dd>
+<p>Executes <code class="codeph">SQLEXEC</code> only for the specified thread or threads of a coordinated Replicat.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-8874A673-A2B8-4B54-BC1D-3B375274DBF9"><!-- --></a><span class="italic"><code class="codeph">threadID</code></span><code class="codeph">[,</code> <span class="italic"><code class="codeph">threadID</code></span><code class="codeph">][, ...]</code></dt>
+<dd>
+<p>Specifies a thread ID or a comma-delimited list of threads in the format of <code class="codeph">threadID, threadID, threadID</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-28125721-D664-4B02-8390-EEED7EBE3457"><!-- --></a><code class="codeph">[,</code> <span class="italic"><code class="codeph">thread_range</code></span><code class="codeph">[,</code> <span class="italic"><code class="codeph">thread_range</code></span><code class="codeph">][, ...]</code></dt>
+<dd>
+<p>Specifies a range of threads in the form of <code class="codeph">threadIDlow-threadIDhigh</code> or a comma-delimted list of ranges in the format of <code class="codeph">threadIDlow-threadIDhigh</code>, <code class="codeph">threadIDlow-threadIDhigh</code>.</p>
+</dd>
+</dl>
+<p>A combination of these formats is permitted, such as <code class="codeph">threadID</code>, <code class="codeph">threadID</code>, <code class="codeph">threadIDlow-threadIDhigh</code>.</p>
+</dd>
+</dl>
+<p>If no <code class="codeph">THREADS</code> clause is used, the SQL is executed by all of the threads that were configured for this Replicat group by the <code class="codeph">ADD REPLICAT</code> command. However, if the SQL satisfies the criteria for a barrier transaction, the entire <code class="codeph">SQLEXEC</code> statement is processed by thread 0 regardless of the actual thread mapping.</p>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__BABICGDA">
+<p class="subhead1">SQLEXEC in a TABLE or MAP Parameter</p>
+<p>A <code class="codeph">SQLEXEC</code> parameter in a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> parameter can be used to execute a stored procedure or query that does or does not accept parameters. The following are <code class="codeph">SQLEXEC</code> dependencies and restrictions when used in a <code class="codeph">MAP</code> or <code class="codeph">TABLE</code> statement:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The SQL is executed by the database user under which the Oracle GoldenGate process is running. This user must have the privilege to execute stored procedures and call database-supplied procedures.</p>
+</li>
+<li>
+<p>A query or procedure must be structured correctly when executing a <code class="codeph">SQLEXEC</code> statement. If Replicat encounters a problem with the query or procedure, the process abends immediately, despite any error-handling rules that are in place. Refer to the SQL reference guide provided by the database vendor for permissible SQL syntax.</p>
+</li>
+<li>
+<p>The <code class="codeph">COMMIT</code> operation of a Replicat transaction to the target database also commits any DML changes that are made in a <code class="codeph">SQLEXEC</code> statement within the boundary of the original source transaction. This is not true for Extract, because Extract does not perform SQL transactions. When using <code class="codeph">SQLEXEC</code> for Extract, you can either enable implicit commits or execute an explicit commit within the <code class="codeph">SQLEXEC</code> procedure.</p>
+</li>
+<li>
+<p>Specify literals in single quotes. Specify case-sensitive object names the same way they are specified in the database.</p>
+</li>
+<li>
+<p>Do not use <code class="codeph">SQLEXEC</code> to change the value of a primary key column. The primary key value is passed from Extract to Replicat. Without it, Replicat operations cannot be completed. If primary key values must be changed with <code class="codeph">SQLEXEC</code>, you may be able to avoid errors by mapping the original key value to another column and then defining that column as a substitute key with the <code class="codeph">KEYCOLS</code> option of the <code class="codeph">TABLE</code> and <code class="codeph">MAP</code> parameters.</p>
+</li>
+<li>
+<p>For DB2 on z/OS, Oracle GoldenGate uses the ODBC <code class="codeph">SQLExecDirect</code> function to execute a SQL statement dynamically. ODBC prepares the SQL statement every time that it is executed, at a specified interval. To support this function, the connected database server must be configured to prepare SQL dynamically. See the DB2 for z/OS documentation for more information.</p>
+</li>
+<li>
+<p>When using Oracle GoldenGate to replicate DDL, all objects that are affected by a stored procedure or query must exist with the correct structures prior to the execution of the SQL. Consequently, DDL on these objects that affects structure (such as <code class="codeph">CREATE</code> or <code class="codeph">ALTER</code>) must execute before the <code class="codeph">SQLEXEC</code> executes.</p>
+</li>
+<li>
+<p>All object names in a <code class="codeph">SQLEXEC</code> statement must be fully qualified with their two-part or three-part names, as appropriate for the database.</p>
+</li>
+<li>
+<p>Do not use <code class="codeph">SQLEXEC</code> for tables being processed in pass-through mode by a data-pump Extract group.</p>
+</li>
+<li>
+<p>The following data types are supported by <code class="codeph">SQLEXEC</code> for input and output parameters.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Numeric data types</p>
+</li>
+<li>
+<p>Date data types</p>
+</li>
+<li>
+<p>Character data types</p>
+</li>
+</ul>
+</li>
+<li>
+<p>When executed by a coordinated Replicat, <code class="codeph">SQLEXEC</code> is executed by the thread or threads that are specified with the <code class="codeph">THREAD</code> or <code class="codeph">THREADRANGE</code> option of the <code class="codeph">MAP</code> statement. However, if the <code class="codeph">SQLEXEC</code> is specified in a <code class="codeph">MAP</code> parameter that contains the <code class="codeph">COORDINATED</code> keyword, it is executed as a barrier transaction automatically by the thread with the lowest ID number, regardless of the actual thread mapping.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Getting More Information About Using SQLEXEC in TABLE and MAP</p>
+<p>For more information about how to use <code class="codeph">SQLEXEC</code>, see <a class="olink GWUAD574" target="_blank" href="../GWUAD/customizing-oracle-goldengate-processing.htm#GWUAD574"><span class="italic"><span><cite>Administering Oracle GoldenGate</cite></span></span></a>.</p>
+<p>For more information about <code class="codeph">TABLE</code> and <code class="codeph">MAP</code>, see <span class="q">"<a href="table-map.htm#GUID-C2356234-3780-48EE-9E7A-F21DC352638C">TABLE | MAP</a>"</span>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax for SQLEXEC in TABLE or MAP</p>
+<pre dir="ltr">
+SQLEXEC (
+{SPNAME <span class="italic">procedure_name</span>[, ID <span class="italic">logical_name</span>] | 
+   ID <span class="italic">logical_name</span>, QUERY ' <span class="italic">SQL_query</span> '}
+{, PARAMS [OPTIONAL | REQUIRED] <span class="italic">parameter_name</span> = {<span class="italic">source_column</span> | <span class="italic">OGG_function</span>} |
+   NOPARAMS}
+[, AFTERFILTER | BEFOREFILTER]
+[, ALLPARAMS {OPTIONAL | REQUIRED}]
+[, ERROR {IGNORE | REPORT | RAISE | FINAL | FATAL}]
+[, EXEC {MAP | ONCE | TRANSACTION | SOURCEROW}][, MAXVARCHARLEN <span class="italic">bytes</span>]
+[, PARAMBUFSIZE <span class="italic">bytes</span>]
+[, TRACE] 
+[, ...]
+[, BEFORE_col1 = @BEFORE(col1),
+)
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-C5C28AF5-1100-4D5C-A2DA-C19A6ADF06F0"><!-- --></a><code class="codeph">SPNAME</code> <span class="italic"><code class="codeph">procedure_name</code></span><code class="codeph">[, ID</code> <span class="italic"><code class="codeph">logical_name</code></span><code class="codeph">]</code></dt>
+<dd>
+<p>Executes a stored procedure.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-B89AF80F-1C42-444C-82FB-EDC8E83D4798"><!-- --></a><code class="codeph">SPNAME</code> <span class="italic"><code class="codeph">procedure_name</code></span></dt>
+<dd>
+<p>Specifies the name of the procedure to execute.</p>
+<p>The following example shows a single execution of a stored procedure named <code class="codeph">lookup</code>. In this case, the actual name of the procedure is used. A logical name is not needed.</p>
+<pre dir="ltr">
+SQLEXEC (SPNAME lookup), PARAMS (param1 = srccol)), &amp;
+COLMAP (targcol = lookup.param1);
+</pre></dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-7C22F4FF-ABE2-4E67-BB4B-390A98ABD696"><!-- --></a><code class="codeph">ID</code> <span class="italic"><code class="codeph">logical_name</code></span></dt>
+<dd>
+<p>Defines an optional logical name for the procedure. For example, logical names for a procedure named <code class="codeph">lookup</code> might be <code class="codeph">lookup1</code>, <code class="codeph">lookup2</code>, and so forth. Use this option to execute the procedure multiple times within a <code class="codeph">MAP</code> statement. A procedure can execute up to 20 times per <code class="codeph">MAP</code> statement. <code class="codeph">ID</code> is not required when executing a procedure once.</p>
+<p>The following example shows the use of the <code class="codeph">ID</code> option to enable multiple executions of a stored procedure that gets values from a lookup table. The values are mapped to target columns.</p>
+<pre dir="ltr">
+SQLEXEC (SPNAME lookup, ID lookup1, &amp;
+  PARAMS (long_name = current_residence_state)), &amp;
+SQLEXEC (SPNAME lookup, ID lookup2, &amp;
+  PARAMS (long_name = birth_state)), &amp;
+COLMAP (custid = custid, current_residence_state_long = lookup1.long_name, &amp; birth_state_long = lookup2.long_name);
+</pre></dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-381E8FEE-95B5-4E0D-952D-698BA0F5F7BC"><!-- --></a><code class="codeph">ID</code> <span class="italic"><code class="codeph">logical_name</code></span><code class="codeph">, QUERY '</code> <span class="italic"><code class="codeph">SQL_query</code></span> <code class="codeph">'</code></dt>
+<dd>
+<p>Executes a query.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-847D5173-15F0-4AAF-A6E2-90AB99F1B4CA"><!-- --></a><code class="codeph">ID</code> <span class="italic"><code class="codeph">logical_name</code></span></dt>
+<dd>
+<p>Defines a logical name for the query. A logical name is required in order to extract values from the query results. <span class="italic"><code class="codeph">ID logical_name</code></span> references the column values returned by the query.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-C1DF0967-530A-4514-9D31-1FC911253602"><!-- --></a><code class="codeph">QUERY '</code> <span class="italic"><code class="codeph">SQL_query '</code></span></dt>
+<dd>
+<p>Specifies the SQL query syntax to execute against the database. The query can either return results with a <code class="codeph">SELECT</code> statement or execute an <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, or <code class="codeph">DELETE</code> statement. A <code class="codeph">SELECT</code> statement should only return one row. If multiple rows are returned, only the first row is processed. Do not specify an <code class="codeph">INTO ...</code> clause for any <code class="codeph">SELECT</code> statements.The query must be valid, standard query language for the database against which it is being executed. Most queries require placeholders for input parameters. How parameters are specified within the query depends on the database type, as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For Oracle, input parameters are specified by using a colon (:) followed by the parameter name, as in the following example.</p>
+<pre dir="ltr">
+'SELECT NAME FROM ACCOUNT WHERE SSN = :SSN AND ACCOUNT = :ACCT'
+</pre></li>
+<li>
+<p>For other databases, input parameters are specified by using a question mark, as in the following example.</p>
+<pre dir="ltr">
+'SELECT NAME FROM ACCOUNT WHERE SSN = ? AND ACCOUNT = ?'
+</pre></li>
+</ul>
+<p>The query must be contained on one line, within single quotes. Quotation marks are not required around a parameter name for any database.</p>
+<p>The following examples illustrate the use of a <code class="codeph">SQLEXEC</code> query for Oracle and SQL Server queries, respectively.</p>
+<p>Oracle example:</p>
+<pre dir="ltr">
+MAP sales.account, TARGET sales.newacct, &amp;
+  SQLEXEC (ID lookup, &amp;
+  QUERY 'select desc_col into desc_param from lookup_table &amp;
+  where code_col = :code_param', &amp;
+  PARAMS (code_param = account_code)), &amp;
+  COLMAP (newacct_id = account_id, newacct_val = lookup.desc_param);
+</pre>
+<p>SQL Server example:</p>
+<pre dir="ltr">
+MAP sales.account, TARGET sales.newacct, &amp;
+  SQLEXEC (ID lookup, &amp;
+  QUERY 'select desc_col into desc_param from lookup_table &amp;
+  where code_col = ?', &amp;
+  PARAMS (p1 = account_code)), &amp;
+  COLMAP (newacct_id = account_id, &amp;
+  newacct_val = lookup.desc_param);
+</pre></dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-DB3AD73A-8C15-47DA-8E3D-16B9460A49B8"><!-- --></a><code class="codeph">PARAMS [OPTIONAL | REQUIRED]</code> <span class="italic"><code class="codeph">parameter_name</code></span> <code class="codeph">=</code> <code class="codeph">{</code><span class="italic"><code class="codeph">source_column</code></span> <code class="codeph">|</code> <span class="italic"><code class="codeph">OGG_function</code></span><code class="codeph">}</code> <code class="codeph">|</code></dt>
+<dt class="dlterm"><code class="codeph">NOPARAMS</code></dt>
+<dd>
+<p>Defines whether or not the procedure or query accepts parameters and, if yes, maps the parameters to the input source. Either a <code class="codeph">PARAMS</code> clause or <code class="codeph">NOPARAMS</code> must be used.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-6BC5B169-D4C0-45C4-B2A1-77A627E53FC2"><!-- --></a><code class="codeph">OPTIONAL | REQUIRED</code></dt>
+<dd>
+<p>Determines whether or not the procedure or query executes when parameter values are missing.</p>
+<p><code class="codeph">OPTIONAL</code> indicates that a parameter value is not required for the SQL to execute. If a required source column is missing from the database operation, or if a column-conversion function cannot complete successfully because a source column is missing, the SQL executes anyway. <code class="codeph">OPTIONAL</code> is the default for all databases except Oracle. For Oracle, whether or not a parameter is optional is automatically determined when retrieving the stored procedure definition.</p>
+<p><code class="codeph">REQUIRED</code> indicates that a parameter value must be present. If the parameter value is not present, the SQL will not be executed.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-2B5D702B-D3FB-4F9B-8C23-0D8331715B9A"><!-- --></a><span class="italic"><code class="codeph">parameter_name</code></span> <code class="codeph">=</code> <code class="codeph">{</code><span class="italic"><code class="codeph">source_col</code></span><code class="codeph">umn |</code> <span class="italic"><code class="codeph">OGG_function</code></span><code class="codeph">}</code></dt>
+<dd>
+<p>Maps the name of a parameter to a column or function that provides the input. The following data types are supported by <code class="codeph">SQLEXEC</code> for input and output parameters.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Numeric data types</p>
+</li>
+<li>
+<p>Date data types</p>
+</li>
+<li>
+<p>Character data types</p>
+</li>
+</ul>
+<p><span class="italic"><code class="codeph">parameter_name</code></span> is one of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For a stored procedure, it is the name of any parameter in the procedure that can accept input.</p>
+</li>
+<li>
+<p>For an Oracle query, it is the name of any input parameter in the query <span class="italic">excluding</span> the leading colon. For example, <code class="codeph">:vemplid</code> would be specified as <code class="codeph">vemplid</code> in the <code class="codeph">PARAMS</code> clause. Oracle permits naming an input parameter any logical name.</p>
+<pre dir="ltr">
+SQLEXEC (ID appphone, QUERY ' select per_type from ps_personal_data '
+    ' where emplid = :vemplid '
+    ' and per_status = 'N' and per_type = 'A' ',
+    PARAMS (vemplid = emplid)),
+TOKENS (applid = @GETVAL(appphone.per_type));
+</pre></li>
+<li>
+<p>For a non-Oracle query, it is <code class="codeph">P</code><span class="italic"><code class="codeph">n</code></span>, where <span class="italic"><code class="codeph">n</code></span> is the number of the parameter within the statement, starting from 1. For example, in a query with two parameters, the <span class="italic"><code class="codeph">parameter_name</code></span> entries are <code class="codeph">p1 and p2</code>. Consider whether the database requires the <code class="codeph">p</code> to be upper or lower case.</p>
+<pre dir="ltr">
+SQLEXEC (ID appphone, QUERY ' select per_type from ps_personal_data '
+    ' where emplid = ? '
+    ' and per_status = 'N' and per_type = 'A' ',
+    PARAMS (p1 = emplid)),
+TOKENS (applid = @GETVAL(appphone.per_type));
+</pre></li>
+</ul>
+<p><span class="italic"><code class="codeph">source_column</code></span> is the name of a source column that provides the input. By default, if the specified column is not present in the log (because the record only contains the values of columns that were updated) the parameter assumes any default value specified by the procedure or query for the parameter.</p>
+<p><span class="italic"><code class="codeph">OGG_function</code></span> is the name of an Oracle GoldenGate column-conversion function that executes to provide the input. See <span class="q">"<a href="column-conversion-functions.htm#GUID-ADDD81D1-35B8-4E5B-A9EB-0CD581333074">Column Conversion Functions</a>"</span>.</p>
+</dd>
+</dl>
+<p>To pass output values from the stored procedure or query as input to a <code class="codeph">FILTER</code> or <code class="codeph">COLMAP</code> clause, use the following syntax:</p>
+<pre dir="ltr">
+{<span class="italic">procedure_name</span> | <span class="italic">logical_name</span>}.<span class="italic">parameter</span>
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">procedure_name</code></span> is the actual name of a stored procedure, which must match the value given for <code class="codeph">SPNAME</code> in the <code class="codeph">SQLEXEC</code> statement. Use this argument only if executing a procedure one time during the course of the Oracle GoldenGate run.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">logical_name</code></span> is the logical name specified with the <code class="codeph">ID</code> option of <code class="codeph">SQLEXEC</code>. Use this argument to pass input values from either a query or an instance of a stored procedure when the procedure executes multiple times within a <code class="codeph">MAP</code> statement.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">parameter</code></span> is the name of a parameter or <code class="codeph">RETURN_VALUE</code> if extracting returned values. By default, output values are truncated at 255 bytes per parameter. If output parameters must be longer, use the <code class="codeph">MAXVARCHARLEN</code> option.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-AD15F153-A57D-4BCA-B7E2-17BB1DDB20BF">
+<p class="notep1">Note:</p>
+<p>As an alternative to the preceding syntax, you can use the <code class="codeph">@GETVAL</code> function. See <span class="q">"<a href="getval.htm#GUID-CDBFA2F1-1B66-43CA-A59F-03AC8997D2F9">GETVAL</a>"</span> for more information.</p>
+</div>
+<p>The following examples apply to a set of Oracle source and target tables and a lookup table. These examples show how parameters for the tables are passed for a single instance of a stored procedure and multiple instances of a stored procedure.</p>
+<p><span class="bold">Source table cust:</span></p>
+<pre dir="ltr">
+custid                     Number
+current_residence_state    Char(2)
+birth_state                Char(2)
+</pre>
+<p><span class="bold">Target table cust_extended:</span></p>
+<pre dir="ltr">
+custid                          Number
+current_residence_state_long    Varchar(30)
+birth_state_long                Varchar(30)
+</pre>
+<p><span class="bold">Lookup table state_lookup</span></p>
+<pre dir="ltr">
+abbreviation     Char(2)
+long_name        Varchar(30)
+</pre>
+<p>The following example shows the use of a stored procedure that executes once to get a value from the lookup table. When processing records from the <code class="codeph">cust</code> table, Oracle GoldenGate executes the <code class="codeph">lookup</code> stored procedure before executing the column map. The <code class="codeph">long_name</code> parameter in the procedure accepts input from the <code class="codeph">birth_state</code> source column.The value is mapped to the target column <code class="codeph">birth_state_long</code> in the <code class="codeph">COLMAP</code> statement.</p>
+<pre dir="ltr">
+MAP sales.cust, TARGET sales.cust_extended, &amp;
+SQLEXEC (SPNAME lookup, &amp;
+PARAMS (long_name = birth_state)), &amp;
+COLMAP (custid = custid, &amp;
+birth_state_long = lookup.long_name);
+</pre>
+<p>The following example shows the use of the <code class="codeph">ID</code> option to enable multiple executions of a stored procedure that gets values from a lookup table. The values are mapped to target columns.</p>
+<pre dir="ltr">
+MAP sales.cust, TARGET sales.cust_extended, &amp;
+SQLEXEC (SPNAME lookup, ID lookup1, &amp;
+PARAMS (long_name = current_residence_state)), &amp;
+SQLEXEC (SPNAME lookup, ID lookup2, &amp;
+PARAMS (long_name = birth_state)), &amp;
+COLMAP (custid = custid, current_residence_state_long = lookup1.long_name, &amp; birth_state_long = lookup2.long_name);
+</pre></dd>
+</dl>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-025D4A32-B69E-42E9-BF13-87666B3C7227"><!-- --></a><code class="codeph">AFTERFILTER | BEFOREFILTER</code></dt>
+<dd>
+<p>Use <code class="codeph">AFTERFILTER</code> and <code class="codeph">BEFOREFILTER</code> to specify when to execute the stored procedure or query in relation to the <code class="codeph">FILTER</code> clause of a <code class="codeph">MAP</code> statement.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-0A23E603-F0DE-4548-8EDF-DCE6404D5360"><!-- --></a><code class="codeph">AFTERFILTER</code></dt>
+<dd>
+<p>Causes the SQL to execute after the <code class="codeph">FILTER</code> statement. This enables you to skip the overhead of executing the SQL unless the filter is successful. This is the default.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-D0415C95-DEE5-4238-8AAE-D6D5A318BF82"><!-- --></a><code class="codeph">BEFOREFILTER</code></dt>
+<dd>
+<p>Causes the SQL to execute before the <code class="codeph">FILTER</code> statement, so the results can be used in the filter.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>The following is an example using <code class="codeph">BEFOREFILTER</code>.</p>
+<pre dir="ltr">
+SQLEXEC (SPNAME check, NOPARAMS, BEFOREFILTER)
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-200CF51F-3CC5-4CE5-84B0-BE06C5993B75"><!-- --></a><code class="codeph">ALLPARAMS [OPTIONAL | REQUIRED]</code></dt>
+<dd>
+<p>Use <code class="codeph">ALLPARAMS</code> as a global rule that determines whether or not all of the specified parameters must be present for the stored procedure or query to execute. Rules for individual parameters established within the <code class="codeph">PARAMS</code> clause override the global rule set with <code class="codeph">ALLPARAMS</code>.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-DAE2E572-6651-406C-8F25-A7D0D9597DE9"><!-- --></a><code class="codeph">OPTIONAL</code></dt>
+<dd>
+<p>Permits the SQL to execute whether or not all of the parameters are present. This is the default.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-5A3F93DB-8D5C-4739-A02D-E39DFCDF7EC4"><!-- --></a><code class="codeph">REQUIRED</code></dt>
+<dd>
+<p>Requires all of the parameters to be present for the SQL to execute.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>The following is an example using <code class="codeph">OPTIONAL</code>.</p>
+<pre dir="ltr">
+SQLEXEC (SPNAME lookup,
+PARAMS (long_name = birth_state, short_name = state),
+ALLPARAMS OPTIONAL)
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-1F1910A6-DA9A-4EFB-A140-0CE7EE4DBC3C"><!-- --></a><code class="codeph">ERROR {IGNORE | REPORT | RAISE | FINAL | FATAL}</code></dt>
+<dd>
+<p>Use <code class="codeph">ERROR</code> to define a response to errors associated with the stored procedure or query. Without explicit error handling, the Oracle GoldenGate process abends on errors. Make certain your procedures return errors to the process and specify the responses with <code class="codeph">ERROR</code>.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-98DBF28A-0DF1-4457-923E-3F1567DDDB94"><!-- --></a><code class="codeph">IGNORE</code></dt>
+<dd>
+<p>Causes Oracle GoldenGate to ignore all errors associated with the stored procedure or query and continue processing. Any resulting parameter extraction results in "column missing" conditions. This is the default.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-4F4043B8-DDEE-4D14-A694-5E1E8264E74C"><!-- --></a><code class="codeph">REPORT</code></dt>
+<dd>
+<p>Ensures that all errors associated with the stored procedure or query are reported to the discard file. The report is useful for tracing the cause of the error. It includes both an error description and the value of the parameters passed to and from the procedure or query. Oracle GoldenGate continues processing after reporting the error.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-152FDB6E-E3EC-4AC5-AAAA-C7A37F918F38"><!-- --></a><code class="codeph">RAISE</code></dt>
+<dd>
+<p>Handles errors according to rules set by a <code class="codeph">REPERROR</code> parameter. Oracle GoldenGate continues processing other stored procedures or queries associated with the current <code class="codeph">MAP</code> statement before processing the error.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-4907D49D-7847-4AEF-963F-D95BF8AC89D0"><!-- --></a><code class="codeph">FINAL</code></dt>
+<dd>
+<p>Is similar to <code class="codeph">RAISE</code> except that when an error associated with a procedure or query is encountered, remaining stored procedures and queries are bypassed. Error processing is invoked immediately after the error.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-88866A43-1028-480F-BA5A-00DC111D3185"><!-- --></a><code class="codeph">FATAL</code></dt>
+<dd>
+<p>Causes Oracle GoldenGate to abend immediately upon encountering an error associated with a procedure or query.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-6C2C60AE-D45E-44C3-8BAA-BF24984F1A4E"><!-- --></a><code class="codeph">EXEC {MAP | ONCE | TRANSACTION | SOURCEROW}</code></dt>
+<dd>
+<p>Use <code class="codeph">EXEC</code> to control the frequency with which a stored procedure or query in a <code class="codeph">MAP</code> statement executes and how long the results are considered valid, if extracting output parameters.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-D6A33C5B-6FAD-43AE-9EDF-DEBFBD90CA65"><!-- --></a><code class="codeph">MAP</code></dt>
+<dd>
+<p>Executes the procedure or query once for each source-target table map for which it is specified. Using <code class="codeph">MAP</code> renders the results invalid for any subsequent maps that have the same source table. <code class="codeph">MAP</code> is the default.</p>
+<p>The following example shows the incorrect use of the default of <code class="codeph">MAP</code>. Because <code class="codeph">MAP</code> is the default, it need not be explicitly listed in the <code class="codeph">SQLEXEC</code> statement. In this example, a source table is mapped in separate <code class="codeph">MAP</code> parameters to two different target tables. In this case, the results are valid only for the first mapping. The results of the procedure <code class="codeph">lookup</code> are expired by the time the second <code class="codeph">MAP</code> parameter executes, and the second <code class="codeph">MAP</code> results in a "column missing" condition. To implement this correctly so that each <code class="codeph">MAP</code> returns valid results, <code class="codeph">SOURCEROW</code> should be used.</p>
+<pre dir="ltr">
+MAP sales.srctab, TARGET sales.targtab, &amp;
+SQLEXEC (SPNAME lookup, PARAMS (param1 = srccol)), &amp;
+COLMAP (targcol = lookup.param2);
+
+MAP sales.srctab, TARGET sales.targtab2, &amp;
+COLMAP (targcol2 = lookup.param2);
+</pre></dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-C5C83AD6-D975-4057-BC76-6A1F542F4A6C"><!-- --></a><code class="codeph">ONCE</code></dt>
+<dd>
+<p>Executes the procedure or query once during the course of the Oracle GoldenGate run, upon the first invocation of the associated <code class="codeph">MAP</code> statement. The results remain valid for as long as the process remains running.</p>
+<p>The following is an example of using <code class="codeph">ONCE</code>.</p>
+<pre dir="ltr">
+MAP sales.cust, TARGET sales.cust_extended, &amp;
+SQLEXEC (SPNAME lookup, PARAMS (long_name = birth_state), EXEC ONCE), &amp;
+COLMAP (custid = custid, &amp;
+birth_state_long = lookup.long_name);
+</pre></dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-6A0B2E00-F1F0-44E0-8634-95515A4E13AF"><!-- --></a><code class="codeph">TRANSACTION</code></dt>
+<dd>
+<p>Executes the procedure or query once per source transaction. The results remain valid for all operations of the transaction.</p>
+<p>The following is an example of using <code class="codeph">TRANSACTION</code>.</p>
+<pre dir="ltr">
+MAP sales.cust, TARGET sales.cust_extended, &amp;
+SQLEXEC (SPNAME lookup, PARAMS (long_name = birth_state), EXEC TRANSACTION), &amp;
+COLMAP (custid = custid, &amp;
+birth_state_long = lookup.long_name);
+</pre></dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-B1D106E7-0807-48E4-B542-795986EDF8C3"><!-- --></a><code class="codeph">SOURCEROW</code></dt>
+<dd>
+<p>Executes the procedure or query once per source row operation. Use this option when you are synchronizing a source table with more than one target table, so that the results of the procedure or query are invoked for each source-target mapping.</p>
+<p>The following is an example of using <code class="codeph">SOURCEROW</code>. In this case, the second map returns a valid value because the procedure executes on every source row operation.</p>
+<pre dir="ltr">
+MAP sales.srctab, TARGET sales.targtab, &amp;
+SQLEXEC (SPNAME lookup, PARAMS (param1 = srccol), EXEC SOURCEROW), &amp;
+COLMAP (targcol = lookup.param2);
+
+MAP sales.srctab, TARGET sales.targtab2, &amp;
+COLMAP (targcol2 = lookup.param2);
+</pre></dd>
+</dl>
+</dd>
+</dl>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-342CE430-5A6C-4B88-A360-146C69FF6680"><!-- --></a><code class="codeph">MAXVARCHARLEN</code> <span class="italic"><code class="codeph">bytes</code></span></dt>
+<dd>
+<p>Use <code class="codeph">MAXVARCHARLEN</code> to specify the maximum byte length allocated for the output value of any parameter in a stored procedure or query. Beyond this maximum, the output values are truncated. The default is 255 bytes without an explicit <code class="codeph">MAXVARCHARLEN</code> clause. The valid range of values is from 50 to 32767 bytes.</p>
+<p>The following example limits the byte length of output values to 100.</p>
+<pre dir="ltr">
+MAXVARCHARLEN 100
+</pre></dd>
+</dl>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-7F6C1E14-8915-4FA9-9FEE-054E28553648"><!-- --></a><code class="codeph">PARAMBUFSIZE</code> <span class="italic"><code class="codeph">bytes</code></span></dt>
+<dd>
+<p>Use <code class="codeph">PARAMBUFSIZE</code> to specify the maximum number of bytes allowed for the memory buffer that stores <code class="codeph">SQLEXEC</code> parameter information, including both input and output parameters. The default is 10,000 bytes without an explicit <code class="codeph">PARAMBUFSIZE</code> clause. The valid range of values is from 1000 to 2000000 bytes. Oracle GoldenGate issues a warning whenever the memory allocated for parameters is within 500 bytes of the maximum.</p>
+<p>The following example increases the buffer to 15,000 bytes.</p>
+<pre dir="ltr">
+PARAMBUFSIZE 15000
+</pre></dd>
+</dl>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-D343DD3F-BE84-43D3-A405-1AA5C3D1F517"><!-- --></a><code class="codeph">TRACE {ALL | ERROR}</code></dt>
+<dd>
+<p>Use <code class="codeph">TRACE</code> to log <code class="codeph">SQLEXEC</code> input and output parameters to the report file.</p>
+<p>The following is a sample report file with <code class="codeph">SQLEXEC</code> tracing enabled:</p>
+<pre dir="ltr">
+Input parameter values...
+LMS_TABLE: INTERACTION_ATTR_VALUES
+   KEY1: 2818249
+  KEY2: 1
+Report File:
+From Table MASTER.INTERACTION_ATTR_VALUES to MASTER.INTERACTION_ATTR_VALUES:
+       #  inserts:      0
+       #  updates:      0
+       #  deletes:      0
+       #  discards:     1
+
+  Stored procedure GGS_INTERACTION_ATTR_VALUES:
+       attempts:        2
+       successful:      0
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-BA6A7A34-58CC-437E-B0E0-A28C9CD580CA"><!-- --></a><code class="codeph">ALL</code></dt>
+<dd>
+<p>Writes the input and output parameters for each invocation of the procedure or query to the report file. This is the default.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-34A0589B-1450-4BC9-A573-683895AAA1EC__GUID-123D2995-7144-4215-901A-88269025E54A"><!-- --></a><code class="codeph">ERROR</code></dt>
+<dd>
+<p>Writes the input and output parameters for each invocation of the procedure or query to the report file only after a SQL error occurs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment350">
+<tr>
+<td class="cellalignment357">
+<table class="cellalignment355">
+<tr>
+<td class="cellalignment354"><a href="sqlduperr.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment354"><a href="statoptions.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment359">
+<table class="cellalignment353">
+<tr>
+<td class="cellalignment354"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment354"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment354"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>B Configuring a Downstream Mining Database</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This appendix contains instructions for preparing a downstream Oracle mining database to support Extract in integrated capture mode." />
+<meta name="dcterms.created" content="2015-06-05T14:9:49Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E29644-07" />
+<meta name="dcterms.isVersionOf" content="GIORA" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="addl_integrated_params.htm" title="Previous" type="text/html" />
+<link rel="Next" href="ic_deploy2.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIORA.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIORA.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIORA.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">22/27</span>
+<!-- End Header -->
+<div id="GIORA472" class="appendix"><a id="BABHBCCF"></a>
+<h1 class="appendix"><span class="secnum">B</span> Configuring a Downstream Mining Database</h1>
+<p><a id="GIORA580"></a>This appendix contains instructions for preparing a downstream Oracle mining database to support Extract in integrated capture mode.</p>
+<p>This appendix includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#BIHJEEBB">Evaluating Capture Options for a Downstream Deployment</a></p>
+</li>
+<li>
+<p><a href="#BIHFBEBC">Preparing the Source Database for Downstream Deployment</a></p>
+</li>
+<li>
+<p><a href="#BIHEEEAD">Preparing the Downstream Mining Database</a></p>
+</li>
+</ul>
+<p>For more information about parameters used in these procedures, see <a class="olink REFRN" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=REFRN"><span class="italic">Oracle Database Reference</span></a> and <a class="olink SBYDB" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=SBYDB"><span class="italic">Oracle Data Guard Concepts and Administration</span></a>.</p>
+<p>For more information about integrated capture, see <a href="process_mode.htm#CBDBDAFI">Section 5.2, "Deciding Which Capture Method to Use."</a></p>
+<p>For examples of the downstream mining configuration, see <a href="ic_deploy2.htm#BABHBCCF2">Appendix C, "Example Downstream Mining Configuration"</a>.</p>
+<a id="BIHJEEBB"></a>
+<div id="GIORA473" class="sect1">
+<h2 class="sect1"><span class="secnum">B.1</span> Evaluating Capture Options for a Downstream Deployment</h2>
+<p>Downstream deployment allows you to offload the source database. The source database ships its redo logs to a downstream database, and Extract uses the logmining server at the downstream database to mine the redo logs. A downstream mining database can accept both archived logs and online redo logs from a source database.</p>
+<p>Multiple source databases can send their redo data to a single downstream database; however the downstream mining database can accept <span class="italic">online</span> redo logs from only one of those source databases. The rest of the source databases must ship archived logs.</p>
+<p>When online logs are shipped to the downstream database, <span class="italic">real-time capture</span> by Extract is possible. Changes are captured as though Extract is reading from the source logs. In order to accept online redo logs from a source database, the downstream mining database must have standby redo logs configured.</p>
+<p>When using a downstream mining configuration, the source database and mining database must be of the same platform. For example, if the source database is running on Linux 64-bit, the downstream database must also be on the Linux 64-bit platform.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BIHFBEBC"></a>
+<div id="GIORA474" class="sect1">
+<h2 class="sect1"><span class="secnum">B.2</span> Preparing the Source Database for Downstream Deployment</h2>
+<p>This section guides you in the process of:</p>
+<ul>
+<li>
+<p><a href="#BIHGIEEG">Section B.2.1, "Creating the Source User Account"</a></p>
+</li>
+<li>
+<p><a href="#BIHJECBD">Section B.2.2, "Configuring Redo Transport from Source to Downstream Mining Database"</a></p>
+</li>
+</ul>
+<a id="BIHGIEEG"></a>
+<div id="GIORA475" class="sect2">
+<h3 class="sect2"><span class="secnum">B.2.1</span> Creating the Source User Account</h3>
+<p>There must be an Extract user on the source database. Extract uses the credentials of this user to do metadata queries and to fetch column values as needed from the source database. The source user is specified by the <code dir="ltr">USERIDALIAS</code> parameter.</p>
+<p>To assign the required privileges, follow the procedure in <a href="user_assignment.htm#BABHFBDB">Chapter 4, "Establishing Oracle GoldenGate Credentials"</a></p>
+</div>
+<!-- class="sect2" -->
+<a id="BIHJECBD"></a>
+<div id="GIORA476" class="sect2">
+<h3 class="sect2"><span class="secnum">B.2.2</span> Configuring Redo Transport from Source to Downstream Mining Database</h3>
+<p>Complete the following steps to set up the transfer of redo log files from a source database to the downstream mining database, and to prepare the downstream mining database to accept these redo log files.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The archived logs shipped from the source databases are called <span class="italic">foreign archived logs</span>. You must not use the recovery area at the downstream mining database to store foreign archived logs. Such a configuration is not supported by Integrated Capture.</div>
+<p>These instructions take into account the requirements to ship redo from multiple sources, if required. You configure an Extract process for each of those sources. The following summarizes the rules for supporting multiple sources sending redo to a single downstream mining database:</p>
+<ul>
+<li>
+<p>Only one source database can be configured to send <span class="italic">online</span> redo to the standby redo logs at the downstream mining database. The <code dir="ltr">log_archive_dest_n</code> setting for this source database should <span class="italic">not</span> have a <code dir="ltr">TEMPLATE</code> clause.</p>
+</li>
+<li>
+<p>Source databases that are <span class="italic">not</span> sending online redo to the standby redo logs of the downstream mining database <span class="italic">must have</span> a <code dir="ltr">TEMPLATE</code> clause specified in the <code dir="ltr">log_archive_dest_n</code> parameter.</p>
+</li>
+<li>
+<p>Each of the source databases that sends redo to the downstream mining database must have a unique DBID. You can select the <code dir="ltr">DBID</code> column from the <code dir="ltr">v$database</code> view of these source databases to ensure that the DBIDs are unique.</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GIORA477"></a>To Configure Redo Transport</p>
+<ol>
+<li>
+<p>Configure Oracle Net so that each source database can communicate with the mining database. For instructions, see <a class="olink NETAG" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=NETAG"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a>.</p>
+</li>
+<li>
+<p>Configure authentication at each source database and at the downstream mining database to support the transfer of redo data. Redo transport sessions are authenticated using either the Secure Sockets Layer (SSL) protocol or a remote login password file. If a source database has a remote login password file, copy it to the appropriate directory of the mining database system. The password file must be the same at all source databases, and at the mining database. For more information about authentication requirements for redo transport, see "Preparing the Primary Database for Standby Database Creation" in <a class="olink SBYDB" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=SBYDB"><span class="italic">Oracle Data Guard Concepts and Administration</span></a>.</p>
+</li>
+<li>
+<p>At each source database, configure one <code dir="ltr">LOG_ARCHIVE_DEST_n</code> initialization parameter to transmit redo data to the downstream mining database. Set the attributes of this parameter as shown in one of the following examples, depending on whether real-time or archived-log-only capture mode is to be used.</p>
+<ul>
+<li>
+<p>Example for real-time capture at the downstream logmining server, where the source database sends its online redo logs to the downstream database:</p>
+<pre dir="ltr">
+ALTER SYSTEM 
+SET LOG_ARCHIVE_DEST_2='SERVICE=DBMSCAP.EXAMPLE.COM ASYNC NOREGISTER
+VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)DB_UNIQUE_NAME=dbmscap'
+</pre></li>
+<li>
+<p>Example for archived-log-only capture at the downstream logmining server:</p>
+<pre dir="ltr">
+ALTER SYSTEM SET
+LOG_ARCHIVE_DEST_2='SERVICE=DMBSCAP.EXAMPLE.COM ASYNC NOREGISTER
+VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)
+TEMPLATE=/usr/oracle/log_for_dbms1/dbms1_arch_%t_%s_%r.log
+DB_UNIQUE_NAME=dbmscap'
+</pre></li>
+</ul>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+When using an archived-log-only downstream mining database, you must specify a value for the <code dir="ltr">TEMPLATE</code> attribute. Oracle also recommends that you use the <code dir="ltr">TEMPLATE</code> clause in the source databases so that the log files from all remote source databases are kept separated from the local database log files, and from each other.</div>
+</li>
+<li>
+<p>At the source database, set a value of <code dir="ltr">ENABLE</code> for the <code dir="ltr">LOG_ARCHIVE_DEST_STATE_n</code> initialization parameter that corresponds with the <code dir="ltr">LOG_ARCHIVE_DEST_n</code> parameter that corresponds to the destination for the downstream mining database, as shown in the following example.</p>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE
+</pre></li>
+<li>
+<p>At the source database, and at the downstream mining database, set the <code dir="ltr">DG_CONFIG</code> attribute of the <code dir="ltr">LOG_ARCHIVE_CONFIG</code> initialization parameter to include the <code dir="ltr">DB_UNIQUE_NAME</code> of the source database and the downstream database, as shown in the following example.</p>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbms1,dbmscap)'
+</pre></li>
+</ol>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BIHEEEAD"></a>
+<div id="GIORA478" class="sect1">
+<h2 class="sect1"><span class="secnum">B.3</span> Preparing the Downstream Mining Database</h2>
+<p>The following sections explain how to prepare the downstream mining database:</p>
+<ul>
+<li>
+<p><a href="#BIHGJEDH">Creating the Downstream Mining User Account</a></p>
+</li>
+<li>
+<p><a href="#BIHGCGEE">Configuring the Mining Database to Archive Local Redo Log Files</a></p>
+</li>
+<li>
+<p><a href="#BIHFAHGE">Preparing a Downstream Mining Database for Real-time Capture</a></p>
+</li>
+</ul>
+<a id="BIHGJEDH"></a>
+<div id="GIORA479" class="sect2">
+<h3 class="sect2"><span class="secnum">B.3.1</span> Creating the Downstream Mining User Account</h3>
+<p>When using a downstream mining configuration, there must be an Extract mining user on the downstream database. The mining Extract process uses the credentials of this user to interact with the downstream logmining server. The downstream mining user is specified by the <code dir="ltr">TRANLOGOPTIONS</code> parameter with the <code dir="ltr">MININGUSERALIAS</code> option. See <a href="user_assignment.htm#BABHFBDB">Chapter 4, "Establishing Oracle GoldenGate Credentials"</a> to assign the correct credentials for the version of your database.</p>
+</div>
+<!-- class="sect2" -->
+<a id="BIHGCGEE"></a>
+<div id="GIORA480" class="sect2">
+<h3 class="sect2"><span class="secnum">B.3.2</span> Configuring the Mining Database to Archive Local Redo Log Files</h3>
+<p>This procedure configures the downstream mining database to archive redo data in its online redo logs. These are redo logs that are generated at the downstream mining database.</p>
+<p>Archiving must be enabled at the downstream mining database if you want to run Extract in real-time integrated capture mode, but it is also recommended for archive-log-only capture. Extract in integrated capture mode writes state information in the database. Archiving and regular backups will enable you to recover this state information in case there are disk failures or corruption at the downstream mining database.</p>
+<p class="subhead2"><a id="GIORA481"></a>To Archive Local Redo Log Files</p>
+<ol>
+<li>
+<p>Alter the downstream mining database to be in archive log mode. You can do this by issuing the following DDL.</p>
+<pre dir="ltr">
+STARTUP MOUNT;
+ALTER DATABASE ARCHIVELOG;
+ALTER DATABASE OPEN;
+</pre></li>
+<li>
+<p>At the downstream mining database, set the first archive log destination in the <code dir="ltr">LOG_ARCHIVE_DEST_n</code> initialization parameter as shown in the following example:</p>
+<pre dir="ltr">
+ALTER SYSTEM SET
+LOG_ARCHIVE_DEST_1='LOCATION=/home/arc_dest/local
+VALID_FOR=(ONLINE_LOGFILE,PRIMARY_ROLE)'
+</pre>
+<p>Alternatively, you can use a command like this example:</p>
+<pre dir="ltr">
+ALTER SYSTEM SET
+LOG_ARCHIVE_DEST_1='LOCATION='USE_DB_RECOVERY_FILE_DEST' valid_for=(ONLINE_LOGFILE,PRIMARY_ROLE)'
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The online redo logs generated by the downstream mining database can be archived to a recovery area. However, you must not use the recovery area of the downstream mining database to stage foreign archived logs or to archive standby redo logs. For information about configuring a fast recovery area, see <a class="olink BRADV" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=BRADV"><span class="italic">Oracle Database Backup and Recovery User's Guide</span></a>.</div>
+</li>
+<li>
+<p>Enable the local archive destination.</p>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_1=ENABLE
+ 
+</pre></li>
+</ol>
+<p>For more information about these initialization parameters, see <a class="olink SBYDB" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=SBYDB"><span class="italic">Oracle Data Guard Concepts and Administration</span></a>.</p>
+</div>
+<!-- class="sect2" -->
+<a id="BIHFAHGE"></a>
+<div id="GIORA482" class="sect2">
+<h3 class="sect2"><span class="secnum">B.3.3</span> Preparing a Downstream Mining Database for Real-time Capture</h3>
+<p>This procedure is only required if you want to use real-time capture at a downstream mining database. It is not required to use archived-log-only capture mode. To use real-time capture, it is assumed that the downstream database has already been configured to archive its local redo data as shown in <a href="#BIHGCGEE">Section B.3.2, "Configuring the Mining Database to Archive Local Redo Log Files"</a>.</p>
+<div id="GIORA483" class="sect3"><a id="sthref200"></a>
+<h4 class="sect3"><span class="secnum">B.3.3.1</span> Create the Standby Redo Log Files</h4>
+<p>The following steps outline the procedure for adding standby redo log files to the downstream mining database. The following summarizes the rules for creating the standby redo logs:</p>
+<ul>
+<li>
+<p>Each standby redo log file must be at least as large as the largest redo log file of the redo source database. For administrative ease, Oracle recommends that all redo log files at source database and the standby redo log files at the downstream mining database be of the same size.</p>
+</li>
+<li>
+<p>The standby redo log must have at least one more redo log group than the redo log at the source database, for each redo thread at the source database.</p>
+</li>
+</ul>
+<p>The specific steps and SQL statements that are required to add standby redo log files depend on your environment. See Oracle Data Guard Concepts and Administration 11g Release 2 (11.2) for detailed instructions about adding standby redo log files to a database.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If there will be multiple source databases sending redo to a single downstream mining database, only one of those sources can send redo to the standby redo logs of the mining database. An Extract process that mines the redo from this source database can run in real-time mode. All other source databases must send only their archived logs to the downstream mining database, and the Extracts that read this data must be configured to run in archived-log-only mode.</div>
+<p class="subhead2"><a id="GIORA484"></a>To Create the Standby Redo Log Files</p>
+<ol>
+<li>
+<p>In SQL*Plus, connect to the source database as an administrative user.</p>
+</li>
+<li>
+<p>Determine the size of the source log file. Make note of the results.</p>
+<pre dir="ltr">
+SELECT BYTES FROM V$LOG;
+</pre></li>
+<li>
+<p>Determine the number of online log file groups that are configured on the source database. Make note of the results.</p>
+<pre dir="ltr">
+SELECT COUNT(GROUP#) FROM V$LOG;
+</pre></li>
+<li>
+<p>Connect to the downstream mining database as an administrative user.</p>
+</li>
+<li>
+<p>Add the standby log file groups to the mining database. The standby log file size must be at least the size of the source log file size. The number of standby log file groups must be at least one more than the number of source online log file groups. This applies to each instance (thread) in a RAC installation. So if you have "n" threads at the source database, each having "m" redo log groups, you should configure n*(m+1) redo log groups at the downstream mining database.</p>
+<p>The following example shows three standby log groups.</p>
+<pre dir="ltr">
+ALTER DATABASE ADD STANDBY LOGFILE GROUP 3
+('/oracle/dbs/slog3a.rdo', '/oracle/dbs/slog3b.rdo') SIZE 500M;
+ALTER DATABASE ADD STANDBY LOGFILE GROUP 4
+('/oracle/dbs/slog4.rdo', '/oracle/dbs/slog4b.rdo') SIZE 500M;
+ALTER DATABASE ADD STANDBY LOGFILE GROUP 5
+('/oracle/dbs/slog5.rdo', '/oracle/dbs/slog5b.rdo') SIZE 500M;
+</pre></li>
+<li>
+<p>Confirm that the standby log file groups were added successfully.</p>
+<pre dir="ltr">
+SELECT GROUP#, THREAD#, SEQUENCE#, ARCHIVED, STATUS
+FROM V$STANDBY_LOG;
+</pre>
+<p>The output should be similar to the following:</p>
+<pre dir="ltr">
+GROUP#     THREAD#    SEQUENCE#  ARC STATUS
+---------- ---------- ---------- --- ----------
+         3          0          0 YES UNASSIGNED
+         4          0          0 YES UNASSIGNED
+         5          0          0 YES UNASSIGNED
+</pre></li>
+<li>
+<p>Ensure that log files from the source database are appearing in the location that is specified in the <code dir="ltr">LOCATION</code> attribute of the local <code dir="ltr">LOG_ARCHIVE_DEST_n</code> that you set. You might need to switch the log file at the source database to see files in the directory.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect3" -->
+<div id="GIORA485" class="sect3"><a id="sthref201"></a>
+<h4 class="sect3"><span class="secnum">B.3.3.2</span> Configure the Database to Archive Standby Redo Log Files Locally</h4>
+<p>This procedure configures the downstream mining database to archive the standby redo logs that receive redo data from the online redo logs of the source database. Keep in mind that foreign archived logs should not be archived in the recovery area of the downstream mining database.</p>
+<p class="subhead2"><a id="GIORA486"></a>To Archive Standby Redo Logs Locally</p>
+<ol>
+<li>
+<p>At the downstream mining database, set the second archive log destination in the <code dir="ltr">LOG_ARCHIVE_DEST_n</code> initialization parameter as shown in the following example.</p>
+<pre dir="ltr">
+ALTER SYSTEM SET
+LOG_ARCHIVE_DEST_2='LOCATION=/home/arc_dest/srl_dbms1
+VALID_FOR=(STANDBY_LOGFILE,PRIMARY_ROLE)'
+</pre>
+<p>Oracle recommends that foreign archived logs (logs from remote source databases) be kept separate from local mining database log files, and from each other. You must not use the recovery area of the downstream mining database to stage foreign archived logs. For information about configuring a fast recovery area, see <a class="olink BRADV" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=BRADV"><span class="italic">Oracle Database Backup and Recovery User's Guide</span></a>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If you are accepting redo generated by another database in the standby redo logs of a downstream mining database, you must configure <code dir="ltr">log_archive_dest_2</code> for your standby redo logs as described above.</div>
+</li>
+<li>
+<p>Enable the <code dir="ltr">LOG_ARCHIVE_DEST_2</code> parameter you set in the previous step as shown in the following example.</p>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE 
+</pre>
+<p>For more information about these initialization parameters, see <a class="olink SBYDB" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=SBYDB"><span class="italic">Oracle Data Guard Concepts and Administration</span></a>.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="appendix" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment233">
+<tr>
+<td class="cellalignment240"><table class="cellalignment238">
+<tr>
+<td class="cellalignment237"><a href="addl_integrated_params.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment237"><a href="ic_deploy2.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment242">
+<table class="cellalignment236">
+<tr>
+<td class="cellalignment237"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment237"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment237"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

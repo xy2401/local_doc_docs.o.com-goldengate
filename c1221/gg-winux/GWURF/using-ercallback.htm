@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using ERCALLBACK</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-exit_params.htm" title="Previous" type="text/html" />
+<link rel="Next" href="function-codes.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-F3F779B3-EFFB-43DC-87F5-73AE10819F48"></a> <span id="PAGE" style="display:none;">413/459</span> <!-- End Header -->
+<a id="GWURF841"></a><a id="GWURF842"></a><a id="GWURF840"></a>
+<h1 id="GWURF-GUID-F3F779B3-EFFB-43DC-87F5-73AE10819F48" class="sect1"><span class="enumeration_section">6.6</span> Using ERCALLBACK</h1>
+<div>
+<p>Use <code class="codeph">ERCALLBACK</code> to execute a callback routine. A user callback routine retrieves context information from the Extract or Replicat process and sets context values, including the record itself, when the call type is one of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">EXIT_CALL_PROCESS_RECORD</code></p>
+</li>
+<li>
+<p><code class="codeph">EXIT_CALL_DISCARD_RECORD</code></p>
+</li>
+<li>
+<p><code class="codeph">EXIT_CALL_DISCARD_ASCII_RECORD</code></p>
+</li>
+</ul>
+<div class="section">
+<p class="subhead1">Syntax</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<pre dir="ltr">
+ERCALLBACK (<span class="italic">function_code</span>, <span class="italic">buffer</span>, <span class="italic">result_code</span> );
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-F3F779B3-EFFB-43DC-87F5-73AE10819F48__GUID-554A8C0E-4C75-4CD1-8407-E67120F4CC7C"><!-- --></a><span class="italic"><code class="codeph">function_code</code></span></dt>
+<dd>
+<p>The function to be executed by the callback routine. The user callback routine behaves differently based on the function code passed to the callback routine. While some functions can be used for both Extract and Replicat, the validity of the function in one process or the other is dependent on the input parameters that are set for that function during the callback routine. See <a href="function-codes.htm#GUID-3C9816F4-887B-4556-B344-505C117AD41A">Function Codes</a> for a full description of available function codes.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-F3F779B3-EFFB-43DC-87F5-73AE10819F48__GUID-EA1D3BFA-416B-493A-BA3F-945BF91ABB27"><!-- --></a><span class="italic"><code class="codeph">buffer</code></span></dt>
+<dd>
+<p>A void pointer to a buffer containing a predefined structure associated with the specified function code.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-F3F779B3-EFFB-43DC-87F5-73AE10819F48__GUID-557B5714-5487-4D19-9260-7595F0538FD6"><!-- --></a><span class="italic"><code class="codeph">result_code</code></span></dt>
+<dd>
+<p>The status of the function executed by the callback routine. The result code returned by the callback routine indicates whether or not the callback function was successful. A result code can be one of the values in <a href="using-ercallback.htm#GUID-F3F779B3-EFFB-43DC-87F5-73AE10819F48__CIHGEBDB" title="This table describes the result codes.">Table 6-4</a>.</p>
+</dd>
+</dl>
+<div class="tblformalwide" id="GUID-F3F779B3-EFFB-43DC-87F5-73AE10819F48__CIHGEBDB">
+<p class="titleintable">Table 6-4 Result Codes</p>
+<table class="cellalignment497" title="Result Codes " summary="This table describes the result codes.">
+<thead>
+<tr class="cellalignment454">
+<th class="cellalignment498" id="d153851e92">Code</th>
+<th class="cellalignment499" id="d153851e95">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e100" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_BAD_COLUMN_DATA</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e100 d153851e95">
+<p>Invalid data was encountered when retrieving or setting column data.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e108" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_BAD_DATE_TIME</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e108 d153851e95">
+<p>A date, timestamp, or interval type <code class="codeph">of</code> column contains an invalid date or time value.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e119" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_BAD_NUMERIC_VALUE</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e119 d153851e95">
+<p>A numeric type of column contains an invalid numeric value.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e127" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_COLUMN_NOT_FOUND</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e127 d153851e95">
+<p>The column was not found in a compressed update record (update by a database that only logs the values that were changed).</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e135" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_ENV_NOT_FOUND</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e135 d153851e95">
+<p>The specified environment value could not be found in the record.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e143" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_EXCEEDED_MAX_LENGTH</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e143 d153851e95">
+<p>The metadata could not be retrieved because the name of the table or column did not fit in the allocated buffer.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e151" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_FETCH_ERROR</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e151 d153851e95">
+<p>The record could not be fetched. View the error message to see the reason.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e159" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_INCOMPLETE_DDL_REC</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e159 d153851e95">
+<p>An internal error occurred when processing the DDL record. The record is probably incomplete.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e168" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_INVALID_CALLBACK_FNC_CD</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e168 d153851e95">
+<p>An invalid callback function code was passed to the callback routine.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e176" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_INVALID_COLUMN</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e176 d153851e95">
+<p>A non-existent column was referred to in the function call.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e184" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_INVALID_COLUMN_TYPE</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e184 d153851e95">
+<p>The routine is trying to manipulate a data type that is not supported by Oracle GoldenGate for that purpose.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e193" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_INVALID_CONTEXT</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e193 d153851e95">
+<p>The callback function was called at an improper time.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e201" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_INVALID_PARAM</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e201 d153851e95">
+<p>An invalid parameter was passed to the callback function.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e209" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_NO_SRCDB_INSTANCE</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e209 d153851e95">
+<p>The source database instance could not be found.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e217" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_NO_TGTDB_INSTANCE</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e217 d153851e95">
+<p>The target database instance could not be found.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e225" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_NOT_SUPPORTED</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e225 d153851e95">
+<p>This function is not supported for this process.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e233" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_OK</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e233 d153851e95">
+<p>The callback function succeeded.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e241" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_SESSION_CS_CNV_ERR</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e241 d153851e95">
+<p>A <code class="codeph">ULIB_ERR_INVALID_CHAR_FOUND</code> error was returned to the character-set conversion routine. The conversion failed.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e252" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_TABLE_NOT_FOUND</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e252 d153851e95">
+<p>An invalid table name was specified.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment500" id="d153851e260" headers="d153851e92">
+<p><code class="codeph">EXIT_FN_RET_TOKEN_NOT_FOUND</code></p>
+</td>
+<td class="cellalignment501" headers="d153851e260 d153851e95">
+<p>The specified user token could not be found in the record.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="using-exit_params.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="function-codes.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

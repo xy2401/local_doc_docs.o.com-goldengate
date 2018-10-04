@@ -1,0 +1,876 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>4 Establishing Oracle GoldenGate Credentials</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This chapter provides guidelines for creating database users for the processes that will interact with the database, assigning the correct privileges, and securing the credentials from unauthorized use." />
+<meta name="dcterms.created" content="2015-06-05T14:9:48Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E29644-07" />
+<meta name="dcterms.isVersionOf" content="GIORA" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="setup.htm" title="Previous" type="text/html" />
+<link rel="Next" href="process_mode.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIORA.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIORA.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIORA.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">7/27</span>
+<!-- End Header -->
+<div id="GIORA546" class="chapter"><a id="BABHFBDB"></a>
+<h1 class="chapter"><span class="secnum">4</span> Establishing Oracle GoldenGate Credentials</h1>
+<p><a id="GIORA547"></a>This chapter provides guidelines for creating database users for the processes that will interact with the database, assigning the correct privileges, and securing the credentials from unauthorized use.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#A1856135">Assigning Credentials to Oracle GoldenGate</a></p>
+</li>
+<li>
+<p><a href="#A1856370">Securing the Oracle GoldenGate Credentials</a></p>
+</li>
+</ul>
+<a id="A1856135"></a>
+<div id="GIORA548" class="sect1">
+<h2 class="sect1"><span class="secnum">4.1</span> Assigning Credentials to Oracle GoldenGate</h2>
+<p>The Oracle GoldenGate processes require one or more database credentials with the correct database privileges for the database version, database configuration, and Oracle GoldenGate features that you are using. Create a source database user and a target database user, each one dedicated to Oracle GoldenGate on the source and target systems. The assigned user can be the same user for all of the Oracle GoldenGate processes that must connect to a source or target Oracle database.</p>
+<p>The following sections outline the Oracle GoldenGate processes that require user credentials:</p>
+<ul>
+<li>
+<p><a href="#BABDEGJD">Section 4.1.1, "Extract User"</a></p>
+</li>
+<li>
+<p><a href="#BABBDDAI">Section 4.1.2, "Replicat User"</a></p>
+</li>
+<li>
+<p><a href="#BABJDJAD">Chapter 4, "Other Oracle GoldenGate Users"</a></p>
+</li>
+</ul>
+<p><a href="#BABIEDIB">Section 4.1.4, "Granting the Appropriate User Privileges"</a> outlines the database privileges that each of those processes requires.</p>
+<a id="BABDEGJD"></a>
+<div id="GIORA549" class="sect2">
+<h3 class="sect2"><span class="secnum">4.1.1</span> Extract User</h3>
+<p>The Extract user performs metadata queries on the source database and fetches data from the source tables when needed. In a local mining deployment of integrated capture, this user also creates, alters, and connects to the logmining server and receives logical change records (LCR) from it. (See <a href="process_mode.htm#CBDBDAFI">Section 5.2, "Deciding Which Capture Method to Use"</a> for more information about capture modes.)</p>
+<p>If the source database is a multitenant container database, the Extract user must be a common user and must log into the root container. See <a href="config_containerdb.htm#BDCFDFDE">Chapter 6, "Configuring Oracle GoldenGate in a Multitenant Container Database"</a> for more information.</p>
+<p>You need to assign an additional user if Extract will be operating in integrated capture mode and you are using a downstream mining database. This user will be the mining user and is created in the downstream database. The mining user creates, alters, and connects to the logmining server on the mining database, and it receives logical change records (LCR) from it. This user can be the same as the source Extract user or different. Choose the name of the mining user carefully. Once created by this user, the database logmining server cannot be altered or used by another user. See <a href="ic_deploy.htm#BABHBCCF">Appendix B, "Configuring a Downstream Mining Database"</a> for more information about configuring downstream mining.</p>
+</div>
+<!-- class="sect2" -->
+<a id="BABBDDAI"></a>
+<div id="GIORA550" class="sect2">
+<h3 class="sect2"><span class="secnum">4.1.2</span> Replicat User</h3>
+<p>The Replicat user creates the Replicat checkpoint table (if used) and applies DML and DDL operations through Oracle Call Interface or through a database inbound server, depending on the Replicat mode. (See <a href="process_mode.htm#CBDFHBIB">Section 5.3, "Deciding Which Apply Method to Use"</a> for more information about Replicat modes.)</p>
+</div>
+<!-- class="sect2" -->
+<a id="BABJDJAD"></a>
+<div id="GIORA551" class="sect2">
+<h3 class="sect2"><span class="secnum">4.1.3</span> Other Oracle GoldenGate Users</h3>
+<p>A user is required in the source database for the Manager process if you are using Oracle GoldenGate DDL support. This user performs maintenance on the Oracle GoldenGate database objects that support DDL capture.</p>
+<p>A user is required in either the source or target database for the <code dir="ltr">DEFGEN</code> utility. The location depends on where the data definition file is being generated. This user performs local metadata queries to build a data-definitions file that supplies the metadata to remote Oracle GoldenGate instances. For more information about the data-definitions file, see <a class="olink GWUAD473" href="../../gg-winux/GWUAD/wu_data_definitions.htm#GWUAD473"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<p>Additional users or privileges may be required to use the following features, if Extract will run in classic capture mode:</p>
+<ul>
+<li>
+<p>RMAN log retention (see <a href="classic_capture.htm#CHDHBEGA">Section 11.4.2, "Log Retention Options"</a>)</p>
+</li>
+<li>
+<p>TDE support (see <a href="classic_capture.htm#BABFABDH">Chapter 11, "Configuring Oracle TDE Data in Classic Capture Mode"</a>)</p>
+</li>
+<li>
+<p>ASM (see <a href="classic_capture.htm#CHDCFGDA">Chapter 11, "Mining ASM-stored Logs in Classic Capture Mode"</a>)</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<a id="BABIEDIB"></a>
+<div id="GIORA552" class="sect2">
+<h3 class="sect2"><span class="secnum">4.1.4</span> Granting the Appropriate User Privileges</h3>
+<p>The user privileges that are required for Oracle GoldenGate depend on the database version and the Extract or Replicat process mode. For more information about process modes, see <a href="process_mode.htm#CACCDCEA">Chapter 5, "Choosing Capture and Apply Modes"</a>.</p>
+<div id="GIORA904" class="sect3"><a id="sthref66"></a>
+<h4 class="sect3"><span class="secnum">4.1.4.1</span> Oracle 11.2.0.4 or Later Database Privileges</h4>
+<p>The following privileges apply to Oracle versions 11.2.0.4 or later.</p>
+<div id="GIORA905" class="tblhruleformal"><p class="titleintable"><a id="sthref67"></a><a id="sthref68"></a>Table 4-1 Oracle GoldenGate Privileges, Version 11.2.0.4 or Later</p>
+<table class="cellalignment245" title="Oracle GoldenGate Privileges, Version 11.2.0.4 or Later" summary="This table describes the Oracle GoldenGate user privileges, version 11.2.0.4 or later.">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t2">Privilege</th>
+<th class="cellalignment246" id="r1c2-t2">ExtractClassic Mode</th>
+<th class="cellalignment246" id="r1c3-t2">Extract Integrated Mode</th>
+<th class="cellalignment246" id="r1c4-t2">ReplicatAll Modes</th>
+<th class="cellalignment246" id="r1c5-t2">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">CREATE SESSION</code></p>
+</td>
+<td class="cellalignment240" headers="r2c1-t2 r1c2-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t2 r1c3-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t2 r1c4-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t2 r1c5-t2">
+<p>Connect to the database</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r3c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">CONNECT</code></p>
+</td>
+<td class="cellalignment240" headers="r3c1-t2 r1c2-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t2 r1c3-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t2 r1c4-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t2 r1c5-t2">
+<p>For Replicat, required only if Replicat owns target objects. Alternatively, use <code dir="ltr">CREATE</code> <code dir="ltr"><span class="codeinlineitalic">object</span></code>.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r4c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">RESOURCE</code></p>
+</td>
+<td class="cellalignment240" headers="r4c1-t2 r1c2-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t2 r1c3-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t2 r1c4-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t2 r1c5-t2">
+<p>Create objects</p>
+<p>If <code dir="ltr">RESOURCE</code> cannot be granted to Replicat, use:</p>
+<p><code dir="ltr">ALTER USER</code> <code dir="ltr"><span class="codeinlineitalic">user</span></code> <code dir="ltr">QUOTA {</code><code dir="ltr"><span class="codeinlineitalic">size</span></code> <code dir="ltr">| UNLIMITED} ON</code> <code dir="ltr"><span class="codeinlineitalic">tablespace</span></code>;</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r5c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">ALTER ANY TABLE</code></p>
+</td>
+<td class="cellalignment240" headers="r5c1-t2 r1c2-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t2 r1c3-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t2 r1c4-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r5c1-t2 r1c5-t2">
+<p>Required for Oracle 12.1.0.1 only to issue the <code dir="ltr">ADD TRANDATA</code> command.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r6c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">ALTER SYSTEM</code></p>
+</td>
+<td class="cellalignment240" headers="r6c1-t2 r1c2-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t2 r1c3-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t2 r1c4-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r6c1-t2 r1c5-t2">
+<p>Perform administrative changes, such as enabling logging</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r7c1-t2" headers="r1c1-t2">
+<p>Privileges granted through <code dir="ltr">dbms_goldengate_auth.grant_admin_privilege</code></p>
+</td>
+<td class="cellalignment240" headers="r7c1-t2 r1c2-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t2 r1c3-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t2 r1c4-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t2 r1c5-t2">
+<p>(Extract) Grants privileges for both classic and integrated Extract, including the logmining server.(Replicat) Grants privileges for both nonintegrated and integrated replicat, including the database inbound server (Oracle 11.2.0.4 or later).</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r8c1-t2" headers="r1c1-t2">
+<p>Any or all of optional privileges of <code dir="ltr">dbms_goldengate_auth.grant_admin_privilege</code></p>
+</td>
+<td class="cellalignment240" headers="r8c1-t2 r1c2-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t2 r1c3-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t2 r1c4-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t2 r1c5-t2">
+<ul>
+<li>
+<p>Capture from Data Vault</p>
+</li>
+<li>
+<p>Capture from Virtual Private Database</p>
+</li>
+<li>
+<p>Capture redacted data</p>
+</li>
+</ul>
+<p>See <a href="#BABCJHDB">Section 4.1.4.4, "Optional Grants for dbms_goldengate_auth.grant_admin_privilege"</a> for more information.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r9c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">INSERT</code>, <code dir="ltr">UPDATE</code>, <code dir="ltr">DELETE</code> on target tables</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t2 r1c2-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r9c1-t2 r1c3-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r9c1-t2 r1c4-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t2 r1c5-t2">
+<p>Apply replicated DML to target objects</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r10c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">CREATE TABLE</code></p>
+</td>
+<td class="cellalignment240" headers="r10c1-t2 r1c2-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r10c1-t2 r1c3-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r10c1-t2 r1c4-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r10c1-t2 r1c5-t2">
+<p>Create a checkpoint table in target database</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r11c1-t2" headers="r1c1-t2">
+<p>DDL privileges on target objects (if using DDL support)</p>
+</td>
+<td class="cellalignment240" headers="r11c1-t2 r1c2-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r11c1-t2 r1c3-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r11c1-t2 r1c4-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r11c1-t2 r1c5-t2">
+<p>Issue replicated DDL on target objects</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r12c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">DBA</code></p>
+</td>
+<td class="cellalignment240" headers="r12c1-t2 r1c2-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r12c1-t2 r1c3-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r12c1-t2 r1c4-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r12c1-t2 r1c5-t2">
+<p>DDL and sequence support</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r13c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">LOCK ANY TABLE</code></p>
+</td>
+<td class="cellalignment240" headers="r13c1-t2 r1c2-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r13c1-t2 r1c3-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r13c1-t2 r1c4-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r13c1-t2 r1c5-t2">
+<p>Lock target tables. Only required for initial load using direct bulk load to SQL*Loader.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r14c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">sys.dbms_internal_clkm</code></p>
+</td>
+<td class="cellalignment240" headers="r14c1-t2 r1c2-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r14c1-t2 r1c3-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r14c1-t2 r1c4-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r14c1-t2 r1c5-t2">
+<p>Replicate Oracle Transparent Data Encryption (TDE)</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r15c1-t2" headers="r1c1-t2">
+<p><code dir="ltr">SELECT ANY TRANSACTION</code></p>
+</td>
+<td class="cellalignment240" headers="r15c1-t2 r1c2-t2">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r15c1-t2 r1c3-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r15c1-t2 r1c4-t2">&nbsp;</td>
+<td class="cellalignment240" headers="r15c1-t2 r1c5-t2">
+<p>Use a newer Oracle ASM API. See <a href="classic_capture.htm#CHDCFGDA">Section 11.3, "Mining ASM-stored Logs in Classic Capture Mode"</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="sect3" -->
+<div id="GIORA906" class="sect3"><a id="sthref69"></a>
+<h4 class="sect3"><span class="secnum">4.1.4.2</span> Oracle 11.2.0.3 or Earlier Database Privileges</h4>
+<p>The following privileges apply to Oracle versions 11.2.0.3 or earlier.</p>
+<div id="GIORA907" class="tblhruleformal"><p class="titleintable"><a id="sthref70"></a><a id="sthref71"></a>Table 4-2 Oracle GoldenGate Privileges, Oracle 11.2.0.3 or Earlier</p>
+<table class="cellalignment245" title="Oracle GoldenGate Privileges, Oracle 11.2.0.3 or Earlier" summary="This table describes the Oracle GoldenGate user privileges for Oracle 11.2.0.3 or earlier.">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t3">Privilege</th>
+<th class="cellalignment246" id="r1c2-t3">ExtractClassic Mode</th>
+<th class="cellalignment246" id="r1c3-t3">ExtractIntegrated Mode</th>
+<th class="cellalignment246" id="r1c4-t3">Replicat</th>
+<th class="cellalignment246" id="r1c5-t3">Manager</th>
+<th class="cellalignment246" id="r1c6-t3">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">CREATE SESSION</code></p>
+<p>and</p>
+<p><code dir="ltr">ALTER SESSION</code></p>
+</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c4-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c6-t3">
+<p>Connect to the database</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r3c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">ALTER SYSTEM</code></p>
+</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c6-t3">
+<p>Perform administrative changes, such as enabling logging</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r4c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">RESOURCE</code></p>
+</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c4-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c6-t3">
+<p>Create objects</p>
+<p>If <code dir="ltr">RESOURCE</code> cannot be granted to Replicat, use:</p>
+<p><code dir="ltr">ALTER USER</code> <code dir="ltr"><span class="codeinlineitalic">user</span></code> <code dir="ltr">QUOTA {</code><code dir="ltr"><span class="codeinlineitalic">size</span></code> <code dir="ltr">| UNLIMITED} ON</code> <code dir="ltr"><span class="codeinlineitalic">tablespace</span></code>;</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r5c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">CONNECT</code></p>
+</td>
+<td class="cellalignment240" headers="r5c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t3 r1c4-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r5c1-t3 r1c6-t3">
+<p>For Replicat, required only if Replicat owns target objects. Alternatively, use <code dir="ltr">CREATE</code> <code dir="ltr"><span class="codeinlineitalic">object</span></code>.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r6c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">SELECT ANY DICTIONARY</code></p>
+</td>
+<td class="cellalignment240" headers="r6c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t3 r1c4-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r6c1-t3 r1c6-t3">
+<p>Query data dictionary objects in the SYS schema</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r7c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">FLASHBACK ANY TABLE</code></p>
+<p>or</p>
+<p><code dir="ltr">FLASHBACK ON</code> <code dir="ltr"><span class="codeinlineitalic">schema.table</span></code></p>
+</td>
+<td class="cellalignment240" headers="r7c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r7c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r7c1-t3 r1c6-t3">
+<p>Make flashback queries</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r8c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">SELECT ANY TABLE</code></p>
+<p>or</p>
+<p><code dir="ltr">SELECT</code> on a <code dir="ltr"><span class="codeinlineitalic">schema.table</span></code></p>
+</td>
+<td class="cellalignment240" headers="r8c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t3 r1c4-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r8c1-t3 r1c6-t3">
+<p>Perform queries on any table</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r9c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">SELECT</code> on <code dir="ltr">dba_clusters</code></p>
+</td>
+<td class="cellalignment240" headers="r9c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r9c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r9c1-t3 r1c6-t3">&nbsp;</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r10c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">INSERT</code>, <code dir="ltr">UPDATE</code>, <code dir="ltr">DELETE</code> on target tables</p>
+</td>
+<td class="cellalignment240" headers="r10c1-t3 r1c2-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r10c1-t3 r1c3-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r10c1-t3 r1c4-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r10c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r10c1-t3 r1c6-t3">
+<p>Apply replicated DML to target objects</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r11c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">CREATE TABLE</code></p>
+</td>
+<td class="cellalignment240" headers="r11c1-t3 r1c2-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r11c1-t3 r1c3-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r11c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r11c1-t3 r1c5-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r11c1-t3 r1c6-t3">
+<p>Create a checkpoint table in target database</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r12c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">EXECUTE</code> on <code dir="ltr">DBMS_FLASHBACK</code> package</p>
+</td>
+<td class="cellalignment240" headers="r12c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r12c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r12c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r12c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r12c1-t3 r1c6-t3">
+<p>Call <code dir="ltr">DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r13c1-t3" headers="r1c1-t3">
+<p>DDL privileges on target objects (if using DDL support)</p>
+</td>
+<td class="cellalignment240" headers="r13c1-t3 r1c2-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r13c1-t3 r1c3-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r13c1-t3 r1c4-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r13c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r13c1-t3 r1c6-t3">
+<p>Issue replicated DDL on target objects</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r14c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">GGS_GGSUSER_ROLE</code> (if using DDL support)</p>
+</td>
+<td class="cellalignment240" headers="r14c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r14c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r14c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r14c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r14c1-t3 r1c6-t3">
+<p>DML privileges on Oracle GoldenGate DDL objects. Role is created by user with SYSDBA privilege during installation of DDL objects.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r15c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">DELETE</code> on Oracle GoldenGate DDL objects</p>
+</td>
+<td class="cellalignment240" headers="r15c1-t3 r1c2-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r15c1-t3 r1c3-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r15c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r15c1-t3 r1c5-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r15c1-t3 r1c6-t3">
+<p>Use parameters that maintain Oracle GoldenGate DDL objects</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r16c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">LOCK ANY TABLE</code></p>
+</td>
+<td class="cellalignment240" headers="r16c1-t3 r1c2-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r16c1-t3 r1c3-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r16c1-t3 r1c4-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r16c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r16c1-t3 r1c6-t3">
+<p>Lock target tables. Only required for initial load using direct bulk load to SQL*Loader.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r17c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">sys.dbms_internal_clkm</code></p>
+</td>
+<td class="cellalignment240" headers="r17c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r17c1-t3 r1c3-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r17c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r17c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r17c1-t3 r1c6-t3">
+<p>Replicate Oracle Transparent Data Encryption (TDE)</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r18c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">SELECT ANY TRANSACTION</code></p>
+</td>
+<td class="cellalignment240" headers="r18c1-t3 r1c2-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r18c1-t3 r1c3-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r18c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r18c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r18c1-t3 r1c6-t3">
+<p>Use a newer Oracle ASM API. See <a href="classic_capture.htm#CHDCFGDA">Section 11.3, "Mining ASM-stored Logs in Classic Capture Mode"</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r19c1-t3" headers="r1c1-t3">
+<p>Privileges granted through <code dir="ltr">dbms_streams_auth.grant_admin_privilege</code></p>
+</td>
+<td class="cellalignment240" headers="r19c1-t3 r1c2-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r19c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r19c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r19c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r19c1-t3 r1c6-t3">
+<p>Interact with database logmining server</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r20c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">EXECUTE</code> on <code dir="ltr">dbms_logmnr_d package</code></p>
+</td>
+<td class="cellalignment240" headers="r20c1-t3 r1c2-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r20c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r20c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r20c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r20c1-t3 r1c6-t3">
+<p>Issue the <code dir="ltr">REGISTER EXTRACT</code> command</p>
+<p>Required for Oracle version &gt;= 11.1.0.5 and &lt;= 11.2.0.1.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r21c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">SELECT FROM sys.logmnr_buildlog</code></p>
+</td>
+<td class="cellalignment240" headers="r21c1-t3 r1c2-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r21c1-t3 r1c3-t3">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r21c1-t3 r1c4-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r21c1-t3 r1c5-t3">&nbsp;</td>
+<td class="cellalignment240" headers="r21c1-t3 r1c6-t3">
+<p>Issue the <code dir="ltr">REGISTER EXTRACT</code> command</p>
+<p>Required for Oracle version &gt;= 11.1.0.5 and &lt;= 11.2.0.1.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="sect3" -->
+<a id="BABCGACJ"></a>
+<div id="GIORA908" class="sect3"><!-- infolevel="all" infotype="General" -->
+<h4 class="sect3"><span class="secnum">4.1.4.3</span> About the dbms_goldengate_auth.grant_admin_privilege Package</h4>
+<p>Most of the privileges that are needed for Extract and Replicat to operate in classic and integrated mode are granted through the <code dir="ltr">dbms_goldengate_auth.grant_admin_privilege</code> package.</p>
+<ul>
+<li>
+<p>The following grants base privileges for Oracle 11.2.0.4 and later. The first example is the default, which grants to both capture and apply. The second shows how to explicitly grant to either capture or apply (in this case, capture).</p>
+<pre dir="ltr">
+grant_admin_privilege('ggadm')
+grant_admin_privilege('ggadm','capture');
+</pre></li>
+<li>
+<p>The following grants base privileges for Oracle 11.2.0.3. The first example is the default, which grants to both capture and apply. The second shows how to explicitly grant to capture.</p>
+<pre dir="ltr">
+grant_admin_privilege('ggadm',grant_select_privileges=&gt;true)
+grant_admin_privilege('ggadm','capture',grant_select_privileges=&gt;true)
+</pre></li>
+</ul>
+</div>
+<!-- class="sect3" -->
+<a id="BABCJHDB"></a>
+<div id="GIORA956" class="sect3">
+<h4 class="sect3"><span class="secnum">4.1.4.4</span> Optional Grants for dbms_goldengate_auth.grant_admin_privilege</h4>
+<p>Additional grants can be added to <code dir="ltr">dbms_goldengate_auth.grant_admin_privilege</code> to support the optional features shown in <a href="#BABGBBDG">Table 4-3</a>.</p>
+<div id="GIORA909" class="tblhruleformal"><p class="titleintable"><a id="sthref72"></a><a id="BABGBBDG"></a>Table 4-3 Optional dbms_goldngate_auth.grant_admin_privilege Grants</p>
+<table class="cellalignment245" title="Optional dbms_goldngate_auth.grant_admin_privilege Grants" summary="This table describes additional optional grants.">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t4">Role/Privilege</th>
+<th class="cellalignment246" id="r1c2-t4">ExtractClassic Mode</th>
+<th class="cellalignment246" id="r1c3-t4">ExtractIntegrated Mode</th>
+<th class="cellalignment246" id="r1c4-t4">Replicat</th>
+<th class="cellalignment246" id="r1c5-t4">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">DV_GOLDENGATE_ADMIN</code></p>
+</td>
+<td class="cellalignment240" headers="r2c1-t4 r1c2-t4">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t4 r1c3-t4">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t4 r1c4-t4">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t4 r1c5-t4">
+<p>Capture or apply when Oracle Data Vault is being used.</p>
+<p>Also grant <code dir="ltr">DV_GOLDENGATE_REDO_ACCESS</code> if using classic capture with <code dir="ltr">TRANLOGOPTIONS DBLOGREADER</code> on Oracle Data Vault. See <a href="classic_capture.htm#CHDCFGDA">Section 11.3, "Mining ASM-stored Logs in Classic Capture Mode."</a></p>
+<p>Also grant Replicat the privileges in <code dir="ltr">DBMS_MACADM.ADD_AUTH_TO_REALM</code> if applying to a realm.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r3c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">EXEMPT</code> <code dir="ltr">ACCESS</code> <code dir="ltr">POLICY</code></p>
+</td>
+<td class="cellalignment240" headers="r3c1-t4 r1c2-t4">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t4 r1c3-t4">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t4 r1c4-t4">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t4 r1c5-t4">
+<p>Capture or apply when Oracle Virtual Private Database is being used.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r4c1-t4" headers="r1c1-t4">
+<p><code dir="ltr">EXEMPT</code> <code dir="ltr">REDACTION</code> <code dir="ltr">POLICY</code></p>
+</td>
+<td class="cellalignment240" headers="r4c1-t4 r1c2-t4">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t4 r1c3-t4">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t4 r1c4-t4">
+<p>X</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t4 r1c5-t4">
+<p>Capture or apply redacted data</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>One or more of these privileges can be granted as a comma-separated list to <code dir="ltr">'CAPTURE'</code>, <code dir="ltr">'APPLY'</code>, or <code dir="ltr">'*'</code>. The default is <code dir="ltr">*</code> (capture and apply).</p>
+<ul>
+<li>
+<p>In the following example, the Extract (capture) user <code dir="ltr">ggadm</code> is being granted <code dir="ltr">DV_GOLDENGATE_ADMIN</code> and <code dir="ltr">EXEMPT REDACTION POLICY</code> in addition to the privileges needed for Extract.</p>
+<pre dir="ltr">
+dbms_goldengate_auth.grant_admin_privilege('ggadm','capture', grant_optional_privilege=&gt;'DV_GOLDENGATE_ADMIN,EXEMPT REDACTION POLICY')
+</pre></li>
+<li>
+<p>In the following example, the Extract (capture) user <code dir="ltr">ggadm</code> is being granted all optional privileges in addition to the privileges needed for Extract:</p>
+<pre dir="ltr">
+dbms_goldengate_auth.grant_admin_privilege('ggadm','capture', grant_optional_privileges=&gt;'*')
+</pre></li>
+</ul>
+<p>For more information about <code dir="ltr">dbms_goldengate_auth.grant_admin_privilege</code>, see <a class="olink ARPLS" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=ARPLS"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a>.</p>
+<p>For more information about Data Vault requirements, see <a class="olink DVADM" href="http://www.oracle.com/pls/topic/lookup?ctx=gg1212&amp;id=DVADM"><span class="italic">Oracle Database Vault Administrator's Guide</span></a>.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1856370"></a>
+<div id="GIORA553" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">4.2</span> Securing the Oracle GoldenGate Credentials</h2>
+<p>To preserve the security of your data, and to monitor Oracle GoldenGate processing accurately, do not permit other users, applications, or processes to log on as, or operate as, an Oracle GoldenGate database user.</p>
+<p>Oracle GoldenGate provides different options for securing the login credentials assigned to Oracle GoldenGate processes. The recommended option is to use a credential store. You can create one credential store and store it in a shared location where all installations of Oracle GoldenGate can access it, or you can create a separate one on each system where Oracle GoldenGate is installed.</p>
+<p>The credential store stores the user name and password for each of the assigned Oracle GoldenGate users. A user ID is associated with one or more aliases, and it is the alias that is supplied in commands and parameter files, not the actual user name or password. The credential file can be partitioned into domains, allowing a standard set of aliases to be used for the processes, while allowing the administrator on each system to manage credentials locally.</p>
+<p>See <a class="olink GWUAD354" href="../../gg-winux/GWUAD/wu_security.htm#GWUAD354"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for more information about creating a credential store and adding user credentials.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment233">
+<tr>
+<td class="cellalignment240"><table class="cellalignment238">
+<tr>
+<td class="cellalignment237"><a href="setup.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment237"><a href="process_mode.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment242">
+<table class="cellalignment236">
+<tr>
+<td class="cellalignment237"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment237"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment237"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

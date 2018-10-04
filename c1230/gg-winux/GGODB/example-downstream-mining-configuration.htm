@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Example Downstream Mining Configuration</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This appendix contains examples for preparing a downstream Oracle mining database to support Extract in integrated capture mode." />
+<meta name="dcterms.created" content="2018-07-26T05:17:29Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E88785-05" />
+<meta name="dcterms.isVersionOf" content="GGODB" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2010, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="configuring-downstream-mining-database.htm" title="Previous" type="text/html" />
+<link rel="Next" href="installing-trigger-based-ddl-capture-1.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGODB.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-6BF05ABF-D4C8-491C-8E9D-58AC640DAC0F"></a> <span id="PAGE" style="display:none;">25/28</span> <!-- End Header -->
+<h1 id="GGODB-GUID-6BF05ABF-D4C8-491C-8E9D-58AC640DAC0F" class="sect1"><span class="enumeration_chapter">C</span> Example Downstream Mining Configuration</h1>
+<div>
+<div><span>This appendix contains examples for preparing a downstream Oracle mining database to support Extract in integrated capture mode.</span></div>
+<p>Configuring a downstream mining database, see <a href="configuring-downstream-mining-database.htm#GUID-E265AB7E-6255-496E-896F-32E943C362D9" title="This appendix contains instructions for preparing a downstream Oracle mining database to support Extract in integrated capture mode.">Configuring a Downstream Mining Database</a>.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-41D56EB7-0C14-438C-8791-8F93CB0DCAF8">Example 1: Capturing from One Source Database in Real-time Mode</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-74BA6112-21CC-4F9D-A4AB-029F57F2BC46">Example 2: Capturing from Multiple Sources in Archive-log-only Mode</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-90068E04-F1D2-4F30-8CCB-1E1A26E8DCDE">Example 3: Capturing from Multiple Sources with Mixed Real-time and Archive-log-only Mode</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-41D56EB7-0C14-438C-8791-8F93CB0DCAF8"></a>
+<h2 id="GGODB-GUID-41D56EB7-0C14-438C-8791-8F93CB0DCAF8" class="sect2"><span class="enumeration_section">C.1</span> Example 1: Capturing from One Source Database in Real-time Mode</h2>
+<div>
+<div class="section">
+<div class="infobox-note" id="GUID-41D56EB7-0C14-438C-8791-8F93CB0DCAF8__GUID-9C09CF5B-E714-4A85-A4FB-9A096B443B65">
+<p class="notep1">Note:</p>
+<p>This example assumes that you created the necessary standby redo log files as shown in <a href="configuring-downstream-mining-database.htm#GUID-E265AB7E-6255-496E-896F-32E943C362D9" title="This appendix contains instructions for preparing a downstream Oracle mining database to support Extract in integrated capture mode.">Configuring a Downstream Mining Database</a>.</p>
+</div>
+<p>This example captures changes from source database DBMS1 by deploying an integrated capture session at a downstream mining database DBMSCAP. This assumes that the following users exist:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>User GGADM1 in DBMS1 whose credentials Extract will use to fetch data and metadata from DBMS1. This user has the alias of <code class="codeph">ggadm1</code> in the Oracle GoldenGate credential store and logs in as <code class="codeph">ggadm1@dbms1</code>. It is assumed that the <code class="codeph">DBMS_GOLDENGATE_AUTH.GRANT_ADMIN_PRIVILEGE()</code> procedure was called to grant appropriate privileges to this user at the source database.</p>
+</li>
+<li>
+<p>User GGADMCAP in DBMSCAP whose credentials Extract will use to retrieve logical change records from the logmining server at the downstream mining database DBMSCAP. This user has the alias of <code class="codeph">ggadmcap</code> in the Oracle GoldenGate credential store and logs in as <code class="codeph">ggadmcap@dbmscap</code>. It is assumed that the <code class="codeph">DBMS_GOLDENGATE_AUTH.GRANT_ADMIN_PRIVILEGE()</code> procedure was called to grant appropriate privileges to this user at the mining database.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-70778388-EAE9-4E2C-99EB-704E505E79F3">Prepare the Mining Database to Archive its Local Redo</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-26F7D6D3-50AE-43B9-B4BD-9F27A244FD82">Prepare the Mining Database to Archive Redo Received in Standby Redo Logs from the Source Database</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-71785E62-A32A-4FF3-81FE-D82EBD0A2E9F">Prepare the Source Database to Send Redo to the Mining Database</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-655DA589-4EC5-495F-94F0-35B4747305C8">Set up Integrated Capture (ext1) on DBMSCAP</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-6BF05ABF-D4C8-491C-8E9D-58AC640DAC0F" title="This appendix contains examples for preparing a downstream Oracle mining database to support Extract in integrated capture mode.">Example Downstream Mining Configuration</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-70778388-EAE9-4E2C-99EB-704E505E79F3"></a>
+<h3 id="GGODB-GUID-70778388-EAE9-4E2C-99EB-704E505E79F3" class="sect3"><span class="enumeration_section">C.1.1</span> Prepare the Mining Database to Archive its Local Redo</h3>
+<div>
+<div class="section">
+<p>To prepare the mining database to archive its local redo:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>The downstream mining database must be in archive log mode. You can do this by issuing the following DDL.</span>
+<div>
+<pre dir="ltr">
+        STARTUP MOUNT;
+        ALTER DATABASE ARCHIVELOG;
+        ALTER DATABASE OPEN;
+</pre></div>
+</li>
+<li class="stepexpand"><span>At the downstream mining database, set <code class="codeph">log_archive_dest_1</code> to archive local redo.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET
+LOG_ARCHIVE_DEST_1='LOCATION=/home/arc_dest/local
+VALID_FOR=(ONLINE_LOGFILE, PRIMARY_ROLE)'
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable <code class="codeph">log_archive_dest_1</code>.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_1=ENABLE 
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-41D56EB7-0C14-438C-8791-8F93CB0DCAF8">Example 1: Capturing from One Source Database in Real-time Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-26F7D6D3-50AE-43B9-B4BD-9F27A244FD82"></a>
+<h3 id="GGODB-GUID-26F7D6D3-50AE-43B9-B4BD-9F27A244FD82" class="sect3"><span class="enumeration_section">C.1.2</span> Prepare the Mining Database to Archive Redo Received in Standby Redo Logs from the Source Database</h3>
+<div>
+<div class="section">
+<p>To prepare the mining database to archive the redo received in standby redo logs from the source database:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>At the downstream mining database, set <code class="codeph">log_archive_dest_2</code> as shown in the following example.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET
+LOG_ARCHIVE_DEST_2='LOCATION=/home/arc_dest/srl_dbms1
+VALID_FOR=(STANDBY_LOGFILE,PRIMARY_ROLE)'
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable <code class="codeph">log_archive_dest_2</code> as shown in the following example.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE
+</pre></div>
+</li>
+<li class="stepexpand"><span>Set <code class="codeph">DG_CONFIG</code> at the downstream mining database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbms1,dbmscap)'
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-41D56EB7-0C14-438C-8791-8F93CB0DCAF8">Example 1: Capturing from One Source Database in Real-time Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-71785E62-A32A-4FF3-81FE-D82EBD0A2E9F"></a>
+<h3 id="GGODB-GUID-71785E62-A32A-4FF3-81FE-D82EBD0A2E9F" class="sect3"><span class="enumeration_section">C.1.3</span> Prepare the Source Database to Send Redo to the Mining Database</h3>
+<div>
+<div class="section">
+<p>To prepare the source database to send redo to the mining database:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Make sure that the source database is running with the required compatibility.</span>
+<div>
+<pre dir="ltr">
+select name, value from v$parameter where name = 'compatible';
+
+NAME            VALUE
+---------       ---------------------
+compatible      11.1.0.7.0
+</pre>
+<p>The minimum compatibility setting required from integrated capture is 11.1.0.0.0.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Set <code class="codeph">DG_CONFIG</code> at the source database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbms1,dbmscap)';
+</pre></div>
+</li>
+<li class="stepexpand"><span>Set up redo transport at the source database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM
+SET LOG_ARCHIVE_DEST_2='SERVICE=DBMSCAP.EXAMPLE.COM ASYNC OPTIONAL NOREGISTER 
+VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)DB_UNIQUE_NAME=dbmscap';
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable the downstream destination.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE;
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-41D56EB7-0C14-438C-8791-8F93CB0DCAF8">Example 1: Capturing from One Source Database in Real-time Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-655DA589-4EC5-495F-94F0-35B4747305C8"></a>
+<h3 id="GGODB-GUID-655DA589-4EC5-495F-94F0-35B4747305C8" class="sect3"><span class="enumeration_section">C.1.4</span> Set up Integrated Capture (ext1) on DBMSCAP</h3>
+<div>
+<div class="section">
+<p>To set up integrated capture (ext1) on DBMSCAP:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Register Extract with the downstream mining database. In the credential store, the alias name of <code class="codeph">ggadm1</code> is linked to a user connect string of <code class="codeph">ggadm1@dbms1</code>. The alias name of <code class="codeph">ggadmcap</code> is linked to a user connect string of <code class="codeph">ggadmcap@dbmscap</code>.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; DBLOGIN USERIDALIAS ggadm1
+GGSCI&gt; MININGDBLOGIN USERIDALIAS ggadmcap
+GGSCI&gt; REGISTER EXTRACT ext1 DATABASE
+</pre></div>
+</li>
+<li class="stepexpand"><span>Create Extract at the downstream mining database.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; ADD EXTRACT ext1 INTEGRATED TRANLOG BEGIN NOW
+</pre></div>
+</li>
+<li class="stepexpand"><span>Edit Extract parameter file <code class="codeph">ext1.prm</code>. The following lines must be present to take advantage of real-time capture. In the credential store, the alias name of <code class="codeph">ggadm1</code> is linked to a user connect string of <code class="codeph">ggadm1@dbms1</code>. The alias name of <code class="codeph">ggadmcap</code> is linked to a user connect string of <code class="codeph">ggadmcap@dbmscap</code>.</span>
+<div>
+<pre dir="ltr">
+USERIDALIAS ggadm1
+TRANLOGOPTIONS MININGUSERALIAS ggadmcap
+TRANLOGOPTIONS INTEGRATEDPARAMS (downstream_real_time_mine Y)
+</pre></div>
+</li>
+<li class="stepexpand"><span>Start Extract.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; START EXTRACT ext1
+</pre></div>
+</li>
+</ol>
+<div class="section">
+<div class="infobox-note" id="GUID-655DA589-4EC5-495F-94F0-35B4747305C8__GUID-79853B5E-EF14-4077-9ECB-176B0DFFB077">
+<p class="notep1">Note:</p>
+<p>You can create multiple Extracts running in real-time integrated capture mode in the downstream mining database, as long as they all are capturing data from the same source database, such as capturing changes for database DBMS1 in the preceding example.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-41D56EB7-0C14-438C-8791-8F93CB0DCAF8">Example 1: Capturing from One Source Database in Real-time Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-74BA6112-21CC-4F9D-A4AB-029F57F2BC46"></a>
+<h2 id="GGODB-GUID-74BA6112-21CC-4F9D-A4AB-029F57F2BC46" class="sect2"><span class="enumeration_section">C.2</span> Example 2: Capturing from Multiple Sources in Archive-log-only Mode</h2>
+<div>
+<div class="section">
+<p>The following example captures changes from database DBMS1 and DBMS2 by deploying an integrated capture session at a downstream mining database DBMSCAP. It assumes the following users:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>User GGADM1 in DBMS1 whose credentials Extract will use to fetch data and metadata from DBMS1. It is assumed that the <code class="codeph">DBMS_GOLDENGATE_AUTH.GRANT_ADMIN_PRIVILEGE()</code> procedure was called to grant appropriate privileges to this user at DBMS1.</p>
+</li>
+<li>
+<p>User GGADM2 in DBMS2 whose credentials Extract will use to fetch data and metadata from DBMS2. It is assumed that the <code class="codeph">DBMS_GOLDENGATE_AUTH.GRANT_ADMIN_PRIVILEGE()</code> procedure was called to grant appropriate privileges to this user at DBMS2.</p>
+</li>
+<li>
+<p>User GGADMCAP in DBMSCAP whose credentials Extract will use to retrieve logical change records from the logmining server at the downstream mining database. It is assumed that the <code class="codeph">DBMS_GOLDENGATE_AUTH.GRANT_ADMIN_PRIVILEGE()</code> procedure was called to grant appropriate privileges to this user at the downstream mining database DBMSCAP.</p>
+</li>
+</ul>
+<p>This procedure also assumes that the downstream mining database is configured in archive log mode.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#unique_332920729">Prepare the Mining Database to Archive its Local Redo</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-AB56D105-E7A6-447F-9C77-5AAC4F406F73">Prepare the Mining Database to Archive Redo from the Source Database</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-251DBE28-4FC1-4853-BF8E-C2DA236D38B6">Prepare the First Source Database to Send Redo to the Mining Database</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-E03AD77D-8F5C-4CB6-A625-6DD64BB3E3B8">Prepare the Second Source Database to Send Redo to the Mining Database</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-304E6885-E19D-4B02-B146-785796757CBD">Set up Extracts at Downstream Mining Database</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-6BF05ABF-D4C8-491C-8E9D-58AC640DAC0F" title="This appendix contains examples for preparing a downstream Oracle mining database to support Extract in integrated capture mode.">Example Downstream Mining Configuration</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="unique_332920729"></a>
+<h3 id="GGODB-unique_332920729" class="sect3"><span class="enumeration_section">C.2.1</span> Prepare the Mining Database to Archive its Local Redo</h3>
+<div>
+<div class="section">
+<p>To prepare the mining database to archive its local redo:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>The downstream mining database must be in archive log mode. You can do this by issuing the following DDL.</span>
+<div>
+<pre dir="ltr">
+        STARTUP MOUNT;
+        ALTER DATABASE ARCHIVELOG;
+        ALTER DATABASE OPEN;
+</pre></div>
+</li>
+<li class="stepexpand"><span>At the downstream mining database, set <code class="codeph">log_archive_dest_1</code> to archive local redo.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET
+LOG_ARCHIVE_DEST_1='LOCATION=/home/arc_dest/local
+VALID_FOR=(ONLINE_LOGFILE, PRIMARY_ROLE)'
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable <code class="codeph">log_archive_dest_1</code>.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_1=ENABLE 
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-74BA6112-21CC-4F9D-A4AB-029F57F2BC46">Example 2: Capturing from Multiple Sources in Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-AB56D105-E7A6-447F-9C77-5AAC4F406F73"></a>
+<h3 id="GGODB-GUID-AB56D105-E7A6-447F-9C77-5AAC4F406F73" class="sect3"><span class="enumeration_section">C.2.2</span> Prepare the Mining Database to Archive Redo from the Source Database</h3>
+<div>
+<div class="section">
+<p>Set <code class="codeph">DG_CONFIG</code> at the downstream mining database.</p>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbms1,dbms2, dbmscap)'
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-74BA6112-21CC-4F9D-A4AB-029F57F2BC46">Example 2: Capturing from Multiple Sources in Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-251DBE28-4FC1-4853-BF8E-C2DA236D38B6"></a>
+<h3 id="GGODB-GUID-251DBE28-4FC1-4853-BF8E-C2DA236D38B6" class="sect3"><span class="enumeration_section">C.2.3</span> Prepare the First Source Database to Send Redo to the Mining Database</h3>
+<div>
+<div class="section">
+<p>To prepare the first source database to send redo to the mining database:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Make certain that DBMS1 source database is running with the required compatibility.</span>
+<div>
+<pre dir="ltr">
+select name, value from v$parameter where name = 'compatible';
+
+NAME            VALUE
+---------       ---------------------
+compatible      11.1.0.0.0
+</pre>
+<p>The minimum compatibility setting required from integrated capture is 11.1.0.0.0.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Set <code class="codeph">DG_CONFIG</code> at DBMS1 source database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbms1, dbmscap)'; 
+</pre></div>
+</li>
+<li class="stepexpand"><span>Set up redo transport at DBMS1 source database. The <code class="codeph">TEMPLATE</code> clause is mandatory if you want to send redo data directly to foreign archived logs at the downstream mining database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM
+SET LOG_ARCHIVE_DEST_2='SERVICE=DBMSCAP.EXAMPLE.COM ASYNC OPTIONAL NOREGISTER
+TEMPLATE='/usr/orcl/arc_dest/dbms1/dbms1_arch_%t_%s_%r.log VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)DB_UNIQUE_NAME=dbmscap';
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable the downstream destination.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE;
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-74BA6112-21CC-4F9D-A4AB-029F57F2BC46">Example 2: Capturing from Multiple Sources in Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-E03AD77D-8F5C-4CB6-A625-6DD64BB3E3B8"></a>
+<h3 id="GGODB-GUID-E03AD77D-8F5C-4CB6-A625-6DD64BB3E3B8" class="sect3"><span class="enumeration_section">C.2.4</span> Prepare the Second Source Database to Send Redo to the Mining Database</h3>
+<div>
+<div class="section">
+<p>To prepare the second source database to send redo to the mining database:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Make sure that DBMS2 source database is running with the required compatibility.</span>
+<div>
+<pre dir="ltr">
+select name, value from v$parameter where name = 'compatible';
+
+NAME                    VALUE
+---------               ---------------------
+compatible              11.1.0.0.0
+</pre>
+<p>The minimum compatibility setting required from integrated capture is 11.1.0.0.0.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Set <code class="codeph">DG_CONFIG</code> at DBMS2 source database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbms2, dbmscap)'; 
+</pre></div>
+</li>
+<li class="stepexpand"><span>Set up redo transport at DBMS2 source database. The <code class="codeph">TEMPLATE</code> clause is mandatory if you want to send redo data directly to foreign archived logs at the downstream mining database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM
+SET LOG_ARCHIVE_DEST_2='SERVICE=DBMSCAP.EXAMPLE.COM ASYNC OPTIONAL NOREGISTER
+TEMPLATE='/usr/orcl/arc_dest/dbms2/dbms2_arch_%t_%s_%r.log VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)DB_UNIQUE_NAME=dbmscap';
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable the downstream destination.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE;
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-74BA6112-21CC-4F9D-A4AB-029F57F2BC46">Example 2: Capturing from Multiple Sources in Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-304E6885-E19D-4B02-B146-785796757CBD"></a>
+<h3 id="GGODB-GUID-304E6885-E19D-4B02-B146-785796757CBD" class="sect3"><span class="enumeration_section">C.2.5</span> Set up Extracts at Downstream Mining Database</h3>
+<div>
+<div class="section">
+<p>These steps set up Extract at the downstream database to capture from the archived logs sent by DBMS1 and DBMS2.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-74BA6112-21CC-4F9D-A4AB-029F57F2BC46">Example 2: Capturing from Multiple Sources in Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-90068E04-F1D2-4F30-8CCB-1E1A26E8DCDE"></a>
+<h2 id="GGODB-GUID-90068E04-F1D2-4F30-8CCB-1E1A26E8DCDE" class="sect2"><span class="enumeration_section">C.3</span> Example 3: Capturing from Multiple Sources with Mixed Real-time and Archive-log-only Mode</h2>
+<div>
+<div class="section">
+<div class="infobox-note" id="GUID-90068E04-F1D2-4F30-8CCB-1E1A26E8DCDE__GUID-FF0EAAA4-7645-4A63-BB15-4D7228104370">
+<p class="notep1">Note:</p>
+<p>This example assumes that you created the necessary standby redo log files as shown in <a href="configuring-downstream-mining-database.htm#GUID-E265AB7E-6255-496E-896F-32E943C362D9" title="This appendix contains instructions for preparing a downstream Oracle mining database to support Extract in integrated capture mode.">Configuring a Downstream Mining Database</a>.</p>
+</div>
+<p>The following example captures changes from database DBMS1, DBMS2 and DBMS3 by deploying an integrated capture session at a downstream mining database DBMSCAP. It assumes the following users:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>User GGADM1 in DBMS1 whose credentials Extract will use to fetch data and metadata from DBMS1. It is assumed that the <code class="codeph">DBMS_GOLDENGATE_AUTH.GRANT_ADMIN_PRIVILEGE()</code> procedure was called to grant appropriate privileges to this user at DBMS1.</p>
+</li>
+<li>
+<p>User GGADM2 in DBMS2 whose credentials Extract will use to fetch data and metadata from DBMS2. It is assumed that the <code class="codeph">DBMS_GOLDENGATE_AUTH.GRANT_ADMIN_PRIVILEGE()</code> procedure was called to grant appropriate privileges to this user at DBMS2.</p>
+</li>
+<li>
+<p>User GGADM3 in DBMS3 whose credentials Extract will use to fetch data and metadata from DBMS3. It is assumed that the <code class="codeph">DBMS_GOLDENGATE_AUTH.GRANT_ADMIN_PRIVILEGE()</code> procedure was called to grant appropriate privileges to this user at DBMS3.</p>
+</li>
+<li>
+<p>User GGADMCAP in DBMSCAP whose credentials Extract will use to retrieve logical change records from the logmining server at the downstream mining database. It is assumed that the <code class="codeph">DBMS_GOLDENGATE_AUTH.GRANT_ADMIN_PRIVILEGE()</code> procedure was called to grant appropriate privileges to this user at the downstream mining database DBMSCAP.</p>
+</li>
+</ul>
+<p>This procedure also assumes that the downstream mining database is configured in archive log mode.</p>
+<p>In this example, the redo sent by DBMS3 will be mined in real time mode, whereas the redo data sent from DBMS1 and DBMS2 will be mined in archive-log-only mode.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-3A60C504-7AD6-4EF1-9AFC-95943ED8A811">Prepare the Mining Database to Archive its Local Redo</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-63609086-751D-4581-BC8D-9BB298E99771">Prepare the Mining Database to Accept Redo from the Source Databases</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#unique_743225626">Prepare the First Source Database to Send Redo to the Mining Database</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#unique_1905706138">Prepare the Second Source Database to Send Redo to the Mining Database</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-38022A89-32CC-4A21-8339-13245A136C78">Prepare the Third Source Database to Send Redo to the Mining Database</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#unique_267789931">Set up Extracts at Downstream Mining Database</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-6BF05ABF-D4C8-491C-8E9D-58AC640DAC0F" title="This appendix contains examples for preparing a downstream Oracle mining database to support Extract in integrated capture mode.">Example Downstream Mining Configuration</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-3A60C504-7AD6-4EF1-9AFC-95943ED8A811"></a>
+<h3 id="GGODB-GUID-3A60C504-7AD6-4EF1-9AFC-95943ED8A811" class="sect3"><span class="enumeration_section">C.3.1</span> Prepare the Mining Database to Archive its Local Redo</h3>
+<div>
+<div class="section">
+<p>To prepare the mining database to archive its local redo:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>The downstream mining database must be in archive log mode. You can do this by issuing the following DDL.</span>
+<div>
+<pre dir="ltr">
+STARTUP MOUNT;
+ALTER DATABASE ARCHIVELOG;
+ALTER DATABASE OPEN;
+</pre></div>
+</li>
+<li class="stepexpand"><span>At the downstream mining database, set <code class="codeph">log_archive_dest_1</code> to archive local redo.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SETLOG_ARCHIVE_DEST_1='LOCATION=/home/arc_dest/localVALID_FOR=(ONLINE_LOGFILE, PRIMARY_ROLE)'
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable <code class="codeph">log_archive_dest_1</code>.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_1=ENABLE 
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-90068E04-F1D2-4F30-8CCB-1E1A26E8DCDE">Example 3: Capturing from Multiple Sources with Mixed Real-time and Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-63609086-751D-4581-BC8D-9BB298E99771"></a>
+<h3 id="GGODB-GUID-63609086-751D-4581-BC8D-9BB298E99771" class="sect3"><span class="enumeration_section">C.3.2</span> Prepare the Mining Database to Accept Redo from the Source Databases</h3>
+<div>
+<div class="section">
+<p>Because redo data is being accepted in the standby redo logs of the downstream mining database, the appropriate number of correctly sized standby redo logs must exist. If you did not configure the standby logs, see <a href="configuring-downstream-mining-database.htm#GUID-E265AB7E-6255-496E-896F-32E943C362D9" title="This appendix contains instructions for preparing a downstream Oracle mining database to support Extract in integrated capture mode.">Configuring a Downstream Mining Database</a>.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>At the downstream mining database, set the second archive log destination in the <code class="codeph">LOG_ARCHIVE_DEST_n</code> initialization parameter as shown in the following example. This is needed to handle archive standby redo logs.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET
+LOG_ARCHIVE_DEST_2='LOCATION=/home/arc_dest/srl_dbms3
+VALID_FOR=(STANDBY_LOGFILE,PRIMARY_ROLE)'
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable the <code class="codeph">LOG_ARCHIVE_DEST_STATE_2</code> initialization parameter that corresponds with the <code class="codeph">LOG_ARCHIVE_DEST_2</code> parameter as shown in the following example.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE 
+</pre></div>
+</li>
+<li class="stepexpand"><span>Set <code class="codeph">DG_CONFIG</code> at the downstream mining database to accept redo data from all of the source databases.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbms1, dbms2, dbms3, dbmscap)' 
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-90068E04-F1D2-4F30-8CCB-1E1A26E8DCDE">Example 3: Capturing from Multiple Sources with Mixed Real-time and Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="unique_743225626"></a>
+<h3 id="GGODB-unique_743225626" class="sect3"><span class="enumeration_section">C.3.3</span> Prepare the First Source Database to Send Redo to the Mining Database</h3>
+<div>
+<div class="section">
+<p>To prepare the first source database to send redo to the mining database:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Make certain that DBMS1 source database is running with the required compatibility.</span>
+<div>
+<pre dir="ltr">
+select name, value from v$parameter where name = 'compatible';
+
+NAME            VALUE
+---------       ---------------------
+compatible      11.1.0.0.0
+</pre>
+<p>The minimum compatibility setting required from integrated capture is 11.1.0.0.0.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Set <code class="codeph">DG_CONFIG</code> at DBMS1 source database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbms1, dbmscap)'; 
+</pre></div>
+</li>
+<li class="stepexpand"><span>Set up redo transport at DBMS1 source database. The <code class="codeph">TEMPLATE</code> clause is mandatory if you want to send redo data directly to foreign archived logs at the downstream mining database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM
+SET LOG_ARCHIVE_DEST_2='SERVICE=DBMSCAP.EXAMPLE.COM ASYNC OPTIONAL NOREGISTER
+TEMPLATE='/usr/orcl/arc_dest/dbms1/dbms1_arch_%t_%s_%r.log VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)DB_UNIQUE_NAME=dbmscap';
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable the downstream destination.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE;
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-90068E04-F1D2-4F30-8CCB-1E1A26E8DCDE">Example 3: Capturing from Multiple Sources with Mixed Real-time and Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="unique_1905706138"></a>
+<h3 id="GGODB-unique_1905706138" class="sect3"><span class="enumeration_section">C.3.4</span> Prepare the Second Source Database to Send Redo to the Mining Database</h3>
+<div>
+<div class="section">
+<p>To prepare the second source database to send redo to the mining database:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Make sure that DBMS2 source database is running with the required compatibility.</span>
+<div>
+<pre dir="ltr">
+select name, value from v$parameter where name = 'compatible';
+
+NAME                    VALUE
+---------               ---------------------
+compatible              11.1.0.0.0
+</pre>
+<p>The minimum compatibility setting required from integrated capture is 11.1.0.0.0.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Set <code class="codeph">DG_CONFIG</code> at DBMS2 source database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbms2, dbmscap)'; 
+</pre></div>
+</li>
+<li class="stepexpand"><span>Set up redo transport at DBMS2 source database. The <code class="codeph">TEMPLATE</code> clause is mandatory if you want to send redo data directly to foreign archived logs at the downstream mining database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM
+SET LOG_ARCHIVE_DEST_2='SERVICE=DBMSCAP.EXAMPLE.COM ASYNC OPTIONAL NOREGISTER
+TEMPLATE='/usr/orcl/arc_dest/dbms2/dbms2_arch_%t_%s_%r.log VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)DB_UNIQUE_NAME=dbmscap';
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable the downstream destination.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE;
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-90068E04-F1D2-4F30-8CCB-1E1A26E8DCDE">Example 3: Capturing from Multiple Sources with Mixed Real-time and Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-38022A89-32CC-4A21-8339-13245A136C78"></a>
+<h3 id="GGODB-GUID-38022A89-32CC-4A21-8339-13245A136C78" class="sect3"><span class="enumeration_section">C.3.5</span> Prepare the Third Source Database to Send Redo to the Mining Database</h3>
+<div>
+<div class="section">
+<p>To prepare the third source database to send redo to the mining database:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Make sure that DBMS3 source database is running with the required compatibility.</span>
+<div>
+<pre dir="ltr">
+select name, value from v$parameter where name = 'compatible';
+
+NAME                    VALUE
+---------               ---------------------
+compatible              11.1.0.0.0
+</pre>
+<p>The minimum compatibility setting required from integrated capture is 11.1.0.0.0.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Set <code class="codeph">DG_CONFIG</code> at DBMS3 source database.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbms3, dbmscap)'; 
+</pre></div>
+</li>
+<li class="stepexpand"><span>Set up redo transport at DBMS3 source database. Because DBMS3 is the source that will send its online redo logs to the standby redo logs at the downstream mining database, do not specify a <code class="codeph">TEMPLATE</code> clause.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM
+SET LOG_ARCHIVE_DEST_2='SERVICE=DBMSCAP.EXAMPLE.COM ASYNC OPTIONAL NOREGISTER
+VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)DB_UNIQUE_NAME=dbmscap';
+</pre></div>
+</li>
+<li class="stepexpand"><span>Enable the downstream destination.</span>
+<div>
+<pre dir="ltr">
+ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE;
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-90068E04-F1D2-4F30-8CCB-1E1A26E8DCDE">Example 3: Capturing from Multiple Sources with Mixed Real-time and Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="unique_267789931"></a>
+<h3 id="GGODB-unique_267789931" class="sect3"><span class="enumeration_section">C.3.6</span> Set up Extracts at Downstream Mining Database</h3>
+<div>
+<div class="section">
+<p>These steps set up Extract at the downstream database to capture from the archived logs sent by DBMS1 and DBMS2.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-0D0DAEAD-868E-427E-968B-609C04E73429">Set up Extract (ext1) to Capture Changes from Archived Logs Sent by DBMS1</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-7CA171EA-5CCC-4C00-83E3-894B83712965">Set up Extract (ext2) to Capture Changes from Archived Logs Sent by DBMS2</a><br /></li>
+<li class="ulchildlink"><a href="example-downstream-mining-configuration.htm#GUID-E35164BA-FF35-4DC6-91AC-97636FA890B1">Set up Extract (ext3) to Capture Changes in Real-time Mode from Online Logs Sent&nbsp;by&nbsp;DBMS3</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#GUID-90068E04-F1D2-4F30-8CCB-1E1A26E8DCDE">Example 3: Capturing from Multiple Sources with Mixed Real-time and Archive-log-only Mode</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-0D0DAEAD-868E-427E-968B-609C04E73429"></a>
+<h4 id="GGODB-GUID-0D0DAEAD-868E-427E-968B-609C04E73429" class="sect4"><span class="enumeration_section">C.3.6.1</span> Set up Extract (ext1) to Capture Changes from Archived Logs Sent by DBMS1</h4>
+<div>
+<div class="section">
+<p>Perform the following steps on the DBMSCAP downstream mining database.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Register Extract with DBMSCAP for the DBMS1 source database. In the credential store, the alias name of <code class="codeph">ggadm1</code> is linked to a user connect string of <code class="codeph">ggadm1@dbms1</code>.The alias name of <code class="codeph">ggadmcap</code> is linked to a user connect string of <code class="codeph">ggadmcap@dbmscap</code>.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; DBLOGIN USERIDALIAS ggadm1
+GGSCI&gt; MININGDBLOGIN USERIDALIAS ggadmcap
+GGSCI&gt; REGISTER EXTRACT ext1 DATABASE
+</pre></div>
+</li>
+<li class="stepexpand"><span>Add Extract at the mining database DBMSCAP.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; ADD EXTRACT ext1 INTEGRATED TRANLOG BEGIN NOW
+</pre></div>
+</li>
+<li class="stepexpand"><span>Edit the Extract parameter file <code class="codeph">ext1.prm</code>. In the credential store, the alias name of <code class="codeph">ggadm1</code> is linked to a user connect string of <code class="codeph">ggadm1@dbms1</code>. The alias name of <code class="codeph">ggadmcap</code> is linked to a user connect string of <code class="codeph">ggadmcap@dbmscap</code>.</span>
+<div>
+<pre dir="ltr">
+USERIDALIAS ggadm1
+TRANLOGOPTIONS MININGUSERALIAS ggadmcap
+TRANLOGOPTIONS INTEGRATEDPARAMS (downstream_real_time_mine N)
+</pre></div>
+</li>
+<li class="stepexpand"><span>Start Extract.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; START EXTRACT ext1
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#unique_267789931">Set up Extracts at Downstream Mining Database</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-7CA171EA-5CCC-4C00-83E3-894B83712965"></a>
+<h4 id="GGODB-GUID-7CA171EA-5CCC-4C00-83E3-894B83712965" class="sect4"><span class="enumeration_section">C.3.6.2</span> Set up Extract (ext2) to Capture Changes from Archived Logs Sent by DBMS2</h4>
+<div>
+<div class="section">
+<p>Perform the following steps on the DBMSCAP downstream mining database.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Register Extract with the mining database for source database DBMS2. In the credential store, the alias name of <code class="codeph">ggadm2</code> is linked to a user connect string of <code class="codeph">ggadm2@dbms2</code>.The alias name of <code class="codeph">ggadmcap</code> is linked to a user connect string of <code class="codeph">ggadmcap@dbmscap</code>.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; DBLOGIN USERIDALIAS ggadm2
+GGSCI&gt; MININGDBLOGIN USERIDALIAS ggadmcap
+GGSCI&gt; REGISTER EXTRACT ext2 DATABASE
+</pre></div>
+</li>
+<li class="stepexpand"><span>Create Extract at the mining database.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; ADD EXTRACT ext2 INTEGRATED TRANLOG, BEGIN NOW
+</pre></div>
+</li>
+<li class="stepexpand"><span>Edit the Extract parameter file <code class="codeph">ext2.prm</code>. In the credential store, the alias name of <code class="codeph">ggadm2</code> is linked to a user connect string of <code class="codeph">ggadm2@dbms2</code>.The alias name of <code class="codeph">ggadmcap</code> is linked to a user connect string of <code class="codeph">ggadmcap@dbmscap</code>.</span>
+<div>
+<pre dir="ltr">
+USERIDALIAS ggadm2
+TRANLOGOPTIONS MININGUSERALIAS ggadmcap
+TRANLOGOPTIONS INTEGRATEDPARAMS (downstream_real_time_mine N)
+</pre></div>
+</li>
+<li class="stepexpand"><span>Start Extract.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; START EXTRACT ext2
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#unique_267789931">Set up Extracts at Downstream Mining Database</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-E35164BA-FF35-4DC6-91AC-97636FA890B1"></a>
+<h4 id="GGODB-GUID-E35164BA-FF35-4DC6-91AC-97636FA890B1" class="sect4"><span class="enumeration_section">C.3.6.3</span> Set up Extract (ext3) to Capture Changes in Real-time Mode from Online Logs Sent&nbsp;by&nbsp;DBMS3</h4>
+<div>
+<div class="section">
+<p>Perform the following steps on the DBMSCAP downstream mining database.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Register Extract with the mining database for source database DBMS3. In the credential store, the alias name of <code class="codeph">ggadm3</code> is linked to a user connect string of <code class="codeph">ggadm3@dbms3</code>.The alias name of <code class="codeph">ggadmcap</code> is linked to a user connect string of <code class="codeph">ggadmcap@dbmscap</code>.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; DBLOGIN USERID ggadm3
+GGSCI&gt; MININGDBLOGIN USERID ggadmcap
+GGSCI&gt; REGISTER EXTRACT ext3 DATABASE
+</pre></div>
+</li>
+<li class="stepexpand"><span>Create Extract at the mining database.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; ADD EXTRACT ext3 INTEGRATED TRANLOG, BEGIN NOW
+</pre></div>
+</li>
+<li class="stepexpand"><span>Edit the Extract parameter file <code class="codeph">ext3.prm</code>. To enable real-time mining, you must specify <code class="codeph">downstream_real_time_mine</code>. In the credential store, the alias name of <code class="codeph">ggadm3</code> is linked to a user connect string of <code class="codeph">ggadm3@dbms3</code>.The alias name of <code class="codeph">ggadmcap</code> is linked to a user connect string of <code class="codeph">ggadmcap@dbmscap</code>.</span>
+<div>
+<pre dir="ltr">
+USERIDALIAS ggadm3
+TRANLOGOPTIONS MININGUSERALIAS ggadmcap
+TRANLOGOPTIONS INTEGRATEDPARAMS (downstream_real_time_mine Y)
+</pre></div>
+</li>
+<li class="stepexpand"><span>Start Extract.</span>
+<div>
+<pre dir="ltr">
+GGSCI&gt; START EXTRACT ext3
+</pre></div>
+</li>
+</ol>
+<div class="section">
+<div class="infobox-note" id="GUID-E35164BA-FF35-4DC6-91AC-97636FA890B1__GUID-09B227D7-EE82-4F20-AA1F-3A003F256511">
+<p class="notep1">Note:</p>
+<p>You can create multiple Extracts running in real-time integrated capture mode in the downstream mining database, as long as they all are capturing data from the same source database, such as all capturing for database DBMS3 in the preceding example.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="example-downstream-mining-configuration.htm#unique_267789931">Set up Extracts at Downstream Mining Database</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment482">
+<tr>
+<td class="cellalignment492">
+<table class="cellalignment487">
+<tr>
+<td class="cellalignment486"><a href="configuring-downstream-mining-database.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment486"><a href="installing-trigger-based-ddl-capture-1.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment494">
+<table class="cellalignment485">
+<tr>
+<td class="cellalignment486"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment486"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment486"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>D Installing Trigger-Based DDL Capture</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This appendix contains instructions for installing the objects that support the trigger-based method of Oracle GoldenGate DDL support." />
+<meta name="dcterms.created" content="2015-06-05T14:9:49Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E29644-07" />
+<meta name="dcterms.isVersionOf" content="GIORA" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="ic_deploy2.htm" title="Previous" type="text/html" />
+<link rel="Next" href="xml_workaround.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GIORA.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GIORA.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GIORA.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">24/27</span>
+<!-- End Header -->
+<script  >
+<!-- // <![CDATA[
+window.name='ddl_install'
+// ]]> -->
+</script> <script  >
+// <![CDATA[
+function footdisplay(footnum,footnote) {
+    var msg = window.open('', 'NewWindow' + footnum,
+        'directories=no,height=120,location=no,menubar=no,resizable=yes,' +
+        'scrollbars=yes,status=no,toolbar=no,width=598');
+    msg.document.open('text/html');
+    msg.document.write('<!DOCTYPE html ');
+    msg.document.write('PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ');
+
+    msg.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
+    msg.document.write('<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>');
+    msg.document.write('Footnote ' + footnum);
+    msg.document.write('<\/title><meta http-equiv="Content-Type" ');
+    msg.document.write('content="text/html; charset=utf-8" />');
+    msg.document.write('');
+    msg.document.write('<style> <![CDATA[ ');
+    msg.document.write('h1 {text-align: center; font-size: 14pt;}');
+    msg.document.write('fieldset {border: none;}');
+    msg.document.write('form {text-align: center;}');
+    msg.document.write(' ]]\u003e <\/style>');
+    msg.document.write('<\/head><body><h1>Footnote ' + footnum + '<\/h1><p>');
+    msg.document.write(footnote);
+    msg.document.write('<\/p><form action="" method="post"><fieldset>');
+    msg.document.write('<input type="button" value="OK" ');
+    msg.document.write('onclick="window.close();" />');
+    msg.document.write('<\/fieldset><\/form><\/body><\/html>');
+    msg.document.close();
+    msg.focus();
+}
+// ]]>
+</script> <noscript>
+<p>The script content on this page is for navigation purposes only and does not alter the content in any way.</p>
+</noscript>
+<div id="GIORA192" class="appendix"><a id="CHDDIBBE"></a>
+<h1 class="appendix"><span class="secnum">D</span> Installing Trigger-Based DDL Capture</h1>
+<p><a id="GIORA565"></a>This appendix contains instructions for installing the objects that support the trigger-based method of Oracle GoldenGate DDL support.</p>
+<p>This appendix includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#A1943478">When to Use Trigger-based DDL Capture</a></p>
+</li>
+<li>
+<p><a href="#A1925817">Overview of the Objects that Support Trigger-based DDL Capture</a></p>
+</li>
+<li>
+<p><a href="#A1929855">Installing the DDL Objects</a></p>
+</li>
+</ul>
+<p>To configure Oracle GoldenGate to capture and replicate DDL, see <a href="ddl.htm#CHDHJEDE">Chapter 13, "Configuring DDL Support."</a></p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+DDL support for sequences (<code dir="ltr">CREATE</code>, <code dir="ltr">ALTER</code>, <code dir="ltr">DROP</code>, <code dir="ltr">RENAME</code>) is compatible with, but not required for, replicating the sequence values themselves. To replicate just sequence values, you do not need to install the Oracle GoldenGate DDL support environment. You can just use the <code dir="ltr">SEQUENCE</code> parameter in the Extract configuration.</div>
+<a id="A1943478"></a>
+<div id="GIORA946" class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">D.1</span> When to Use Trigger-based DDL Capture</h2>
+<p>You <span class="italic">must</span> use trigger-based DDL capture when Extract will operate in the following configurations:</p>
+<ul>
+<li>
+<p>Extract operates in classic capture mode against any version of Oracle database.</p>
+</li>
+<li>
+<p>Extract operates in integrated mode against an Oracle database version 11.2.0.3 or earlier.</p>
+</li>
+</ul>
+<p>If Extract will run in integrated mode against a version 11.2.0.4 or later Oracle database, the DDL trigger is not required. By default, DDL capture is handled transparently through the database logmining server.</p>
+<p>If Extract will capture from a multitenant container database, integrated capture mode must be used with the native DDL capture method.</p>
+<p>See <a href="process_mode.htm#CACCDCEA">Chapter 5, "Choosing Capture and Apply Modes"</a> for more information about capture modes.</p>
+<p>See <a href="ddl.htm#CHDHJEDE">Chapter 13, "Configuring DDL Support"</a> for more information about configuring DDL support.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A1925817"></a>
+<div id="GIORA193" class="sect1">
+<h2 class="sect1"><span class="secnum">D.2</span> Overview of the Objects that Support Trigger-based DDL Capture</h2>
+<p>To install the Oracle GoldenGate trigger-based DDL environment, you will be installing the database objects shown in <a href="#CHDECAAE">Table D-1</a>.</p>
+<div id="GIORA194" class="tblhruleformal"><p class="titleintable"><a id="sthref222"></a><a id="CHDECAAE"></a>Table D-1 DDL Synchronization Objects</p>
+<table class="cellalignment245" title="DDL Synchronization Objects" summary="This table lists the DDL synchronization objects. It gives the purpose and default name for each object.">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t3">Object</th>
+<th class="cellalignment246" id="r1c2-t3">Purpose</th>
+<th class="cellalignment246" id="r1c3-t3">Default name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t3" headers="r1c1-t3">
+<p>DDL marker table</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c2-t3">
+<p>Stores DDL information. This table only receives inserts.</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t3 r1c3-t3">
+<p><code dir="ltr">GGS_MARKER</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r3c1-t3" headers="r1c1-t3">
+<p>Sequence on marker table</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c2-t3">
+<p>Used for a column in the marker table.</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t3 r1c3-t3">
+<p><code dir="ltr">GGS_DDL_SEQ</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r4c1-t3" headers="r1c1-t3">
+<p>DDL history table</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c2-t3">
+<p>Stores object metadata history. This table receives inserts, updates, deletes.</p>
+</td>
+<td class="cellalignment240" headers="r4c1-t3 r1c3-t3">
+<p><code dir="ltr">GGS_DDL_HIST</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r5c1-t3" headers="r1c1-t3">
+<p>Object ID history table</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t3 r1c2-t3">
+<p>Contains object IDs of configured objects.</p>
+</td>
+<td class="cellalignment240" headers="r5c1-t3 r1c3-t3">
+<p><code dir="ltr">GGS_DDL_HIST_ALT</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r6c1-t3" headers="r1c1-t3">
+<p>DDL trigger</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t3 r1c2-t3">
+<p>Fires on DDL operations. Writes information about the operation to the marker and history tables. Installed with the trigger are some packages.</p>
+</td>
+<td class="cellalignment240" headers="r6c1-t3 r1c3-t3">
+<p><code dir="ltr">GGS_DDL_TRIGGER_BEFORE</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r7c1-t3" headers="r1c1-t3">
+<p>DDL schema</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t3 r1c2-t3">
+<p>Contains the DDL synchronization objects.</p>
+</td>
+<td class="cellalignment240" headers="r7c1-t3 r1c3-t3">
+<p>None; must be specified during installation and in the <code dir="ltr">GLOBALS</code> file.</p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r8c1-t3" headers="r1c1-t3">
+<p>User role</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t3 r1c2-t3">
+<p>Establishes the role needed to execute DDL operations.</p>
+</td>
+<td class="cellalignment240" headers="r8c1-t3 r1c3-t3">
+<p><code dir="ltr">GGS_GGSUSER_ROLE</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r9c1-t3" headers="r1c1-t3">
+<p>Internal setup table</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t3 r1c2-t3">
+<p>Database table for internal use only.</p>
+</td>
+<td class="cellalignment240" headers="r9c1-t3 r1c3-t3">
+<p><code dir="ltr">GGS_SETUP</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r10c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">ddl_pin</code></p>
+</td>
+<td class="cellalignment240" headers="r10c1-t3 r1c2-t3">
+<p>Pins DDL tracing, the DDL package, and the DDL trigger for performance improvements.</p>
+</td>
+<td class="cellalignment240" headers="r10c1-t3 r1c3-t3">
+<p><code dir="ltr">ddl_pin</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r11c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">ddl_cleartrace.sql</code></p>
+</td>
+<td class="cellalignment240" headers="r11c1-t3 r1c2-t3">
+<p>Removes the DDL trace file.</p>
+</td>
+<td class="cellalignment240" headers="r11c1-t3 r1c3-t3">
+<p><code dir="ltr">ddl_cleartrace.sql</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r12c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">ddl_status.sql</code></p>
+</td>
+<td class="cellalignment240" headers="r12c1-t3 r1c2-t3">
+<p>Verifies that the Oracle GoldenGate DDL objects are installed</p>
+</td>
+<td class="cellalignment240" headers="r12c1-t3 r1c3-t3">
+<p><code dir="ltr">ddl_status.sql</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r13c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">marker_status.sql</code></p>
+</td>
+<td class="cellalignment240" headers="r13c1-t3 r1c2-t3">
+<p>Verifies that the marker table is installed.</p>
+</td>
+<td class="cellalignment240" headers="r13c1-t3 r1c3-t3">
+<p><code dir="ltr">marker_status.sql</code></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r14c1-t3" headers="r1c1-t3">
+<p><code dir="ltr">ddl_tracelevel.sql</code></p>
+</td>
+<td class="cellalignment240" headers="r14c1-t3 r1c2-t3">
+<p>Sets the level for DDL tracing.</p>
+</td>
+<td class="cellalignment240" headers="r14c1-t3 r1c3-t3">
+<p><code dir="ltr">ddl_tracelevel.sql</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="sect1" -->
+<a id="A1929855"></a>
+<div id="GIORA195" class="sect1">
+<h2 class="sect1"><span class="secnum">D.3</span> Installing the DDL Objects</h2>
+<p>Follow these steps to install the database objects that support Oracle GoldenGate DDL capture.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+When using Extract in classic mode to capture in an Active Data Guard environment, the DDL objects must be installed on the source database, not the standby.</div>
+<ol>
+<li id="CHDGGGCD">
+<p>Choose a schema that can contain the Oracle GoldenGate DDL objects. This schema cannot be case-sensitive.</p>
+</li>
+<li>
+<p>Grant the following permission to the Oracle GoldenGate schema.</p>
+<pre dir="ltr">
+GRANT EXECUTE ON utl_file TO <span class="codeinlineitalic">schema</span>;
+</pre></li>
+<li>
+<p>Create a default tablespace for the Oracle GoldenGate DDL schema. This tablespace must be dedicated to the DDL schema; do not allow any other schema to share it.</p>
+</li>
+<li>
+<p>Set <code dir="ltr">AUTOEXTEND</code> to <code dir="ltr">ON</code> for the DDL tablespace, and size it to accommodate the growth of the <code dir="ltr">GGS_DDL_HIST</code> and <code dir="ltr">GGS_MARKER</code> tables. The <code dir="ltr">GGS_DDL_HIST</code> table, in particular, will grow in proportion to overall DDL activity.</p>
+</li>
+<li>
+<p>(Optional) To cause user DDL activity to fail when the DDL tablespace fills up, edit the <code dir="ltr">params.sql</code> script and set the <code dir="ltr">ddl_fire_error_in_trigger</code> parameter to <code dir="ltr">TRUE</code>. Extract cannot capture DDL if the tablespace fills up, so stopping the DDL gives you time to extend the tablespace size and prevent the loss of DDL capture. Managing tablespace sizing this way, however, requires frequent monitoring of the business applications and Extract to avoid business disruptions. As a best practice, make certain to size the tablespace appropriately in the first place, and set <code dir="ltr">AUTOEXTEND</code> to <code dir="ltr">ON</code> so that the tablespace does not fill up.</p>
+<div class="infoboxnotewarn">
+<p class="notep1">CAUTION:</p>
+<p class="warnsp">Make a backup of the <code dir="ltr">params.sql</code> script before you edit it to preserve its original state.</p>
+</div>
+</li>
+<li>
+<p>Create a <code dir="ltr">GLOBALS</code> file (or edit it, if one exists).</p>
+<pre dir="ltr">
+EDIT PARAMS ./GLOBALS
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<code dir="ltr">EDIT PARAMS</code> creates a simple text file. When you save the file after <code dir="ltr">EDIT PARAMS</code>, it is saved with the name <code dir="ltr">GLOBALS</code> in upper case, without a file extension, at the root of the Oracle GoldenGate directory. Do not alter the file name or location.</div>
+</li>
+<li>
+<p>In the <code dir="ltr">GLOBALS</code> file, specify the name of the DDL schema by adding the following parameter to the <code dir="ltr">GLOBALS</code> file.</p>
+<pre dir="ltr">
+GGSCHEMA <span class="codeinlineitalic">schema_name</span>
+</pre></li>
+<li>
+<p>(Optional) To change the names of other objects listed in <a href="#CHDECAAE">Table D-1</a>, <span class="italic">the changes must be made now</span>, before proceeding with the rest of the installation. Otherwise, you will need to stop Oracle GoldenGate DDL processing and reinstall the DDL objects. It is recommended that you accept the default names of the database objects. To change any name in <a href="#CHDECAAE">Table D-1</a> (except the schema), do one or both of the following:</p>
+<ul>
+<li>
+<p>Record all name changes in the <code dir="ltr">params.sql</code> script. Edit this script and change the appropriate parameters. Do not run this script.</p>
+</li>
+<li>
+<p>List the names shown in <a href="#CHDHDAHA">Table D-2</a> in the <code dir="ltr">GLOBALS</code> file. The correct parameters to use are listed in the <span class="bold">Parameter</span> column of the table.</p>
+<div id="GIORA196" class="tblhruleformal"><p class="titleintable"><a id="sthref223"></a><a id="CHDHDAHA"></a>Table D-2 GLOBALS Parameters for Changing DDL Object Names</p>
+<table class="cellalignment245" title="GLOBALS Parameters for Changing DDL Object Names" summary="This table lists the GLOBALS parameters for changing DDL object names.">
+<thead>
+<tr class="cellalignment234">
+<th class="cellalignment246" id="r1c1-t7">Object</th>
+<th class="cellalignment246" id="r1c2-t7">Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r2c1-t7" headers="r1c1-t7">
+<p>Marker table</p>
+</td>
+<td class="cellalignment240" headers="r2c1-t7 r1c2-t7">
+<p><code dir="ltr">MARKERTABLE</code> <code dir="ltr"><span class="codeinlineitalic">new_table_name</span></code><a id="sthref224" href="#sthref224" onclick='footdisplay(1,"Do not qualify the name of any of these tables. The schema name for these table must be either the one that is specified with \u003ccode dir=\"ltr\"\u003eGGSCHEMA\u003c/code\u003e or the schema of the current user, if \u003ccode dir=\"ltr\"\u003eGGSCHEMA\u003c/code\u003e is not specified in \u003ccode dir=\"ltr\"\u003eGLOBALS\u003c/code\u003e.")'><sup class="tablefootnote">Foot&nbsp;1&nbsp;</sup></a></p>
+</td>
+</tr>
+<tr class="cellalignment234">
+<td class="cellalignment240" id="r3c1-t7" headers="r1c1-t7">
+<p>History table</p>
+</td>
+<td class="cellalignment240" headers="r3c1-t7 r1c2-t7">
+<p><code dir="ltr">DDLTABLE</code> <code dir="ltr"><span class="codeinlineitalic">new_table_name</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p class="tablefootnote"><sup class="tablefootnote">Footnote&nbsp;1&nbsp;</sup>Do not qualify the name of any of these tables. The schema name for these table must be either the one that is specified with <code dir="ltr">GGSCHEMA</code> or the schema of the current user, if <code dir="ltr">GGSCHEMA</code> is not specified in <code dir="ltr">GLOBALS</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>To enable trigger-based DDL replication to recognize Oracle invisible indexes as unique identifiers, set the following parameter to <code dir="ltr">TRUE</code> in the <code dir="ltr">params.sql</code> script:</p>
+<pre dir="ltr">
+define allow_invisible_index_keys = 'TRUE' 
+</pre></li>
+<li>
+<p>Save and close the <code dir="ltr">GLOBALS</code> file and the <code dir="ltr">params.sql</code> file.</p>
+</li>
+<li>
+<p>Change directories to the Oracle GoldenGate installation directory.</p>
+</li>
+<li>
+<p>Exit all Oracle sessions, including those of SQL*Plus, those of business applications, those of the Oracle GoldenGate processes, and those of any other software that uses Oracle. Prevent the start of any new sessions.</p>
+</li>
+<li>
+<p>Run SQL*Plus and log in as a user that has <code dir="ltr">SYSDBA</code> privilege. This privilege is required to install the DDL trigger in the <code dir="ltr">SYS</code> schema, which is required by Oracle. All other DDL objects are installed in the schema that you created in .</p>
+</li>
+<li>
+<p>Run the <code dir="ltr">marker_setup.sql</code> script. Supply the name of the Oracle GoldenGate schema when prompted, and then press <span class="gui-object-action">Enter</span> to execute the script. The script installs support for the Oracle GoldenGate DDL marker system.</p>
+<pre dir="ltr">
+@marker_setup.sql
+</pre></li>
+<li>
+<p>Run the <code dir="ltr">ddl_setup.sql</code> script. You are prompted to specify the name of the DDL schema that you configured in . (Note: <code dir="ltr">ddl_setup.sql</code> will fail if the tablespace for this schema is shared by any other users. It will not fail, however, if the default tablespace does not have <code dir="ltr">AUTOEXTEND</code> set to <code dir="ltr">ON</code>, the recommended setting.)</p>
+<pre dir="ltr">
+@ddl_setup.sql
+</pre></li>
+<li>
+<p>Run the <code dir="ltr">role_setup.sql</code> script. At the prompt, supply the DDL schema name. The script drops and creates the role that is needed for DDL synchronization, and it grants DML permissions on the Oracle GoldenGate DDL objects.</p>
+<pre dir="ltr">
+@role_setup.sql
+</pre></li>
+<li>
+<p>Grant the role that was created (default name is <code dir="ltr">GGS_GGSUSER_ROLE</code>) to all Oracle GoldenGate Extract users. You may need to make multiple grants if the processes have different user names.</p>
+<pre dir="ltr">
+GRANT <span class="codeinlineitalic">role</span> TO <span class="codeinlineitalic">user</span>;
+</pre></li>
+<li>
+<p>Run the <code dir="ltr">ddl_enable.sql</code> script to enable the DDL trigger.</p>
+<pre dir="ltr">
+@ddl_enable.sql
+</pre></li>
+</ol>
+<p class="subhead2"><a id="GIORA197"></a>To Install and Use the Optional Performance Tool</p>
+<p>To improve the performance of the DDL trigger, make the <code dir="ltr">ddl_pin</code> script part of the database startup. It must be invoked with the Oracle GoldenGate DDL user name, as in:</p>
+<pre dir="ltr">
+@ddl_pin <span class="codeinlineitalic">DDL_user</span>
+</pre>
+<p>This script pins the PL/SQL package that is used by the trigger into memory. If executing this script from SQL*Plus, connect as <code dir="ltr">SYSDBA</code> from the Oracle GoldenGate installation directory. This script relies on the Oracle <code dir="ltr">dmbs_shared_pool</code> system package, so install that package before using <code dir="ltr">ddl_pin</code>.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="appendix" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment233">
+<tr>
+<td class="cellalignment240"><table class="cellalignment238">
+<tr>
+<td class="cellalignment237"><a href="ic_deploy2.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment237"><a href="xml_workaround.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment242">
+<table class="cellalignment236">
+<tr>
+<td class="cellalignment237"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment237"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment237"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>ADD HEARTBEATTABLE</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="stop-jagent.htm" title="Previous" type="text/html" />
+<link rel="Next" href="alter-heartbeattable.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-126E30A2-DC7A-4C93-93EC-0EB8BA7C13CB"></a> <span id="PAGE" style="display:none;">101/459</span> <!-- End Header -->
+<a id="GWURF1239"></a><a id="GWURF1240"></a><a id="GWURF1238"></a>
+<h1 id="GWURF-GUID-126E30A2-DC7A-4C93-93EC-0EB8BA7C13CB" class="sect1"><span class="enumeration_section">1.93</span> ADD HEARTBEATTABLE</h1>
+<div>
+<div class="section">
+<p>Use <code class="codeph">ADD HEARTBEATTABLE</code> to create the objects necessary to use the automatic heartbeat functionality. This command:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>creates a heartbeat seed table, heartbeat table, and heartbeat history table,</p>
+</li>
+<li>
+<p>creates the <code class="codeph">GG_LAG</code> and <code class="codeph">GG_LAG_HISTORY</code> views,</p>
+</li>
+<li>
+<p>creates the <code class="codeph">GG_UPDATE_HB_TAB</code> and <code class="codeph">GG_PURGE_HB_TAB</code> procedures that are called by the scheduler jobs,</p>
+</li>
+<li>
+<p>creates the scheduler jobs that periodically update the heartbeat and seed table, and purge the history table,</p>
+</li>
+<li>
+<p>populates the seed table.</p>
+</li>
+</ul>
+<p>The default seed, heartbeat, and history table names are <code class="codeph">GG_HEARTBEAT_SEED</code>, <code class="codeph">GG_HEARTBEAT</code>, and <code class="codeph">GG_HEARTBEAT_HISTORY</code> respectively. The tables, procedures and scheduler jobs are created in the <code class="codeph">GGSCHEMA</code> mentioned in GLOBALS file. The default names can be overridden by specifying <code class="codeph">HEARTBEATTABLE</code> <span class="italic"><code class="codeph">hbschemaname.hbtablename</code></span> in the GLOBALS file. In this case, the tables, procedures, and jobs are created in the schema, <span class="italic"><code class="codeph">hbschemaname</code></span>. The seed and history table are created by appending a <code class="codeph">_SEED</code> and <code class="codeph">_HISTORY</code> to the table, <span class="italic"><code class="codeph">hbtablename</code></span>.</p>
+<p>This command requires a <code class="codeph">DBLOGIN</code>. On a CDB database, a PDB login is required.</p>
+<p>For Oracle, the <code class="codeph">ADD HEARTBEATTABLE</code> has to be performed in every PDB that you want to generate heartbeats for in CDB mode.</p>
+<p>For DB2 LUW, you must set the <code class="codeph">DB2_ATS_ENABLE</code> property with the <code class="codeph">db2set DB2_ATS_ENABLE=yes</code> command.</p>
+<p>For SQL/MX, the <code class="codeph">GGSCHEMA</code> schema is not used so you must use a two or three-part name only. Additionally, there are no stored procedures or scheduler jobs.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+ADD HEARTBEATTABLE
+[, FREQUENCY <span class="italic">number in seconds</span>]
+[, RETENTION_TIME <span class="italic">number in days</span>] |
+[, PURGE_FREQUENCY <span class="italic">number in days</span>]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-126E30A2-DC7A-4C93-93EC-0EB8BA7C13CB__GUID-E30EDABB-67A3-41F2-BDF2-C317FF4C9981"><!-- --></a><code class="codeph">FREQUENCY</code></dt>
+<dd>
+<p>Specifies how often the heartbeat seed table and heartbeat table are updated. For example, how frequently heartbeat records are generated. The default is 60 seconds.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-126E30A2-DC7A-4C93-93EC-0EB8BA7C13CB__GUID-BE6251B8-33F4-43C0-A36E-E57C893B3893"><!-- --></a><code class="codeph">RETENTION_TIME</code></dt>
+<dd>
+<p>Specifies when heartbeat entries older than the retention time in the history table are purged. The default is 30 days.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-126E30A2-DC7A-4C93-93EC-0EB8BA7C13CB__GUID-1CD49136-EFB5-4183-B6C7-A1D99F749522"><!-- --></a> <code class="codeph">PURGE_FREQUENCY</code></dt>
+<dd>
+<p>Specifies how often the purge scheduler is run to delete table entries that are older than the retention time from the heartbeat history . The default is 1 day.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-126E30A2-DC7A-4C93-93EC-0EB8BA7C13CB__GUID-3FC70ED6-0ECB-4D8E-84C1-75E053CBF5F4"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following command creates default heartbeat tables, procedures and jobs.</p>
+<pre dir="ltr">
+ADD HEARTBEATTABLE
+</pre></dd>
+<dt class="dlterm"><a id="GUID-126E30A2-DC7A-4C93-93EC-0EB8BA7C13CB__GUID-3BF5A927-FF0E-49A2-98E6-52109EBB8CC2"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following command creates the heartbeat tables, procedures and jobs with custom frequency, retention time, and purge frequency.</p>
+<pre dir="ltr">
+ADD HEARTBEATTABLE, frequency 120, retention_time 10, purge_frequency 2
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="stop-jagent.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="alter-heartbeattable.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

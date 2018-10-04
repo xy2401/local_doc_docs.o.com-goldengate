@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Preparing the System for Oracle GoldenGate</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1091" />
+<meta name="description" content="This chapter contains guidelines for preparing the DB2 for i system to support Oracle GoldenGate." />
+<meta name="dcterms.created" content="2017-03-02T23:13:40Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Installing and Configuring Oracle GoldenGate for DB2 for i" />
+<meta name="dcterms.identifier" content="E66362-03" />
+<meta name="dcterms.isVersionOf" content="GIDBI" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2017,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="installing.htm" title="Previous" type="text/html" />
+<link rel="Next" href="configuring_dbi.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GIDBI.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">6/11</span> <!-- End Header -->
+<div id="GIDBI151" class="chapter"><a id="i1369130"></a>
+<h1 class="chapter"><span class="secnum">3</span> Preparing the System for Oracle GoldenGate</h1>
+<p><a id="GIDBI152"></a>This chapter contains guidelines for preparing the DB2 for i system to support Oracle GoldenGate.</p>
+<p>This chapter contains the following sections:</p>
+<ul>
+<li>
+<p><a href="#A998790">Section 3.1, "Preparing the Journals for Data Capture by Extract"</a></p>
+</li>
+<li>
+<p><a href="#CHDIBHHH">Section 3.2, "Specifying Object Names"</a></p>
+</li>
+<li>
+<p><a href="#i1608427">Section 3.3, "Preparing Tables for Processing"</a></p>
+</li>
+<li>
+<p><a href="#A1098678">Section 3.4, "Adjusting the System Clock"</a></p>
+</li>
+<li>
+<p><a href="#A1661237">Section 3.5, "Configuring the ODBC Driver"</a></p>
+</li>
+</ul>
+<a id="A998790"></a>
+<div id="GIDBI153" class="sect1"><!-- infotype="Concept" -->
+<h2 class="sect1"><span class="secnum">3.1</span> Preparing the Journals for Data Capture by Extract</h2>
+<p>All tables for which you want data to be captured must be journaled, either explicitly or by default by means of a <code dir="ltr">QSQJRN</code> journal in the same library. To preserve data integrity, data journal entries are sent to Extract in time order as they appear on the system. This section provides guidelines for configuring the journals to support capture by Extract.</p>
+<div id="GIDBI154" class="sect2"><!-- infolevel="all" infotype="Concept" --><a id="sthref13"></a>
+<h3 class="sect2"><span class="secnum">3.1.1</span> Allocating Journals to an Extract Group</h3>
+<p>One Extract process can handle up to 30 journals. If using more journals than that, use additional Extract processes to handle the extra journals. You can also use additional Extract processes to improve capture performance if necessary.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+To ensure transaction integrity, all journals that correspond to any given transaction must be read by the same Extract group. For more information about using multiple Extract processes, see <a class="olink GWUAD659" href="../GWUAD/tuning-performance-oracle-goldengate.htm#GWUAD659"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</div>
+</div>
+<!-- class="sect2" -->
+<a id="CHDIFIGA"></a>
+<div id="GIDBI155" class="sect2"><!-- infolevel="all" infotype="Task" -->
+<h3 class="sect2"><span class="secnum">3.1.2</span> Setting Journal Parameters</h3>
+<p>To support the capture of data by the Extract process, the following are the minimal journaling parameter settings that are required.</p>
+<ul>
+<li>
+<p>Manage Receivers <code dir="ltr">(MNGRCV): *SYSTEM</code></p>
+</li>
+<li>
+<p>Delete Receivers <code dir="ltr">(DLTRCV): *NO</code></p>
+</li>
+<li>
+<p>Receiver Size Option <code dir="ltr">(RCVSIZOPT): *MAXOPT2</code> (<code dir="ltr">*MAXOPT3</code> recommended)</p>
+</li>
+<li>
+<p>Journal State <code dir="ltr">(JRNSTATE): *ACTIVE</code></p>
+</li>
+<li>
+<p>Minimize Entry Specific Data <code dir="ltr">(MINENTDTA): *NONE</code></p>
+</li>
+<li>
+<p>Fixed Length Data <code dir="ltr">(FIXLENDTA): *USR *SYSSEQ</code></p>
+</li>
+</ul>
+<p>In the following example, the command to set these attributes for a journal <code dir="ltr">JRN1</code> in library <code dir="ltr">LIB1</code> would be:</p>
+<pre dir="ltr">
+CHGJRN JRN(LIB1/JRN1) MNGRCV(*SYSTEM) DLTRCV(*NO) RCVSIZOPT(*MAXOPT2) JRNSTATE(*ACTIVE) MINENTDTA(*NONE) FIXLENDTA(*USR *SYSSEQ)
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+To check the attributes of a journal, use the command <code dir="ltr">WRKJRNA JRN(LIB1/JRN1) DETAIL(*CURATR)</code>.</div>
+<p>When the journaling is set to the recommended parameter settings, you are assured that the entries in the journals contain all of the information necessary for Oracle GoldenGate processing to occur. These settings also ensure that the system does not delete the journal receivers automatically, but retains them in case Extract needs to process older data.</p>
+</div>
+<!-- class="sect2" -->
+<div id="GIDBI156" class="sect2"><!-- infolevel="all" infotype="Task" --><a id="sthref14"></a>
+<h3 class="sect2"><span class="secnum">3.1.3</span> Deleting Old Journal Receivers</h3>
+<p>Although the <code dir="ltr">DLTRCV</code> parameter is set to <code dir="ltr">NO</code> in the recommended configuration for Extract (see <a href="#CHDIFIGA">"Setting Journal Parameters"</a>), you can delete old journal receivers manually once Extract is finished capturing from them.</p>
+<p>If using another application that is using the journals that Oracle GoldenGate will be reading, consideration must be given regarding any automatic journal receiver cleanup that may be in place. Oracle GoldenGate must be able to read the journal receivers before they are detached or removed.</p>
+<p class="subhead2"><a id="GIDBI157"></a>To Delete Journal Receivers</p>
+<ol>
+<li>
+<p>Run GGSCI.</p>
+</li>
+<li>
+<p>In GGSCI, issue the following command to view the journal positions in which Extract has current processing points, along with their journal receivers.</p>
+<pre dir="ltr">
+INFO EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Use the following DB2 for i command to delete any journal receivers that were generated prior to the ones that are shown in the <code dir="ltr">INFO EXTRACT</code> command.</p>
+<pre dir="ltr">
+DLTJRNRCV JRNRCV(<span class="codeinlineitalic">library</span>/<span class="codeinlineitalic">journal_receiver</span>)
+</pre>
+<p>Where:</p>
+<p><code dir="ltr"><span class="codeinlineitalic">library</span></code> and <code dir="ltr"><span class="codeinlineitalic">journal_receiver</span></code> are the actual names of the library and journal receiver to be deleted. See the DB2 for i Information Center for more information about this command.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CHDIBHHH"></a>
+<div id="GIDBI158" class="sect1"><!-- infotype="Task" -->
+<h2 class="sect1"><span class="secnum">3.2</span> Specifying Object Names</h2>
+<p>Oracle GoldenGate commands and parameters support input in the form of SQL names, native names in the format of <code dir="ltr"><span class="codeinlineitalic">library_name/file_name(member_name)</span></code>, or a mix of the two. If a native file system name does not include the member name, all members are implicitly selected by the Oracle GoldenGate process. For a SQL name only the first member is used.</p>
+<p>To support case sensitivity of double quoted object names, specify those names within double quotes in the Oracle GoldenGate parameter files. This is true of both SQL and native file system names.</p>
+<p>When specifying a native table name in a <code dir="ltr">MAP</code> statement on a platform other than DB2 for i, the name must be enclosed within double quotes so that Oracle GoldenGate correctly interprets it as a separator character.</p>
+<p>For consistency of terminology in other administrative and reference Oracle GoldenGate documentation, the SQL terms "schema" and "table" are used to reference the containers for the DB2 for i data, as shown in <a href="#CHDBHFDA">Table 3-1</a>:</p>
+<div id="GIDBI159" class="tblruleformal">
+<p class="titleintable"><a id="sthref15"></a><a id="CHDBHFDA"></a>Table 3-1 Native-SQL object name relationships</p>
+<table class="cellalignment154" title="Native-SQL object name relationships" summary="This table describes the relationshp between Native and SQL object names." dir="ltr">
+<thead>
+<tr class="cellalignment145">
+<th class="cellalignment155" id="r1c1-t4">Native</th>
+<th class="cellalignment155" id="r1c2-t4">SQL</th>
+<th class="cellalignment155" id="r1c3-t4">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment145">
+<td class="cellalignment151" id="r2c1-t4" headers="r1c1-t4">
+<p>Library</p>
+<p>(maximum length 10)</p>
+</td>
+<td class="cellalignment151" headers="r2c1-t4 r1c2-t4">
+<p>Schema</p>
+<p>(maximum length 128)</p>
+</td>
+<td class="cellalignment151" headers="r2c1-t4 r1c3-t4">
+<p>The operating system creates a corresponding native name for a SQL-created schema.</p>
+</td>
+</tr>
+<tr class="cellalignment145">
+<td class="cellalignment151" id="r3c1-t4" headers="r1c1-t4">
+<p>File</p>
+<p>(maximum length 10)</p>
+</td>
+<td class="cellalignment151" headers="r3c1-t4 r1c2-t4">
+<p>Table</p>
+<p>(maximum length 128)</p>
+</td>
+<td class="cellalignment151" headers="r3c1-t4 r1c3-t4">
+<p>The operating system creates a corresponding native name for a SQL-created table.</p>
+</td>
+</tr>
+<tr class="cellalignment145">
+<td class="cellalignment151" id="r4c1-t4" headers="r1c1-t4">
+<p>Member</p>
+</td>
+<td class="cellalignment151" headers="r4c1-t4 r1c2-t4">
+<p>Not Applicable</p>
+</td>
+<td class="cellalignment151" headers="r4c1-t4 r1c3-t4">
+<p>Contains the actual data. Only the first member of a <code dir="ltr">FILE</code> object can be accessed through SQL. To access data in other members the native system name must be used.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblruleformal" --></div>
+<!-- class="sect1" -->
+<a id="i1608427"></a>
+<div id="GIDBI160" class="sect1"><!-- infotype="Concept" -->
+<h2 class="sect1"><span class="secnum">3.3</span> Preparing Tables for Processing</h2>
+<p>The following table attributes must be addressed in an Oracle GoldenGate environment.</p>
+<a id="i1608475"></a>
+<div id="GIDBI161" class="sect2"><!-- infotype="Concept" -->
+<h3 class="sect2"><span class="secnum">3.3.1</span> Assigning Row Identifiers</h3>
+<p>Oracle GoldenGate requires some form of unique row identifier on the source and target tables to locate the correct target rows for replicated updates and deletes.</p>
+<a id="i1608509"></a>
+<div id="GIDBI162" class="sect3"><!-- infotype="Task" -->
+<h4 class="sect3"><span class="secnum">3.3.1.1</span> How Oracle GoldenGate Determines the Kind of Row Identifier to Use</h4>
+<p>Unless a <code dir="ltr">KEYCOLS</code> clause is used in the <code dir="ltr">TABLE</code> or <code dir="ltr">MAP</code> statement, Oracle GoldenGate selects a row identifier to use in the following order of priority:</p>
+<ol>
+<li>
+<p>Primary key</p>
+</li>
+<li>
+<p>First unique key alphanumerically that does not contain a timestamp or non-materialized computed column.</p>
+</li>
+<li>
+<p>Unique access path contained in the physical file object.</p>
+</li>
+<li>
+<p>If none of the preceding key types exist (even though there might be other types of keys defined on the table) Oracle GoldenGate constructs a pseudo key of all columns that the database allows to be used in a unique key, excluding those that are not supported by Oracle GoldenGate in a key or those that are excluded from the Oracle GoldenGate configuration.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If there are other, non-usable keys on a table or if there are no keys at all on the table, Oracle GoldenGate logs an appropriate message to the report file. Constructing a key from all of the columns impedes the performance of Oracle GoldenGate on the source system. On the target, this key causes Replicat to use a larger, less efficient <code dir="ltr">WHERE</code> clause.</div>
+</li>
+</ol>
+</div>
+<!-- class="sect3" -->
+<div id="GIDBI163" class="sect3"><!-- infotype="Task" --><a id="sthref16"></a>
+<h4 class="sect3"><span class="secnum">3.3.1.2</span> Using <code dir="ltr">KEYCOLS</code> to Specify a Custom Key</h4>
+<p>If a table does not have one of the preceding types of row identifiers, or if you prefer those identifiers not to be used, you can define a substitute key if the table has columns that always contain unique values. You define this substitute key by including a <code dir="ltr">KEYCOLS</code> clause within the Extract <code dir="ltr">TABLE</code> parameter and the Replicat <code dir="ltr">MAP</code> parameter. The specified key will override any existing primary or unique key that Oracle GoldenGate finds. For more information, see <a class="olink GWURF546" href="../GWURF/table-map.htm#GWURF546"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If you want to use the RRN of the records as the key for a table, you may access the <code dir="ltr">GGHEADER</code> Oracle GoldenGate Environment Variable <code dir="ltr">AUDITRBA</code> which will contain the RRN for each record processed.</div>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<div id="GIDBI164" class="sect2"><!-- infotype="Task" --><a id="sthref17"></a>
+<h3 class="sect2"><span class="secnum">3.3.2</span> Preventing Key Changes</h3>
+<p>If you must add columns to the key that Extract is using as the row identifier for a table (primary key, unique key, <code dir="ltr">KEYCOLS</code> key, or all-column key) after Oracle GoldenGate has started processing journal data, follow these steps to make the change.</p>
+<ol>
+<li>
+<p>Stop Extract.</p>
+<pre dir="ltr">
+STOP EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Issue the following command until it returns <code dir="ltr">EOF</code>, indicating that it has processed all of the existing journal data.</p>
+<pre dir="ltr">
+INFO EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Make the change to the key.</p>
+</li>
+<li>
+<p>Start Extract.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<div id="GIDBI165" class="sect2"><!-- infolevel="all" infotype="Task" --><a id="sthref18"></a>
+<h3 class="sect2"><span class="secnum">3.3.3</span> Disabling Constraints on the Target</h3>
+<p>Triggers and cascade constraints must be disabled on the target tables or configured to ignore changes made by Replicat. Constraints must be disabled because Oracle GoldenGate replicates DML that results from a trigger or a cascade constraint. If the same trigger or constraint gets activated on the target table, it becomes redundant because of the replicated version, and the database returns an error. Consider the following example, where the source tables are <code dir="ltr">emp_src</code> and <code dir="ltr">salary_src</code> and the target tables are <code dir="ltr">emp_targ</code> and <code dir="ltr">salary_targ</code>.</p>
+<ol>
+<li>
+<p>A delete is issued for <code dir="ltr">emp_src</code>.</p>
+</li>
+<li>
+<p>It cascades a delete to <code dir="ltr">salary_src</code>.</p>
+</li>
+<li>
+<p>Oracle GoldenGate sends both deletes to the target.</p>
+</li>
+<li>
+<p>The parent delete arrives first and is applied to <code dir="ltr">emp_targ</code>.</p>
+</li>
+<li>
+<p>The parent delete cascades a delete to <code dir="ltr">salary_targ</code>.</p>
+</li>
+<li>
+<p>The cascaded delete from <code dir="ltr">salary_src</code> is applied to <code dir="ltr">salary_targ</code>.</p>
+</li>
+<li>
+<p>The row cannot be located because it was already deleted in step 5.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<div id="GIDBI166" class="sect2"><!-- infotype="Task" --><a id="sthref19"></a>
+<h3 class="sect2"><span class="secnum">3.3.4</span> Enabling Change Capture</h3>
+<p>To capture changes to a table in a journal, you can run the <code dir="ltr">STRJRNPF</code> command on the OS/400 command line or run the <code dir="ltr">ADD TRANDATA</code> command from GGSCI. The <code dir="ltr">ADD TRANDATA</code> command calls <code dir="ltr">STRJRNPF</code> and is the recommended method to start journaling for tables, because it ensures that the required journal image attribute of Record Images <code dir="ltr">(IMAGES): *BOTH</code> is set on the <code dir="ltr">STRJRNPF</code> command.</p>
+<p class="subhead2"><a id="GIDBI167"></a>To Run <code dir="ltr">ADD TRANDATA</code></p>
+<ol>
+<li>
+<p>Run GGSCI on the source system.</p>
+</li>
+<li>
+<p>Issue the <code dir="ltr">DBLOGIN</code> command.</p>
+<pre dir="ltr">
+DBLOGIN SOURCEDB <span class="codeinlineitalic">database</span> USERID <span class="codeinlineitalic">user</span>, PASSWORD <span class="italic">password</span> [<span class="codeinlineitalic">encryption_options</span>]
+</pre>
+<p>Where: <code dir="ltr">SOURCEDB</code> specifies the default DB 2 for i database, <code dir="ltr">USERID</code> specifies the Extract user profile, and <code dir="ltr">PASSWORD</code> specifies that profile's password. See <a class="olink GWURF251" href="../GWURF/dblogin.htm#GWURF251"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for password encryption options for <code dir="ltr">DBLOGIN</code>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Only <code dir="ltr">BLOWFISH</code> encryption is supported for DB2 for i systems.</div>
+</li>
+<li>
+<p>Issue the <code dir="ltr">ADD TRANDATA</code> command.</p>
+<pre dir="ltr">
+ADD TRANDATA<span class="codeinlineitalic"> table_specification</span>
+</pre>
+<p>Where: <code dir="ltr"><span class="codeinlineitalic">table_specification</span></code> is one of the following:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">schema.table</span></code> <code dir="ltr">[JOURNAL</code> <code dir="ltr"><span class="codeinlineitalic">library/journal</span></code>]</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">library/file</span></code> <code dir="ltr">[JOURNAL</code> <code dir="ltr"><span class="codeinlineitalic">library/journal]</span></code> (See <a href="#CHDCACCJ">"Specifying a Default Journal"</a>)</p>
+</li>
+</ul>
+</li>
+</ol>
+<a id="CHDCACCJ"></a>
+<div id="GIDBI168" class="sect3"><!-- infolevel="all" infotype="Task" -->
+<h4 class="sect3"><span class="secnum">3.3.4.1</span> Specifying a Default Journal</h4>
+<p>To specify a default journal for multiple tables or files in the <code dir="ltr">ADD TRANDATA</code> command, instead of specifying the <code dir="ltr">JOURNAL</code> keyword, use the following GGSCI command before issuing <code dir="ltr">ADD TRANDATA</code>.</p>
+<pre dir="ltr">
+DEFAULTJOURNAL <span class="codeinlineitalic">library/journal</span> 
+</pre>
+<p>Any <code dir="ltr">ADD TRANDATA</code> command used without a journal assumes the journal from <code dir="ltr">DEFAULTJOURNAL</code>.</p>
+<p>To display the current setting of <code dir="ltr">DEFAULTJOURNAL</code>, you can issue the command with no arguments.</p>
+</div>
+<!-- class="sect3" -->
+<div id="GIDBI169" class="sect3"><!-- infolevel="all" infotype="Task" --><a id="sthref20"></a>
+<h4 class="sect3"><span class="secnum">3.3.4.2</span> Removing a Default Journal Specification</h4>
+<p>To remove the use of a default journal, use the following GGSCI command:</p>
+<pre dir="ltr">
+DEFAULTJOURNAL CLEAR
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<div id="GIDBI170" class="sect2"><!-- infotype="Task" --><a id="sthref21"></a>
+<h3 class="sect2"><span class="secnum">3.3.5</span> Maintaining Materialized Query Tables</h3>
+<p>To maintain parity between source and target materialized query tables (MQT), you replicate the base tables, but not the MQTs. The target database maintains the MQTs based on the changes that Replicat applies to the base tables.</p>
+<p>The following are the rules for configuring these tables:</p>
+<ul>
+<li>
+<p>Include the base tables in your <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements.</p>
+</li>
+<li>
+<p>Do not include MQTs in the <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements.</p>
+</li>
+<li>
+<p>Wildcards can be used in <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> statements, even though they might resolve MQT names along with regular table names. Oracle GoldenGate automatically excludes MQTs from wildcarded table lists. However, any MQT that is explicitly listed in an Extract <code dir="ltr">TABLE</code> statement by name will cause Extract to abend.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<div id="GIDBI171" class="sect2"><!-- infolevel="all" infotype="Task" --><a id="sthref22"></a>
+<h3 class="sect2"><span class="secnum">3.3.6</span> Specifying the Oracle GoldenGate Library</h3>
+<p>Before starting Oracle GoldenGate, specify the name of the Oracle GoldenGate for DB2 for i library when running the <code dir="ltr">ggos400install</code> script. This creates a link to the <code dir="ltr">OGGPRCJRN *SRVPGM</code> (service program) object that was restored to that library. If the link to the <code dir="ltr">oggprcjrn</code> service program is deleted you could just re-run the <code dir="ltr">ggos400install</code> shell script and specify the same library, or use the command "<code dir="ltr">ln -s /qsys.lib/</code><code dir="ltr"><span class="codeinlineitalic">OGG_library</span></code><code dir="ltr">.lib/oggprcjrn.srvpgm oggprcjrn.srvpgm</code>". If this link is incorrect or missing, Extract will abend.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1098678"></a>
+<div id="GIDBI172" class="sect1"><!-- infolevel="all" infotype="Task" -->
+<h2 class="sect1"><span class="secnum">3.4</span> Adjusting the System Clock</h2>
+<p>It is recommended that you set the system clock to UTC (Universal Time Coordinate) time and use the timezone offset in the DB2 for i system values to represent the correct local time. If this setup is done correctly, local daylight savings time adjustments can occur automatically with no disruption to replication.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A1661237"></a>
+<div id="GIDBI173" class="sect1"><!-- infolevel="all" infotype="Task" -->
+<h2 class="sect1"><span class="secnum">3.5</span> Configuring the ODBC Driver</h2>
+<p>This section applies only if you installed Replicat on a Windows or Linux system to operate remotely from the DB2 for i target. In this configuration, Replicat must connect to the target system over a database connection that is specified with ODBC. The following steps show how to install and configure ODBC to connect to the DB2 for i target system.</p>
+<p><a href="#CHDFCFJH">Configuring ODBC on Linux</a></p>
+<p><a href="#CHDEEJIG">Configuring ODBC on Windows</a></p>
+<a id="CHDFCFJH"></a>
+<div id="GIDBI174" class="sect2"><!-- infolevel="all" infotype="Task" -->
+<h3 class="sect2"><span class="secnum">3.5.1</span> Configuring ODBC on Linux</h3>
+<p>To configure ODBC, you can use the graphical user interface to run the ODBC configuration utility that is supplied with your Linux distribution, or you can edit the <code dir="ltr">odbc.ini</code> file with the settings described in these steps. (These steps show the ODBC Administrator tool launched from the <code dir="ltr">ODBCConfig</code> graphical interface utility for Linux.)</p>
+<ol>
+<li>
+<p>Download and install the 32-bit or 64-bit iSeries Access ODBC driver on the remote Linux system according to the vendor documentation. The iSeries ODBC driver is supplied as a free component of iSeries Access.</p>
+</li>
+<li>
+<p>Issue one of the following commands, depending on the driver that you want to use.</p>
+<p><span class="bold">32-bit driver</span>:</p>
+<pre dir="ltr">
+rpm -ivh iSeriesAccess-7.1.0-1.0.i386.rpm
+</pre>
+<p><span class="bold">64-bit driver</span>:</p>
+<pre dir="ltr">
+rpm -ivh iSeriesAccess-7.1.0-1.0.x86_64.rpm
+</pre></li>
+<li>
+<p>You can create a user DSN (a connection that is available only to the user that created it) or a system DSN (a connection that is available to all users on the system). To create a user DSN, log on to the system as the user that you will be using for the Replicat process.</p>
+</li>
+<li>
+<p>Run the ODBC configuration utility.</p>
+</li>
+<li>
+<p>On the initial page of the ODBC configuration tool, select the <span class="bold">User DSN</span> tab to create a user DSN or the <span class="bold">System DSN</span> tab to create a system DSN. (These steps create a user DSN; creating a system DSN is similar.)</p>
+<div id="GIDBI175" class="figure">
+<p class="titleinfigure"><a id="sthref23"></a>Figure 3-1 Adding an ODBC DSN on Linux</p>
+<img width="669" height="300" src="img/odbc1.JPG" alt="Description of Figure 3-1 follows" /><br />
+<a id="sthref24" href="img_text/odbc1.htm">Description of ''Figure 3-1 Adding an ODBC DSN on Linux''</a><br />
+<br /></div>
+<!-- class="figure" --></li>
+<li>
+<p>On the tab you selected, click <span class="bold">Add</span>.</p>
+</li>
+<li>
+<p>Select the appropriate iSeries Access ODBC driver, click <span class="bold">OK</span>, and then go to step <a href="#CHDFFCHD">8</a> of these instructions. If the correct driver is not shown in the <span class="bold">Select the DRIVER</span> list, click the <span class="bold">Add...</span> button and then complete the fields as shown in Figure 3&ndash;3.</p>
+<div id="GIDBI176" class="figure">
+<p class="titleinfigure"><a id="sthref25"></a>Figure 3-2 Selecting an ODBC Driver on Linux</p>
+<img width="545" height="370" src="img/odbc2.JPG" alt="Description of Figure 3-2 follows" /><br />
+<a id="sthref26" href="img_text/odbc2.htm">Description of ''Figure 3-2 Selecting an ODBC Driver on Linux''</a><br />
+<br /></div>
+<!-- class="figure" -->
+<div id="GIDBI177" class="figure">
+<p class="titleinfigure"><a id="CHDJHCFJ"></a>Figure 3-3 Manually Editing Driver Properties When the Driver is Not Found</p>
+<img width="644" height="372" src="img/odbc3.JPG" alt="Description of Figure 3-3 follows" /><br />
+<a id="sthref27" href="img_text/odbc3.htm">Description of ''Figure 3-3 Manually Editing Driver Properties When the Driver is Not Found''</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>How to complete <a href="#CHDJHCFJ">Figure 3-3</a> fields:</p>
+<ul>
+<li>
+<p>Set <span class="bold">Name</span> to the name of the driver.</p>
+</li>
+<li>
+<p>Set <span class="bold">Driver</span> to the path where the driver is installed.</p>
+</li>
+<li>
+<p>Set <span class="bold">Setup</span> to the <code dir="ltr">libcwbodbci.so</code> file that is in the driver installation directory.</p>
+</li>
+<li>
+<p>Leave the other settings to their defaults.</p>
+</li>
+<li>
+<p>Click the check mark above the <span class="bold">Name</span> field to save your settings.</p>
+</li>
+</ul>
+</li>
+<li id="CHDFFCHD">
+<p>In the <span class="bold">Name</span> field of the Data Source Properties dialog, supply a one-word name for the data source. In the <span class="bold">System</span> field, enter the fully qualified name of the target DB2 for i system, for example: <code dir="ltr">sysname.company.com</code>. Leave the <span class="bold">UserID</span> and <span class="bold">Password</span> fields blank, to allow Replicat to supply credentials when it connects to the database. Leave the remaining fields set to their defaults, and then click the check mark above the <span class="bold">Name</span> field to save your settings.</p>
+<div id="GIDBI178" class="figure">
+<p class="titleinfigure"><a id="sthref28"></a>Figure 3-4 Setting Data Source Properties</p>
+<img width="644" height="604" src="img/odbc4.JPG" alt="Description of Figure 3-4 follows" /><br />
+<a id="sthref29" href="img_text/odbc4.htm">Description of ''Figure 3-4 Setting Data Source Properties''</a><br />
+<br /></div>
+<!-- class="figure" --></li>
+<li>
+<p>You are returned to the ODBC Data Source Administrator dialog. Click <span class="bold">OK</span> to exit the ODBC configuration utility.</p>
+</li>
+<li>
+<p>To support <code dir="ltr">GRAPHIC</code>, <code dir="ltr">VARGRAPHIC</code> and <code dir="ltr">DBCLOB</code> types, edit the <code dir="ltr">.odbc.ini</code> file and add the following line.</p>
+<pre dir="ltr">
+GRAPHIC = 1
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If you created a user Data Source Name, this file is located in the home directory of the user that created it. If you created a system DSN, this file is in <code dir="ltr">/etc/odbc.ini</code> or <code dir="ltr">/usr/local/etc/odbc.ini</code>.</div>
+</li>
+<li>
+<p>From the Oracle GoldenGate directory on the target, run GGSCI and issue the <code dir="ltr">DBLOGIN</code> command to log into the target database. See <a class="olink GWURF251" href="../GWURF/dblogin.htm#GWURF251"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for detailed syntax.</p>
+<pre dir="ltr">
+DBLOGIN SOURCEDB <span class="codeinlineitalic">database</span>, USERID <span class="codeinlineitalic">db_user</span> [, PASSWORD <span class="codeinlineitalic">pw</span> [<span class="codeinlineitalic">encryption options</span>]]
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr">SOURCEDB</code> <code dir="ltr"><span class="codeinlineitalic">database</span></code> specifies the new Data Source Name.</p>
+</li>
+<li>
+<p><code dir="ltr">USERID</code> <code dir="ltr"><span class="codeinlineitalic">db_user</span></code><code dir="ltr">, PASSWORD</code> <code dir="ltr"><span class="codeinlineitalic">pw</span></code> are the Replicat database user profile and password.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">encryption options</span></code> is optional password encryption.</p>
+</li>
+</ul>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Only <code dir="ltr">BLOWFISH</code> encryption is supported for DB2 for i systems.</div>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="CHDEEJIG"></a>
+<div id="GIDBI179" class="sect2"><!-- infolevel="all" infotype="Task" -->
+<h3 class="sect2"><span class="secnum">3.5.2</span> Configuring ODBC on Windows</h3>
+<p>On Windows, the ODBC Administration tool is in the Administrative Tools folder as <span class="bold">Data Sources (ODBC)</span>.</p>
+<ol>
+<li>
+<p>Download and install the 32-bit or 64-bit iSeries Access ODBC driver from the DB2 for iSeries Access package on the remote Windows system according to the vendor documentation. The iSeries ODBC driver is supplied as a free component of iSeries Access.</p>
+</li>
+<li>
+<p>You can create a user DSN (a connection that is available only to the user that created it) or a system DSN (a connection that is available to all users on the system). To create a user DSN, log on to the system as the user that you will be using for the Replicat process.</p>
+</li>
+<li>
+<p>From the Windows Control Panel, select <span class="bold">Administrative Tools</span>, then <span class="bold">Data Sources (ODBC)</span>.</p>
+</li>
+<li>
+<p>On the first page of the ODBC configuration tool, select the <span class="bold">User DSN</span> tab to create a user DSN or the <span class="bold">System DSN</span> tab to create a system DSN. (These steps create a user DSN; creating a system DSN is similar.)</p>
+<div id="GIDBI180" class="figure">
+<p class="titleinfigure"><a id="sthref30"></a>Figure 3-5 Adding an ODBC DSN on Windows</p>
+<img width="464" height="387" src="img/winodbc1.JPG" alt="Description of Figure 3-5 follows" /><br />
+<a id="sthref31" href="img_text/winodbc1.htm">Description of ''Figure 3-5 Adding an ODBC DSN on Windows''</a><br />
+<br /></div>
+<!-- class="figure" --></li>
+<li>
+<p>On the tab that you selected, click <span class="bold">Add</span>.</p>
+</li>
+<li>
+<p>Select the appropriate iSeries Access ODBC Driver from the list of drivers, and then click <span class="bold">Finish</span>.</p>
+<div id="GIDBI181" class="figure">
+<p class="titleinfigure"><a id="sthref32"></a>Figure 3-6 Selecting an ODBC Driver on Windows</p>
+<img width="473" height="356" src="img/winodbc2.JPG" alt="Description of Figure 3-6 follows" /><br />
+<a id="sthref33" href="img_text/winodbc2.htm">Description of ''Figure 3-6 Selecting an ODBC Driver on Windows''</a><br />
+<br /></div>
+<!-- class="figure" --></li>
+<li>
+<p>On the General tab of the DB2 for i Access for Windows ODBC Setup dialog, provide a name (without any spaces) in the <span class="bold">Data Source Name</span> field, add an optional description in the <span class="bold">Description</span> field, and then select the system name from the <span class="bold">System</span> selection list.</p>
+<div id="GIDBI182" class="figure">
+<p class="titleinfigure"><a id="sthref34"></a>Figure 3-7 Setting General ODBC Properties on Windows</p>
+<img width="570" height="478" src="img/winodbc3.JPG" alt="Description of Figure 3-7 follows" /><br />
+<a id="sthref35" href="img_text/winodbc3.htm">Description of ''Figure 3-7 Setting General ODBC Properties on Windows''</a><br />
+<br /></div>
+<!-- class="figure" --></li>
+<li>
+<p>On the Server tab, set <span class="bold">Naming Convention</span> to <code dir="ltr">SQL Naming Convention (*SQL)</code>. Leave the other fields set to their defaults.</p>
+<div id="GIDBI183" class="figure">
+<p class="titleinfigure"><a id="sthref36"></a>Figure 3-8 Setting Server ODBC Properties on Windows</p>
+<img width="568" height="479" src="img/winodbc4.JPG" alt="Description of Figure 3-8 follows" /><br />
+<a id="sthref37" href="img_text/winodbc4.htm">Description of ''Figure 3-8 Setting Server ODBC Properties on Windows''</a><br />
+<br /></div>
+<!-- class="figure" --></li>
+<li>
+<p>On the Data Types tab, select the <span class="bold">Report as Supported</span> check box under Double Byte Character Set (DBCS) graphic data types.</p>
+<div id="GIDBI184" class="figure">
+<p class="titleinfigure"><a id="sthref38"></a>Figure 3-9 Setting DBCS ODBC Properties</p>
+<img width="569" height="478" src="img/winodbc5.JPG" alt="Description of Figure 3-9 follows" /><br />
+<a id="sthref39" href="img_text/winodbc5.htm">Description of ''Figure 3-9 Setting DBCS ODBC Properties''</a><br />
+<br /></div>
+<!-- class="figure" --></li>
+<li>
+<p>On the Conversions tab, clear the <span class="bold">Convert binary data (CCSID 65535) to text</span> check box.</p>
+<div id="GIDBI185" class="figure">
+<p class="titleinfigure"><a id="sthref40"></a>Figure 3-10 Setting Conversion ODBC Properties</p>
+<img width="573" height="480" src="img/winodbc6.JPG" alt="Description of Figure 3-10 follows" /><br />
+<a id="sthref41" href="img_text/winodbc6.htm">Description of ''Figure 3-10 Setting Conversion ODBC Properties''</a><br />
+<br /></div>
+<!-- class="figure" --></li>
+<li>
+<p>Click <span class="bold">Apply</span>, then <span class="bold">OK</span>. You are returned to the ODBC Data Source Administrator dialog.</p>
+</li>
+<li>
+<p>Confirm that the new Data Source Name appears under <span class="bold">User Data Sources</span>.</p>
+<div id="GIDBI186" class="figure">
+<p class="titleinfigure"><a id="sthref42"></a>Figure 3-11 Confirming New Data Source Name</p>
+<img width="461" height="386" src="img/winodbc7.JPG" alt="Description of Figure 3-11 follows" /><br />
+<a id="sthref43" href="img_text/winodbc7.htm">Description of ''Figure 3-11 Confirming New Data Source Name''</a><br />
+<br /></div>
+<!-- class="figure" --></li>
+<li>
+<p>Click <span class="bold">OK</span> to exit the ODBC configuration utility.</p>
+</li>
+<li>
+<p>From the Oracle GoldenGate directory on the target, run GGSCI and issue the <code dir="ltr">DBLOGIN</code> command to log into the target database. See <a class="olink GWURF251" href="../GWURF/dblogin.htm#GWURF251"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for detailed syntax.</p>
+<pre dir="ltr">
+DBLOGIN SOURCEDB <span class="codeinlineitalic">database</span>, USERID <span class="codeinlineitalic">db_user</span> [, PASSWORD <span class="codeinlineitalic">pw</span> [<span class="codeinlineitalic">encryption_options</span>]]
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr">SOURCEDB</code> <code dir="ltr"><span class="codeinlineitalic">database</span></code> specifies the new data source name.</p>
+</li>
+<li>
+<p><code dir="ltr">USERID</code> <code dir="ltr"><span class="codeinlineitalic">db_user</span></code><code dir="ltr">, PASSWORD</code> <code dir="ltr"><span class="codeinlineitalic">pw</span></code> are the Replicat database user profile and password.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">encryption_options</span></code> is optional password encryption.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Only <code dir="ltr">BLOWFISH</code> encryption is supported for DB2 for i systems.</div>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment144">
+<tr>
+<td class="cellalignment151">
+<table class="cellalignment149">
+<tr>
+<td class="cellalignment148"><a href="installing.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment148"><a href="configuring_dbi.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2017,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment153">
+<table class="cellalignment147">
+<tr>
+<td class="cellalignment148"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment148"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

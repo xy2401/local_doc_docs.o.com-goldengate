@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the HBase Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Learn how to use the HBase Handler to populate HBase tables from existing Oracle GoldenGate supported sources." />
+<meta name="dcterms.created" content="2018-09-04T10:47:42Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E89845-03" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-flume-handler.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-hdfs-handler.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-3EC975E2-1F9A-4AB3-B3F6-7B4ADFEED390"></a> <span id="PAGE" style="display:none;">10/33</span> <!-- End Header -->
+<script  >
+//<![CDATA[
+window.name='using-hbase-handler'
+//]]>
+</script> <script  >
+    function footdisplay(footnum,footnote) {
+    var msg = window.open('about:blank', 'NewWindow' + footnum,
+        'directories=no,height=100,location=no,menubar=no,resizable=yes,' +
+        'scrollbars=yes,status=no,toolbar=no,width=598');
+    msg.document.open('text/html');
+    msg.document.write('<!DOCTYPE html ');
+    msg.document.write('PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ');
+    msg.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'); 
+    msg.document.write('<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" ><head><title>');
+   
+    msg.document.write('Footnote&amp;nbsp; ' + footnum);
+    msg.document.write('<\/title><meta http-equiv="Content-Type" ');
+    msg.document.write('content="text/html; charset=utf-8" />');
+    msg.document.write('');
+    msg.document.write('<style> <![CDATA[ ');
+    msg.document.write('h1 {text-align: center; font-size: 14pt;}');
+    msg.document.write('fieldset {border: none;}');
+    msg.document.write('form {text-align: center;}');
+    msg.document.write(' ]]\u003e <\/style>');
+    msg.document.write('<\/head><body><div id="footnote"><h1>Footnote&nbsp; ' + footnum + '<\/h1><p>');
+    msg.document.write(footnote);
+    msg.document.write('<\/p><form action="" method="post"><fieldset>');
+    msg.document.write('<input type="button" value="OK" ');
+    msg.document.write('onclick="window.close();" />');
+    msg.document.write('<\/fieldset><\/form><\/div><\/body><\/html>');
+    msg.document.close();
+    setTimeout(function() {
+        var height = msg.document.getElementById('footnote').offsetHeight;
+        msg.resizeTo(598, height + 100);
+    }
+    , 100);
+    msg.focus();
+}
+</script><noscript>
+<p>The script content on this page is for navigation purposes only and does not alter the content in any way.</p>
+</noscript><a id="GADBD397"></a>
+<h1 id="GADBD-GUID-3EC975E2-1F9A-4AB3-B3F6-7B4ADFEED390" class="sect1"><span class="enumeration_chapter">7</span> Using the HBase Handler</h1>
+<div>
+<p>Learn how to use the HBase Handler to populate HBase tables from existing Oracle GoldenGate supported sources.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-6C50AC04-A637-4165-9BAD-A5AE96FF1D52">Overview</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-E5071D39-6E49-44A1-AF25-3C226CC21094">Detailed Functionality</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-1AF0C143-9D6A-41D7-94F2-BC0D76D72018">Setting Up and Running the HBase Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-7A6E554F-F38B-4896-9118-3C18E75C3B54">Security</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-C1AD7142-9B27-4FFA-8CB8-A40E9A523703">Metadata Change Events</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-5247718A-478B-4296-B791-76A8D05A2E52">Additional Considerations</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-DFFDFC5B-3331-455F-9504-1BD25CD102A4">Troubleshooting the HBase Handler</a><br /></li>
+</ul>
+</div>
+<a id="GADBD398"></a>
+<div class="props_rev_3"><a id="GUID-6C50AC04-A637-4165-9BAD-A5AE96FF1D52"></a>
+<h2 id="GADBD-GUID-6C50AC04-A637-4165-9BAD-A5AE96FF1D52" class="sect2"><span class="enumeration_section">7.1</span> Overview</h2>
+<div>
+<div class="section">
+<p>HBase is an open source Big Data application that emulates much of the functionality of a relational database management system (RDBMS). Hadoop is specifically designed to store large amounts of unstructured data. Conversely, data stored in databases and replicated through Oracle GoldenGate is highly structured. HBase provides a way to maintain the important structure of data while taking advantage of the horizontal scaling that is offered by the Hadoop Distributed File System (HDFS).</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-3EC975E2-1F9A-4AB3-B3F6-7B4ADFEED390" title="Learn how to use the HBase Handler to populate HBase tables from existing Oracle GoldenGate supported sources.">Using the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD402"></a><a id="GADBD403"></a><a id="GADBD404"></a><a id="GADBD405"></a><a id="GADBD401"></a>
+<div class="props_rev_3"><a id="GUID-E5071D39-6E49-44A1-AF25-3C226CC21094"></a>
+<h2 id="GADBD-GUID-E5071D39-6E49-44A1-AF25-3C226CC21094" class="sect2"><span class="enumeration_section">7.2</span> Detailed Functionality</h2>
+<div>
+<div class="section">
+<p>The HBase Handler takes operations from the source trail file and creates corresponding tables in HBase, and then loads change capture data into those tables.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">HBase Table Names</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Table names created in an HBase map to the corresponding table name of the operation from the source trail file. Table name is case-sensitive.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">HBase Table Namespace</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>For two-part table names (schema name and table name), the schema name maps to the HBase table namespace. For a three-part table name like <code class="codeph">Catalog.Schema.MyTable</code>, the create HBase namespace would be <code class="codeph">Catalog_Schema</code>. HBase table namespaces are case sensitive. A null schema name is supported and maps to the default HBase namespace.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">HBase Row Key</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>HBase has a similar concept to the database primary keys, called the HBase row key. The HBase row key is the unique identifier for a table row. HBase only supports a single row key per row and it cannot be empty or null. The HBase Handler maps the primary key value into the HBase row key value. If the source table has multiple primary keys, then the primary key values are concatenated, separated by a pipe delimiter (<code class="codeph">|</code>).You can configure the HBase row key delimiter.</p>
+<p>The source table must have at least one primary key column. Replication of a table without a primary key causes the HBase Handler to abend.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">HBase Column Family</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>HBase has the concept of a column family. A column family is a way to group column data. Only a single column family is supported. Every HBase column must belong to a single column family. The HBase Handler provides a single column family per table that defaults to <code class="codeph">cf</code>. You can configure the column family name. However, after a table is created with a specific column family name, you cannot reconfigure the column family name in the HBase example, without first modifying or dropping the table results in an abend of the <span>Oracle GoldenGate</span>Replicat processes.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-3EC975E2-1F9A-4AB3-B3F6-7B4ADFEED390" title="Learn how to use the HBase Handler to populate HBase tables from existing Oracle GoldenGate supported sources.">Using the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD406"></a>
+<div class="props_rev_3"><a id="GUID-1AF0C143-9D6A-41D7-94F2-BC0D76D72018"></a>
+<h2 id="GADBD-GUID-1AF0C143-9D6A-41D7-94F2-BC0D76D72018" class="sect2"><span class="enumeration_section">7.3</span> Setting Up and Running the HBase Handler</h2>
+<div>
+<div class="section">
+<p>HBase must run either collocated with the HBase Handler process or on a machine that can connect from the network that is hosting the HBase Handler process. The underlying HDFS single instance or clustered instance serving as the repository for HBase data must also run.</p>
+<p>Instructions for configuring the HBase Handler components and running the handler are described in this section.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-5E080B12-1659-47A4-B915-92A28D1C223B">Classpath Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-041AEA7E-E0EA-4FA6-B632-C058AA40DA7E">HBase Handler Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-B2CADBEA-30C3-4D32-A692-DA4C02E86C12">Sample Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-C56CC944-B51D-4FD1-9F53-FA62B7FAA835">Performance Considerations</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-3EC975E2-1F9A-4AB3-B3F6-7B4ADFEED390" title="Learn how to use the HBase Handler to populate HBase tables from existing Oracle GoldenGate supported sources.">Using the HBase Handler</a></p>
+</div>
+</div>
+</div>
+<a id="GADBD407"></a>
+<div class="props_rev_3"><a id="GUID-5E080B12-1659-47A4-B915-92A28D1C223B"></a>
+<h3 id="GADBD-GUID-5E080B12-1659-47A4-B915-92A28D1C223B" class="sect3"><span class="enumeration_section">7.3.1</span> Classpath Configuration</h3>
+<div>
+<div class="section">
+<p>For the HBase Handler to connect to HBase and stream data, the hbase-site.xml file and the HBase client jars must be configured in <code class="codeph">gg.classpath</code> variable. The HBase client jars must match the version of HBase to which the HBase Handler is connecting. The HBase client jars are not shipped with the Oracle GoldenGate for Big Data product.</p>
+<p><a href="hbase-handler-client-dependencies.htm#GUID-0923A020-5800-4B8F-8EFA-05AF9061629B" title="What are the dependencies for the HBase Handler to connect to Apache HBase databases?">HBase Handler Client Dependencies</a> lists the required HBase client jars by version.</p>
+<p>The default location of the <code class="codeph">hbase-site.xml</code> file is <span class="italic"><code class="codeph">HBase_Home</code></span><code class="codeph">/conf</code>.</p>
+<p>The default location of the HBase client JARs is <span class="italic"><code class="codeph">HBase_Home</code></span><code class="codeph">/lib/*</code>.</p>
+<p>If the HBase Handler is running on Windows, follow the Windows classpathing syntax.</p>
+<p>The <code class="codeph">gg.classpath</code> must be configured exactly as described. The path to the <code class="codeph">hbase-site.xml</code> file must contain only the path with no wild card appended. The inclusion of the * wildcard in the path to the <code class="codeph">hbase-site.xml</code> file will cause it to be inaccessible. Conversely, the path to the dependency jars must include the (*) wildcard character in order to include all the jar files in that directory, in the associated classpath. Do not use <code class="codeph">*.jar</code>. The following is an example of a correctly configured <code class="codeph">gg.classpath</code> variable:</p>
+<p><code class="codeph">gg.classpath=/var/lib/hbase/lib/*:/var/lib/hbase/conf</code></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-1AF0C143-9D6A-41D7-94F2-BC0D76D72018">Setting Up and Running the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD410"></a><a id="GADBD409"></a>
+<div class="props_rev_3"><a id="GUID-041AEA7E-E0EA-4FA6-B632-C058AA40DA7E"></a>
+<h3 id="GADBD-GUID-041AEA7E-E0EA-4FA6-B632-C058AA40DA7E" class="sect3"><span class="enumeration_section">7.3.2</span> HBase Handler Configuration</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the HBase Handler. These properties are located in the Java Adapter properties file (not in the Replicat properties file).</p>
+<p>To enable the selection of the HBase Handler, you must first configure the handler type by specifying <code class="codeph">gg.handler.jdbc.type=hbase</code> and the other HBase properties as follows:</p>
+</div>
+<!-- class="section" -->
+<div class="tblformal" id="GUID-041AEA7E-E0EA-4FA6-B632-C058AA40DA7E__GUID-D804E272-991E-421B-992F-E0DBFACB6184">
+<p class="titleintable">Table 7-1 HBase Handler Configuration Properties</p>
+<table class="cellalignment78" title="HBase Handler Configuration Properties" summary="HBase Handler Configuration Properties">
+<thead>
+<tr class="cellalignment65">
+<th class="cellalignment98" id="d38448e349">Properties</th>
+<th class="cellalignment99" id="d38448e352">Required/ Optional</th>
+<th class="cellalignment100" id="d38448e355">Legal Values</th>
+<th class="cellalignment101" id="d38448e358">Default</th>
+<th class="cellalignment102" id="d38448e361">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e366" headers="d38448e349">
+<p><code class="codeph">gg.handlerlist</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e366 d38448e352">
+<p>Required</p>
+</td>
+<td class="cellalignment105" headers="d38448e366 d38448e355">
+<p>Any string.</p>
+</td>
+<td class="cellalignment106" headers="d38448e366 d38448e358">
+<p>None</p>
+</td>
+<td class="cellalignment107" headers="d38448e366 d38448e361">
+<p>Provides a name for the HBase Handler. The HBase Handler name is then becomes part of the property names listed in this table.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e383" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">type</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e383 d38448e352">
+<p>Required</p>
+</td>
+<td class="cellalignment105" headers="d38448e383 d38448e355">
+<p><code class="codeph">hbase</code>.</p>
+</td>
+<td class="cellalignment106" headers="d38448e383 d38448e358">
+<p>None</p>
+</td>
+<td class="cellalignment107" headers="d38448e383 d38448e361">
+<p>Selects the HBase Handler for streaming change data capture into HBase.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e407" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">hBaseColumnFamilyName</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e407 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e407 d38448e355">
+<p>Any string legal for an HBase column family name.</p>
+</td>
+<td class="cellalignment106" headers="d38448e407 d38448e358">
+<p><code class="codeph">cf</code></p>
+</td>
+<td class="cellalignment107" headers="d38448e407 d38448e361">
+<p>Column family is a grouping mechanism for columns in HBase. The HBase Handler only supports a single column family in the 12.2 release.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e430" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name</code></span><code class="codeph">.includeTokens</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e430 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e430 d38448e355">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment106" headers="d38448e430 d38448e358">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment107" headers="d38448e430 d38448e361">
+<p>Using <code class="codeph">true</code> indicates that token values are included in the output to HBase. Using <code class="codeph">false</code> means token values are not to be included.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e463" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">keyValueDelimiter</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e463 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e463 d38448e355">
+<p>Any string.</p>
+</td>
+<td class="cellalignment106" headers="d38448e463 d38448e358">
+<p><code class="codeph">=</code></p>
+</td>
+<td class="cellalignment107" headers="d38448e463 d38448e361">
+<p>Provides a delimiter between key values in a map. For example, <code class="codeph">key=value,key1=value1,key2=value2</code>. Tokens are mapped values. Configuration value supports <code class="codeph">CDATA[]</code> wrapping.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e492" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">keyValuePairDelimiter</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e492 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e492 d38448e355">
+<p>Any string.</p>
+</td>
+<td class="cellalignment106" headers="d38448e492 d38448e358">
+<p><code class="codeph">,</code></p>
+</td>
+<td class="cellalignment107" headers="d38448e492 d38448e361">
+<p>Provides a delimiter between key value pairs in a map. For example, <code class="codeph">key=value,key1=value1,key2=value2key=value,key1=value1,key2=value2</code>. Tokens are mapped values. Configuration value supports <code class="codeph">CDATA[]</code> wrapping.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e521" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">encoding</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e521 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e521 d38448e355">
+<p>Any encoding name or alias supported by Java.<a id="fn_1" href="#fn_1" onclick='footdisplay(1,"See Java Internalization Support at https://docs.oracle.com/javase/8/docs/technotes/guides/intl/. ")'><sup>Foot&nbsp;1</sup></a> For a list of supported options, see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html" target="_blank"><code class="codeph">https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html</code></a>.</p>
+</td>
+<td class="cellalignment106" headers="d38448e521 d38448e358">
+<p>The native system encoding of the machine hosting the Oracle GoldenGate process</p>
+</td>
+<td class="cellalignment107" headers="d38448e521 d38448e361">
+<p>Determines the encoding of values written the HBase. HBase values are written as bytes.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e560" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">pkUpdateHandling</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e560 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e560 d38448e355">
+<p><code class="codeph">abend</code> | <code class="codeph">update</code> | <code class="codeph">delete-insert</code></p>
+</td>
+<td class="cellalignment106" headers="d38448e560 d38448e358">
+<p><code class="codeph">abend</code></p>
+</td>
+<td class="cellalignment107" headers="d38448e560 d38448e361">
+<p>Provides configuration for how the HBase Handler should handle update operations that change a primary key. Primary key operations can be problematic for the HBase Handler and require special consideration by you.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">abend</code>: indicates the process will end abnormally.</p>
+</li>
+<li>
+<p><code class="codeph">update</code>: indicates the process will treat this as a normal update</p>
+</li>
+<li>
+<p><code class="codeph">delete-insert</code>: indicates the process will treat this as a delete and an insert. The full before image is required for this feature to work properly. This can be achieved by using full supplemental logging in Oracle Database. Without full before and after row images the insert data will be incomplete.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e606" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">nullValueRepresentation</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e606 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e606 d38448e355">
+<p>Any string.</p>
+</td>
+<td class="cellalignment106" headers="d38448e606 d38448e358">
+<p><code class="codeph">NULL</code></p>
+</td>
+<td class="cellalignment107" headers="d38448e606 d38448e361">
+<p>Allows you to configure what will be sent to HBase in the case of a NULL column value. The default is <code class="codeph">NULL</code>. Configuration value supports <code class="codeph">CDATA[]</code> wrapping.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e635" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">authType</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e635 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e635 d38448e355">
+<p><code class="codeph">kerberos</code></p>
+</td>
+<td class="cellalignment106" headers="d38448e635 d38448e358">
+<p>None</p>
+</td>
+<td class="cellalignment107" headers="d38448e635 d38448e361">
+<p>Setting this property to <code class="codeph">kerberos</code> enables Kerberos authentication.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e661" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">kerberosKeytabFile</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e661 d38448e352">
+<p>Optional (Required if <code class="codeph">authType=kerberos</code>)</p>
+</td>
+<td class="cellalignment105" headers="d38448e661 d38448e355">
+<p>Relative or absolute path to a Kerberos <code class="codeph">keytab</code> file.</p>
+</td>
+<td class="cellalignment106" headers="d38448e661 d38448e358">
+<p>-</p>
+</td>
+<td class="cellalignment107" headers="d38448e661 d38448e361">
+<p>The <code class="codeph">keytab</code> file allows the HDFS Handler to access a password to perform a <code class="codeph">kinit</code> operation for Kerberos security.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e696" headers="d38448e349">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">kerberosPrincipal</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e696 d38448e352">
+<p>Optional (Required if <code class="codeph">authType=kerberos</code>)</p>
+</td>
+<td class="cellalignment105" headers="d38448e696 d38448e355">
+<p>A legal Kerberos principal name (for example, <code class="codeph">user/FQDN@MY.REALM</code>)</p>
+</td>
+<td class="cellalignment106" headers="d38448e696 d38448e358">
+<p>-</p>
+</td>
+<td class="cellalignment107" headers="d38448e696 d38448e361">
+<p>The Kerberos principal name for Kerberos authentication.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e724" headers="d38448e349">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.hBase98Compatible&nbsp;</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e724 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e724 d38448e355">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment106" headers="d38448e724 d38448e358">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment107" headers="d38448e724 d38448e361">
+<p>Set this configuration property to <code class="codeph">true</code> to enable integration with the HBase 0.98.<span class="italic">x</span> and 0.96.<span class="italic">x</span> releases.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e758" headers="d38448e349">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.rowkeyDelimiter&nbsp;</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e758 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e758 d38448e355">
+<p>Any string/</p>
+</td>
+<td class="cellalignment106" headers="d38448e758 d38448e358">
+<p>|</p>
+</td>
+<td class="cellalignment107" headers="d38448e758 d38448e361">
+<p>Configures the delimiter between primary key values from the source table when generating the HBase <code class="codeph">rowkey</code>. This property supports <code class="codeph">CDATA[]</code> wrapping of the value to preserve whitespace if the user wishes to delimit incoming primary key values with a character or characters determined to be whitespace.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e784" headers="d38448e349">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.setHBaseOperationTimestamp</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e784 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e784 d38448e355">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment106" headers="d38448e784 d38448e358">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment107" headers="d38448e784 d38448e361">
+<p>Set to <code class="codeph">true</code> to set the timestamp for HBase operations in the HBase Handler instead of allowing HBase is assign the timestamps on the server side. This property can be used to solve the problem of a row delete followed by an immediate reinsert of the row not showing up in HBase, see <a href="using-hbase-handler.htm#GUID-1A9BA580-628B-48BD-9DC0-C3DF9722E0FB">HBase Handler Delete-Insert Problem</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment103" id="d38448e815" headers="d38448e349">
+<p><code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.omitNullValues</code></p>
+</td>
+<td class="cellalignment104" headers="d38448e815 d38448e352">
+<p>Optional</p>
+</td>
+<td class="cellalignment105" headers="d38448e815 d38448e355">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment106" headers="d38448e815 d38448e358">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment107" headers="d38448e815 d38448e361">
+<p>Set to <code class="codeph">true</code> to omit null fields from being written.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p class="tablefootnote"><sup class="tablefootnote">Footnote&nbsp;1</sup></p>
+<p>See <span class="italic">Java Internalization Support</span> at <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/" target="_blank"><code class="codeph">https://docs.oracle.com/javase/8/docs/technotes/guides/intl/</code></a>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-1AF0C143-9D6A-41D7-94F2-BC0D76D72018">Setting Up and Running the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD411"></a>
+<div class="props_rev_3"><a id="GUID-B2CADBEA-30C3-4D32-A692-DA4C02E86C12"></a>
+<h3 id="GADBD-GUID-B2CADBEA-30C3-4D32-A692-DA4C02E86C12" class="sect3"><span class="enumeration_section">7.3.3</span> Sample Configuration</h3>
+<div>
+<div class="section">
+<p>The following is a sample configuration for the HBase Handler from the Java Adapter properties file:</p>
+<pre dir="ltr">
+gg.handlerlist=hbase
+gg.handler.hbase.type=hbase
+gg.handler.hbase.mode=tx
+gg.handler.hbase.hBaseColumnFamilyName=cf
+gg.handler.hbase.includeTokens=true
+gg.handler.hbase.keyValueDelimiter=CDATA[=]
+gg.handler.hbase.keyValuePairDelimiter=CDATA[,]
+gg.handler.hbase.encoding=UTF-8
+gg.handler.hbase.pkUpdateHandling=abend
+gg.handler.hbase.nullValueRepresentation=CDATA[NULL]
+gg.handler.hbase.authType=none
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-1AF0C143-9D6A-41D7-94F2-BC0D76D72018">Setting Up and Running the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD416"></a>
+<div class="props_rev_3"><a id="GUID-C56CC944-B51D-4FD1-9F53-FA62B7FAA835"></a>
+<h3 id="GADBD-GUID-C56CC944-B51D-4FD1-9F53-FA62B7FAA835" class="sect3"><span class="enumeration_section">7.3.4</span> Performance Considerations</h3>
+<div>
+<div class="section">
+<p>At each transaction commit, the HBase Handler performs a flush call to flush any buffered data to the HBase region server. This must be done to maintain write durability. Flushing to the HBase region server is an expensive call and performance can be greatly improved by using the Replicat <code class="codeph">GROUPTRANSOPS</code> parameter to group multiple smaller transactions in the source trail file into a larger single transaction applied to HBase. You can use Replicat base-batching by adding the configuration syntax in the Replicat configuration file.</p>
+<p>Operations from multiple transactions are grouped together into a larger transaction, and it is only at the end of the grouped transaction that transaction is committed.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-1AF0C143-9D6A-41D7-94F2-BC0D76D72018">Setting Up and Running the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD417"></a>
+<div class="props_rev_3"><a id="GUID-7A6E554F-F38B-4896-9118-3C18E75C3B54"></a>
+<h2 id="GADBD-GUID-7A6E554F-F38B-4896-9118-3C18E75C3B54" class="sect2"><span class="enumeration_section">7.4</span> Security</h2>
+<div>
+<div class="section">
+<p>You can secure HBase connectivity using Kerberos authentication. Follow the associated documentation for the HBase release to secure the HBase cluster. The HBase Handler can connect to Kerberos secured clusters. The HBase <code class="codeph">hbase-site.xml</code> must be in handlers classpath with the <code class="codeph">hbase.security.authentication</code> property set to <code class="codeph">kerberos</code> and <code class="codeph">hbase.security.authorization</code> property set to <code class="codeph">true</code>.</p>
+<p>You have to include the directory containing the HDFS <code class="codeph">core-site.xml</code> file in the classpath. Kerberos authentication is performed using the Hadoop <code class="codeph">UserGroupInformation</code> class. This class relies on the Hadoop configuration property <code class="codeph">hadoop.security.authentication</code> being set to <code class="codeph">kerberos</code> to successfully perform the <code class="codeph">kinit</code> command.</p>
+<p>Additionally, you must set the following properties in the HBase Handler Java configuration file:</p>
+<pre dir="ltr">
+gg.handler.{<span class="italic">name</span>}.authType=kerberos
+gg.handler.{<span class="italic">name</span>}.keberosPrincipalName={<span class="italic">legal Kerberos principal name</span>}
+gg.handler.{<span class="italic">name</span>}.kerberosKeytabFile={<span class="italic">path to a keytab file that contains the password for the Kerberos principal so that the Oracle GoldenGate HDFS handler can programmatically perform the Kerberos kinit operations to obtain a Kerberos ticket</span>}.
+</pre>
+<p>You may encounter the inability to decrypt the Kerberos password from the <code>keytab</code> file. This causes the Kerberos authentication to fall back to interactive mode which cannot work because it is being invoked programmatically. The cause of this problem is that the Java Cryptography Extension (JCE) is not installed in the Java Runtime Environment (JRE). Ensure that the JCE is loaded in the JRE, see <a href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html" target="_blank">http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html</a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-3EC975E2-1F9A-4AB3-B3F6-7B4ADFEED390" title="Learn how to use the HBase Handler to populate HBase tables from existing Oracle GoldenGate supported sources.">Using the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD418"></a>
+<div class="props_rev_3"><a id="GUID-C1AD7142-9B27-4FFA-8CB8-A40E9A523703"></a>
+<h2 id="GADBD-GUID-C1AD7142-9B27-4FFA-8CB8-A40E9A523703" class="sect2"><span class="enumeration_section">7.5</span> Metadata Change Events</h2>
+<div>
+<div class="section">
+<p>Oracle GoldenGate 12.2 includes metadata in trail and can handle metadata change events at runtime. The HBase Handler can handle metadata change events at runtime as well. One of the most common scenarios is the addition of a new column. The result in HBase is that the new column and its associated data are streamed to HBase after the metadata change event.</p>
+<p>It is important to understand that in order to enable metadata change events, the entire Replication chain must be upgraded to Oracle GoldenGate 12.2. The 12.2 HBase Handler can work with trail files produced by Oracle GoldenGate 12.1 and later. However, these trail files do not include metadata in trail, and therefore metadata change events cannot be handled at runtime.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-3EC975E2-1F9A-4AB3-B3F6-7B4ADFEED390" title="Learn how to use the HBase Handler to populate HBase tables from existing Oracle GoldenGate supported sources.">Using the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD419"></a>
+<div class="props_rev_3"><a id="GUID-5247718A-478B-4296-B791-76A8D05A2E52"></a>
+<h2 id="GADBD-GUID-5247718A-478B-4296-B791-76A8D05A2E52" class="sect2"><span class="enumeration_section">7.6</span> Additional Considerations</h2>
+<div>
+<div class="section">
+<p>HBase has been experiencing changes to the client interface in the last few releases. HBase 1.0.0 introduced a new recommended client interface and the 12.2 HBase Handler has moved to the new interface to keep abreast of the most current changes. However, this does create a backward compatibility issue. The HBase Handler is not compatible with HBase versions older than 1.0.0. If an Oracle GoldenGate integration is required with 0.99.<span class="italic">x</span> or older version of HBase, this can be accomplished using the 12.1.2.1.<span class="italic">x</span> HBase Handler. Contact Oracle Support to obtain a ZIP file of the 12.1.2.1.<span class="italic">x</span> HBase Handler.</p>
+<p>Classpath issues are common during the initial setup of the HBase Handler. The typical indicators are occurrences of the <code class="codeph">ClassNotFoundException</code> in the Java <code class="codeph">log4j</code> log file. The HBase client jars do not ship with <span>Oracle GoldenGate for Big Data</span>. You must resolve the required HBase client jars. <a href="hbase-handler-client-dependencies.htm#GUID-0923A020-5800-4B8F-8EFA-05AF9061629B" title="What are the dependencies for the HBase Handler to connect to Apache HBase databases?">HBase Handler Client Dependencies</a> includes a list of HBase client jars for each supported version. Either the <code class="codeph">hbase-site.xml</code> or one or more of the required client JARS are not included in the classpath. For instructions on configuring the classpath of the HBase Handler, see <a href="using-hbase-handler.htm#GUID-5E080B12-1659-47A4-B915-92A28D1C223B">Classpath Configuration</a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-3EC975E2-1F9A-4AB3-B3F6-7B4ADFEED390" title="Learn how to use the HBase Handler to populate HBase tables from existing Oracle GoldenGate supported sources.">Using the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD412"></a>
+<div class="props_rev_3"><a id="GUID-DFFDFC5B-3331-455F-9504-1BD25CD102A4"></a>
+<h2 id="GADBD-GUID-DFFDFC5B-3331-455F-9504-1BD25CD102A4" class="sect2"><span class="enumeration_section">7.7</span> Troubleshooting the HBase Handler</h2>
+<div>
+<div class="section">
+<p>Troubleshooting of the HBase Handler begins with the contents for the Java <code class="codeph">log4j</code> file. Follow the directions in the Java Logging Configuration to configure the runtime to correctly generate the Java <code class="codeph">log4j</code> log file.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-EC21D0C0-BBB1-490A-B5B2-35A0B48DCCCB">Java Classpath</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-49F1BAC9-C2ED-4019-9B35-CDEF24ABBD24">HBase Connection Properties</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-DDF4317B-1232-4AAF-936C-895CC99D8504">Logging of Handler Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-1A9BA580-628B-48BD-9DC0-C3DF9722E0FB">HBase Handler Delete-Insert Problem</a><br /></li>
+<li class="ulchildlink"><a href="using-hbase-handler.htm#GUID-241209AD-5934-40C1-A345-60F878ABBA7C">Cloudera CDH HBase Compatibility</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-3EC975E2-1F9A-4AB3-B3F6-7B4ADFEED390" title="Learn how to use the HBase Handler to populate HBase tables from existing Oracle GoldenGate supported sources.">Using the HBase Handler</a></p>
+</div>
+</div>
+</div>
+<a id="GADBD413"></a>
+<div class="props_rev_3"><a id="GUID-EC21D0C0-BBB1-490A-B5B2-35A0B48DCCCB"></a>
+<h3 id="GADBD-GUID-EC21D0C0-BBB1-490A-B5B2-35A0B48DCCCB" class="sect3"><span class="enumeration_section">7.7.1</span> Java Classpath</h3>
+<div>
+<p>Issues with the Java classpath are common. A <code class="codeph">ClassNotFoundException</code> in the Java <code class="codeph">log4j</code> log file indicates a classpath problem. You can use the Java <code class="codeph">log4j</code> log file to troubleshoot this issue. Setting the log level to <code class="codeph">DEBUG</code> logs each of the jars referenced in the <code class="codeph">gg.classpath</code> object to the log file. You can make sure that all of the required dependency jars are resolved by enabling <code class="codeph">DEBUG</code> level logging, and then searching the log file for messages like the following:</p>
+<pre dir="ltr">
+2015-09-29 13:04:26 DEBUG ConfigClassPath:74 -  ...adding to classpath:
+ url="file:/ggwork/hbase/hbase-1.0.1.1/lib/hbase-server-1.0.1.1.jar"
+</pre></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-DFFDFC5B-3331-455F-9504-1BD25CD102A4">Troubleshooting the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD414"></a>
+<div class="props_rev_3"><a id="GUID-49F1BAC9-C2ED-4019-9B35-CDEF24ABBD24"></a>
+<h3 id="GADBD-GUID-49F1BAC9-C2ED-4019-9B35-CDEF24ABBD24" class="sect3"><span class="enumeration_section">7.7.2</span> HBase Connection Properties</h3>
+<div>
+<p>The contents of the HDFS <code class="codeph">hbase-site.xml</code> file (including default settings) are output to the Java <code class="codeph">log4j</code> log file when the logging level is set to <code class="codeph">DEBUG</code> or <code class="codeph">TRACE</code>. This file shows the connection properties to HBase. Search for the following in the Java <code class="codeph">log4j</code> log file.</p>
+<pre dir="ltr">
+2015-09-29 13:04:27 DEBUG HBaseWriter:449 - Begin - HBase configuration object contents for connection troubleshooting. 
+Key: [hbase.auth.token.max.lifetime] Value: [604800000].
+</pre>
+<p>Commonly, for the <code class="codeph">hbase-site.xml</code> file is not included in the classpath or the path to the <code class="codeph">hbase-site.xml</code> file is incorrect. In this case, the HBase Handler cannot establish a connection to HBase, and the <span>Oracle GoldenGate</span> process abends. The following error is reported in the Java <code class="codeph">log4j</code> log.</p>
+<pre dir="ltr">
+2015-09-29 12:49:29 ERROR HBaseHandler:207 - Failed to initialize the HBase handler.
+org.apache.hadoop.hbase.ZooKeeperConnectionException: Can't connect to ZooKeeper
+</pre>
+<p>Verify that the classpath correctly includes the <code class="codeph">hbase-site.xml</code> file and that HBase is running.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-DFFDFC5B-3331-455F-9504-1BD25CD102A4">Troubleshooting the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD415"></a>
+<div class="props_rev_3"><a id="GUID-DDF4317B-1232-4AAF-936C-895CC99D8504"></a>
+<h3 id="GADBD-GUID-DDF4317B-1232-4AAF-936C-895CC99D8504" class="sect3"><span class="enumeration_section">7.7.3</span> Logging of Handler Configuration</h3>
+<div>
+<p>The Java <code class="codeph">log4j</code> log file contains information on the configuration state of the HBase Handler. This information is output at the <code class="codeph">INFO</code> log level. The following is a sample output:</p>
+<pre dir="ltr">
+2015-09-29 12:45:53 INFO HBaseHandler:194 - **** Begin HBase Handler - Configuration Summary ****
+  Mode of operation is set to tx.
+  HBase data will be encoded using the native system encoding.
+  In the event of a primary key update, the HBase Handler will ABEND.
+  HBase column data will use the column family name [cf].
+  The HBase Handler will not include tokens in the HBase data.
+  The HBase Handler has been configured to use [=] as the delimiter between keys and values.
+  The HBase Handler has been configured to use [,] as the delimiter between key values pairs.
+  The HBase Handler has been configured to output [NULL] for null values.
+Hbase Handler Authentication type has been configured to use [none]
+</pre></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-DFFDFC5B-3331-455F-9504-1BD25CD102A4">Troubleshooting the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3"><a id="GUID-1A9BA580-628B-48BD-9DC0-C3DF9722E0FB"></a>
+<h3 id="GADBD-GUID-1A9BA580-628B-48BD-9DC0-C3DF9722E0FB" class="sect3"><span class="enumeration_section">7.7.4</span> HBase Handler Delete-Insert Problem</h3>
+<div>
+<p>If you are using the HBase Handler <code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.setHBaseOperationTimestamp</code> configuration property, the source database may get out of sync with data in the HBase Handler tables. This is caused by the deletion of a row followed by the immediate reinsertion of the row. HBase creates a tombstone marker for the delete that is identified by a specific timestamp. This tombstone marker marks any row records in HBase with the same row key as deleted that have a timestamp before or the same as the tombstone marker. This can occur when the deleted row is immediately reinserted. The insert operation can inadvertently have the same timestamp as the delete operation so the delete operation causes the subsequent insert operation to incorrectly appear as deleted.</p>
+<p>To work around this issue, you need to set the <code class="codeph">gg.handler.<span class="codeinlineitalic">name</span>.setHbaseOperationTimestamp=</code> to <code class="codeph">true</code>, which does two things:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Sets the timestamp for row operations in the HBase Handler.</p>
+</li>
+<li>
+<p>Detection of a delete-insert operation that ensures that the insert operation has a timestamp that is after the insert.</p>
+</li>
+</ul>
+<p>The default for <code class="codeph">gg.handler.name.setHbaseOperationTimestamp</code> is<code class="codeph">false</code>, which means that the HBase server supplies the timestamp for a row. This can cause the out of sync problem.</p>
+<p>Setting the row operation timestamp in the HBase Handler can have these consequences:</p>
+<ol>
+<li>
+<p>Since the timestamp is set on the client side, this could create problems if multiple applications are feeding data to the same HBase table.</p>
+</li>
+<li>
+<p>If delete and reinsert is a common pattern in your use case, then the HBase Handler has to increment the timestamp 1 millisecond each time this scenario is encountered.</p>
+</li>
+</ol>
+<p>Processing cannot be allowed to get too far into the future so the HBase Handler only allows the timestamp to increment 100 milliseconds into the future before it attempts to wait the process so that the client side HBase operation timestamp and real time are back in sync. When a delete-insert is used instead of an update in the source database so this sync scenario would be quite common. Processing speeds may be affected by not allowing the HBase timestamp to go over 100 milliseconds into the future if this scenario is common.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-DFFDFC5B-3331-455F-9504-1BD25CD102A4">Troubleshooting the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-241209AD-5934-40C1-A345-60F878ABBA7C"></a>
+<h3 id="GADBD-GUID-241209AD-5934-40C1-A345-60F878ABBA7C" class="sect3"><span class="enumeration_section">7.7.5</span> Cloudera CDH HBase Compatibility</h3>
+<div>
+<p>The Cloudera CDH has moved to HBase 1.0.0 in the CDH 5.4.0 version. To keep reverse compatibility with HBase 0.98<span class="italic">.x</span> and before, the HBase client in the CDH broke the binary compatibility with Apache HBase 1.0.0. This created a compatibility problem for the HBase Handler when connecting to Cloudera CDH HBase for CDH versions 5.4 - 5.11. You may have been advised to solve this problem by using the old 0.98 HBase interface and setting the following configuration parameter:</p>
+<pre dir="ltr">
+gg.handler.<span class="italic">name</span>.hBase98Compatible=true 
+</pre>
+<p>This compatibility problem is solved using Java Refection. If you are using the HBase Handler to connect to CDH 5.4<span class="italic">x</span>, then you should changed the HBase Handler configuration property to the following:</p>
+<pre dir="ltr">
+gg.handler.<span class="italic">name</span>.hBase98Compatible=false
+</pre>
+<p>Optionally, you can omit the property entirely because the default value is <code class="codeph">false</code>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-hbase-handler.htm#GUID-DFFDFC5B-3331-455F-9504-1BD25CD102A4">Troubleshooting the HBase Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment64">
+<tr>
+<td class="cellalignment74">
+<table class="cellalignment69">
+<tr>
+<td class="cellalignment68"><a href="using-flume-handler.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment68"><a href="using-hdfs-handler.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment76">
+<table class="cellalignment67">
+<tr>
+<td class="cellalignment68"><a href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment68"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment68"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+</body>
+</html>

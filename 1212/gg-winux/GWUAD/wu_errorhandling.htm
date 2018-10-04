@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>15 Handling Processing Errors</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1028" />
+<meta name="description" content="This chapter describes how to configure the Oracle GoldenGate processes to handle errors." />
+<meta name="dcterms.created" content="2014-11-11T22:58:6Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Administering Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E29388-06" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Index" href="index.htm" title="Index" type="text/html" />
+<link rel="Prev" href="wu_changesync.htm" title="Previous" type="text/html" />
+<link rel="Next" href="wu_initsync.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GWUAD.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GWUAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">18/30</span>
+<!-- End Header -->
+<div id="GWUAD497" class="chapter"><a id="g1030758"></a> <a id="i1020124"></a>
+<h1 class="chapter"><span class="secnum">15</span> <a id="sthref756"></a><a id="sthref757"></a>Handling <a id="sthref758"></a><a id="sthref759"></a><a id="sthref760"></a>Processing Errors</h1>
+<p><a id="GWUAD498"></a>This chapter describes how to configure the Oracle GoldenGate processes to handle errors.</p>
+<p><a id="GWUAD998"></a>Oracle GoldenGate reports processing errors in several ways by means of its monitoring and reporting tools. For more information about these tools, see <a href="wu_monitoring.htm#i999987">Chapter 18, "Monitoring Oracle GoldenGate Processing."</a></p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#BABCBBBC">Overview of Oracle GoldenGate Error Handling</a></p>
+</li>
+<li>
+<p><a href="#BABJFAHA">Handling Extract Errors</a></p>
+</li>
+<li>
+<p><a href="#i1014773">Handling Replicat Errors during DML Operations</a></p>
+</li>
+<li>
+<p><a href="#BABCDDJG">Handling Replicat errors during DDL Operations</a></p>
+</li>
+<li>
+<p><a href="#i1001543">Handling TCP/IP Errors</a></p>
+</li>
+<li>
+<p><a href="#BABFEDGG">Maintaining Updated Error Messages</a></p>
+</li>
+<li>
+<p><a href="#BABEGJHA">Resolving Oracle GoldenGate Errors</a></p>
+</li>
+</ul>
+<a id="BABCBBBC"></a>
+<div id="GWUAD499" class="sect1">
+<h2 class="sect1"><span class="secnum">15.1</span> <a id="sthref761"></a><a id="sthref762"></a>Overview of Oracle GoldenGate Error Handling</h2>
+<p>Oracle GoldenGate provides error-handling options for:</p>
+<ul>
+<li>
+<p>Extract</p>
+</li>
+<li>
+<p>Replicat</p>
+</li>
+<li>
+<p>TCP/IP</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="BABJFAHA"></a>
+<div id="GWUAD500" class="sect1">
+<h2 class="sect1"><span class="secnum">15.2</span> Handling<a id="sthref763"></a> Extract Errors</h2>
+<p>There is no specific parameter to handle Extract errors when DML operations are being extracted, but Extract does provide a number of parameters that can be used to prevent anticipated problems. These parameters handle anomalies that can occur during the processing of DML operations, such as what to do when a row to be fetched cannot be located, or what to do when the transaction log is not available. The following is a partial list of these parameters.</p>
+<ul>
+<li>
+<p><code dir="ltr">FETCHOPTIONS</code></p>
+</li>
+<li>
+<p><code dir="ltr">WARNLONGTRANS</code></p>
+</li>
+<li>
+<p><code dir="ltr">DBOPTIONS</code></p>
+</li>
+<li>
+<p><code dir="ltr">TRANLOGOPTIONS</code></p>
+</li>
+</ul>
+<p>To handle extraction errors that relate to DDL operations, use the <code dir="ltr">DDLERROR</code> parameter.</p>
+<p>For a complete parameter list, see <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="i1014773"></a>
+<div id="GWUAD501" class="sect1">
+<h2 class="sect1"><span class="secnum">15.3</span> Handling <a id="sthref764"></a>Replicat Errors during DML Operations</h2>
+<p>To control the way that Replicat responds to an error during one of its DML statements, use the <code dir="ltr">REPERROR</code> parameter in the Replicat parameter file. You can use <code dir="ltr">REPERROR</code> as a global parameter or as part of a <code dir="ltr">MAP</code> statement. You can handle most errors in a default fashion (for example, to cease processing) with <code dir="ltr"><a id="sthref765"></a>DEFAULT</code> and <code dir="ltr">DEFAULT2</code> options, and also handle other errors in a specific manner.</p>
+<p>The following comprise the range of <code dir="ltr">REPERROR</code> responses:</p>
+<ul>
+<li>
+<p><code dir="ltr"><a id="sthref766"></a>ABEND</code>: roll back the transaction and stop processing.</p>
+</li>
+<li>
+<p><code dir="ltr"><a id="sthref767"></a>DISCARD</code>: log the error to the discard file and continue processing.</p>
+</li>
+<li>
+<p><code dir="ltr"><a id="sthref768"></a>EXCEPTION</code>: send the error for exceptions processing. See <a href="#i1019066">Section 15.3.1, "Handling Errors as Exceptions"</a> for more information.</p>
+</li>
+<li>
+<p><code dir="ltr"><a id="sthref769"></a>IGNORE</code>: ignore the error and continue processing.</p>
+</li>
+<li>
+<p><code dir="ltr">RETRYOP [MAXRETRIES</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code><code dir="ltr">]</code>: retry the operation, optionally up to a specific number of times.</p>
+</li>
+<li>
+<p><a id="sthref770"></a><code dir="ltr">TRANSABORT [, MAXRETRIES</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code><code dir="ltr">] [, DELAY[C]SECS</code> <code dir="ltr"><span class="codeinlineitalic">n</span></code><code dir="ltr">]</code>: abort the transaction and reposition to the beginning, optionally up to a specific number of times at specific intervals.</p>
+</li>
+<li>
+<p><code dir="ltr"><a id="sthref771"></a>RESET</code>: remove all previous <code dir="ltr">REPERROR</code> rules and restore the default of <code dir="ltr">ABEND</code>.</p>
+</li>
+<li>
+<p><code dir="ltr">TRANSDISCARD</code>: discard the entire replicated source transaction if any operation within that transaction, including the commit, causes a Replicat error that is listed in the error specification. This option is useful when integrity constraint checking is disabled on the target.</p>
+</li>
+<li>
+<p><code dir="ltr">TRANSEXCEPTION</code>: perform exceptions mapping for every record in the replicated source transaction, according to its exceptions-mapping statement, if any operation within that transaction (including the commit) causes a Replicat error that is listed in the error specification.</p>
+</li>
+</ul>
+<p>Most options operate on the individual record that generated an error, and Replicat processes the other, successful operations in the transaction. The exceptions are <code dir="ltr">TRANSDISCARD</code> and <code dir="ltr">TRANSEXCEPTION</code>: These options affect all records in a transaction if any record in that transaction generates an error. (The <code dir="ltr">ABEND</code> option also applies to the entire transaction, but does not apply error handling.)</p>
+<p>See <a class="olink GWURF603" href="../../gg-winux/GWURF/gg_parameters126.htm#GWURF603"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for <code dir="ltr">REPERROR</code> syntax and usage.</p>
+<a id="i1019066"></a>
+<div id="GWUAD502" class="sect2">
+<h3 class="sect2"><span class="secnum">15.3.1</span> Handling Errors as <a id="sthref772"></a>Exceptions</h3>
+<p>When the action of <code dir="ltr">REPERROR</code> is <code dir="ltr">EXCEPTION</code> or <code dir="ltr">TRANSEXCEPTION</code>, you can map the values of operations that generate errors to an exceptions table and, optionally, map other information about the error that can be used to resolve the error. See <a href="#i1019437">Section 15.3.1.3, "About the Exceptions Table"</a>.</p>
+<p>To map the exceptions to the exceptions table, use either of the following options of the <code dir="ltr">MAP</code> parameter:</p>
+<ul>
+<li>
+<p><code dir="ltr">MAP</code> with <code dir="ltr">EXCEPTIONSONLY</code></p>
+</li>
+<li>
+<p><code dir="ltr">MAP</code> with <code dir="ltr">MAPEXCEPTION</code></p>
+</li>
+</ul>
+<div id="GWUAD503" class="sect3"><a id="sthref773"></a>
+<h4 class="sect3"><span class="secnum">15.3.1.1</span> Using <a id="sthref774"></a>EXCEPTIONSONLY</h4>
+<p><code dir="ltr">EXCEPTIONSONLY</code> is valid for one pair of source and target tables that are explicitly named and mapped one-to-one in a <code dir="ltr">MAP</code> statement; that is, there cannot be wildcards. To use <code dir="ltr">EXCEPTIONSONLY</code>, create two <code dir="ltr">MAP</code> statements for each source table that you want to use <code dir="ltr">EXCEPTIONSONLY</code> for on the target:</p>
+<ul>
+<li>
+<p>The first, a standard <code dir="ltr">MAP</code> statement, maps the source table to the actual target table.</p>
+</li>
+<li>
+<p>The second, an <span class="italic">exceptions MAP statement</span>, maps the source table to the <span class="italic">exceptions table</span> (instead of to the target table). An exceptions <code dir="ltr">MAP</code> statement executes immediately after an error on the source table to send the row values to the exceptions table.</p>
+<p>To identify a <code dir="ltr">MAP</code> statement as an exceptions <code dir="ltr">MAP</code> statement, use the <code dir="ltr">INSERTALLRECORDS</code> and <code dir="ltr">EXCEPTIONSONLY</code> options. The exceptions <code dir="ltr">MAP</code> statement must immediately follow the regular <code dir="ltr">MAP</code> statement that contains the same source table. Use a <code dir="ltr">COLMAP</code> clause in the exceptions <code dir="ltr">MAP</code> statement if the source and exceptions-table columns are not identical, or if you want to map additional information to extra columns in the exceptions table, such as information that is captured by means of column-conversion functions or <code dir="ltr">SQLEXEC</code>.</p>
+</li>
+</ul>
+<p>For more information about these parameters, see <a class="olink GWURF546" href="../../gg-winux/GWURF/gg_parameters160.htm#GWURF546"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div id="GWUAD506" class="example"><p class="titleinexample"><a id="sthref775"></a>Example 15-1 EXCEPTIONSONLY</p>
+<p>This example shows how to use <code dir="ltr">REPERROR</code> with <code dir="ltr">EXCEPTIONSONLY</code> and an exceptions <code dir="ltr">MAP</code> statement. This example only shows the parameters that relate to <code dir="ltr">REPERROR</code>; other parameters not related to error handling are also required for Replicat.</p>
+<pre dir="ltr">
+REPERROR (DEFAULT, EXCEPTION)
+MAP ggs.equip_account, TARGET ggs.equip_account2,
+COLMAP (USEDEFAULTS);
+MAP ggs.equip_account, TARGET ggs.equip_account_exception,
+EXCEPTIONSONLY,
+INSERTALLRECORDS
+COLMAP (USEDEFAULTS,
+DML_DATE = @DATENOW (),
+OPTYPE = @GETENV ('LASTERR', 'OPTYPE'),
+DBERRNUM = @GETENV ('LASTERR', 'DBERRNUM'),
+DBERRMSG = @GETENV ('LASTERR', 'DBERRMSG'));
+</pre>
+<p>In this example, the <code dir="ltr">REPERROR</code> parameter is set for <code dir="ltr">DEFAULT</code> error handling, and the <code dir="ltr">EXCEPTION</code> option causes the Replicat process to treat failed operations as exceptions and continue processing.</p>
+<p>There are two <code dir="ltr">MAP</code> statements:</p>
+</div>
+<!-- class="example" -->
+<ul>
+<li>
+<p>A regular <code dir="ltr">MAP</code> statement that maps the source table <code dir="ltr">ggs.equip_account</code> to its target table <code dir="ltr">equip_account2.</code></p>
+</li>
+<li>
+<p>An exceptions <code dir="ltr">MAP</code> statement that maps the same source table to the exceptions table <code dir="ltr">ggs.equip_account_exception</code>.</p>
+</li>
+</ul>
+<p>In this case, four extra columns were created, in addition to the same columns that the table itself contains:</p>
+<pre dir="ltr">
+DML_DATE
+OPTYPE
+DBERRNUM
+DBERRMSG
+</pre>
+<p>To populate the <code dir="ltr">DML_DATE</code> column, the <code dir="ltr"><a id="sthref776"></a></code><code dir="ltr">@DATENOW</code> column-conversion function is used to get the date and time of the failed operation, and the result is mapped to the column. To populate the other extra columns, the <a id="sthref777"></a><code dir="ltr">@GETENV</code> function is used to return the operation type, database error number, and database error message.</p>
+<p>The <code dir="ltr">EXCEPTIONSONLY</code> option of the exceptions <code dir="ltr">MAP</code> statement causes the statement to execute only after a failed operation on the source table. It prevents every operation from being logged to the exceptions table.</p>
+<p>The <code dir="ltr"><a id="sthref778"></a><a id="sthref779"></a><a id="sthref780"></a>INSERTALLRECORDS</code> parameter causes all failed operations for the specified source table, no matter what the operation type, to be logged to the exceptions table as <span class="italic">inserts</span>.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+There can be no primary key or unique index restrictions on the exception table. Uniqueness violations are possible in this scenario and would generate errors.</div>
+</div>
+<!-- class="sect3" -->
+<div id="GWUAD504" class="sect3"><a id="sthref781"></a>
+<h4 class="sect3"><span class="secnum">15.3.1.2</span> Using <a id="sthref782"></a>MAPEXCEPTION</h4>
+<p><code dir="ltr">MAPEXCEPTION</code> is valid when the names of the source and target tables in the <code dir="ltr">MAP</code> statement are wildcarded. Place the <code dir="ltr">MAPEXCEPTION</code> clause in the regular <code dir="ltr">MAP</code> statement, the same one where you map the source tables to the target tables. Replicat maps all operations that generate errors from all of the wildcarded tables to the same exceptions table; therefore, the exceptions table should contain a superset of all of the columns in all of the wildcarded tables.</p>
+<p>Because you cannot individually map columns in a wildcard configuration, use the <code dir="ltr">COLMAP</code> clause with the <code dir="ltr">USEDEFAULTS</code> option to handle the column mapping for the wildcarded tables (or use the <code dir="ltr">COLMATCH</code> parameter if appropriate), and use explicit column mappings to map any additional information, such as that captured with column-conversion functions or <code dir="ltr">SQLEXEC</code>.</p>
+<p>When using <code dir="ltr">MAPEXCEPTION</code>, include the <code dir="ltr">INSERTALLRECORDS</code> parameter in the <code dir="ltr">MAPEXCEPTION</code> clause. <code dir="ltr">INSERTALLRECORDS</code> causes all operation types to be applied to the exceptions table as <code dir="ltr">INSERT</code> operations. This is required to keep an accurate record of the exceptions and to prevent integrity errors on the exceptions table.</p>
+<p>For more information about these parameters, see <a class="olink GWURF546" href="../../gg-winux/GWURF/gg_parameters160.htm#GWURF546"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div id="GWUAD507" class="example"><p class="titleinexample"><a id="sthref783"></a>Example 15-2 MAPEXCEPTION</p>
+<p>This is an example of how to use <code dir="ltr">MAPEXCEPTION</code> for exceptions mapping. The <code dir="ltr">MAP</code> and <code dir="ltr">TARGET</code> clauses contain wildcarded source and target table names. Exceptions that occur when processing any table with a name beginning with <code dir="ltr">TRX</code> are captured to the <code dir="ltr">fin.trxexceptions</code> table using the designated mapping.</p>
+<pre dir="ltr">
+MAP src.trx*, TARGET trg.*,
+MAPEXCEPTION (TARGET fin.trxexceptions,
+INSERTALLRECORDS,
+COLMAP (USEDEFAULTS,
+ACCT_NO = ACCT_NO,
+OPTYPE = @GETENV ('LASTERR', 'OPTYPE'),
+DBERR = @GETENV ('LASTERR', 'DBERRNUM'),
+DBERRMSG = @GETENV ('LASTERR', 'DBERRMSG')
+)
+);
+</pre></div>
+<!-- class="example" --></div>
+<!-- class="sect3" -->
+<a id="i1019437"></a>
+<div id="GWUAD505" class="sect3">
+<h4 class="sect3"><span class="secnum">15.3.1.3</span> About the Exceptions Table</h4>
+<p>Use an exceptions table to capture information about an error that can be used for such purposes as troubleshooting your applications or configuring them to handle the error. At minimum, an exceptions table should contain enough columns to receive the entire row image from the failed operation. You can define extra columns to contain other information that is captured by means of column-conversion functions, <code dir="ltr">SQLEXEC</code>, or other external means.</p>
+<p><a id="i1001502"></a>To ensure that the trail record contains values for all of the columns that you map to the exceptions table, you can use either the <code dir="ltr">LOGALLSUPCOLS</code> parameter or the following parameters in the Extract parameter file:</p>
+<ul>
+<li>
+<p>Use the <code dir="ltr">NOCOMPRESSDELETES</code> parameter so that all columns of a row are written to the trail for <code dir="ltr">DELETE</code> operations.</p>
+</li>
+<li>
+<p>Use the <code dir="ltr">GETUPDATEBEFORES</code> parameter so that Extract captures the before image of a row and writes them to the trail.</p>
+</li>
+</ul>
+<p>For more information about these parameters, see <a class="olink GWURF995" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF995"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABCDDJG"></a>
+<div id="GWUAD508" class="sect1">
+<h2 class="sect1"><span class="secnum">15.4</span> Handling Replicat errors during DDL Operations</h2>
+<p>To control the way that Replicat responds to an error that occurs for a DDL operation on the target, use the <code dir="ltr">DDLERROR</code> parameter in the Replicat parameter file. For more information, see <a class="olink GWURF448" href="../../gg-winux/GWURF/gg_parameters036.htm#GWURF448"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="i1001543"></a>
+<div id="GWUAD509" class="sect1">
+<h2 class="sect1"><span class="secnum">15.5</span> Handling TCP/IP Errors<a id="sthref784"></a><a id="sthref785"></a><a id="sthref786"></a></h2>
+<p>To provide instructions for responding to TCP/IP errors, use the <code dir="ltr">TCPERRS</code> file. This file is in the Oracle GoldenGate directory</p>
+<div id="GWUAD510" class="example"><p class="titleinexample"><a id="sthref787"></a>Example 15-3 TCPERRS File</p>
+<pre dir="ltr">
+# TCP/IP error handling parameters
+# Default error response is abend
+#
+# Error          Response   Delay(csecs)  Max Retries
+
+ECONNABORTED     RETRY      1000          10
+ECONNREFUSED     RETRY      1000          12
+ECONNRESET       RETRY      500           10
+ENETDOWN         RETRY      3000          50
+ENETRESET        RETRY      1000          10
+ENOBUFS          RETRY      100           60
+ENOTCONN         RETRY      100           10
+EPIPE            RETRY      500           10
+ESHUTDOWN        RETRY      1000          10
+ETIMEDOUT        RETRY      1000          10
+NODYNPORTS       RETRY      100           10
+</pre>
+<p>The <code dir="ltr">TCPERRS</code> file contains default responses to basic errors. To alter the instructions or add instructions for new errors, open the file in a text editor and change any of the values in the columns shown in <a href="#g1028649">Table 15-1</a>:</p>
+</div>
+<!-- class="example" -->
+<div id="GWUAD511" class="tblhruleformal"><p class="titleintable"><a id="sthref788"></a><a id="g1028649"></a>Table 15-1 TCPERRS Columns</p>
+<table class="cellalignment160" title="TCPERRS Columns" summary="This table describes the TCPERRS columns and descriptions.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t3">Column</th>
+<th class="cellalignment161" id="r1c2-t3">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t3" headers="r1c1-t3">
+<p class="synopsis">Error</p>
+</td>
+<td class="cellalignment157" headers="r2c1-t3 r1c2-t3">
+<p>Specifies a TCP/IP error for which you are defining a response.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t3" headers="r1c1-t3">
+<p class="synopsis">Response</p>
+</td>
+<td class="cellalignment157" headers="r3c1-t3 r1c2-t3">
+<p>Controls whether or not Oracle GoldenGate tries to connect again after the defined error. Valid values are either <code dir="ltr">RETRY</code> or <code dir="ltr"><a id="sthref789"></a>ABEND</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t3" headers="r1c1-t3">
+<p class="synopsis">Delay</p>
+</td>
+<td class="cellalignment157" headers="r4c1-t3 r1c2-t3">
+<p>Controls how long Oracle GoldenGate waits before attempting to connect again.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t3" headers="r1c1-t3">
+<p class="synopsis">Max Retries</p>
+</td>
+<td class="cellalignment157" headers="r5c1-t3 r1c2-t3">
+<p>Controls the number of times that Oracle GoldenGate attempts to connect again before aborting.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" -->
+<p>If a response is not explicitly defined in the <code dir="ltr">TCPERRS</code> file, Oracle GoldenGate responds to TCP/IP errors by abending.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABFEDGG"></a>
+<div id="GWUAD512" class="sect1">
+<h2 class="sect1"><span class="secnum">15.6</span> Maintaining Updated Error Messages</h2>
+<p>The error, information, and warning messages that Oracle GoldenGate processes generate are stored in a data file named <code dir="ltr"><a id="sthref790"></a><a id="sthref791"></a>ggmessage.dat</code> in the Oracle GoldenGate installation directory. The version of this file is checked upon process startup and must be identical to that of the process in order for the process to operate.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABEGJHA"></a>
+<div id="GWUAD513" class="sect1">
+<h2 class="sect1"><span class="secnum">15.7</span> Resolving Oracle GoldenGate Errors</h2>
+<p>To get help with specific troubleshooting issues, go to My Oracle Support at <code dir="ltr"><a href="http://support.oracle.com">http://support.oracle.com</a></code> and search the Knowledge Base.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment150">
+<tr>
+<td class="cellalignment157"><table class="cellalignment155">
+<tr>
+<td class="cellalignment154"><a href="wu_changesync.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment154"><a href="wu_initsync.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment159">
+<table class="cellalignment153">
+<tr>
+<td class="cellalignment154"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment154"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment154"><a href="index.htm"><img width="24" height="24" src="../../dcommon/gifs/index.gif" alt="Go to Index" /><br />
+<span class="icon">Index</span></a></td>
+<td class="cellalignment154"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

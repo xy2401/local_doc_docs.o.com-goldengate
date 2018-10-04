@@ -1,0 +1,497 @@
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Creating Process Groups</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the" />
+<meta name="dcterms.created" content="2018-07-19T06:26:07Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Installing and Configuring Oracle GoldenGate for Oracle Database" />
+<meta name="dcterms.identifier" content="E66365-07" />
+<meta name="dcterms.isVersionOf" content="GIORA" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2010, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="configuring-ddl-support.htm" title="Previous" type="text/html" />
+<link rel="Next" href="instantiating-oracle-goldengate-replication.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GIORA.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-36EF79B0-1CBC-4B72-8CD1-13DA70E7FDCF"></a> <span id="PAGE" style="display:none;">21/31</span> <!-- End Header -->
+<a id="GIORA948"></a><a id="GIORA947"></a>
+<h1 id="GIORA-GUID-36EF79B0-1CBC-4B72-8CD1-13DA70E7FDCF" class="sect1"><span class="enumeration_chapter">14</span> Creating Process Groups</h1>
+<div>
+<div><span>This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the "change-synchronization" processes. At minimum, you will create one primary Extract, one data pump, and one Replicat process group.</span></div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="creating-process-groups.htm#GUID-A0142F18-94F1-4C9C-8792-027D8314EE9C">Prerequisites to These Procedures</a><br /></li>
+<li class="ulchildlink"><a href="creating-process-groups.htm#GUID-85A3F9B3-A7C4-4339-9008-F19381953BCF">Registering Extract with the Mining Database</a><br /></li>
+<li class="ulchildlink"><a href="creating-process-groups.htm#GUID-B2796557-B1B9-4868-B469-AC1CC0B13220">Adding the Primary Extract</a><br /></li>
+<li class="ulchildlink"><a href="creating-process-groups.htm#GUID-8A42C992-4460-454D-B6DD-CAD6842B8259">Add the Local Trail</a><br /></li>
+<li class="ulchildlink"><a href="creating-process-groups.htm#GUID-6E54C6AD-AE81-40E2-ABB1-B937D46C5E54">Add the Data Pump Extract Group</a><br /></li>
+<li class="ulchildlink"><a href="creating-process-groups.htm#GUID-AF95B639-0620-4981-B5D5-E7005F0DEC7E">Add the Remote Trail</a><br /></li>
+<li class="ulchildlink"><a href="creating-process-groups.htm#GUID-7065CF34-FD9A-4652-A34A-AE9F6BD3C87E">Add the Replicat Group</a><br /></li>
+</ul>
+</div>
+<a id="GIORA949"></a>
+<div class="props_rev_3"><a id="GUID-A0142F18-94F1-4C9C-8792-027D8314EE9C"></a>
+<h2 id="GIORA-GUID-A0142F18-94F1-4C9C-8792-027D8314EE9C" class="sect2"><span class="enumeration_section">14.1</span> Prerequisites to These Procedures</h2>
+<div>
+<div class="section">
+<p>This chapter assumes you have installed Oracle GoldenGate, understand the different processing options available to you, and have performed the following prerequisite configuration steps before proceeding to configure Oracle GoldenGate process groups:</p>
+<p><a href="establishing-oracle-goldengate-credentials.htm#GUID-AA6D2B5E-BED6-4818-95A7-419507B1CEEE" title="This chapter provides guidelines for creating database users for the processes that will interact with the database, assigning the correct privileges, and securing the credentials from unauthorized use.">Establishing Oracle GoldenGate Credentials</a></p>
+<p><a href="preparing-database-oracle-goldengate.htm#GUID-F069C961-4805-47ED-8D3F-E393541CB5FC" title="This chapter contains steps to take so that the source Oracle Database is configured properly to support the capture of transactional changes.">Preparing the Database for Oracle GoldenGate</a></p>
+<p><a href="configuring-capture-integrated-mode.htm#GUID-D7C88D05-569B-4A09-9C7E-A2B6DC4B0457" title="This chapter contains instructions for configuring the Oracle GoldenGate capture process to capture transaction data in integrated mode. See for more information about Extract modes.">Configuring Capture in Integrated Mode</a></p>
+<p><a href="configuring-capture-classic-mode.htm#GUID-6AF9D6B6-60F6-4542-A68F-EA251F098B1F" title="This chapter contains instructions for configuring the Oracle GoldenGate capture process in classic mode.">Configuring Capture in Classic Mode</a></p>
+<p><a href="configuring-oracle-goldengate-apply.htm#GUID-3449BA2F-7943-4CDF-B457-45356CEC99AC" title="This chapter contains instructions for configuring the Replicat apply process in either nonintegrated or integrated mode. See for more information about Extract modes.">Configuring Oracle GoldenGate Apply</a></p>
+<p><a href="configuring-ddl-support.htm#GUID-0A230601-A447-499C-B31F-C9431E1FF034" title="This chapter contains information to help you understand and configure DDL support in Oracle GoldenGate.">Configuring DDL Support</a> (to use DDL support)</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="creating-process-groups.htm#GUID-36EF79B0-1CBC-4B72-8CD1-13DA70E7FDCF" title='This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the "change-synchronization" processes. At minimum, you will create one primary Extract, one data pump, and one Replicat process group.'>Creating Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GIORA920"></a>
+<div class="props_rev_3"><a id="GUID-85A3F9B3-A7C4-4339-9008-F19381953BCF"></a>
+<h2 id="GIORA-GUID-85A3F9B3-A7C4-4339-9008-F19381953BCF" class="sect2"><span class="enumeration_section">14.2</span> Registering Extract with the Mining Database</h2>
+<div>
+<div class="section">
+<p>If you are using Extract in integrated mode, you need to create a database logmining server to capture redo data. You do this from the GGSCI interface by registering the primary Extract process with the mining database. The creation of the logmining server extracts a snapshot of the source database in the redo stream of the source database. In a source multitenant container database, you register Extract with each of the pluggable databases that you want to include for capture.</p>
+<div class="infoboxnotewarn" id="GUID-85A3F9B3-A7C4-4339-9008-F19381953BCF__GUID-71E07F1C-7B02-40CA-9363-59C3AC6008C3">
+<p class="notep1">WARNING:</p>
+<p>Make certain that you know the earliest SCN of the log stream at which you want Extract to begin processing. Extract cannot have a starting SCN value that is lower than the first SCN that is specified when the underlying database capture process is created with the <code class="codeph">REGISTER EXTRACT</code> command. You can use the <code class="codeph">SCN</code> option</p>
+</div>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Log into the mining database then use the commands appropriate to your environment. The use of <code class="codeph">DBLOGIN</code> always refers to the source database.</span>
+<div>
+<p><span class="bold">Command for source database deployment</span>:</p>
+<pre dir="ltr">
+DBLOGIN USERIDALIAS <span class="italic">alias</span>
+</pre>
+<p><span class="bold">Command for downstream mining database deployment</span>:</p>
+<pre dir="ltr">
+DBLOGIN USERIDALIAS <span class="italic">alias</span>
+MININGDBLOGIN USERIDALIAS <span class="italic">alias2</span>
+</pre>
+<p>Where: <span class="italic"><code class="codeph">alias</code></span> specifies the alias of the database login credential that is assigned to Extract. This credential must exist in the Oracle GoldenGate credential store. For more information, see <a href="establishing-oracle-goldengate-credentials.htm#GUID-AA6D2B5E-BED6-4818-95A7-419507B1CEEE" title="This chapter provides guidelines for creating database users for the processes that will interact with the database, assigning the correct privileges, and securing the credentials from unauthorized use.">Establishing Oracle GoldenGate Credentials</a>For more information about <code class="codeph">DBLOGIN</code>, see <a class="olink GWURF251" target="_blank" href="../GWURF/dblogin.htm#GWURF251"><span class="italic"><span id="GUID-85A3F9B3-A7C4-4339-9008-F19381953BCF__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>. For more information about <code class="codeph">MININGDBLOGIN</code>, see <a class="olink GWURF1054" target="_blank" href="../GWURF/miningdblogin.htm#GWURF1054"><span class="italic"><span><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Register the Extract process with the mining database.</span>
+<div>
+<pre dir="ltr">
+REGISTER EXTRACT <span class="italic">group </span>DATABASE [CONTAINER (<span class="italic">container</span>[, ...])] [SCN <span class="italic">system_change_number</span>]
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">group</code></span> is the name of the Extract group.</p>
+</li>
+<li>
+<p><code class="codeph">CONTAINER (</code><span class="italic"><code class="codeph">container</code></span><code class="codeph">[, ...])</code> specifies a pluggable database (PDB) within a multitenant container database, or a list of PDBs separated with commas. The specified PDBs must exist before the <code class="codeph">REGISTER</code> command is executed. Extract will capture only from the PDBs that are listed in this command. For example, the following command registers PDBs <code class="codeph">mypdb1</code> and <code class="codeph">mypdb4</code>. Changes from any other PDBs in the multitenant container database are ignored by Oracle GoldenGate.</p>
+<pre dir="ltr">
+REGISTER EXTRACT myextract DATABASE CONTAINER (mypdb1, mypdb4, mydb5)
+</pre>
+<p>You can add or drop pluggable databases at a later date by stopping Extract, issuing a <code class="codeph">DBLOGIN</code> command, and then issuing <code class="codeph">REGISTER EXTRACT</code> with the <code class="codeph">{ADD | DROP} CONTAINER</code> option of <code class="codeph">DATABASE</code>. See <a class="olink GWURF160" target="_blank" href="../GWURF/register-extract.htm#GWURF160"><span class="italic"><span><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a> for more information about <code class="codeph">REGISTER EXTRACT</code>.</p>
+<div class="infobox-note" id="GUID-85A3F9B3-A7C4-4339-9008-F19381953BCF__GUID-0C7DD461-8CB8-4743-8A6A-B2226FFB6041">
+<p class="notep1">Note:</p>
+<p>Adding <code class="codeph">CONTAINER</code>s at particular SCN on an existing Extract is not supported.</p>
+</div>
+</li>
+<li>
+<p>Registers Extract to begin capture at a specific SCN in the past. Without this option, capture begins from the time that <code class="codeph">REGISTER EXTRACT</code> is issued. The specified SCN must correspond to the begin SCN of a dictionary build operation in a log file. You can issue the following query to find all valid SCN values:</p>
+<pre dir="ltr">
+SELECT first_change#
+   FROM v$archived_log 
+   WHERE dictionary_begin = 'YES' AND 
+      standby_dest = 'NO' AND
+      name IS NOT NULL AND 
+      status = 'A';
+</pre></li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>To register additional Extracts with a downstream database for the same source database, issue this <code class="codeph">REGISTER</code> command.</span>
+<div>
+<p>If you want to have more than one extract per source database, you can do that using the <code class="codeph">SHARE</code> with <code class="codeph">REGISTER EXTRACT</code> for better performance and metadata management. The specified <code class="codeph">SCN</code> must correspond to the <code class="codeph">SCN</code> where mining should begin in the archive logs.</p>
+<pre dir="ltr">
+REGISTER EXTRACT <span class="italic">group </span>DATABASE [CONTAINER (<span class="italic">container</span>[, ...])] [SCN <span class="italic">system_change_number</span>] SHARE
+</pre></div>
+</li>
+</ol>
+<div class="section">
+<div class="infobox-note" id="GUID-85A3F9B3-A7C4-4339-9008-F19381953BCF__GUID-CC0176E5-7953-43AE-B2E5-149595E24AD1">
+<p class="notep1">Note:</p>
+<p>The register process may take a few to several minutes to complete, even though the <code class="codeph">REGISTER</code> command returns immediately.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="creating-process-groups.htm#GUID-36EF79B0-1CBC-4B72-8CD1-13DA70E7FDCF" title='This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the "change-synchronization" processes. At minimum, you will create one primary Extract, one data pump, and one Replicat process group.'>Creating Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GIORA419"></a><a id="GIORA420"></a><a id="GIORA418"></a>
+<div class="props_rev_3"><a id="GUID-B2796557-B1B9-4868-B469-AC1CC0B13220"></a>
+<h2 id="GIORA-GUID-B2796557-B1B9-4868-B469-AC1CC0B13220" class="sect2"><span class="enumeration_section">14.3</span> Adding the Primary Extract</h2>
+<div>
+<div class="section">
+<p>These steps add the primary Extract that captures change data.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>If using downstream capture, set the RMAN archive log deletion policy to the following value in the source database:</span>
+<div>
+<pre dir="ltr">
+CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY
+</pre>
+<p>This must be done before you add the primary Extract.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Run GGSCI.</span></li>
+<li class="stepexpand"><span>If using integrated capture, issue the <code class="codeph">DBLOGIN</code> command.</span>
+<div>
+<pre dir="ltr">
+DBLOGIN USERIDALIAS <span class="italic">alias</span>
+</pre>
+<p>Where: <span class="italic"><code class="codeph">alias</code></span> specifies the alias of the database login credential that is assigned to Extract. This credential must exist in the Oracle GoldenGate credential store. For more information, see <a href="establishing-oracle-goldengate-credentials.htm#GUID-AA6D2B5E-BED6-4818-95A7-419507B1CEEE" title="This chapter provides guidelines for creating database users for the processes that will interact with the database, assigning the correct privileges, and securing the credentials from unauthorized use.">Establishing Oracle GoldenGate Credentials</a></p>
+</div>
+</li>
+<li class="stepexpand"><span>Issue the <code class="codeph">ADD EXTRACT</code> command to add the primary Extract group.</span>
+<div>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">group name</span> 
+{, TRANLOG | , INTEGRATED TRANLOG}
+{, BEGIN {NOW | <span class="italic">yyyy-mm-dd</span>[<span class="italic"> hh:mi:</span>[<span class="italic">ss</span>[<span class="italic">.cccccc</span>]]]} | SCN <span class="italic">value</span>} 
+[, THREADS <span class="italic">n</span>]
+ 
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">group name</code></span> is the name of the Extract group.</p>
+</li>
+<li>
+<p><code class="codeph">TRANLOG</code> specifies the transaction log as the data source; <span class="italic">for classic capture only</span>. See <a href="creating-process-groups.htm#GUID-B2796557-B1B9-4868-B469-AC1CC0B13220__BABJJBHB">Example 14-1</a>.</p>
+</li>
+<li>
+<p><code class="codeph">INTEGRATED TRANLOG</code> specifies that Extract receives logical change records through a database logmining server; <span class="italic">for integrated capture only</span>. See <a href="creating-process-groups.htm#GUID-B2796557-B1B9-4868-B469-AC1CC0B13220__BABDFBJI">Example 14-2</a>. Before issuing <code class="codeph">ADD EXTRACT</code> with this option, make certain you logged in to the database with the <code class="codeph">DBLOGIN</code> command and that you registered this Extract with the database. See <a href="creating-process-groups.htm#GUID-85A3F9B3-A7C4-4339-9008-F19381953BCF">Registering Extract with the Mining Database</a> for more information.</p>
+</li>
+<li>
+<p><code class="codeph">BEGIN</code> specifies to begin capturing data as of a specific <span class="italic">time</span>:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">NOW</code> starts at the first record that is time stamped at the same time that <code class="codeph">ADD EXTRACT</code> is issued.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">yyyy-mm-dd</code></span><code class="codeph">[</code> <span class="italic"><code class="codeph">hh:mi:</code></span><code class="codeph">[</code><span class="italic"><code class="codeph">ss</code></span><code class="codeph">[</code><span class="italic"><code class="codeph">.cccccc</code></span><code class="codeph">]]]</code> starts at an explicit timestamp. Logs from this timestamp must be available. For Extract in integrated mode, the timestamp value must be greater than the timestamp at which the Extract was registered with the database.</p>
+</li>
+<li>
+<p><code class="codeph">SCN</code> <span class="italic"><code class="codeph">value</code></span> starts Extract at the transaction in the redo log that has the specified Oracle system change number (SCN). For Extract in integrated mode, the SCN value must be greater than the SCN at which the Extract was registered with the database. See <a href="creating-process-groups.htm#GUID-85A3F9B3-A7C4-4339-9008-F19381953BCF">Registering Extract with the Mining Database</a> for more information.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code class="codeph">THREADS</code> <span class="italic"><code class="codeph">n</code></span> is required in classic capture mode for Oracle Real Application Cluster (RAC), to specify the number of redo log threads being used by the cluster. Extract reads and coordinates each thread to maintain transactional consistency. Not required for integrated capture.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-B2796557-B1B9-4868-B469-AC1CC0B13220__GUID-FFF03581-09DD-49C2-9BEA-93AAB6045502">
+<p class="notep1">Note:</p>
+<p>Additional options are available. See <a class="olink GWURF122" target="_blank" href="../GWURF/add-extract.htm#GWURF122"><span class="italic"><span id="GUID-B2796557-B1B9-4868-B469-AC1CC0B13220__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</div>
+</div>
+</li>
+</ol>
+<div class="example" id="GUID-B2796557-B1B9-4868-B469-AC1CC0B13220__BABJJBHB">
+<p class="titleinexample">Example 14-1 Classic capture with timestamp start point</p>
+<pre dir="ltr">
+ADD EXTRACT finance, TRANLOG, BEGIN 2011-01-01 12:00:00.000000
+</pre></div>
+<!-- class="example" -->
+<div class="example" id="GUID-B2796557-B1B9-4868-B469-AC1CC0B13220__BABDFBJI">
+<p class="titleinexample">Example 14-2 Integrated capture with timestamp start point</p>
+<pre dir="ltr">
+DBLOGIN USERIDALIAS myalias
+ADD EXTRACT finance, INTEGRATED TRANLOG, BEGIN NOW
+</pre></div>
+<!-- class="example" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="creating-process-groups.htm#GUID-36EF79B0-1CBC-4B72-8CD1-13DA70E7FDCF" title='This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the "change-synchronization" processes. At minimum, you will create one primary Extract, one data pump, and one Replicat process group.'>Creating Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GIORA423"></a><a id="GIORA422"></a>
+<div class="props_rev_3"><a id="GUID-8A42C992-4460-454D-B6DD-CAD6842B8259"></a>
+<h2 id="GIORA-GUID-8A42C992-4460-454D-B6DD-CAD6842B8259" class="sect2"><span class="enumeration_section">14.4</span> Add the Local Trail</h2>
+<div>
+<div class="section">
+<p>These steps add the local trail to which the primary Extract writes captured data.</p>
+<p>In GGSCI on the source system, issue the <code class="codeph">ADD EXTTRAIL</code> command:</p>
+<pre dir="ltr">
+ADD EXTTRAIL <span class="italic">pathname</span>, EXTRACT <span class="italic">group name</span>
+</pre>
+<p>Where:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">EXTTRAIL</code> specifies that the trail is to be created on the local system.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">pathname</code></span> is the relative or fully qualified name of the trail, including the two-character name.</p>
+</li>
+<li>
+<p><code class="codeph">EXTRACT</code> <span class="italic"><code class="codeph">group name</code></span> is the name of the primary Extract group.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-8A42C992-4460-454D-B6DD-CAD6842B8259__GUID-8AF03AF4-0360-4B7F-9340-4785F602F102">
+<p class="notep1">Note:</p>
+<p>Oracle GoldenGate creates this trail automatically during processing.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-8A42C992-4460-454D-B6DD-CAD6842B8259__GUID-9AF0ACBE-E2B5-44F1-8739-00EA93B762D2">
+<p class="titleinexample">Example 14-3</p>
+<pre dir="ltr">
+ADD EXTTRAIL /ggs/dirdat/lt, EXTRACT finance
+</pre></div>
+<!-- class="example" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="creating-process-groups.htm#GUID-36EF79B0-1CBC-4B72-8CD1-13DA70E7FDCF" title='This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the "change-synchronization" processes. At minimum, you will create one primary Extract, one data pump, and one Replicat process group.'>Creating Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GIORA425"></a><a id="GIORA424"></a>
+<div class="props_rev_3"><a id="GUID-6E54C6AD-AE81-40E2-ABB1-B937D46C5E54"></a>
+<h2 id="GIORA-GUID-6E54C6AD-AE81-40E2-ABB1-B937D46C5E54" class="sect2"><span class="enumeration_section">14.5</span> Add the Data Pump Extract Group</h2>
+<div>
+<div class="section">
+<p>These steps add the data pump that reads the local trail and sends the data to the target.</p>
+<p>In GGSCI on the source system, issue the <code class="codeph">ADD EXTRACT</code> command.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">group name, </span>EXTTRAILSOURCE <span class="italic">trail name</span> 
+</pre>
+<p>Where:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>group name is the name of the Extract group.</p>
+</li>
+<li>
+<p><code class="codeph">EXTTRAILSOURCE</code> <span class="italic"><code class="codeph">trail name</code></span> is the relative or fully qualified name of the local trail.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-6E54C6AD-AE81-40E2-ABB1-B937D46C5E54__GUID-BA224B43-438F-461E-A9B5-4F1B9A30E45B">
+<p class="titleinexample">Example 14-4</p>
+<pre dir="ltr">
+ADD EXTRACT financep, EXTTRAILSOURCE c:\ggs\dirdat\lt
+</pre></div>
+<!-- class="example" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="creating-process-groups.htm#GUID-36EF79B0-1CBC-4B72-8CD1-13DA70E7FDCF" title='This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the "change-synchronization" processes. At minimum, you will create one primary Extract, one data pump, and one Replicat process group.'>Creating Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GIORA427"></a><a id="GIORA426"></a>
+<div class="props_rev_3"><a id="GUID-AF95B639-0620-4981-B5D5-E7005F0DEC7E"></a>
+<h2 id="GIORA-GUID-AF95B639-0620-4981-B5D5-E7005F0DEC7E" class="sect2"><span class="enumeration_section">14.6</span> Add the Remote Trail</h2>
+<div>
+<div class="section">
+<p>These steps add the remote trail. Although it is read by Replicat, this trail must be associated with the data pump, so it must be added on the source system, not the target.</p>
+<p>In GGSCI on the source system, issue the following command:</p>
+<p><code class="codeph">ADD RMTTRAIL</code> <span class="italic"><code class="codeph">pathname,</code></span> <code class="codeph">EXTRACT</code> <span class="italic"><code class="codeph">group name</code></span></p>
+<p>Where:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">RMTTRAIL</code> specifies that the trail is to be created on the target system.</p>
+</li>
+<li>
+<p>pathname is the relative or fully qualified name of the trail, including the two-character name.</p>
+</li>
+<li>
+<p><code class="codeph">EXTRACT</code> <span class="italic"><code class="codeph">group name</code></span> is the name of the data-pump Extract group.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-AF95B639-0620-4981-B5D5-E7005F0DEC7E__GUID-E2BBE650-B87F-4749-984A-C46B5C5CC131">
+<p class="notep1">Note:</p>
+<p>Oracle GoldenGate creates this trail automatically during processing.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-AF95B639-0620-4981-B5D5-E7005F0DEC7E__GUID-E1781A66-434B-4D58-BFAD-352A4664BC7D">
+<p class="titleinexample">Example 14-5</p>
+<pre dir="ltr">
+ADD RMTTRAIL /ggs/dirdat/rt, EXTRACT financep
+</pre></div>
+<!-- class="example" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="creating-process-groups.htm#GUID-36EF79B0-1CBC-4B72-8CD1-13DA70E7FDCF" title='This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the "change-synchronization" processes. At minimum, you will create one primary Extract, one data pump, and one Replicat process group.'>Creating Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GIORA429"></a><a id="GIORA430"></a><a id="GIORA428"></a>
+<div class="props_rev_3"><a id="GUID-7065CF34-FD9A-4652-A34A-AE9F6BD3C87E"></a>
+<h2 id="GIORA-GUID-7065CF34-FD9A-4652-A34A-AE9F6BD3C87E" class="sect2"><span class="enumeration_section">14.7</span> Add the Replicat Group</h2>
+<div>
+<div class="section">
+<p>These steps add the Replicat group that reads the remote trail and applies the data changes to the target Oracle Database.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Run GGSCI on the target system.</span></li>
+<li class="stepexpand"><span>If using integrated Replicat, issue the <code class="codeph">DBLOGIN</code> command to log into the database from GGSCI.</span>
+<div>
+<pre dir="ltr">
+DBLOGIN USERIDALIAS <span class="italic">alias</span>
+</pre>
+<p>Where: <span class="italic"><code class="codeph">alias</code></span> specifies the alias of the database login credential that is assigned to Replicat. This credential must exist in the Oracle GoldenGate credential store. For more information, see <a href="establishing-oracle-goldengate-credentials.htm#GUID-AA6D2B5E-BED6-4818-95A7-419507B1CEEE" title="This chapter provides guidelines for creating database users for the processes that will interact with the database, assigning the correct privileges, and securing the credentials from unauthorized use.">Establishing Oracle GoldenGate Credentials</a></p>
+</div>
+</li>
+<li class="stepexpand"><span>Issue the <code class="codeph">ADD REPLICAT</code> command with the following syntax.</span>
+<div>
+<pre dir="ltr">
+ADD REPLICAT <span class="italic">group name</span>, [INTEGRATED,] EXTTRAIL <span class="italic">pathname</span>
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">group name</code></span> is the name of the Replicat group.</p>
+</li>
+<li>
+<p><code class="codeph">INTEGRATED</code> creates an integrated Replicat group.</p>
+</li>
+<li>
+<p><code class="codeph">EXTTRAIL</code> <span class="italic"><code class="codeph">pathname</code></span> is the relative or fully qualified name of the remote trail, including the two-character name.</p>
+<p>For more information, see <a class="olink GWURF183" target="_blank" href="../GWURF/add-replicat.htm#GWURF183"><span class="italic"><span id="GUID-7065CF34-FD9A-4652-A34A-AE9F6BD3C87E__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+<div class="example" id="GUID-7065CF34-FD9A-4652-A34A-AE9F6BD3C87E__GUID-A4DF1AAC-048D-44D7-881A-44A3C87D4EA3">
+<p class="titleinexample">Example 14-6 Adds a Nonintegrated Replicat</p>
+<pre dir="ltr">
+ADD REPLICAT financer, EXTTRAIL c:\ggs\dirdat\rt
+</pre></div>
+<!-- class="example" -->
+<div class="example" id="GUID-7065CF34-FD9A-4652-A34A-AE9F6BD3C87E__GUID-0D7E2F05-5B34-4978-B431-60D342D54B18">
+<p class="titleinexample">Example 14-7 Adds an Integrated Replicat</p>
+<pre dir="ltr">
+ADD REPLICAT financer, INTEGRATED, EXTTRAIL c:\ggs\dirdat\rt
+</pre></div>
+<!-- class="example" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="creating-process-groups.htm#GUID-36EF79B0-1CBC-4B72-8CD1-13DA70E7FDCF" title='This chapter contains instructions for creating Oracle GoldenGate process groups, collectively known as the "change-synchronization" processes. At minimum, you will create one primary Extract, one data pump, and one Replicat process group.'>Creating Process Groups</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment377">
+<tr>
+<td class="cellalignment396">
+<table class="cellalignment382">
+<tr>
+<td class="cellalignment381"><a href="configuring-ddl-support.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment381"><a href="instantiating-oracle-goldengate-replication.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2010, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment398">
+<table class="cellalignment380">
+<tr>
+<td class="cellalignment381"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment381"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

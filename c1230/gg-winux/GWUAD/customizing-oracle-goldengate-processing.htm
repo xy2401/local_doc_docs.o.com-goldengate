@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Customizing Oracle GoldenGate Processing</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter describes how to customize Oracle GoldenGate processing." />
+<meta name="dcterms.created" content="2018-09-07T14:17:29Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81607-07" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="instantiating-oracle-goldengate-initial-load.htm" title="Previous" type="text/html" />
+<link rel="Next" href="monitoring-oracle-goldengate-processing.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-222806A8-5556-41C2-BADA-C8A0E95D8F92"></a> <span id="PAGE" style="display:none;">20/30</span> <!-- End Header -->
+<a id="GWUAD572"></a><a id="GWUAD571"></a>
+<h1 id="GWUAD-GUID-222806A8-5556-41C2-BADA-C8A0E95D8F92" class="sect1"><span class="enumeration_chapter">16</span> Customizing Oracle GoldenGate Processing</h1>
+<div>
+<div><span>This chapter describes how to customize Oracle GoldenGate processing.</span></div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<a id="GWUAD574"></a>
+<div class="props_rev_3"><a id="GUID-DDEA4D6E-6A45-4FE8-A0D6-10CE67209CCE"></a>
+<h2 id="GWUAD-GUID-DDEA4D6E-6A45-4FE8-A0D6-10CE67209CCE" class="sect2"><span class="enumeration_section">16.1</span> Executing Commands, Stored Procedures, and Queries with SQLEXEC</h2>
+<div>
+<p>The <code class="codeph">SQLEXEC</code> parameter of Oracle GoldenGate enables Extract and Replicat to communicate with the database to do the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Execute a database command, stored procedure, or SQL query to perform a database function, return results (<code class="codeph">SELECT</code> statements) or perform DML (<code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, <code class="codeph">DELETE</code>) operations.</p>
+</li>
+<li>
+<p>Retrieve output parameters from a procedure for input to a <code class="codeph">FILTER</code> or <code class="codeph">COLMAP</code> clause.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-DDEA4D6E-6A45-4FE8-A0D6-10CE67209CCE__GUID-B6D4CA98-D4FD-48E1-B36A-FE90ADA61D3E">
+<p class="notep1">Note:</p>
+<code class="codeph">SQLEXEC</code> provides minimal globalization support. To use <code class="codeph">SQLEXEC</code> in the capture parameter file of the source capture, make sure that the client character set in the source <code class="codeph">.prm</code> file is either the same or a superset of the source database character set.</div>
+</div>
+<a id="GWUAD575"></a>
+<div class="props_rev_3"><a id="GUID-29DCD689-501D-42C4-92C4-4A2A45076F66"></a>
+<h3 id="GWUAD-GUID-29DCD689-501D-42C4-92C4-4A2A45076F66" class="sect3"><span class="enumeration_section">16.1.1</span> Performing Processing with SQLEXEC</h3>
+<div>
+<p><code class="codeph">SQLEXEC</code> extends the functionality of both Oracle GoldenGate and the database by allowing Oracle GoldenGate to use the native SQL of the database to execute custom processing instructions.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Stored procedures and queries can be used to select or insert data into the database, to aggregate data, to denormalize or normalize data, or to perform any other function that requires database operations as input. Oracle GoldenGate supports stored procedures that accept input and those that produce output.</p>
+</li>
+<li>
+<p>Database commands can be issued to perform database functions required to facilitate Oracle GoldenGate processing, such as disabling triggers on target tables and then enabling them again.</p>
+</li>
+</ul>
+</div>
+</div>
+<a id="GWUAD576"></a>
+<div class="props_rev_3"><a id="GUID-F8900FF7-2D87-461E-A998-D7163950D4E2"></a>
+<h3 id="GWUAD-GUID-F8900FF7-2D87-461E-A998-D7163950D4E2" class="sect3"><span class="enumeration_section">16.1.2</span> Using SQLEXEC</h3>
+<div>
+<p>The <code class="codeph">SQLEXEC</code> parameter can be used as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>as a clause of a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement</p>
+</li>
+<li>
+<p>as a standalone parameter at the root level of the Extract or Replicat parameter file.</p>
+</li>
+</ul>
+</div>
+</div>
+<a id="GWUAD578"></a><a id="GWUAD579"></a><a id="GWUAD577"></a>
+<div class="props_rev_3"><a id="GUID-84B754A2-EF62-4BB7-B289-A9BA6787DE8E"></a>
+<h3 id="GWUAD-GUID-84B754A2-EF62-4BB7-B289-A9BA6787DE8E" class="sect3"><span class="enumeration_section">16.1.3</span> Executing SQLEXEC within a TABLE or MAP Statement</h3>
+<div>
+<p>When used within a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement, <code class="codeph">SQLEXEC</code> can pass and accept parameters. It can be used for procedures and queries, but not for database commands.</p>
+<div class="section">
+<p class="subhead3">Syntax</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>This syntax executes a procedure within a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement.</p>
+<pre dir="ltr">
+SQLEXEC (SPNAME <span class="italic">sp_name</span>,
+[ID <span class="italic">logical_name</span>,]
+{PARAMS <span class="italic">param_spec</span> | NOPARAMS})
+</pre>
+<div class="tblformal" id="GUID-84B754A2-EF62-4BB7-B289-A9BA6787DE8E__GUID-F7AC226A-B391-459B-872B-67CF01EEC1C4">
+<table class="cellalignment46" summary="This table describes the arguments for executing a SQLEXEC procedure within a TABLE or MAP statement.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment74" id="d50162e205">Argument</th>
+<th class="cellalignment75" id="d50162e208">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e213" headers="d50162e205">
+<pre dir="ltr">
+SPNAME
+</pre></td>
+<td class="cellalignment77" headers="d50162e213 d50162e208">
+<p>Required keyword that begins a clause to execute a stored procedure.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e220" headers="d50162e205">
+<pre dir="ltr">
+<span class="italic">sp_name</span>
+</pre></td>
+<td class="cellalignment77" headers="d50162e220 d50162e208">
+<p>Specifies the name of the stored procedure to execute.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e229" headers="d50162e205">
+<pre dir="ltr">
+ID <span class="italic">logical_name</span>
+</pre></td>
+<td class="cellalignment77" headers="d50162e229 d50162e208">
+<p>Defines a logical name for the procedure. Use this option to execute the procedure multiple times within a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement. Not required when executing a procedure only once.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e247" headers="d50162e205">
+<pre dir="ltr">
+PARAMS <span class="italic">param_spec</span> |
+NOPARAMS
+</pre></td>
+<td class="cellalignment77" headers="d50162e247 d50162e208">
+<p>Specifies whether or not the procedure accepts parameters. One of these options must be used (see <a href="customizing-oracle-goldengate-processing.htm#GUID-9A43D4EA-4DF7-446C-91F1-562C397E9808">Using Input and Output Parameters</a>).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Syntax</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>This syntax executes a query within a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement.</p>
+<pre dir="ltr">
+SQLEXEC (ID <span class="italic">logical_name</span>, QUERY ' <span class="italic">query</span> ',
+{PARAMS <span class="italic">param_spec</span> | NOPARAMS})
+</pre>
+<div class="tblformal" id="GUID-84B754A2-EF62-4BB7-B289-A9BA6787DE8E__GUID-A0644C4F-64AB-409D-A825-FFF2E2DC5FF7">
+<table class="cellalignment46" summary="This table describes the arguments for executing a SQLEXEC query within a TABLE or MAP statement.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment74" id="d50162e294">Argument</th>
+<th class="cellalignment75" id="d50162e297">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e302" headers="d50162e294">
+<pre dir="ltr">
+ID <span class="italic">logical_name</span>
+</pre></td>
+<td class="cellalignment77" headers="d50162e302 d50162e297">
+<p>Defines a logical name for the query. A logical name is required in order to extract values from the query results. <code class="codeph">ID</code> <span class="italic"><code class="codeph">logical_name</code></span> references the column values returned by the query.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e319" headers="d50162e294">
+<pre dir="ltr">
+QUERY ' <span class="italic">sql_query</span> '
+</pre></td>
+<td class="cellalignment77" headers="d50162e319 d50162e297">
+<p>Specifies the SQL query syntax to execute against the database. It can either return results with a <code class="codeph">SELECT</code> statement or change the database with an <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, or <code class="codeph">DELETE</code> statement. The query must be within single quotes and must be contained all on one line. Specify case-sensitive object names the way they are stored in the database, such as within quotes for Oracle case-sensitive names.</p>
+<pre dir="ltr">
+SQLEXEC 'SELECT "col1" from "schema"."table"'
+</pre></td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e344" headers="d50162e294">
+<pre dir="ltr">
+PARAMS <span class="italic">param_spec</span> |
+NOPARAMS
+</pre></td>
+<td class="cellalignment77" headers="d50162e344 d50162e297">
+<p>Defines whether or not the query accepts parameters. One of these options must be used (see <a href="customizing-oracle-goldengate-processing.htm#GUID-9A43D4EA-4DF7-446C-91F1-562C397E9808">Using Input and Output Parameters</a>).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>If you want to execute a query on a table residing on a different database than the current database, then the different database name has to be specified with the table. The delimiter between the database name and the tablename should be a colon (<code class="codeph">:</code>). The following are some example use cases:</p>
+<pre dir="ltr">
+select col1 from db1:tab1
+select col2 from db2:schema2.tab2
+select col3 from tab3
+select col3 from schema4.tab4
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD580"></a>
+<div class="props_rev_3"><a id="GUID-F235B45E-878F-4BC5-9774-BDB578005499"></a>
+<h3 id="GWUAD-GUID-F235B45E-878F-4BC5-9774-BDB578005499" class="sect3"><span class="enumeration_section">16.1.4</span> Executing SQLEXEC as a Standalone Statement</h3>
+<div>
+<p>When used as a standalone parameter statement in the Extract or Replicat parameter file, <code class="codeph">SQLEXEC</code> can execute a stored procedure, query, or database command. As such, it need not be tied to any specific table and can be used to perform general SQL operations. For example, if the Oracle GoldenGate database user account is configured to time-out when idle, you could use <code class="codeph">SQLEXEC</code> to execute a query at a defined interval, so that Oracle GoldenGate does not appear idle. As another example, you could use <code class="codeph">SQLEXEC</code> to issue an essential database command, such as to disable target triggers. A standalone <code class="codeph">SQLEXEC</code> statement cannot accept input parameters or return output parameters.</p>
+<div class="tblformal" id="GUID-F235B45E-878F-4BC5-9774-BDB578005499__GUID-9A7E9698-DE1F-46BE-A7A5-B3BCEA8CAF87">
+<table class="cellalignment46" summary="This table shows parameter syntax for executing SQLEXEC as a standalone statement.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment20" id="d50162e402">Parameter syntax</th>
+<th class="cellalignment20" id="d50162e405">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e410" headers="d50162e402">
+<pre dir="ltr">
+SQLEXEC 'call<span class="italic"> procedure_name</span>()'
+</pre></td>
+<td class="cellalignment21" headers="d50162e410 d50162e405">
+<p>Execute a stored procedure</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e423" headers="d50162e402">
+<pre dir="ltr">
+SQLEXEC '<span class="italic">sql_query</span>'
+</pre></td>
+<td class="cellalignment21" headers="d50162e423 d50162e405">
+<p>Execute a query</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e436" headers="d50162e402">
+<pre dir="ltr">
+SQLEXEC '<span class="italic">database_command</span>'
+</pre></td>
+<td class="cellalignment21" headers="d50162e436 d50162e405">
+<p>Execute a database command</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<div class="tblformal" id="GUID-F235B45E-878F-4BC5-9774-BDB578005499__GUID-53CAE9BA-BCD5-4FF6-90D5-6D6D7836391D">
+<table class="cellalignment46" summary="This table describes the arguments for executing SQLEXEC as a standalone statement.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment33" id="d50162e455">Argument</th>
+<th class="cellalignment93" id="d50162e458">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment36" id="d50162e463" headers="d50162e455">
+<pre dir="ltr">
+'call
+<span class="italic">procedure_name</span> ()'
+</pre></td>
+<td class="cellalignment94" headers="d50162e463 d50162e458">
+<p>Specifies the name of a stored procedure to execute. The statement must be enclosed within single quotes.</p>
+<p>Example:</p>
+<pre dir="ltr">
+SQLEXEC 'call prc_job_count ()'
+</pre></td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment36" id="d50162e479" headers="d50162e455">
+<pre dir="ltr">
+'<span class="italic">sql_query</span>'
+</pre></td>
+<td class="cellalignment94" headers="d50162e479 d50162e458">
+<p>Specifies the name of a query to execute. The query must be contained all on one line and enclosed within single quotes.</p>
+<p>Specify case-sensitive object names the way they are stored in the database, such as within double quotes for Oracle object names that are case-sensitive.</p>
+<pre dir="ltr">
+SQLEXEC 'SELECT "col1" from "schema"."table"'
+</pre></td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment36" id="d50162e494" headers="d50162e455">
+<pre dir="ltr">
+'<span class="italic">database_command</span>'
+</pre></td>
+<td class="cellalignment94" headers="d50162e494 d50162e458">
+<p>Specifies a database command to execute. Must be a valid command for the database.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p><code class="codeph">SQLEXEC</code> provides options to control processing behavior, memory usage, and error handling. For more information, see <a class="olink GWURF660" target="_blank" href="../GWURF/sqlexec.htm#GWURF660"><span class="italic"><span id="GUID-F235B45E-878F-4BC5-9774-BDB578005499__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+</div>
+<a id="GWUAD581"></a>
+<div class="props_rev_3"><a id="GUID-9A43D4EA-4DF7-446C-91F1-562C397E9808"></a>
+<h3 id="GWUAD-GUID-9A43D4EA-4DF7-446C-91F1-562C397E9808" class="sect3"><span class="enumeration_section">16.1.5</span> Using Input and Output Parameters</h3>
+<div>
+<p>Oracle GoldenGate provides options for passing input and output values to and from a procedure or query that is executed with <code class="codeph">SQLEXEC</code> within a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement.</p>
+</div>
+<a id="GWUAD582"></a><a id="GWUAD1119"></a>
+<div class="props_rev_3"><a id="GUID-C0664CC0-AC3C-4252-8C5E-CDD68EA2BC65"></a>
+<h4 id="GWUAD-GUID-C0664CC0-AC3C-4252-8C5E-CDD68EA2BC65" class="sect4"><span class="enumeration_section">16.1.5.1</span> Passing Values to Input Parameters</h4>
+<div>
+<p>To pass data values to input parameters within a stored procedure or query, use the <code class="codeph">PARAMS</code> option of <code class="codeph">SQLEXEC</code>.</p>
+<div class="section">
+<p class="subhead3">Syntax</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<pre dir="ltr">
+PARAMS ([OPTIONAL | REQUIRED] <span class="italic">param</span> = {<span class="italic">source_column</span> | <span class="italic">function</span>}
+[, ...] )
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">OPTIONAL</code> indicates that a parameter value is not required for the SQL to execute. If a required source column is missing from the database operation, or if a column-conversion function cannot complete successfully because a source column is missing, the SQL executes anyway.</p>
+</li>
+<li>
+<p><code class="codeph">REQUIRED</code> indicates that a parameter value must be present. If the parameter value is not present, the SQL will not be executed.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">param</code></span> is one of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For a stored procedure, it is the name of any parameter in the procedure that can accept input, such as a column in a lookup table.</p>
+</li>
+<li>
+<p>For an Oracle query, it is the name of any input parameter in the query excluding the leading colon. For example, <code class="codeph">:param1</code> would be specified as <code class="codeph">param1</code> in the <code class="codeph">PARAMS</code> clause.</p>
+</li>
+<li>
+<p>For a non-Oracle query, it is <code class="codeph">p</code><span class="italic"><code class="codeph">n</code></span>, where <span class="italic"><code class="codeph">n</code></span> is the number of the parameter within the statement, starting from 1. For example, in a query with two parameters, the <span class="italic"><code class="codeph">param</code></span> entries are <code class="codeph">p1</code> and <code class="codeph">p2</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code class="codeph">{</code><span class="italic"><code class="codeph">source_column</code></span> | <span class="italic"><code class="codeph">function</code></span>} is the column or Oracle GoldenGate conversion function that provides input to the procedure.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD583"></a><a id="GWUAD1120"></a>
+<div class="props_rev_3"><a id="GUID-4306E67B-DB34-4974-853B-BFE84EC190B3"></a>
+<h4 id="GWUAD-GUID-4306E67B-DB34-4974-853B-BFE84EC190B3" class="sect4"><span class="enumeration_section">16.1.5.2</span> Passing Values to Output Parameters</h4>
+<div>
+<p>To pass values from a stored procedure or query as input to a <code class="codeph">FILTER</code> or <code class="codeph">COLMAP</code> clause, use the following syntax:</p>
+<div class="section">
+<p class="subhead3">Syntax</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<pre dir="ltr">
+{<span class="italic">procedure_name</span> | <span class="italic">logical_name</span>}.<span class="italic">parameter</span>
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">procedure_name</code></span> is the actual name of the stored procedure. Use this argument only if executing a procedure one time during the life of the current Oracle GoldenGate process.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">logical_name</code></span> is the logical name specified with the <code class="codeph">ID</code> option of <code class="codeph">SQLEXEC</code>. Use this argument if executing a query or a stored procedure that will be executed multiple times.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">parameter</code></span> is either the name of the parameter or <code class="codeph">RETURN_VALUE</code>, if extracting returned values.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD584"></a><a id="GWUAD585"></a><a id="GWUAD1121"></a>
+<div class="props_rev_3"><a id="GUID-9785A42F-1C1A-44E4-88FD-B365932446CC"></a>
+<h4 id="GWUAD-GUID-9785A42F-1C1A-44E4-88FD-B365932446CC" class="sect4"><span class="enumeration_section">16.1.5.3</span> SQLEXEC Examples Using Parameters</h4>
+<div>
+<p>These examples use stored procedures and queries with input and output parameters.</p>
+<div class="infobox-note" id="GUID-9785A42F-1C1A-44E4-88FD-B365932446CC__GUID-D88ED078-9F8B-4C37-A43E-3B80FF5FED0B">
+<p class="notep1">Note:</p>
+<p>Additional <code class="codeph">SQLEXEC</code> options are available for use when a procedure or query includes parametes. See the full <code class="codeph">SQLEXEC</code> documentation in <a class="olink GWURF660" target="_blank" href="../GWURF/sqlexec.htm#GWURF660"><span class="italic"><span id="GUID-9785A42F-1C1A-44E4-88FD-B365932446CC__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+<div class="example" id="GUID-9785A42F-1C1A-44E4-88FD-B365932446CC__GUID-89EDAE70-22FD-40D4-B41E-81C49E8553EE">
+<p class="titleinexample">Example 16-1 SQLEXEC with a Stored Procedure</p>
+<p>This example uses <code class="codeph">SQLEXEC</code> to run a stored procedure named <code class="codeph">LOOKUP</code> that performs a query to return a description based on a code. It then maps the results to a target column named <code class="codeph">NEWACCT_VAL</code>.</p>
+<pre dir="ltr">
+CREATE OR REPLACE PROCEDURE LOOKUP
+(CODE_PARAM IN VARCHAR2, DESC_PARAM OUT VARCHAR2)
+BEGIN
+    SELECT DESC_COL
+    INTO DESC_PARAM
+    FROM LOOKUP_TABLE
+    WHERE CODE_COL = CODE_PARAM
+END;
+</pre>
+<p>Contents of <code class="codeph">MAP</code> statement:</p>
+<pre dir="ltr">
+MAP sales.account, TARGET sales.newacct, &amp;
+  SQLEXEC (SPNAME lookup, PARAMS (code_param = account_code)), &amp;
+    COLMAP (newacct_id = account_id, newacct_val = lookup.desc_param);
+</pre>
+<pre dir="ltr">
+</pre>
+<p><code class="codeph">SQLEXEC</code> executes the <code class="codeph">LOOKUP</code> stored procedure. Within the <code class="codeph">SQLEXEC</code> clause, the <code class="codeph">PARAMS (code_param = account_code)</code> statement identifies <code class="codeph">code_param</code> as the procedure parameter to accept input from the <code class="codeph">account_code</code> column in the <code class="codeph">account</code> table.</p>
+<p>Replicat executes the <code class="codeph">LOOKUP</code> stored procedure prior to executing the column map, so that the <code class="codeph">COLMAP</code> clause can extract and map the results to the <code class="codeph">newacct_val</code> column.</p>
+</div>
+<!-- class="example" -->
+<div class="example" id="GUID-9785A42F-1C1A-44E4-88FD-B365932446CC__GUID-28FFDE9F-E753-4E47-8454-F2483586519F">
+<p class="titleinexample">Example 16-2 SQLEXEC with a Query</p>
+<p>This example implements the same logic as used in the previous example, but it executes a SQL query instead of a stored procedure and uses the <code class="codeph">@GETVAL</code> function in the column map.</p>
+<p>A query must be on one line. To split an Oracle GoldenGate parameter statement into multiple lines, an ampersand (<code class="codeph">&amp;</code>) line terminator is required.</p>
+<p>Query for an Oracle database:</p>
+<pre dir="ltr">
+MAP sales.account, TARGET sales.newacct, &amp;
+SQLEXEC (ID lookup, &amp;
+QUERY 'select desc_col desc_param from lookup_table where code_col = :code_param', &amp;
+PARAMS (code_param = account_code)), &amp;
+COLMAP (newacct_id = account_id, newacct_val = &amp;
+@getval (lookup.desc_param));
+</pre>
+<p>Query for a non-Oracle database:</p>
+<pre dir="ltr">
+MAP sales.account, TARGET sales.newacct, &amp;
+SQLEXEC (ID lookup, &amp;
+QUERY 'select desc_col desc_param from lookup_table where code_col = ?', &amp;
+PARAMS (p1 = account_code)), &amp;
+COLMAP (newacct_id = account_id, newacct_val = &amp;
+@getval (lookup.desc_param));
+</pre></div>
+<!-- class="example" --></div>
+</div>
+</div>
+<a id="GWUAD1122"></a>
+<div class="props_rev_3"><a id="GUID-E4493768-4554-4CB6-A015-764F730E57FF"></a>
+<h3 id="GWUAD-GUID-E4493768-4554-4CB6-A015-764F730E57FF" class="sect3"><span class="enumeration_section">16.1.6</span> Handling SQLEXEC Errors</h3>
+<div>
+<p>There are two types of error conditions to consider when implementing <code class="codeph">SQLEXEC</code>:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The column map requires a column that is missing from the source database operation. This can occur for an update operation if the database only logs the values of columns that changed, rather than all of the column values. By default, when a required column is missing, or when an Oracle GoldenGate column-conversion function results in a "column missing" condition, the stored procedure does not execute. Subsequent attempts to extract an output parameter from the stored procedure results in a "column missing condition" in the <code class="codeph">COLMAP</code> or <code class="codeph">FILTER</code> clause.</p>
+</li>
+<li>
+<p>The database generates an error.</p>
+</li>
+</ul>
+</div>
+<a id="GWUAD1123"></a>
+<div class="props_rev_3"><a id="GUID-B91BD395-CCC1-459D-B320-7A1EFBFBF86D"></a>
+<h4 id="GWUAD-GUID-B91BD395-CCC1-459D-B320-7A1EFBFBF86D" class="sect4"><span class="enumeration_section">16.1.6.1</span> Handling Missing Column Values</h4>
+<div>
+<p>Use the <code class="codeph">@COLTEST</code> function to test the results of the parameter that was passed, and then map an alternative value for the column to compensate for missing values, if desired. Otherwise, to ensure that column values are available, you can use the <code class="codeph">FETCHCOLS</code> or <code class="codeph">FETCHCOLSEXCEPT</code> option of the <code class="codeph">TABLE</code> parameter to fetch the values from the database if they are not present in the log. As an alternative to fetching columns, you can enable supplemental logging for those columns.</p>
+</div>
+</div>
+<a id="GWUAD587"></a><a id="GWUAD1124"></a>
+<div class="props_rev_3"><a id="GUID-6411BDDD-539E-4C47-A540-DCE9596965C5"></a>
+<h4 id="GWUAD-GUID-6411BDDD-539E-4C47-A540-DCE9596965C5" class="sect4"><span class="enumeration_section">16.1.6.2</span> Handling Database Errors</h4>
+<div>
+<p>Use the <code class="codeph">ERROR</code> option in the <code class="codeph">SQLEXEC</code> clause to direct Oracle GoldenGate to respond in one of the following ways:</p>
+<div class="tblformal" id="GUID-6411BDDD-539E-4C47-A540-DCE9596965C5__GUID-C0CBBF03-DB4C-4BDA-AAFF-0AE316E8DE3C">
+<p class="titleintable">Table 16-1 ERROR Options</p>
+<table class="cellalignment46" title="ERROR Options" summary="This table shows how to use the ERROR option in the SQLEXEC clause. It lists and describes each action.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment51" id="d50162e944">Action</th>
+<th class="cellalignment52" id="d50162e947">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment53" id="d50162e952" headers="d50162e944">
+<pre dir="ltr">
+IGNORE
+</pre></td>
+<td class="cellalignment54" headers="d50162e952 d50162e947">
+<p>Causes Oracle GoldenGate to ignore all errors associated with the stored procedure or query and continue processing. Any resulting parameter extraction results in a "column missing" condition. This is the default.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment53" id="d50162e959" headers="d50162e944">
+<pre dir="ltr">
+REPORT
+</pre></td>
+<td class="cellalignment54" headers="d50162e959 d50162e947">
+<p>Ensures that all errors associated with the stored procedure or query are reported to the discard file. The report is useful for tracing the cause of the error. It includes both an error description and the value of the parameters passed to and from the procedure or query. Oracle GoldenGate continues processing after reporting the error.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment53" id="d50162e966" headers="d50162e944">
+<pre dir="ltr">
+RAISE
+</pre></td>
+<td class="cellalignment54" headers="d50162e966 d50162e947">
+<p>Handles errors according to rules set by a <code class="codeph">REPERROR</code> parameter specified in the Replicat parameter file. Oracle GoldenGate continues processing other stored procedures or queries associated with the current <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement before processing the error.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment53" id="d50162e985" headers="d50162e944">
+<pre dir="ltr">
+FINAL
+</pre></td>
+<td class="cellalignment54" headers="d50162e985 d50162e947">
+<p>Performs in a similar way to <code class="codeph">RAISE</code> except that when an error associated with a procedure or query is encountered, any remaining stored procedures and queries are bypassed. Error processing is called immediately after the error.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment53" id="d50162e995" headers="d50162e944">
+<pre dir="ltr">
+FATAL
+</pre></td>
+<td class="cellalignment54" headers="d50162e995 d50162e947">
+<p>Causes Oracle GoldenGate to abend immediately upon encountering an error associated with a procedure or query.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+</div>
+<a id="GWUAD588"></a>
+<div class="props_rev_3"><a id="GUID-9CBF772D-08DB-4A54-A2EC-6813244DAE43"></a>
+<h3 id="GWUAD-GUID-9CBF772D-08DB-4A54-A2EC-6813244DAE43" class="sect3"><span class="enumeration_section">16.1.7</span> Additional SQLEXEC Guidelines</h3>
+<div>
+<p>Observe the following <code class="codeph">SQLEXEC</code> guidelines:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Up to 20 stored procedures or queries can be executed per <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> entry. They execute in the order listed in the parameter statement.</p>
+</li>
+<li>
+<p>A database login by the Oracle GoldenGate user must precede the <code class="codeph">SQLEXEC</code> clause. Use the <code class="codeph">SOURCEDB</code> and/or <code class="codeph">USERID</code> or <code class="codeph">USERIDALIAS</code> parameter in the Extract parameter file or the <code class="codeph">TARGETDB</code> and/or <code class="codeph">USERID</code> or <code class="codeph">USERIDALIAS</code> parameter in the Replicat parameter file, as needed for the database type and configured authentication method.</p>
+</li>
+<li>
+<p>The SQL is executed by the Oracle GoldenGate user. This user must have the privilege to execute stored procedures and call RDBM-supplied procedures.</p>
+</li>
+<li>
+<p>Database operations within a stored procedure or query are committed in same context as the original transaction.</p>
+</li>
+<li>
+<p>Do not use <code class="codeph">SQLEXEC</code> to update the value of a primary key column. If <code class="codeph">SQLEXEC</code> is used to update the value of a key column, then the Replicat process will not be able to perform a subsequent update or delete operation, because the original key value will be unavailable. If a key value must be changed, you can map the original key value to another column and then specify that column with the <code class="codeph">KEYCOLS</code> option of the <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> parameter.</p>
+</li>
+<li>
+<p>For DB2, Oracle GoldenGate uses the ODBC <code class="codeph">SQLExecDirect</code> function to execute a SQL statement dynamically. This means that the connected database server must be able to prepare the statement dynamically. ODBC prepares the SQL statement every time it is executed (at the requested interval). Typically, this does not present a problem to Oracle GoldenGate users. See the IBM DB2 documentation for more information.</p>
+</li>
+<li>
+<p>Do not use <code class="codeph">SQLEXEC</code> for objects being processing by a data-pump Extract in pass-through mode.</p>
+</li>
+<li>
+<p>All object names in a <code class="codeph">SQLEXEC</code> statement must be fully qualified with their two-part or three-part names, as appropriate for the database.</p>
+</li>
+<li>
+<p>All objects that are affected by a <code class="codeph">SQLEXEC</code> stored procedure or query must exist with the correct structures prior to the execution of the SQL. Consequently, DDL on these objects that affects structure (such as <code class="codeph">CREATE</code> or <code class="codeph">ALTER</code>) must happen before the <code class="codeph">SQLEXEC</code> executes.</p>
+</li>
+<li>
+<p>All objects affected by a standalone <code class="codeph">SQLEXEC</code> statement must exist before the Oracle GoldenGate processes start. Because of this, DDL support must be disabled for those objects; otherwise, DDL operations could change the structure or delete the object before the <code class="codeph">SQLEXEC</code> procedure or query executes on it.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<a id="GWUAD589"></a>
+<div class="props_rev_3"><a id="GUID-E444D3D1-1E5B-4C5D-9196-53A78C6CDDC0"></a>
+<h2 id="GWUAD-GUID-E444D3D1-1E5B-4C5D-9196-53A78C6CDDC0" class="sect2"><span class="enumeration_section">16.2</span> Using Oracle GoldenGate Macros to Simplify and Automate Work</h2>
+<div>
+<p>You can use Oracle GoldenGate macros in parameter files to configure and reuse parameters, commands, and conversion functions. reducing the amount of text you must enter to do common tasks. A macro is a built-in automation tool that enables you to call a stored set of processing steps from within the Oracle GoldenGate parameter file. A macro can consist of a simple set of frequently used parameter statements to a complex series of parameter substitutions, calculations, or conversions. You can call other macros from a macro. You can store commonly used macros in a library, and then call the library rather than call the macros individually.</p>
+<p>Oracle GoldenGate macros work with the following parameter files:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>DEFGEN</p>
+</li>
+<li>
+<p>Extract</p>
+</li>
+<li>
+<p>Replicat</p>
+</li>
+</ul>
+<p>Do not use macros to manipulate data for tables that are being processed by a data-pump Extract in pass-through mode.</p>
+<p>There are two steps to using macros:</p>
+<p><a href="customizing-oracle-goldengate-processing.htm#GUID-E0214D9B-1278-4F42-A7F8-4B9B40CA2409">Defining a Macro</a></p>
+<p><a href="customizing-oracle-goldengate-processing.htm#GUID-ACDFA156-E2C8-4307-BB6B-5870EF7667AF">Calling a Macro</a></p>
+</div>
+<a id="GWUAD591"></a><a id="GWUAD592"></a><a id="GWUAD590"></a>
+<div class="props_rev_3"><a id="GUID-E0214D9B-1278-4F42-A7F8-4B9B40CA2409"></a>
+<h3 id="GWUAD-GUID-E0214D9B-1278-4F42-A7F8-4B9B40CA2409" class="sect3"><span class="enumeration_section">16.2.1</span> Defining a Macro</h3>
+<div>
+<p>To define an Oracle GoldenGate macro, use the <code class="codeph">MACRO</code> parameter in the parameter file. <code class="codeph">MACRO</code> defines any input parameters that are needed and it defines the work that the macro performs.</p>
+<div class="section">
+<p class="subhead3">Syntax</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<pre dir="ltr">
+MACRO #<span class="italic">macro_name</span>
+PARAMS (#<span class="italic">p1</span>, #<span class="italic">p2</span> [, ...])
+BEGIN
+<span class="italic">macro_body</span>
+END;
+</pre>
+<div class="tblformal" id="GUID-E0214D9B-1278-4F42-A7F8-4B9B40CA2409__GUID-0CA46FF7-F20B-4165-8DBE-9AB669D4A597">
+<p class="titleintable">Table 16-2 Macro Definition Arguments</p>
+<table class="cellalignment46" title="Macro Definition Arguments" summary="This table describes the macro definition arguments.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment74" id="d50162e1222">Argument</th>
+<th class="cellalignment75" id="d50162e1225">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e1230" headers="d50162e1222">
+<pre dir="ltr">
+MACRO
+</pre></td>
+<td class="cellalignment77" headers="d50162e1230 d50162e1225">
+<p>Required. Indicates the start of an Oracle GoldenGate macro definition.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e1237" headers="d50162e1222">
+<pre dir="ltr">
+#<span class="italic">macro_name</span>
+</pre></td>
+<td class="cellalignment77" headers="d50162e1237 d50162e1225">
+<p>The name of the macro. Macro and parameter names must begin with a macro character. The default macro character is the pound (#) character, as in <code class="codeph">#macro1</code> and <code class="codeph">#param1</code>.</p>
+<p>A macro or parameter name can be one word consisting of letters and numbers, or both. Special characters, such as the underscore character (<code class="codeph">_</code>) or hyphen <code class="codeph">(-</code>), can be used. Some examples of macro names are: <code class="codeph">#mymacro</code>, <code class="codeph">#macro1</code>, <code class="codeph">#macro_1</code>, <code class="codeph">#macro-1</code>, <code class="codeph">#macro$</code>. Some examples of parameter names are <code class="codeph">#sourcecol</code>, <code class="codeph">#s</code>, <code class="codeph">#col1</code>, and <code class="codeph">#col_1</code>.</p>
+<p>To avoid parsing errors, the macro character cannot be used as the first character of a macro name. For example, <code class="codeph">##macro</code> is invalid. If needed, you can change the macro character by using the <code class="codeph">MACROCHAR</code> parameter. See <a class="olink GWURF-GUID-58C63816-40DE-4BA8-9949-7D2F0AE12C26" target="_blank" href="../GWURF/macrochar.htm#GWURF-GUID-58C63816-40DE-4BA8-9949-7D2F0AE12C26">Reference for Oracle GoldenGate for Windows and UNIX</a>.</p>
+<p>Macro and parameter names are not case-sensitive. Macro or parameter names within quotation marks are ignored.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e1303" headers="d50162e1222">
+<pre dir="ltr">
+PARAMS (#<span class="italic">p1</span>, #<span class="italic">p2</span>)
+</pre></td>
+<td class="cellalignment77" headers="d50162e1303 d50162e1225">
+<p>Optional definition of input parameters. Specify a comma-separated list of parameter names and enclose it within parentheses. Each parameter must be referenced in the macro body where you want input values to be substituted. You can list each parameter on a separate line to improve readability (making certain to use the open and close parentheses to enclose the parameter list). See <a href="customizing-oracle-goldengate-processing.htm#GUID-F5DF72FD-2EFF-4802-A76E-62750E90C65F">Calling a Macro that Contains Parameters</a> for more information.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e1321" headers="d50162e1222">
+<pre dir="ltr">
+BEGIN
+</pre></td>
+<td class="cellalignment77" headers="d50162e1321 d50162e1225">
+<p>Begins the macro body. Must be specified before the macro body.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e1328" headers="d50162e1222">
+<pre dir="ltr">
+<span class="italic">macro_body</span>
+</pre></td>
+<td class="cellalignment77" headers="d50162e1328 d50162e1225">
+<p>The macro body. The body is a syntax statement that defines the function that is to be performed by the macro. A macro body can include any of the following types of statements.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Simple parameter statements, as in:</p>
+<pre dir="ltr">
+COL1 = COL2
+</pre></li>
+<li>
+<p>Complex parameter statements with parameter substitution as in:</p>
+<pre dir="ltr">
+MAP #o.#t, TARGET #o.#t, KEYCOLS (#k), COLMAP (USEDEFAULTS); 
+</pre></li>
+<li>
+<p>Invocations of other macros, as in:</p>
+<pre dir="ltr">
+#colmap (COL1, #sourcecol)
+</pre></li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e1353" headers="d50162e1222">
+<pre dir="ltr">
+END;
+</pre></td>
+<td class="cellalignment77" headers="d50162e1353 d50162e1225">
+<p>Ends the macro definition. The semicolon is required to complete the definition.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>The following is an example of a macro definition that includes parameters. In this case, the macro simplifies the task of object and column mapping by supplying the base syntax of the <code class="codeph">MAP</code> statement with input parameters that resolve to the names of the owners, the tables, and the <code class="codeph">KEYCOLS</code> columns.</p>
+<pre dir="ltr">
+MACRO #macro1  
+PARAMS ( #o, #t, #k )  
+BEGIN  
+MAP #o.#t, TARGET #o.#t, KEYCOLS (#k), COLMAP (USEDEFAULTS); 
+END; 
+</pre>
+<p>The following is an example of a macro that does not define parameters. It executes a frequently used set of parameters.</p>
+<pre dir="ltr">
+MACRO #option_defaults
+BEGIN
+GETINSERTS
+GETUPDATES
+GETDELETES
+INSERTDELETES
+END;
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD595"></a><a id="GWUAD1189"></a><a id="GWUAD594"></a>
+<div class="props_rev_3"><a id="GUID-ACDFA156-E2C8-4307-BB6B-5870EF7667AF"></a>
+<h3 id="GWUAD-GUID-ACDFA156-E2C8-4307-BB6B-5870EF7667AF" class="sect3"><span class="enumeration_section">16.2.2</span> Calling a Macro</h3>
+<div>
+<p>This section shows you how to call a macro. (To define a macro, see <a href="customizing-oracle-goldengate-processing.htm#GUID-E0214D9B-1278-4F42-A7F8-4B9B40CA2409">Defining a Macro</a>).</p>
+<p>To call a macro, use the following syntax where you want the macro to run within the parameter file.</p>
+<div class="section">
+<p class="subhead3">Syntax</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<pre dir="ltr">
+[<span class="italic">target</span> =] <span class="italic">macro_name</span> (<span class="italic">val</span>[, ...])
+</pre>
+<pre dir="ltr">
+[<span class="italic">target</span> =] <span class="italic">macro_name</span> (<span class="italic">val</span> | {<span class="italic">val</span>, <span class="italic">val</span>, ...}[, ...])
+</pre>
+<div class="tblformal" id="GUID-ACDFA156-E2C8-4307-BB6B-5870EF7667AF__CHDEDJBG">
+<p class="titleintable">Table 16-3 Syntax Elements for Calling a Macro</p>
+<table class="cellalignment46" title="Syntax Elements for Calling a Macro" summary="Describes the syntax for invoking a macro.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment74" id="d50162e1448">Argument</th>
+<th class="cellalignment75" id="d50162e1451">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e1456" headers="d50162e1448">
+<p><span class="italic"><code class="codeph">target =</code></span></p>
+</td>
+<td class="cellalignment77" headers="d50162e1456 d50162e1451">
+<p>Optional. Specifies the target to which the results of the macro are assigned or mapped. For example, <code class="codeph">target</code> can be used to specify a target column in a <code class="codeph">COLMAP</code> statement. In the following call to the <code class="codeph">#make_date</code> macro, the column <code class="codeph">DATECOL1</code> is the target and will be mapped to the macro results.</p>
+<pre dir="ltr">
+DATECOL1 = #make_date (YR1, MO1, DAY1)
+</pre>
+<p>Without a target, the syntax to call <code class="codeph">#make_date</code> is:</p>
+<pre dir="ltr">
+#make_date (YR1, MO1, DAY1)
+</pre></td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e1486" headers="d50162e1448">
+<p><span class="italic"><code class="codeph">macro_name</code></span></p>
+</td>
+<td class="cellalignment77" headers="d50162e1486 d50162e1451">
+<p>The name of the macro that is being called, for example: <code class="codeph">#make_date</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e1498" headers="d50162e1448">
+<p><code class="codeph">(</code> <span class="italic"><code class="codeph">val</code></span><code class="codeph">[, ...]</code>)</p>
+</td>
+<td class="cellalignment77" headers="d50162e1498 d50162e1451">
+<p>The parameter input values. This component is required whether or not the macro defines parameters. If the macro defines parameters, specify a comma-separated list of input values, in the order that corresponds to the parameter definitions in the <code class="codeph">MACRO</code> parameter, and enclose the list within parentheses. If the macro does not define parameters, specify the open and close parentheses with nothing between them (). For more information about this syntax, see the following:</p>
+<p><a href="customizing-oracle-goldengate-processing.htm#GUID-F5DF72FD-2EFF-4802-A76E-62750E90C65F">Calling a Macro that Contains Parameters</a>.</p>
+<p><a href="customizing-oracle-goldengate-processing.htm#GUID-599C48AF-F607-4E7B-A5F5-F905A38D4D05">Calling a Macro without Input Parameters</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment76" id="d50162e1523" headers="d50162e1448">
+<p><code class="codeph">(</code> <span class="italic"><code class="codeph">val</code></span> <code class="codeph">| {</code><span class="italic"><code class="codeph">val</code></span><code class="codeph">,</code> <span class="italic"><code class="codeph">val</code></span><code class="codeph">, ...} )[, ...]</code></p>
+</td>
+<td class="cellalignment77" headers="d50162e1523 d50162e1451">
+<p>The parameter input values. This component is required whether or not the macro defines parameters. If the macro defines parameters, specify a comma-separated list of input values, in the order that corresponds to the parameter definitions in the <code class="codeph">MACRO</code> parameter, and enclose the list within parentheses. To pass multiple values to one parameter, separate them with commas and enclose the list within curly brackets. If the macro does not define parameters, specify the open and close parentheses with nothing between them (). For more information about this syntax, see the following:</p>
+<p><a href="customizing-oracle-goldengate-processing.htm#GUID-F5DF72FD-2EFF-4802-A76E-62750E90C65F">Calling a Macro that Contains Parameters</a>.</p>
+<p><a href="customizing-oracle-goldengate-processing.htm#GUID-599C48AF-F607-4E7B-A5F5-F905A38D4D05">Calling a Macro without Input Parameters</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+<a id="GWUAD1190"></a><a id="GWUAD1191"></a><a id="GWUAD597"></a>
+<div class="props_rev_3"><a id="GUID-F5DF72FD-2EFF-4802-A76E-62750E90C65F"></a>
+<h4 id="GWUAD-GUID-F5DF72FD-2EFF-4802-A76E-62750E90C65F" class="sect4"><span class="enumeration_section">16.2.2.1</span> Calling a Macro that Contains Parameters</h4>
+<div>
+<p>To call a macro that contains parameters, the call statement must supply the input values that are to be substituted for those parameters when the macro runs. See the syntax in <a href="customizing-oracle-goldengate-processing.htm#GUID-ACDFA156-E2C8-4307-BB6B-5870EF7667AF__CHDEDJBG" title="Describes the syntax for invoking a macro.">Table 16-3</a>.</p>
+<p>Valid input for a macro parameter is any of the following, preceded by the macro character (default is #):</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>A single value in plain or quoted text, such as: <code class="codeph">#macro (#name, #address, #phone)</code> or <code class="codeph">#macro (#"name", #"address", #"phone")</code>.</p>
+</li>
+<li>
+<p>A comma-separated list of values enclosed within curly brackets, such as: <code class="codeph">#macro1 (SCOTT, DEPT, {DEPTNO1, DEPTNO2, DEPTNO3})</code>. The ability to substitute a block of values for any given parameter add flexibility to the macro definition and its usability in the Oracle GoldenGate configuration.</p>
+</li>
+<li>
+<p>Calls to other macros, such as: <code class="codeph">#macro (#mycalc (col2, 100), #total)</code>. In this example, the <code class="codeph">#mycalc</code> macro is called with the input values of <code class="codeph">col2</code> and <code class="codeph">100</code>.</p>
+</li>
+</ul>
+<p>Oracle GoldenGate substitutes parameter values within the macro body according to the following rules.</p>
+<ol>
+<li>
+<p>The macro processor reads through the macro body looking for instances of parameter names specified in the <code class="codeph">PARAMS</code> statement.</p>
+</li>
+<li>
+<p>For each occurrence of the parameter name, the corresponding parameter value specified during the call is substituted.</p>
+</li>
+<li>
+<p>If a parameter name does not appear in the <code class="codeph">PARAMS</code> statement, the macro processor evaluates whether or not the item is, instead, a call to another macro. (See <a href="customizing-oracle-goldengate-processing.htm#GUID-54AD812C-C2A3-412E-A5BD-DB3B80C2BAF6">Calling Other Macros from a Macro</a>.) If the call succeeds, the nested macro is executed. If it fails, the whole macro fails.</p>
+</li>
+</ol>
+<div class="example" id="GUID-F5DF72FD-2EFF-4802-A76E-62750E90C65F__GUID-2638EF19-AF5C-460F-89C3-4FA15FCE9253">
+<p class="titleinexample">Example 16-3 Using Parameters to Populate a MAP Statement</p>
+<p>The following macro definition specifies three parameter that must be resolved. The parameters substitute for the names of the table owner (parameter <code class="codeph">#o</code>), the table (parameter <code class="codeph">#t</code>), and the <code class="codeph">KEYCOLS</code> columns (parameter <code class="codeph">#k</code>) in a <code class="codeph">MAP</code> statement.</p>
+<pre dir="ltr">
+MACRO #macro1  PARAMS ( #o, #t, #k )  BEGIN  MAP #o.#t, TARGET #o.#t, KEYCOLS (#k), COLMAP (USEDEFAULTS); END; 
+</pre>
+<p>Assuming a table in the <code class="codeph">MAP</code> statement requires only one <code class="codeph">KEYCOLS</code> column, the following syntax can be used to call <code class="codeph">#macro1</code>. In this syntax, the <code class="codeph">#k</code> parameter can be resolved with only one value.</p>
+<pre dir="ltr">
+#macro1 (SCOTT, DEPT, DEPTNO1)
+</pre>
+<p>To call the macro for a table that requires two <code class="codeph">KEYCOLS</code> columns, the curly brackets are used as follows to enclose both of the required values for the column names:</p>
+<pre dir="ltr">
+#macro1 (SCOTT, DEPT, {DEPTNO1, DEPTNO2})
+</pre>
+<p>The <code class="codeph">DEPTNO1</code> and <code class="codeph">DEPTNO2</code> values are passed as one argument to resolve the <code class="codeph">#t</code> parameter. Tables with three or more <code class="codeph">KEYCOLS</code> can also be handled in this manner, using additional values inside the curly brackets.</p>
+</div>
+<!-- class="example" -->
+<div class="example" id="GUID-F5DF72FD-2EFF-4802-A76E-62750E90C65F__GUID-8CACBD4F-0E23-4938-85D5-2966197512BC">
+<p class="titleinexample">Example 16-4 Using a Macro to Perform Conversion</p>
+<p>In this example, a macro defines the parameters <code class="codeph">#year</code>, <code class="codeph">#month</code>, and <code class="codeph">#day</code> to convert a proprietary date format.</p>
+<pre dir="ltr">
+MACRO #make_date
+PARAMS (#year, #month, #day)
+BEGIN
+@DATE ('YYYY-MM-DD', 'CC', @IF (#year &lt; 50, 20, 19), 'YY', #year, 'MM', #month, 'DD', #day)
+END;
+</pre>
+<p>The macro is called in the <code class="codeph">COLMAP</code> clause:</p>
+<pre dir="ltr">
+MAP sales.acct_tab, TARGET sales.account,
+COLMAP
+(
+targcol1 = sourcecol1,
+datecol1 = #make_date(YR1, MO1, DAY1),
+datecol2 = #make_date(YR2, MO2, DAY2)
+);
+</pre>
+<p>The macro expands as follows:</p>
+<pre dir="ltr">
+MAP sales.acct_tab, TARGET sales.account,
+COLMAP
+(
+targcol1 = sourcecol1,
+datecol1 = @DATE ('YYYY-MM-DD', 'CC', @IF (YR1 &lt; 50, 20, 19),'YY', YR1, 'MM', MO1, 'DD', DAY1),
+datecol2 = @DATE ('YYYY-MM-DD', 'CC', @IF (YR2 &lt; 50, 20, 19),'YY', YR2, 'MM', MO2, 'DD', DAY2)
+);
+</pre></div>
+<!-- class="example" --></div>
+</div>
+<a id="GWUAD599"></a>
+<div class="props_rev_3"><a id="GUID-599C48AF-F607-4E7B-A5F5-F905A38D4D05"></a>
+<h4 id="GWUAD-GUID-599C48AF-F607-4E7B-A5F5-F905A38D4D05" class="sect4"><span class="enumeration_section">16.2.2.2</span> Calling a Macro without Input Parameters</h4>
+<div>
+<p>To call a macro without input parameters, the call statement must supply the open and close parentheses, but without any input values: <code class="codeph">#macro ()</code>.</p>
+<p>The following macro is defined without input parameters. The body contains frequently used parameters.</p>
+<pre dir="ltr">
+MACRO #option_defaults
+BEGIN
+GETINSERTS
+GETUPDATES
+GETDELETES
+INSERTDELETES
+END;
+</pre>
+<p>This macro is called as follows:</p>
+<pre dir="ltr">
+#option_defaults ()
+IGNOREUPDATES
+MAP owner.srctab, TARGET owner.targtab;
+
+#option_defaults ()
+MAP owner.srctab2, TARGET owner.targtab2;
+</pre>
+<p>The macro expands as follows:</p>
+<pre dir="ltr">
+GETINSERTS
+GETUPDATES
+GETDELETES
+INSERTDELETES
+IGNOREUPDATES
+MAP owner.srctab, TARGET owner.targtab;
+
+GETINSERTS
+GETUPDATES
+GETDELETES
+INSERTDELETES
+MAP owner.srctab2, TARGET owner.targtab2;
+</pre></div>
+</div>
+</div>
+<a id="GWUAD601"></a>
+<div class="props_rev_3"><a id="GUID-54AD812C-C2A3-412E-A5BD-DB3B80C2BAF6"></a>
+<h3 id="GWUAD-GUID-54AD812C-C2A3-412E-A5BD-DB3B80C2BAF6" class="sect3"><span class="enumeration_section">16.2.3</span> Calling Other Macros from a Macro</h3>
+<div>
+<p>To call other macros from a macro, create a macro definition similar to the following. In this example, the <code class="codeph">#make_date</code> macro is nested within the <code class="codeph">#assign_date</code> macro, and it is called when <code class="codeph">#assign_date</code> runs.</p>
+<p>The nested macro must define all, or a subset of, the same parameters that are defined in the base macro. In other words, the input values when the base macro is called must resolve to the parameters in both macros.</p>
+<p>The following defines <code class="codeph">#assign_date</code>:</p>
+<pre dir="ltr">
+MACRO #assign_date
+PARAMS (#target_col, #year, #month, #day)
+BEGIN
+#target_col = #make_date (#year, #month, #day)
+END;
+</pre>
+<p>The following defines <code class="codeph">#make_date</code>. This macro creates a date format that includes a four-digit year, after first determining whether the two-digit input date should be prefixed with a century value of 19 or 20. Notice that the <code class="codeph">PARAMS</code> statement of <code class="codeph">#make_date</code> contains a subset of the parameters in the <code class="codeph">#assign_date</code> macro.</p>
+<pre dir="ltr">
+MACRO #make_date
+PARAMS (#year, #month, #day)
+BEGIN
+@DATE ('YYYY-MM-DD', 'CC', @IF (#year &lt; 50, 20, 19), 'YY', #year, 'MM', #month, 'DD', #day)
+END;
+</pre>
+<p>The following syntax calls <code class="codeph">#assign_date</code>:</p>
+<pre dir="ltr">
+#assign_date (COL1, YEAR, MONTH, DAY)
+</pre>
+<p>The macro expands to the following given the preceding input values and the embedded <code class="codeph">#make_date</code> macro:</p>
+<pre dir="ltr">
+COL1 = @DATE ('YYYY-MM-DD', 'CC', @IF (YEAR &lt; 50, 20, 19),'YY', YEAR, 'MM', MONTH, 'DD', DAY)
+</pre></div>
+</div>
+<a id="GWUAD1126"></a><a id="GWUAD602"></a>
+<div class="props_rev_3"><a id="GUID-CA0A5411-A744-44BD-B6C7-CBA400823993"></a>
+<h3 id="GWUAD-GUID-CA0A5411-A744-44BD-B6C7-CBA400823993" class="sect3"><span class="enumeration_section">16.2.4</span> Creating Macro Libraries</h3>
+<div>
+<p>You can create a macro library that contains one or more macros. By using a macro library, you can define a macro once and then use it within many parameter files.</p>
+<div class="section">
+<p class="subhead3">To Create a Macro Library</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ol>
+<li>
+<p>Open a new file in a text editor.</p>
+</li>
+<li>
+<p>Use commented lines to describe the library, if needed.</p>
+</li>
+<li>
+<p>Using the syntax described in <a href="customizing-oracle-goldengate-processing.htm#GUID-E0214D9B-1278-4F42-A7F8-4B9B40CA2409">Defining a Macro</a>, enter the syntax for each macro.</p>
+</li>
+<li>
+<p>Save the file in the <code class="codeph">dirprm</code> sub-directory of the Oracle GoldenGate directory as:</p>
+<pre dir="ltr">
+<span class="italic">filename</span>.mac
+</pre>
+<p>Where:</p>
+<p><span class="italic"><code class="codeph">filename</code></span> is the name of the file. The <code class="codeph">.mac</code> extension defines the file as a macro library.</p>
+</li>
+</ol>
+<p>The following sample library named <code class="codeph">datelib</code> contains two macros, <code class="codeph">#make_date</code> and <code class="codeph">#assign_date</code>.</p>
+<pre dir="ltr">
+-- datelib macro library
+--
+MACRO #make_date
+PARAMS (#year, #month, #day)
+BEGIN
+@DATE ('YYYY-MM-DD', 'CC', @IF (#year &lt; 50, 20, 19), 'YY', #year, 'MM', #month, 'DD', #day)
+END;
+
+MACRO #assign_date
+PARAMS (#target_col, #year, #month, #day)
+BEGIN
+#target_col = #make_date (#year, #month, #day)
+END;
+</pre>
+<p>To use a macro library, use the <code class="codeph">INCLUDE</code> parameter at the beginning of a parameter file, as shown in the following sample Replicat parameter file.</p>
+<pre dir="ltr">
+INCLUDE /ggs/dirprm/datelib.mac
+REPLICAT rep
+ASSUMETARGETDEFS
+USERIDALIAS ogg
+MAP fin.acct_tab, TARGET fin.account;
+</pre>
+<p>When including a long macro library in a parameter file, you can use the <code class="codeph">NOLIST</code> parameter to suppress the listing of each macro in the Extract or Replicat report file. Listing can be turned on and off by placing the <code class="codeph">LIST</code> and <code class="codeph">NOLIST</code> parameters anywhere within the parameter file or within the macro library file. In the following example, <code class="codeph">NOLIST</code> suppresses the listing of each macro in the <code class="codeph">hugelib</code> macro library. Specifying <code class="codeph">LIST</code> after the <code class="codeph">INCLUDE</code> statement restores normal listing to the report file.</p>
+<pre dir="ltr">
+NOLIST
+INCLUDE /ggs/dirprm/hugelib.mac
+LIST
+INCLUDE /ggs/dirprm/mdatelib.mac
+REPLICAT REP
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<a id="GWUAD606"></a><a id="GWUAD605"></a>
+<div class="props_rev_3"><a id="GUID-96FE1980-7766-4137-8392-BDEC8D673599"></a>
+<h3 id="GWUAD-GUID-96FE1980-7766-4137-8392-BDEC8D673599" class="sect3"><span class="enumeration_section">16.2.5</span> Tracing Macro Expansion</h3>
+<div>
+<p>You can trace macro expansion with the <code class="codeph">CMDTRACE</code> parameter. With <code class="codeph">CMDTRACE</code> enabled, macro expansion steps are shown in the Extract or Replicat report file.</p>
+<div class="section">
+<p class="subhead3">Syntax</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<pre dir="ltr">
+CMDTRACE [ON | OFF | DETAIL]
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">ON</code> enables tracing.</p>
+</li>
+<li>
+<p><code class="codeph">OFF</code> disables tracing.</p>
+</li>
+<li>
+<p><code class="codeph">DETAIL</code> produces a verbose display of macro expansion.</p>
+</li>
+</ul>
+<p>In the following example, tracing is enabled before <code class="codeph">#testmac</code> is called, then disabled after the macro's execution.</p>
+<pre dir="ltr">
+REPLICAT REP
+MACRO #testmac
+BEGIN
+COL1 = COL2,
+COL3 = COL4,
+END;
+...
+CMDTRACE ON
+MAP test.table1, TARGET test.table2,
+COLMAP (#testmac);
+CMDTRACE OFF
+</pre></div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GWUAD607"></a>
+<div class="props_rev_3"><a id="GUID-0818E549-40DA-48E8-95F7-501C7DE11480"></a>
+<h2 id="GWUAD-GUID-0818E549-40DA-48E8-95F7-501C7DE11480" class="sect2"><span class="enumeration_section">16.3</span> Using User Exits to Extend Oracle GoldenGate Capabilities</h2>
+<div>
+<p>User exits are custom routines that you write in C programming code and call during Extract or Replicat processing. User exits extend and customize the functionality of the Extract and Replicat processes with minimal complexity and risk. With user exits, you can respond to database events when they occur, without altering production programs.</p>
+</div>
+<a id="GWUAD608"></a>
+<div class="props_rev_3"><a id="GUID-417CA070-6236-47B3-981E-D103529A6A47"></a>
+<h3 id="GWUAD-GUID-417CA070-6236-47B3-981E-D103529A6A47" class="sect3"><span class="enumeration_section">16.3.1</span> When to Implement User Exits</h3>
+<div>
+<p>You can employ user exits as an alternative to, or in conjunction with, the column-conversion functions that are available within Oracle GoldenGate. User exits can be a better alternative to the built-in functions because a user exit processes data only once (when the data is extracted) rather than twice (once when the data is extracted and once to perform the transformation).</p>
+<p>The following are some ways in which you can implement user exits:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Perform arithmetic operations, date conversions, or table lookups while mapping from one table to another.</p>
+</li>
+<li>
+<p>Implement record archival functions offline.</p>
+</li>
+<li>
+<p>Respond to unusual database events in custom ways, for example by sending an e-mail message or a page based on an output value.</p>
+</li>
+<li>
+<p>Accumulate totals and gather statistics.</p>
+</li>
+<li>
+<p>Manipulate a record.</p>
+</li>
+<li>
+<p>Repair invalid data.</p>
+</li>
+<li>
+<p>Calculate the net difference in a record before and after an update.</p>
+</li>
+<li>
+<p>Accept or reject records for extraction or replication based on complex criteria.</p>
+</li>
+<li>
+<p>Normalize a database during conversion.</p>
+</li>
+</ul>
+</div>
+</div>
+<a id="GWUAD609"></a>
+<div class="props_rev_3"><a id="GUID-4BF54C42-B0B7-495D-BBE9-9EF2239E1D33"></a>
+<h3 id="GWUAD-GUID-4BF54C42-B0B7-495D-BBE9-9EF2239E1D33" class="sect3"><span class="enumeration_section">16.3.2</span> Making Oracle GoldenGate Record Information Available to the Routine</h3>
+<div>
+<p>The basis for most user exit processing is the <code class="codeph">EXIT_CALL_PROCESS_RECORD</code> function. For Extract, this function is called just before a record buffer is output to the trail. For Replicat, it is called just before a record is applied to the target. If source-target mapping is specified in the parameter file, the <code class="codeph">EXIT_CALL_PROCESS_RECORD</code> event takes place after the mapping is performed.</p>
+<p>When <code class="codeph">EXIT_CALL_PROCESS_RECORD</code> is called, the record buffer and other record information are available to it through callback routines. The user exit can map, transform, clean, or perform any other operation with the data record. When it is finished, the user exit can return a status indicating whether the record should be processed or ignored by Extract or Replicat.</p>
+</div>
+</div>
+<a id="GWUAD1127"></a><a id="GWUAD613"></a><a id="GWUAD614"></a><a id="GWUAD610"></a>
+<div class="props_rev_3"><a id="GUID-6DCDBA40-A7B8-4BD4-8ED0-39B9401DE4F3"></a>
+<h3 id="GWUAD-GUID-6DCDBA40-A7B8-4BD4-8ED0-39B9401DE4F3" class="sect3"><span class="enumeration_section">16.3.3</span> Creating User Exits</h3>
+<div>
+<p>The following instructions help you to create user exits on Windows and UNIX systems. For more information about the parameters and functions that are described in these instructions, see <a class="olink GWURF-GUID-74F59B86-AF52-4ADE-8FC8-4EA56720CEC8" target="_blank" href="../GWURF/user-exit-functions.htm#GWURF-GUID-74F59B86-AF52-4ADE-8FC8-4EA56720CEC8">Reference for Oracle GoldenGate for Windows and UNIX</a>.</p>
+<div class="infobox-note" id="GUID-6DCDBA40-A7B8-4BD4-8ED0-39B9401DE4F3__GUID-2D240A36-82C2-4BFD-B3D5-E168C0E90D65">
+<p class="notep1">Note:</p>
+<p>User exits are case-sensitive for database object names. Names are returned exactly as they are defined in the hosting database. Object names must be fully qualified.</p>
+</div>
+<div class="section">
+<p class="subhead3">To Create User Exits</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ol>
+<li>
+<p>In C code, create either a shared object (UNIX systems) or a DLL (Windows) and create or export a routine to be called from Extract or Replicat. This routine is the communication point between Oracle GoldenGate and your routines. Name the routine whatever you want. The routine must accept the following Oracle GoldenGate user exit parameters:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">EXIT_CALL_TYPE</code>: Indicates when, during processing, the routine is called.</p>
+</li>
+<li>
+<p><code class="codeph">EXIT_CALL_RESULT</code>: Provides a response to the routine.</p>
+</li>
+<li>
+<p><code class="codeph">EXIT_PARAMS</code>: Supplies information to the routine. This function enables you to use the <code class="codeph">EXITPARAM</code> option of the <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement to pass a parameter that is a literal string to the user exit. This is only valid during the exit call to process a specific record. This function also enables you to pass parameters specified with the <code class="codeph">PARAMS</code> option of the <code class="codeph">CUSEREXIT</code> parameter at the exit call startup.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>In the source code, include the <code class="codeph">usrdecs.h</code> file. The <code class="codeph">usrdecs.h</code> file is the include file for the user exit API. It contains type definitions, return status values, callback function codes, and a number of other definitions. The <code class="codeph">usrdecs.h</code> file is installed within the Oracle GoldenGate directory. Do not modify this file.</p>
+</li>
+<li>
+<p>Include Oracle GoldenGate callback routines in the user exit when applicable. Callback routines retrieve record and application context information, and they modify the contents of data records. To implement a callback routine, use the <code class="codeph">ERCALLBACK</code> function in the shared object. The user callback routine behaves differently based on the function code that is passed to the callback routine.</p>
+<pre dir="ltr">
+ERCALLBACK (<span class="italic">function_code</span>, <span class="italic">buffer</span>, <span class="italic">result_code</span>);
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">function_code</code></span> is the function to be executed by the callback routine.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">buffer</code></span> is a void pointer to a buffer containing a predefined structure associated with the specified function code.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">result_code</code></span> is the status of the function that is executed by the callback routine. The result code that is returned by the callback routine indicates whether or not the callback function was successful.</p>
+</li>
+<li>
+<p>On Windows systems, Extract and Replicat export the <code class="codeph">ERCALLBACK</code> function that is to be called from the user exit routine. The user exit must explicitly load the callback function at run-time using the appropriate Windows API calls.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Include the <code class="codeph">CUSEREXIT</code> parameter in your Extract or Replicat parameter file. This parameter accepts the name of the shared object or DLL and the name of the exported routine that is to be called from Extract or Replicat. You can specify the full path of the shared object or DLL or let the operating system's standard search strategy locate the shared object.</p>
+<pre dir="ltr">
+CUSEREXIT {<span class="italic">DLL</span> | <span class="italic">shared_object</span>} <span class="italic">routine</span>
+[, INCLUDEUPDATEBEFORES]
+[, PARAMS '<span class="italic">startup_string</span>']
+</pre>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">DLL</code></span> is a Windows DLL and <span class="italic"><code class="codeph">shared_object</code></span> is a UNIX shared object that contains the user exit function.</p>
+</li>
+<li>
+<p><code class="codeph">INCLUDEUPDATEBEFORES</code> gets before images for <code class="codeph">UPDATE</code> operations.</p>
+</li>
+<li>
+<p><code class="codeph">PARAMS</code> <span class="italic"><code class="codeph">'startup_string'</code></span> supplies a startup string, such as a startup parameter.</p>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-6DCDBA40-A7B8-4BD4-8ED0-39B9401DE4F3__GUID-68251A8D-7C7D-4601-A3FE-CA91BC9E538A">
+<p class="titleinexample">Example 16-5 Example of Base Syntax, UNIX</p>
+<pre dir="ltr">
+CUSEREXIT eruserexit.so MyUserExit
+</pre></div>
+<!-- class="example" -->
+<div class="example" id="GUID-6DCDBA40-A7B8-4BD4-8ED0-39B9401DE4F3__GUID-9DF342CE-8DC9-48F1-936F-58F38E233192">
+<p class="titleinexample">Example 16-6 Example Base Syntax, Windows</p>
+<pre dir="ltr">
+CUSEREXIT eruserexit.dll MyUserExit
+</pre></div>
+<!-- class="example" --></div>
+</div>
+<a id="GWUAD615"></a>
+<div class="props_rev_3"><a id="GUID-DE1DB85C-6DCB-4A55-8527-DA671DACE46C"></a>
+<h3 id="GWUAD-GUID-DE1DB85C-6DCB-4A55-8527-DA671DACE46C" class="sect3"><span class="enumeration_section">16.3.4</span> Supporting Character-set Conversion in User Exits</h3>
+<div>
+<p>To maintain data integrity, a user exit needs to understand the character set of the character-type data that it exchanges with an Oracle GoldenGate process. Oracle GoldenGate user exit logic provides globalization support for:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>character-based database metadata, such as the names of catalogs, schemas, tables, and columns</p>
+</li>
+<li>
+<p>the values of character-type columns, such as <code class="codeph">CHAR</code>, <code class="codeph">VARCHAR2</code>, <code class="codeph">CLOB</code>, <code class="codeph">NCHAR</code>, <code class="codeph">NVARCHAR2</code>, and <code class="codeph">NCLOB</code>, as well as string-based numbers, date-time, and intervals.</p>
+</li>
+</ul>
+<p>Properly converting between character sets allows column data to be compared, manipulated, converted, and mapped properly from one type of database and character set to another. Most of this processing is performed when the <code class="codeph">EXIT_CALL_PROCESS_RECORD</code> call type is called and the record buffer and other record information is made available through callback routines.</p>
+<p>The user exit has its own session character set. This is defined by the <code class="codeph">GET_SESSION_CHARSET</code> and <code class="codeph">SET_SESSION_CHARSET</code> callback functions. The caller process provides conversion between character sets if the character set of the user exit is different from the hosting context of the process.</p>
+<p>To enable this support in user exits, there is the <code class="codeph">GET_DATABASE_METADATA</code> callback function code. This function enables the user exit to get database metadata, such as the locale and the character set of the character-type data that it exchanges with the process that calls it (Extract, data pump, Replicat). It also returns how the database treats the case-sensitivity of object names, how it treats quoted and unquoted names, and how it stores object names.</p>
+<p>For more information about these components, see <a class="olink GWURF-GUID-74F59B86-AF52-4ADE-8FC8-4EA56720CEC8" target="_blank" href="../GWURF/user-exit-functions.htm#GWURF-GUID-74F59B86-AF52-4ADE-8FC8-4EA56720CEC8">Reference for Oracle GoldenGate for Windows and UNIX</a>.</p>
+</div>
+</div>
+<a id="GWUAD617"></a><a id="GWUAD616"></a>
+<div class="props_rev_3"><a id="GUID-1D618FE8-C669-4B5D-96A1-6BA2A9FE45E6"></a>
+<h3 id="GWUAD-GUID-1D618FE8-C669-4B5D-96A1-6BA2A9FE45E6" class="sect3"><span class="enumeration_section">16.3.5</span> Using Macros to Check Name Metadata</h3>
+<div>
+<p>The object name that is passed by the user exit API is the exact name that is encoded in the user-exit session character set, and exactly the same name that is retrieved from the database. If the user exit compares the object name with a literal string, the user exit must retrieve the database locale and then normalize the string so that it is compared with the object name in the same encoding.</p>
+<p>Oracle GoldenGate provides the following macros that can be called by the user exit to check the metadata of database object names. For example, a macro can be used to check whether a quoted table name is case-sensitive and whether it is stored as mixed-case in the database server. These macros are defined in the <code class="codeph">usrdecs.h</code> file.</p>
+<div class="tblformal" id="GUID-1D618FE8-C669-4B5D-96A1-6BA2A9FE45E6__GUID-680BB71F-A87B-43E4-BFE9-92825CE2DEBD">
+<p class="titleintable">Table 16-4 Macros for metadata checking</p>
+<table class="cellalignment46" title="Macros for metadata checking" summary="This table shows macros for checking the metadata of database object names.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment20" id="d50162e2366">Macro</th>
+<th class="cellalignment20" id="d50162e2369">What it verifies</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e2374" headers="d50162e2366">
+<p><code class="codeph">supportsMixedCaseIdentifiers( nameMeta, DbObjType )</code></p>
+</td>
+<td class="cellalignment21" headers="d50162e2374 d50162e2369">
+<p>Whether the database treats a mixed-case unquoted name of a specified data type as case-sensitive and stores the name in mixed case.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e2382" headers="d50162e2366">
+<p><code class="codeph">supportsMixedCaseQuotedIdentifiers( nameMeta, DBObjType )</code></p>
+</td>
+<td class="cellalignment21" headers="d50162e2382 d50162e2369">
+<p>Whether the database treats the mixed-case quoted name of a specified data type as case-sensitive and stores the name in mixed case.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e2390" headers="d50162e2366">
+<p><code class="codeph">storesLowerCaseIdentifiers( nameMeta, DbObjType )</code></p>
+</td>
+<td class="cellalignment21" headers="d50162e2390 d50162e2369">
+<p>Whether the database treats the mixed-case unquoted name of a specified data type as case-insensitive and stores the name in lower case.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e2398" headers="d50162e2366">
+<p><code class="codeph">storesLowerCaseQuotedIdentifiers( nameMeta, DbObjType )</code></p>
+</td>
+<td class="cellalignment21" headers="d50162e2398 d50162e2369">
+<p>Whether the database treats the mixed-case quoted name of a specified data type as case-insensitive and stores the name in lower case.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e2406" headers="d50162e2366">
+<p><code class="codeph">storesMixedCaseIdentifiers( nameMeta, DbObjType )</code></p>
+</td>
+<td class="cellalignment21" headers="d50162e2406 d50162e2369">
+<p>Whether the database treats the mixed-case unquoted name of a specified data type as case-insensitive and stores the name in mixed case.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e2414" headers="d50162e2366">
+<p><code class="codeph">storesMixedCaseQuotedIdentifiers( nameMeta, DbObjType )</code></p>
+</td>
+<td class="cellalignment21" headers="d50162e2414 d50162e2369">
+<p>Whether the database treats the mixed-case quoted name of a specified data type as case-insensitive and stores the name in mixed case.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e2422" headers="d50162e2366">
+<p><code class="codeph">storesUpperCaseIdentifiers( nameMeta, DbObjType )</code></p>
+</td>
+<td class="cellalignment21" headers="d50162e2422 d50162e2369">
+<p>Whether the database treats the mixed-case unquoted name of a specified data type as case-insensitive and stores the name in upper case.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment21" id="d50162e2430" headers="d50162e2366">
+<p><code class="codeph">storesUpperCaseQuotedIdentifiers( nameMeta, DbObjType )</code></p>
+</td>
+<td class="cellalignment21" headers="d50162e2430 d50162e2369">
+<p>Whether the database treats the mixed-case quoted name of a specified data type as case-insensitive and stores the name in upper case.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<a id="GWUAD619"></a><a id="GWUAD618"></a>
+<div class="props_rev_3"><a id="GUID-A450B46C-D9B4-474A-926C-80066F65A36E"></a>
+<h3 id="GWUAD-GUID-A450B46C-D9B4-474A-926C-80066F65A36E" class="sect3"><span class="enumeration_section">16.3.6</span> Describing the Character Format</h3>
+<div>
+<p>The input parameter <code class="codeph">column_value_mode</code> describes the character format of the data that is being processed and is used in several of the function codes. The following table describes the meaning of the <code class="codeph">EXIT_FN_RAW_FORMAT</code>, <code class="codeph">EXIT_FN_CHAR_FORMAT</code>, and <code class="codeph">EXIT_FN_CNVTED_SESS_FORMAT</code> format codes, per data type.</p>
+<div class="tblformalwide" id="GUID-A450B46C-D9B4-474A-926C-80066F65A36E__GUID-EE484575-767C-4821-97AB-473E4D0FE6BF">
+<p class="titleintable">Table 16-5 column_value_mode_matrix Meanings</p>
+<table class="cellalignment26" title="column_value_mode_matrix Meanings" summary="This table shows the character format of the data that is being processed and used in several of the function codes.">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment95" id="d50162e2481">Data Type</th>
+<th class="cellalignment27" id="d50162e2484">EXIT_FN_RAW_FORMAT</th>
+<th class="cellalignment27" id="d50162e2487">EXIT_FN_CHAR_FORMAT</th>
+<th class="cellalignment27" id="d50162e2490">EXIT_FN_CNVTED_SESS_FORMAT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2495" headers="d50162e2481">
+<p><code class="codeph">CHAR</code></p>
+<p><code class="codeph">"abc</code>"</p>
+</td>
+<td class="cellalignment30" headers="d50162e2495 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info</p>
+<p>+ column value</p>
+<p>0000 0004 61 62 63 20</p>
+</td>
+<td class="cellalignment30" headers="d50162e2495 d50162e2487">
+<p>"abc" encoded in <code class="codeph">ASCII</code> or <code class="codeph">EBCDIC</code>.</p>
+<p><code class="codeph">NULL</code> terminated.</p>
+<p>Tailing spaces are trimmed.</p>
+</td>
+<td class="cellalignment30" headers="d50162e2495 d50162e2490">
+<p>"abc" encoded in user exit session character set.</p>
+<p><code class="codeph">NOT NULL</code> terminated.</p>
+<p>Tailing spaces are trimmed by default unless the <code class="codeph">GLOBALS</code> parameter <code class="codeph">NOTRIMSPACES</code> is specified.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2543" headers="d50162e2481">
+<p><code class="codeph">NCHAR</code></p>
+<p><code class="codeph">0061 0062 0063 0020</code></p>
+</td>
+<td class="cellalignment30" headers="d50162e2543 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value.</p>
+<p>0000 0008 00 61 0062 0063 0020</p>
+</td>
+<td class="cellalignment30" headers="d50162e2543 d50162e2487">
+<p>"abc" (encoded in <code class="codeph">UTF8</code>) or truncated at the first byte, depending on whether <code class="codeph">NCHAR</code> is treated as UTF-8.</p>
+<p><code class="codeph">NULL</code> terminated.</p>
+<p>Trailing spaces are trimmed.</p>
+</td>
+<td class="cellalignment30" headers="d50162e2543 d50162e2490">
+<p>"abc" encoded in user exit session character set.</p>
+<p><code class="codeph">NOT NULL</code> terminated.</p>
+<p>Tailing spaces are trimmed by default unless the <code class="codeph">GLOBALS</code> parameter <code class="codeph">NOTRIMSPACES</code> is specified.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2590" headers="d50162e2481">
+<p><code class="codeph">VARCHAR2</code></p>
+<p><code class="codeph">"abc"</code></p>
+</td>
+<td class="cellalignment30" headers="d50162e2590 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+<td class="cellalignment30" headers="d50162e2590 d50162e2487">
+<p>"abc" encoded in <code class="codeph">ASCII</code> or <code class="codeph">EBCDIC</code>.</p>
+<p><code class="codeph">NULL</code> terminated.</p>
+<p>No trimming.</p>
+</td>
+<td class="cellalignment30" headers="d50162e2590 d50162e2490">
+<p>"abc" encoded in user exit session character set.</p>
+<p><code class="codeph">NOT NULL</code> terminated.</p>
+<p>No trimming.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2629" headers="d50162e2481">
+<p><code class="codeph">NVARCHAR2</code></p>
+<p><code class="codeph">0061 0062 0063 0020</code></p>
+</td>
+<td class="cellalignment30" headers="d50162e2629 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+<td class="cellalignment30" headers="d50162e2629 d50162e2487">
+<p>"abc" (encoded in <code class="codeph">UTF8</code>) or truncated at the first byte, depending on whether <code class="codeph">NVARCHAR2</code> is treated as <code class="codeph">UTF-8</code>.</p>
+<p><code class="codeph">NULL</code> terminated.</p>
+<p>No trimming.</p>
+</td>
+<td class="cellalignment30" headers="d50162e2629 d50162e2490">
+<p>"abc"encoded in user exit session character set.</p>
+<p><code class="codeph">NOT NULL</code> terminated.</p>
+<p>No trimming.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2671" headers="d50162e2481">
+<p><code class="codeph">CLOB</code></p>
+</td>
+<td class="cellalignment30" headers="d50162e2671 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+<td class="cellalignment30" headers="d50162e2671 d50162e2487">
+<p>Similar to <code class="codeph">VARCHAR2</code>, but only output up to 4K bytes.</p>
+<p><code class="codeph">NULL</code> Terminated.</p>
+<p>No trimming.</p>
+</td>
+<td class="cellalignment30" headers="d50162e2671 d50162e2490">
+<p>Similar to <code class="codeph">VARCHAR2</code>, but only output data requested in user exit session character set.</p>
+<p><code class="codeph">NOT NULL</code> terminated.</p>
+<p>No trimming.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2707" headers="d50162e2481">
+<p><code class="codeph">NCLOB</code></p>
+</td>
+<td class="cellalignment30" headers="d50162e2707 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+<td class="cellalignment30" headers="d50162e2707 d50162e2487">
+<p>Similar to <code class="codeph">NVARCHAR2</code>, but only output up to 4K bytes.</p>
+<p><code class="codeph">NULL</code> terminated.</p>
+<p>No trimming.</p>
+</td>
+<td class="cellalignment30" headers="d50162e2707 d50162e2490">
+<p>Similar to <code class="codeph">NVARCHAR2</code>, but only output data requested in user exit session character set.</p>
+<p><code class="codeph">NOT NULL</code> terminated.</p>
+<p>No trimming.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2743" headers="d50162e2481">
+<p><code class="codeph">NUMBER</code></p>
+<p><code class="codeph">123.89</code></p>
+</td>
+<td class="cellalignment30" headers="d50162e2743 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+<td class="cellalignment30" headers="d50162e2743 d50162e2487">
+<p>"123.89" encoded in <code class="codeph">ASCII</code> or <code class="codeph">EBCDIC</code>.</p>
+<p><code class="codeph">NULL</code> terminated.</p>
+</td>
+<td class="cellalignment30" headers="d50162e2743 d50162e2490">
+<p>"123.89" encoded in user exit session character set.</p>
+<p><code class="codeph">NOT NULL</code> terminated.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2778" headers="d50162e2481">
+<p><code class="codeph">DATE</code></p>
+<p><code class="codeph">31-May-11</code></p>
+</td>
+<td class="cellalignment30" headers="d50162e2778 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+<td class="cellalignment30" headers="d50162e2778 d50162e2487">
+<p>"2011-05-31" encoded in <code class="codeph">ASCII</code> or <code class="codeph">EBCDIC</code>.</p>
+<p><code class="codeph">NULL</code> terminated.</p>
+</td>
+<td class="cellalignment30" headers="d50162e2778 d50162e2490">
+<p>"2011-05-31" encoded in user exit session character set.</p>
+<p><code class="codeph">NOT NULL</code> terminated.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2813" headers="d50162e2481">
+<p><code class="codeph">TIMESTAMP</code></p>
+<p><code class="codeph">31-May-11 12.00.00 AM</code></p>
+</td>
+<td class="cellalignment30" headers="d50162e2813 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+<td class="cellalignment30" headers="d50162e2813 d50162e2487">
+<p>"2011-05-31 12.00.00 AM" encoded in <code class="codeph">ASCII</code> or <code class="codeph">EBCDIC</code>.</p>
+<p><code class="codeph">NULL</code> terminated.</p>
+</td>
+<td class="cellalignment30" headers="d50162e2813 d50162e2490">
+<p>"2011-05-31 12.00.00 AM" encoded in user exit session character set.</p>
+<p><code class="codeph">NOT NULL</code> terminated.</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2848" headers="d50162e2481">
+<p><code class="codeph">Interval Year to Month or Interval Day to Second</code></p>
+</td>
+<td class="cellalignment30" headers="d50162e2848 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+<td class="cellalignment30" headers="d50162e2848 d50162e2487">
+<p>NA</p>
+</td>
+<td class="cellalignment30" headers="d50162e2848 d50162e2490">
+<p>NA</p>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment96" id="d50162e2866" headers="d50162e2481">
+<p><code class="codeph">RAW</code></p>
+</td>
+<td class="cellalignment30" headers="d50162e2866 d50162e2484">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+<td class="cellalignment30" headers="d50162e2866 d50162e2487">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+<td class="cellalignment30" headers="d50162e2866 d50162e2490">
+<p>2-byte null indicator +</p>
+<p>2-byte length info +</p>
+<p>column value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<a id="GWUAD620"></a>
+<div class="props_rev_3"><a id="GUID-667C4AB9-E5CA-4E5E-8590-310E19E96AFA"></a>
+<h3 id="GWUAD-GUID-667C4AB9-E5CA-4E5E-8590-310E19E96AFA" class="sect3"><span class="enumeration_section">16.3.7</span> Upgrading User Exits</h3>
+<div>
+<p>The <code class="codeph">usrdecs.h</code> file is versioned to allow backward compatibility with existing user exits when enhancements or upgrades, such as new functions or structural changes, are added to a new Oracle GoldenGate release. The version of the <code class="codeph">usrdecs.h</code> file is printed in the report file at the startup of Replicat or Extract.</p>
+<p>To use new user exit functionality, you must recompile your routines to include the new <code class="codeph">usrdecs</code> file. Routines that do not use new features do not need to be recompiled.</p>
+</div>
+</div>
+<a id="GWUAD621"></a>
+<div class="props_rev_3"><a id="GUID-8307134A-1AEA-4358-A3C0-92B91B4BC07C"></a>
+<h3 id="GWUAD-GUID-8307134A-1AEA-4358-A3C0-92B91B4BC07C" class="sect3"><span class="enumeration_section">16.3.8</span> Viewing Examples of How to Use the User Exit Functions</h3>
+<div>
+<p>Oracle GoldenGate installs the following sample user exit files into the <code class="codeph">UserExitExamples</code> directory of the Oracle GoldenGate installation directory:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">exitdemo.c</code> shows how to initialize the user exit, issue callbacks at given exit points, and modify data. It also demonstrates how to retrieve the fully qualified table name or a specific metadata part, such as the name of the catalog or container, or the schema, or just the unqualified table name. In addition, this demo shows how to process DDL data. The demo is not specific to any database type.</p>
+</li>
+<li>
+<p><code class="codeph">exitdemo_utf16.c</code> shows how to use UTF16-encoded data (both metadata and column data) in the callback structures for information exchanged between the user exit and the caller process.</p>
+</li>
+<li>
+<p><code class="codeph">exitdemo_more_recs.c</code> shows an example of how to use the same input record multiple times to generate several target records.</p>
+</li>
+<li>
+<p><code class="codeph">exitdemo_lob.c</code> shows an example of how to get read access to LOB data.</p>
+</li>
+<li>
+<p><code class="codeph">exitdemo_pk_befores.c</code> shows how to access the before and after image portions of a primary key update record, as well as the before images of regular updates (non-key updates). It also shows how to get target row values with <code class="codeph">SQLEXEC</code> in the Replicat parameter file as a means for conflict detection. The resulting fetched values from the target are mapped as the target record when it enters the user exit.</p>
+</li>
+</ul>
+<p>Each directory contains the <code class="codeph">*.c</code> files as well as makefiles and a <code class="codeph">readme.txt</code> file.</p>
+</div>
+</div>
+</div>
+<a id="GWUAD622"></a>
+<div class="props_rev_3"><a id="GUID-5DA699A5-C578-426C-80DC-183990D5AE18"></a>
+<h2 id="GWUAD-GUID-5DA699A5-C578-426C-80DC-183990D5AE18" class="sect2"><span class="enumeration_section">16.4</span> Using the Oracle GoldenGate Event Marker System to Raise Database Events</h2>
+<div>
+<p>Oracle GoldenGate provides an event marker system, also known as the event marker infrastructure (EMI), which enables the Oracle GoldenGate processes to take a defined action based on an <span class="italic">event record</span> in the transaction log or in the trail (depending on the data source of the process). The event record is a record that satisfies a specific filter criterion for which you want an action to occur. You can use this system to customize Oracle GoldenGate processing based on database events.</p>
+<p>For example, you can use the event marker system to start, suspend, or stop a process, to perform a transformation, or to report statistics. The event marker system can be put to use for purposes such as:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>To establish a synchronization point at which <code class="codeph">SQLEXEC</code> or user exit functions can be performed</p>
+</li>
+<li>
+<p>To execute a shell command that executes a data validation script or sends an email</p>
+</li>
+<li>
+<p>To activate tracing when a specific account number is detected</p>
+</li>
+<li>
+<p>To capture lag history</p>
+</li>
+<li>
+<p>To stop or suspend a process to run reports or batch processes at the end of the day</p>
+</li>
+</ul>
+<p>The event marker feature is supported for the replication of data changes, but not for initial loads.</p>
+<p>The system requires the following input components:</p>
+<ol>
+<li>
+<p>The <span class="italic">event record</span> that triggers the action can be specified with <code class="codeph">FILTER</code>, <code class="codeph">WHERE</code>, or <code class="codeph">SQLEXEC</code> in a <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement. Alternatively, a special <code class="codeph">TABLE</code> statement in a Replicat parameter file enables you to perform <code class="codeph">EVENTACTIONS</code> actions without mapping a source table to a target table.</p>
+</li>
+<li>
+<p>In the <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement where you specify the event record, include the <code class="codeph">EVENTACTIONS</code> parameter with the appropriate option to specify the action that is to be taken by the process.</p>
+</li>
+</ol>
+<p>You can combine <code class="codeph">EVENTACTIONS</code> options, as shown in the following examples.</p>
+<p>The following causes the process to issue a checkpoint, log an informational message, and ignore the entire transaction (without processing any of it), plus generate a report.</p>
+<pre dir="ltr">
+EVENTACTIONS (CP BEFORE, REPORT, LOG, IGNORE TRANSACTION)
+</pre>
+<p>The following writes the event record to the discard file and ignores the entire transaction.</p>
+<pre dir="ltr">
+EVENTACTIONS (DISCARD, IGNORE TRANS)
+</pre>
+<p>The following logs an informational message and gracefully stop the process.</p>
+<pre dir="ltr">
+EVENTACTIONS (LOG INFO, STOP)
+</pre>
+<p>The following rolls over the trail file and does not write the event record to the new file.</p>
+<pre dir="ltr">
+EVENTACTIONS (ROLLOVER, IGNORE)
+</pre>
+<p>For syntax details and additional usage instructions, see <a class="olink GWURF546" target="_blank" href="../GWURF/table-map.htm#GWURF546"><span class="italic"><span id="GUID-5DA699A5-C578-426C-80DC-183990D5AE18__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+<a id="GWUAD623"></a>
+<div class="props_rev_3"><a id="GUID-B845291C-6697-484B-BA1E-659E66015A43"></a>
+<h3 id="GWUAD-GUID-B845291C-6697-484B-BA1E-659E66015A43" class="sect3"><span class="enumeration_section">16.4.1</span> Case Studies in the Usage of the Event Marker System</h3>
+<div>
+<p>These examples highlight some use cases for the event marker system. For syntax details and additional usage instructions, see <a class="olink GWURF546" target="_blank" href="../GWURF/table-map.htm#GWURF546"><span class="italic"><span id="GUID-B845291C-6697-484B-BA1E-659E66015A43__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+<a id="GWUAD624"></a>
+<div class="props_rev_3"><a id="GUID-E2EBAC40-F80E-47AE-ACED-63DCBDC63D06"></a>
+<h4 id="GWUAD-GUID-E2EBAC40-F80E-47AE-ACED-63DCBDC63D06" class="sect4"><span class="enumeration_section">16.4.1.1</span> Trigger End-of-day Processing</h4>
+<div>
+<p>This example specifies the capture of operations that are performed on a special table named <code class="codeph">event_table</code> in the source database. This table exists solely for the purpose of receiving inserts at a predetermined time, for example at 5:00 P.M. every day. When Replicat receives the transaction record for this operation, it stops gracefully to allow operators to start end-of-day processing jobs. By using the insert on the <code class="codeph">event_table</code> table every day, the operators know that Replicat has applied all committed transactions up to 5:00. <code class="codeph">IGNORE</code> causes Replicat to ignore the event record itself, because it has no purpose in the target database. <code class="codeph">LOG INFO</code> causes Replicat to log an informational message about the operation.</p>
+<pre dir="ltr">
+TABLE source.event_table, EVENTACTIONS (IGNORE, LOG INFO, STOP);
+</pre></div>
+</div>
+<a id="GWUAD625"></a>
+<div class="props_rev_3"><a id="GUID-D74D049A-F91C-488B-8E81-34E21840D4CC"></a>
+<h4 id="GWUAD-GUID-D74D049A-F91C-488B-8E81-34E21840D4CC" class="sect4"><span class="enumeration_section">16.4.1.2</span> Simplify Transition from Initial Load to Change Synchronization</h4>
+<div>
+<p>Event actions and event tables can be used to help with the transition from an initial load to ongoing change replication. For example, suppose an existing, populated source table must be added to the Oracle GoldenGate configuration. This table must be created on the target, and then the two must be synchronized by using an export/import. This example assumes that an event table named <code class="codeph">source.event_table</code> exists in the source database and is specified in a Replicat <code class="codeph">TABLE</code> statement.</p>
+<pre dir="ltr">
+TABLE source.event_table, EVENTACTIONS (IGNORE, LOG INFO, STOP);
+</pre>
+<p>To allow users to continue working with the new source table, it is added to the Extract parameter file, but not to the Replicat parameter file. Extract begins capturing data from this table to the trail, where it is stored.</p>
+<p>At the point where the source and target are read-consistent after the export, an event record is inserted into the event table on the source, which propagates to the target. When Replicat receives the event record (marking the read-consistent point), the process stops as directed by <code class="codeph">EVENTACTIONS STOP</code>. This allows the new table to be added to the Replicat <code class="codeph">MAP</code> statement. Replicat can be positioned to start replication from the timestamp of the event record, eliminating the need to use the <code class="codeph">HANDLECOLLISIONS</code> parameter. Operations in the trail from before the event record can be ignored because it is known that they were applied in the export.</p>
+<p>The event record itself is ignored by Replicat, but an informational message is logged.</p>
+</div>
+</div>
+<a id="GWUAD626"></a>
+<div class="props_rev_3"><a id="GUID-2552230F-3EC8-4A4C-BBD5-B0C2720895A1"></a>
+<h4 id="GWUAD-GUID-2552230F-3EC8-4A4C-BBD5-B0C2720895A1" class="sect4"><span class="enumeration_section">16.4.1.3</span> Stop Processing When Data Anomalies are Encountered</h4>
+<div>
+<p>This example uses <code class="codeph">ABORT</code> to stop Replicat immediately with a fatal error if an anomaly is detected in a bank record, where the customer withdraws more money than the account contains. In this case, the source table is mapped to a target table in a Replicat <code class="codeph">MAP</code> statement for actual replication to the target. A <code class="codeph">TABLE</code> statement is also used for the source table, so that the <code class="codeph">ABORT</code> action stops Replicat before it applies the anomaly to the target database. <code class="codeph">ABORT</code> takes precedence over processing the record.</p>
+<pre dir="ltr">
+MAP source.account, TARGET target.account;
+TABLE source.account, FILTER (withdrawal &gt; balance), EVENTACTIONS (ABORT);
+</pre></div>
+</div>
+<a id="GWUAD628"></a>
+<div class="props_rev_3"><a id="GUID-94458DFA-E4C8-4850-83C3-56B83F45F29D"></a>
+<h4 id="GWUAD-GUID-94458DFA-E4C8-4850-83C3-56B83F45F29D" class="sect4"><span class="enumeration_section">16.4.1.4</span> Trace a Specific Order Number</h4>
+<div>
+<p>The following example enables Replicat tracing only for an order transaction that contains an insert operation for a specific order number (<code class="codeph">order_no = 1</code>). The trace information is written to the <code class="codeph">order_1.trc</code> trace file. The <code class="codeph">MAP</code> parameter specifies the mapping of the source table to the target table.</p>
+<pre dir="ltr">
+MAP sales.order, TARGET rpt.order;
+TABLE source.order,
+FILTER (@GETENV ('GGHEADER', 'OPTYPE') = 'INSERT' AND order_no = 1), &amp;
+EVENTACTIONS (TRACE order_1.trc TRANSACTION);
+</pre></div>
+</div>
+<a id="GWUAD629"></a>
+<div class="props_rev_3"><a id="GUID-ADEFC27C-28E9-4419-82AE-4924BE80C2C4"></a>
+<h4 id="GWUAD-GUID-ADEFC27C-28E9-4419-82AE-4924BE80C2C4" class="sect4"><span class="enumeration_section">16.4.1.5</span> Execute a Batch Process</h4>
+<div>
+<p>In this example, a batch process executes once a month to clear the source database of accumulated data. At the beginning of the transaction, typically a batch transaction, a record is written to a special <code class="codeph">job</code> table to indicate that the batch job is starting. <code class="codeph">TRANSACTION</code> is used with <code class="codeph">IGNORE</code> to specify that the entire transaction must be ignored by Extract, because the target system does not need to reflect the deleted records. By ignoring the work on the Extract side, unnecessary trail and network overhead is eliminated.</p>
+<pre dir="ltr">
+TABLE source.job, FILTER (@streq (job_type = 'HOUSEKEEPING')=1), &amp;
+EVENTACTIONS (IGNORE TRANSACTION);
+</pre>
+<div class="infobox-note" id="GUID-ADEFC27C-28E9-4419-82AE-4924BE80C2C4__GUID-3BE68679-F73B-415F-8EE7-DAF57D0ADBC7">
+<p class="notep1">Note:</p>
+<p>If a logical batch delete were to be composed of multiple smaller batches, each smaller batch would require an insert into the job table as the first record in the transaction.</p>
+</div>
+</div>
+</div>
+<a id="GWUAD630"></a>
+<div class="props_rev_3"><a id="GUID-110A444D-0E42-4EC5-A545-24480F5C5D51"></a>
+<h4 id="GWUAD-GUID-110A444D-0E42-4EC5-A545-24480F5C5D51" class="sect4"><span class="enumeration_section">16.4.1.6</span> Propagate Only a SQL Statement without the Resultant Operations</h4>
+<div>
+<p>This example shows how different <code class="codeph">EVENTACTIONS</code> clauses can be used in combination on the source and target to replicate just a SQL statement rather than the operations that result from that statement. In this case, it is an <code class="codeph">INSERT INTO...SELECT</code> transaction. Such a transaction could generate millions of rows that would need to be propagated, but with this method, all that is propagated is the initial SQL statement to reduce trail and network overhead. The <code class="codeph">SELECTs</code> are all performed on the target. This configuration requires perfectly synchronized source and target tables in order to maintain data integrity.</p>
+<p>Extract:</p>
+<pre dir="ltr">
+TABLE source.statement, EVENTACTIONS (IGNORE TRANS INCLUDEEVENT);
+</pre>
+<p>Replicat:</p>
+<pre dir="ltr">
+TABLE source.statement, SQLEXEC (execute SQL statement), &amp;
+EVENTACTIONS (INFO, IGNORE);
+</pre>
+<p>To use this configuration, a <code class="codeph">statement</code> table is populated with the first operation in the transaction, that being the <code class="codeph">INSERT INTO...SELECT</code>, which becomes the event record.</p>
+<div class="infobox-note" id="GUID-110A444D-0E42-4EC5-A545-24480F5C5D51__GUID-2B468DCC-06B4-4BD8-BE02-DDF4995CA721">
+<p class="notep1">Note:</p>
+<p>For large SQL statements, the statement can be written to multiple columns in the table. For example, eight <code class="codeph">VARCHAR (4000)</code> columns could be used to store SQL statements up to 32 KB in length.</p>
+</div>
+<p>Because of the <code class="codeph">IGNORE TRANS INCLUDEEVENT</code>, Extract ignores all of the subsequent inserts that are associated with the <code class="codeph">SELECT</code> portion of the statement, but writes the event record that contains the SQL text to the trail. Using a <code class="codeph">TABLE</code> statement, Replicat passes the event record to a <code class="codeph">SQLEXEC</code> statement that concatenates the SQL text columns, if necessary, and executes the <code class="codeph">INSERT INTO...SELECT</code> statement using the target tables as the input for the <code class="codeph">SELECT</code> sub-query.</p>
+</div>
+</div>
+<a id="GWUAD631"></a>
+<div class="props_rev_3"><a id="GUID-8FD764CA-5E00-4043-9C87-910EFF4147E9"></a>
+<h4 id="GWUAD-GUID-8FD764CA-5E00-4043-9C87-910EFF4147E9" class="sect4"><span class="enumeration_section">16.4.1.7</span> Committing Other Transactions Before Starting a Long-running Transaction</h4>
+<div>
+<p>This use of <code class="codeph">EVENTACTIONS</code> ensures that all open transactions that are being processed by Replicat get committed to the target before the start of a long running transaction. It forces Replicat to write a checkpoint before beginning work on the large transaction. Forcing a checkpoint constrains any potential recovery to just the long running transaction. Because a Replicat checkpoint implies a commit to the database, it frees any outstanding locks and makes the pending changes visible to other sessions.</p>
+<pre dir="ltr">
+TABLE source.batch_table, EVENTACTIONS (CHECKPOINT BEFORE);
+</pre></div>
+</div>
+<a id="GWUAD632"></a>
+<div class="props_rev_3"><a id="GUID-82CE2718-C397-47BA-A5F7-30829D4174F4"></a>
+<h4 id="GWUAD-GUID-82CE2718-C397-47BA-A5F7-30829D4174F4" class="sect4"><span class="enumeration_section">16.4.1.8</span> Execute a Shell Script to Validate Data</h4>
+<div>
+<p>This example executes a shell script that runs another script that validates data after Replicat applies the last transaction in a test run. On the source, an event record is written to an event table named <code class="codeph">source.event</code>. The record inserts the value <code class="codeph">COMPARE</code> into the <code class="codeph">event_type</code> column of the event table, and this record gets replicated at the end of the other test data. In the <code class="codeph">TABLE</code> statement in the Replicat parameter file, the <code class="codeph">FILTER</code> clause qualifies the record and then triggers the shell script <code class="codeph">compare_db.sh</code> to run as specified by <code class="codeph">SHELL</code> in the <code class="codeph">EVENTACTIONS</code> clause. After that, Replicat stops immediately as specified by <code class="codeph">FORCESTOP</code>.</p>
+<p>Extract:</p>
+<pre dir="ltr">
+TABLE src.*;
+TABLE test.event;
+</pre>
+<p>Replicat:</p>
+<pre dir="ltr">
+MAP src.*, TARGET targ.*;
+MAP test.event, TARGET test.event, FILTER (@streq (event_type, 'COMPARE')=1), &amp;
+EVENTACTIONS (SHELL 'compare_db.sh', FORCESTOP);
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8">
+<table class="cellalignment6">
+<tr>
+<td class="cellalignment5"><a href="instantiating-oracle-goldengate-initial-load.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment5"><a href="monitoring-oracle-goldengate-processing.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

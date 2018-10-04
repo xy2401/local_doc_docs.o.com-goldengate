@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Configuring Oracle GoldenGate for DB2 for i</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database." />
+<meta name="dcterms.created" content="2018-09-07T08:20:49Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Heterogeneous Databases" />
+<meta name="dcterms.identifier" content="E88786-08" />
+<meta name="dcterms.isVersionOf" content="GGHDB" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="preparing-system-oracle-goldengate2.htm" title="Previous" type="text/html" />
+<link rel="Next" href="instantiating-and-starting-oracle-goldengate-replication.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGHDB.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B"></a> <span id="PAGE" style="display:none;">12/37</span> <!-- End Header -->
+<h1 id="GGHDB-GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" class="sect1"><span class="enumeration_chapter">6</span> Configuring Oracle GoldenGate for DB2 for i</h1>
+<div>
+<div><span>This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.</span></div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-96E3F3B5-054C-454B-94B6-F7419809C519">What to Expect from this Procedure</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-49F79E18-FC3F-4CE5-980E-81129223A8DA">Getting Started with Oracle GoldenGate</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-071E8B63-5E93-49B4-A814-65F14DA7724E">Creating the Oracle GoldenGate Instance</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-D195237D-642A-4DE8-9DD2-A658D44293E8">Creating a GLOBALS File</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-848BFA16-3737-4FE8-8972-0DE813065B27">Creating a Data Definitions File</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-DAF20D1F-98F3-49F5-9E23-9698E2BDA96E">Encrypting the Extract and Replicat Passwords</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-3E608FAF-8EDD-4AF7-8B7B-48A2D2BBE43B">Configuring Extract for Change Capture from DB2 for i</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-89B362C4-4793-42E4-8B18-AF66DF5443E6">Configuring Replicat for Change Delivery to DB2 for i</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-472B9595-1772-4EFA-A90A-1377E5CE7B43">Next Steps in the Deployment</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-23BD873A-7D17-4408-9377-70003AFF20A1">When to Start Replicating Transactional Changes</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-112535B6-2A61-4006-A8B3-95BB1645F223">Testing Your Configuration</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-oracle-goldengate-db2-i.htm" title="This part describes tasks for configuring and running Oracle GoldenGateon a DB2 for i database.&nbsp;">Using Oracle GoldenGate with IBM DB2 for i</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-96E3F3B5-054C-454B-94B6-F7419809C519"></a>
+<h2 id="GGHDB-GUID-96E3F3B5-054C-454B-94B6-F7419809C519" class="sect2"><span class="enumeration_section">6.1</span> What to Expect from this Procedure</h2>
+<div>
+<p>These instructions show you how to configure a set of basic Oracle GoldenGate parameter (configuration) files, one for each process that replicates transactional data changes from a DB2 for i source to a DB2 for i target, or to a different database type. Your business requirements probably will require a more complex topology, but this procedure forms a basis for the rest of your configuration steps.</p>
+<p>This chapter is a subset of the instructions in <a class="olink GWUAD514" target="_blank" href="../GWUAD/configuring-online-change-synchronization.htm#GWUAD514"><span class="italic"><span id="GUID-96E3F3B5-054C-454B-94B6-F7419809C519__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></span></a>. It focuses on the basic parameters that are specific to DB2 for i.</p>
+<p>By performing these steps, you can:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>get the basic configuration files established.</p>
+</li>
+<li>
+<p>build upon them later by adding more parameters as you make decisions about features or requirements that apply to your environment.</p>
+</li>
+<li>
+<p>use copies of them to make additional parameter files faster than starting from scratch.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-49F79E18-FC3F-4CE5-980E-81129223A8DA"></a>
+<h2 id="GGHDB-GUID-49F79E18-FC3F-4CE5-980E-81129223A8DA" class="sect2"><span class="enumeration_section">6.2</span> Getting Started with Oracle GoldenGate</h2>
+<div>
+<p>Before proceeding with the configuration process, you should get familiar with the Oracle GoldenGate architecture, the command interface, and the methods for supplying input and instructions to the processes. See <a class="olink GWUAD153" target="_blank" href="../GWUAD/getting-started-oracle-goldengate-process-interfaces.htm#GWUAD153"><span class="italic"><span id="GUID-49F79E18-FC3F-4CE5-980E-81129223A8DA__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></span></a> for this information.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-071E8B63-5E93-49B4-A814-65F14DA7724E"></a>
+<h2 id="GGHDB-GUID-071E8B63-5E93-49B4-A814-65F14DA7724E" class="sect2"><span class="enumeration_section">6.3</span> Creating the Oracle GoldenGate Instance</h2>
+<div>
+<div class="section">
+<p>Each Oracle GoldenGate installation is rooted in the Manager process. This is the controller process that instantiates the Oracle GoldenGate processes, allocates port numbers, and performs file maintenance. Together, the Manager process and its child processes, and their related programs and files comprise an Oracle GoldenGate instance.</p>
+<p>To run Oracle GoldenGate, a Manager process must be running on all systems that will be part of the Oracle GoldenGate environment. To run Manager, you first create a parameter file for it. For details on configuring Manager and its network connections, see <a class="olink GWUAD138" target="_blank" href="../GWUAD/configuring-manager-and-network-communications.htm#GWUAD138"><span class="italic"><span id="GUID-071E8B63-5E93-49B4-A814-65F14DA7724E__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-D195237D-642A-4DE8-9DD2-A658D44293E8"></a>
+<h2 id="GGHDB-GUID-D195237D-642A-4DE8-9DD2-A658D44293E8" class="sect2"><span class="enumeration_section">6.4</span> Creating a <code class="codeph">GLOBALS</code> File</h2>
+<div>
+<div class="section">
+<p>The <code class="codeph">GLOBALS</code> parameter file contains parameters that affect all processes within an Oracle GoldenGate instance. The <code class="codeph">GLOBALS</code> parameter <code class="codeph">NAMECCSID</code> is specific to DB2 for i and may be required if the SQL catalog contains object names that are referenced by a different CCSID than the system CCSID. The SQL catalog is created in the system CCSID and does not indicate this difference when queried. Oracle GoldenGate makes queries to the catalog and could retrieve the name incorrectly unless <code class="codeph">NAMECCSID</code> is used to supply the correct CCSID value. For more information, see <a class="olink GWURF1167" target="_blank" href="../GWURF/nameccsid.htm#GWURF1167"><span class="italic"><span id="GUID-D195237D-642A-4DE8-9DD2-A658D44293E8__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-848BFA16-3737-4FE8-8972-0DE813065B27"></a>
+<h2 id="GGHDB-GUID-848BFA16-3737-4FE8-8972-0DE813065B27" class="sect2"><span class="enumeration_section">6.5</span> Creating a Data Definitions File</h2>
+<div>
+<div class="section">
+<p>When replicating data from one table to another, an important consideration is whether the column structures (metadata) of the source and target tables are identical. Oracle GoldenGate looks up metadata for the following purposes:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>On the source, to supply complete information about captured operations to the Replicat process.</p>
+</li>
+<li>
+<p>On the target, to determine the structures of the target tables, so that the replicated data is correctly mapped and converted (if needed) by Replicat.</p>
+</li>
+</ul>
+<p>When source and target table definitions are dissimilar, Oracle GoldenGate must perform a conversion from one format to the other. To perform conversions, both sets of definitions must be known to Oracle GoldenGate. Oracle GoldenGate can query the local database to get one set of definitions, but it must rely on a <span class="italic">data-definitions file</span> to get definitions from the remote database. The data-definitions file contains information about the metadata of the data that is being replicated.</p>
+<p>To create a definitions file, you configure and run the <code class="codeph">DEFGEN</code> utility and then transfer the definitions file to the target system. For instructions, see <a class="olink GWUAD473" target="_blank" href="../GWUAD/associating-replicated-data-metadata.htm#GWUAD473"><span class="italic"><span id="GUID-848BFA16-3737-4FE8-8972-0DE813065B27__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></span></a>. This file must be in place on the target system before you start the Oracle GoldenGate processes for the first time.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-DAF20D1F-98F3-49F5-9E23-9698E2BDA96E"></a>
+<h2 id="GGHDB-GUID-DAF20D1F-98F3-49F5-9E23-9698E2BDA96E" class="sect2"><span class="enumeration_section">6.6</span> Encrypting the Extract and Replicat Passwords</h2>
+<div>
+<div class="section">
+<p>It is strongly recommended that you encrypt the passwords of the user profiles that will be used for the primary and data pump Extracts, and for the Replicat process. Oracle GoldenGate must use Blowfish encryption on the DB2 for i platform. The standard Oracle GoldenGate encryption method of AES (Advanced Encryption Standard) is not supported by the IMB i platform. To encrypt the password, see <a class="olink GWUAD356" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWUAD356"><span class="italic"><span id="GUID-DAF20D1F-98F3-49F5-9E23-9698E2BDA96E__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></span></a>. That documentation also contains information about how to encrypt data within disk storage and across TCP/IP.</p>
+<div class="infobox-note" id="GUID-DAF20D1F-98F3-49F5-9E23-9698E2BDA96E__GUID-C2C4A479-A76E-4CC3-9F8B-86C9BBE7900D">
+<p class="notep1">Note:</p>
+<p>The Oracle GoldenGate credential store is not supported by the iSeries platform.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-3E608FAF-8EDD-4AF7-8B7B-48A2D2BBE43B"></a>
+<h2 id="GGHDB-GUID-3E608FAF-8EDD-4AF7-8B7B-48A2D2BBE43B" class="sect2"><span class="enumeration_section">6.7</span> Configuring Extract for Change Capture from DB2 for i</h2>
+<div>
+<div class="section">
+<p>Perform these steps on the source system to configure the primary Extract and the data pump Extract that support change capture and transport across the network.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-AB9410E5-08EF-4356-A580-D8BD9B6B223A">Configuring the Primary Extract</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-255ACF5C-DE54-46D0-B6FA-5C0D56FFBF3E">Configuring the Data Pump</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-AB9410E5-08EF-4356-A580-D8BD9B6B223A"></a>
+<h3 id="GGHDB-GUID-AB9410E5-08EF-4356-A580-D8BD9B6B223A" class="sect3"><span class="enumeration_section">6.7.1</span> Configuring the Primary Extract</h3>
+<div>
+<div class="section">
+<p>These steps configure the primary Extract to capture transaction data from a source DB2 LUW database and write the data to a local trail for temporary storage.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>In GGSCI on the source system, create the Extract parameter file.</span>
+<div>
+<pre dir="ltr">
+EDIT PARAMS <span class="italic">name</span>
+</pre>
+<p>Where: <span class="italic"><code class="codeph">name</code></span> is the name of the primary Extract.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Enter the Extract parameters in the order shown, starting a new line for each parameter statement.</span>
+<div>
+<p><span class="bold">Basic parameters for the primary Extract</span></p>
+<pre dir="ltr">
+EXTRACT finance
+SOURCEDB mysource, USERIDALIAS myalias 
+LOGALLSUPCOLS
+ENCRYPTTRAIL AES192
+EXTTRAIL /ggs/dirdat/lt
+TABLE hr.*;
+</pre>
+<div class="tblformalwide" id="GUID-AB9410E5-08EF-4356-A580-D8BD9B6B223A__CEGBIJIG">
+<p class="titleintable">Table 6-1 Basic Parameters for Primary Extract</p>
+<table class="cellalignment131" title="Basic Parameters for Primary Extract" summary="This table describes the basic parameters for primary Extract in classic capture mode.">
+<thead>
+<tr class="cellalignment115">
+<th class="cellalignment132" id="d11218e484">Parameter</th>
+<th class="cellalignment133" id="d11218e487">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment115">
+<td class="cellalignment134" id="d11218e492" headers="d11218e484">
+<pre dir="ltr">
+EXTRACT <span class="italic">group</span>
+</pre></td>
+<td class="cellalignment135" headers="d11218e492 d11218e487">
+<p><span class="italic"><code class="codeph">group</code></span> is the name of the Extract group. For more information, see <a class="olink GWURF487" target="_blank" href="../GWURF/extract.htm#GWURF487"><span class="italic">Reference for Oracle GoldenGate</span></a>.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment134" id="d11218e510" headers="d11218e484">
+<pre dir="ltr">
+SOURCEDB <span class="italic">database</span>, USERIDALIAS <span class="italic">alias</span>
+</pre></td>
+<td class="cellalignment135" headers="d11218e510 d11218e487">
+<p>Specifies the real name of the source DB2 LUW database (not an alias), plus the alias of the database login credential of the user that is assigned to Extract. This credential must exist in the Oracle GoldenGate credential store. For more information, see <a class="olink OGGIN-GUID-01C35F80-E4CA-4039-9288-B2497A89D479" target="_blank" href="../OGGIN/installing-db2-luw.htm#OGGIN-GUID-01C35F80-E4CA-4039-9288-B2497A89D479">Database User for Oracle GoldenGate Processes</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment134" id="d11218e528" headers="d11218e484">
+<pre dir="ltr">
+ENCRYPTTRAIL <span class="italic">algorithm</span>
+</pre></td>
+<td class="cellalignment135" headers="d11218e528 d11218e487">
+<p>Encrypts the local trail. For more information about Oracle GoldenGate trail encryption options, see <a class="olink GWUAD354" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWUAD354"><span class="italic">Administering Oracle GoldenGate</span></a> .</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment134" id="d11218e543" headers="d11218e484">
+<pre dir="ltr">
+EXTTRAIL <span class="italic">pathname</span>
+</pre></td>
+<td class="cellalignment135" headers="d11218e543 d11218e487">
+<p>Specifies the path name of the local trail to which the primary Extract writes captured data for temporary storage.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment134" id="d11218e553" headers="d11218e484">
+<pre dir="ltr">
+TABLE <span class="italic">schema.object</span>;
+</pre></td>
+<td class="cellalignment135" headers="d11218e553 d11218e487">
+<p>Specifies the database object for which to capture data.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">TABLE</code> is a required keyword.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">schema</code></span> is the schema name or a wildcarded set of schemas.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">object</code></span> is the table name, or a wildcarded set of tables.</p>
+</li>
+</ul>
+<p>See <a class="olink GWUAD192" target="_blank" href="../GWUAD/getting-started-oracle-goldengate-process-interfaces.htm#GWUAD192"><span class="italic">Administering Oracle GoldenGate</span></a> for information about how to specify object names with and without wildcards. Note that only the asterisk (*) wildcard is supported for DB2 LUW. The question mark (?) wildcard is not supported for this database.</p>
+<p>Terminate the parameter statement with a semi-colon.</p>
+<p>To exclude tables from a wildcard specification, use the <code class="codeph">TABLEEXCLUDE</code> parameter. See <a class="olink GWURF-GUID-1CA39664-9813-44A7-844B-DE44B403006C" target="_blank" href="../GWURF/tableexclude.htm#GWURF-GUID-1CA39664-9813-44A7-844B-DE44B403006C"><span class="italic">Reference for Oracle GoldenGate</span></a> for more information about usage and syntax.</p>
+<p>For more information and for additional <code class="codeph">TABLE</code> options that control data filtering, mapping, and manipulation, see <a class="olink GWURF-GUID-C76063D3-CC0B-4BF3-88B3-EA5B93BDB385" target="_blank" href="../GWURF/oracle-goldengate-ggsci-commands.htm#GWURF-GUID-C76063D3-CC0B-4BF3-88B3-EA5B93BDB385"><span class="italic">Reference for Oracle GoldenGate</span></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</li>
+<li class="stepexpand"><span>Enter any optional Extract parameters that are recommended for your configuration. You can edit this file at any point before starting processing by using the <code class="codeph">EDIT PARAMS</code> command in GGSCI. For a list of parameters and links to their detailed reference, see <a class="olink GWURF978" target="_blank" href="../GWURF/summary-oracle-goldengate-parameters.htm#GWURF978"><span class="italic">Reference for Oracle GoldenGate</span></a>.</span></li>
+<li class="stepexpand"><span>Save and close the file.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-3E608FAF-8EDD-4AF7-8B7B-48A2D2BBE43B">Configuring Extract for Change Capture from DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-255ACF5C-DE54-46D0-B6FA-5C0D56FFBF3E"></a>
+<h3 id="GGHDB-GUID-255ACF5C-DE54-46D0-B6FA-5C0D56FFBF3E" class="sect3"><span class="enumeration_section">6.7.2</span> Configuring the Data Pump</h3>
+<div>
+<div class="section">
+<p>These steps configure the data pump that reads the local trail and sends the data across the network to a remote trail.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>In GGSCI on the source system, create the data-pump parameter file.</span>
+<div>
+<pre dir="ltr">
+EDIT PARAMS <span class="italic">name</span>
+</pre>
+<p>Where: <span class="italic"><code class="codeph">name</code></span> is the name of the data pump Extract group.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Enter the data-pump parameters in the order shown, starting a new line for each parameter statement. Your input variables will be different. See <a href="configuring-oracle-goldengate-db2-i.htm#GUID-255ACF5C-DE54-46D0-B6FA-5C0D56FFBF3E__BABHEJJJ" title="Basic parameters for a data-pump Extract">Table 6-2</a> for descriptions.</span>
+<div>
+<p><span class="bold">Basic parameters for the data-pump Extract group:</span></p>
+<pre dir="ltr">
+EXTRACT extpump
+SOURCEDB FINANCE USERID ogg, PASSWORD AACAAAAAAAAAAA, BLOWFISH ENCRYPTKEY mykey
+RMTHOST fin1, MGRPORT 7809
+RMTTRAIL /ggs/dirdat/rt
+TABLE hr.*;
+</pre>
+<div class="tblformalwide" id="GUID-255ACF5C-DE54-46D0-B6FA-5C0D56FFBF3E__BABHEJJJ">
+<p class="titleintable">Table 6-2 Basic Parameters for the Data Pump Extract</p>
+<table class="cellalignment131" title="Basic Parameters for the Data Pump Extract" summary="Basic parameters for a data-pump Extract">
+<thead>
+<tr class="cellalignment115">
+<th class="cellalignment136" id="d11218e695">Parameter</th>
+<th class="cellalignment137" id="d11218e698">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e703" headers="d11218e695">
+<pre dir="ltr">
+EXTRACT <span class="italic">group</span>
+</pre></td>
+<td class="cellalignment139" headers="d11218e703 d11218e698">
+<p><span class="italic"><code class="codeph">group name</code></span> is the name of the data pump.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e716" headers="d11218e695">
+<pre dir="ltr">
+SOURCEDB <span class="italic">database</span> USERID <span class="italic">user</span>, PASSWORD <span class="italic">password</span>, BLOWFISH ENCRYPTKEY <span class="italic">keyname</span>
+</pre></td>
+<td class="cellalignment139" headers="d11218e716 d11218e698">
+<p>Specifies database connection information.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">SOURCEDB</code> specifies the <span class="italic">default</span> DB 2 for i database.</p>
+</li>
+<li>
+<p><code class="codeph">USERID</code> specifies the Extract database user profile.</p>
+</li>
+<li>
+<p><code class="codeph">PASSWORD</code> specifies the user's password that was encrypted with the <code class="codeph">ENCRYPT PASSWORD</code> command. Enter or paste the encrypted password after the <code class="codeph">PASSWORD</code> keyword.</p>
+</li>
+<li>
+<p><code class="codeph">BLOWFISH ENCRYPTKEY</code> <span class="italic"><code class="codeph">keyname</code></span> specifies the name of the lookup key in the local <code class="codeph">ENCKEYS</code> file.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e775" headers="d11218e695">
+<p><code class="codeph">DECRYPTTRAIL</code> <code class="codeph">BLOWFISH</code></p>
+</td>
+<td class="cellalignment139" headers="d11218e775 d11218e698">
+<p>Decrypts the input trail.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e787" headers="d11218e695">
+<pre dir="ltr">
+RMTHOST <span class="italic">hostname</span>, MGRPORT <span class="italic">portnumber</span>
+</pre></td>
+<td class="cellalignment139" headers="d11218e787 d11218e698">
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">RMTHOST</code> specifies the name or IP address of the target system.</p>
+</li>
+<li>
+<p><code class="codeph">MGRPORT</code> specifies the port number where Manager is running on the target.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e810" headers="d11218e695">
+<pre dir="ltr">
+ENCRYPTTRAIL BLOWFISH
+</pre></td>
+<td class="cellalignment139" headers="d11218e810 d11218e698">
+<p>Encrypts the remote trail with Blowfish encryption.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e817" headers="d11218e695">
+<pre dir="ltr">
+RMTTRAIL <span class="italic">pathname</span>
+</pre></td>
+<td class="cellalignment139" headers="d11218e817 d11218e698">
+<p>Specifies the path name of the remote trail.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e827" headers="d11218e695">
+<pre dir="ltr">
+TABLE <span class="italic">owner.table</span>;
+</pre></td>
+<td class="cellalignment139" headers="d11218e827 d11218e698">
+<p>Specifies a table or tables to process.</p>
+<p>Terminate the <code class="codeph">TABLE</code> statement with a semi-colon.</p>
+<p>To exclude tables from a wildcard specification, use the <code class="codeph">TABLEEXCLUDE</code> <span class="italic"><code class="codeph">owner.table</code></span> parameter after the <code class="codeph">TABLE</code> statement.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</li>
+<li class="stepexpand"><span>Enter any optional Extract parameters that are recommended elsewhere in this manual and any others shown in <a class="olink GWURF-GUID-E763CBD0-FBE5-4FD1-8AB6-DFEF8D31909D" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF-GUID-E763CBD0-FBE5-4FD1-8AB6-DFEF8D31909D">Summary of Extract Commands</a>.</span></li>
+<li class="stepexpand"><span>Save and close the file.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-3E608FAF-8EDD-4AF7-8B7B-48A2D2BBE43B">Configuring Extract for Change Capture from DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-89B362C4-4793-42E4-8B18-AF66DF5443E6"></a>
+<h2 id="GGHDB-GUID-89B362C4-4793-42E4-8B18-AF66DF5443E6" class="sect2"><span class="enumeration_section">6.8</span> Configuring Replicat for Change Delivery to DB2 for i</h2>
+<div>
+<div class="section">
+<p>These steps configure Replicat to apply data to a DB2 for i target database, operating either on the target system or on a remote Windows or Linux system. To configure Replicat for change delivery to a different database type, such as an Oracle database, follow the directions in the Oracle GoldenGate Installation and Configuration guide for that database. There may be additional parameters and requirements for delivery to that database type.</p>
+<div class="infobox-note" id="GUID-89B362C4-4793-42E4-8B18-AF66DF5443E6__GUID-BB6963D6-9C3F-4955-92B9-D64A29E34DF3">
+<p class="notep1">Note:</p>
+<p>There does not have to be a database on a Windows or Linux machine to support connection by ODBC by Replicat.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-946E6994-2DA5-4CDF-A4B9-F6AEB01BDF69">Creating a Checkpoint Table</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-E5BC8204-79DD-4C0C-8FA0-5DF632846C54">Configuring Replicat</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-946E6994-2DA5-4CDF-A4B9-F6AEB01BDF69"></a>
+<h3 id="GGHDB-GUID-946E6994-2DA5-4CDF-A4B9-F6AEB01BDF69" class="sect3"><span class="enumeration_section">6.8.1</span> Creating a Checkpoint Table</h3>
+<div>
+<div class="section">
+<p>Replicat maintains its checkpoints in a checkpoint table in the DB2 for i target database. Each checkpoint is written to the checkpoint table, that must be journaled, within the Replicat transaction. Because a checkpoint either succeeds or fails with the transaction, Replicat ensures that a transaction is only applied once, even if there is a failure of the process or the database.</p>
+<p>A common method of create the checkpoint table with journaling is as follows:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>In GGSCI on the target system, create the Replicat checkpoint file.</span>
+<div>
+<pre dir="ltr">
+DEFAULTJOURNAL <span class="italic">library_name</span>/<span class="italic">journal_name</span>
+</pre>
+<p>Where: <span class="italic"><code class="codeph">library_name</code></span> is the name of the library and <code class="codeph">journal_name</code> is the name of the default journal.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Add the checkpoint table.</span>
+<div>
+<pre dir="ltr">
+ADD CHECKPOINTTABLE <span class="italic">library_name</span>.chkptab 
+
+Successfully created checkpoint table kgr.chkptab 
+</pre></div>
+</li>
+<li class="stepexpand"><span>Add journaling to the checkpoint table.</span>
+<div>
+<pre dir="ltr">
+ADD TRANDATA <span class="italic">library_name</span>.CHKPTAB
+</pre></div>
+</li>
+</ol>
+<div class="section">
+<p>For more information about creating a checkpoint table, see <a class="olink GWUAD521" target="_blank" href="../GWUAD/configuring-online-change-synchronization.htm#GWUAD521"><span class="italic"><span id="GUID-946E6994-2DA5-4CDF-A4B9-F6AEB01BDF69__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-89B362C4-4793-42E4-8B18-AF66DF5443E6">Configuring Replicat for Change Delivery to DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-E5BC8204-79DD-4C0C-8FA0-5DF632846C54"></a>
+<h3 id="GGHDB-GUID-E5BC8204-79DD-4C0C-8FA0-5DF632846C54" class="sect3"><span class="enumeration_section">6.8.2</span> Configuring Replicat</h3>
+<div>
+<div class="section">
+<p>These steps configure the Replicat process in a basic way without any special mapping or conversion of the data.</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>In GGSCI on the target system, create the Replicat parameter file.</span>
+<div>
+<pre dir="ltr">
+EDIT PARAMS <span class="italic">name</span>
+</pre>
+<p>Where: <span class="italic"><code class="codeph">name</code></span> is the name of the Replicat group.</p>
+</div>
+</li>
+<li class="stepexpand"><span>Enter the Replicat parameters in the order shown, starting a new line for each parameter statement. See <a href="configuring-oracle-goldengate-db2-i.htm#GUID-E5BC8204-79DD-4C0C-8FA0-5DF632846C54__BABHEIJH" title="Basic parameters for Replicat">Table 6-3</a> for descriptions.</span>
+<div>
+<pre dir="ltr">
+REPLICAT financer
+TARGETDB FINANCIAL USERID ogg, PASSWORD AACAAAAAAAAAAA, BLOWFISH ENCRYPTKEY mykey
+ASSUMETARGETDEFS
+-- Instead of ASSUMETARGETDEFS, use SOURCEDEFS if replicating from
+-- DB2 for i to a different database type, or from a DB2 for i source
+-- that is not identical in definitions to a target DB2 for i database.
+-- SOURCEDEFS /users/ogg/dirdef/defsfile
+DISCARDFILE /users/ogg/disc
+MAP hr.*, TARGET hr2.*;
+</pre>
+<div class="tblformalwide" id="GUID-E5BC8204-79DD-4C0C-8FA0-5DF632846C54__BABHEIJH">
+<p class="titleintable">Table 6-3 Basic Parameters for Replicat</p>
+<table class="cellalignment131" title="Basic Parameters for Replicat" summary="Basic parameters for Replicat">
+<thead>
+<tr class="cellalignment115">
+<th class="cellalignment136" id="d11218e1063">Parameter</th>
+<th class="cellalignment137" id="d11218e1066">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e1071" headers="d11218e1063">
+<pre dir="ltr">
+REPLICAT <span class="italic">group</span>
+</pre></td>
+<td class="cellalignment139" headers="d11218e1071 d11218e1066">
+<p><span class="italic"><code class="codeph">group</code></span> is the name of the Replicat group.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e1084" headers="d11218e1063">
+<pre dir="ltr">
+TARGETDB <span class="italic">database</span> USERID <span class="italic">user,</span> PASSWORD <span class="italic">password</span>, BLOWFISH ENCRYPTKEY <span class="italic">keyname</span>
+</pre></td>
+<td class="cellalignment139" headers="d11218e1084 d11218e1066">
+<p>Specifies database connection information.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">SOURCEDB</code> specifies the data source name (DSN) of the target DB2 for i database.</p>
+</li>
+<li>
+<p><code class="codeph">USERID</code> specifies the Replicat database user profile.</p>
+</li>
+<li>
+<p><code class="codeph">PASSWORD</code> specifies the user's password that was encrypted with the <code class="codeph">ENCRYPT PASSWORD</code> command. Enter or paste the encrypted password after the <code class="codeph">PASSWORD</code> keyword.</p>
+</li>
+<li>
+<p><code class="codeph">BLOWFISH ENCRYPTKEY</code> <span class="italic"><code class="codeph">keyname</code></span> specifies the name of the lookup key in the local <code class="codeph">ENCKEYS</code> file.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e1140" headers="d11218e1063">
+<p><code class="codeph">DECRYPTTRAIL</code> <code class="codeph">BLOWFISH</code></p>
+</td>
+<td class="cellalignment139" headers="d11218e1140 d11218e1066">
+<p>Decrypts the input trail.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e1152" headers="d11218e1063">
+<pre dir="ltr">
+SOURCEDEFS <span class="italic">pathname</span> |
+ASSUMETARGETDEFS
+</pre></td>
+<td class="cellalignment139" headers="d11218e1152 d11218e1066">
+<p>Specifies how to interpret data definitions. Use <code class="codeph">SOURCEDEFS</code> if the source and target tables have different definitions, such as when replicating data between dissimilar IBM for i databases or from an IBM for i database to an Oracle database. For <span class="italic"><code class="codeph">pathname</code></span>, specify the source data-definitions file that you created with the <code class="codeph">DEFGEN</code> utility in <span class="q">"<a href="configuring-oracle-goldengate-db2-i.htm#GUID-848BFA16-3737-4FE8-8972-0DE813065B27">Creating a Data Definitions File</a>"</span>. Use <code class="codeph">ASSUMETARGETDEFS</code> if the source and target tables are all DB2 for i and have the same definitions.</p>
+</td>
+</tr>
+<tr class="cellalignment115">
+<td class="cellalignment138" id="d11218e1180" headers="d11218e1063">
+<pre dir="ltr">
+MAP <span class="italic">owner.table</span>, TARGET <span class="italic">owner.table</span>;
+</pre></td>
+<td class="cellalignment139" headers="d11218e1180 d11218e1066">
+<p>Specifies a relationship between a source and target table or tables. The <code class="codeph">MAP</code> clause specifies the source objects, and the <code class="codeph">TARGET</code> clause specifies the target objects to which the source objects are mapped.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">owner</code></span> is the schema or library name.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">table</code></span> is the name of a table or a wildcard definition for multiple tables.</p>
+</li>
+</ul>
+<p>For supported object names, see <a class="olink GWUAD192" target="_blank" href="../GWUAD/getting-started-oracle-goldengate-process-interfaces.htm#GWUAD192"><span><cite>Administering Oracle GoldenGate</cite></span></a>.</p>
+<p>Terminate the <code class="codeph">MAP</code> statement with a semi-colon.</p>
+<p>To exclude tables from a wildcard specification, use the <code class="codeph">MAPEXCLUDE</code> parameter.</p>
+<p>For more information and for additional options that control data filtering, mapping, and manipulation, see <code class="codeph">MAP</code> in <a class="olink GWURF546" target="_blank" href="../GWURF/table-map.htm#GWURF546"><span><cite>Reference for Oracle GoldenGate</cite></span></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</li>
+<li class="stepexpand"><span>Enter any optional Extract parameters that are recommended elsewhere in this manual and any others shown in <a class="olink GWURF-GUID-0E5E2C82-16A7-44F5-85E3-A8F8D369BA0D" target="_blank" href="../GWURF/summary-oracle-goldengate-parameters.htm#GWURF-GUID-0E5E2C82-16A7-44F5-85E3-A8F8D369BA0D">Summary of Extract Parameters</a>.</span></li>
+<li class="stepexpand"><span>Save and close the file.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-89B362C4-4793-42E4-8B18-AF66DF5443E6">Configuring Replicat for Change Delivery to DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-472B9595-1772-4EFA-A90A-1377E5CE7B43"></a>
+<h2 id="GGHDB-GUID-472B9595-1772-4EFA-A90A-1377E5CE7B43" class="sect2"><span class="enumeration_section">6.9</span> Next Steps in the Deployment</h2>
+<div>
+<p>Because of its flexibility, Oracle GoldenGate offers numerous features and options that must be considered before you start any processes. To further configure Oracle GoldenGate to suit your business needs, see the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>For additional configuration guidelines to achieve specific replication topologies, see <a class="olink GWUAD-GUID-5005AF6D-76D2-4C72-80E2-AD33C24F0C26" target="_blank" href="../GWUAD/configuring-manager-and-network-communications.htm#GWUAD-GUID-5005AF6D-76D2-4C72-80E2-AD33C24F0C26">Administering Oracle GoldenGate for Windows and UNIX</a>. This guide also contains information about:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Oracle GoldenGate architecture</p>
+</li>
+<li>
+<p>Oracle GoldenGate commands</p>
+</li>
+<li>
+<p>Oracle GoldenGate initial load methods</p>
+</li>
+<li>
+<p>Configuring security</p>
+</li>
+<li>
+<p>Using customization features</p>
+</li>
+<li>
+<p>Mapping columns that contain dissimilar data</p>
+</li>
+<li>
+<p>Data filtering and manipulation</p>
+</li>
+</ul>
+</li>
+<li>
+<p>For syntax options and descriptions of Oracle GoldenGate GGSCI commands and Oracle GoldenGate parameters shown in this guide, see <a class="olink GWURF-GUID-C76063D3-CC0B-4BF3-88B3-EA5B93BDB385" target="_blank" href="../GWURF/oracle-goldengate-ggsci-commands.htm#GWURF-GUID-C76063D3-CC0B-4BF3-88B3-EA5B93BDB385">Reference for Oracle GoldenGate for Windows and UNIX</a>.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-23BD873A-7D17-4408-9377-70003AFF20A1"></a>
+<h2 id="GGHDB-GUID-23BD873A-7D17-4408-9377-70003AFF20A1" class="sect2"><span class="enumeration_section">6.10</span> When to Start Replicating Transactional Changes</h2>
+<div>
+<p>You must start replication when the source and target data is in a synchronized state, where the corresponding rows in the source and target tables contain identical data values. Unless you are starting with brand new source and target databases with no current user activity, you will need to activate change capture and apply processes to handle ongoing transactional changes while an initial load is being applied to the target. This process is known as <span class="italic">initial synchronization</span>, or also as <span class="italic">instantiation</span>. The initial load captures a point-in-time snapshot of the source data and applies it to the target, while Oracle GoldenGate maintains any changes that are made after that point.</p>
+<p>See <a class="olink GWUAD546" target="_blank" href="../GWUAD/instantiating-oracle-goldengate-initial-load.htm#GWUAD546">Instantiating Oracle GoldenGate with an Initial Load</a> in <cite><span><cite>Administering Oracle GoldenGate</cite></span></cite> for instantiation options.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-033F6636-2BFF-45DF-9F2D-E40ECC05806E">Starting Extract During Instantiation</a><br /></li>
+<li class="ulchildlink"><a href="configuring-oracle-goldengate-db2-i.htm#GUID-CB33A80C-A856-4837-8232-1DEDD824480F">Changing the Position of Extract to a Later Time</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-033F6636-2BFF-45DF-9F2D-E40ECC05806E"></a>
+<h3 id="GGHDB-GUID-033F6636-2BFF-45DF-9F2D-E40ECC05806E" class="sect3"><span class="enumeration_section">6.10.1</span> Starting Extract During Instantiation</h3>
+<div>
+<div class="section">
+<p>When Extract starts for the first time to begin capturing data during the instantiation process, it captures all of the transaction data that it encounters after the specified start point, but none of the data that occurred before that point. To ensure that Extract does not start in the middle of ongoing transactions that would be discarded, set the tables that are to be captured to an inactive state. You can either put the system into a restricted state by using the <code class="codeph">ALCOBJ</code> command to lock the objects or libraries, or you can force all of the current transactions on those tables to stop at a certain point.</p>
+<p>After initialization is complete, remember to unlock any objects that you locked. To do so, log off of the session that locked the objects or use the <code class="codeph">DLCOBJ</code> command from the OS/400 command line.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-23BD873A-7D17-4408-9377-70003AFF20A1">When to Start Replicating Transactional Changes</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-CB33A80C-A856-4837-8232-1DEDD824480F"></a>
+<h3 id="GGHDB-GUID-CB33A80C-A856-4837-8232-1DEDD824480F" class="sect3"><span class="enumeration_section">6.10.2</span> Changing the Position of Extract to a Later Time</h3>
+<div>
+<div class="section">
+<p>You may at some point, over the life of an Extract run, need to set the position of Extract in the data stream manually. To reposition Extract, use the <code class="codeph">ALTER EXTRACT</code> command in GGSCI. To help you identify any given Extract read position, the <code class="codeph">INFO EXTRACT</code> command shows the positions for each journal in an Extract configuration, including the journal receiver information. For more information about these commands, see <a class="olink GWURF110" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E81615-01&amp;id=GWURF110"><span class="italic"><span id="GUID-CB33A80C-A856-4837-8232-1DEDD824480F__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a>.</p>
+<div class="infobox-note" id="GUID-CB33A80C-A856-4837-8232-1DEDD824480F__GUID-C13D3C02-B9E0-4DD7-B68C-C63141B2C5EA">
+<p class="notep1">Note:</p>
+<p>Because the journals can have a transaction split among them, if a given journal is independently repositioned far into the past, the resulting latency from reprocessing the entries may cause the already-read journals to stall until the reading of the latent journal catches up.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-23BD873A-7D17-4408-9377-70003AFF20A1">When to Start Replicating Transactional Changes</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-112535B6-2A61-4006-A8B3-95BB1645F223"></a>
+<h2 id="GGHDB-GUID-112535B6-2A61-4006-A8B3-95BB1645F223" class="sect2"><span class="enumeration_section">6.11</span> Testing Your Configuration</h2>
+<div>
+<p>It is important to test your configuration in a test environment before deploying it live on your production machines. This is especially important in an active-active or high availability configuration, where trusted source data may be touched by the replication processes. Testing enables you to find and resolve any configuration mistakes or data issues without the need to interrupt user activity for re-loads on the target or other troubleshooting activities.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="configuring-oracle-goldengate-db2-i.htm#GUID-0A9D12E8-10EE-4A46-9A8D-83B54EDA151B" title="This chapter contains instructions for configuring Oracle GoldenGate to capture source DB2 for i data and apply it to a supported target database.">Configuring Oracle GoldenGate for DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment114">
+<tr>
+<td class="cellalignment121">
+<table class="cellalignment119">
+<tr>
+<td class="cellalignment118"><a href="preparing-system-oracle-goldengate2.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment118"><a href="instantiating-and-starting-oracle-goldengate-replication.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment123">
+<table class="cellalignment117">
+<tr>
+<td class="cellalignment118"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment118"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment118"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

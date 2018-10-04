@@ -1,0 +1,560 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>3 Preparing the System for Oracle GoldenGate</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="This chapter contains guidelines for preparing the database and the system to support Oracle GoldenGate. This chapter contains the following sections:" />
+<meta name="dcterms.created" content="2015-05-21T11:4:7Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for Teradata" />
+<meta name="dcterms.identifier" content="E29290-02" />
+<meta name="dcterms.isVersionOf" content="GITER" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="ogg_wu_install_tera.htm" title="Previous" type="text/html" />
+<link rel="Next" href="ogg_wu_config_tera.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GITER.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GITER.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GITER.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">6/11</span>
+<!-- End Header -->
+<div id="GITER165" class="chapter"><a id="sthref43"></a>
+<h1 class="chapter"><span class="secnum">3</span> Preparing the System for Oracle GoldenGate</h1>
+<p><a id="GITER166"></a>This chapter contains guidelines for preparing the database and the system to support Oracle GoldenGate. This chapter contains the following sections:</p>
+<ul>
+<li>
+<p><a href="#CFHEAJJC">Section 3.1, "Preparing Tables for Processing"</a></p>
+</li>
+<li>
+<p><a href="#BGBFBFGC">Section 3.2, "Creating a Teradata Replication Group"</a></p>
+</li>
+<li>
+<p><a href="#CFHBAFBE">Section 3.3, "Activating DDL Capture by the Teradata TAM"</a></p>
+</li>
+<li>
+<p><a href="#CFHBHIFB">Section 3.4, "Disabling the Capture of DDL"</a></p>
+</li>
+<li>
+<p><a href="#CFHBBCFH">Section 3.5, "Configuring the TAM Initialization File"</a></p>
+</li>
+</ul>
+<a id="CFHEAJJC"></a>
+<div id="GITER167" class="sect1">
+<h2 class="sect1"><span class="secnum">3.1</span> Preparing Tables for Processing</h2>
+<p>The following table attributes must be addressed in an Oracle GoldenGate environment.</p>
+<p><a href="#CFHGEAJD">Section 3.1.1, "Disabling Triggers and Cascade Constraints"</a></p>
+<p><a href="#CFHCIEBF">Section 3.1.2, "Assigning Row Identifiers"</a></p>
+<a id="CFHGEAJD"></a>
+<div id="GITER168" class="sect2">
+<h3 class="sect2"><span class="secnum">3.1.1</span> Disabling Triggers and Cascade Constraints</h3>
+<p>Disable triggers, cascade delete constraints, and cascade update constraints on target Sybase tables, or alter them to ignore changes made by the Oracle GoldenGate database user. Oracle GoldenGate replicates DML that results from a trigger or cascade constraint. If the same trigger or constraint gets activated on the target table, it becomes redundant because of the replicated version, and the database returns an error. Consider the following example, where the source tables are <code dir="ltr">emp_src</code> and <code dir="ltr">salary_src</code> and the target tables are <code dir="ltr">emp_targ</code> and <code dir="ltr">salary_targ</code>.</p>
+<ol>
+<li>
+<p>A delete is issued for <code dir="ltr">emp_src</code>.</p>
+</li>
+<li>
+<p>It cascades a delete to <code dir="ltr">salary_src</code>.</p>
+</li>
+<li>
+<p>Oracle GoldenGate sends both deletes to the target.</p>
+</li>
+<li>
+<p>The parent delete arrives first and is applied to <code dir="ltr">emp_targ</code>.</p>
+</li>
+<li>
+<p>The parent delete cascades a delete to <code dir="ltr">salary_targ</code>.</p>
+</li>
+<li>
+<p>The cascaded delete from <code dir="ltr">salary_src</code> is applied to <code dir="ltr">salary_targ</code><span class="italic">.</span></p>
+</li>
+<li>
+<p>The row cannot be located because it was already deleted in step 5.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="CFHCIEBF"></a>
+<div id="GITER169" class="sect2">
+<h3 class="sect2"><span class="secnum">3.1.2</span> Assigning Row Identifiers</h3>
+<p>Oracle GoldenGate requires some form of unique row identifier on the source and target tables to locate the correct target rows for replicated updates and deletes.</p>
+<div id="GITER170" class="sect3"><!-- infolevel="all" infotype="General" --><a id="sthref44"></a>
+<h4 class="sect3"><span class="secnum">3.1.2.1</span> How Oracle GoldenGate Determines the Kind of Row Identifier to Use</h4>
+<p>Unless a <code dir="ltr">KEYCOLS</code> clause is used in the <code dir="ltr">TABLE</code> or <code dir="ltr">MAP</code> statement, Oracle GoldenGate selects a row identifier to use in the following order of priority:</p>
+<ol>
+<li>
+<p>Primary key</p>
+</li>
+<li>
+<p>First unique key alphanumerically that does not contain a timestamp or non-materialized computed column.</p>
+</li>
+<li>
+<p>If none of the preceding key types exist (even though there might be other types of keys defined on the table) Oracle GoldenGate constructs a pseudo key of all columns that the database allows to be used in a unique key, excluding those that are not supported by Oracle GoldenGate in a key or those that are excluded from the Oracle GoldenGate configuration.</p>
+</li>
+</ol>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If there are other, non-usable keys on a table or if there are no keys at all on the table, Oracle GoldenGate logs an appropriate message to the report file. Constructing a key from all of the columns impedes the performance of Oracle GoldenGate on the source system. On the target, this key causes Replicat to use a larger, less efficient <code dir="ltr">WHERE</code> clause.</div>
+</div>
+<!-- class="sect3" -->
+<a id="CFHIAICH"></a>
+<div id="GITER171" class="sect3">
+<h4 class="sect3"><span class="secnum">3.1.2.2</span> Using KEYCOLS to Specify a Custom Key</h4>
+<p>If a table does not have one of the preceding types of row identifiers, or if you prefer those identifiers not to be used, you can define a substitute key if the table has columns that always contain unique values. You define this substitute key by including a <code dir="ltr">KEYCOLS</code> clause within the Extract <code dir="ltr">TABLE</code> parameter and the Replicat <code dir="ltr">MAP</code> parameter. The specified key will override any existing primary or unique key that Oracle GoldenGate finds. For more information, see <a class="olink GWURF546" href="../../gg-winux/GWURF/gg_parameters160.htm#GWURF546"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BGBFBFGC"></a>
+<div id="GITER172" class="sect1">
+<h2 class="sect1"><span class="secnum">3.2</span> Creating a Teradata Replication Group</h2>
+<p>To create a replication group, use a <code dir="ltr">CreateGroupStmtFile</code> (Create Group Statement) file. By using a <code dir="ltr">CreateGroupStmtFile</code>, the correct identifier information for the replication group is automatically written to the <code dir="ltr">tam.ini</code> file. For more information, see the <span class="italic">Teradata Replication Services Using Oracle GoldenGate</span> documentation.</p>
+<p>All objects that have dependencies on one another must be specified in the same replication group. A transaction must be wholly contained within the same replication group.</p>
+<p class="subhead2"><a id="GITER173"></a>To create a Create Group Statement file:</p>
+<ol>
+<li>
+<p>Use a text editor to create a text file.</p>
+</li>
+<li>
+<p>Add the following lines:</p>
+</li>
+<li>
+<ul>
+<li>
+<p>The Teradata command <code dir="ltr">create replication group</code></p>
+</li>
+<li>
+<p>The name of the Teradata replication group</p>
+</li>
+<li>
+<p>The table list that is associated with the replication group. A table can only be associated with one replication group. Only one replication group is allowed per Oracle GoldenGate Extract group.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Save the file with the suffix <code dir="ltr">.sql</code> in a directory within the Oracle GoldenGate installation directory, either at the root level or in a sub-directory that you create, such as <code dir="ltr">dirtam</code>.</p>
+</li>
+<li>
+<p>Specify the name of this file with the <code dir="ltr">CreateGroupStmtFile</code> parameter in the TAM initialization file. See <a href="#CFHBBCFH">Section 3.5, "Configuring the TAM Initialization File"</a> for more information.</p>
+<div id="GITER174" class="example"><p class="titleinexample"><a id="sthref45"></a>Example 3-1 Sample Create Group Statement File</p>
+<pre dir="ltr">
+Create Replication Group HRTRG1 (HR.EMPLOYEE, HR.EMP_INFO, HR.EMP_DEPT, HR.EMP_REVIEWS);
+</pre></div>
+<!-- class="example" --></li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="CFHBAFBE"></a>
+<div id="GITER175" class="sect1">
+<h2 class="sect1"><span class="secnum">3.3</span> Activating DDL Capture by the Teradata TAM</h2>
+<p>To specify DDL that you want the Teradata TAM to pass to Oracle GoldenGate, you create a replication ruleset statement for a replication group. A ruleset statement creates a set of one or more DDL-capture rules and associates them with the specified replication group. The rules are applied against the names and types of the target objects of the DDL statements as those operations are executed, making them immediately available for replication. DDL operations on tables that are members of a replication group are automatically captured.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The Teradata RSG must be properly configured. For more information, see the <span class="italic">Teradata Replication Services Using Oracle GoldenGate</span> documentation at <code dir="ltr"><a href="http://www.info.teradata.com">http://www.info.teradata.com</a></code>.</div>
+<p class="subhead2"><a id="GITER176"></a>To activate DDL capture by the Teradata TAM:</p>
+<ol>
+<li>
+<p>Log in as a user with <code dir="ltr">REPLCONTROL</code> privilege.</p>
+</li>
+<li>
+<p>Create the replication ruleset.</p>
+<pre dir="ltr">
+[CREATE | REPLACE] REPLICATION RULESET <span class="italic">ruleset</span>
+</pre>
+<pre dir="ltr">
+[, DEFAULT]
+</pre>
+<pre dir="ltr">
+FOR <span class="italic">replication_group</span> 
+</pre>
+<pre dir="ltr">
+AS <span class="italic">rule_specification</span> [, <span class="italic">rule_specification</span>] 
+</pre>
+<p><span class="bold">Where:</span></p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">rule_specification</span></code> is:</p>
+<pre dir="ltr">
+<span class="italic">object_kind</span> LIKE <span class="italic">string_literal</span> [ESCAPE <span class="italic">character_literal</span>]
+[AND NOT LIKE <span class="italic">string_literal</span> [ESCAPE <span class="italic">character_literal</span>] ]
+</pre></li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">object_kind</span></code> is:</p>
+<pre dir="ltr">
+TABLE | TEMPORARY TABLE | VIEW | MACRO | TRIGGER | INDEX
+</pre></li>
+</ul>
+</li>
+</ol>
+<p class="subhead2"><a id="GITER177"></a>Usage requirements</p>
+<ul>
+<li>
+<p>A replication group must contain explicitly defined members with a table list, or it must be an empty group that is associated with a replication ruleset.</p>
+</li>
+<li>
+<p>If the <code dir="ltr">CREATE</code> form of the statement is used, and a rule set with the same rule set name already exists for the specified replication group, the <code dir="ltr">CREATE</code> statement fails.</p>
+</li>
+<li>
+<p>If the <code dir="ltr">REPLACE</code> form of the statement is used, and a rule set with the same rule set name already exists for the specified replication group, the existing ruleset is replaced by the new rule set.</p>
+</li>
+<li>
+<p>If the <code dir="ltr">DEFAULT</code> option is used, all of the rules in the rule set are considered to be default rules. A default rule is applied if no other rule matches the object.</p>
+</li>
+<li>
+<ul>
+<li>
+<p>A non-default rule must not match the same object as a non-default rule that is associated with another replication group.</p>
+</li>
+<li>
+<p>A default rule must not match the same object as a default rule that is associated with another replication group.</p>
+</li>
+<li>
+<p>The <code dir="ltr">LIKE</code> and <code dir="ltr">NOT LIKE</code> clauses specify pattern strings to match against the fully-qualified names of the objects of the SQL statements. The pattern strings can contain wildcard characters. The pattern and the optional <code dir="ltr">ESCAPE</code> character are used together in the same way as the <code dir="ltr">LIKE</code> predicate operator.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>For more information about creating replication groups and rulesets, see the <span class="italic">Teradata Replication Services Using Oracle GoldenGate</span> documentation at <code dir="ltr"><a href="http://www.info.teradata.com">http://www.info.teradata.com</a></code>.</p>
+<p class="subhead2"><a id="GITER178"></a><span class="bold">Example</span></p>
+<p>This example creates a rule set named <code dir="ltr">Sales1</code> for the replication group named <code dir="ltr">MyRepGroup</code> to capture any table that is created in the database named <code dir="ltr">SalesDB</code> and also capture any DDL that affects any view in <code dir="ltr">SalesDB</code> where the view name does not have the suffix <code dir="ltr">_s</code>.</p>
+<pre dir="ltr">
+CREATE REPLICATION GROUP MyRepGroup
+</pre>
+<pre dir="ltr">
+CREATE REPLICATION RULESET Sales1 FOR MyRepGroup AS
+</pre>
+<pre dir="ltr">
+TABLE LIKE 'SalesDB.%',
+</pre>
+<pre dir="ltr">
+VIEW LIKE 'SalesDB.%' AND NOT LIKE '%z_s' ESCAPE 'z'
+</pre>
+<p>Note the use of an escape character to override the normal treatment of the underscore ("_") as a wildcard.</p>
+<p>To configure Oracle GoldenGate DDL replication, see <a class="olink GWUAD" href="../../gg-winux/GWUAD/toc.htm"></a><a href="ogg_wu_ddl_tera.htm#BABDCGDJ">Chapter 5, "Configuring DDL Synchronization for a Teradata Database."</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="CFHBHIFB"></a>
+<div id="GITER179" class="sect1">
+<h2 class="sect1"><span class="secnum">3.4</span> Disabling the Capture of DDL</h2>
+<p>This section contains instructions for disabling the capture and replication of Teradata DDL in either of two cases: Keeping the replication group or deleting the replication group.</p>
+<p>Both cases require <code dir="ltr">REPLCONTROL</code> privilege.</p>
+<p class="subhead2"><a id="GITER180"></a>To disable the capture of DDL and keep the replication group:</p>
+<pre dir="ltr">
+DROP REPLICATION RULESET <span class="italic">ruleset</span> FOR <span class="italic">replication_group</span>
+</pre>
+<p>For example:</p>
+<pre dir="ltr">
+DROP REPLICATION RULESET Sales1 FOR MyRepGroup;
+</pre>
+<p class="subhead2"><a id="GITER181"></a>To disable the capture of DDL and delete the replication group:</p>
+<pre dir="ltr">
+DROP REPLICATION GROUP <span class="italic">replication_group</span> [ ( <span class="italic">table</span> [, ... ] )]
+</pre>
+<p>For example:</p>
+<pre dir="ltr">
+DROP REPLICATION GROUP MyRepGroup
+</pre></div>
+<!-- class="sect1" -->
+<a id="CFHBBCFH"></a>
+<div id="GITER182" class="sect1">
+<h2 class="sect1"><span class="secnum">3.5</span> Configuring the TAM Initialization File</h2>
+<p>The Teradata Access Module (TAM) provides the Extract process with links to the Teradata environment. To configure the TAM, create an initialization file.</p>
+<p>The following is an example TAM initialization file.</p>
+<pre dir="ltr">
+Mode=Replication
+DictOdbcConnString=DSN=myDsn;uid=myUser;pwd=myPass
+MgmtOdbcConnString=DSN=myDsn;uid=myUser;pwd=myPass
+CreateGroupStmtFile=c:\GGS\Teradata\dirtam\hrtrg1.sql
+CharacterSet=ASCII
+ControlRSG=10.10.10.49:1152
+DataRSG1=10.10.10.50:1153
+DataRSG2=node3
+DataRSG3=node4:1155
+Encryption=All
+</pre>
+<p><a href="#CFHEGCEH">Table 3-1</a> describes the required TAM initialization parameters.</p>
+<ol>
+<li>
+<p>Use a text editor to create a text file.</p>
+</li>
+<li>
+<p>Add the following required parameters to the file. Optional parameters that are listed also can be used as needed.</p>
+<div id="GITER183" class="tblhruleformal"><p class="titleintable"><a id="sthref46"></a><a id="CFHEGCEH"></a>Table 3-1 Required TAM initialization File Parameters</p>
+<table class="cellalignment259" title="Required TAM initialization File Parameters" summary="This is a two-column table that describes the required TAM initialization file parameters.">
+<thead>
+<tr class="cellalignment249">
+<th class="cellalignment260" id="r1c1-t4">Parameter</th>
+<th class="cellalignment260" id="r1c2-t4">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r2c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+Mode={Replication}
+</pre></td>
+<td class="cellalignment255" headers="r2c1-t4 r1c2-t4">
+<p><span class="italic">Required</span></p>
+<p>Specifies that the replication mode will be change data capture.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r3c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+DictOdbcConnString=<span class="codeinlineitalic">ODBC_connection_string_for_metadata</span>
+</pre></td>
+<td class="cellalignment255" headers="r3c1-t4 r1c2-t4">
+<p><span class="italic">Required</span></p>
+<p>The logon string of a user with access rights to the dictionary tables.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r4c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+MgmtOdbcConnString=
+</pre>
+<pre dir="ltr">
+<span class="codeinlineitalic">ODBC_connection_string for_management_functions</span>
+</pre></td>
+<td class="cellalignment255" headers="r4c1-t4 r1c2-t4">
+<p><span class="italic">Required</span></p>
+<p>The logon string of a user with rights to execute management functions, such as <code dir="ltr">CREATE REPLICATION GROUP</code>. This logon requires the <code dir="ltr">REPLCONTROL</code> privilege.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r5c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+CreateGroupStmtFile=
+</pre>
+<p><code dir="ltr"><span class="codeinlineitalic">name</span></code></p>
+</td>
+<td class="cellalignment255" headers="r5c1-t4 r1c2-t4">
+<p><span class="italic">Required for TAM12 and later</span></p>
+<p>The name of the Create Group statement file that contains the <code dir="ltr">CREATE REPLICATION GROUP</code> statement for a new group. If the replication group was not created with a Create Group statement file, omit or comment out this parameter and use the <code dir="ltr">GroupID</code> and <code dir="ltr">SecurityToken</code> parameters.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r6c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+GroupID=
+<span class="codeinlineitalic">ID</span>
+</pre></td>
+<td class="cellalignment255" headers="r6c1-t4 r1c2-t4">
+<p><span class="italic">Required if SecurityToken is used</span></p>
+<p>The ID of the replication group that is associated with the TAM. If <code dir="ltr">GroupID</code> is used, <code dir="ltr">SecurityToken</code> must be used.</p>
+<p>You can view the ID of any replication group with this command:</p>
+<pre dir="ltr">
+HELP REPLICATION GROUP <span class="italic">replication_group</span>;
+</pre>
+<p>For example:</p>
+<pre dir="ltr">
+help replication group g1;
+</pre>
+<p>The ID is a numerical ID in the <code dir="ltr">Identifier</code> column next to the name of the group.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r7c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+SecurityToken=
+<span class="codeinlineitalic">token</span>
+</pre></td>
+<td class="cellalignment255" headers="r7c1-t4 r1c2-t4">
+<p><span class="italic">Required if replication group was not created with Create Group Statement</span></p>
+<p>The security token for the replication group that is associated with the TAM. If a group was created with a Create Group Statement file and you specify that file with the <code dir="ltr">CreateGroupStmtFile</code> parameter, the <code dir="ltr">SecurityToken</code> and <code dir="ltr">GroupID</code> parameters can be omitted because they will be generated automatically at runtime.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r8c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+AltControlRSG=
+<span class="codeinlineitalic">IP</span>_or_<span class="codeinlineitalic">name</span>
+</pre></td>
+<td class="cellalignment255" headers="r8c1-t4 r1c2-t4">
+<p><span class="italic">Optional</span></p>
+<p>Specifies the IP address or name of a server that can take over as the control RSG when the primary one fails.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r9c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+CharacterSet=
+</pre>
+<pre dir="ltr">
+{ASCII | UTF16}
+</pre></td>
+<td class="cellalignment255" headers="r9c1-t4 r1c2-t4">
+<p><span class="italic">Required</span></p>
+<p>The character set for this replication group. There is more overhead associated with UTF16, so use it only when required</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r10c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+ControlRSG=<span class="codeinlineitalic">address</span>[:<span class="codeinlineitalic">port</span>]DataRSG1=<span class="codeinlineitalic">address</span>[:<span class="codeinlineitalic">port</span>][DataRSG2=<span class="codeinlineitalic">address</span>[:<span class="codeinlineitalic">port</span>]] [...]
+</pre></td>
+<td class="cellalignment255" headers="r10c1-t4 r1c2-t4">
+<p><span class="italic">Required</span></p>
+<p>The RSG node addresses. Can be either a node name or an IP address and can be appended with an optional port number. The control RSG should be the highest numbered of the RSGs in the system.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r11c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+Encryption={None | Control | Data | All}
+</pre></td>
+<td class="cellalignment255" headers="r11c1-t4 r1c2-t4">
+<p><span class="italic">Required</span></p>
+<p>The types of messages to encrypt. There is little difference in overhead between encrypting just data messages and encrypting both data and control messages. Use <code dir="ltr">All</code> to specify encryption or <code dir="ltr">None</code> to specify no encryption.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r12c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+RsgTimeoutSec=<span class="codeinlineitalic">seconds</span>
+</pre></td>
+<td class="cellalignment255" headers="r12c1-t4 r1c2-t4">
+<p><span class="italic">Optional</span></p>
+<p>The timeout, in seconds, when polling RSG for data. The default is 1. Valid range is 0-60 seconds.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r13c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+RsgTimeoutMSec=<span class="codeinlineitalic">milliseconds</span>
+</pre></td>
+<td class="cellalignment255" headers="r13c1-t4 r1c2-t4">
+<p><span class="italic">Optional</span></p>
+<p>The timeout, in milliseconds, when polling RSG for data. The default is 0. Valid range is 0-60000000 milliseconds.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r14c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+Tracing= {Debug |Performance |All |None}
+</pre></td>
+<td class="cellalignment255" headers="r14c1-t4 r1c2-t4">
+<p><span class="italic">Optional</span></p>
+<p>The level of debug tracing.</p>
+<p>The default is <code dir="ltr">None</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r15c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+MaxProtTransCompleteThresh=<span class="codeinlineitalic">number_of_transactions</span>
+</pre></td>
+<td class="cellalignment255" headers="r15c1-t4 r1c2-t4">
+<p><span class="italic">Optional, valid for max protection mode</span></p>
+<p>The number of outstanding transactions that can be held after which an Oracle GoldenGate checkpoint must be requested. This is significant when operating in maximum protection mode. If there are numerous sessions that are applying transactions at a high rate, this parameter can be set to a higher value, such as 10. However, if the number of sessions is small, or if the rate of submission is low, you can set it to a lower value, such as 1-4, to minimize latency and maximize throughput. The default is 0. Valid range is 0-24 transactions.</p>
+</td>
+</tr>
+<tr class="cellalignment249">
+<td class="cellalignment255" id="r16c1-t4" headers="r1c1-t4">
+<pre dir="ltr">
+Bidirectional {TRUE | FALSE}
+</pre></td>
+<td class="cellalignment255" headers="r16c1-t4 r1c2-t4">
+<p><span class="italic">Optional</span></p>
+<p>Specifies whether or not before images of data are sent to Oracle GoldenGate. Must be <code dir="ltr">TRUE</code> if the Extract parameter <code dir="ltr">GETUPDATEBEFORES</code> is used. The default is <code dir="ltr">FALSE</code>, which sends only the after image of data to reduce the CDC overhead and communication bandwidth that is used.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></li>
+<li>
+<p>Save the file as an ASCII file named <code dir="ltr">tam.ini</code> within the Oracle GoldenGate installation directory, either at the root level or in a sub-directory that you create, such as <code dir="ltr">dirtam</code>.</p>
+</li>
+<li>
+<p>Specify the name of this file with the <code dir="ltr">VAM</code> parameter in the Extract parameter file.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment248">
+<tr>
+<td class="cellalignment255"><table class="cellalignment261">
+<tr>
+<td class="cellalignment252"><a href="ogg_wu_install_tera.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment252"><a href="ogg_wu_config_tera.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment257">
+<table class="cellalignment258">
+<tr>
+<td class="cellalignment252"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment252"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment252"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

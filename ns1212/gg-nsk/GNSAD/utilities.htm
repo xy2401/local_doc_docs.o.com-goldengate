@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Using Oracle GoldenGate Utilities</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.24" />
+<meta name="description" content="This chapter describes Oracle GoldenGate utilities that support a variety of processing requirements, such as generating data definitions and DDL, the ability to back records out of a target, and a streamlined method for duplicating files when incremental change processing is not necessary." />
+<meta name="dcterms.created" content="2014-08-06T9:43:50Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate for Mainframe Administering Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E28904-01" />
+<meta name="dcterms.isVersionOf" content="GNSAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="manageandmonitor.htm" title="Previous" type="text/html" />
+<link rel="Next" href="sizing.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E28904-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">14/17</span> <!-- End Header --><a id="CJAEDCIA"></a><a id="GNSAD434"></a>
+<h1 class="chapter"><span class="secnum">11</span> Using Oracle GoldenGate Utilities</h1>
+<p><a id="GNSAD435"></a>This chapter describes Oracle GoldenGate utilities that support a variety of processing requirements, such as generating data definitions and DDL, the ability to back records out of a target, and a streamlined method for duplicating files when incremental change processing is not necessary.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#i943069">Section 11.1, "Generating Data Definitions with DEFGEN"</a></p>
+</li>
+<li>
+<p><a href="#A999950">Section 11.2, "Creating Target Database DDL"</a></p>
+</li>
+<li>
+<p><a href="#A1002485">Section 11.3, "Oracle GoldenGate Rollback"</a></p>
+</li>
+<li>
+<p><a href="#i934797">Section 11.4, "Using Syncfile"</a></p>
+</li>
+</ul>
+<a id="i943069"></a><a id="GNSAD436"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">11.1</span> Generating Data Definitions with DEFGEN</h2>
+<p>When capturing, transforming, and delivering data across disparate systems and databases, you must understand both the source and target layouts. Understanding column names and data types is instrumental to the data synchronization functions of Oracle GoldenGate.</p>
+<p>The <code>DEFGEN</code> utility produces a file defining the source files and tables' layouts. These definitions are used by the Collector and by Replicat. In some cases, Extract also uses a definition file containing the target layouts when transformation operations are required on the source system.</p>
+<p>The output definitions are written and saved to a text file and transferred to all target systems in text format. When they start, Replicat and the Collector read the definitions to interpret the data formats read from Oracle GoldenGate trails.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Do not modify the text file that is output from <code>DEFGEN</code>.</p>
+</div>
+<p>Once you have generated your definitions, you must specify their location in your process' parameter file. Replicat uses the <code>SOURCEDEFS</code> parameter to indicate which source definition file to use. Collector uses the <code>&ndash;d</code> argument at startup to specify which source definition file to use.</p>
+<p>Run <code>DEFGEN</code> interactively or using a batch obey script.</p>
+<pre>
+TACL&gt; RUN DEFGEN [/IN <span class="codeinlineitalic">command_file</span>/] [EXCLUDESYSTEM] [EXPANDDDL <span class="codeinlineitalic">options</span>] [RECORDNAMEPROMPTING]
+</pre>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" title="RUN DEFGEN Arguments" summary="This table summarizes arguments for running DEFGEN." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t3">Option</th>
+<th class="cellalignment33" id="r1c2-t3">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t3" headers="r1c1-t3">
+<pre>
+IN <span class="codeinlineitalic">command_file</span>
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t3 r1c2-t3">
+<p>If you have created and saved a parameter file using the NonStop editor, enter the name of that file.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t3" headers="r1c1-t3">
+<pre>
+EXCLUDESYSTEM
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t3 r1c2-t3">
+<p>Causes <code>DEFGEN</code> to omit the NonStop system name from the files and tables for which definitions are being generated.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t3" headers="r1c1-t3">
+<pre>
+EXPANDDDL <span class="codeinlineitalic">options</span>
+</pre></td>
+<td class="cellalignment34" headers="r4c1-t3 r1c2-t3">
+<p>Use the <code>EXPANDDDL</code> parameter to manipulate output for Enscribe record definitions containing arrays and redundant field names. This feature is primarily useful when mapping Enscribe files to SQL tables. It can also be useful when generating SQL tables based on Enscribe definitions using the <code>DDLGEN</code> utility. <code>EXPANDDDL</code> is not necessary when the source database is NonStop SQL.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t3" headers="r1c1-t3">
+<pre>
+RECORDNAMEPROMPTING
+</pre></td>
+<td class="cellalignment34" headers="r5c1-t3 r1c2-t3">
+<p>Use <code>RECORDNAMEPROMPTING</code> to enter the name of an existing record definition to use when generating a definition for a new table.</p>
+<p>Use this parameter to point to the same definition for multiple tables that have identical definitions made up of the same columns, column order, and data types.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>For details about the <code>DEFGEN</code> parameters, see <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span>.</p>
+<a id="GNSAD437"></a>
+<div class="sect2"><a id="sthref235"></a>
+<h3 class="sect2"><span class="secnum">11.1.1</span> Configuring DEFGEN Interactively</h3>
+<ol>
+<li>
+<p>Run <code>DEFGEN</code> from TACL using the following syntax:</p>
+<pre>
+TACL&gt; RUN DEFGEN EXPANDDDL EXPANDGROUPARRAYS RESOLVEDUPGROUP OMITREDEFS
+</pre></li>
+<li>
+<p>In response to the prompts, enter information similar to the following example:</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" title="RUN DEFGEN Prompts with Sample Responses" summary="This table lists sample responses for prompts when running DEFGEN from TACL." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t4">For the prompt:</th>
+<th class="cellalignment33" id="r1c2-t4">Enter:</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t4" headers="r1c1-t4">
+<p>Enter definitions file name (or Exit):</p>
+</td>
+<td class="cellalignment34" headers="r2c1-t4 r1c2-t4">
+<pre>
+$DATA1.GGSDEF.CUSTDEF
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t4" headers="r1c1-t4">
+<p>File/Table to create definition for (or Exit):</p>
+</td>
+<td class="cellalignment34" headers="r3c1-t4 r1c2-t4">
+<pre>
+$DATA1.GGSSOU.ECUSTMER
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t4" headers="r1c1-t4">
+<p>Include DDL record definition (Y/N)?</p>
+</td>
+<td class="cellalignment34" headers="r4c1-t4 r1c2-t4">
+<pre>
+Y
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t4" headers="r1c1-t4">
+<p>DDL dictionary:</p>
+</td>
+<td class="cellalignment34" headers="r5c1-t4 r1c2-t4">
+<pre>
+$DATA1.GGSDDL
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r6c1-t4" headers="r1c1-t4">
+<p>DDL record definition name:</p>
+</td>
+<td class="cellalignment34" headers="r6c1-t4 r1c2-t4">
+<pre>
+ECUSTMER-REC
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r7c1-t4" headers="r1c1-t4">
+<p>File/Table to create definition for (or Exit)</p>
+</td>
+<td class="cellalignment34" headers="r7c1-t4 r1c2-t4">
+<pre>
+EXIT
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></li>
+<li>
+<p>Transfer this file, as a text file, to the target system.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD438"></a>
+<div class="sect2"><a id="sthref236"></a>
+<h3 class="sect2"><span class="secnum">11.1.2</span> Configuring DEFGEN in Batch</h3>
+<ol>
+<li>
+<p>Use the NonStop editor to create a parameter file.</p>
+</li>
+<li>
+<p>Enter parameters similar to the following examples:</p>
+<ul>
+<li>
+<p>For NonStop SQL</p>
+<pre>
+$DATA1.GGSDEF.CUSTDEF
+$DATA1.GGSSOU.TCUSTMER
+EXIT
+</pre></li>
+<li>
+<p>For NonStop Enscribe</p>
+<pre>
+$DATA1.GGSDEF.CUSTDEF
+$DATA1.GGSSOU.ECUSTMER
+Y
+$DATA1.GGSDDL
+ECUSTMER-DEF
+EXIT
+EXIT
+</pre></li>
+</ul>
+</li>
+<li>
+<p>Start <code>DEFGEN</code> from TACL using a syntax similar to:</p>
+<pre>
+TACL&gt; RUN DEFGEN /IN GGSPARM.DEFGEN/
+</pre></li>
+<li>
+<p>Transfer the generated definitions file, as a text file, to the target system.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD439"></a>
+<div class="sect2"><a id="sthref237"></a>
+<h3 class="sect2"><span class="secnum">11.1.3</span> A Sample Definitions File</h3>
+<pre>
+Definition for table $DATA1.GGSSOU.TCUSTMER
+Record length: 198
+Syskey: 0
+Columns: 13
+TS          134 8 0 0 0 0 1 8  8 0 0 0 0 1 0 1
+RECNUM      132 4 8 0 0 0 1 4  4 4 0 0 0 0 1 0 1
+SYSNAME     1 8 12 0 0 0 0 8 8 8 0 0 0 0 1 0 0
+TEXT        0 64 20 0 0 0 0 64 64 64 0 0 0 0 1 0 0
+VAL1        134 8 84 0 0 0 1 8 8 8 0 0 0 0 1 0 0
+VAL2        134 8  92 0 0 0 1 8 8 8 0 0 0 0 1 0 0
+COL_COMPUTE 134 8 100 0 0 0 1 8 8 8 0 0 0 0 1 0 0
+I16         130 2 108 0 0 0 1 2 2 2 0 0 0 0 1 0 0
+I32         132 4 110 0 0 0 1 4 4 4 0 0 0 0 1 0 0
+I64         134 8 114 0 0 0 1 8 8 8 0 0 0 0 1 0 0
+I32_TOTAL   132 4 122 0 0 0 1 4  4 4 0 0 0 0 1 0 0
+JTS         134 8 126 0 0 0 1 8 8 8 0 0 0 0 1 0 0
+JTS_TEXT    0 64 134 0 0 0 0 64 64 64 0 0 0 0 1 0 0
+End of definition
+</pre></div>
+<!-- class="sect2" -->
+<a id="GNSAD440"></a>
+<div class="sect2"><a id="sthref238"></a>
+<h3 class="sect2"><span class="secnum">11.1.4</span> Running DEFGEN to Use Existing Definitions</h3>
+<p>Multiple tables that have the same structure (identical columns, column order, and data types) can use the same definition. To run <code>DEFGEN</code> for these tables, use the <code>RECORDNAMEPROMPTING</code> argument.</p>
+<ol>
+<li>
+<p>Run <code>DEFGEN</code> from TACL using the following syntax:</p>
+<pre>
+TACL&gt; RUN DEFGEN RECORDNAMEPROMPTING
+</pre></li>
+</ol>
+<p>In response to the prompts, enter information similar to the following example:</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" title="RUN DEFGEN Prompts with Sample Responses (Existing Definitions)" summary="This table lists sample entries to prompts when running DEFGEN to use existing definitions." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t5">For the prompt:</th>
+<th class="cellalignment33" id="r1c2-t5">Enter:</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t5" headers="r1c1-t5">
+<p>Enter definitions file name (or Exit):</p>
+</td>
+<td class="cellalignment34" headers="r2c1-t5 r1c2-t5">
+<pre>
+$DATA1.GGSDEF.CUSTDEF
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t5" headers="r1c1-t5">
+<p>File/Table to create definition for (or Exit):</p>
+</td>
+<td class="cellalignment34" headers="r3c1-t5 r1c2-t5">
+<pre>
+$DATA1.GGSSOU.ECUSTMER
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t5" headers="r1c1-t5">
+<p>Use record name for definition file (Y/N)?</p>
+</td>
+<td class="cellalignment34" headers="r4c1-t5 r1c2-t5">
+<pre>
+Y
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t5" headers="r1c1-t5">
+<p>Record or definition name to be used:</p>
+</td>
+<td class="cellalignment34" headers="r5c1-t5 r1c2-t5">
+<pre>
+CUSTOMER-DEF
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r6c1-t5" headers="r1c1-t5">
+<p>File/Table to create definition for (or Exit)</p>
+</td>
+<td class="cellalignment34" headers="r6c1-t5 r1c2-t5">
+<pre>
+EXIT
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A999950"></a><a id="GNSAD441"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">11.2</span> Creating Target Database DDL</h2>
+<p><code>DDLGEN</code> generates table definitions for target databases based on existing Enscribe and NonStop SQL definitions. It can also use the output from the <code>DEFGEN</code> utility (see above). <code>DDLGEN</code> reduces the work necessary to create databases on platforms such as UNIX or Windows, and enables the creation of NonStop SQL databases based on Enscribe definitions. Target templates are provided for NonStop SQL, Oracle, SQL Server, DB2, and Sybase.</p>
+<p><code>DDLGEN</code> is run either interactively by supplying responses to user prompts, or in batch mode by supplying an input file.When running interactively, the user is supplied several prompts. For batch execution, the answers to the prompts are supplied in the obey file. It is recommended that the user runs the process in interactive mode to better understand the replies to specify in the obey file.</p>
+<p>The result of running <code>DDLGEN</code> is a text file containing the create table statements. Transfer this file, as a text file, to your target system.</p>
+<p>For details about the <code>DDLGEN</code> parameters, see <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span>.</p>
+<p>The <code>DDLGEN</code> syntax is:</p>
+<pre>
+TACL&gt; RUN DDLGEN [/IN <span class="codeinlineitalic">command_file</span>/] [-d <span class="codeinlineitalic">DEFGEN_output</span>]
+</pre>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" title="Summary of RUN DEFGEN arguments" summary="This table summarizes the arguments used to run DDLGEN." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t6">Argument</th>
+<th class="cellalignment33" id="r1c2-t6">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t6" headers="r1c1-t6">
+<pre>
+IN <span class="codeinlineitalic">command_file</span>
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t6 r1c2-t6">
+<p>If you have created and saved a file of responses using the NonStop editor, enter the name of that file. See the information on configuring <code>DDLGEN</code> interactively in <a href="#i962423">Section 11.2.1</a> for a list of the responses.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t6" headers="r1c1-t6">
+<pre>
+-d <span class="codeinlineitalic">DEFGEN_output</span>
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t6 r1c2-t6">
+<p>Instructs <code>DDLGEN</code> to use the definitions file produced by <code>DEFGEN</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<a id="i962423"></a><a id="GNSAD442"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">11.2.1</span> Configuring DDLGEN Interactively</h3>
+<ol>
+<li>
+<p>Start <code>DDLGEN</code> from TACL using a syntax similar to:</p>
+<pre>
+TACL&gt; RUN DDLGEN
+</pre></li>
+<li>
+<p>In response to the prompts, enter information similar to the following example:</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" title="RUN DDLGEN Prompts with Sample Responses" summary="This table lists sample entries for prompts when running DDLGEN from TACL.." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t7">For the prompt:</th>
+<th class="cellalignment33" id="r1c2-t7">Enter:</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t7" headers="r1c1-t7">
+<p>Output file for table DDL (or Exit):</p>
+</td>
+<td class="cellalignment34" headers="r2c1-t7 r1c2-t7">
+<pre>
+$DATA1.GGSDEF.CUSTDEF
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t7" headers="r1c1-t7">
+<p>DDL template file name (or Exit):</p>
+</td>
+<td class="cellalignment34" headers="r3c1-t7 r1c2-t7">
+<pre>
+<span class="codeinlineitalic">template_name</span>
+</pre>
+<p>There are seven different templates prepackaged with Oracle GoldenGate:</p>
+<p><code>TMPLDB2</code> - DB2 for Windows and UNIX</p>
+<p><code>TMPLDB2M</code> - DB2 for the z/OS and OS/390</p>
+<p><code>TMPLMSA</code> - Microsoft Access</p>
+<p><code>TMPLMSS</code> - Microsoft SQL Server</p>
+<p><code>TMPLORA</code> - Oracle</p>
+<p><code>TMPLSYB</code> - Sybase</p>
+<p><code>TMPLTDM</code> - NonStop SQL/MP</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t7" headers="r1c1-t7">
+<p>Source File/Table (or Exit):</p>
+</td>
+<td class="cellalignment34" headers="r4c1-t7 r1c2-t7">
+<pre>
+$DATA1.GGSSOU.ECUSTMER
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t7" headers="r1c1-t7">
+<p>DDL dictionary:</p>
+</td>
+<td class="cellalignment34" headers="r5c1-t7 r1c2-t7">
+<pre>
+$DATA1.GGSDDL
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r6c1-t7" headers="r1c1-t7">
+<p>DDL record definition name:</p>
+</td>
+<td class="cellalignment34" headers="r6c1-t7 r1c2-t7">
+<pre>
+ECUSTMER-REC
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r7c1-t7" headers="r1c1-t7">
+<p>Source File/Table (or Exit):</p>
+</td>
+<td class="cellalignment34" headers="r7c1-t7 r1c2-t7">
+<pre>
+$DATA1.GGSSOU.TCUSTORD
+</pre></td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r8c1-t7" headers="r1c1-t7">
+<p>Source File/Table (or Exit):</p>
+</td>
+<td class="cellalignment34" headers="r8c1-t7 r1c2-t7">
+<pre>
+EXIT
+</pre></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></li>
+<li>
+<p>Transfer the definitions file, as a text file, to the target system.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD443"></a>
+<div class="sect2"><a id="sthref239"></a>
+<h3 class="sect2"><span class="secnum">11.2.2</span> Configuring DDLGEN in Batch</h3>
+<ol>
+<li>
+<p>Use the NonStop editor to create a parameter file. For this example, the file name is <code>GGSPARM.DDLGEN</code>.</p>
+</li>
+<li>
+<p>Enter parameters similar to the following examples:</p>
+<pre>
+$DATA1.GGSDEF.CUSTDEF
+TMPLORA
+$DATA1.GGSSOU.ECUSTMER
+$DATA1.GGSDDL
+ECUSTMER-REC
+$DATA1.GGSSOU.TCUSTORD
+EXIT
+</pre></li>
+<li>
+<p>Initiate <code>DDLGEN</code>:</p>
+<pre>
+TACL&gt; RUN DDLGEN /IN GGSPARM.DDLGEN/ -d $DATA1.GGSDEF.CUSTDEF
+</pre>
+<p>In this step, you are instructing <code>DDLGEN</code> to use the <code>DEFGEN</code> definitions file that was produced by a previous run of <code>DEFGEN</code>.</p>
+</li>
+<li>
+<p>Transfer the generated definitions file, as a text file, to the target system.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD444"></a>
+<div class="sect2"><a id="sthref240"></a>
+<h3 class="sect2"><span class="secnum">11.2.3</span> Addressing Enscribe DDL Peculiarities</h3>
+<p>Enscribe record definitions often contain the following items that do not map directly to SQL environments:</p>
+<ul>
+<li>
+<p><code>OCCURS</code> items</p>
+<p>SQL columns cannot have multiple occurrences, while Enscribe fields can.</p>
+</li>
+<li>
+<p>Group level items</p>
+<p>There is no grouping hierarchy in SQL, while an Enscribe record definition can contain fields that are redundant until qualified at the group level. This means that redundant column names can be created when mapping Enscribe definitions to SQL. For example, an Enscribe record might contain the field <code>YEAR</code> twice, once within the <code>BEGIN-DATE</code> group and once within the <code>END-DATE</code> group.</p>
+</li>
+</ul>
+<p>To get around these conditions, you can run the <code>DEFGEN</code> utility with various <code>EXPANDDDL</code> options set, as described in <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span>. Use the <code>-d</code> parameter to specify the definitions file created by <code>DEFGEN</code> as input to <code>DDLGEN</code>.</p>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD445"></a>
+<div class="sect2"><a id="sthref241"></a>
+<h3 class="sect2"><span class="secnum">11.2.4</span> Understanding the Template File</h3>
+<p>Templates are provided with each version of Oracle GoldenGate. A template file specifies how to generate the target definitions based on the source definitions. Each template file contains the following items:</p>
+<ul>
+<li>
+<p>Literal text to output for each table definition.</p>
+</li>
+<li>
+<p>Source to target data type conversion specifications.</p>
+</li>
+<li>
+<p>Column name substitution specifications.</p>
+</li>
+<li>
+<p>Miscellaneous run-time parameters.</p>
+</li>
+<li>
+<p>Section headers.</p>
+</li>
+<li>
+<p>Comments, which begin with a pound sign (<code>#</code>).</p>
+</li>
+<li>
+<p>Session parameters, which are resolved at run-time by user prompts and applied during the entire <code>DDLGEN</code> session. Session parameters begin with a question mark (?).</p>
+</li>
+<li>
+<p>Per-table parameters, which are input by the user for each table definition generated. Per-table parameters begin with a percent sign (<code>%</code>).</p>
+</li>
+<li>
+<p>Calculated parameters, which include information determined by <code>DDLGEN</code>. Calculated parameters include the following:</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" title="Calculated Template Parameters" summary="This table lists parameters that are contained in each template file." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t8">Calculated Parameter</th>
+<th class="cellalignment33" id="r1c2-t8">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t8" headers="r1c1-t8">
+<pre>
+?TABLE
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t8 r1c2-t8">
+<p>The file name portion of the source table or file.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t8" headers="r1c1-t8">
+<pre>
+?COLUMNS
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t8 r1c2-t8">
+<p>A list containing each column, its target data type, precision and scale (if any), and null/not null syntax.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r4c1-t8" headers="r1c1-t8">
+<pre>
+?KEYCOLUMNS
+</pre></td>
+<td class="cellalignment34" headers="r4c1-t8 r1c2-t8">
+<p>A list containing each column in the primary key.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r5c1-t8" headers="r1c1-t8">
+<pre>
+?MAXPAGES
+?MAXMEGS
+?CURPAGES
+?CURMEGS
+</pre></td>
+<td class="cellalignment34" headers="r5c1-t8 r1c2-t8">
+<p>The maximum and current number of 2048-byte pages and megabytes in the source table.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></li>
+</ul>
+<a id="i934572"></a><a id="GNSAD446"></a>
+<div class="sect3">
+<h4 class="sect3"><span class="secnum">11.2.4.1</span> Sample Template File</h4>
+<p>This sample (<code>TMPLORA</code>), is a template file for converting HP NonStop DDL to Oracle DDL.</p>
+<p>The sections are:</p>
+<ul>
+<li>
+<p>Table creation section specifying operations for creating and managing tables. Note that in this section <code>?TABLE</code>, <code>?COLUMNS</code> and <code>?KEYCOLUMNS</code> are resolved by <code>DDLGEN</code>. <code>?TABLE_SPACE</code> is prompted for once and will apply to every table, while <code>%NEXT_SIZE</code> is prompted for on a per-table basis.</p>
+</li>
+<li>
+<p>Column name mapping section containing source NonStop and target Oracle column names. This section maps the source column names to the target names. In this example, any occurrences of <code>ROWID</code> in the NonStop database will be changed to <code>ROWID_</code> in the Oracle definition. If Oracle keywords appear in your NonStop database definitions, add entries to this list.</p>
+</li>
+<li>
+<p>Miscellaneous parameters section. Specify instructions for column formatting.</p>
+</li>
+<li>
+<p>Column type mapping section. Determines how NonStop types are defined in Oracle. <code>Precision</code> and <code>Scale</code> definitions can be <code>YES</code>, <code>NO</code> or a constant, positive value.</p>
+</li>
+</ul>
+<p>Note in this example, there are two entries for both <code>CHAR</code> and <code>VARCHAR</code>. Because Oracle allows a maximum of 255 characters in a <code>VARCHAR2</code>, we specify that all instances of <code>CHAR</code> and <code>VARCHAR</code> with length greater than 255 should become <code>LONGS</code>.</p>
+<pre>
+# Table Creation Section
+#
+DROP TABLE ?TABLE;
+CREATE TABLE ?TABLE
+(
+?COLUMNS
+,CONSTRAINT PK_?TABLE
+PRIMARY KEY
+(
+?KEYCOLUMNS
+)
+USING INDEX
+TABLESPACE ?TABLE_SPACE
+)
+TABLESPACE ?TABLE_SPACE
+STORAGE (INITIAL 50K NEXT %NEXT_SIZE);
+#
+# Column Name Mapping Section
+#
+# NonStop column name     Oracle target name
+#
+ROWID                     ROWID_
+SYSDATE                   SYSDATE_
+#
+# Miscellaneous Parameters Section
+#
+INCLUDENULL
+#
+# Column Type Mapping Section   
+#                                             Max   Max
+#NonStop Type Target DB Type Precision  Scale Prec. Scale
+#
+CHAR          VARCHAR2       Y          N     255   N
+CHAR          LONG           Y          N     N     N
+VARCHAR       VARCHAR2       Y          N     255   N
+VARCHAR       LONG           N          N     N     N
+REAL          NUMBER         N          N     N     N
+DOUBLE        NUMBER         N          N     N     N
+NUMERIC       NUMBER         Y          Y     N     N
+SMALLINT      NUMBER         Y          N     N     N
+INTEGER       NUMBER         Y          N     N     N
+LARGEINT      NUMBER         Y          N     N     N
+DECIMAL       NUMBER         Y          Y     N     N
+DATE          DATE           N          N     N     N
+TIME          DATE           N          N     N     N
+TIMESTAMP     DATE           N          N     N     N
+DATETIME      VARCHAR2       Y          N     N     N
+INTERVAL      VARCHAR2       Y          N     N     N
+</pre></div>
+<!-- class="sect3" -->
+<a id="GNSAD482"></a>
+<div class="sect3"><!-- infolevel="all" infotype="General" --><a id="sthref242"></a>
+<h4 class="sect3"><span class="secnum">11.2.4.2</span> Sample NonStop SQL Table Definition</h4>
+<p>An example for creating Oracle table DDL is shown below.</p>
+<pre>
+CREATE TABLE TCUSTORD
+(
+    CUST_CODE        CHAR (4)                   NOT NULL,
+    ORDER_DATE       DATETIME YEAR TO SECOND    NOT NULL,
+    PRODUCT_CODE     CHAR (8)                   NOT NULL,
+    ORDER_ID         NUMERIC (18)               NOT NULL,
+    PRODUCT_PRICE    DECIMAL (8,2),
+    PRODUCT_AMOUNT   DECIMAL (6,0),
+    TRANSACTION_ID   NUMERIC (18)               NOT NULL,
+    DESCRIPTION      CHAR (400),
+    PRIMARY KEY (CUST_CODE, ORDER_DATE, PRODUCT_CODE, ORDER_ID)
+);
+</pre></div>
+<!-- class="sect3" -->
+<a id="GNSAD483"></a>
+<div class="sect3"><!-- infolevel="all" infotype="General" --><a id="sthref243"></a>
+<h4 class="sect3"><span class="secnum">11.2.4.3</span> Modifying the Sample Template File</h4>
+<p>In this example, you can make three modifications:</p>
+<ol>
+<li>
+<p>Add a <code>DATE_MODIFIED</code> column to each table and to the primary key.</p>
+</li>
+<li>
+<p>Calculate the <code>NEXT</code> value based on the table's current size. Note that any parameter value that evaluates to a numeric value can be multiplied or divided.</p>
+</li>
+<li>
+<p>Substitute the column name <code>ORDER_NUM</code> for instances of <code>ORDER_ID</code>.</p>
+</li>
+</ol>
+<p>The following is the template file, with modifications shown in bold.</p>
+<pre>
+#
+# Table Creation Section
+#
+DROP TABLE ?TABLE;
+CREATE TABLE ?TABLE
+(
+?COLUMNS
+<span class="bold">,  DATE_MODIFIEDDATE   NOT NULL</span>
+,  CONSTRAINT PK_?TABLE
+   PRIMARY KEY
+   (
+?KEYCOLUMNS
+<span class="bold">,  DATE_MODIFIED</span>
+   )
+   USING INDEX
+   TABLESPACE ?TABLE_SPACE
+)
+TABLESPACE ?TABLE_SPACE
+STORAGE (INITIAL 50K NEXT <span class="bold">?CURPAGES/5</span>K);
+#
+# Column Name Mapping Section
+#
+# NonStop column name     Oracle target name
+#
+ROWID     ROWID_
+SYSDATE   SYSDATE_
+<span class="bold">ORDER_ID  ORDER_NUM</span>
+</pre></div>
+<!-- class="sect3" -->
+<a id="GNSAD484"></a>
+<div class="sect3"><!-- infolevel="all" infotype="General" --><a id="sthref244"></a>
+<h4 class="sect3"><span class="secnum">11.2.4.4</span> Generating the Sample Definition</h4>
+<p>The following example generates an Oracle definition:</p>
+<pre>
+1&gt; RUN DDLGEN
+Output file for table DDL (or Exit): ORADDL
+DDL template file name (or Exit): TMPLORA
+Value for param TABLE_SPACE: USERS
+Source File/Table (or Exit): $DATA1.SAMPLE.TCUSTORD
+Source File/Table (or Exit): EXIT
+</pre>
+<p>The following is an example of the contents of <code>ORADDL</code> after <code>DDLGEN</code> is run.</p>
+<pre>
+DROP TABLE TCUSTORD;
+CREATE TABLE TCUSTORD
+(
+   CUST_CODE       VARCHAR2(4)  NOT NULL
+,  ORDER_DATE      DATE        NOT NULL
+,  PRODUCT_CODE    VARCHAR2(8) NOT NULL
+<span class="bold">,  ORDER_NUM       NUMBER(18)  NOT NULL</span>
+,  PRODUCT_PRICE   NUMBER(8,2) NULL
+,  PRODUCT_AMOUNT  NUMBER(6,0) NULL
+,  TRANSACTION_ID  NUMBER(18)  NULL
+<span class="bold">,  DATE_MODIFIED   DATE        NOT NULL</span>
+
+,  CONSTRAINT PK_TCUSTORD
+   PRIMARY KEY
+   (
+   CUST_CODE
+,  ORDER_DATE
+,  PRODUCT_CODE
+<span class="bold">,  ORDER_NUM</span>
+<span class="bold">,  DATE_MODIFIED</span>
+   )
+   USING INDEX
+   TABLESPACE USERS
+)
+TABLESPACE USERS
+STORAGE (INITIAL 50K NEXT <span class="bold">470</span>K);
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="A1002485"></a><a id="GNSAD453"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">11.3</span> Oracle GoldenGate Rollback</h2>
+<p>You can run Oracle GoldenGate for selective rollback processing when synchronizing data from TMF applications. Oracle GoldenGate rollback uses before-images from the TMF audit trail to undo database changes for user-defined tables and files, rows and records, and time periods. Two valuable applications of rollback are:</p>
+<ul>
+<li>
+<p>Reversing errors caused by damaged data or accidental deletions. For example, if you issue a SQL <code>UPDATE</code> or <code>DELETE</code> command without the <code>WHERE</code> clause, rollback reverses the errors caused by the erroneous operations.</p>
+</li>
+<li>
+<p>Maintaining large test databases. Use rollback to restore the test database to its state before a test run, enabling test cycles to run quickly. Since the rollback process only reverses changes, a database can be restored much more efficiently than a complete database restore.</p>
+</li>
+</ul>
+<p>The Reverse program prepares extracted data for rollback by:</p>
+<ul>
+<li>
+<p>Reversing the ordering of database operations in the file so Replicat processes them in reverse order, guaranteeing that records with the same key are properly applied.</p>
+</li>
+<li>
+<p>Changing the before or after-image indicator in each record.</p>
+</li>
+<li>
+<p>Changing delete operations to inserts, and insert operations to deletes.</p>
+</li>
+<li>
+<p>Reversing the <code>BEGIN</code> and <code>END</code> transaction indicators to delimit each transaction.</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GNSAD454"></a>Syntax</p>
+<pre>
+RUN REVERSE <span class="variable">source_extract_trail</span> <span class="variable">target_extract_trail</span>
+</pre>
+<div class="inftblhruleinformal">
+<table class="cellalignment32" title="RUN REVERSE Arguments" summary="This table lists the names and descriptions for RUN REVERSE arguments." dir="ltr">
+<thead>
+<tr class="cellalignment26">
+<th class="cellalignment33" id="r1c1-t9">Argument</th>
+<th class="cellalignment33" id="r1c2-t9">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r2c1-t9" headers="r1c1-t9">
+<pre>
+<span class="variable">source_extract_trail</span>
+</pre></td>
+<td class="cellalignment34" headers="r2c1-t9 r1c2-t9">
+<p>The <code>EXTTRAIL</code> specified in the Extract parameter file. The <code>REVERSE</code> program can also run against a set of trails.</p>
+</td>
+</tr>
+<tr class="cellalignment26">
+<td class="cellalignment34" id="r3c1-t9" headers="r1c1-t9">
+<pre>
+<span class="variable">target_extract_trail</span>
+</pre></td>
+<td class="cellalignment34" headers="r3c1-t9 r1c2-t9">
+<p>The <code>EXTTRAIL</code> specified in the Replicat parameter file.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p><code><span class="codeinlineitalic">source_extract_trail</span></code> and <code><span class="codeinlineitalic">target_extract_trail</span></code> must be different.</p>
+</div>
+<a id="GNSAD455"></a>
+<div class="sect2"><a id="sthref245"></a>
+<h3 class="sect2"><span class="secnum">11.3.1</span> Using Oracle GoldenGate Rollback</h3>
+<ol>
+<li>
+<p>Create an Extract parameter file.</p>
+<p><a id="i934744"></a><span class="bold">Sample Extract parameter file</span></p>
+<pre>
+SPECIALRUN
+BEGIN 2010-05-30 17:00
+END   2010-05-30 18:00
+GETUPDATEBEFORES
+EXTFILE $DATA2.DAT.EXTSRC
+TABLE $DATA3.TABLES.SALES;
+TABLE $DATA3.TABLES.ACCOUNTS;
+</pre>
+<p>About the parameters:</p>
+<ul>
+<li>
+<p><code>SPECIALRUN</code> indicates that no checkpoints are required.</p>
+</li>
+<li>
+<p><code>BEGIN</code> and <code>END</code> parameters specify the period during which the original transactions occurred.</p>
+</li>
+<li>
+<p><code>GETUPDATEBEFORES</code> directs Extract to extract before-images.</p>
+</li>
+<li>
+<p><code>EXTFILE</code> specifies the trail holding the extracted images is an Extract flat file.</p>
+</li>
+<li>
+<p><code>FILE</code> and <code>TABLE</code> parameters specify the tables and files to reverse. Include special criteria, such as <code>ACCOUNT = "CA</code>".</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Create a Replicat parameter file, similar to example on <a href="#i943155">"<span class="bold">Sample Replicat parameter file</span>"</a>.</p>
+<p><a id="i943155"></a><span class="bold">Sample Replicat parameter file</span></p>
+<pre>
+SPECIALRUN
+END RUNTIME
+EXTFILE $DATA2.DAT.EXTTARG
+MAP $DATA3.TABLES.SALES, TARGET $DATA4.TABLES.SALES;
+MAP $DATA3.TABLES.ACCOUNTS, TARGET $DATA4.TABLES.ACCOUNTS;
+</pre>
+<p>About the parameters:</p>
+<ul>
+<li>
+<p><code>SPECIALRUN</code> indicates that no checkpoints are required.</p>
+</li>
+<li>
+<p><code>EXTFILE</code> identifies the Extract trail as a flat file.</p>
+</li>
+<li>
+<p><code>MAP</code> specifies mappings from source to target. When backing out the original database, the source and target are the same. When backing delivered transactions out of the target database, the source and target of each map are different.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Run Extract, Reverse, and Replicat similar to:</p>
+<pre>
+TACL&gt; RUN EXTRACT /IN $DATA1.MYSUB.EXTPARM/
+TACL&gt; RUN REVERSE $DATA2.DAT.EXTSRC $DATA2.DAT.EXTTARG
+TACL&gt; RUN REPLICAT /IN $DATA1.MYSUB.REPPARM/
+</pre>
+<ul>
+<li>
+<p>Running Extract extracts the changes.</p>
+</li>
+<li>
+<p>Running Reverse prepares the extracted changes for replication.</p>
+</li>
+<li>
+<p>Running Replicat applies the before-images to the original database (or to an alternative database if you are reversing delivered changes).</p>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD456"></a>
+<div class="sect2"><a id="sthref246"></a>
+<h3 class="sect2"><span class="secnum">11.3.2</span> Reviewing Reversed Records</h3>
+<p>Before applying rollback, you may want to review your pending changes. To review, run Extract with the <code>FORMATSQL</code> parameter. The Extract file contains SQL syntax describing each of the statements to be reversed.</p>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD457"></a>
+<div class="sect2"><a id="sthref247"></a>
+<h3 class="sect2"><span class="secnum">11.3.3</span> Correcting Unexpected Results</h3>
+<p>If rollback produces unexpected or undesired results, you can reapply the original changes to the database. Use the source Extract file (<code><span class="codeinlineitalic">source_extract_trail</span></code>) specified in the <code>REVERSE</code> command as the <code>EXTFILE</code> entry in your Replicat parameter file and run Replicat again.</p>
+</div>
+<!-- class="sect2" -->
+<a id="GNSAD458"></a>
+<div class="sect2"><a id="sthref248"></a>
+<h3 class="sect2"><span class="secnum">11.3.4</span> Invalid Conditions for Rollback</h3>
+<p>Rollback does not work in the following circumstances:</p>
+<ul>
+<li>
+<p>Because entry-sequenced does not support deletes, rollback does not work when inserts are reversed for an entry-sequenced table or file.</p>
+</li>
+<li>
+<p>When a table is organized with a cluster key (a non-unique primary key), reversing deletes results in <code>SYSKEY</code> values that are different from the original rows. The delete's before-image is applied as an insert into the table. Replicat cannot control the <code>SYSKEY</code> value, so it becomes the timestamp when the records are reversed and relationships depending on the original <code>SYSKEY</code> are lost. In addition, if both deletes and inserts are reversed, results will likely be incorrect. If a set of columns can be defined that uniquely identifies the record, you can use the <code>KEYCOLS</code> option of the Replicat <code>MAP</code> statement.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="i934797"></a><a id="GNSAD459"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">11.4</span> Using Syncfile</h2>
+<p>Syncfile manages non-database file duplication. For example, you may want to replicate configuration files that are small and change infrequently. This is a common requirement for maintaining a secondary system that has frequent database changes, but infrequent configuration file changes.</p>
+<p>Syncfile can copy almost any type of file, making it suitable for other scenarios that require only infrequent, off-hours copying. By default, Syncfile uses the NonStop <code>FUP DUP</code> utility to perform file duplication; however, it can also run user-written TACL scripts to perform more specialized file duplication, such as FTP over TCP/IP.</p>
+<p>You implement Syncfile by defining its parameters. The two main parameters include a file list to duplicate, and one to many schedules. A file set can be a file name, a wildcarded file name, or a file exclude list. The schedules are events which can be as frequent as you want, such as every day, every hour, or every ten minutes.</p>
+<p>Syncfile options control the following:</p>
+<ul>
+<li>
+<p>The files to duplicate</p>
+</li>
+<li>
+<p>The schedule for determining when files should be duplicated</p>
+</li>
+<li>
+<p>The method for duplication (FUP, FTP, etc.)</p>
+</li>
+<li>
+<p>Whether files should be always duplicated, or only when modified</p>
+</li>
+</ul>
+<p>A Syncfile parameter file can contain multiple schedules and file sets. In addition, you can create multiple Syncfile processes to support duplication for different applications or other requirements.</p>
+<p>Syncfile processes are persistent. If a Syncfile process goes down unexpectedly, Manager automatically restarts it.</p>
+<a id="GNSAD460"></a>
+<div class="sect2"><a id="sthref249"></a>
+<h3 class="sect2"><span class="secnum">11.4.1</span> Implementing Syncfile</h3>
+<ol>
+<li>
+<p>Create a parameter file with the necessary Syncfile parameters. The parameter file includes the names of the files to duplicate, the schedules, and other options.</p>
+<p><span class="bold">Sample Syncfile parameter file:</span></p>
+<pre>
+EVENT DAILY, EVERY DAY AT 1:00, EXCLUDE FRIDAY, EXCLUDE AUGUST 2;
+EVENT FREQUENT, EVERY 2 HOURS;
+DUP $DATA1.SOURCE.*, TARGET \BKUP.$DATA2.*.*,
+ALWAYS, EVENT DAILY;
+DUP $DATA2.GGSPARM.*, TARGET \BKUP.$DATA3.*.*,
+TACLCMD "RUN $DATA1.GGSTACL.SYNCTCL&lt;source&gt; &lt;target&gt;",
+CHANGED, EVENT FREQUENT;
+</pre>
+<p>This parameter file specifies the following attributes and actions:</p>
+<ul>
+<li>
+<p>Two events&mdash;daily and frequent. The daily event happens every day at 1:00 AM. However, the daily event is cancelled on all Fridays and August 2. The frequent event occurs every two hours. There are two <code>DUP</code> specifications. The first <code>DUP</code> specification indicates the file set <code>$data1.source.*</code>. Files satisfying that description are duplicated according to the daily event schedule (every day at 1:00). These files are duplicated regardless of whether the data has changed (the "always" option). Files are duplicated to <code>\bkup.$data2</code> with the same subvolume and file name as the corresponding source files.</p>
+</li>
+<li>
+<p>By default, the <code>FUP DUP</code> <code>source,</code> <code><span class="codeinlineitalic">target,</span></code> <code>PURGE, SAVEALL</code> command is used to duplicate the files.</p>
+</li>
+<li>
+<p>The second <code>DUP</code> specification names everything from <code>$data2.ggsparm</code> to be copied to <code>\bkup.$data3</code> with the same subvolume and file names. Files are duplicated on the frequent event schedule (every two hours). However, only those files with a modification timestamp on the source greater than that of the target will be duplicated (the changed option). The changed option does not have to be specified since it is the default option.</p>
+<p>In this example <code>TACLCMD</code> is added as a clause to the <code>DUP</code> parameter. This will cause Syncfile to run the TACL macro <code>$data1.ggstacl.synctcl</code> to duplicate the file. The macro is responsible for determining how to move source files to the target system, as well as any intermediate required steps.</p>
+<p>In this instance, the <code>&lt;source&gt;</code> and <code>&lt;target&gt;</code> arguments should not be replaced with any file name. They act as keywords to trigger Syncfile to use the <code>DUP $DATA2.GGSPARM.*, TARGET \BKUP.$DATA3.*.*</code> statement to identify the source and target parameters that will be passed to the macro.</p>
+<p>If file names are entered in <code>&lt;source&gt;</code> and <code>&lt;target&gt;</code> they will be passed to the macro instead. The following TACL macro and Syncfile parameters will pass <code>GGSPARM.FILE1</code> as %1% and <code>GGSPARM.FILEB</code> as %2% to cause it to duplicate <code>FILE1</code> to <code>FILEB</code>, not to <code>$DATA3.GGSPARM.FILEA</code>.</p>
+<pre>
+?TACLMACRO
+FUP DUP %1%, %2%
+DUP $DATA1.GGSPARM.FILE1, TARGET $DATA3.GGSPARM.FILEA,
+TACLCMD "RUN $DATA1.GGSPARM.TACL1 GGSPARM.FILE1 GGSPARM.FILEB",
+ALWAYS, EVENT DAILY 1330;
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Leaving out the <code>&lt;source&gt;</code> and <code>&lt;target&gt;</code> arguments will cause Syncfile to abend.</p>
+</div>
+</li>
+</ul>
+<p>The two most important parameters for Syncfile are <code>EVENT</code> and <code>DUP</code>. At least one <code>EVENT</code> and one <code>DUP</code> parameter are required for each Syncfile operation. Each parameter entry must be terminated with a semi-colon (<code>;</code>).</p>
+</li>
+<li>
+<p>Start GGSCI and add the Syncfile process.</p>
+<pre>
+TACL&gt; RUN GGSCI
+GGSCI&gt; ADD SYNCFILE <span class="variable">group_name</span>
+[, PARAMS <span class="variable">parameter_file</span>]
+[, REPORT <span class="variable">report_filename</span>]
+[, PROCESS <span class="variable">process_name</span>]
+[, PROGRAM <span class="variable">program_name</span>]
+</pre>
+<p>Add options as desired.</p>
+</li>
+<li>
+<p>Start the Syncfile process.</p>
+<pre>
+GGSCI&gt; START SYNCFILE
+</pre></li>
+</ol>
+<p>See <span class="italic"><span class="italic">Reference for Oracle GoldenGate on HP NonStop Guardian</span></span> for details about the GGSCI Syncfile commands and the Syncfile parameters.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment25">
+<tr>
+<td class="cellalignment34">
+<table class="cellalignment30">
+<tr>
+<td class="cellalignment29"><a href="manageandmonitor.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment29"><a href="sizing.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;1995, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment36">
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment29"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment29"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

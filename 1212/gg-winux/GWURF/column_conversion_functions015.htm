@@ -1,0 +1,1091 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>GETENV</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="Contains instructions for using Oracle GoldenGate commands, parameters, and functions." />
+<meta name="dcterms.created" content="2015-06-05T16:34:30Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E29392-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="column_conversion_functions014.htm" title="Previous" type="text/html" />
+<link rel="Next" href="column_conversion_functions016.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GWURF.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GWURF.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">345/413</span>
+<!-- End Header --><a id="i1000559"></a>
+<div id="GWURF788" class="refsect1">
+<h1 class="refsect1">GETENV</h1>
+<p>Use the <code dir="ltr">@GETENV</code> function to return information about the Oracle GoldenGate environment. You can use the information as input into the following:</p>
+<ul>
+<li>
+<p>Stored procedures or queries (with <code dir="ltr">SQLEXEC</code>)</p>
+</li>
+<li>
+<p>Column maps (with the <code dir="ltr">COLMAP</code> option of <code dir="ltr">TABLE</code> or <code dir="ltr">MAP</code>)</p>
+</li>
+<li>
+<p>User tokens (defined with the <code dir="ltr">TOKENS</code> option of <code dir="ltr">TABLE</code> and mapped to target columns by means of the <code dir="ltr">@TOKENS</code> function)</p>
+</li>
+<li>
+<p>The <code dir="ltr">GET_ENV_VALUE</code> user exit function (see <a href="user_exit_functions016.htm#i1105970">"GET_ENV_VALUE"</a>)</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+All syntax options must be enclosed within quotes as shown in the syntax descriptions.</div>
+</li>
+</ul>
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="sthref1833"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV (
+'LAG' , '<span class="codeinlineitalic">unit</span>' |
+'LASTERR' , '<span class="codeinlineitalic">error_info</span>' |
+'JULIANTIMESTAMP' |
+'RECSOUTPUT' |
+{'STATS'|'DELTASTATS'}, ['TABLE', '<span class="codeinlineitalic">table</span>'], '<span class="codeinlineitalic">statistic</span>' |
+'GGENVIRONMENT', '<span class="codeinlineitalic">environment_info</span>' |
+'GGFILEHEADER', '<span class="codeinlineitalic">header_info</span>' |
+'GGHEADER', '<span class="codeinlineitalic">header_info</span>' |
+'RECORD', '<span class="codeinlineitalic">location_info</span>' |
+'DBENVIRONMENT', '<span class="codeinlineitalic">database_info</span>'
+'TRANSACTION', '<span class="codeinlineitalic">transaction_info</span>' |
+'OSVARIABLE', '<span class="codeinlineitalic">variable</span>' |
+'TLFKEY', SYSKEY, <span class="codeinlineitalic">unique_key</span>
+)
+</pre></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1034398"></a><code dir="ltr">'LAG' , '</code><code dir="ltr"><span class="codeinlineitalic">unit</span></code><code dir="ltr">'</code></p>
+<p>Valid for Extract and Replicat.</p>
+<p>Use the <code dir="ltr">LAG</code> option of <code dir="ltr">@GETENV</code> to return lag information. Lag is the difference between the time that a record was processed by Extract or Replicat and the timestamp of that record in the data source.</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1834"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('LAG', {'SEC'|'MSEC'|'MIN'})
+</pre>
+<dl>
+<dt><code dir="ltr">'SEC'</code></dt>
+<dd>
+<p>Returns the lag in seconds. This is the default when a unit is not explicitly provided for <code dir="ltr">LAG</code>.</p>
+</dd>
+<dt><code dir="ltr">'MSEC'</code></dt>
+<dd>
+<p>Returns the lag in milliseconds.</p>
+</dd>
+<dt><code dir="ltr">'MIN'</code></dt>
+<dd>
+<p>Returns the lag in minutes.</p>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1000664"></a><code dir="ltr">'LASTERR' , '</code><code dir="ltr"><span class="codeinlineitalic">error_info</span></code><code dir="ltr">'</code></p>
+<p>Valid for Replicat.</p>
+<p>Use the <code dir="ltr">LASTERR</code> option of <code dir="ltr">@GETENV</code> to return information about the last failed operation processed by Replicat.</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1835"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('LASTERR', {'DBERRNUM'|'DBERRMSG'|'OPTYPE'|'ERRTYPE'})
+</pre>
+<dl>
+<dt><code dir="ltr">'DBERRNUM'</code></dt>
+<dd>
+<p>Returns the database error number associated with the failed operation.</p>
+</dd>
+<dt><code dir="ltr">'DBERRMSG'</code></dt>
+<dd>
+<p>Returns the database error message associated with the failed operation.</p>
+</dd>
+<dt><code dir="ltr">'OPTYPE'</code></dt>
+<dd>
+<p>Returns the operation type that was attempted. For a list of Oracle GoldenGate operation types, see <a class="olink GWUAD735" href="../../gg-winux/GWUAD/wu_fileformats.htm#GWUAD735"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</dd>
+<dt><code dir="ltr">'ERRTYPE'</code></dt>
+<dd>
+<p>Returns the type of error. Possible results are:</p>
+<ul>
+<li>
+<p><code dir="ltr">DB</code> (for database errors)</p>
+</li>
+<li>
+<p><code dir="ltr">MAP</code> (for errors in mapping)</p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1113697"></a><code dir="ltr">'JULIANTIMESTAMP'</code></p>
+<p>Valid for Extract and Replicat.</p>
+<p>Use the <code dir="ltr">JULIANTIMESTAMP</code> option of <code dir="ltr">@GETENV</code> to return the current time in Julian format. The unit is microseconds (one millionth of a second). On a Windows machine, the value will be padded with zeros (0) because the granularity of the Windows timestamp is milliseconds (one thousandth of a second). For example, the following is a typical column mapping:</p>
+<pre dir="ltr">
+MAP dbo.tab8451, Target targ.tabjts, COLMAP (USEDEFAULTS, &amp;
+JTSS = @GETENV ('JULIANTIMESTAMP')
+JTSFFFFFF = @date ('yyyy-mm-dd hh:mi:ss.ffffff', 'JTS', &amp;
+@getenv ('JULIANTIMESTAMP') ) )
+;
+</pre>
+<p>Possible values that the <code dir="ltr">JTSS</code> and <code dir="ltr">JTSFFFFFF</code> columns can have are:</p>
+<pre dir="ltr">
+212096320960773000 2010-12-17:16:42:40.773000
+212096321536540000 2010-12-17:16:52:16.540000
+212096322856385000 2010-12-17:17:14:16.385000
+212096323062919000 2010-12-17:17:17:42.919000
+212096380852787000 2010-12-18:09:20:52.787000
+</pre>
+<p>The last three digits (the microseconds) of the number all contain the padding of 0s .</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1836"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('JULIANTIMESTAMP')
+</pre></div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1113698"></a><code dir="ltr">'RECSOUTPUT'</code></p>
+<p>Valid for Extract.</p>
+<p>Use the <code dir="ltr">RECSOUTPUT</code> option of <code dir="ltr">@GETENV</code> to retrieve a current count of the number of records that Extract has written to the trail file since the process started. The returned value is not unique to a table or transaction, but instead for the Extract session itself. The count resets to 1 whenever Extract stops and then is started again.</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1837"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('RECSOUTPUT')
+</pre></div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1113699"></a><code dir="ltr">{'STATS'|'DELTASTATS'}, ['TABLE', '</code><code dir="ltr"><span class="codeinlineitalic">table</span></code><code dir="ltr">'], '</code><code dir="ltr"><span class="codeinlineitalic">statistic</span></code><code dir="ltr">'</code></p>
+<p>Valid for Extract and Replicat.</p>
+<p>Use the <code dir="ltr">STATS</code> and <code dir="ltr">DELTASTATS</code> options of <code dir="ltr">@GETENV</code> to return the number of operations that were processed per table for any or all of the following:</p>
+<ul>
+<li>
+<p><code dir="ltr">INSERT</code> operations</p>
+</li>
+<li>
+<p><code dir="ltr">UPDATE</code> operations</p>
+</li>
+<li>
+<p><code dir="ltr">DELETE</code> operations</p>
+</li>
+<li>
+<p><code dir="ltr">TRUNCATE</code> operations</p>
+</li>
+<li>
+<p>Total DML operations</p>
+</li>
+<li>
+<p>Total DDL operations</p>
+</li>
+<li>
+<p>Number of conflicts that occurred, if the Conflict Detection and Resolution (CDR) feature is used.</p>
+</li>
+<li>
+<p>Number of CDR resolutions that succeeded</p>
+</li>
+<li>
+<p>Number of CDR resolutions that failed</p>
+</li>
+</ul>
+<p>Any errors in the processing of this function, such as an unresolved table entry or incorrect syntax, returns a zero (0) for the requested statistics value.</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1838"></a>Understanding How Recurring Table Specifications Affect Operation Counts</p>
+<p>An Extract that is processing the same source table to multiple output trails returns statistics based on each localized output trail to which the table linked to <code dir="ltr">@GETENV</code> is written. For example, if Extract captures 100 inserts for table <code dir="ltr">ABC</code> and writes table <code dir="ltr">ABC</code> to three trails, the result for the <code dir="ltr">@GETENV</code> is 300</p>
+<pre dir="ltr">
+EXTRACT ABC
+...
+EXTTRAIL c:\ogg\dirdat\aa;
+TABLE TEST.ABC;
+EXTTRAIL c:\ogg\dirdat\bb;
+TABLE TEST.ABC;
+TABLE EMI, TOKENS (TOKEN-CNT = @GETENV ('STATS', 'TABLE', 'ABC', 'DML'));
+EXTTRAIL c:\ogg\dirdat\cc;
+TABLE TEST.ABC;
+</pre>
+<p>In the case of an Extract that writes a source table multiple times to a single output trail, or in the case of a Replicat that has multiple <code dir="ltr">MAP</code> statements for the same <code dir="ltr">TARGET</code> table, the statistics results are based on all matching <code dir="ltr">TARGET</code> entries. For example, if Replicat filters 20 rows for <code dir="ltr">REGION</code> <code dir="ltr">'WEST</code>,' 10 rows for <code dir="ltr">REGION</code> <code dir="ltr">'EAST</code>,' 5 rows for <code dir="ltr">REGION</code> <code dir="ltr">'NORTH</code>,' and 2 rows for <code dir="ltr">REGION</code> <code dir="ltr">'SOUTH</code>' (all for table <code dir="ltr">ABC</code>) the result of the <code dir="ltr">@GETENV</code> is 37.</p>
+<pre dir="ltr">
+REPLICAT ABC
+...
+MAP TEST.ABC, TARGET TEST.ABC, FILTER (@STREQ (REGION, 'WEST'));
+MAP TEST.ABC, TARGET TEST.ABC, FILTER (@STREQ (REGION, 'EAST'));
+MAP TEST.ABC, TARGET TEST.ABC, FILTER (@STREQ (REGION, 'NORTH'));
+MAP TEST.ABC, TARGET TEST.ABC, FILTER (@STREQ (REGION, 'SOUTH'));
+MAP TEST.EMI, TARGET TEST.EMI, &amp;
+    COLMAP (CNT = @GETENV ('STATS', 'TABLE', 'ABC', 'DML'));
+</pre></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1839"></a>Capturing Multiple Statistics</p>
+<p>You can execute multiple instances of <code dir="ltr">@GETENV</code> to get counts for different operation types.</p>
+<p>This example returns statistics only for <code dir="ltr">INSERT</code> and <code dir="ltr">UPDATE</code> operations:</p>
+<pre dir="ltr">
+REPLICAT TEST
+..
+..
+MAP TEST.ABC, TARGET TEST.ABC, COLMAP (USEDEFAULTS, IU = @COMPUTE (@GETENV &amp;
+    ('STATS', 'TABLE', 'ABC', 'DML') - (@GETENV ('STATS', 'TABLE', &amp;
+    'ABC', 'DELETE'));
+</pre>
+<p>This example returns statistics for DDL and <code dir="ltr">TRUNCATE</code> operations:</p>
+<pre dir="ltr">
+REPLICAT TEST2
+..
+..
+MAP TEST.ABC, TARGET TEST.ABC, COLMAP (USEDEFAULTS, DDL = @COMPUTE &amp;
+(@GETENV ('STATS', 'DDL') + (@GETENV ('STATS', 'TRUNCATE'));
+</pre></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1840"></a>Example Use Case</p>
+<p>In the following use case, if all DML from the source is applied successfully to the target, Replicat suspends by means of <code dir="ltr">EVENTACTIONS</code> with <code dir="ltr">SUSPEND</code>, until resumed from GGSCI with <code dir="ltr">SEND REPLICAT</code> with <code dir="ltr">RESUME</code>.</p>
+<p><code dir="ltr">GETENV</code> used in Extract parameter file:</p>
+<pre dir="ltr">
+TABLE HR1.HR*;
+TABLE HR1.STAT, TOKENS ('env_stats' = @GETENV ('STATS', 'TABLE', &amp;
+    'HR1.HR*', 'DML'));
+</pre>
+<p><code dir="ltr">GETENV</code> used in Replicat parameter file:</p>
+<pre dir="ltr">
+MAP HR1.HR*, TARGET HR2.*;
+MAP HR1.STAT, TARGET HR2.STAT, filter (
+    @if (
+    @token ('stats') =
+    @getenv ('STATS', 'TABLE', 'TSSCAT.TCUSTORD', 'DML'), 1, 0 )
+    ),
+    eventactions (suspend);
+</pre></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="BABCAACC"></a>Using statistics in FILTER clauses</p>
+<p>Statistics returned by <code dir="ltr">STATS</code> and <code dir="ltr">DELTASTATS</code> are dynamic values and are incremented after mapping is performed. Therefore, when using CDR statistics in a <code dir="ltr">FILTER</code> clause in each of multiple <code dir="ltr">MAP</code> statements, you need to order the <code dir="ltr">MAP</code> statements in descending order of the statistics values. If the order is not correct, Oracle GoldenGate returns error OGG-01921. For detailed information about this requirement, see Document 1556241.1 in the Knowledge base of My Oracle Support (http://support.oracle.com).</p>
+<div id="GWURF1183" class="example"><p class="titleinexample"><a id="sthref1841"></a>Example 5-1 MAP statements containing statistics in FILTER clauses</p>
+<p>In the following example, the <code dir="ltr">MAP</code> statements containing the filter for the <code dir="ltr">CDR_CONFLICTS</code> statistic are ordered in descending order of the statistic: <code dir="ltr">&gt;3</code>, then <code dir="ltr">=3</code>, then <code dir="ltr">&lt;3</code>.</p>
+<pre dir="ltr">
+MAP TEST.GG_HEARTBEAT_TABLE, TARGET TEST.GG_HEARTBEAT_TABLE COMPARECOLS (ON UPDATE ALL),RESOLVECONFLICT(UPDATEROWEXISTS,(DEFAULT, OVERWRITE)),FILTER (@GETENV ("STATS", "CDR_CONFLICTS") &gt; 3),EVENTACTIONS (LOG INFO);MAP TEST.GG_HEARTBEAT_TABLE, TARGET TEST.GG_HEARTBEAT_TABLE COMPARECOLS (ON UPDATE ALL),RESOLVECONFLICT(UPDATEROWEXISTS,(DEFAULT, OVERWRITE)),FILTER (@GETENV ("STATS", "CDR_CONFLICTS") = 3),EVENTACTIONS (LOG WARNING);MAP TEST.GG_HEARTBEAT_TABLE, TARGET TEST.GG_HEARTBEAT_TABLE COMPARECOLS (ON UPDATE ALL),RESOLVECONFLICT(UPDATEROWEXISTS,(DEFAULT, OVERWRITE)),FILTER (@GETENV ("STATS", "CDR_CONFLICTS") &lt; 3),EVENTACTIONS (LOG WARNING);
+</pre></div>
+<!-- class="example" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1842"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ({'STATS' | 'DELTASTATS'}, ['TABLE', '<span class="italic">table</span>'], '<span class="italic">statistic</span>')
+</pre>
+<dl>
+<dt><code dir="ltr">{'STATS' | 'DELTASTATS'}</code></dt>
+<dd>
+<p><code dir="ltr">STATS</code> returns counts since process startup, whereas <code dir="ltr">DELTASTATS</code> returns counts since the last execution of a <code dir="ltr">DELTASTATS</code>.</p>
+<p>The execution logic is as follows:</p>
+<ul>
+<li>
+<p>When Extract processes a transaction record that satisfies <code dir="ltr">@GETENV</code> with <code dir="ltr">STATS</code> or <code dir="ltr">DELTASTATS</code>, the table name is matched against resolved source tables in the <code dir="ltr">TABLE</code> statement.</p>
+</li>
+<li>
+<p>When Replicat processes a trail record that satisfies <code dir="ltr">@GETENV</code> with <code dir="ltr">STATS</code> or <code dir="ltr">DELTASTATS</code>, the table name is matched against resolved target tables in the <code dir="ltr">TARGET</code> clause of the <code dir="ltr">MAP</code> statement.</p>
+</li>
+</ul>
+</dd>
+<dt><code dir="ltr">'TABLE', '</code><code dir="ltr"><span class="codeinlineitalic">table</span></code><code dir="ltr">'</code></dt>
+<dd>
+<p>Executes the <code dir="ltr">STATS</code> or <code dir="ltr">DELTASTATS</code> only for the specified table or tables. Without this option, counts are returned for all tables that are specified in <code dir="ltr">TABLE</code> (Extract) or <code dir="ltr">MAP</code> (Replicat) parameters in the parameter file.</p>
+<p>Valid <code dir="ltr"><span class="codeinlineitalic">table_name</span></code> values are:</p>
+<ul>
+<li>
+<p>'<code dir="ltr"><span class="codeinlineitalic">schema.table</span></code>' specifies a table.</p>
+</li>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">'table'</span></code> specifies a table of the default schema.</p>
+</li>
+<li>
+<p>'<code dir="ltr"><span class="codeinlineitalic">schema.*</span></code>' specifies all tables of a schema.</p>
+</li>
+<li>
+<p>'<code dir="ltr">*</code>' specifies all tables of the default schema.</p>
+</li>
+</ul>
+<p>For example, the following counts DML operations only for tables in the <code dir="ltr">hr</code> schema:</p>
+<pre dir="ltr">
+MAP fin.*, TARGET fin.*;
+MAP hr.*, TARGET hr.*;
+MAP hq.rpt, TARGET hq.rpt, COLMAP (USEDEFAULTS, CNT = @GETENV ('STATS', 'TABLE', 'hr.*', 'DML'));
+</pre>
+<p>Likewise, the following counts DML operations only for the <code dir="ltr">emp</code> table in the <code dir="ltr">hr</code> schema:</p>
+<pre dir="ltr">
+MAP fin.*, TARGET fin.*;
+MAP hr.*, TARGET hr.*;
+MAP hq.rpt, TARGET hq.rpt, COLMAP (USEDEFAULTS, CNT = @GETENV ('STATS', 'TABLE', 'hr.emp', 'DML'));
+</pre>
+<p>By contrast, because there are no specific tables specified for <code dir="ltr">STATS</code> in the following example, the function counts all <code dir="ltr">INSERT</code>, <code dir="ltr">UPDATE</code>, and <code dir="ltr">DELETE</code> operations for all tables in all schemas that are represented in the <code dir="ltr">TARGET</code> clauses of <code dir="ltr">MAP</code> statements:</p>
+<pre dir="ltr">
+MAP fin.*, TARGET fin.*;
+MAP hr.*, TARGET hr.*;
+MAP hq.rpt, TARGET hq.rpt, COLMAP (USEDEFAULTS, CNT = &amp;
+@GETENV ('STATS', 'DML'));
+</pre></dd>
+<dt><code dir="ltr"><span class="codeinlineitalic">'statistic</span></code>'</dt>
+<dd>
+<p>The type of statistic to return. See <a href="#BABCAACC">Section 5.1, "Using statistics in FILTER clauses"</a> for important information when using statistics in <code dir="ltr">FILTER</code> clauses in multiple <code dir="ltr">TABLE</code> or <code dir="ltr">MAP</code> statements.</p>
+<dl>
+<dt><code dir="ltr">'INSERT'</code></dt>
+<dd>
+<p>Returns the number of <code dir="ltr">INSERT</code> operations that were processed.</p>
+</dd>
+<dt><code dir="ltr">'UPDATE'</code></dt>
+<dd>
+<p>Returns the number of <code dir="ltr">UPDATE</code> operations that were processed.</p>
+</dd>
+<dt><code dir="ltr">'DELETE'</code></dt>
+<dd>
+<p>Returns the number of <code dir="ltr">DELETE</code> operations that were processed.</p>
+</dd>
+<dt><code dir="ltr">'DML'</code></dt>
+<dd>
+<p>Returns the total of <code dir="ltr">INSERT, UPDATE,</code> and <code dir="ltr">DELETE</code> operations that were processed.</p>
+</dd>
+<dt><code dir="ltr">'TRUNCATE'</code></dt>
+<dd>
+<p>Returns the number of <code dir="ltr">TRUNCATE</code> operations that were processed. This variable returns a count only if Oracle GoldenGate DDL replication is not being used. If DDL replication is being used, this variable returns a zero.</p>
+</dd>
+<dt><code dir="ltr">'DDL'</code></dt>
+<dd>
+<p>Returns the number of DDL operations that were processed, including <code dir="ltr">TRUNCATE</code>s and DDL specified in <code dir="ltr">INCLUDE</code> and <code dir="ltr">EXCLUDE</code> clauses of the <code dir="ltr">DDL</code> parameter, all scopes (<code dir="ltr">MAPPED</code>, <code dir="ltr">UNMAPPED</code>, <code dir="ltr">OTHER</code>). This variable returns a count only if Oracle GoldenGate DDL replication is being used. This variable is not valid for <code dir="ltr">'DELTASTATS</code>'.</p>
+</dd>
+<dt><code dir="ltr">'CDR_CONFLICTS'</code></dt>
+<dd>
+<p>Returns the number of conflicts that Replicat detected when executing the Conflict Detection and Resolution (CDR) feature.</p>
+<p>Example for a specific table:</p>
+<pre dir="ltr">
+@GETENV ('STATS','TABLE','HR.EMP','CDR_CONFLICTS')
+</pre>
+<p>Example for all tables processed by Replicat:</p>
+<pre dir="ltr">
+@GETENV ('STATS','CDR_CONFLICTS')
+</pre></dd>
+<dt><code dir="ltr">'CDR_RESOLUTIONS_SUCCEEDED'</code></dt>
+<dd>
+<p>Returns the number of conflicts that Replicat resolved when executing the Conflict Detection and Resolution (CDR) feature.</p>
+<p>Example for a specific table:</p>
+<pre dir="ltr">
+@GETENV ('STATS','TABLE','HR.EMP', 'CDR_RESOLUTIONS_SUCCEEDED')
+</pre>
+<p>Example for all tables processed by Replicat:</p>
+<pre dir="ltr">
+@GETENV ('STATS','CDR_RESOLUTIONS_SUCCEEDED')
+</pre></dd>
+<dt><code dir="ltr">'CDR_RESOLUTIONS_FAILED'</code></dt>
+<dd>
+<p>Returns the number of conflicts that Replicat could not resolve when executing the Conflict Detection and Resolution (CDR) feature.</p>
+<p>Example for a specific table:</p>
+<pre dir="ltr">
+@GETENV ('STATS','TABLE','HR.EMP', 'CDR_RESOLUTIONS_FAILED')
+</pre>
+<p>Example for all tables processed by Replicat:</p>
+<pre dir="ltr">
+@GETENV ('STATS','CDR_RESOLUTIONS_FAILED')
+</pre></dd>
+</dl>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1107952"></a><code dir="ltr">'GGENVIRONMENT' , '</code><code dir="ltr"><span class="codeinlineitalic">environment_info</span></code><code dir="ltr">'</code></p>
+<p>Valid for Extract and Replicat.</p>
+<p>Use the <code dir="ltr">GGENVIRONMENT</code> option of <code dir="ltr">@GETENV</code> to return information about the Oracle GoldenGate environment.</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1843"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('GGENVIRONMENT', {'DOMAINNAME'|'GROUPDESCRIPTION'|'GROUPNAME'|
+   'GROUPTYPE'|'HOSTNAME'|'OSUSERNAME'|'PROCESSID'})
+</pre>
+<dl>
+<dt><code dir="ltr">'DOMAINNAME'</code></dt>
+<dd>
+<p>(Windows only) Returns the domain name associated with the user that started the process.</p>
+</dd>
+<dt><code dir="ltr">'GROUPDESCRIPTION'</code></dt>
+<dd>
+<p>Returns the description of the group, taken from the checkpoint file. Requires that a description was provided with the <code dir="ltr">DESCRIPTION</code> parameter when the group was created with the <code dir="ltr">ADD</code> command in GGSCI.</p>
+</dd>
+<dt><code dir="ltr">'GROUPNAME'</code></dt>
+<dd>
+<p>Returns the name of the process group.</p>
+</dd>
+<dt><code dir="ltr">'GROUPTYPE'</code></dt>
+<dd>
+<p>Returns the type of process, either <code dir="ltr">EXTRACT</code> or <code dir="ltr">REPLICAT</code>.</p>
+</dd>
+<dt><code dir="ltr">'HOSTNAME'</code></dt>
+<dd>
+<p>Returns the name of the system running the Extract or Replicat process.</p>
+</dd>
+<dt><code dir="ltr">'OSUSERNAME'</code></dt>
+<dd>
+<p>Returns the operating system user name that started the process.</p>
+</dd>
+<dt><code dir="ltr">'PROCESSID'</code></dt>
+<dd>
+<p>Returns the process ID that is assigned to the process by the operating system.</p>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1000733"></a><code dir="ltr">'GGHEADER' , '</code><code dir="ltr"><span class="codeinlineitalic">header_info</span></code><code dir="ltr">'</code></p>
+<p>Valid for Extract and Replicat.</p>
+<p>Use the <code dir="ltr">GGHEADER</code> option of <code dir="ltr">@GETENV</code> to return information from the header portion of an Oracle GoldenGate trail record. The header describes the transaction environment of the record. For more information on record headers and record types, see <a class="olink GWUAD741" href="../../gg-winux/GWUAD/wu_fileformats.htm#GWUAD741"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1844"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('GGHEADER', {'BEFOREAFTERINDICATOR'|'COMMITTIMESTAMP'|'LOGPOSITION'|
+   'LOGRBA'|'OBJECTNAME'|'TABLENAME'|'OPTYPE'|'RECORDLENGTH'|
+   'TRANSACTIONINDICATOR'})
+</pre>
+<dl>
+<dt><code dir="ltr">'BEFOREAFTERINDICATOR'</code></dt>
+<dd>
+<p>Returns the before or after indicator showing whether the record is a before image or an after image. Possible results are:</p>
+<ul>
+<li>
+<p><code dir="ltr">BEFORE</code> (before image)</p>
+</li>
+<li>
+<p><code dir="ltr">AFTER</code> (after image)</p>
+</li>
+</ul>
+</dd>
+<dt><code dir="ltr">'COMMITTIMESTAMP'</code></dt>
+<dd>
+<p>Returns the transaction timestamp (the time when the transaction committed) expressed in the format of <code dir="ltr">YYYY-MM-DD HH:MI:SS.FFFFFF</code>, for example:</p>
+<pre dir="ltr">
+2011-01-24 17:08:59.000000
+</pre></dd>
+<dt><code dir="ltr">'LOGPOSITION'</code></dt>
+<dd>
+<p>Returns the position of the Extract process in the data source. (See the <code dir="ltr">LOGRBA</code> option.)</p>
+</dd>
+<dt><code dir="ltr">'LOGRBA'</code></dt>
+<dd>
+<p><code dir="ltr">LOGRBA</code> and <code dir="ltr">LOGPOSITION</code> store details of the position in the data source of the record. For transactional log-based products, <code dir="ltr">LOGRBA</code> is the sequence number and <code dir="ltr">LOGPOSITION</code> is the relative byte address. However, these values will vary depending on the capture method and database type.</p>
+</dd>
+<dt><code dir="ltr">'OBJECTNAME' | 'TABLENAME'</code></dt>
+<dd>
+<p>Returns the table name or object name (if a non-table object).</p>
+</dd>
+<dt><code dir="ltr">'OPTYPE'</code></dt>
+<dd>
+<p>Returns the type of operation. Possible results are:</p>
+<pre dir="ltr">
+INSERT
+UPDATE
+DELETE
+ENSCRIBE COMPUPDATE
+SQL COMPUPDATE
+PK UPDATE
+TRUNCATE
+</pre>
+<p>If the operation is not one of the above types, then the function returns the word <code dir="ltr">TYPE</code> with the number assigned to the type.</p>
+</dd>
+<dt><code dir="ltr">'RECORDLENGTH'</code></dt>
+<dd>
+<p>Returns the record length in bytes.</p>
+</dd>
+<dt><code dir="ltr">'TRANSACTIONINDICATOR'</code></dt>
+<dd>
+<p>Returns the transaction indicator. The value corresponds to the <code dir="ltr">TransInd</code> field of the record header, which can be viewed with the Logdump utility.</p>
+<p>Possible results are:</p>
+<ul>
+<li>
+<p><code dir="ltr">BEGIN</code> (represents <code dir="ltr">TransInD</code> of 0, the first record of a transaction.)</p>
+</li>
+<li>
+<p><code dir="ltr">MIDDLE</code> (represents <code dir="ltr">TransInD</code> of 1, a record in the middle of a transaction.)</p>
+</li>
+<li>
+<p><code dir="ltr">END</code> (represents <code dir="ltr">TransInD</code> of 2, the last record of a transaction.)</p>
+</li>
+<li>
+<p><code dir="ltr">WHOLE</code> (represents <code dir="ltr">TransInD</code> of 3, the only record in a transaction.)</p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1113700"></a><code dir="ltr">'GGFILEHEADER' , '</code><code dir="ltr"><span class="codeinlineitalic">header_info</span></code><code dir="ltr">'</code></p>
+<p>Valid for Replicat.</p>
+<p>Use the <code dir="ltr">GGFILEHEADER</code> option of <code dir="ltr">@GETENV</code> to return attributes of an Oracle GoldenGate extract file or trail file. These attributes are stored as tokens in the file header.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If a given database, operating system, or Oracle GoldenGate version does not provide information that relates to a given token, a <code dir="ltr">NULL</code> value will be returned.</div>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1845"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('GGFILEHEADER', {'COMPATIBILITY'|'CHARSET'|'CREATETIMESTAMP'|
+   'FILENAME'|'FILETYPE'|'FILESEQNO'|'FILESIZE'|'FIRSTRECCSN'|
+   'LASTRECCSN'|'FIRSTRECIOTIME'|'LASTRECIOTIME'|'URI'|'URIHISTORY'|
+   'GROUPNAME'|'DATASOURCE'|'GGMAJORVERSION'|'GGMINORVERSION'|
+   'GGVERSIONSTRING'|'GGMAINTENANCELEVEL'|'GGBUGFIXLEVEL'|'GGBUILDNUMBER'|
+   'HOSTNAME'|'OSVERSION'|'OSRELEASE'|'OSTYPE'|'HARDWARETYPE'|
+   'DBNAME'|'DBINSTANCE'|'DBTYPE'|'DBCHARSET'|'DBMAJORVERSION'|
+   'DBMINORVERSION'|'DBVERSIONSTRING'|'DBCLIENTCHARSET'|'DBCLIENTVERSIONSTRING'|
+   'RECOVERYMODE'|'LASTCOMPLETECSN'|'LASTCOMPLETEXIDS'|'LASTCSN'|'LASTXID'|
+   'LASTCSNTS'})
+</pre>
+<dl>
+<dt><code dir="ltr">'COMPATIBILITY'</code></dt>
+<dd>
+<p>Returns the Oracle GoldenGate compatibility level of the trail file. The compatibility level of the current Oracle GoldenGate version must be greater than, or equal to, the compatibility level of the trail file to be able to read the data records in that file. Current valid values are 0 or 1.</p>
+<ul>
+<li>
+<p>1 means that the trail file is of Oracle GoldenGate version 10.0 or later, which supports file headers that contain file versioning information.</p>
+</li>
+<li>
+<p>0 means that the trail file is of an Oracle GoldenGate version that is older than 10.0. File headers are not supported in those releases. The 0 value is used for backward compatibility to those Oracle GoldenGate versions.</p>
+</li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt><code dir="ltr">'CHARSET'</code></dt>
+<dd>
+<p>Returns the global character set of the trail file. For example:</p>
+<p><code dir="ltr">WCP1252-1</code></p>
+</dd>
+<dt><code dir="ltr">'CREATETIMESTAMP'</code></dt>
+<dd>
+<p>Returns the time that the trail was created, in local GMT Julian time in INT64.</p>
+</dd>
+<dt><code dir="ltr">'FILENAME'</code></dt>
+<dd>
+<p>Returns the name of the trail file. Can be an absolute or relative path, with a forward or backward slash depending on the file system.</p>
+</dd>
+<dt><code dir="ltr">'FILETYPE'</code></dt>
+<dd>
+<p>Returns a numerical value indicating whether the trail file is a single file (such as one created for a batch run) or a sequentially numbered file that is part of a trail for online, continuous processing. The valid values are:</p>
+<ul>
+<li>
+<p>0 - EXTFILE</p>
+</li>
+<li>
+<p>1 - EXTTRAIL</p>
+</li>
+<li>
+<p>2 - UNIFIED and EXTFILE</p>
+</li>
+<li>
+<p>3 - UNIFIED and EXTTRAIL</p>
+</li>
+</ul>
+</dd>
+<dt><code dir="ltr">'FILESEQNO'</code></dt>
+<dd>
+<p>Returns the sequence number of the trail file, without any leading zeros. For example, if a file sequence number is <code dir="ltr">aa000026</code>, <code dir="ltr">FILESEQNO</code> returns <code dir="ltr">26</code>.</p>
+</dd>
+<dt><code dir="ltr">'FILESIZE'</code></dt>
+<dd>
+<p>Returns the size of the trail file. It returns <code dir="ltr">NULL</code> on an active file and returns a size value when the file is full and the trail rolls over.</p>
+</dd>
+<dt><code dir="ltr">'FIRSTRECCSN'</code></dt>
+<dd>
+<p>Returns the commit sequence number (CSN) of the first record in the trail file.Value is <code dir="ltr">NULL</code> until the trail file is completed. For more information about the CSN, see <a class="olink GWUAD752" href="../../gg-winux/GWUAD/wu_csn.htm#GWUAD752"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</dd>
+<dt><code dir="ltr">'LASTRECCSN'</code></dt>
+<dd>
+<p>Returns the commit sequence number (CSN) of the last record in the trail file.Value is <code dir="ltr">NULL</code> until the trail file is completed. For more information about the CSN, see <a class="olink GWUAD752" href="../../gg-winux/GWUAD/wu_csn.htm#GWUAD752"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</dd>
+<dt><code dir="ltr">'FIRSTRECIOTIME'</code></dt>
+<dd>
+<p>Returns the time that the first record was written to the trail file. Value is <code dir="ltr">NULL</code> until the trail file is completed.</p>
+</dd>
+<dt><code dir="ltr">'LASTRECIOTIME'</code></dt>
+<dd>
+<p>Returns the time that the last record was written to the trail file. Value is <code dir="ltr">NULL</code> until the trail file is completed.</p>
+</dd>
+<dt><code dir="ltr">'URI'</code></dt>
+<dd>
+<p>Returns the universal resource identifier of the process that created the trail file, in the following format:</p>
+<pre dir="ltr">
+<span class="italic">host_name</span>:<span class="italic">dir</span>:[:<span class="italic">dir</span>][:<span class="italic">dir_n</span>]<span class="italic">group_name</span>
+</pre>
+<p><span class="bold">Where:</span></p>
+<ul>
+<li>
+<p><code dir="ltr">host_name</code> is the name of the server that hosts the process</p>
+</li>
+<li>
+<p><code dir="ltr">dir</code> is a subdirectory of the Oracle GoldenGate installation path.</p>
+</li>
+<li>
+<p><code dir="ltr">group_name</code> is the name of the process group that is linked with the process.</p>
+</li>
+</ul>
+<p>The following example shows where the trail was processed and by which process. This includes a history of previous runs.</p>
+<pre dir="ltr">
+sys1:home:oracle:v9.5:extora
+</pre></dd>
+<dt><code dir="ltr">'URIHISTORY'</code></dt>
+<dd>
+<p>Returns a list of the URIs of processes that wrote to the trail file before the current process.</p>
+<ul>
+<li>
+<p>For a primary Extract, this field is empty.</p>
+</li>
+<li>
+<p>For a data pump, this field is <code dir="ltr">URIHistory</code> + <code dir="ltr">URI</code> of the input trail file.</p>
+</li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt><code dir="ltr">'GROUPNAME'</code></dt>
+<dd>
+<p>Returns the name of the group that is associated with the Extract process that created the trail. The group name is the one that was supplied when the <code dir="ltr">ADD EXTRACT</code> command was issued.</p>
+</dd>
+<dt><code dir="ltr">'DATASOURCE'</code></dt>
+<dd>
+<p>Returns the data source that was read by the process. The return value can be one of the following:</p>
+<ul>
+<li>
+<p><code dir="ltr">DS_EXTRACT_TRAILS: The source was an Oracle GoldenGate extract file, populated with change data.</code></p>
+</li>
+<li>
+<p><code dir="ltr">DS_DATABASE:</code> The source was a direct select from database table written to a trail, used for <code dir="ltr">SOURCEISTABLE</code>-driven initial load.</p>
+</li>
+<li>
+<p><code dir="ltr">DS_TRAN_LOGS: The source was the database transaction log.</code></p>
+</li>
+<li>
+<p><code dir="ltr">DS_INITIAL_DATA_LOAD: The source was a direct select from database tables for an initial load.</code></p>
+</li>
+<li>
+<p><code dir="ltr">DS_VAM_EXTRACT:</code> The source was a vendor access module (VAM).</p>
+</li>
+<li>
+<p><code dir="ltr">DS_VAM_TWO_PHASE_COMMIT:</code> The source was a VAM trail.</p>
+</li>
+</ul>
+</dd>
+<dt><code dir="ltr">'GGMAJORVERSION'</code></dt>
+<dd>
+<p>Returns the major version of the Extract process that created the trail, expressed as an integer. For example, if a version is 1.2.3, it returns 1.</p>
+</dd>
+<dt><code dir="ltr">'GGMINORVERSION'</code></dt>
+<dd>
+<p>Returns the minor version of the Extract process that created the trail, expressed as an integer. For example, if a version is 1.2.3, it returns 2.</p>
+</dd>
+<dt><code dir="ltr">'GGVERSIONSTRING'</code></dt>
+<dd>
+<p>Returns the maintenance (or patch) level of the Extract process that created the trail, expressed as an integer. For example, if a version is 1.2.3, it returns 3.</p>
+</dd>
+<dt><code dir="ltr">'GGMAINTENANCELEVEL'</code></dt>
+<dd>
+<p>Returns the maintenance version of the process (<code dir="ltr">xx.xx.xx)</code>.</p>
+</dd>
+<dt><code dir="ltr">'GGBUGFIXLEVEL'</code></dt>
+<dd>
+<p>Returns the patch version of the process (<code dir="ltr">xx.xx.xx.xx)</code>.</p>
+</dd>
+<dt><code dir="ltr">'GGBUILDNUMBER'</code></dt>
+<dd>
+<p>Returns the build number of the process.</p>
+</dd>
+</dl>
+<dl>
+<dt><code dir="ltr">'HOSTNAME'</code></dt>
+<dd>
+<p>Returns the DNS name of the machine where the Extract that wrote the trail is running. For example:</p>
+<ul>
+<li>
+<p><code dir="ltr">sysa</code></p>
+</li>
+<li>
+<p><code dir="ltr">sysb</code></p>
+</li>
+<li>
+<p><code dir="ltr">paris</code></p>
+</li>
+<li>
+<p><code dir="ltr">hq25</code></p>
+</li>
+</ul>
+</dd>
+<dt><code dir="ltr">'OSVERSION'</code></dt>
+<dd>
+<p>Returns the major version of the operating system of the machine where the Extract that wrote the trail is running. For example:</p>
+<ul>
+<li>
+<p><code dir="ltr">Version s10_69</code></p>
+</li>
+<li>
+<p><code dir="ltr">#1 SMP Fri Feb 24 16:56:28 EST 2006</code></p>
+</li>
+<li>
+<p><code dir="ltr">5.00.2195 Service Pack 4</code></p>
+</li>
+</ul>
+</dd>
+<dt><code dir="ltr">'OSRELEASE'</code></dt>
+<dd>
+<p>Returns the release version of the operating system of the machine where the Extract that wrote the trail is running. For example, release versions of the examples given for <code dir="ltr">OSVERSION</code> could be:</p>
+<ul>
+<li>
+<p><code dir="ltr">5.10</code></p>
+</li>
+<li>
+<p><code dir="ltr">2.6.9-34.ELsmp</code></p>
+</li>
+</ul>
+</dd>
+<dt><code dir="ltr">'OSTYPE'</code></dt>
+<dd>
+<p>Returns the type of operating system of the machine where the Extract that wrote the trail is running. For example:</p>
+<ul>
+<li>
+<p><code dir="ltr">SunOS</code></p>
+</li>
+<li>
+<p><code dir="ltr">Linux</code></p>
+</li>
+<li>
+<p><code dir="ltr">Microsoft Windows</code></p>
+</li>
+</ul>
+</dd>
+<dt><code dir="ltr">'HARDWARETYPE'</code></dt>
+<dd>
+<p>Returns the type of hardware of the machine where the Extract that wrote the trail is running. For example:</p>
+<ul>
+<li>
+<p><code dir="ltr">sun4u</code></p>
+</li>
+<li>
+<p><code dir="ltr">x86_64</code></p>
+</li>
+<li>
+<p><code dir="ltr">x86</code></p>
+</li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt><code dir="ltr">'DBNAME'</code></dt>
+<dd>
+<p>Returns the name of the database, for example <code dir="ltr">findb</code>.</p>
+</dd>
+<dt><code dir="ltr">'DBINSTANCE'</code></dt>
+<dd>
+<p>Returns the name of the database instance, if applicable to the database type, for example <code dir="ltr">ORA1022A</code>.</p>
+</dd>
+<dt><code dir="ltr">'DBTYPE'</code></dt>
+<dd>
+<p>Returns the type of database that produced the data in the trail file. Can be one of:</p>
+<pre dir="ltr">
+DB2 UDB
+DB2 ZOS
+CTREE
+MSSQL
+MYSQL
+ORACLE
+SQLMX
+SYBASE
+TERADATA
+NONSTOP
+ENSCRIBE
+ODBC
+</pre></dd>
+<dt><code dir="ltr">'DBCHARSET'</code></dt>
+<dd>
+<p>Returns the character set that is used by the database that produced the data in the trail file. (For some databases, this will be empty.)</p>
+</dd>
+<dt><code dir="ltr">'DBMAJORVERSION'</code></dt>
+<dd>
+<p>Returns the major version of the database that produced the data in the trail file.</p>
+</dd>
+<dt><code dir="ltr">'DBMINORVERSION'</code></dt>
+<dd>
+<p>Returns the minor version of the database that produced the data in the trail file.</p>
+</dd>
+<dt><code dir="ltr">'DBVERSIONSTRING'</code></dt>
+<dd>
+<p>Returns the maintenance (patch) level of the database that produced the data in the trail file.</p>
+</dd>
+<dt><code dir="ltr">'DBCLIENTCHARSET'</code></dt>
+<dd>
+<p>Returns the character set that is used by the database client.</p>
+</dd>
+<dt><code dir="ltr">'DBCLIENTVERSIONSTRING'</code></dt>
+<dd>
+<p>Returns the maintenance (patch) level of the database client. (For some databases, this will be empty.)</p>
+</dd>
+</dl>
+<dl>
+<dt><code dir="ltr">'RECOVERYMODE'</code></dt>
+<dd>
+<p>Returns recovery information for internal Oracle GoldenGate use.</p>
+</dd>
+<dt><code dir="ltr">'LASTCOMPLETECSN'</code></dt>
+<dd>
+<p>Returns recovery information for internal Oracle GoldenGate use.</p>
+</dd>
+<dt><code dir="ltr">'LASTCOMPLETEXIDS'</code></dt>
+<dd>
+<p>Returns recovery information for internal Oracle GoldenGate use.</p>
+</dd>
+<dt><code dir="ltr">'LASTCSN'</code></dt>
+<dd>
+<p>Returns recovery information for internal Oracle GoldenGate use.</p>
+</dd>
+<dt><code dir="ltr">'LASTXID'</code></dt>
+<dd>
+<p>Returns recovery information for internal Oracle GoldenGate use.</p>
+</dd>
+<dt><code dir="ltr">'LASTCSNTS'</code></dt>
+<dd>
+<p>Returns recovery information for internal Oracle GoldenGate use.</p>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1113701"></a><code dir="ltr">'RECORD' , '</code><code dir="ltr"><span class="codeinlineitalic">location_info</span></code><code dir="ltr">'</code></p>
+<p>Valid for a data-pump Extract or Replicat.</p>
+<p>Use the <code dir="ltr">RECORD</code> option of <code dir="ltr">@GETENV</code> to return the location or Oracle rowid of a record in an Oracle GoldenGate trail file.</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1846"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('RECORD', {'FILESEQNO'|'FILERBA'|'ROWID'|'RSN'|'TIMESTAMP'})
+</pre>
+<dl>
+<dt><code dir="ltr">'FILESEQNO'</code></dt>
+<dd>
+<p>Returns the sequence number of the trail file without any leading zeros.</p>
+</dd>
+<dt><code dir="ltr">'FILERBA'</code></dt>
+<dd>
+<p>Returns the relative byte address of the record within the <code dir="ltr">FILESEQNO</code> file.</p>
+</dd>
+<dt><code dir="ltr">'ROWID'</code></dt>
+<dd>
+<p>(Valid for Oracle) Returns the rowid of the record.</p>
+</dd>
+<dt><code dir="ltr">'RSN'</code></dt>
+<dd>
+<p>Returns the record sequence number within the transaction.</p>
+</dd>
+<dt><code dir="ltr">'TIMESTAMP'</code></dt>
+<dd>
+<p>Returns the timestamp of the record.</p>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1113702"></a><code dir="ltr">'DBENVIRONMENT' , '</code><code dir="ltr"><span class="codeinlineitalic">database_info</span></code><code dir="ltr">'</code></p>
+<p>Valid for Extract and Replicat.</p>
+<p>Use the <code dir="ltr">DBENVIRONMENT</code> option of <code dir="ltr">@GETENV</code> to return global environment information for a database.</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1847"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('DBENVIRONMENT', {'DBNAME'|'DBVERSION'|'DBUSER'|'SERVERNAME'})
+</pre>
+<dl>
+<dt><code dir="ltr">'DBNAME'</code></dt>
+<dd>
+<p>Returns the database name.</p>
+</dd>
+<dt><code dir="ltr">'DBVERSION'</code></dt>
+<dd>
+<p>Returns the database version.</p>
+</dd>
+<dt><code dir="ltr">'DBUSER'</code></dt>
+<dd>
+<p>Returns the database login user. Note that SQL Server does not log the user ID.</p>
+</dd>
+<dt><code dir="ltr">'SERVERNAME'</code></dt>
+<dd>
+<p>Returns the name of the server.</p>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1113703"></a><code dir="ltr">'TRANSACTION' , '</code><code dir="ltr"><span class="codeinlineitalic">transaction_info</span></code></p>
+<p>Valid for Extract and Replicat.</p>
+<p>Use the <code dir="ltr">TRANSACTION</code> option of <code dir="ltr">@GETENV</code> to return information about a source transaction. This option is valid for the Extract process.</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1848"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('TRANSACTION', {'TRANSACTIONID'|'XID'|'CSN'|'TIMESTAMP'|'NAME'|
+   'USERID'|'USERNAME'|'PLANNAME' | 'LOGBSN' | 'REDOTHREAD')
+</pre>
+<dl>
+<dt><code dir="ltr">'TRANSACTIONID' | 'XID'</code></dt>
+<dd>
+<p>Returns the transaction ID number. Either <code dir="ltr">TRANSACTIONID</code> or <code dir="ltr">XID</code> can be used. The transaction ID and the CSN are associated with the first record of every transaction and are stored as tokens in the trail record. For each transaction ID, there is an associated CSN. Transaction ID tokens have no zero-padding on any platform, because they never get evaluated as relative values. They only get evaluated for whether they match or do not match. Note that in the trail, the transaction ID token is shown as <code dir="ltr">TRANID</code>.</p>
+</dd>
+<dt><code dir="ltr">'CSN'</code></dt>
+<dd>
+<p>Returns the commit sequence number (CSN). The CSN is not zero-padded when returned for these databases: Oracle, DB2 LUW, and DB2 z/OS. For all other supported databases, the CSN is zero-padded. In the case of the Sybase CSN, each substring that is delimited by a dot (.) will be padded to a length that does not change for that substring.</p>
+<p>Note that in the trail, the CSN token is shown as <code dir="ltr">LOGCSN</code>. See the <code dir="ltr">TRANSACTIONID | XID</code> environment value for additional information about the CSN token.</p>
+<p>For more information about the CSN, see <a class="olink GWUAD752" href="../../gg-winux/GWUAD/wu_csn.htm#GWUAD752"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</dd>
+<dt><code dir="ltr">'TIMESTAMP'</code></dt>
+<dd>
+<p>Returns the commit timestamp of the transaction.</p>
+</dd>
+<dt><code dir="ltr">'NAME'</code></dt>
+<dd>
+<p>Returns the transaction name, if available.</p>
+</dd>
+<dt><code dir="ltr">'USERID'</code></dt>
+<dd>
+<p>(Oracle) Returns the Oracle user ID of the database user that committed the last transaction.</p>
+</dd>
+<dt><code dir="ltr">'USERNAME'</code></dt>
+<dd>
+<p>(Oracle) Returns the Oracle user name of the database user that committed the last transaction.</p>
+</dd>
+<dt><code dir="ltr">'PLANNAME'</code></dt>
+<dd>
+<p>(DB2 on z/OS) Returns the plan name under which the current transaction was originally executed. The plan name is included in the begin unit of recovery log record.</p>
+</dd>
+<dt><code dir="ltr">'LOGBSN'</code></dt>
+<dd>
+<p>Returns the begin sequence number (BSN) in the transaction log. The BSN is the native sequence number that identifies the beginning of the oldest uncommitted transaction that is held in Extract memory. For example, given an Oracle database, the BSN would be expressed as a system change number (SCN). The BSN corresponds to the current I/O checkpoint value of Extract. This value can be obtained from the trail by Replicat when <code dir="ltr">@GETENV ('TRANSACTION', 'LOGBSN')</code> is used. This value also can be obtained by using the <code dir="ltr">INFO REPLICAT</code> command with the <code dir="ltr">DETAIL</code> option. The purpose of obtaining the BSN from Replicat is to get a recovery point for Extract in the event that a system failure or file system corruption makes the Extract checkpoint file unusable. See <a class="olink GWUAD698" href="../../gg-winux/GWUAD/wu_adminops.htm#GWUAD698"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for more information about recovering the Extract position.</p>
+</dd>
+<dt><code dir="ltr">'REDOTHREAD'</code></dt>
+<dd>
+<p>Returns the thread number of a RAC node extract; on non-RAC node extracts the value is always 1. For data pump and Replicat, the thread id used by Extract capture of a RAC node is returned; on non-RAC, <code dir="ltr">@GETENV()</code> returns an error. Logdump shows the token, <code dir="ltr">ORATHREADID</code>, in the token section if the transaction is captured by Extract on a RAC node.</p>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1113704"></a><code dir="ltr">'OSVARIABLE' , '</code><code dir="ltr"><span class="codeinlineitalic">variable</span></code><code dir="ltr">'</code></p>
+<p>Valid for Extract and Replicat.</p>
+<p>Use the <code dir="ltr">OSVARIABLE</code> option of <code dir="ltr">@GETENV</code> to return the string value of a specified operating-system environment variable.</p>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1849"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('OSVARIABLE', '<span class="italic">variable</span>')
+</pre>
+<dl>
+<dt><code dir="ltr"><span class="codeinlineitalic">'variable'</span></code></dt>
+<dd>
+<p>The name of the variable. The search is an exact match of the supplied variable name. For example, the UNIX <code dir="ltr">grep</code> command would return all of the following variables, but <code dir="ltr">@GETENV&nbsp;('OSVARIABLE', 'HOME')</code> would only return the value for <code dir="ltr">HOME</code>:</p>
+<pre dir="ltr">
+ANT_HOME=/usr/local/ant
+JAVA_HOME=/usr/java/j2sdk1.4.2_10
+HOME=/home/judyd
+ORACLE_HOME=/rdbms/oracle/ora1022i/64
+</pre>
+<p>The search is case-sensitive if the operating system supports case-sensitivity.</p>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="i1099260"></a><code dir="ltr">'TLFKEY' , SYSKEY, '</code><code dir="ltr"><span class="codeinlineitalic">unique_key</span></code><code dir="ltr">'</code></p>
+<p>Valid for Extract and Replicat.</p>
+<p>Use the <code dir="ltr">TLFKEY</code> option of <code dir="ltr">@GETENV</code> to associate a unique key with TLF/PTLF records in ACI's Base24 application. The 64-bit key is composed of the following concatenated items:</p>
+<ul>
+<li>
+<p>The number of seconds since 2000.</p>
+</li>
+<li>
+<p>The block number of the record in the TLF/PTLF block multiplied by ten.</p>
+</li>
+<li>
+<p>The node specified by the user (must be between 0 and 255).</p>
+</li>
+</ul>
+<div class="refsubsect"><p class="titleinrefsubsect2"><a id="sthref1850"></a>Syntax</p>
+<pre dir="ltr">
+@GETENV ('TLFKEY', SYSKEY, <span class="italic">unique_key</span>)
+</pre>
+<dl>
+<dt><code dir="ltr">SYSKEY,</code> <code dir="ltr"><span class="codeinlineitalic">unique_key</span></code></dt>
+<dd>
+<p>The NonStop node number of the source TLF/PTLF file. Do not enclose this syntax element in quotes.</p>
+<p>Example:</p>
+<pre dir="ltr">
+GETENV ('TLFKEY', SYSKEY, 27)
+</pre></dd>
+</dl>
+</div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment135">
+<tr>
+<td class="cellalignment142"><table class="cellalignment140">
+<tr>
+<td class="cellalignment139"><a href="column_conversion_functions014.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment139"><a href="column_conversion_functions016.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment144">
+<table class="cellalignment138">
+<tr>
+<td class="cellalignment139"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment139"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment139"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>3 Preparing the System for Oracle GoldenGate Processing</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.23 Build 1" />
+<meta name="description" content="Certain database attributes must be addressed in an Oracle GoldenGate environment. Some steps are required on the source system, some on the target, and some on both." />
+<meta name="dcterms.created" content="2014-01-31T22:37:49Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Installing and Configuring Oracle GoldenGate for NonStop SQL/MX" />
+<meta name="dcterms.identifier" content="E29230-01" />
+<meta name="dcterms.isVersionOf" content="GISMX" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="ogg_wu_install_sqlmx.htm" title="Previous" type="text/html" />
+<link rel="Next" href="ogg_wu_uninstall_sqlmx.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GISMX.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GISMX.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GISMX.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">6/8</span>
+<!-- End Header --><a id="GISMX133"></a> <a id="sthref18"></a>
+<h1 class="chapter"><span class="secnum">3</span> Preparing the System for Oracle GoldenGate Processing</h1>
+<p><a id="GISMX134"></a>Certain database attributes must be addressed in an Oracle GoldenGate environment. Some steps are required on the source system, some on the target, and some on both. This chapter describes these steps. It contains the following sections:</p>
+<ul>
+<li>
+<p><a href="#BABIBFJI">Section 3.1, "Configuring Oracle GoldenGate to Support Tables with a SYSKEY or Clustered Key"</a></p>
+</li>
+<li>
+<p><a href="#BABGCBGD">Section 3.2, "Define an ODBC data source"</a></p>
+</li>
+<li>
+<p><a href="#BABFIJHA">Section 3.3, "Specifying object names in a SQL/MX configuration"</a></p>
+</li>
+<li>
+<p><a href="#BABFIGBE">Section 3.4, "Disable triggers and cascade constraints on a SQL/MX target"</a></p>
+</li>
+<li>
+<p><a href="#BABGDAGH">Section 3.5, "Configure ODBC to prevent timeouts on a SQL/MX target"</a></p>
+</li>
+<li>
+<p><a href="#BABCJJBJ">Section 3.6, "Specify connection authentication on a SQL/MX target"</a></p>
+</li>
+<li>
+<p><a href="#BABEGHJA">Section 3.7, "Supply a data-definitions file on a NonStop target"</a></p>
+</li>
+</ul>
+<a id="BABIBFJI"></a><a id="GISMX161"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">3.1</span> Configuring Oracle GoldenGate to Support Tables with a SYSKEY or Clustered Key</h2>
+<p>If your Replicat configuration includes tables that have a <code>SYSKEY</code> or a clustered key, you must take steps to ensure that the correct row is changed during an <code>UPDATE</code> or <code>DELETE</code> operation. Replicat uses an ODBC driver to connect to a target SQL/MX database. This driver does not allow Replicat to get the values of the <code>SYSKEYs</code> in the target tables, so they cannot be used in the <code>WHERE</code> clause to locate rows for processing. You can handle this condition in either of the following ways:</p>
+<p><a href="#BABIJJHA">Section 3.1.1, "Method One (handle through the Replicat configuration)"</a></p>
+<p><a href="#BABEIHAE">Section 3.1.2, "Method Two (handle through the Extract configuration)"</a></p>
+<a id="BABIJJHA"></a><a id="GISMX162"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">3.1.1</span> Method One (handle through the Replicat configuration)</h3>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>This is the preferred method of handling tables with <code>SYSKEY</code> or clustered keys.</p>
+</div>
+<p>This method maps the source <code>SYSKEY</code> to an additional column in the target table. Replicat can then be configured to use the key value to locate a target row that has the same key value.</p>
+<ol>
+<li>
+<p>Add a column named <code>GGS_SYSKEY</code> to the target table.</p>
+</li>
+<li>
+<p>In the <code>MAP</code> statement, map the source <code>SYSKEY</code> column to the <code>GGS_SYSKEY</code> column by means of a <code>COLMAP</code> clause.</p>
+</li>
+<li>
+<p>Specify the <code>GGS_SYSKEY</code> column in a <code>KEYCOLS</code> clause in the same <code>MAP</code> statement. This ensures that the unique source <code>SYSKEY</code> value is used as the key for the target table.</p>
+</li>
+</ol>
+<p>The following is an example of this procedure:</p>
+<p><span class="bold">Source table:</span></p>
+<pre>
+CREATE TABLE DEV.TSSCAT.ENTRY
+  (
+    COLA    INT DEFAULT NULL
+  , COLB    CHAR(20)  DEFAULT DEFAULT NULL
+  )
+</pre>
+<p><span class="bold">Target table:</span></p>
+<p>If the target table has a clustered key rather than a <code>SYSKEY</code>, include the user-defined columns in the <code>STORE BY</code> clause.</p>
+<pre>
+CREATE TABLE DEV.TASCAT.ENTRY
+  (
+    GGS_SYSKEY  LARGEINT NO DEFAULT NOT NULL
+  , COLA        INT DEFAULT NULL
+  , COLB        CHAR(20) DEFAULT DEFAULT NULL
+  )
+  STORE BY (GGS_SYSKEY ASC);
+</pre>
+<p><span class="bold">MAP statement:</span></p>
+<p>If the target table has a clustered key rather than a <code>SYSKEY</code>, include the user-defined columns in the <code>STORE BY</code> clause.</p>
+<pre>
+MAP TSSCAT.ENTRY, TARGET TASCAT.ENTRY,
+   COLMAP (ggs_syskey = syskey, USEDEFAULTS),
+   KEYCOLS (ggs_syskey);
+</pre></div>
+<!-- class="sect2" -->
+<a id="BABEIHAE"></a><a id="GISMX163"></a>
+<div class="sect2">
+<h3 class="sect2"><span class="secnum">3.1.2</span> Method Two (handle through the Extract configuration)</h3>
+<p>You can allow Replicat to use the full row image to locate a row in the target table, rather than rely on a key. Replicat defaults to using the full row image when a target key is not defined or when it is not available (as in this case, where ODBC does not supply it). This method requires that the combination of all of the column values of any given row makes that row unique among all other rows in the table. Otherwise, Replicat may change more than one row.</p>
+<p>No changes to the target table definitions are required by this method, nor are there any special column mapping requirements in the Replicat configuration. You only need to turn off compression in the source table attributes and in the Extract configuration.</p>
+<ol>
+<li>
+<p>Create or alter the source tables to have the <code>ATTRIBUTE NO AUDITCOMPRESS</code> set. The following is an example:</p>
+<pre>
+CREATE TABLE DEV.TSSCAT.ENTRY
+  (
+    COLA    INT DEFAULT NULL
+  , COLB    CHAR(20)  DEFAULT DEFAULT NULL
+  )
+  ATTRIBUTE NO AUDITCOMPRESS;
+</pre></li>
+<li>
+<p>Use the <code>NOCOMPRESSDELETES</code> and <code>NOCOMPRESSUPDATES</code> parameters in the Extract parameter file to configure Extract to write all of the columns of a table to the trail for <code>UPDATE</code> and <code>DELETE</code> operations. Replicat will use all column values as the row locator. (By default Extract only writes the key to the trail for <code>DELETEs</code> and only the key and the changed columns for <code>UPDATEs</code>.) For more information, see <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABGCBGD"></a><a id="GISMX137"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">3.2</span> Define an ODBC data source</h2>
+<p>Follow these steps to specify a data source name (DSN) to which the GGSCI command interface can connect on the source and to which the Replicat process can connect on the target.</p>
+<ol>
+<li>
+<p>Log into the NonStop system and select a TACL prompt.</p>
+</li>
+<li>
+<p>Edit or Tedit the <code>$SYSTEM.SYSTEM.ODBCDSN</code> ODBC configuration file.</p>
+</li>
+<li>
+<p>Add the DSN to the <code>[ODBC Data Sources]</code> list, as shown in <a href="#BABJDCJJ">Example 3-1</a>. A DSN of <code>TDM_Default_DataSource</code> and default connection settings are included in this file by default.</p>
+</li>
+<li>
+<p>Define your data source connection by adding the following lines, referring to <a href="#BABJDCJJ">Example 3-1</a> as needed:</p>
+<ul>
+<li>
+<p>[<code><span class="codeinlineitalic">dsn</span></code>] : Replace <code><span class="codeinlineitalic">dsn</span></code> in the heading with the actual DSN.</p>
+</li>
+<li>
+<p><code>Description</code> : Add a text string description, if needed.</p>
+</li>
+<li>
+<p><code>Catalog</code> : Add the database catalog.</p>
+</li>
+<li>
+<p><code>Schema</code> : Add the database schema.</p>
+</li>
+<li>
+<p><code>Server</code> : Add the NSK server. The server is where the ODBC/MX server is running and must be in the format of <code>TCP:</code><code><span class="codeinlineitalic">IP_address_or_domain_name</span></code>/<code><span class="codeinlineitalic">IP_port</span></code> as shown in <a href="#BABJDCJJ">Example 3-1</a>.</p>
+</li>
+<li>
+<p>Add the other parameters only if you want them to be something other than the default settings specified under <code>TDM_Default_DataSource</code> .</p>
+</li>
+</ul>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>The DSN in the <code>ODBCDSN</code> file must exactly match the DSN that is defined in the <code>ODBC/MX</code> service. Data source names are case-sensitive.</p>
+</div>
+</li>
+<li>
+<p>Save the file and then exit the edit session.</p>
+</li>
+</ol>
+<div class="example"><p class="titleinexample"><a id="BABJDCJJ"></a><a id="GISMX138"></a>Example 3-1 Template for ODBC configuration file</p>
+<pre>
+TACL&gt; Edit $SYSTEM.SYSTEM.ODBCDSN
+
+[ODBC]
+TraceFlags = 6
+TraceStart = 0TraceFile = trlog
+
+[ODBC Data Sources]
+TDM_Default_DataSource = NonStop ODBC/MX 2.3
+&lt;dsn&gt; = NonStop ODBC/MX 2.3
+
+DataSourceName = &lt;Driver&gt;
+
+[TDM_Default_DataSource]
+Description = Default Data Source
+Catalog = CAT
+Schema = SCH
+DataLang = 0
+FetchBufferSize = SYSTEM_DEFAULT
+Server = TCP:xxx.xxx.xxx.xxx/xxxx
+SQL_ATTR_CONNECTION_TIMEOUT = SYSTEM_DEFAULT
+SQL_LOGIN_TIMEOUT = SYSTEM_DEFAULT
+SQL_QUERY_TIMEOUT = NO_TIMEOUT
+
+[&lt;dsn&gt;]
+Description = &lt;text string describing data source&gt;
+Catalog = &lt;target catalog&gt;
+Schema = &lt;target schema&gt;
+Server = TCP:&lt;ip address or domain name&gt;/&lt;ip port&gt;
+</pre></div>
+<!-- class="example" -->
+<p>For more information about the <code>$SYSTEM.SYSTEM.ODBCDSN</code> file and how to configure ODBC for SQL/MX, see <span class="italic">HP NonStop Open System Services ODBC/MX Client Driver</span> at.</p>
+<p><code><a href="http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02132824/c02132824.pdf">http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02132824/c02132824.pdf</a></code></p>
+</div>
+<!-- class="sect1" -->
+<a id="BABFIJHA"></a><a id="GISMX139"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">3.3</span> Specifying object names in a SQL/MX configuration</h2>
+<p>Oracle GoldenGate supports both two-part (<code>schema.table</code>) and three-part (<code>catalog.schema.table</code>) table names in parameter files and commands. See <a class="olink GWUAD192" href="../../gg-winux/GWUAD/wu_gettingstarted.htm#GWUAD192"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a> for complete information about specifying object names.</p>
+<a id="BABJIBBH"></a><a id="GISMX140"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2"><span class="secnum">3.3.1</span> Using two-part names</h3>
+<p>In a two-part name, you specify the schema and the object name. To map the catalog portion of the name, you must link it to an Extract or Replicat group. Only one catalog can be linked to an Extract or Replicat group. To capture from, or apply to, more than one catalog, you must create an Extract group for each one on the source and a Replicat group for each one on the target. To link a catalog to an Extract group, use the <code>SOURCEDB</code> parameter. To link a catalog to a Replicat group, use the <code>TARGETDB</code> parameter. The <code>USERID</code> portion of <code>SOURCEDB</code> and <code>TARGETDB</code> specifies the default schema.</p>
+<pre>
+SOURCEDB <span class="codeinlineitalic">catalog</span> USERID <span class="codeinlineitalic">schema</span>
+
+TARGETDB <span class="codeinlineitalic">catalog</span> USERID <span class="codeinlineitalic">schema</span>
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>The API that is used by Extract does not log in to the database, so an authentication password is not required.</p>
+</div>
+</div>
+<!-- class="sect2" -->
+<a id="GISMX141"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" --><a id="sthref19"></a>
+<h3 class="sect2"><span class="secnum">3.3.2</span> Using three-part names</h3>
+<p>In a three-part name, you specify the catalog, schema, and object name as <code>catalog.schema.object</code>. You must explicitly enable support for three-part names by using the <code>ENABLECATALOGNAMES</code> parameter in the <code>GLOBALS</code> file. For more information about the <code>GLOBALS</code> file, see <a class="olink GWUAD166" href="../../gg-winux/GWUAD/wu_gettingstarted.htm#GWUAD166"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABFIGBE"></a><a id="GISMX143"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">3.4</span> Disable triggers and cascade constraints on a SQL/MX target</h2>
+<p>Disable triggers, cascade delete constraints, and cascade update constraints on target SQL/MX tables, or alter them to ignore changes made by the Oracle GoldenGate database user. Oracle GoldenGate replicates DML that results from a trigger or cascade constraint. If the same trigger or constraint gets activated on the target table, it becomes redundant because of the replicated version, and the database returns an error. Consider the following example, where the source tables are <code>emp_src</code> and <code>salary_src</code> and the target tables are <code>emp_targ</code> and <code>salary_targ</code>.</p>
+<ol>
+<li>
+<p>A delete is issued for <code>emp_src</code><span class="italic">.</span></p>
+</li>
+<li>
+<p>It cascades a delete to <code>salary_src</code> .</p>
+</li>
+<li>
+<p>Oracle GoldenGate sends both deletes to the target.</p>
+</li>
+<li>
+<p>The parent delete arrives first and is applied to <code>emp_targ</code> .</p>
+</li>
+<li>
+<p>The parent delete cascades a delete to <code>salary_targ</code> .</p>
+</li>
+<li>
+<p>The cascaded delete from <code>salary_src</code> is applied to <code>salary_targ</code><span class="italic">.</span></p>
+</li>
+<li>
+<p>The row cannot be located because it was already deleted in step 5.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="BABGDAGH"></a><a id="GISMX144"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">3.5</span> Configure ODBC to prevent timeouts on a SQL/MX target</h2>
+<p>Follow this procedure to change the ODBC connection timeout on a NonStop target from the <code>SYSTEM_DEFAULT</code> of ten minutes to <code>NO_TIMEOUT</code> .</p>
+<ol>
+<li>
+<p>From OSH, run <code>mxci</code> and set the mode to <code>mxcs</code> .</p>
+<pre>
+/G/DEV01/SUPERDEV 1&gt;mxci
+&gt;&gt;mode mxcs;
+</pre></li>
+<li>
+<p>Issue the following command to show current settings.</p>
+<pre>
+info ds *,detail;
+</pre>
+<p>The system responds:</p>
+<div class="example"><p class="titleinexample"><a id="GISMX145"></a><a id="sthref20"></a>Example 3-2</p>
+<pre>
+Name: \SYSA.$MX.TDM_Default_DataSource
+CpuList: ALL
+InitPri..........Same as Assoc Server
+CurrentState..................STARTED
+ConnectedServers....................0
+AvailableServers....................4
+LastStateChg.............Apr 12 15:36
+LastUpdate...............Apr 12 14:56
+IdleServer..........................4
+IdleTimeout............SYSTEM_DEFAULT
+MaxServer.........................100
+ConnTimeout............SYSTEM_DEFAULT
+InitServer..........................4
+StartAutomatic.....................ON
+Trace.............................OFF
+SQLPrepareStat....................OFF
+ConnInfoStat.......................ON
+SQLExecuteStat....................OFF
+SessionInfoStat....................ON
+SQLExecDirectStat.................OFF
+SQLStmtStat.......................OFF
+SQLFetchStat......................OFF
+</pre></div>
+<!-- class="example" --></li>
+<li>
+<p>Change the <code>IdleTimeout</code> and <code>ConnTimeout</code> to <code>NO_TIMEOUT</code> as follows:</p>
+<pre>
+CS&gt;alter ds "TDM_Default_DataSource", IdleTimeout NO_TIMEOUT;
+CS&gt;&gt;alter ds "TDM_Default_DataSource", ConnTimeout NO_TIMEOUT;
+</pre></li>
+<li>
+<p>Restart the NonStop SQL/MX server.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="BABCJJBJ"></a><a id="GISMX146"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">3.6</span> Specify connection authentication on a SQL/MX target</h2>
+<p>Add the following parameters to the Replicat parameter file to specify ODBC connection authentication for Replicat to use on the target SQL/MX database.</p>
+<pre>
+TARGETDB <span class="codeinlineitalic">DSN</span> USERID <span class="codeinlineitalic">user</span>, PASSWORD <span class="codeinlineitalic">password</span>
+</pre>
+<ul>
+<li>
+<p>Use the <code>TARGETDB</code> and <code>USERID</code> parameters as one entry.</p>
+</li>
+<li>
+<p>Supply the ODBC data source name with <code>TARGETDB</code> .</p>
+</li>
+<li>
+<p>Supply the user name and password with <code>USERID</code> .</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="BABEGHJA"></a><a id="GISMX147"></a>
+<div class="sect1">
+<h2 class="sect1"><span class="secnum">3.7</span> Supply a data-definitions file on a NonStop target</h2>
+<p>To replicate data between source and target NonStop SQL/MX databases, you must supply source data definitions to the Replicat process, even though the two databases might be identical in version and structure. There are slight differences in the way that metadata is returned to Oracle GoldenGate by the native API from the source database and by ODBC from the target database.</p>
+<ol>
+<li>
+<p>Create a data definitions file with the DEFGEN utility.</p>
+</li>
+<li>
+<p>Transfer the definitions file to the target system.</p>
+</li>
+<li>
+<p>Specify the fully qualified name of the definitions file with the <code>SOURCEDEFS</code> parameter in the Replicat parameter file.</p>
+</li>
+</ol>
+<p>For more information about data-definitions files, see <a class="olink GWUAD473" href="../../gg-winux/GWUAD/wu_data_definitions.htm#GWUAD473"><span class="italic">Administering Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment82">
+<tr>
+<td class="cellalignment89"><table class="cellalignment93">
+<tr>
+<td class="cellalignment86"><a href="ogg_wu_install_sqlmx.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment86"><a href="ogg_wu_uninstall_sqlmx.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment91">
+<table class="cellalignment92">
+<tr>
+<td class="cellalignment86"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment86"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment86"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

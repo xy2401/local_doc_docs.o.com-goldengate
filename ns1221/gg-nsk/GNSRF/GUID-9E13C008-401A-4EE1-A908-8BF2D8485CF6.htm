@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>SQLFORMATDISCARDFILE</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-06EF4487-0FB2-43C8-84ED-64D3AC07CA33.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-0DA6F317-33C5-49C7-B728-2594360A88C2.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-9E13C008-401A-4EE1-A908-8BF2D8485CF6"></a> <span id="PAGE" style="display:none;">237/360</span> <!-- End Header -->
+<a id="GNSRF571"></a>
+<h1 id="GNSRF-GUID-9E13C008-401A-4EE1-A908-8BF2D8485CF6" class="sect1"><span class="enumeration_section">2.211</span> SQLFORMATDISCARDFILE</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use <code class="codeph">SQLFORMATDISCARDFILE</code> to create a file for SQLCI formatted statements of operations that have been discarded because of errors. Once the original problem is corrected, SQL discard files can be used as input to replicate the failed operations.</p>
+<p>The SQL formatted records include <code class="codeph">SET</code> <code class="codeph">SESSION</code> <code class="codeph">ABORT</code> <code class="codeph">ERROR</code> <code class="codeph">ON</code> to cause the SQL action to abend if there is an error. <code class="codeph">BEGIN</code> and <code class="codeph">COMMIT WORK</code> statements are also included.</p>
+<p>The requirements for using the SQL discard file are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The target for the Replicat must be SQL/MP. (The source database may be any that Oracle GoldenGate supports.)</p>
+</li>
+<li>
+<p>The contents of the SQL formatted discard file can be edited, but must be valid input to SQLCI. Because of the possible size of the file, <code class="codeph">TEDIT</code> should be used; <code class="codeph">EDIT</code> can fail on a memory error.</p>
+</li>
+</ul>
+<p>The SQL discard file is an edit type file so changes can be made if necessary. The size of the file is set at extents (70, 70, 128) and this should not be changed.</p>
+<div class="infobox-note" id="GUID-9E13C008-401A-4EE1-A908-8BF2D8485CF6__GUID-628C0922-7720-4734-ABE1-A25200100BE5">
+<p class="notep1">Note:</p>
+<p>The extents should not be changed because making it 1) smaller may result in an error 45 indicating the file is full when more lines could be processed 2) larger may suppress an error 46 indicating there are more lines than an edit file may contain.</p>
+</div>
+<p>See <span class="italic"><span id="GUID-9E13C008-401A-4EE1-A908-8BF2D8485CF6__GNSAD"><cite>Administering Oracle GoldenGate for HP NonStop (Guardian)</cite></span></span> for information on editing the file and the rules that must be followed for valid input to SQLCI.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Default</p>
+<p>No SQL discard file created.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+SQLFORMATDISCARDFILE <span class="italic">file_name</span>
+[, APPEND | PURGE | ROLLOVER]
+[, LINECOUNT <span class="italic">number</span>]
+[, OWNER (<span class="italic">group_number</span>, <span class="italic">user_number</span>)]
+[, SECURE "<span class="italic">rwep</span>"]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-9E13C008-401A-4EE1-A908-8BF2D8485CF6__GUID-E79DD0F1-816C-4EC5-A305-FD605361AD39"><!-- --></a><span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p>A physical file name or an existing define name of class map. The <span class="italic"><code class="codeph">file_name</code></span> must include the file location.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-9E13C008-401A-4EE1-A908-8BF2D8485CF6__GUID-866BF69B-93B2-4AF8-A9AC-AD4B65245355"><!-- --></a><code class="codeph">APPEND</code> | <code class="codeph">PURGE</code> | <code class="codeph">ROLLOVER</code></dt>
+<dd>
+<p>Specifies the handling of an existing SQL discard file.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">APPEND</code> - Adds a record to the end of the file.</p>
+</li>
+<li>
+<p><code class="codeph">PURGE</code> - Purges an existing file and creates a new one. This is the default if no option is entered.</p>
+</li>
+<li>
+<p><code class="codeph">ROLLOVER</code> - Renames the existing discard file by appending a sequence number to the <span class="italic"><code class="codeph">file_name</code></span> according to these rules:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>If the <span class="italic"><code class="codeph">file-name</code></span> is 7 characters or less, 1 digit is appended.</p>
+</li>
+<li>
+<p>If the file name is 8 characters, the file will not rollover and a warning is given that the name is too long. This is true when the rollover is requested from GGSCI as well as from the <code class="codeph">DISCARDFILE</code> parameter.</p>
+</li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-9E13C008-401A-4EE1-A908-8BF2D8485CF6__GUID-6053D6A9-D13D-473C-B8D7-B4C06EA9D07B"><!-- --></a><code class="codeph">LINECOUNT</code> <span class="italic"><code class="codeph">number</code></span></dt>
+<dd>
+<p>Sets the number of lines in the edit file that will trigger rollover. <span class="italic"><code class="codeph">number</code></span> must be at least 5000 and no greater than 98000. The default is 98000 when no value is entered.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-9E13C008-401A-4EE1-A908-8BF2D8485CF6__GUID-5C63B16B-942E-4606-9C03-8E096B11B018"><!-- --></a><code class="codeph">OWNER</code> (<span class="italic"><code class="codeph">group_number</code></span>, <span class="italic"><code class="codeph">user_number</code></span>)</dt>
+<dd>
+<p>Defines ownership of the discard file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-9E13C008-401A-4EE1-A908-8BF2D8485CF6__GUID-3C1F74F7-DC98-41CD-83B7-6C3FB7322257"><!-- --></a><code class="codeph">SECURE</code> "<span class="italic"><code class="codeph">rwep</code></span>"</dt>
+<dd>
+<p>Secures the file using standard Guardian security for read, write, execute and purge operations.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Example</p>
+<pre dir="ltr">
+SQLFORMATDISCARDFILE $DATA01.G11RPT.SQLDIS, APPEND, LINECOUNT 24000
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-06EF4487-0FB2-43C8-84ED-64D3AC07CA33.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-0DA6F317-33C5-49C7-B728-2594360A88C2.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

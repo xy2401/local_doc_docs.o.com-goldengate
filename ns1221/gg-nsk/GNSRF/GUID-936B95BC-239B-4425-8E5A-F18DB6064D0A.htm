@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>WAITFILEEVENT</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2017-03-12T23:03:13Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference Guide for Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57713-03" />
+<meta name="dcterms.isVersionOf" content="GNSRF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-CF0675A2-BFA6-4001-9A0C-17BBF9A152F0.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-8345EEDC-16C1-4E98-9F35-34325D506C3A.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSRF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A"></a> <span id="PAGE" style="display:none;">274/360</span> <!-- End Header -->
+<a id="GNSRF620"></a><a id="GNSRF621"></a><a id="GNSRF619"></a>
+<h1 id="GNSRF-GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A" class="sect1"><span class="enumeration_section">2.248</span> WAITFILEEVENT</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid for</p>
+<p>Extract, Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use <code class="codeph">WAITFILEEVENT</code> to wait for a specific event before proceeding. Bi-directional scenarios in particular may need to wait for an external event before proceeding.</p>
+<p>For example, a file called <code class="codeph">SOURCE.FLTODAY</code> is mapped to a file called <code class="codeph">TARGET.FLTODAY</code>. Every day at 17:00, <code class="codeph">SOURCE.FLTODAY</code> is renamed to <code class="codeph">SOURCE.FLyymmdd</code>. To propagate the data from <code class="codeph">SOURCE.FLTODAY</code> to the appropriate target file, a <code class="codeph">WAITFILEEVENT</code> command is used.</p>
+<p>With <code class="codeph">WAITFILEEVENT</code>, Replicat delays upon receiving information that <code class="codeph">SOURCE.FLTODAY</code> has been created, until <code class="codeph">TARGET.FLTODAY</code> is also created.</p>
+<p><code class="codeph">WAITFILEEVENT</code> produces event messages (which also appear in the Replicat report file) regarding Replicat status while waiting. To bypass the wait event, issue the GGSCI command: <code class="codeph">SEND REPLICAT</code> <span class="italic"><code class="codeph">group_name</code></span>, <code class="codeph">BYPASSFILEEVENT</code></p>
+<p>To use <code class="codeph">WAITFILEEVENT</code>, the source file must be specified in a corresponding <code class="codeph">MAP</code>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+WAITFILEEVENT <span class="italic">source_filespec</span>
+[, <a id="d88099e91" class="indexterm-anchor"></a>CREATES]
+[, <a id="d88099e96" class="indexterm-anchor"></a>CREATIONWINDOW <span class="italic">unit</span> <span class="italic">num_units</span>]
+[, <a id="d88099e110" class="indexterm-anchor"></a>EXEC "<span class="italic">command</span>"]
+[, <a id="d88099e119" class="indexterm-anchor"></a>PURGES]
+[, <a id="d88099e124" class="indexterm-anchor"></a>RENAMES]
+[, <a id="d88099e129" class="indexterm-anchor"></a>WARNAFTER <span class="italic">unit</span> <span class="italic">warn_time</span>]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A__GUID-3AC1A440-A2C4-470C-B9B7-F1B6A9DADBC7"><!-- --></a><span class="italic"><code class="codeph">source_filespec</code></span></dt>
+<dd>
+<p>The file name or wildcard name to which the wait rules apply.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A__GUID-18378855-BA1E-4E51-8E87-43BE05364D57"><!-- --></a><code class="codeph">CREATES</code></dt>
+<dd>
+<p>Wait until <span class="italic"><code class="codeph">source_filespec</code></span> exists. If <span class="italic"><code class="codeph">source_filespec</code></span> does not exist in the <code class="codeph">CREATIONWINDOW</code> time period, Replicat keeps checking every 10 seconds until the file has been created.</p>
+<p>You must specify one or more <code class="codeph">CREATES</code> to indicate the events on which to wait.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A__GUID-205BE0D4-5FE0-41F2-AD93-16F5A14D9A13"><!-- --></a><code class="codeph">CREATIONWINDOW</code> <span class="italic"><code class="codeph">unit</code></span> <span class="italic"><code class="codeph">num_units</code></span></dt>
+<dd>
+<p>The amount of time Replicat checks for the new file.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">unit</code></span> can be <code class="codeph">SECONDS</code>, <code class="codeph">MINUTES</code>, <code class="codeph">HOURS</code>; for example <code class="codeph">CREATIONWINDOW HOURS</code>.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">num_units</code></span> can be any positive integer.</p>
+</li>
+</ul>
+<p>The default is <code class="codeph">CREATIONWINDOW HOURS 20</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A__GUID-CC538C3F-D7BD-446A-9F92-18B1503D7CE2"><!-- --></a><code class="codeph">EXEC</code> "<span class="italic"><code class="codeph">command</code></span>"</dt>
+<dd>
+<p>Execute any valid TACL command or program instead of processing the specified <code class="codeph">CREATES</code>, <code class="codeph">PURGES</code>, <code class="codeph">RENAMES</code>, or some other event. The success of the command is not evaluated. If error handling is necessary, implement it within the command or program being executed.</p>
+<p>When you specify <code class="codeph">EXEC</code>, <code class="codeph">CREATIONWINDOW</code> and <code class="codeph">WARNAFTER</code> have no effect.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A__GUID-FC8F4606-0C54-4D1C-A0EF-37670ADD7EF8"><!-- --></a><code class="codeph">PURGES</code></dt>
+<dd>
+<p>Wait until <span class="italic"><code class="codeph">source_filespec</code></span> does not exist.</p>
+<p>You must specify one or more of <code class="codeph">PURGES</code> to indicate the events on which to wait.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A__GUID-5C222709-ADA6-481A-968C-7D03A6A1D777"><!-- --></a><code class="codeph">RENAMES</code></dt>
+<dd>
+<p>Wait until <span class="italic"><code class="codeph">source_filespec</code></span> is renamed. If <span class="italic"><code class="codeph">source_filespec</code></span> has not been renamed in the <code class="codeph">CREATIONWINDOW</code> time period, Replicat keeps checking every 10 seconds until the file has been renamed.</p>
+<p>You must specify one or more <code class="codeph">RENAMES</code> to indicate the events on which to wait.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A__GUID-4BF90685-9471-48CB-B552-A26DDCDFC0AC"><!-- --></a><code class="codeph">WARNAFTER</code> <span class="italic"><code class="codeph">unit</code></span> <span class="italic"><code class="codeph">warn_time</code></span></dt>
+<dd>
+<p>The amount of time before a critical event is issued to EMS indicating that the event has not been satisfied.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">unit</code></span> can be <code class="codeph">SECONDS</code>, <code class="codeph">MINUTES</code>, <code class="codeph">HOURS</code>; for example <code class="codeph">WARNAFTER HOURS</code>.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">warn_time</code></span> can be any positive integer.</p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A__GUID-61508E93-D30E-44B9-918B-1897273DD392"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following example demonstrates the use of <code class="codeph">CREATIONWINDOW</code>, <code class="codeph">WARNAFTER</code>, <code class="codeph">CREATES</code>, and <code class="codeph">RENAMES</code>.</p>
+<pre dir="ltr">
+WAITFILEEVENT \GGS.$DATA1.DAT.ACCOUNT*, &amp;
+CREATIONWINDOW HOURS 5, &amp;
+WARNAFTER MINUTES 30, &amp;
+CREATES, RENAMES
+</pre></dd>
+<dt class="dlterm"><a id="GUID-936B95BC-239B-4425-8E5A-F18DB6064D0A__GUID-B131D621-7950-402B-8DFC-896288E0D6A9"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following example uses the <code class="codeph">EXEC</code> option to rename a target file after the source has been purged.</p>
+<pre dir="ltr">
+WAITFILEEVENT $data1.dat.account, PURGE, &amp;
+EXEC "rename $data2.target.account, &amp;
+$data2.targold.account"
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment28">
+<tr>
+<td class="cellalignment35">
+<table class="cellalignment33">
+<tr>
+<td class="cellalignment32"><a href="GUID-CF0675A2-BFA6-4001-9A0C-17BBF9A152F0.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment32"><a href="GUID-8345EEDC-16C1-4E98-9F35-34325D506C3A.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment37">
+<table class="cellalignment31">
+<tr>
+<td class="cellalignment32"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment32"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment32"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment32"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

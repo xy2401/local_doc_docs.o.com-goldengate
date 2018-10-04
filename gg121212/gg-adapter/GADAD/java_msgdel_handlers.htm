@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>14 Configuring Event Handlers</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1023">
+<meta name="description" content="This chapter discusses types of event handlers explaining how to specify the event handler to use and what your options are. It explains how to format the output and what you can expect from the Oracle GoldenGate Report file.">
+<meta name="dcterms.created" content="2015-04-08T9:18:57Z">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="robots" content="all">
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Application Adapters Administering Oracle GoldenGate Adapters">
+<meta name="dcterms.identifier" content="E61853-01">
+<meta name="partno" content="E64636-01">
+
+<meta name="dcterms.isVersionOf" content="GADAD">
+<link rel="Start" href="../../index.htm" title="Home" type="text/html">
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html">
+
+<script type="application/javascript" src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript" src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html">
+<link rel="Prev" href="java_msgdel_using.htm" title="Previous" type="text/html">
+<link rel="Next" href="java_msgdel_properties.htm" title="Next" type="text/html">
+<link rel="alternate" href="../GADAD.pdf" title="PDF version" type="application/pdf">
+<link rel="alternate" href="../GADAD.epub" title="ePub version" type="application/epub+zip">
+<link rel="alternate" href="../GADAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook">
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="application/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53addf516e0e58a5"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate Adapters</a>
+</div>
+
+<span id="PAGE" style="display:none;">21/28</span>
+<!-- End Header -->
+<div id="GADAD319" class="chapter"><a id="CIHIJCHJ"></a>
+<h1 class="chapter"><span class="secnum">14</span> Configuring Event Handlers</h1>
+<p><a id="GADAD546"></a>This chapter discusses types of event handlers explaining how to specify the event handler to use and what your options are. It explains how to format the output and what you can expect from the Oracle GoldenGate Report file.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#j_m_h_s_e_h">Specifying Event Handlers</a></p>
+</li>
+<li>
+<p><a href="#A999279">JMS Handler</a></p>
+</li>
+<li>
+<p><a href="#A999627">File Handler</a></p>
+</li>
+<li>
+<p><a href="#A999730">Custom Handlers</a></p>
+</li>
+<li>
+<p><a href="#A999751">Formatting the Output</a></p>
+</li>
+<li>
+<p><a href="#A999781">Reporting</a></p>
+</li>
+</ul>
+<a id="j_m_h_s_e_h"></a>
+<div id="GADAD320" class="sect1">
+<h2 class="sect1"><span class="secnum">14.1</span> Specifying Event Handlers</h2>
+<p>Processing transaction, operation and metadata events in Java works as follows:</p>
+<ul>
+<li>
+<p>The Oracle GoldenGate Extract reads local trail data and passes the transactions, operations and database metadata to the user exit. Metadata can come from either a source definitions file or by querying the database.</p>
+</li>
+<li>
+<p>Events are fired by the Java framework, optionally filtered by custom Event Filters.</p>
+</li>
+<li>
+<p>Handlers (event listeners) process these events, and process the transactions, operations and metadata. Custom formatters may be applied for certain types of targets.</p>
+</li>
+</ul>
+<p>There are several existing handlers:</p>
+<ul>
+<li>
+<p>A message handler to send to a JMS provider using either a MapMessage, or using a TextMessage with customized formatters.</p>
+</li>
+<li>
+<p>A specialized message handler to send JMS messages to Oracle Advanced Queuing (AQ).</p>
+</li>
+<li>
+<p>A file writer handler, for writing to a single file, or a rolling file.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The file writer handler is particularly useful as development utility, since the file writer can take the exact same formatter as the JMS TextMessage handler. Using the file writer provides a simple way to test and tune the formatters for JMS without actually sending the messages to JMS.</div>
+</li>
+</ul>
+<p>Event handlers can be configured using the main Java property file or they may optionally read in their own properties directly from yet another property file (depending on the handler implementation). Handler properties are set using the following syntax:</p>
+<pre>
+gg.handler.{<span class="italic">name</span>}.<span class="italic">someproperty</span>=<span class="italic">somevalue</span>
+</pre>
+<p>This will cause the property <code><span class="codeinlineitalic">someproperty</span></code> to be set to the value <code><span class="codeinlineitalic">somevalue</span></code> for the handler instance identified in the property file by <code><span class="codeinlineitalic">name</span></code>. This <code><span class="codeinlineitalic">name</span></code> is used in the property file to define active handlers and set their properties; it is user-defined.</p>
+<p>Implementation note (for Java developers): Following the above example: when the handler is instantiated, the method <code>void</code> setSomeProperty(String value) will be called on the handler instance, passing in the String value <code><span class="codeinlineitalic">somevalue</span></code>. A JavaBean <code>PropertyEditor</code> may also be defined for the handler, in which case the string can be automatically converted to the appropriate type for the setter method. For example, in the Java application properties file, we may have the following:</p>
+<pre>
+# the list of active handlers: only two are active
+gg.handlerlist=one, two
+# set properties on 'one'
+gg.handler.one.type=file
+gg.handler.one.format=com.mycompany.MyFormatter
+gg.handler.one.file=output.xml
+# properties for handler 'two'
+gg.handler.two.type=jms_text
+gg.handler.two.format=com.mycompany.MyFormatter
+gg.handler.two.properties=jboss.properties
+# set properties for handler 'foo'; this handler is ignored
+gg.handler.foo.type=com.mycompany.MyHandler
+gg.handler.foo.someproperty=somevalue
+</pre>
+<p>The type identifies the handler class; the other properties depend on the type of handler created. If a separate properties file is used to initialize the handler (such as the JMS handlers), the properties file is found in the class path. For example, if properties file is at: <code>{</code><code><span class="codeinlineitalic">gg_install_dir</span></code><code>}/dirprm/foo.properties</code>, then specify in the properties file as follows: <code>gg.handler.</code><code><span class="codeinlineitalic">name</span></code><code>.properties=foo.properties</code>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A999279"></a>
+<div id="GADAD321" class="sect1">
+<h2 class="sect1"><span class="secnum">14.2</span> JMS Handler</h2>
+<p>The main Java property file identifies active handlers. The JMS handler may optionally use a separate property file for JMS-specific configuration. This allows more than one JMS handler to be configured to run at the same time.</p>
+<p>There are examples included for several JMS providers (JBoss, TIBCO, Solace, ActiveMQ, WebLogic). For a specific JMS provider, you can choose the appropriate properties files as a starting point for your environment. Each JMS provider has slightly different settings, and your environment will have unique settings as well.</p>
+<p>The installation directory for the Java jars (<code>ggjava</code>) contains the core application jars (<code>ggjava.jar</code>) and its dependencies in <code>resources/lib/*.jar</code>. The resources directory contains all dependencies and configuration, and is in the class path.</p>
+<p>If the JMS client jars already exist somewhere on the system, they can be referenced directly and added to the class path without copying them.</p>
+<p>The following types of JMS handlers can be specified:</p>
+<ul>
+<li>
+<p><span class="bold">jms</span> &ndash; sends text messages to a topic or queue. The messages may be formatted using Velocity templates or by writing a formatter in Java. The same formatters can be used for a <code>jms_text message</code> as for writing to files. (<code>jms_text</code> is a synonym for <code>jms</code>.)</p>
+</li>
+<li>
+<p><span class="bold">aq</span> &ndash; sends text messages to Oracle Advanced Queuing (AQ). The <code>aq</code> handler is a <code>jms</code> handler configured for delivery to AQ. The messages can be formatted using Velocity temlates or a custom formatter.</p>
+</li>
+<li>
+<p><span class="bold">jms_map</span> &ndash; sends a JMS MapMessage to a topic or queue. The <code>JMSType</code> of the message is set to the name of the table. The body of the message consists of the following metadata, followed by column name and column value pairs:</p>
+<ul>
+<li>
+<p><code>GG_ID</code> &ndash; position of the record, uniquely identifies this operation</p>
+</li>
+<li>
+<p><code>GG_OPTYPE</code> &ndash; type of SQL (insert/update/delete),</p>
+</li>
+<li>
+<p><code>GG_TABLE</code> &ndash; table name on which the operation occurred</p>
+</li>
+<li>
+<p><code>GG_TIMESTAMP</code> &ndash; timestamp of the operation</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="A999627"></a>
+<div id="GADAD322" class="sect1">
+<h2 class="sect1"><span class="secnum">14.3</span> File Handler</h2>
+<p>The file handler is often used to verify the message format when the actual target is JMS, and the message format is being developed using custom Java or Velocity templates. Here is a property file using a file handler:</p>
+<pre>
+# one file handler active, using Velocity template formatting
+gg.handlerlist=myfile
+gg.handler.myfile.type=file
+gg.handler.myfile.rollover.size=5M
+gg.handler.myfile.format=sample2xml.vm
+gg.handler.myfile.file=output.xml
+</pre>
+<p>This example uses a single handler (though, a JMS handler and the file handler could be used at the same time), writing to a file called <code>output.xml</code>, using a Velocity template called <code>sample2xml.vm</code>. The template is found via the classpath.</p>
+</div>
+<!-- class="sect1" -->
+<a id="A999730"></a>
+<div id="GADAD323" class="sect1">
+<h2 class="sect1"><span class="secnum">14.4</span> Custom Handlers</h2>
+<p>For information on coding a custom handler, see <a href="java_msgdel_custom.htm#i1003358">Section 16.3, "Coding a Custom Handler in Java."</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="A999751"></a>
+<div id="GADAD324" class="sect1">
+<h2 class="sect1"><span class="secnum">14.5</span> Formatting the Output</h2>
+<p>As previously described, the existing JMS and file output handlers can be configured through the properties file. Each handler has its own specific properties that can be set: for example, the output file can be set for the file handler, and the JMS destination can be set for the JMS handler. Both of these handlers may also specify a custom formatter. The same formatter may be used for both handlers. As an alternative to writing Java code for custom formatting, a Velocity template may be specified. For further information, see <a href="java_msgdel_custom.htm#i1002124">Section 16.1, "Filtering Events."</a></p>
+</div>
+<!-- class="sect1" -->
+<a id="A999781"></a>
+<div id="GADAD325" class="sect1">
+<h2 class="sect1"><span class="secnum">14.6</span> Reporting</h2>
+<p>Summary statistics about the throughput and amount of data processed are generated when the Extract process stops. Additionally, statistics can be written periodically either after a specified amount of time or after a specified number of records have been processed. If both time and number of records are specified, then the report is generated for whichever event happens first. These statistical summaries are written to the Oracle GoldenGate report file and the user exit log files.</p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr>
+<table class="cellalignment12">
+<tr>
+<td class="cellalignment19"><table class="cellalignment17">
+<tr>
+<td class="cellalignment16"><a href="java_msgdel_using.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page"><br>
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment16"><a href="java_msgdel_properties.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page"><br>
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle"><br>
+Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br>
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment21">
+<table class="cellalignment15">
+<tr>
+<td class="cellalignment16"><a href="../../index.htm"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home"><br>
+<span class="icon">Home</span></a></td>
+<td class="cellalignment16"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents"><br>
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment16"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page"><br>
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

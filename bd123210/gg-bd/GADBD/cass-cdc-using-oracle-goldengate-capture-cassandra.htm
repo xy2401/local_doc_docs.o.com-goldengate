@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using Oracle GoldenGate Capture for Cassandra</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases." />
+<meta name="dcterms.created" content="2018-09-04T10:47:42Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E89845-03" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-pluggable-formatters.htm" title="Previous" type="text/html" />
+<link rel="Next" href="connecting-microsoft-azure-data-lake.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047"></a> <span id="PAGE" style="display:none;">21/33</span> <!-- End Header -->
+<h1 id="GADBD-GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" class="sect1"><span class="enumeration_chapter">18</span> Using <span>Oracle GoldenGate</span> Capture for Cassandra</h1>
+<div>
+<p>Learn how to use <span>Oracle GoldenGate</span> capture (Extract) to get changes from Apache Cassandra databases.</p>
+<div class="section">
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-F834DA87-F7E5-4C52-BA36-D14A097120AA">Overview</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-71C3E6AB-82E6-4986-AC21-93C1901A4BAD">Setting Up Cassandra Change Data Capture</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-AC468CBB-450B-4B0D-9932-FAF8FA613EB8">Deduplication</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-7D9A5689-DFA0-4472-B0B2-A18C6724D891">Topology Changes</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-FB0657A4-D443-4970-966A-208C9DFAD080">Data Availability in the CDC Logs</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C6903EB7-D406-43A2-9E22-2130E97AC700">Using Extract Initial Load</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-FF221A2A-887E-4F4E-9452-0B7ACDC0A93C">Using Change Data Capture Extract</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-0451EF88-6569-4B28-A5FF-9E88877FEDA1">Replicating to RDMBS Targets</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C211341D-EB6A-4A89-87AB-8985E328FDC2">Partition Update or Insert of Static Columns</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-0C9E7868-2DB9-4BDA-90C6-161C6C71609F">Partition Delete</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-81EBDE65-E457-49C0-A4E1-0B5D8C04C8AE">Security and Authentication</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-6E3625BD-5B21-40D0-8419-A41FFF2936BE">Multiple Extract Support</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50">CDC Configuration Reference</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-533E4A89-CBA1-447F-84F7-FAD85D670A09">Troubleshooting</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-F834DA87-F7E5-4C52-BA36-D14A097120AA"></a>
+<h2 id="GADBD-GUID-F834DA87-F7E5-4C52-BA36-D14A097120AA" class="sect2"><span class="enumeration_section">18.1</span> Overview</h2>
+<div>
+<div class="section">
+<p>Apache Cassandra is a NoSQL Database Management System designed to store large amounts of data. A Cassandra cluster configuration provides horizontal scaling and replication of data across multiple machines. It can provide high availability and eliminate a single point of failure by replicating data to multiple nodes within a Cassandra cluster. Apache Cassandra is open source and designed to run on low-cost commodity hardware.</p>
+<p>Cassandra relaxes the axioms of a traditional relational database management systems (RDBMS) regarding atomicity, consistency, isolation, and durability. When considering implementing Cassandra, it is important to understand its differences from a traditional RDBMS and how those differences affect your specific use case.</p>
+<p>Cassandra provides eventual consistency. Under the eventual consistency model, accessing the state of data for a specific row eventually returns the latest state of the data for that row as defined by the most recent change. However, there may be a latency period between the creation and modification of the state of a row and what is returned when the state of that row is queried. The benefit of eventual consistency is that the latency period is predicted based on your Cassandra configuration and the level of work load that your Cassandra cluster is currently under, see <a href="http://cassandra.apache.org/" target="_blank">http://cassandra.apache.org/</a>.</p>
+<p>Review the data type support, see <a href="using-cassandra-handler.htm#GUID-86AAA501-44A8-4099-9BA5-B45732F49BC9">About the Cassandra Data Types</a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-71C3E6AB-82E6-4986-AC21-93C1901A4BAD"></a>
+<h2 id="GADBD-GUID-71C3E6AB-82E6-4986-AC21-93C1901A4BAD" class="sect2"><span class="enumeration_section">18.2</span> Setting Up Cassandra Change Data Capture</h2>
+<div>
+<div class="section">
+<p class="subhead2">Prerequisites</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Apache Cassandra cluster must have at least one node up and running.</p>
+</li>
+<li>
+<p>Read and write access to CDC commit log files on every live node in the cluster is done through SFTP or NFS.</p>
+</li>
+<li>
+<p>Every node in the Cassandra cluster must have the <code class="codeph">cdc_enabled</code> parameter set to <code class="codeph">true</code> in the <code class="codeph">cassandra.yaml</code> configuration file.</p>
+</li>
+<li>
+<p>Virtual nodes must be enabled on every Cassandra node by setting the <code class="codeph">num_tokens</code> parameter in <code class="codeph">cassandra.yaml</code> .</p>
+</li>
+<li>
+<p>You must download and provide the third party libraries listed in <a href="cass-cdc-client-dependencies.htm#GUID-48CF9CF8-6EF6-4F43-BA14-1AD44332960B" title="What are the dependencies for the Cassandra Capture (Extract) to connect to Apache Cassandra databases?">Cassandra Capture Client Dependencies</a>.</p>
+</li>
+<li>
+<p>New tables can be created with Change Data Capture (CDC) enabled using the <code class="codeph">WITH CDC=true</code> clause in the <code class="codeph">CREATE TABLE</code> command. For example:</p>
+<pre dir="ltr">
+CREATE TABLE ks_demo_rep1.mytable (col1 int, col2 text, col3 text, col4 text, PRIMARY KEY (col1)) WITH cdc=true;
+</pre>
+<p>You can enable CDC on existing tables as follows:</p>
+<pre dir="ltr">
+ALTER TABLE ks_demo_rep1.mytable WITH cdc=true;
+</pre></li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-A5C574BB-5061-4544-BEF8-C76221913594">Data Types</a><br /></li>
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-74957E41-2624-4B4B-81B3-1559F4C52D2B">Cassandra Database Operations</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-A5C574BB-5061-4544-BEF8-C76221913594"></a>
+<h3 id="GADBD-GUID-A5C574BB-5061-4544-BEF8-C76221913594" class="sect3"><span class="enumeration_section">18.2.1</span> Data Types</h3>
+<div>
+<div class="section">
+<p class="subhead3">Supported Cassandra Data Types</p>
+<p>The following are the supported data types:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">ASCII</code></p>
+</li>
+<li>
+<p><code class="codeph">BIGINT</code></p>
+</li>
+<li>
+<p><code class="codeph">BLOB</code></p>
+</li>
+<li>
+<p><code class="codeph">BOOLEAN</code></p>
+</li>
+<li>
+<p><code class="codeph">DATE</code></p>
+</li>
+<li>
+<p><code class="codeph">DECIMAL</code></p>
+</li>
+<li>
+<p><code class="codeph">DOUBLE</code></p>
+</li>
+<li>
+<p><code class="codeph">DURATION</code></p>
+</li>
+<li>
+<p><code class="codeph">FLOAT</code></p>
+</li>
+<li>
+<p><code class="codeph">INET</code></p>
+</li>
+<li>
+<p><code class="codeph">INT</code></p>
+</li>
+<li>
+<p><code class="codeph">SMALLINT</code></p>
+</li>
+<li>
+<p><code class="codeph">TEXT</code></p>
+</li>
+<li>
+<p><code class="codeph">TIME</code></p>
+</li>
+<li>
+<p><code class="codeph">TIMESTAMP</code></p>
+</li>
+<li>
+<p><code class="codeph">TIMEUUID</code></p>
+</li>
+<li>
+<p><code class="codeph">TINYINT</code></p>
+</li>
+<li>
+<p><code class="codeph">UUID</code></p>
+</li>
+<li>
+<p><code class="codeph">VARCHAR</code></p>
+</li>
+<li>
+<p><code class="codeph">VARINT</code></p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Unsupported Data Types</p>
+<p>The following are the unsupported data types:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">COUNTER</code></p>
+</li>
+<li>
+<p><code class="codeph">MAP</code></p>
+</li>
+<li>
+<p><code class="codeph">SET</code></p>
+</li>
+<li>
+<p><code class="codeph">LIST</code></p>
+</li>
+<li>
+<p><code class="codeph">UDT</code> (user defined type)</p>
+</li>
+<li>
+<p><code class="codeph">TUPLE</code></p>
+</li>
+<li>
+<p><code class="codeph">CUSTOM_TYPE</code></p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-71C3E6AB-82E6-4986-AC21-93C1901A4BAD">Setting Up Cassandra Change Data Capture</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-74957E41-2624-4B4B-81B3-1559F4C52D2B"></a>
+<h3 id="GADBD-GUID-74957E41-2624-4B4B-81B3-1559F4C52D2B" class="sect3"><span class="enumeration_section">18.2.2</span> Cassandra Database Operations</h3>
+<div>
+<div class="section">
+<p class="subhead3">Supported Operations</p>
+<p>The following are the supported operations:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">INSERT</code></p>
+</li>
+<li>
+<p><code class="codeph">UPDATE</code> (Captured as <code class="codeph">INSERT</code>)</p>
+</li>
+<li>
+<p><code class="codeph">DELETE</code></p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Unsupported Operations</p>
+<p>The <code class="codeph">TRUNCATE</code> <code class="codeph">DDL</code> (<code class="codeph">CREATE</code>, <code class="codeph">ALTER</code>, and <code class="codeph">DROP</code>) operation is not supported. Because the Cassandra commit log files do not record any before images for the <code class="codeph">UPDATE</code> or <code class="codeph">DELETE</code> operations. The result is that the captured operations can never have a before image. <span>Oracle GoldenGate</span> features that rely on before image records, such as Conflict Detection and Resolution, are not available.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-71C3E6AB-82E6-4986-AC21-93C1901A4BAD">Setting Up Cassandra Change Data Capture</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-AC468CBB-450B-4B0D-9932-FAF8FA613EB8"></a>
+<h2 id="GADBD-GUID-AC468CBB-450B-4B0D-9932-FAF8FA613EB8" class="sect2"><span class="enumeration_section">18.3</span> Deduplication</h2>
+<div>
+<div class="section">
+<p>One of the features of a Cassandra cluster is its high availability. To support high availability, multiple redundant copies of table data are stored on different nodes in the cluster. <span>Oracle GoldenGate for Big Data</span> Cassandra Capture automatically filters out duplicate rows (<span class="bold">deduplicate</span>). Deduplication is active by default. Oracle recommends using it if your data is captured and applied to targets where duplicate records are discouraged (for example RDBMS targets).</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-7D9A5689-DFA0-4472-B0B2-A18C6724D891"></a>
+<h2 id="GADBD-GUID-7D9A5689-DFA0-4472-B0B2-A18C6724D891" class="sect2"><span class="enumeration_section">18.4</span> Topology Changes</h2>
+<div>
+<div class="section">
+<p>Cassandra nodes can change their status (<span class="bold">topology change</span>) and the cluster can still be alive. <span>Oracle GoldenGate for Big Data</span> Cassandra Capture can detect the node status changes and react to these changes when applicable. The Cassandra capture process can detect the following events happening in the cluster:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Node shutdown and boot.</p>
+</li>
+<li>
+<p>Node decommission and commission.</p>
+</li>
+<li>
+<p>New keyspace and table created.</p>
+</li>
+</ul>
+<p>Due to topology changes, if the capture process detects that an active producer node goes down, it tries to recover any missing rows from an available replica node. During this process, there is a possibility of data duplication for some rows. This is a transient data duplication due to the topology change. For more details about reacting to changes in topology, see <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-533E4A89-CBA1-447F-84F7-FAD85D670A09">Troubleshooting</a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-FB0657A4-D443-4970-966A-208C9DFAD080"></a>
+<h2 id="GADBD-GUID-FB0657A4-D443-4970-966A-208C9DFAD080" class="sect2"><span class="enumeration_section">18.5</span> Data Availability in the CDC Logs</h2>
+<div>
+<div class="section">
+<p>The Cassandra CDC API can only read data from commit log files in the CDC directory. There is a latency for the data in the active commit log directory to be archived (moved) to the CDC commit log directory.</p>
+<p>The input data source for the Cassandra capture process is the CDC commit log directory. There could be delays for the data to be captured mainly due to the commit log files not yet visible to the capture process.</p>
+<p>On a production cluster with a lot of activity, this latency is very minimal as the data is archived from the active commit log directory to the CDC commit log directory in the order of microseconds.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-C6903EB7-D406-43A2-9E22-2130E97AC700"></a>
+<h2 id="GADBD-GUID-C6903EB7-D406-43A2-9E22-2130E97AC700" class="sect2"><span class="enumeration_section">18.6</span> Using Extract Initial Load</h2>
+<div>
+<div class="section">
+<p>Cassandra Extract supports the standard initial load capability to extract source table data to <span>Oracle GoldenGate</span> trail files.</p>
+<p>Initial load for Cassandra can be performed to synchronize tables, either as a prerequisite step to replicating changes or as a standalone function.</p>
+<p>Direct loading from a source Cassandra table to any target table is <span class="italic">not</span> supported.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Configuring the Initial Load</p>
+<p>You need to add these parameters to your <code class="codeph">GLOBALS</code> parameter file:</p>
+<pre dir="ltr">
+OGGSOURCE CASSANDRA
+CLUSTERCONTACTPOINTS nodeadresses
+</pre>
+<p>For example, to write to a single trail file:</p>
+<pre dir="ltr">
+SOURCEISTABLE
+SOURCEDB keyspace1, USERID user1, PASSWORD pass1
+EXTFILE ./dirdat/load_data.dat, PURGE
+TABLE keyspace1.table1;
+</pre>
+<p>Then you would run this command in GGSCI:</p>
+<pre dir="ltr">
+EXTRACT PARAMFILE ./dirprm/load.prm REPORTFILE ./dirrpt/load.rpt
+</pre>
+<p>If you want to write to multiple files, you could use:</p>
+<pre dir="ltr">
+EXTRACT load
+SOURCEISTABLE
+SOURCEDB keyspace1, USERID user1, PASSWORD pass1
+EXTFILE ./dirdat/la, megabytes 2048, MAXFILES 999
+TABLE keyspace1.table1;
+</pre>
+<div class="infobox-note" id="GUID-C6903EB7-D406-43A2-9E22-2130E97AC700__GUID-49774FC0-0BB8-4A1E-B65E-C713DA4BCD0F">
+<p class="notep1">Note:</p>
+<p>Save the file with the name specified in the example (<code class="codeph">load.prm</code>) into the <code class="codeph">dirprm</code> directory.</p>
+</div>
+<p>Then you would run these commands in GGSCI:</p>
+<pre dir="ltr">
+ADD EXTRACT load, SOURCEISTABLE 
+START EXTRACT load 
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-FF221A2A-887E-4F4E-9452-0B7ACDC0A93C"></a>
+<h2 id="GADBD-GUID-FF221A2A-887E-4F4E-9452-0B7ACDC0A93C" class="sect2"><span class="enumeration_section">18.7</span> Using Change Data Capture Extract</h2>
+<div>
+<div class="section">
+<p>Review the example <code>.prm</code> files from <span>Oracle GoldenGate for Big Data</span>installation directory under <code>$HOME/AdapterExamples/big-data/cassandracapture</code>.</p>
+<ol>
+<li>
+<p>When adding the Cassandra Extract trail, you need to use <code class="codeph">EXTTRAIL</code> to create a local trail file.</p>
+<p>The Cassandra Extract trail file should not be configured with the <code class="codeph">RMTTRAIL</code> option.</p>
+<pre dir="ltr">
+ggsci&gt; ADD EXTRACT <span class="italic">groupname</span>, TRANLOG
+ggsci&gt; ADD EXTTRAIL <span class="italic">trailprefix</span>, EXTRACT <span class="italic">groupname</span>
+Example:
+ggsci&gt; ADD EXTRACT cass, TRANLOG
+ggsci&gt; ADD EXTTRAIL ./dirdat/z1, EXTRACT cass
+</pre></li>
+<li>
+<p>To configure the Extract, see the example <code>.prm</code> files in the Oracle GoldenGate for Big Data installation directory in <code class="codeph">$HOME/AdapterExamples/big-data/cassandracapture</code>.</p>
+</li>
+<li>
+<p>Position the Extract.</p>
+<pre dir="ltr">
+ggsci&gt; ADD EXTRACT <span class="italic">groupname</span>, TRANLOG, BEGIN NOW
+ggsci&gt; ADD EXTRACT <span class="italic">groupname</span>, TRANLOG, BEGIN &lsquo;yyyy-mm-dd hh:mm:ss&rsquo;
+ggsci&gt; ALTER EXTRACT <span class="italic">groupname</span>, BEGIN &lsquo;yyyy-mm-dd hh:mm:ss&rsquo;
+</pre></li>
+<li>
+<p>Manage the transaction data logging for the tables.</p>
+<pre dir="ltr">
+ggsci&gt; DBLOGIN SOURCEDB nodeaddress USERID <span class="italic">userid</span> PASSWORD <span class="italic">password</span>
+ggsci&gt; ADD TRANDATA <span class="italic">keyspace</span>.<span class="italic">tablename</span>
+ggsci&gt; INFO TRANDATA <span class="italic">keyspace</span>.<span class="italic">tablename</span>
+ggsci&gt; DELETE TRANDATA <span class="italic">keyspace</span>.<span class="italic">tablename</span>
+
+</pre>
+<p>Examples:</p>
+<pre dir="ltr">
+ggsci&gt; DBLOGIN SOURCEDB 127.0.0.1
+ggsci&gt; INFO TRANDATA ks_demo_rep1.mytable
+ggsci&gt; INFO TRANDATA ks_demo_rep1.*
+ggsci&gt; INFO TRANDATA *.*
+ggsci&gt; INFO TRANDATA ks_demo_rep1.&rdquo;CamelCaseTab&rdquo;
+ggsci&gt; ADD TRANDATA ks_demo_rep1.mytable
+ggsci&gt; DELETE TRANDATA ks_demo_rep1.mytable
+</pre></li>
+<li>
+<p>Append the following line in the GLOBALS parameter file:</p>
+<pre dir="ltr">
+JVMBOOTOPTIONS -Dlogback.configurationFile=AdapterExamples/big-data/cassandracapture/logback.xml
+</pre></li>
+<li>
+<p>Configure the Extract and GLOBALS parameter files:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-FF221A2A-887E-4F4E-9452-0B7ACDC0A93C__GUID-11C43678-9C75-409E-BCC7-46D18F5D9C26"><!-- --></a>Apache Cassandra 3.11 SDK, compatible with Apache Cassandra 3.9, 3.10, 3.11</dt>
+<dd>
+<p>Extract parameter file:</p>
+<pre dir="ltr">
+EXTRACT <span class="italic">groupname</span>
+TRANLOGOPTIONS CDCREADERSDKVERSION 3.11
+TRANLOGOPTIONS CDCLOGDIRTEMPLATE /path/to/data/cdc_raw
+SOURCEDB <span class="italic">nodeaddress</span>
+VAM libggbigdata_vam.so
+EXTTRAIL <span class="italic">trailprefix</span>
+TABLE *.*;
+</pre>
+<p>GLOBALS parameter file:</p>
+<pre dir="ltr">
+OGGSOURCE CASSANDRA
+CLUSTERCONTACTPOINTS <span class="italic">nodeadresses</span>
+JVMCLASSPATH ggjava/ggjava.jar:/path/to/cassandra-driver-core/3.3.1/cassandra-driver-core-3.3.1.jar:dirprm:/path/to/apache-cassandra-3.11.0/lib/*:/path/to/gson/2.3/gson-2.3.jar:/path/to/jsch/0.1.54/jsch-0.1.54.jar:/path/to/commons-lang3/3.5/commons-lang3-3.5.jar
+</pre>
+<p>Oracle recommends that you use the latest Cassandra 3.11 JAR files (<code class="codeph">TRANLOGOPTIONS CDCREADERSDKVERSION 3.11</code> and <code class="codeph">JVMCLASSPATH</code> configuration) for all supported Cassandra database versions.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-FF221A2A-887E-4F4E-9452-0B7ACDC0A93C__GUID-4FD6D148-5E49-4163-BC6B-CD0ECD9E1A4C"><!-- --></a>Apache Cassandra 3.9 SDK</dt>
+<dd>
+<p>Extract parameter file:</p>
+<pre dir="ltr">
+EXTRACT <span class="italic">groupname</span>
+TRANLOGOPTIONS CDCREADERSDKVERSION 3.9
+TRANLOGOPTIONS CDCLOGDIRTEMPLATE /path/to/data/cdc_raw
+SOURCEDB <span class="italic">nodeaddress</span>
+VAM libggbigdata_vam.so
+EXTTRAIL <span class="italic">trailprefix</span>
+TABLE *.*;
+</pre>
+<p>GLOBALS parameter file:</p>
+<pre dir="ltr">
+OGGSOURCE CASSANDRA
+CLUSTERCONTACTPOINTS <span class="italic">nodeadresses</span>
+JVMCLASSPATH ggjava/ggjava.jar:/path/to/cassandra-driver-core/3.3.1/cassandra-driver-core-3.3.1.jar:dirprm:/path/to/apache-cassandra-3.9/lib/*:/path/to/gson/2.3/gson-2.3.jar:/path/to/jsch/0.1.54/jsch-0.1.54.jar:/path/to/commons-lang3/3.5/commons-lang3-3.5.jar
+</pre></dd>
+</dl>
+</li>
+</ol>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-0451EF88-6569-4B28-A5FF-9E88877FEDA1"></a>
+<h2 id="GADBD-GUID-0451EF88-6569-4B28-A5FF-9E88877FEDA1" class="sect2"><span class="enumeration_section">18.8</span> Replicating to RDMBS Targets</h2>
+<div>
+<div class="section">
+<p>You must take additional care when replicating source <code class="codeph">UPDATE</code> operations from Cassandra trail files to RDMBS targets. Any source <code class="codeph">UPDATE</code> operation appears as an <code class="codeph">INSERT</code> record in the <span>Oracle GoldenGate</span> trail file. Replicat may abend when a source <code class="codeph">UPDATE</code> operation is applied as an <code class="codeph">INSERT</code> operation on the target database.</p>
+<p>You have these options:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">OVERRIDEDUPS</code>: If you expect that the source database is to contain mostly <code class="codeph">INSERT</code> operations and very few <code class="codeph">UPDATE</code> operations, then <code class="codeph">OVERRIDEDUPS</code> is the recommended option. Replicat can recover from duplicate key errors while replicating the small number of the source <code class="codeph">UPDATE</code> operations. See <a class="olink GWURF-GUID-F979B7A7-961C-4302-96A9-62CE3CDABC3E" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E89860-01&amp;id=GWURF-GUID-F979B7A7-961C-4302-96A9-62CE3CDABC3E"><code class="codeph">OVERRIDEDUPS</code> \ <code class="codeph">NOOVERRIDEDUPS</code></a></p>
+</li>
+</ul>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">UPDATEINSERTS</code> and <code class="codeph">INSERTMISSINGUPDATES</code>: Use this configuration if the source database is expected to contain mostly <code class="codeph">UPDATE</code> operations and very few <code class="codeph">INSERT</code> operations. With this configuration, Replicat has fewer missing row errors to recover, which leads to better throughput. See <a class="olink GWURF-GUID-B7E6421C-74A1-43B7-AC01-DEC7A2DCE77F" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E89860-01&amp;id=GWURF-GUID-B7E6421C-74A1-43B7-AC01-DEC7A2DCE77F"><code class="codeph">UPDATEINSERTS</code> | <code class="codeph">NOUPDATEINSERTS</code></a> and <a class="olink GWURF-GUID-3C1BD608-2F0D-4B01-BFFE-14E8FD48C385" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E89860-01&amp;id=GWURF-GUID-3C1BD608-2F0D-4B01-BFFE-14E8FD48C385"><code class="codeph">INSERTMISSINGUPDATES</code> | <code class="codeph">NOINSERTMISSINGUPDATES</code></a>.</p>
+</li>
+</ul>
+<ul style="list-style-type: disc;">
+<li>
+<p>No additional configuration is required if the target table can accept duplicate rows or you want to abend Replicat on duplicate rows.</p>
+</li>
+</ul>
+<p>If you configure Replicat to use <code class="codeph">BATCHSQL</code>, there may be duplicate row or missing row errors in batch mode. Although there is a reduction in the Replicat throughput due to these errors, Replicat automatically recovers from these errors. If the source operations are mostly <code class="codeph">INSERTS</code>, then <code class="codeph">BATCHSQL</code> is a good option.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-C211341D-EB6A-4A89-87AB-8985E328FDC2"></a>
+<h2 id="GADBD-GUID-C211341D-EB6A-4A89-87AB-8985E328FDC2" class="sect2"><span class="enumeration_section">18.9</span> Partition Update or Insert of Static Columns</h2>
+<div>
+<div class="section">
+<p>When the source Cassandra table has static columns, the static column values can be modified by skipping any clustering key columns that are in the table.</p>
+<p>For example:</p>
+<pre dir="ltr">
+create table ks_demo_rep1.nls_staticcol
+(
+    teamname text,
+    manager text static,
+    location text static,
+    membername text,
+    nationality text,
+    position text,
+    PRIMARY KEY ((teamname), membername)
+)
+WITH cdc=true;
+insert into ks_demo_rep1.nls_staticcol (teamname, manager, location) VALUES ('Red Bull', 'Christian Horner', '&lt;unknown&gt;
+</pre>
+<p>The insert <code class="codeph">CQL</code> is missing the clustering key <code class="codeph">membername</code>. Such an operation is a partition insert.</p>
+<p>Similarly, you could also update a static column with just the partition keys in the <code class="codeph">WHERE</code> clause of the <code class="codeph">CQL</code> that is a partition update operation. Cassandra Extract cannot write a <code class="codeph">INSERT</code> or <code class="codeph">UPDATE</code> operation into the trail with missing key columns. It abends on detecting a partition <code class="codeph">INSERT</code> or <code class="codeph">UPDATE</code> operation.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-0C9E7868-2DB9-4BDA-90C6-161C6C71609F"></a>
+<h2 id="GADBD-GUID-0C9E7868-2DB9-4BDA-90C6-161C6C71609F" class="sect2"><span class="enumeration_section">18.10</span> Partition Delete</h2>
+<div>
+<div class="section">
+<p>A Cassandra table may have a primary key composed on one or more partition key columns and clustering key columns. When a <code class="codeph">DELETE</code> operation is performed on a Cassandra table by skipping the clustering key columns from the <code class="codeph">WHERE</code> clause, it results in a partition delete operation.</p>
+<p>For example:</p>
+<pre dir="ltr">
+create table ks_demo_rep1.table1
+(
+ col1 ascii, col2 bigint, col3 boolean, col4 int,
+ PRIMARY KEY((col1, col2), col4)
+) with cdc=true;
+
+delete from ks_demo_rep1.table1 where col1 = 'asciival' and col2 = 9876543210; /** skipped clustering key column col4 **/
+</pre>
+<p>Cassandra Extract cannot write a <code class="codeph">DELETE</code> operation into the trail with missing key columns and abends on detecting a partition <code class="codeph">DELETE</code> operation.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-81EBDE65-E457-49C0-A4E1-0B5D8C04C8AE"></a>
+<h2 id="GADBD-GUID-81EBDE65-E457-49C0-A4E1-0B5D8C04C8AE" class="sect2"><span class="enumeration_section">18.11</span> Security and Authentication</h2>
+<div>
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>Cassandra Extract can connect to a Cassandra cluster using username and password based authentication and SSL authentication.</p>
+</li>
+<li>
+<p>Connection to Kerberos enabled Cassandra clusters is <span class="italic">not</span> supported in this release.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-844F9E15-F581-444A-9A32-4E440750986B">Configuring SSL</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-844F9E15-F581-444A-9A32-4E440750986B"></a>
+<h3 id="GADBD-GUID-844F9E15-F581-444A-9A32-4E440750986B" class="sect3"><span class="enumeration_section">18.11.1</span> Configuring SSL</h3>
+<div>
+<div class="section">
+<p>To enable SSL, add the SSL parameter to your <code class="codeph">GLOBALS</code> file or Extract parameter file. Additionally, a separate configuration is required for the Java and CPP drivers, see <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50">CDC Configuration Reference</a>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">SSL configuration for Java driver</p>
+<pre dir="ltr">
+JVMBOOTOPTIONS -
+Djavax.net.ssl.trustStore=/path/to/SSL/truststore.file -
+Djavax.net.ssl.trustStorePassword=<span class="italic">password</span> -
+Djavax.net.ssl.keyStore=/path/to/SSL/keystore.file -
+Djavax.net.ssl.keyStorePassword=<span class="italic">password</span>
+</pre>
+<p>The keystore and truststore certificates can be generated using these instructions:</p>
+<p><a href="https://docs.datastax.com/en/cassandra/2.1/cassandra/security/secureSSLCertificates_t.html" target="_blank">https://docs.datastax.com/en/cassandra/2.1/cassandra/security/secureSSLCertificates_t.html</a></p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">SSL configuration for Cassandra CPP driver</p>
+<p>To operate with an SSL configuration, you have to add the following parameter in the Oracle GoldenGate <code class="codeph">GLOBALS</code> file or Extract parameter file:</p>
+<pre dir="ltr">
+CPPDRIVEROPTIONS SSL PEMPUBLICKEYFILE /path/to/PEM/formatted/public/key/file/cassandra.pem CPPDRIVEROPTIONS SSL PEERCERTVERIFICATIONFLAG 0
+</pre>
+<p>This configuration is required to connect to a Cassandra cluster with SSL enabled. Additionally, you need to add these settings to your <code class="codeph">cassandra.yaml</code> file:</p>
+<pre dir="ltr">
+client_encryption_options:
+    enabled: true
+    # If enabled and optional is set to true encrypted and unencrypted connections are handled.
+    optional: false
+    keystore: /path/to/keystore
+    keystore_password: <span class="italic">password</span>
+    require_client_auth: false
+</pre>
+<p>The PEM formatted certificates can be generated using these instructions:</p>
+<p><a href="https://docs.datastax.com/en/developer/cpp-driver/2.8/topics/security/ssl/" target="_blank">https://docs.datastax.com/en/developer/cpp-driver/2.8/topics/security/ssl/</a></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-81EBDE65-E457-49C0-A4E1-0B5D8C04C8AE">Security and Authentication</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-6E3625BD-5B21-40D0-8419-A41FFF2936BE"></a>
+<h2 id="GADBD-GUID-6E3625BD-5B21-40D0-8419-A41FFF2936BE" class="sect2"><span class="enumeration_section">18.12</span> Multiple Extract Support</h2>
+<div>
+<div class="section">
+<p>Multiple Extract groups in a single <span>Oracle GoldenGate for Big Data</span> installation can be configured to connect to the same Cassandra cluster.</p>
+<p>To run multiple Extract groups:</p>
+<ol>
+<li>
+<p>One (and only one) Extract group can be configured to move the commit log files in the <code class="codeph">cdc_raw</code> directory on the Cassandra nodes to a staging directory. The <code class="codeph">movecommitlogstostagingdir</code> parameter is enabled by default and no additional configuration is required for this Extract group.</p>
+</li>
+<li>
+<p>All the other Extract groups should be configured with the <code class="codeph">nomovecommitlogstostagingdir</code> parameter in the Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</li>
+</ol>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50"></a>
+<h2 id="GADBD-GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50" class="sect2"><span class="enumeration_section">18.13</span> CDC Configuration Reference</h2>
+<div>
+<div class="section">
+<p>The following properties are used with Cassandra change data capture.</p>
+<div class="tblformal" id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-6C04DE81-7FA0-4A49-B66D-78EB454B4120">
+<table class="cellalignment71">
+<thead>
+<tr class="cellalignment65">
+<th class="cellalignment72" id="d100993e1343">Properties</th>
+<th class="cellalignment72" id="d100993e1346">Required/Optional</th>
+<th class="cellalignment72" id="d100993e1349">Location</th>
+<th class="cellalignment72" id="d100993e1352">Default</th>
+<th class="cellalignment72" id="d100993e1355">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment65" rowspan="1" colspan="1" id="d100993e1360" headers="d100993e1343">
+<p><code class="codeph">DBOPTIONS ENABLECASSANDRACPPDRIVERTRACE true</code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1360 d100993e1346">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1360 d100993e1349">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1360 d100993e1352">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1360 d100993e1355">
+<p>Use only during initial load process.</p>
+<p>When set to <code class="codeph">true</code>, the Cassandra driver logs all the API calls to a <code class="codeph">driver.log</code> file. This file is created in the <span>Oracle GoldenGate for Big Data</span> installation directory. This is useful for debugging.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" rowspan="1" colspan="1" id="d100993e1392" headers="d100993e1343">
+<p><code class="codeph">DBOPTIONS FETCHBATCHSIZE <span class="codeinlineitalic">number</span></code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1392 d100993e1346">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1392 d100993e1349">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1392 d100993e1352">
+<p><code class="codeph">1000</code></p>
+<p>Minimum is <code class="codeph">1</code></p>
+<p>Maximum is <code class="codeph">100000</code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1392 d100993e1355">
+<p>Use only during initial load process.</p>
+<p>Specifies the number of rows of data the driver attempts to fetch on each request submitted to the database server.</p>
+<p>The parameter value should be lower than the database configuration parameter, <code class="codeph">tombstone_warn_threshold</code>, in the database configuration file, <code class="codeph">cassandra.yaml</code>. Otherwise the initial load process might fail.</p>
+<p>Oracle recommends that you set this parameter value to 5000 for initial load Extract optimum performance.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" rowspan="1" colspan="1" id="d100993e1435" headers="d100993e1343">
+<p><code class="codeph">TRANLOGOPTIONS CDCLOGDIRTEMPLATE <span class="codeinlineitalic">path</span></code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1435 d100993e1346">
+<p>Required</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1435 d100993e1349">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1435 d100993e1352">
+<p>None</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1435 d100993e1355">
+<p>The CDC commit log directory path template. The template can optionally have the <code class="codeph">$nodeAddress</code> meta field that is resolved to the respective node address.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" rowspan="1" colspan="1" id="d100993e1460" headers="d100993e1343">
+<p><code class="codeph">TRANLOGOPTIONS SFTP <span class="codeinlineitalic">options</span></code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1460 d100993e1346">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1460 d100993e1349">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1460 d100993e1352">
+<p>None</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1460 d100993e1355">
+<p>The secure file transfer protocol (SFTP) connection details to pull and transfer the commit log files. You can use one or more of these options:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-8A76ADDE-EE33-44A8-9ACC-5095C9DA8CBF"><!-- --></a><code class="codeph">USER <span class="codeinlineitalic">user</span></code></dt>
+<dd>
+<p>The SFTP user name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-D94CD011-8F6A-41E4-9938-7386F6E9B8CC"><!-- --></a><code class="codeph">PASSWORD <span class="codeinlineitalic">password</span></code></dt>
+<dd>
+<p>The SFTP password.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-83F76113-54C4-4122-84DC-490AA970F900"><!-- --></a><code class="codeph">KNOWNHOSTSFILE <span class="codeinlineitalic">file</span></code></dt>
+<dd>
+<p>The location of the Secure Shell (SSH)known hosts file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-FC3F0176-37B3-42C0-906D-689342B4CB5F"><!-- --></a><code class="codeph">LANDINGDIR <span class="codeinlineitalic">dir</span></code></dt>
+<dd>
+<p>The SFTP landing directory for the commit log files on the local machine.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-3BD86DA3-C44A-4367-97B4-8F8585345865"><!-- --></a><code class="codeph">PRIVATEKEY <span class="codeinlineitalic">file</span></code></dt>
+<dd>
+<p>The SSH private key file.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-D460BDCD-AC9F-49F0-B2E2-05991C3FBE7E"><!-- --></a><code class="codeph">PASSPHRASE <span class="codeinlineitalic">password</span></code></dt>
+<dd>
+<p>The SSH private key pass phrase.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-207DA9F5-E108-46FF-8560-2E3B8BC7A81D"><!-- --></a><code class="codeph">PORTNUMBER <span class="codeinlineitalic">portnumber</span></code></dt>
+<dd>
+<p>The SSH port number.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" rowspan="1" colspan="1" id="d100993e1546" headers="d100993e1343">
+<p><code class="codeph">CLUSTERCONTACTPOINTS <span class="codeinlineitalic">nodes</span> USER <span class="codeinlineitalic">dbuser</span> PASSWORD <span class="codeinlineitalic">dbpassword</span></code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1546 d100993e1346">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1546 d100993e1349">
+<p><code>GLOBALS</code> parameter file</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1546 d100993e1352">
+<p><code class="codeph">127.0.0.1</code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1546 d100993e1355">
+<p>A comma separated list of nodes to be used for a connection to the Cassandra cluster. You should provide at least one node address. The parameter options are:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-08518375-FCEA-41B1-B1EF-47921216BF50"><!-- --></a><code class="codeph">USER <span class="codeinlineitalic">dbuser</span></code></dt>
+<dd>
+<p>No default</p>
+<p>Optional</p>
+<p>The user name to use when connecting to the database.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-D8B23C5E-EC77-4A80-9AA2-2576FF3A5194"><!-- --></a><code class="codeph">PASSWORD <span class="codeinlineitalic">dbpassword</span></code></dt>
+<dd>
+<p>No default</p>
+<p>Required when <code class="codeph">USER</code> is used.</p>
+<p>The user password to use when connecting to the database.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-574A91EE-9830-4537-8286-024F82937AF1"><!-- --></a><code class="codeph">PORT &lt;<span class="codeinlineitalic">port number</span></code></dt>
+<dd>
+<p>No default</p>
+<p>Optional</p>
+<p>The port to use when connecting to the database.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" rowspan="1" colspan="1" id="d100993e1617" headers="d100993e1343">
+<p><code class="codeph">TRANLOGOPTIONS CDCREADERSDKVERSION <span class="codeinlineitalic">version</span></code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1617 d100993e1346">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1617 d100993e1349">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1617 d100993e1352">
+<p><code class="codeph">3.11</code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1617 d100993e1355">
+<p>The SDK Version for the CDC reader capture API.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment65" rowspan="1" colspan="1" id="d100993e1640" headers="d100993e1343">
+<p><code class="codeph">ABENDONMISSEDRECORD</code> | <code class="codeph">NOABENDONMISSEDRECORD</code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1640 d100993e1346">
+<p>Optional</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1640 d100993e1349">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1640 d100993e1352">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment65" rowspan="1" colspan="1" headers="d100993e1640 d100993e1355">
+<p>When set to <code class="codeph">true</code> and the possibility of a missing record is found, the process stops with the diagnostic information. This is generally detected when a node goes down and the CDC reader doesn't find a replica node with a matching last record from the dead node. You can set this parameter to <code class="codeph">false</code> to continue processing. A warning message is logged about the scenario.</p>
+</td>
+</tr>
+</tbody>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1677">
+<p><code class="codeph">TRANLOGOPTIONS CLEANUPCDCCOMMITLOGS</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1677">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e1677">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment73" headers="d100993e1677">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1677">
+<p>Purge CDC commit log files post extract processing. When the value is set to <code class="codeph">false</code>, the CDC commit log files are moved to the <code>cdc_raw_processed</code> directory.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1704">
+<p><code class="codeph">JVMBOOTOPTIONS <span class="codeinlineitalic">jvm_options</span></code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1704">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e1704">
+<p><code>GLOBALS</code> parameter file</p>
+</td>
+<td class="cellalignment73" headers="d100993e1704">
+<p>None</p>
+</td>
+<td class="cellalignment73" headers="d100993e1704">
+<p>The boot options for the Java Virtual Machine. Multiple options are delimited by a space character.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1725">
+<p><code class="codeph">JVMCLASSPATH <span class="codeinlineitalic">classpath</span></code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1725">
+<p>Required</p>
+</td>
+<td class="cellalignment73" headers="d100993e1725">
+<p><code>GLOBALS</code> parameter file</p>
+</td>
+<td class="cellalignment73" headers="d100993e1725">
+<p>None</p>
+</td>
+<td class="cellalignment73" headers="d100993e1725">
+<p>The classpath for the Java Virtual Machine. You can include an asterisk (<code class="codeph">*</code>) wildcard to match all JAR files in any directory. Multiple paths should be delimited with a colon (<code class="codeph">:</code>) character.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1752">
+<p><code class="codeph">OGGSOURCE <span class="codeinlineitalic">source</span></code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1752">
+<p>Required</p>
+</td>
+<td class="cellalignment73" headers="d100993e1752">&nbsp;</td>
+<td class="cellalignment73" headers="d100993e1752">
+<p>None</p>
+</td>
+<td class="cellalignment73" headers="d100993e1752">
+<p>The source database for CDC capture or database queries. The valid value is <code class="codeph">CASSANDRA</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1772">
+<p><code class="codeph">SOURCEDB <span class="codeinlineitalic">nodeaddress</span> USERID <span class="codeinlineitalic">dbuser</span> PASSWORD <span class="codeinlineitalic">dbpassword</span></code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1772">
+<p>Required</p>
+</td>
+<td class="cellalignment73" headers="d100993e1772">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment73" headers="d100993e1772">
+<p>None</p>
+</td>
+<td class="cellalignment73" headers="d100993e1772">
+<p>A single Cassandra node address that is used for a connection to the Cassandra cluster and to query the metadata for the captured tables.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__USERDBUSERNODEFAULTOPTIONALTHEUSERN-669E0E88"><!-- --></a><code class="codeph">USER <span class="codeinlineitalic">dbuser</span></code></dt>
+<dd>
+<p>No default</p>
+<p>Optional</p>
+<p>The user name to use when connecting to the database.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__PASSWORDDBPASSWORDNODEFAULTREQUIRED-669E0E91"><!-- --></a><code class="codeph">PASSWORD <span class="codeinlineitalic">dbpassword</span></code></dt>
+<dd>
+<p>No default</p>
+<p>Required when <code class="codeph">USER</code> is used.</p>
+<p>The user password to use when connecting to the database.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1830">
+<p><code class="codeph">ABENDONUPDATERECORDWITHMISSINGKEYS</code> | <code class="codeph">NOABENDONUPDATERECORDWITHMISSINGKEYS</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1830">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e1830">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment73" headers="d100993e1830">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1830">
+<p>If this value is <code class="codeph">true</code>, anytime an <code class="codeph">UPDATE</code> operation record with missing key columns is found, the process stops with the diagnostic information. You can set this property to <code class="codeph">false</code> to continue processing and write this record to the trail file. A warning message is logged about the scenario. This operation is a partition update, see <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C211341D-EB6A-4A89-87AB-8985E328FDC2">Partition Update or Insert of Static Columns</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1866">
+<p><code class="codeph">ABENDONDELETERECORDWITHMISSINGKEYS</code> | <code class="codeph">NOABENDONDELETERECORDWITHMISSINGKEYS</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1866">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e1866">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment73" headers="d100993e1866">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1866">
+<p>If this value is <code class="codeph">true</code>, anytime an <code class="codeph">DELETE</code> operation record with missing key columns is found, the process stops with the diagnostic information. You can set this property to <code class="codeph">false</code> to continue processing and write this record to the trail file. A warning message is logged about the scenario. This operation is a partition update, see <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-0C9E7868-2DB9-4BDA-90C6-161C6C71609F">Partition Delete</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1902">
+<p><code class="codeph">MOVECOMMITLOGSTOSTAGINGDIR</code> | <code class="codeph">NOMOVECOMMITLOGSTOSTAGINGDIR</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1902">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e1902">
+<p>Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment73" headers="d100993e1902">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1902">
+<p>Enabled by default and this instructs the Extract group to move the commit log files in the <code class="codeph">cdc_raw</code> directory on the Cassandra nodes to a staging directory for the commit log files. Only one Extract group can have <code class="codeph">movecommitlogstostagingdir</code> enabled, and all the other Extract groups disable this by specifying <code class="codeph">nomovecommitlogstostagingdir</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1935">
+<p><code class="codeph">SSL</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1935">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e1935">
+<p>GLOBALS or Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment73" headers="d100993e1935">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1935">
+<p>Use for basic SSL support during connection. Additional JSSE configuration through Java System properties is expected when enabling this.</p>
+<div class="infobox-note" id="GUID-3C9DC84C-B120-4D83-ABFF-1F0D12870B50__GUID-BC6B3B77-1D5F-460F-9196-F44A6D2B35D7">
+<p class="notep1">Note:</p>
+<p>The following SSL properties are in <code class="codeph">CPPDRIVEROPTIONS SSL</code> so this keyword must be added to any other SSL property to work.</p>
+</div>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1962">
+<p><code class="codeph">CPPDRIVEROPTIONS SSL PEMPUBLICKEYFILE <span class="codeinlineitalic">cassadra.pem</span></code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1962">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e1962">
+<p>GLOBALS or Extract parameter (<code class="codeph">.prm</code>) file.</p>
+<p>String that indicates the absolute path with fully qualified name. This file is must for the SSL connection.</p>
+</td>
+<td class="cellalignment73" headers="d100993e1962">
+<p>None, unless the <code class="codeph">PEMPUBLICKEYFILE</code> property is specified, then you must specify a value.</p>
+</td>
+<td class="cellalignment73" headers="d100993e1962">
+<p>Indicates that it is PEM formatted public key file used to verify the peer's certificate. This property is needed for one-way handshake or basic SSL connection.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e1989">
+<p><code class="codeph">CPPDRIVEROPTIONS SSL ENABLECLIENTAUTH</code> | <code class="codeph">DISABLECLIENTAUTH</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1989">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e1989">
+<p>GLOBALS or Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment73" headers="d100993e1989">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e1989">
+<p>Enabled indicates a two-way SSL encryption between client and server. It is required to authenticate both the client and the server through PEM formatted certificates. This property also needs the <code class="codeph">pemclientpublickeyfile</code> and <code class="codeph">pemclientprivatekeyfile</code> properties to be set. The <code class="codeph">pemclientprivatekeypasswd</code> property must be configured if the client private key is password protected. Setting this property to <code class="codeph">false</code> disables client authentication for two-way handshake.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e2026">
+<p><code class="codeph">CPPDRIVEROPTIONS SSL PEMCLIENTPUBLICKEYFILE <span class="codeinlineitalic">public.pem</span></code></p>
+</td>
+<td class="cellalignment73" headers="d100993e2026">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e2026">
+<p>GLOBALS or Extract parameter (<code class="codeph">.prm</code>) file.</p>
+<p>String that indicates the absolute path with fully qualified name. This file is must for the SSL connection.</p>
+</td>
+<td class="cellalignment73" headers="d100993e2026">
+<p>None, unless the <code class="codeph">PEMCLIENTPUBLICKEYFILE</code> property is specified, then you must specify a value.</p>
+</td>
+<td class="cellalignment73" headers="d100993e2026">
+<p>Use for a PEM formatted public key file name used to verify the client's certificate. This is must if you are using <code class="codeph">CPPDRIVEROPTIONS SSL ENABLECLIENTAUTH</code> or for two-way handshake.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e2056">
+<p><code class="codeph">CPPDRIVEROPTIONS SSL PEMCLIENTPRIVATEKEYFILE <span class="codeinlineitalic">public.pem</span></code></p>
+</td>
+<td class="cellalignment73" headers="d100993e2056">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e2056">
+<p>GLOBALS or Extract parameter (<code class="codeph">.prm</code>) file.</p>
+<p>String that indicates the absolute path with fully qualified name. This file is must for the SSL connection.</p>
+</td>
+<td class="cellalignment73" headers="d100993e2056">
+<p>None, unless the <code class="codeph">PEMCLIENTPRIVATEKEYFILE</code> property is specified, then you must specify a value.</p>
+</td>
+<td class="cellalignment73" headers="d100993e2056">
+<p>Use for a PEM formatted private key file name used to verify the client's certificate. This is must if you are using <code class="codeph">CPPDRIVEROPTIONS SSL ENABLECLIENTAUTH</code> or for two-way handshake.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e2086">
+<p><code class="codeph">CPPDRIVEROPTIONS SSL PEMCLIENTPRIVATEKEYPASSWD <span class="codeinlineitalic">privateKeyPasswd</span></code></p>
+</td>
+<td class="cellalignment73" headers="d100993e2086">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e2086">
+<p>GLOBALS or Extract parameter (<code class="codeph">.prm</code>) file.</p>
+<p>A string</p>
+</td>
+<td class="cellalignment73" headers="d100993e2086">
+<p>None, unless the <code class="codeph">PEMCLIENTPRIVATEKEYPASSWD</code> property is specified, then you must specify a value.</p>
+</td>
+<td class="cellalignment73" headers="d100993e2086">
+<p>Sets the password for the PEM formatted private key file used to verify the client's certificate. This is must if the private key file is protected with the password.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e2113">
+<p><code class="codeph">CPPDRIVEROPTIONS SSL PEERCERTVERIFICATIONFLAG <span class="codeinlineitalic">value</span></code></p>
+</td>
+<td class="cellalignment73" headers="d100993e2113">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e2113">
+<p>GLOBALS or Extract parameter (<code class="codeph">.prm</code>) file.</p>
+<p>An integer</p>
+</td>
+<td class="cellalignment73" headers="d100993e2113">
+<p><code class="codeph">0</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e2113">
+<p>Sets the verification required on the peer's certificate. The range is 0&ndash;4:</p>
+<p>0&ndash;Disable certificate identity verification.</p>
+<p>1&ndash;Verify the peer certificate</p>
+<p>2&ndash;Verify the peer identity</p>
+<p>3&ndash; Not used so it is similar to disable certificate identity verification.</p>
+<p>4 &ndash;Verify the peer identity by its domain name</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment73" id="d100993e2148">
+<p><code class="codeph">CPPDRIVEROPTIONS SSL ENABLEREVERSEDNS</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e2148">
+<p>Optional</p>
+</td>
+<td class="cellalignment73" headers="d100993e2148">
+<p>GLOBALS or Extract parameter (<code class="codeph">.prm</code>) file.</p>
+</td>
+<td class="cellalignment73" headers="d100993e2148">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment73" headers="d100993e2148">
+<p>Enables retrieving host name for IP addresses using reverse IP lookup.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-533E4A89-CBA1-447F-84F7-FAD85D670A09"></a>
+<h2 id="GADBD-GUID-533E4A89-CBA1-447F-84F7-FAD85D670A09" class="sect2"><span class="enumeration_section">18.14</span> Troubleshooting</h2>
+<div>
+<div class="section">
+<p class="subhead2">No data captured by the Cassandra Extract process.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The Cassandra database has not flushed the data from the active commit log files to the CDC commit log files. The flush is dependent on the load of the Cassandra cluster.</p>
+</li>
+<li>
+<p>The Cassandra Extract captures data from the CDC commit log files only.</p>
+</li>
+<li>
+<p>Check the CDC property of the source table. The CDC property of the source table should be set to <code class="codeph">true</code>.</p>
+</li>
+<li>
+<p>Data is not captured if the <code class="codeph">TRANLOGOPTIONS CDCREADERSDKVERSION</code> 3.9 parameter is in use and the <code class="codeph">JVMCLASSPATH</code> is configured to point to Cassandra 3.10 or 3.11 JAR files.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Error: OGG-01115 Function getInstance not implemented.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The following line is missing from the <code class="codeph">GLOBALS</code> file.</p>
+<p><code class="codeph">OGGSOURCE CASSANDRA</code></p>
+</li>
+<li>
+<p>The <code class="codeph">GLOBALS</code> file is missing from the <span>Oracle GoldenGate</span> directory.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Error: Unable to connect to Cassandra cluster, Exception: com.datastax.driver.core.exceptions.NoHostAvailableException</p>
+<p>This indicates that the connection to the Cassandra cluster was unsuccessful.</p>
+<p>Check the following parameters:</p>
+<p><code class="codeph">CLUSTERCONTACTPOINTS</code></p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Error: Exception in thread "main" java.lang.NoClassDefFoundError: oracle/goldengate/capture/cassandra/CassandraCDCProcessManager</p>
+<p>Check the <code class="codeph">JVMCLASSPATH</code> parameter in the <code class="codeph">GLOBALS</code> file.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Error: oracle.goldengate.util.Util - Unable to invoke method while constructing object. Unable to create object of class "oracle.goldengate.capture.cassandracapture311.SchemaLoader3DOT11" Caused by: java.lang.NoSuchMethodError: org.apache.cassandra.config.DatabaseDescriptor.clientInitialization()V</p>
+<p>There is a mismatch in the Cassandra SDK version configuration. The <code class="codeph">TRANLOGOPTIONS CDCREADERSDKVERSION 3.11</code> parameter is in use and the <code class="codeph">JVMCLASSPATH</code> may have the Cassandra 3.9 JAR file path.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Error: OGG-25171 Trail file '/path/to/trail/gg' is remote. Only local trail allowed for this extract.</p>
+<p>A Cassandra Extract should only be configured to write to local trail files. When adding trail files for Cassandra Extract, use the <code class="codeph">EXTTRAIL</code> option. For example:</p>
+<pre dir="ltr">
+ADD EXTTRAIL ./dirdat/z1, EXTRACT cass
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Errors: OGG-868 <span class="italic">error message</span> or OGG-4510 <span class="italic">error message</span></p>
+<p>The cause could be any of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Unknown user or invalid password</p>
+</li>
+<li>
+<p>Unknown node address</p>
+</li>
+<li>
+<p>Insufficient memory</p>
+</li>
+</ul>
+<p>Another cause could be that the connection to the Cassandra database is broken. The <span class="italic">error message</span> indicates the database error that has occurred.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Error: OGG-251712 Keyspace keyspacename does not exist in the database.</p>
+<p>The issue could be due to these conditions:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>During the Extract initial load process, you may have deleted the <code class="codeph">KEYSPACE <span class="codeinlineitalic">keyspacename</span></code> from the Cassandra database.</p>
+</li>
+<li>
+<p>The <code class="codeph">KEYSPACE <span class="codeinlineitalic">keyspacename</span></code> does not exist in the Cassandra database.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Error: OGG-25175 Unexpected error while fetching row.</p>
+<p>This can occur if the connection to the Cassandra database is broken during initial load process.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Error: &ldquo;Server-side warning: Read 915936 live rows and 12823104 tombstone cells for query SELECT * FROM <span class="italic">keyspace</span>.<span class="italic">table</span>(see tombstone_warn_threshold)&rdquo;.</p>
+<p>When the value of the initial load <code class="codeph">DBOPTIONS FETCHBATCHSIZE</code> parameter is greater than the Cassandra database configuration parameter,<code class="codeph">tombstone_warn_threshold</code>, this is likely to occur.</p>
+<p>Increase the value of <code class="codeph">tombstone_warn_threshold</code> or reduce the <code class="codeph">DBOPTIONS FETCHBATCHSIZE</code> value to get around this issue.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Duplicate records in the Cassandra Extract trail.</p>
+<p>Internal tests on a multi-node Cassandra cluster have revealed that there is a possibility of duplicate records in the Cassandra CDC commit log files. The duplication in the Cassandra commit log files is more common when there is heavy write parallelism, write errors on nodes, and multiple retry attempts on the Cassandra nodes. In these cases, it is expected that Cassandra trail file will have duplicate records.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">JSchException or SftpException in the Extract Report File</p>
+<p>Verify that the SFTP credentials (<code class="codeph">user</code>, <code class="codeph">password</code>, and <code class="codeph">privatekey</code>) are correct. Check that the SFTP user has read and write permissions for the <code class="codeph">cdc_raw</code> directory on each of the nodes in the Cassandra cluster.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">ERROR o.g.c.c.CassandraCDCProcessManager - Exception during creation of CDC staging directory&nbsp;[{}]java.nio.file.AccessDeniedException</p>
+<p>The Extract process does not have permission to create CDC commit log staging directory. For example, if the <code class="codeph">cdc_raw</code> commit log directory is <code class="codeph">/path/to/cassandra/home/data/cdc_raw</code>, then the staging directory would be <code class="codeph">/path/to/cassandra/home/data/cdc_raw/../cdc_raw_staged</code>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Extract report file shows a lot of DEBUG log statements</p>
+<p>On production system, you do not need to enable debug logging. To use <code class="codeph">INFO</code> level logging, make sure that the <code class="codeph">GLOBALS</code> file includes this parameter:</p>
+<pre dir="ltr">
+JVMBOOTOPTIONS -Dlogback.configurationFile=AdapterExamples/big-data/cassandracapture/logback.xml
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To enable SSL in Oracle Golden Gate Cassandra Extract you have to enable SSL in the GLOBALS file or in the Extract Parameter file.</p>
+<p>If SSL Keyword is missing, then Extract assumes that you wanted to connect without SSL. So if the <code class="codeph">Cassandra.yaml</code> file has an SSL configuration entry, then the connection fails.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">SSL is enabled and it is one-way handshake</p>
+<p>You must specify the <code class="codeph">CPPDRIVEROPTIONS SSL PEMPUBLICKEYFILE <span class="codeinlineitalic">/scratch/testcassandra/testssl/ssl/cassandra.pem</span></code> property.</p>
+<p>If this property is missing, then Extract generates this error:.</p>
+<pre dir="ltr">
+</pre>
+2018-06-09 01:55:37 ERROR OGG-25180 The PEM formatted public key file used to verify the peer's certificate is missing. If SSL is enabled, then it is must to set PEMPUBLICKEYFILE in your Oracle GoldenGate GLOBALS file or in Extract parameter file</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">SSL is enabled and it is two-way handshake</p>
+<p>You must specify these properties for SSL two-way handshake:</p>
+<pre dir="ltr">
+CPPDRIVEROPTIONS SSL ENABLECLIENTAUTH 
+CPPDRIVEROPTIONS SSL PEMCLIENTPUBLICKEYFILE <span class="italic">/scratch/testcassandra/testssl/ssl/datastax-cppdriver.pem
+</span>CPPDRIVEROPTIONS SSL PEMCLIENTPRIVATEKEYFILE <span class="italic">/scratch/testcassandra/testssl/ssl/datastax-cppdriver-private.pem
+</span>CPPDRIVEROPTIONS SSL PEMCLIENTPRIVATEKEYPASSWD <span class="italic">cassandra</span>
+</pre>
+<p>Additionally, consider the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>If <code class="codeph">ENABLECLIENTAUTH</code> is missing then Extract assumes that it is one-way handshake so it ignores <code class="codeph">PEMCLIENTPRIVATEKEYFILE</code> and <code class="codeph">PEMCLIENTPRIVATEKEYFILE</code>. The following error occurs because the <code>cassandra.yaml</code> file should have <code class="codeph">require_client_auth</code> set to <code class="codeph">true</code>.</p>
+<pre dir="ltr">
+2018-06-09 02:00:35  ERROR   OGG-00868  No hosts available for the control connection.
+</pre></li>
+<li>
+<p>If <code class="codeph">ENABLECLIENTAUTH</code> is used and <code class="codeph">PEMCLIENTPRIVATEKEYFILE</code> is missing, then this error occurs:</p>
+<pre dir="ltr">
+2018-06-09 02:04:46  ERROR   OGG-25178  The PEM formatted private key file used to verify the client's certificate is missing. For two way handshake or if ENABLECLIENTAUTH is set, then it is mandatory to set PEMCLIENTPRIVATEKEYFILE in your Oracle GoldenGate GLOBALS file or in Extract parameter file.
+</pre></li>
+<li>
+<p>If <code class="codeph">ENABLECLIENTAUTH</code> is use and <code class="codeph">PEMCLIENTPUBLICKEYFILE</code> is missing, then this error occurs:</p>
+<pre dir="ltr">
+2018-06-09 02:06:20  ERROR   OGG-25179  The PEM formatted public key file used to verify the client's certificate is missing. For two way handshake or if ENABLECLIENTAUTH is set, then it is mandatory to set PEMCLIENTPUBLICKEYFILE in your Oracle GoldenGate GLOBALS file or in Extract parameter file.
+</pre></li>
+<li>
+<p>If the password is set while generating the client private key file then you must add <code class="codeph">PEMCLIENTPRIVATEKEYPASSWD</code> to avoid this error:</p>
+<pre dir="ltr">
+2018-06-09 02:09:48  ERROR   OGG-25177  The SSL certificate: /scratch/jitiwari/testcassandra/testssl/ssl/datastax-cppdriver-private.pem can not be loaded. Unable to load private key.
+</pre></li>
+<li>
+<p>If any of the PEM file is missing from the specified absolute path, then this error occurs:</p>
+<pre dir="ltr">
+2018-06-09 02:12:39  ERROR   OGG-25176  Can not open the SSL certificate: /scratch/jitiwari/testcassandra/testssl/ssl/cassandra.pem.
+</pre></li>
+</ul>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">General SSL Errors</p>
+<p>Consider these general errors:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The SSL connection may fail if you have enabled all SSL required parameters in Extract or GLOBALS file and the SSL is not configured in the <code class="codeph">cassandra.yaml</code> file.</p>
+</li>
+<li>
+<p>The absolute path or the qualified name of the PEM file may not correct. There could be access issue on the PEM file stored location.</p>
+</li>
+<li>
+<p>The password added during generating the client private key file may not be correct or you may not have enabled it in the Extract parameter or GLOBALS file.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="cass-cdc-using-oracle-goldengate-capture-cassandra.htm#GUID-C198C7C6-E7C4-4247-BC21-5AD8A26F6047" title="Learn how to use Oracle GoldenGate capture (Extract) to get changes from Apache Cassandra databases.">Using Oracle GoldenGate Capture for Cassandra</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment64">
+<tr>
+<td class="cellalignment74">
+<table class="cellalignment69">
+<tr>
+<td class="cellalignment68"><a href="using-pluggable-formatters.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment68"><a href="connecting-microsoft-azure-data-lake.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment76">
+<table class="cellalignment67">
+<tr>
+<td class="cellalignment68"><a href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment68"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment68"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Encrypting Data with the Master Key and Wallet Method</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="To use this method of data encryption, you create a master key wallet and add a master key to the wallet. This method works as follows, depending on whether the data is encrypted in the trails or across TCP/IP:" />
+<meta name="dcterms.created" content="2018-05-10T07:33:56Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Securing the Oracle GoldenGate Environment" />
+<meta name="dcterms.identifier" content="E91326-01" />
+<meta name="dcterms.isVersionOf" content="OGGSE" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="overview-ca-security-options.htm" title="Previous" type="text/html" />
+<link rel="Next" href="encrypting-data-enckeys-method1.htm" title="Next" type="text/html" />
+<link rel="alternate" href="OGGSE.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-EC282970-4C1F-47F2-8E42-7B999166C44B"></a> <span id="PAGE" style="display:none;">17/24</span> <!-- End Header -->
+<h1 id="OGGSE-GUID-EC282970-4C1F-47F2-8E42-7B999166C44B" class="sect1"><span class="enumeration_chapter">8</span> Encrypting Data with the Master Key and Wallet Method</h1>
+<div id="TOUSETHISMETHODOFDATAENCRYPTIONYOUC-463535EF">
+<p>To use this method of data encryption, you create a master key wallet and add a master key to the wallet. This method works as follows, depending on whether the data is encrypted in the trails or across TCP/IP:</p>
+<div class="section" id="GUID-EC282970-4C1F-47F2-8E42-7B999166C44B__EACHTIMEORACLEGOLDENGATECREATESATRA-46357611">
+<ul style="list-style-type: disc;">
+<li>
+<p>Each time <span>Oracle GoldenGate</span> creates a trail file, it generates a new encryption key automatically. This encryption key encrypts the trail contents. The master key encrypts the encryption key. This process of encrypting encryption keys is known as <span class="bold">key wrap</span> and is described in standard ANS X9.102 from American Standards Committee.</p>
+</li>
+<li>
+<p>To encrypt data across the network, <span>Oracle GoldenGate</span> generates a session key using a cryptographic function based on the master key.</p>
+</li>
+</ul>
+<p><span>Oracle GoldenGate</span> uses an auto-login wallet (file extension <code class="codeph">.sso</code>), meaning that it is an obfuscated container that does not require human intervention to supply the necessary passwords.</p>
+<p>Encrypting data with a master key and wallet is not supported on the DB2 for i, DB2 z/OS, or NonStop platforms.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="encrypting-data-master-key-and-wallet-method.htm#GUID-3A1E95A7-56FC-49EA-BC57-E4A303DE372C">Creating the Wallet and Adding a Master Key</a><br /></li>
+<li class="ulchildlink"><a href="encrypting-data-master-key-and-wallet-method.htm#GUID-CC262D20-6C27-4AE3-8501-BC7FF5987779">Specifying Encryption Parameters in the Parameter File</a><br /></li>
+<li class="ulchildlink"><a href="encrypting-data-master-key-and-wallet-method.htm#GUID-B86D8D76-E698-4FAA-B83A-14B21D16322B">Renewing the Master Key</a><br /></li>
+<li class="ulchildlink"><a href="encrypting-data-master-key-and-wallet-method.htm#GUID-9401E5C0-D574-4A5C-A61B-3DCFDD275CF0">Deleting Stale Master Keys</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="securing-oracle-goldengate.htm" title="Use this part to secure your CA and MA environments.">Securing Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-3A1E95A7-56FC-49EA-BC57-E4A303DE372C"></a>
+<h2 id="OGGSE-GUID-3A1E95A7-56FC-49EA-BC57-E4A303DE372C" class="sect2"><span class="enumeration_section">8.1</span> Creating the Wallet and Adding a Master Key</h2>
+<div>
+<div class="section" id="GUID-3A1E95A7-56FC-49EA-BC57-E4A303DE372C__THEWALLETISCREATEDINAPLATFORM-INDEP-4635A1EF">
+<p>The wallet is created in a platform-independent format. The wallet can be stored on a shared file system that is accessible by all systems in the Oracle GoldenGate environment. Alternatively, you can use an identical wallet on each system in the Oracle GoldenGate environment. If you use a wallet on each system, you must create the wallet on one system, typically the source system, and then copy it to all of the other systems in the Oracle GoldenGate environment. This must also be done every time you add, change, or delete a master key.</p>
+<p>This procedure creates the wallet on the source system and then guides you through copying it to the other systems in the Oracle GoldenGate environment.</p>
+</div>
+<!-- class="section" -->
+<ol id="GUID-3A1E95A7-56FC-49EA-BC57-E4A303DE372C__OPTIONALTOSTORETHEWALLETINALOCATION-4635A448">
+<li class="stepexpand"><span>(Optional) To store the wallet in a location other than the <code class="codeph">dirwlt</code> subdirectory of the Oracle GoldenGate installation directory, specify the desired location with the <code class="codeph">WALLETLOCATION</code> parameter in the <code class="codeph">GLOBALS</code> file.</span>
+<div>
+<pre dir="ltr">
+WALLETLOCATION <span class="italic">directory_path</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Create a master-key wallet with the <code class="codeph">CREATE WALLET</code> command in GGSCI.</span></li>
+<li class="stepexpand"><span>Open the wallet after it has been created with the <code class="codeph">OPEN WALLET</code> command i.</span></li>
+<li class="stepexpand"><span>Add a master key to the wallet with the <code class="codeph">ADD MASTERKEY</code> command.</span></li>
+<li class="stepexpand"><span>Issue the <code class="codeph">INFO MASTERKEY</code> command to confirm that the key you added is the current version. In a new installation, the version should be 1.</span></li>
+<li class="stepexpand"><span>Issue the <code class="codeph">INFO MASTERKEY</code> command with the <code class="codeph">VERSION</code> option, where the version is the current version number. Record the version number and the AES hash value of that version.</span>
+<div>
+<pre dir="ltr">
+INFO MASTERKEY VERSION <span class="italic">version</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Copy the wallet to all of the other Oracle GoldenGate systems.</span></li>
+<li class="stepexpand"><span>Issue the <code class="codeph">INFO MASTERKEY</code> command with the <code class="codeph">VERSION</code> option on each system to which you copied the wallet, where the version is the version number that you recorded. For each wallet, make certain the <code class="codeph">Status</code> is <code class="codeph">Current</code> and compare the AES hash value with the one that you originally recorded. All wallets must show identical key versions and hash values.</span>
+<div>
+<pre dir="ltr">
+INFO MASTERKEY VERSION <span class="italic">version</span>
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="encrypting-data-master-key-and-wallet-method.htm#GUID-EC282970-4C1F-47F2-8E42-7B999166C44B" title="To use this method of data encryption, you create a master key wallet and add a master key to the wallet. This method works as follows, depending on whether the data is encrypted in the trails or across TCP/IP:">Encrypting Data with the Master Key and Wallet Method</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-CC262D20-6C27-4AE3-8501-BC7FF5987779"></a>
+<h2 id="OGGSE-GUID-CC262D20-6C27-4AE3-8501-BC7FF5987779" class="sect2"><span class="enumeration_section">8.2</span> Specifying Encryption Parameters in the Parameter File</h2>
+<div>
+<div class="section" id="GUID-CC262D20-6C27-4AE3-8501-BC7FF5987779__THISPROCEDUREADDSTHEPARAMETERSTHATA-4635EA1C">
+<p>This procedure adds the parameters that are required to support data encryption in the trails and across the network with the master key and wallet method.</p>
+</div>
+<!-- class="section" -->
+<ol id="GUID-CC262D20-6C27-4AE3-8501-BC7FF5987779__INTHEFOLLOWINGPARAMETERFILESADDTHEF-4635ED76">
+<li class="stepexpand"><span>In the following parameter files, add the following:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>To encrypt trail data: In the parameter file of the primary Extract group and the data pump, add an <code class="codeph">ENCRYPTTRAIL</code> parameter statement before any parameter that specifies a trail or file that you want to be encrypted. Parameters that specify trails or files are <code class="codeph">EXTTRAIL</code>, <code class="codeph">RMTTRAIL</code>, <code class="codeph">EXTFILE</code>, and <code class="codeph">RMTFILE</code>. The syntax is:</p>
+<pre dir="ltr">
+ENCRYPTTRAIL {AES128 | AES192 | AES256 | BLOWFISH} 
+</pre></li>
+<li>
+<p>To encrypt data across TCP/IP: In the parameter file of the data pump (or the primary Extract, if no pump is being used), use the <code class="codeph">ENCRYPT</code> option of the <code class="codeph">RMTHOSTOPTIONS</code> parameter. The syntax is:</p>
+<pre dir="ltr">
+RMTHOSTOPTIONS <span class="italic">host</span>, MGRPORT <span class="italic">port</span>, ENCRYPT {AES128 | AES192 | AES256 | BLOWFISH}
+
+RMTHOSTOPTIONS ENCRYPT {AES128 | AES192 | AES256 | BLOWFISH}
+</pre></li>
+</ul>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">RMTHOSTOPTIONS</code> is used for Extract including passive extracts. See <a href="using-target-system-connection-initiation.htm#GUID-71F45FDD-6406-4153-9638-F13891C39AE7" title="Learn how to initiate passive and alias connections between your source and target systems.">Using Target System Connection Initiation</a> for more information about passive Extract.</p>
+</li>
+<li>
+<p><code class="codeph">ENCRYPTTRAIL</code> without options specifies 256-key byte substitution. This format is not secure and should not be used in a production environment. Use only for backward compatibility with earlier Oracle GoldenGate versions.</p>
+</li>
+<li>
+<p><code class="codeph">AES128</code> encrypts with the AES-128 encryption algorithm.</p>
+</li>
+<li>
+<p><code class="codeph">AES192</code> encrypts with AES-192 encryption algorithm.</p>
+</li>
+<li>
+<p><code class="codeph">AES256</code> encrypts with AES-256 encryption algorithm.</p>
+</li>
+<li>
+<p><code class="codeph">BLOWFISH</code> uses Blowfish encryption with a 64-bit block size and a variable-length key size from 32 bits to 128 bits. Use AES if supported for the platform. Use <code class="codeph">BLOWFISH</code> for backward compatibility with earlier Oracle GoldenGate versions, and for DB2 z/OS and DB2 for i. AES is not supported on those platforms.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Use the <code class="codeph">DECRYPTTRAIL</code> parameter for a data pump if you want trail data to be decrypted before it is written to the output trail. Otherwise, the data pump automatically decrypts it, if processing is required, and then reencrypts it before writing to the output trail. (Replicat decrypts the data automatically without any parameter input.)</span>
+<div>
+<pre dir="ltr">
+DECRYPTTRAIL
+</pre></div>
+</li>
+</ol>
+<div class="section" id="GUID-CC262D20-6C27-4AE3-8501-BC7FF5987779__YOUCANEXPLICITLYDECRYPTINCOMINGTRAI-4635F17F">
+<div class="infobox-note" id="GUID-CC262D20-6C27-4AE3-8501-BC7FF5987779__GUID-615C86F3-6FB4-4233-BC48-9A5ED6B2B49C">
+<p class="notep1">Note:</p>
+<p>You can explicitly decrypt incoming trail data and then re-encrypt it again for any output trails or files. First, enter <code class="codeph">DECRYPTTRAIL</code> to decrypt the data, and then enter <code class="codeph">ENCRYPTTRAIL</code> and its output trail specifications. <code class="codeph">DECRYPTTRAIL</code> must precede <code class="codeph">ENCRYPTTRAIL</code>. Explicit decryption and re-encryption enables you to vary the AES algorithm from trail to trail, if desired. For example, you can use AES 128 to encrypt a local trail and AES 256 to encrypt a remote trail. Alternatively, you can use the master key and wallet method to encrypt from one process to a second process, and then use the <code class="codeph">ENCKEYS</code> method to encrypt from the second process to the third process.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="encrypting-data-master-key-and-wallet-method.htm#GUID-EC282970-4C1F-47F2-8E42-7B999166C44B" title="To use this method of data encryption, you create a master key wallet and add a master key to the wallet. This method works as follows, depending on whether the data is encrypted in the trails or across TCP/IP:">Encrypting Data with the Master Key and Wallet Method</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-B86D8D76-E698-4FAA-B83A-14B21D16322B"></a>
+<h2 id="OGGSE-GUID-B86D8D76-E698-4FAA-B83A-14B21D16322B" class="sect2"><span class="enumeration_section">8.3</span> Renewing the Master Key</h2>
+<div>
+<div class="section" id="GUID-B86D8D76-E698-4FAA-B83A-14B21D16322B__THISPROCEDURERENEWSTHEMASTERENCRYPT-46362F21">
+<p>This procedure renews the master encryption key in the encryption-key wallet. Renewing the master key creates a new version of the key. Its name remains the same, but the bit ordering changes. As part of your security policy, you should renew the current master key regularly so that it does not get stale.</p>
+<p>All renewed versions of a master key remain in the wallet until they are marked for deletion with the <code class="codeph">DELETE MASTERKEY</code> command and then the wallet is purged with the <code class="codeph">PURGE WALLET</code> command, see <a href="encrypting-data-master-key-and-wallet-method.htm#GUID-9401E5C0-D574-4A5C-A61B-3DCFDD275CF0">Deleting Stale Master Keys</a>.</p>
+<p>Unless the wallet is maintained centrally on shared storage (as a shared wallet), the updated wallet must be copied to all of the other systems in the Oracle GoldenGate configuration that use that wallet. To do so, the Oracle GoldenGate must be stopped. This procedure includes steps for performing those tasks in the correct order.</p>
+</div>
+<!-- class="section" -->
+<ol id="GUID-B86D8D76-E698-4FAA-B83A-14B21D16322B__STOPEXTRACT.STOPEXTRACTGROUPONTHETA-46363139">
+<li class="stepexpand"><span>Stop Extract.</span>
+<div>
+<pre dir="ltr">
+STOP EXTRACT <span class="italic">group</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the target systems, issue the following command for each Replicat until it returns <code class="codeph">At EOF</code>.</span>
+<div>
+<pre dir="ltr">
+SEND REPLICAT <span class="italic">group</span> STATUS
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the source system, stop the data pumps.</span>
+<div>
+<pre dir="ltr">
+STOP EXTRACT <span class="italic">group</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the target systems, stop the Replicat groups.</span>
+<div>
+<pre dir="ltr">
+STOP REPLICAT <span class="italic">group</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the source system, issue the following command to open the wallet.</span>
+<div>
+<pre dir="ltr">
+OPEN WALLET
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the source system, issue the following command to confirm the version of the current key. Make a record of the version.</span>
+<div>
+<pre dir="ltr">
+INFO MASTERKEY
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the source system, issue the following command to renew the master key.</span>
+<div>
+<pre dir="ltr">
+RENEW MASTERKEY
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the source system, issue the following command to confirm that a new version is current.</span>
+<div>
+<pre dir="ltr">
+INFO MASTERKEY
+</pre>
+<div class="infobox-note" id="GUID-B86D8D76-E698-4FAA-B83A-14B21D16322B__GUID-89A0242E-3F65-4561-84AA-5072D458D260">
+<p class="notep1">Note:</p>
+<p>If you are using a shared wallet, go to step <a href="encrypting-data-master-key-and-wallet-method.htm#GUID-B86D8D76-E698-4FAA-B83A-14B21D16322B__RESTARTEXTRACT.STARTEXTRACTGROUP-46BBFAB8">12</a>. If you are using a wallet on each system, continue to the next step.</p>
+</div>
+</div>
+</li>
+<li class="stepexpand"><span>On the source system, issue the following command, where <span class="italic"><code class="codeph">version</code></span> is the new version of the master key. Make a record of the hash value.</span>
+<div>
+<pre dir="ltr">
+INFO MASTERKEY VERSION <span class="italic">version</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Copy the updated wallet from the source system to the same location as the old wallet on all of the target systems.</span></li>
+<li class="stepexpand"><span>On each target, issue the following command, where <span class="italic"><code class="codeph">version</code></span> is the new version number of the master key. For each wallet, make certain the <code class="codeph">Status</code> is <code class="codeph">Current</code> and compare the new hash value with the one that you originally recorded. All wallets must show identical key versions and hash values.</span>
+<div>
+<pre dir="ltr">
+INFO MASTERKEY VERSION <span class="italic">version</span>
+</pre></div>
+</li>
+<li class="stepexpand" id="GUID-B86D8D76-E698-4FAA-B83A-14B21D16322B__RESTARTEXTRACT.STARTEXTRACTGROUP-46BBFAB8"><span>Restart Extract.</span>
+<div>
+<pre dir="ltr">
+START EXTRACT <span class="italic">group</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Restart the data pumps.</span>
+<div>
+<pre dir="ltr">
+START EXTRACT <span class="italic">group</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Restart Replicat.</span>
+<div>
+<pre dir="ltr">
+START REPLICAT <span class="italic">group</span>
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="encrypting-data-master-key-and-wallet-method.htm#GUID-EC282970-4C1F-47F2-8E42-7B999166C44B" title="To use this method of data encryption, you create a master key wallet and add a master key to the wallet. This method works as follows, depending on whether the data is encrypted in the trails or across TCP/IP:">Encrypting Data with the Master Key and Wallet Method</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-9401E5C0-D574-4A5C-A61B-3DCFDD275CF0"></a>
+<h2 id="OGGSE-GUID-9401E5C0-D574-4A5C-A61B-3DCFDD275CF0" class="sect2"><span class="enumeration_section">8.4</span> Deleting Stale Master Keys</h2>
+<div>
+<div class="section" id="GUID-9401E5C0-D574-4A5C-A61B-3DCFDD275CF0__THISPROCEDUREDELETESSTALEVERSIONSOF-46367A03">
+<p>This procedure deletes stale versions of the master key. Deleting stale keys should be part of the overall policy for maintaining a secure Oracle GoldenGate wallet. It is recommended that you develop a policy for how many versions of a key you want to keep in the wallet and how long you want to keep them.</p>
+<div class="infobox-note" id="GUID-9401E5C0-D574-4A5C-A61B-3DCFDD275CF0__GUID-6A37CF5C-093C-4F39-9B5C-F0CE6EBF44C0">
+<p class="notep1">Note:</p>
+<p>For Oracle GoldenGate deployments using a shared wallet, the older versions of the master key should be retained after the master key is renewed until all processes are using the newest version. The time to wait depends on the topology, latency, and data load of the deployment. A minimum wait of 24 hours is a conservative estimate, but you may need to perform testing to determine how long it takes for all processes to start using a new key. To determine whether all of the processes are using the newest version, view the report file of each Extract immediately after renewing the master key to confirm the last SCN that was mined with the old key. Then, monitor the Replicat report files to verify that this SCN was applied by all Replicat groups. At this point, you can delete the older versions of the master key.</p>
+</div>
+<p>If the wallet is on central storage that is accessible by all Oracle GoldenGate installations that use that wallet, you need only perform these steps once to the shared wallet. You do not need to stop the Oracle GoldenGate processes.</p>
+<p>If the wallet is not on central storage (meaning there is a copy on each Oracle GoldenGate system) you can do one of the following:</p>
+</div>
+<!-- class="section" -->
+<div class="section" id="GUID-9401E5C0-D574-4A5C-A61B-3DCFDD275CF0__IFYOUCANSTOPTHEORACLEGOLDENGATEPROC-46367D3A">
+<ul style="list-style-type: disc;">
+<li>
+<p>If you can stop the Oracle GoldenGate processes, you only need to perform the steps to change the wallet once and then copy the updated wallet to the other systems before restarting the Oracle GoldenGate processes.</p>
+</li>
+<li>
+<p>If you cannot stop the Oracle GoldenGate processes, you must perform the steps to change the wallet on each system, making certain to perform them exactly the same way on each one.</p>
+<p>These steps include prompts for both scenarios.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" -->
+<ol id="GUID-9401E5C0-D574-4A5C-A61B-3DCFDD275CF0__ONTHESOURCESYSTEMISSUETHEFOLLOWINGC-46367F78">
+<li class="stepexpand"><span>On the source system, issue the following command to determine the versions of the master key that you want to delete. Typically, the oldest versions should be the ones deleted. Make a record of these versions.</span>
+<div>
+<pre dir="ltr">
+INFO MASTERKEY
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the source system, issue the following command to open the wallet.</span>
+<div>
+<pre dir="ltr">
+OPEN WALLET
+</pre></div>
+</li>
+<li class="stepexpand"><span>Issue the following command to delete the stale master keys. Options are available to delete a specific version, a range of versions, or all versions including the current one. To delete all of the versions, transaction activity and the Oracle GoldenGate processes must be stopped.</span>
+<div>
+<pre dir="ltr">
+DELETE MASTERKEY {VERSION <span class="italic">version</span> | RANGE FROM <span class="italic">begin_value</span> TO <span class="italic">end_value</span>}
+</pre>
+<div class="infobox-note" id="GUID-9401E5C0-D574-4A5C-A61B-3DCFDD275CF0__GUID-F8067EE8-AB55-46A0-8E5D-DC3A89BBD85E">
+<p class="notep1">Note:</p>
+<p><code class="codeph">DELETE MASTERKEY</code> marks the key versions for deletion but does not actually delete them.</p>
+</div>
+</div>
+</li>
+<li class="stepexpand"><span>Review the messages returned by the <code class="codeph">DELETE MASTERKEY</code> command to ensure that the correct versions were marked for deletion. To unmark any version that was marked erroneously, use the <code class="codeph">UNDELETE MASTERKEY</code> <code class="codeph">VERSION</code> <span class="italic"><code class="codeph">version</code></span> command before proceeding with these steps. If desired, you can confirm the marked deletions with the <code class="codeph">INFO MASTERKEY</code> command.</span></li>
+<li class="stepexpand"><span>When you are satisfied that the correct versions are marked for deletion, issue the following command to purge them from the wallet. This is a permanent deletion and cannot be undone.</span>
+<div>
+<pre dir="ltr">
+PURGE WALLET
+</pre>
+<p>Next steps:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>If the wallet resides on shared storage, you are done with these steps.</p>
+</li>
+<li>
+<p>If there is a wallet on each system and you cannot stop the Oracle GoldenGate processes, repeat the preceding steps on each Oracle GoldenGate system.</p>
+</li>
+<li>
+<p>If there is a wallet on each system and you can stop the Oracle GoldenGate processes, continue with these steps to stop the processes and copy the wallet to the other systems in the correct order.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Stop Extract.</span>
+<div>
+<pre dir="ltr">
+STOP EXTRACT <span class="italic">group</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>In GGSCI, issue the following command for each data pump Extract until each returns <code class="codeph">At EOF</code>, indicating that all of the data in the local trail has been processed.</span>
+<div>
+<pre dir="ltr">
+SEND EXTRACT <span class="italic">group</span> STATUS
+</pre></div>
+</li>
+<li class="stepexpand"><span>Stop the data pumps.</span>
+<div>
+<pre dir="ltr">
+STOP EXTRACT <span class="italic">group</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>On the target systems, issue the following command for each Replicat until it returns <code class="codeph">At EOF</code>.</span>
+<div>
+<pre dir="ltr">
+SEND REPLICAT <span class="italic">group</span> STATUS
+</pre></div>
+</li>
+<li class="stepexpand"><span>Stop the Replicat groups.</span>
+<div>
+<pre dir="ltr">
+STOP REPLICAT <span class="italic">group</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Copy the updated wallet from the source system to the same location as the old wallet on all of the target systems.</span></li>
+<li class="stepexpand"><span>Restart Extract.</span>
+<div>
+<pre dir="ltr">
+START EXTRACT <span class="italic">group</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Restart the data pumps.</span>
+<div>
+<pre dir="ltr">
+START EXTRACT <span class="italic">group</span>
+</pre></div>
+</li>
+<li class="stepexpand"><span>Restart Replicat.</span>
+<div>
+<pre dir="ltr">
+START REPLICAT <span class="italic">group</span>
+</pre></div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="encrypting-data-master-key-and-wallet-method.htm#GUID-EC282970-4C1F-47F2-8E42-7B999166C44B" title="To use this method of data encryption, you create a master key wallet and add a master key to the wallet. This method works as follows, depending on whether the data is encrypted in the trails or across TCP/IP:">Encrypting Data with the Master Key and Wallet Method</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment238">
+<tr>
+<td class="cellalignment249">
+<table class="cellalignment243">
+<tr>
+<td class="cellalignment242"><a href="overview-ca-security-options.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment242"><a href="encrypting-data-enckeys-method1.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment251">
+<table class="cellalignment241">
+<tr>
+<td class="cellalignment242"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment242"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment242"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>GET_STATISTICS</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1056" />
+<meta name="description" content="Contains instructions for using Oracle GoldenGate commands, parameters, and functions." />
+<meta name="dcterms.created" content="2015-06-05T16:34:33Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E29392-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="user_exit_functions028.htm" title="Previous" type="text/html" />
+<link rel="Next" href="user_exit_functions030.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GWURF.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GWURF.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">398/413</span>
+<!-- End Header --><a id="i1100252"></a>
+<div id="GWURF868" class="refsect1">
+<h1 class="refsect1">GET_STATISTICS</h1>
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="sthref2114"></a>Valid For</p>
+<p>Extract and Replicat</p>
+</div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="sthref2115"></a>Description</p>
+<p>Use the <code dir="ltr">GET_STATISTICS</code> function to retrieve the current processing statistics for the Extract or Replicat process. For example, the user exit can output statistics to a custom report should a fatal error occur during Extract or Replicat processing.</p>
+<p>Statistics are automatically handled based on which process type has requested the data:</p>
+<ul>
+<li>
+<p>The Extract process will always treat the request as a source table, counting that table once regardless of the number of times output.</p>
+</li>
+<li>
+<p>The Replicat process will always treat the request as a set of target tables. The set includes all counts to the target regardless of the number of source tables.</p>
+</li>
+</ul>
+<p>If the database is case-sensitive, object names must be specified in the same letter case as they are defined in the hosting database; otherwise, the case does not matter.</p>
+</div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="sthref2116"></a>Syntax</p>
+<pre dir="ltr">
+#include "usrdecs.h"
+short result_code;
+statistics_def statistics;
+ERCALLBACK (GET_STATISTICS, &amp;statistics, &amp;result_code);
+</pre></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="sthref2117"></a>Buffer</p>
+<pre dir="ltr">
+typedef struct
+{
+char *table_name;
+short group;
+exit_timestamp_string start_datetime;
+long num_inserts;
+long num_updates;
+long num_befores;
+long num_deletes;
+long num_discards;
+long num_ignores;
+long total_db_operations;
+long total_operations;
+/* Version 2 CALLBACK_STRUCT_VERSION */
+long num_truncates;
+} statistics_def;
+</pre></div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="sthref2118"></a>Input</p>
+<dl>
+<dt><code dir="ltr">table_name</code></dt>
+<dd>
+<p>A null-terminated string specifying the fully qualified name of the source table. Statistics are always recorded against the source records. If the character session of the user exit is set with <code dir="ltr">SET_SESSION_CHARSET</code> to a value other than the default character set of the operating system, as defined in <code dir="ltr">ULIB_CS_DEFAULT</code> in the <code dir="ltr">ucharset.h</code> file, the table name and the date are interpreted in the session character set.</p>
+</dd>
+<dt><code dir="ltr">group</code></dt>
+<dd>
+<p>Can be one of the following:</p>
+<dl>
+<dt><code dir="ltr">EXIT_STAT_GROUP_STARTUP</code></dt>
+<dd>
+<p>Retrieves statistics since the Oracle GoldenGate process was last started.</p>
+</dd>
+<dt><code dir="ltr">EXIT_STAT_GROUP_DAILY</code></dt>
+<dd>
+<p>Retrieves statistics since midnight of the current day.</p>
+</dd>
+<dt><code dir="ltr">EXIT_STAT_GROUP_HOURLY</code></dt>
+<dd>
+<p>Retrieves statistics since the start of the current hour.</p>
+</dd>
+<dt><code dir="ltr">EXIT_STAT_GROUP_RECENT</code></dt>
+<dd>
+<p>Retrieves statistics since the statistics were reset using GGSCI.</p>
+</dd>
+<dt><code dir="ltr">EXIT_STAT_GROUP_REPORT</code></dt>
+<dd>
+<p>Retrieves statistics since the last report was generated.</p>
+</dd>
+<dt><code dir="ltr">EXIT_STAT_GROUP_USEREXIT</code></dt>
+<dd>
+<p>Retrieves statistics since the last time the user exit reset the statistics with <code dir="ltr">RESET_USEREXIT_STATS</code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="sthref2119"></a>Output</p>
+<dl>
+<dt><code dir="ltr">start_datetime</code></dt>
+<dd>
+<p>A null-terminated string in the format of <code dir="ltr">YYYY-MM-DD HH:MI:SS</code> indicating the local date and time that statistics started to be recorded for the specified group.</p>
+</dd>
+<dt><code dir="ltr">num_inserts</code></dt>
+<dd>
+<p>The returned number of inserts processed by Extract or Replicat.</p>
+</dd>
+<dt><code dir="ltr">num_updates</code></dt>
+<dd>
+<p>The returned number of updates processed by Extract or Replicat.</p>
+</dd>
+<dt><code dir="ltr">num_befores</code></dt>
+<dd>
+<p>The returned number of update before images processed by Extract or Replicat.</p>
+</dd>
+<dt><code dir="ltr">num_deletes</code></dt>
+<dd>
+<p>The returned number of deletes processed by Extract or Replicat.</p>
+</dd>
+<dt><code dir="ltr">num_discards</code></dt>
+<dd>
+<p>The returned number of records discarded by Extract or Replicat.</p>
+</dd>
+<dt><code dir="ltr">num_ignores</code></dt>
+<dd>
+<p>The returned number of records ignored by Extract or Replicat.</p>
+</dd>
+<dt><code dir="ltr">total_db_operations</code></dt>
+<dd>
+<p>The returned number of total database operations processed by Extract or Replicat.</p>
+</dd>
+<dt><code dir="ltr">total_operations</code></dt>
+<dd>
+<p>The returned number of total operations processed by Extract or Replicat, including discards and ignores.</p>
+</dd>
+<dt><code dir="ltr">num_truncates</code></dt>
+<dd>
+<p>The returned number of truncates processed by Extract or Replicat.</p>
+</dd>
+</dl>
+</div>
+<!-- class="refsubsect" -->
+<div class="refsubsect"><p class="titleinrefsubsect"><a id="sthref2120"></a>Return Values</p>
+<pre dir="ltr">
+EXIT_FN_RET_INVALID_CONTEXT
+EXIT_FN_RET_INVALID_PARAM
+EXIT_FN_RET_TABLE_NOT_FOUND
+EXIT_FN_RET_OK
+</pre></div>
+<!-- class="refsubsect" --></div>
+<!-- class="refsect1" --></div>
+<!-- class="refentry" -->
+<div class="refentry"></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment135">
+<tr>
+<td class="cellalignment142"><table class="cellalignment140">
+<tr>
+<td class="cellalignment139"><a href="user_exit_functions028.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment139"><a href="user_exit_functions030.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment144">
+<table class="cellalignment138">
+<tr>
+<td class="cellalignment139"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment139"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment139"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

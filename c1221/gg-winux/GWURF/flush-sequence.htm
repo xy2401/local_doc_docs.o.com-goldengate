@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>FLUSH SEQUENCE</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="dumpddl.htm" title="Previous" type="text/html" />
+<link rel="Next" href="list-tables.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-51798997-0ED6-49CF-B3B3-6A8D307A100F"></a> <span id="PAGE" style="display:none;">73/459</span> <!-- End Header -->
+<a id="GWURF966"></a><a id="GWURF261"></a><a id="GWURF260"></a>
+<h1 id="GWURF-GUID-51798997-0ED6-49CF-B3B3-6A8D307A100F" class="sect1"><span class="enumeration_section">1.65</span> FLUSH SEQUENCE</h1>
+<div>
+<div class="section">
+<p>Use <code class="codeph">FLUSH SEQUENCE</code> immediately after you start Extract for the first time during an initial synchronization or a re-synchronization. This command updates an Oracle sequence so that initial redo records are available at the time that Extract starts to capture transaction data. Normally, redo is not generated until the current cache is exhausted. The flush gives Replicat an initial start point with which to synchronize to the correct sequence value on the target system. From then on, Extract can use the redo that is associated with the usual cache reservation of sequence values.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">To Use FLUSH SEQUENCE</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ol>
+<li>
+<p>The following Oracle procedures are used by <code class="codeph">FLUSH SEQUENCE</code>:</p>
+<div class="tblformal" id="GUID-51798997-0ED6-49CF-B3B3-6A8D307A100F__GUID-D8991374-09C6-44EE-BFBC-B120F2351D44">
+<p class="titleintable">Table 1-19 Procedures That Support FLUSH SEQUENCE</p>
+<table class="cellalignment476" title="Procedures That Support FLUSH SEQUENCE" summary="This table lists the Oracle procedures used by FLUSH SEQUENCE. It gives the database, procedure, and user and privileges.">
+<thead>
+<tr class="cellalignment454">
+<th class="cellalignment587" id="d34121e44">Database</th>
+<th class="cellalignment588" id="d34121e47">Procedure</th>
+<th class="cellalignment589" id="d34121e50">User and Privileges</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment454">
+<td class="cellalignment590" id="d34121e55" headers="d34121e44">
+<p>Source</p>
+</td>
+<td class="cellalignment591" headers="d34121e55 d34121e47">
+<p><code class="codeph">updateSequence</code></p>
+</td>
+<td class="cellalignment592" headers="d34121e55 d34121e50">
+<p>Grants <code class="codeph">EXECUTE</code> to the owner of the Oracle GoldenGate DDL objects, or other selected user if not using DDL support.</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment590" id="d34121e69" headers="d34121e44">
+<p>Target</p>
+</td>
+<td class="cellalignment591" headers="d34121e69 d34121e47">
+<p><code class="codeph">replicateSequence</code></p>
+</td>
+<td class="cellalignment592" headers="d34121e69 d34121e50">
+<p>Grants <code class="codeph">EXECUTE</code> to the Oracle GoldenGate Replicat user.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>The <code class="codeph">sequence.sql</code> script installs these procedures. Normally, this script is run as part of the Oracle GoldenGate installation process, but make certain that was done before using <code class="codeph">FLUSH SEQUENCE</code>. If <code class="codeph">sequence.sql</code> was not run, the flush fails and an error message similar to the following is generated:</p>
+<pre dir="ltr">
+Cannot flush sequence {0}. Refer to the Oracle GoldenGate for Oracle 
+documentation for instructions on how to set up and run the sequence.sql 
+script. Error {1}.
+</pre></li>
+<li>
+<p>The <code class="codeph">GLOBALS</code> file must contain a <code class="codeph">GGSCHEMA</code> parameter that specifies the schema in which the procedures are installed. This user must have <code class="codeph">CONNECT</code>, <code class="codeph">RESOURCE</code>, and <code class="codeph">DBA</code> privileges.</p>
+</li>
+<li>
+<p>Before using <code class="codeph">FLUSH SEQUENCE</code>, issue the <code class="codeph">DBLOGIN</code> command as the database user that has <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">updateSequence</code> procedure. If logging into a multitenant container database, log into the pluggable database that contains the sequence that is to be flushed.</p>
+</li>
+</ol>
+<div class="infobox-note" id="GUID-51798997-0ED6-49CF-B3B3-6A8D307A100F__GUID-6B6C12E5-2DF8-496D-9FB3-775194D958E2">
+<p class="notep1">Note:</p>
+<p>For full instructions on configuring Oracle GoldenGate to support sequences, see <a class="olink GIORA-GUID-B890041C-1474-4422-A7A0-C14D1182D8EF" target="_blank" href="../GIORA/configuring-oracle-goldengate-multitenant-container-database.htm#GIORA-GUID-B890041C-1474-4422-A7A0-C14D1182D8EF">Installing and Configuring Oracle GoldenGate for Oracle Database</a>.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+FLUSH SEQUENCE <span class="italic">owner.sequence</span>
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-51798997-0ED6-49CF-B3B3-6A8D307A100F__GUID-AAE16E37-7242-4B55-8E76-94B606FCC15D"><!-- --></a><span class="italic"><code class="codeph">owner.sequence</code></span></dt>
+<dd>
+<p>The owner and name of an Oracle sequence. The schema name cannot be null. You can use an asterisk (*) wildcard for the sequence name but not for the owner name.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Example</p>
+<pre dir="ltr">
+FLUSH SEQUENCE scott.seq*
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="dumpddl.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="list-tables.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

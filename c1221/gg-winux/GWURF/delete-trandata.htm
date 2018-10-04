@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>DELETE TRANDATA</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="delete-schematrandata.htm" title="Previous" type="text/html" />
+<link rel="Next" href="info-schematrandata.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-B3102159-524B-4CC4-B7D7-D05CCCCAEAC3"></a> <span id="PAGE" style="display:none;">80/459</span> <!-- End Header -->
+<a id="GWURF276"></a><a id="GWURF277"></a><a id="GWURF1165"></a><a id="GWURF275"></a>
+<h1 id="GWURF-GUID-B3102159-524B-4CC4-B7D7-D05CCCCAEAC3" class="sect1"><span class="enumeration_section">1.72</span> DELETE TRANDATA</h1>
+<div>
+<div class="section">
+<p>Use <code class="codeph">DELETE TRANDATA</code> to do one of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>DB2 LUW and DB2 on z/OS: Alters the table to <code class="codeph">DATA CAPTURE NONE.</code></p>
+</li>
+<li>
+<p>Oracle: Disable supplemental logging.</p>
+</li>
+<li>
+<p>Sybase: Disable replication.</p>
+</li>
+<li>
+<p>SQL Server: Stops extended logging for a table.</p>
+</li>
+</ul>
+<p>By default, this command attempts to remove the supplemental logging of the key columns that are used by Oracle GoldenGate (can be the primary key, a unique key, <code class="codeph">KEYCOLS</code> columns, or all columns) and also the scheduling columns. The scheduling columns are the primary key, all of the unique keys, and all of the foreign keys. To delete the logging of the Oracle GoldenGate key columns, but not the scheduling columns, include the <code class="codeph">NOSCHEDULINGCOLS</code> option with <code class="codeph">DELETE TRANDATA</code>. If <code class="codeph">ADD TRANDATA</code> was issued with the <code class="codeph">ALLCOLS</code> option, use <code class="codeph">DELETE TRANDATA</code> with the <code class="codeph">ALLCOLS</code> option to remove the supplemental logging of all of the columns, including the Oracle GoldenGate key columns.</p>
+<p>Use the <code class="codeph">DBLOGIN</code> command to establish a database connection before using this command. The user specified with this command must have the same privileges that are required for <code class="codeph">ADD TRANDATA</code>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+DELETE TRANDATA [<span class="italic">container</span>.]<span class="italic">owner.table</span> [NOSCHEDULINGCOLS | ALLCOLS]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-B3102159-524B-4CC4-B7D7-D05CCCCAEAC3__GUID-07679BC0-EC7A-4A9A-A121-35D2C9306623"><!-- --></a><code class="codeph">[</code><span class="italic"><code class="codeph">container</code></span><code class="codeph">.]</code><span class="italic"><code class="codeph">owner.table</code></span></dt>
+<dd>
+<p>The pluggable database (if this is an Oracle multitenant container database), owner and name of the table or file. A wildcard can be used for any name component.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-B3102159-524B-4CC4-B7D7-D05CCCCAEAC3__GUID-620C1B4E-4D88-4D0C-9381-8B43DF7BF51E"><!-- --></a><code class="codeph">NOSCHEDULINGCOLS</code></dt>
+<dd>
+<p>Prevents the command from removing the supplemental logging of the scheduling columns of the specified table. The scheduling columns are the primary key, all of the unique keys, and all of the foreign keys of a table.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-B3102159-524B-4CC4-B7D7-D05CCCCAEAC3__GUID-21FFE110-3CBB-40A7-8984-7EE49BA113A6"><!-- --></a><code class="codeph">ALLCOLS</code></dt>
+<dd>
+<p>Removes the supplemental logging of all of the columns of the specified table.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-B3102159-524B-4CC4-B7D7-D05CCCCAEAC3__GUID-7924819E-BF29-4433-81C3-62EA755B692E"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+DELETE TRANDATA finance.acct
+</pre></dd>
+<dt class="dlterm"><a id="GUID-B3102159-524B-4CC4-B7D7-D05CCCCAEAC3__GUID-B31486F7-6512-4D5C-A426-575666B32BBB"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+DELETE TRANDATA finance.ac*
+</pre></dd>
+<dt class="dlterm"><a id="GUID-B3102159-524B-4CC4-B7D7-D05CCCCAEAC3__GUID-8EBB6745-54AE-4249-A6FC-D88E79ECD989"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<pre dir="ltr">
+DELETE TRANDATA finance.acct ALLCOLS
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="delete-schematrandata.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="info-schematrandata.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

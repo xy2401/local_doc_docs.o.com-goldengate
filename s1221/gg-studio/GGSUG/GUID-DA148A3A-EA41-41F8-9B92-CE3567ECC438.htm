@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Understanding Mapping Groups</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2016-06-29T14:09:39Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate Studio" />
+<meta name="dcterms.identifier" content="E69355-02" />
+<meta name="dcterms.isVersionOf" content="GGSUG" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-4476786A-311F-4AFF-966C-E4674C68666C.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-C128F50D-E7E1-4605-80C7-48B9B936C063.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGSUG.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-DA148A3A-EA41-41F8-9B92-CE3567ECC438"></a> <span id="PAGE" style="display:none;">23/46</span> <!-- End Header --><a id="GGSUG208"></a>
+<h1 id="GGSUG-GUID-DA148A3A-EA41-41F8-9B92-CE3567ECC438" class="sect1"><span class="enumeration_section">4.1</span> Understanding Mapping Groups</h1>
+<div>
+<p>In Oracle GoldenGate Studio, the term mapping group is used to explain a collection of source and target table mappings and associated replication logic such as filtering and conflict detection rules. First, the tables must be drag and dropped or added using the keyboard shortcuts from the Resources Navigator to the Mapping Editor. Then, source and target table mapping associations can be automatically generated using Automap or created by drag-and-drop or using keyboard shortcuts from source to target and target to source. Additionally, wildcard characters (*) can be used in the mappings at the schema and table level. If you drag and drop the schema name it will automatically use a wildcard, indicating all tables. For more on wildcard logic see the Orcale GoldenGate Reference manual. For Oracle multitenant support you must edit the schema name manually to include the pluggable database name.</p>
+<p>Only the metadata from the database connections are used when creating mapping groups. This means mapping groups are logical constructs which can be assigned to multiple replication paths. Mapping groups local to a solution can be associated with any replication path in that solution, while global mapping groups located in the global resource library, can be used for any replication path for any solution across all projects. When a mapping group is modified that change will be reflected in all replication paths referencing that mapping group. More than one mapping group can be assigned to a replication path.</p>
+<p>For example, if you have 100 stores with the same application schema reporting back to a central data warehouse, you only have to define that mapping group once and you can apply it to all 100 replication paths. Any changes to that mapping group will only needs to be made once and will be reflected in all 100 replication paths.</p>
+</div>
+<a id="GGSUG241"></a><a id="GGSUG240"></a>
+<div class="props_rev_3"><a id="GUID-5990D05C-AB19-4E32-A0FD-1A69C9680365"></a>
+<h2 id="GGSUG-GUID-5990D05C-AB19-4E32-A0FD-1A69C9680365" class="sect2"><span class="enumeration_section">4.1.1</span> Schema and Table Mapping</h2>
+<div>
+<p>Schemas are not directly mapped to other schemas. Tables in the schemas are mapped other tables. To map all tables in a schema you can either highlight all of the tables in the global resource library and drag and drop them into the mapping editor or you can drag and drop the schema name, which will then use a wildcard (*) for all tables. If you're replicating DDL and want to capture new tables then always use a wildcard. Wildcard can also be used with schema names. However, when using a wildcard for schema names, some system schemas will automatically be excluded. To see which schema names will be implicitly excluded when using wildcards, refer Oracle GoldenGate installation document for that database. When using a wildcard for the schema name, the implicitly excluded schemas can be overridden by explicitly listing the schema names.</p>
+<div class="section">
+<p>To map tables or wildcards you can click the <span class="bold">Automap</span> button and any unmapped target table will be mapped to a source table if the table names are the same regardless if they are in different schemas. Alternatively, in the mapping editor you can drag and drop source and target table names on each other to create the association.</p>
+<p>Once tables are mapped you will see the <span class="bold">Source</span> table name in the <span class="bold">Target</span> column <span class="bold">Mapped From</span>. Only the Source table names are listed in this column but a tool tip will provide the source schema name. Double clicking the Target table name or Mapped From table name will take you to the column mapping editor.</p>
+<p>In the schema and table mapping editor you can define properties and logic for the entire mapping, source tables, and target tables. The following figure and the table show which properties can be edited based on where you click in the mapping editor.</p>
+<div class="figure" id="GUID-5990D05C-AB19-4E32-A0FD-1A69C9680365__GUID-49E8BEA6-189D-44BA-A960-D266F0834E22">
+<p class="titleinfigure">Figure 4-1 Schema and Table Mapping</p>
+<img alt="img/GUID-A40AF9CA-5E86-4C8F-9AFB-286DEFD7DF2A-default.png" width="941" height="280" src="img/GUID-A40AF9CA-5E86-4C8F-9AFB-286DEFD7DF2A-default.png" /></div>
+<!-- class="figure" -->
+<div class="tblformal" id="GUID-5990D05C-AB19-4E32-A0FD-1A69C9680365__GUID-FD040C92-2982-4C4C-8AFF-AE690CEB10BE">
+<hr />
+<table class="cellalignment34" summary="Schema and Table Mapping Explanation">
+<thead align="left">
+<tr>
+<th class="cellalignment43" id="d5566e68">ID</th>
+<th class="cellalignment44" id="d5566e71">UI Element</th>
+<th class="cellalignment45" id="d5566e74">Properties</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment43" id="d5566e79" headers="d5566e68">
+<p>1</p>
+</td>
+<td class="cellalignment44" headers="d5566e79 d5566e71">
+<p>Map Breadcrumbs</p>
+</td>
+<td class="cellalignment45" headers="d5566e79 d5566e74">
+<p>Name and description, DDL replication, global column matching, DML conversions, and global replication error responses.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment43" id="d5566e89" headers="d5566e68">
+<p>2</p>
+</td>
+<td class="cellalignment44" headers="d5566e89 d5566e71">
+<p>Source schema name</p>
+</td>
+<td class="cellalignment45" headers="d5566e89 d5566e74">
+<p>Database name, schema name, and exclude schema from source capture. The exclude schema is used when you have used a wildcard for all schemas but want to explicitly exclude certain schemas that would otherwise be included with the wildcard.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment43" id="d5566e99" headers="d5566e68">
+<p>3</p>
+</td>
+<td class="cellalignment44" headers="d5566e99 d5566e71">
+<p>Source table name</p>
+</td>
+<td class="cellalignment45" headers="d5566e99 d5566e74">
+<p>Table name, exclude table from source capture, filter, Where clause, custom SQL execution, event actions, and additional custom properties.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment43" id="d5566e109" headers="d5566e68">
+<p>4</p>
+</td>
+<td class="cellalignment44" headers="d5566e109 d5566e71">
+<p>Target schema name</p>
+</td>
+<td class="cellalignment45" headers="d5566e109 d5566e74">
+<p>Target schema name and exclude schema from target apply</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment43" id="d5566e119" headers="d5566e68">
+<p>5</p>
+</td>
+<td class="cellalignment44" headers="d5566e119 d5566e71">
+<p>Target table name and Mapped From</p>
+</td>
+<td class="cellalignment45" headers="d5566e119 d5566e74">
+<p>Target schema name and exclude table from target apply, exception handling, filter, DML conversion, Where clause, table specific replication error responses, custom SQL execution, coordinated apply thread (if applicable), coordinated apply thread range (if applicable), event actions, more settings, and additional custom properties.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="infobox-note" id="GUID-5990D05C-AB19-4E32-A0FD-1A69C9680365__GUID-FD78228F-E171-415E-84C3-46C7564C4E35">
+<p class="notep1">Note:</p>
+<p>When you have more than one table mapped you will need to drill into column mapping and select the table name to edit all the properties except exclude property. This allows you to apply different logic to different tables.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GGSUG243"></a><a id="GGSUG242"></a>
+<div class="props_rev_3"><a id="GUID-0EDDB964-9CC2-4444-BBDF-17C3684C0554"></a>
+<h2 id="GGSUG-GUID-0EDDB964-9CC2-4444-BBDF-17C3684C0554" class="sect2"><span class="enumeration_section">4.1.2</span> Column Mapping</h2>
+<div>
+<p>You can navigate to the column mapping from the table mapping editor. Double click the Target table name or the <span class="bold">Mapped From</span> column, or right-click anywhere on the target row that contains the table name and chose <span class="bold">Edit Column Mapping</span> from the context menu.</p>
+<p>The Oracle GoldenGate runtime engine automatically maps matching column names so column mapping is not required. Column mapping works in the same way as table mapping and you can use Automap and drag-and-drop between Source and Target.</p>
+<p>In the column mapping editor you can define properties and logic for Source and Target tables and columns. The following figure and the table show which properties can be edited based on where you click in the mapping editor. It also shows how to select individual table mappings when more than one table is mapped to a target table and how to navigate back to the schema and table mapping editor.</p>
+<div class="infobox-note" id="GUID-0EDDB964-9CC2-4444-BBDF-17C3684C0554__GUID-EA1E3103-E2C8-4735-BE07-D1C30666695A">
+<p class="notep1">Note:</p>
+<p>Selecting the table name in the column mapping editor provides the same options as clicking the table name in the schema and table mapping editor when there is only one source table mapped to the target table.</p>
+</div>
+<div class="figure" id="GUID-0EDDB964-9CC2-4444-BBDF-17C3684C0554__GUID-9BF6ED25-4584-4D53-9C35-086DAA675D17">
+<p class="titleinfigure">Figure 4-2 Column Mapping</p>
+<img alt="img/GUID-AD48820C-8D25-4A1A-A29B-7900DE90AA24-default.png" width="937" height="287" src="img/GUID-AD48820C-8D25-4A1A-A29B-7900DE90AA24-default.png" /></div>
+<!-- class="figure" -->
+<div class="tblformal" id="GUID-0EDDB964-9CC2-4444-BBDF-17C3684C0554__GUID-BB4A9FE9-A6AA-4A7A-8E40-35703440C0D3">
+<hr />
+<table class="cellalignment34" summary="Column Mapping Explanation">
+<thead align="left">
+<tr>
+<th class="cellalignment43" id="d5566e175">ID</th>
+<th class="cellalignment46" id="d5566e178">UI Elements</th>
+<th class="cellalignment47" id="d5566e181">Properties</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment43" id="d5566e186" headers="d5566e175">
+<p>1</p>
+</td>
+<td class="cellalignment46" headers="d5566e186 d5566e178">
+<p>Map Breadcrumbs showing mapping group name</p>
+</td>
+<td class="cellalignment47" headers="d5566e186 d5566e181">
+<p>Selecting here returns to the schema and table mapping editor.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment43" id="d5566e196" headers="d5566e175">
+<p>2</p>
+</td>
+<td class="cellalignment46" headers="d5566e196 d5566e178">
+<p>Map Breadcrumbs showing table mapping name</p>
+</td>
+<td class="cellalignment47" headers="d5566e196 d5566e181">
+<p>If there is more than one source table mapped to this target table, selecting here provides a drop down list of those other mappings and you can navigate to them.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment43" id="d5566e206" headers="d5566e175">
+<p>3</p>
+</td>
+<td class="cellalignment46" headers="d5566e206 d5566e178">
+<p>Source table name</p>
+</td>
+<td class="cellalignment47" headers="d5566e206 d5566e181">
+<p>Table name, exclude table from source capture, filter, Where clause, custom SQL execution, event actions, and additional custom properties</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment43" id="d5566e216" headers="d5566e175">
+<p>4</p>
+</td>
+<td class="cellalignment46" headers="d5566e216 d5566e178">
+<p>Source column name</p>
+</td>
+<td class="cellalignment47" headers="d5566e216 d5566e181">
+<p>Column name, exclude column from source capture, force column to be used as (part) of the primary key.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment43" id="d5566e226" headers="d5566e175">
+<p>5</p>
+</td>
+<td class="cellalignment46" headers="d5566e226 d5566e178">
+<p>Target table name</p>
+</td>
+<td class="cellalignment47" headers="d5566e226 d5566e181">
+<p>Target table name, exclude table mapping from target apply, force specific columns to be used as the key, exception handling, conflict detection, conflict resolution, filter, DML conversion, Where clause, table specific replication error responses, custom SQL execution, coordinated apply thread (if applicable), coordinated apply thread range (if applicable), event actions, more settings, and additional custom properties.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment43" id="d5566e236" headers="d5566e175">
+<p>6</p>
+</td>
+<td class="cellalignment46" headers="d5566e236 d5566e178">
+<p>Target column name and Mapped From</p>
+</td>
+<td class="cellalignment47" headers="d5566e236 d5566e181">
+<p>Column name, mapped from (which can contain source column names or custom logic), force column to be used as (part) of the primary key, enable this column for update conflict detection, and enable this column for delete conflict detection.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" -->
+<div class="infobox-note" id="GUID-0EDDB964-9CC2-4444-BBDF-17C3684C0554__GUID-31749F74-83AD-49FA-83C6-C1F80A556A7F">
+<p class="notep1">Note:</p>
+<p>Primary key column overrides, conflict detection, and conflict resolution are only present in the column mapping editor.</p>
+</div>
+</div>
+</div>
+<a id="GGSUG209"></a><a id="GGSUG244"></a>
+<div class="props_rev_3"><a id="GUID-E49B31FA-4C87-4EDF-93B8-13B9C6160383"></a>
+<h2 id="GGSUG-GUID-E49B31FA-4C87-4EDF-93B8-13B9C6160383" class="sect2"><span class="enumeration_section">4.1.3</span> Automap</h2>
+<div>
+<p>The Automap feature automatically maps similarly named tables. Automapping assignments are created from the source to target and not the reverse. The mapping window looks as follows:</p>
+<div class="figure" id="GUID-E49B31FA-4C87-4EDF-93B8-13B9C6160383__GUID-19FDE7F2-E247-4DD4-A2B3-01384381087A">
+<p class="titleinfigure">Figure 4-3 Automap</p>
+<img alt="img/GUID-0AFE2D51-0FC2-4DE9-B4E8-9E3906BFF0C8-default.png" width="642" height="186" src="img/GUID-0AFE2D51-0FC2-4DE9-B4E8-9E3906BFF0C8-default.png" /></div>
+<!-- class="figure" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment24">
+<tr>
+<td class="cellalignment31">
+<table class="cellalignment29">
+<tr>
+<td class="cellalignment28"><a href="GUID-4476786A-311F-4AFF-966C-E4674C68666C.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment28"><a href="GUID-C128F50D-E7E1-4605-80C7-48B9B936C063.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment33">
+<table class="cellalignment27">
+<tr>
+<td class="cellalignment28"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment28"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

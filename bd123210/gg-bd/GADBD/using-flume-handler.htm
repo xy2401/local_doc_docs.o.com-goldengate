@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the Flume Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="Learn how to use the Flume Handler to stream change capture data to a Flume source database." />
+<meta name="dcterms.created" content="2018-09-04T10:47:42Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E89845-03" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-file-writer-handler.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-hbase-handler.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A"></a> <span id="PAGE" style="display:none;">9/33</span> <!-- End Header -->
+<a id="GADBD420"></a>
+<h1 id="GADBD-GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A" class="sect1"><span class="enumeration_chapter">6</span> Using the Flume Handler</h1>
+<div>
+<p>Learn how to use the Flume Handler to stream change capture data to a Flume source database.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-9CA7E19C-FDF2-422E-AE57-CCE8E4FE3BF3">Overview</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-DE10334E-71AC-41E1-8AC2-075DEBE30775">Setting Up and Running the Flume Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-6920E6D1-05E7-4CB7-86D1-6D7A3178FDEE">Data Mapping of Operations to Flume Events</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-02D2F46C-D31A-46C5-8536-FEA9101113F3">Performance Considerations</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-5BA29358-EE61-475D-926E-89CB195F43FB">Metadata Change Events</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-28C37117-3746-431A-AE25-04E54ACBA31B">Example Flume Source Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-DD59F911-5BA1-4C1C-845C-29BD6E0E1693">Advanced Features</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-06757D87-A23A-4B11-A5DB-74A13912E504">Troubleshooting the Flume Handler</a><br /></li>
+</ul>
+</div>
+<a id="GADBD421"></a>
+<div class="props_rev_3"><a id="GUID-9CA7E19C-FDF2-422E-AE57-CCE8E4FE3BF3"></a>
+<h2 id="GADBD-GUID-9CA7E19C-FDF2-422E-AE57-CCE8E4FE3BF3" class="sect2"><span class="enumeration_section">6.1</span> Overview</h2>
+<div>
+<div class="section">
+<div class="p">The Flume Handler is designed to stream change capture data from an Oracle GoldenGate trail to a Flume source. Apache Flume is an open source application for which the primary purpose is streaming data into Big Data applications. The Flume architecture contains three main components, sources, channels, and sinks that collectively make a pipeline for data.
+<ul style="list-style-type: disc;">
+<li>
+<p>A Flume source publishes the data to a Flume channel.</p>
+</li>
+<li>
+<p>A Flume sink retrieves the data out of a Flume channel and streams the data to different targets.</p>
+</li>
+<li>
+<p>A Flume Agent is a container process that owns and manages a source, channel and sink.</p>
+</li>
+</ul>
+</div>
+<p>A single Flume installation can host many agent processes. The Flume Handler can stream data from a trail file to Avro or Thrift RPC Flume sources.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A" title="Learn how to use the Flume Handler to stream change capture data to a Flume source database.">Using the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD423"></a>
+<div class="props_rev_3"><a id="GUID-DE10334E-71AC-41E1-8AC2-075DEBE30775"></a>
+<h2 id="GADBD-GUID-DE10334E-71AC-41E1-8AC2-075DEBE30775" class="sect2"><span class="enumeration_section">6.2</span> Setting Up and Running the Flume Handler</h2>
+<div>
+<div class="section">
+<p>Instructions for configuring the Flume Handler components and running the handler are described in this section.</p>
+<p>To run the Flume Handler, a Flume Agent configured with an Avro or Thrift Flume source must be up and running. Oracle GoldenGate can be collocated with Flume or located on a different machine. If located on a different machine, the host and port of the Flume source must be reachable with a network connection. For instructions on how to configure and start a Flume Agent process, see the <span class="italic">Flume User Guide</span> <a href="https://flume.apache.org/releases/content/1.6.0/FlumeUserGuide.pdf" target="_blank"><code class="codeph">https://flume.apache.org/releases/content/1.6.0/FlumeUserGuide.pdf</code></a>.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-53081475-7487-48C8-A801-AC581ABA38EC">Classpath Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-36456B87-E00C-4906-AD1C-44FD7923F6F6">Flume Handler Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-79F6A7A2-2EC3-4EE6-8721-606980C8BBD0">Review a Sample Configuration</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A" title="Learn how to use the Flume Handler to stream change capture data to a Flume source database.">Using the Flume Handler</a></p>
+</div>
+</div>
+</div>
+<a id="GADBD424"></a>
+<div class="props_rev_3"><a id="GUID-53081475-7487-48C8-A801-AC581ABA38EC"></a>
+<h3 id="GADBD-GUID-53081475-7487-48C8-A801-AC581ABA38EC" class="sect3"><span class="enumeration_section">6.2.1</span> Classpath Configuration</h3>
+<div>
+<div class="section">
+<p>For the Flume Handler to connect to the Flume source and run, the Flume Agent configuration file and the Flume client jars must be configured in <code class="codeph">gg.classpathconfiguration</code> variable. The Flume Handler uses the contents of the Flume Agent configuration file to resolve the host, port, and source type for the connection to Flume source. The Flume client libraries do <span class="italic">not</span> ship with Oracle GoldenGate for Big Data. The Flume client library versions must match the version of Flume to which the Flume Handler is connecting. For a list of the required Flume client JAR files by version, see <a href="flume-handler-client-dependencies.htm#GUID-BD3A5EF2-2EBD-4BB0-BD34-6A62743A5D90" title="What are the dependencies for the Flume Handler to connect to Flume databases?">Flume Handler Client Dependencies</a>.</p>
+<p>The Oracle GoldenGate property, <code class="codeph">gg.classpath</code> variable must be set to include the following default locations:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The default location of the <code class="codeph">core-site.xml</code> file is <span class="italic"><code class="codeph">Flume_Home</code></span><code class="codeph">/conf</code>.</p>
+</li>
+<li>
+<p>The default location of the Flume client JARS is <span class="italic"><code class="codeph">Flume_Home</code></span><code class="codeph">/lib/*</code>.</p>
+</li>
+</ul>
+<p>The <code class="codeph">gg.classpath</code> must be configured exactly as shown here. The path to the Flume Agent configuration file must contain the path with no wild card appended. The inclusion of the wildcard in the path to the Flume Agent configuration file will make the file inaccessible. Conversely, pathing to the dependency jars must include the <code class="codeph">*</code> wildcard character in order to include all of the JAR files in that directory in the associated classpath. Do not use <code class="codeph">*.jar</code>. The following is an example of a correctly configured <code class="codeph">gg.classpath</code> variable:</p>
+<p><code class="codeph">gg.classpath=dirprm/:/var/lib/flume/lib/*</code></p>
+<p>If the Flume Handler and Flume are not collocated, then the Flume Agent configuration file and the Flume client libraries must be copied to the machine hosting the Flume Handler process.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-DE10334E-71AC-41E1-8AC2-075DEBE30775">Setting Up and Running the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD426"></a>
+<div class="props_rev_3"><a id="GUID-36456B87-E00C-4906-AD1C-44FD7923F6F6"></a>
+<h3 id="GADBD-GUID-36456B87-E00C-4906-AD1C-44FD7923F6F6" class="sect3"><span class="enumeration_section">6.2.2</span> Flume Handler Configuration</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the Flume Handler. These properties are located in the Java Adapter properties file (not in the Replicat properties file).</p>
+<p>To enable the selection of the Flume Handler, you must first configure the handler type by specifying <code class="codeph">gg.handler.jdbc.type=flume</code> and the other Flume properties as follows:</p>
+</div>
+<!-- class="section" -->
+<div class="tblformalwide" id="GUID-36456B87-E00C-4906-AD1C-44FD7923F6F6__GUID-F5C16B6B-92D0-429B-9308-B71A995C3621">
+<table class="cellalignment87" summary="Five column table describing Flume Handler Configuration Properties.">
+<thead>
+<tr class="cellalignment65">
+<th class="cellalignment88" id="d35886e298">Property Name</th>
+<th class="cellalignment88" id="d35886e301">Property Value</th>
+<th class="cellalignment80" id="d35886e304">Required / Optional</th>
+<th class="cellalignment80" id="d35886e307">Default</th>
+<th class="cellalignment138" id="d35886e310">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment65">
+<td class="cellalignment92" id="d35886e315" headers="d35886e298">
+<p><code class="codeph">gg.handlerlist</code></p>
+</td>
+<td class="cellalignment92" headers="d35886e315 d35886e301">
+<p><code class="codeph">flumehandler</code> (choice of any name)</p>
+</td>
+<td class="cellalignment84" headers="d35886e315 d35886e304">
+<p>Yes</p>
+</td>
+<td class="cellalignment84" headers="d35886e315 d35886e307">&nbsp;</td>
+<td class="cellalignment139" headers="d35886e315 d35886e310">
+<p>List of handlers. Only one is allowed with grouping properties <code class="codeph">ON</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment92" id="d35886e335" headers="d35886e298">
+<p><code class="codeph">gg.handler.<code class="codeph">name</code>.type</code></p>
+</td>
+<td class="cellalignment92" headers="d35886e335 d35886e301">
+<p><code class="codeph">flume</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e335 d35886e304">
+<p>Yes</p>
+</td>
+<td class="cellalignment84" headers="d35886e335 d35886e307">&nbsp;</td>
+<td class="cellalignment139" headers="d35886e335 d35886e310">
+<p>Type of handler to use.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment92" id="d35886e354" headers="d35886e298">
+<p><code class="codeph">gg.handler.<code class="codeph">name</code>.format</code></p>
+</td>
+<td class="cellalignment92" headers="d35886e354 d35886e301">
+<p>Formatter class or short code</p>
+</td>
+<td class="cellalignment84" headers="d35886e354 d35886e304">
+<p>No.</p>
+</td>
+<td class="cellalignment84" headers="d35886e354 d35886e307">Defaults to <code class="codeph">delimitedtext</code></td>
+<td class="cellalignment139" headers="d35886e354 d35886e310">
+<p>The formatter to be used. Can be one of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">avro_row</code></p>
+</li>
+<li>
+<p><code class="codeph">avro_op</code></p>
+</li>
+<li>
+<p><code class="codeph">delimitedtext</code></p>
+</li>
+<li>
+<p><code class="codeph">xml</code></p>
+</li>
+<li>
+<p><code class="codeph">json</code></p>
+</li>
+<li>
+<p><code class="codeph">json_row</code></p>
+</li>
+</ul>
+<p>You can also write a custom formatter and include the fully qualified class name here.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment92" id="d35886e402" headers="d35886e298">
+<p><code class="codeph">gg.handler.<code class="codeph">name</code>.RpcClientPropertiesFile</code></p>
+</td>
+<td class="cellalignment92" headers="d35886e402 d35886e301">
+<p>Any choice of filename</p>
+</td>
+<td class="cellalignment84" headers="d35886e402 d35886e304">
+<p>No. Defaults to <code class="codeph">default-flume-rpc.properties</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e402 d35886e307">&nbsp;</td>
+<td class="cellalignment139" headers="d35886e402 d35886e310">
+<p>Either the default <code class="codeph">default-flume-rpc.properties</code> or a specified custom RPC client properties file must exist in the classpath.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment92" id="d35886e425" headers="d35886e298">
+<p><code class="codeph">gg.handler.<code class="codeph">name</code>.mode</code></p>
+</td>
+<td class="cellalignment92" headers="d35886e425 d35886e301">
+<p><code class="codeph">op</code>|<code class="codeph">tx</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e425 d35886e304">
+<p>No. Defaults to <code class="codeph">op</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e425 d35886e307">&nbsp;</td>
+<td class="cellalignment139" headers="d35886e425 d35886e310">
+<p>Operation mode (op) or Transaction Mode (tx). Java Adapter grouping options can be used only in tx mode.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment92" id="d35886e449" headers="d35886e298">
+<p><code class="codeph">gg.handler.<code class="codeph">name</code>.EventHeaderClass</code></p>
+</td>
+<td class="cellalignment92" headers="d35886e449 d35886e301">
+<p>A custom implementation fully qualified class name</p>
+</td>
+<td class="cellalignment84" headers="d35886e449 d35886e304">
+<p>No. Defaults to <code class="codeph">DefaultFlumeEventHeader</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e449 d35886e307">&nbsp;</td>
+<td class="cellalignment139" headers="d35886e449 d35886e310">
+<p>Class to be used to define what header properties are to be added to a flume event.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment92" id="d35886e469" headers="d35886e298">
+<p><code class="codeph">gg.handler.<code class="codeph">name</code>.EventMapsTo</code></p>
+</td>
+<td class="cellalignment92" headers="d35886e469 d35886e301">
+<p><code class="codeph">op</code>|<code class="codeph">tx</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e469 d35886e304">
+<p>No. Defaults to <code class="codeph">op</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e469 d35886e307">&nbsp;</td>
+<td class="cellalignment139" headers="d35886e469 d35886e310">
+<p>Defines whether each flume event represents an operation or a transaction. If <code class="codeph">handler mode = op</code>, <code class="codeph">EventMapsTo</code> will always be <code class="codeph">op</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment92" id="d35886e502" headers="d35886e298">
+<p><code class="codeph">gg.handler.<code class="codeph">name</code>.PropagateSchema</code></p>
+</td>
+<td class="cellalignment92" headers="d35886e502 d35886e301">
+<p><code class="codeph">true</code>|<code class="codeph">false</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e502 d35886e304">
+<p>No. Defaults to <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e502 d35886e307">&nbsp;</td>
+<td class="cellalignment139" headers="d35886e502 d35886e310">
+<p>When set to <code class="codeph">true</code>, the Flume handler publishes schema events.</p>
+</td>
+</tr>
+<tr class="cellalignment65">
+<td class="cellalignment92" id="d35886e529" headers="d35886e298">
+<p><code class="codeph">gg.handler.<code class="codeph">name</code>.includeTokens</code></p>
+</td>
+<td class="cellalignment92" headers="d35886e529 d35886e301">
+<p><code class="codeph">true</code>|<code class="codeph">false</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e529 d35886e304">
+<p>No. Defaults to <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment84" headers="d35886e529 d35886e307">&nbsp;</td>
+<td class="cellalignment139" headers="d35886e529 d35886e310">
+<p>When set to <code class="codeph">true</code>, includes token data from the source trail files in the output. When set to <code class="codeph">false</code>, to excludes the token data from the source trail files in the output.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-DE10334E-71AC-41E1-8AC2-075DEBE30775">Setting Up and Running the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD427"></a>
+<div class="props_rev_3"><a id="GUID-79F6A7A2-2EC3-4EE6-8721-606980C8BBD0"></a>
+<h3 id="GADBD-GUID-79F6A7A2-2EC3-4EE6-8721-606980C8BBD0" class="sect3"><span class="enumeration_section">6.2.3</span> Review a Sample Configuration</h3>
+<div>
+<div class="section">
+<pre dir="ltr">
+gg.handlerlist = flumehandler
+gg.handler.flumehandler.type = flume
+gg.handler.flumehandler.RpcClientPropertiesFile=custom-flume-rpc.properties
+gg.handler.flumehandler.format =avro_op
+gg.handler.flumehandler.mode =tx
+gg.handler.flumehandler.EventMapsTo=tx
+gg.handler.flumehandler.PropagateSchema =true
+gg.handler.flumehandler.includeTokens=false
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-DE10334E-71AC-41E1-8AC2-075DEBE30775">Setting Up and Running the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD434"></a>
+<div class="props_rev_3"><a id="GUID-6920E6D1-05E7-4CB7-86D1-6D7A3178FDEE"></a>
+<h2 id="GADBD-GUID-6920E6D1-05E7-4CB7-86D1-6D7A3178FDEE" class="sect2"><span class="enumeration_section">6.3</span> Data Mapping of Operations to Flume Events</h2>
+<div>
+<div class="section">
+<p>This section explains how operation data from the Oracle GoldenGate trail file is mapped by the Flume Handler into Flume Events based on different configurations. A Flume Event is a unit of data that flows through a Flume agent. The event flows from source to channel to sink and is represented by an implementation of the event interface. An event carries a payload (byte array) that is accompanied by an optional set of headers (string attributes).</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-7275B200-2A8A-4A71-B92C-ADD2EA8A36D0">Operation Mode</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-6E3A28FD-BAC7-4FC6-97D8-D6484E08DA8F">Transaction Mode and EventMapsTo Operation</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-D37812BF-4531-4128-AC1B-6BD4321F1B0E">Transaction Mode and EventMapsTo Transaction</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A" title="Learn how to use the Flume Handler to stream change capture data to a Flume source database.">Using the Flume Handler</a></p>
+</div>
+</div>
+</div>
+<a id="GADBD435"></a>
+<div class="sect3"><a id="GUID-7275B200-2A8A-4A71-B92C-ADD2EA8A36D0"></a>
+<h3 id="GADBD-GUID-7275B200-2A8A-4A71-B92C-ADD2EA8A36D0" class="sect3"><span class="enumeration_section">6.3.1</span> Operation Mode</h3>
+<div>
+<p>The configuration for the Flume Handler in the Oracle GoldenGate Java configuration file is as follows:</p>
+<pre dir="ltr">
+gg.handler.{name}.mode=op
+</pre>
+<p>The data for each operation from an Oracle GoldenGate trail file maps into a single Flume Event. Each event is immediately flushed to Flume. Each Flume Event has the following headers:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">TABLE_NAME:</code> The table name for the operation</p>
+</li>
+<li>
+<p><code class="codeph">SCHEMA_NAME</code>: The catalog name (if available) and the schema name of the operation</p>
+</li>
+<li>
+<p><code class="codeph">SCHEMA_HASH</code>: The hash code of the Avro schema (only applicable for Avro Row and Avro Operation formatters)</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-6920E6D1-05E7-4CB7-86D1-6D7A3178FDEE">Data Mapping of Operations to Flume Events</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD436"></a>
+<div class="sect3"><a id="GUID-6E3A28FD-BAC7-4FC6-97D8-D6484E08DA8F"></a>
+<h3 id="GADBD-GUID-6E3A28FD-BAC7-4FC6-97D8-D6484E08DA8F" class="sect3"><span class="enumeration_section">6.3.2</span> Transaction Mode and <code class="codeph">EventMapsTo</code> Operation</h3>
+<div>
+<p>The configuration for the Flume Handler in the Oracle GoldenGate Java configuration file is as follows:</p>
+<pre dir="ltr">
+gg.handler.<span class="italic">flume_handler_name</span>.mode=tx
+gg.handler.flume_handler_name.EventMapsTo=op
+</pre>
+<p>The data for each operation from Oracle GoldenGate trail file maps into a single Flume Event. Events are flushed to Flume when the transaction is committed. Each Flume Event has the following headers:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">TABLE_NAME</code>: The table name for the operation</p>
+</li>
+<li>
+<p><code class="codeph">SCHEMA_NAME</code>: The catalog name (if available) and the schema name of the operation</p>
+</li>
+<li>
+<p><code class="codeph">SCHEMA_HASH</code>: The hash code of the Avro schema (only applicable for Avro Row and Avro Operation formatters)</p>
+</li>
+</ul>
+<p>We recommend that you use this mode when formatting data as Avro or delimited text. It is important to understand that configuring Replicat batching functionality increases the number of operations that are processed in a transaction.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-6920E6D1-05E7-4CB7-86D1-6D7A3178FDEE">Data Mapping of Operations to Flume Events</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD437"></a>
+<div class="props_rev_3"><a id="GUID-D37812BF-4531-4128-AC1B-6BD4321F1B0E"></a>
+<h3 id="GADBD-GUID-D37812BF-4531-4128-AC1B-6BD4321F1B0E" class="sect3"><span class="enumeration_section">6.3.3</span> Transaction Mode and <code class="codeph">EventMapsTo</code> Transaction</h3>
+<div>
+<div class="section">
+<p>The configuration for the Flume Handler in the Oracle GoldenGate Java configuration file is as follows.</p>
+<pre dir="ltr">
+gg.handler.<span class="italic">flume_handler_name</span>.mode=tx
+gg.handler.<span class="italic">flume_handler_name</span>.EventMapsTo=tx
+</pre>
+<p>The data for all operations for a transaction from the source trail file are concatenated and mapped into a single Flume Event. The event is flushed when the transaction is committed. Each Flume Event has the following headers:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">GG_TRANID</code>: The transaction ID of the transaction</p>
+</li>
+<li>
+<p><code class="codeph">OP_COUNT</code>: The number of operations contained in this Flume payload event</p>
+</li>
+</ul>
+<p>We recommend that you use this mode only when using self describing formats such as JSON or XML. In is important to understand that configuring Replicat batching functionality increases the number of operations that are processed in a transaction.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-6920E6D1-05E7-4CB7-86D1-6D7A3178FDEE">Data Mapping of Operations to Flume Events</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD439"></a>
+<div class="props_rev_3"><a id="GUID-02D2F46C-D31A-46C5-8536-FEA9101113F3"></a>
+<h2 id="GADBD-GUID-02D2F46C-D31A-46C5-8536-FEA9101113F3" class="sect2"><span class="enumeration_section">6.4</span> Performance Considerations</h2>
+<div>
+<div class="section">
+<p>Consider the following options for enhanced performance:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Set Replicat-based grouping</p>
+</li>
+<li>
+<p>Set the transaction mode with <code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">flume_handler_name</code></span>. <code class="codeph">EventMapsTo=tx</code></p>
+</li>
+<li>
+<p>Increase the maximum heap size of the JVM in Oracle GoldenGate Java properties file (the maximum heap size of the Flume Handler may affect performance)</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A" title="Learn how to use the Flume Handler to stream change capture data to a Flume source database.">Using the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD440"></a>
+<div class="props_rev_3"><a id="GUID-5BA29358-EE61-475D-926E-89CB195F43FB"></a>
+<h2 id="GADBD-GUID-5BA29358-EE61-475D-926E-89CB195F43FB" class="sect2"><span class="enumeration_section">6.5</span> Metadata Change Events</h2>
+<div>
+<div class="section">
+<p>The Flume Handler is adaptive to metadata change events. &nbsp;To handle metadata change events, the source trail files must have metadata in the trail file. However, this functionality depends on the source replicated database and the upstream Oracle GoldenGate Capture process to capture and replicate DDL events. This feature is not available for all database implementations in Oracle GoldenGate. To determine whether DDL replication is supported, see the Oracle GoldenGate installation and configuration guide for the appropriate database.</p>
+<p>Whenever a metadata change occurs at the source, the Flume Handler notifies the associated formatter of the metadata change event. Any cached schema that the formatter is holding for that table will be deleted. The next time that the associated formatter encounters an operation for that table the schema is regenerated.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A" title="Learn how to use the Flume Handler to stream change capture data to a Flume source database.">Using the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD441"></a>
+<div class="props_rev_3"><a id="GUID-28C37117-3746-431A-AE25-04E54ACBA31B"></a>
+<h2 id="GADBD-GUID-28C37117-3746-431A-AE25-04E54ACBA31B" class="sect2"><span class="enumeration_section">6.6</span> Example Flume Source Configuration</h2>
+<div>
+<div class="section">
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-A57176E8-7C30-4B62-97B5-5DABDE0DC265">Avro Flume Source</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-8DE4F297-614B-445C-A319-093D3A29F118">Thrift Flume Source</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A" title="Learn how to use the Flume Handler to stream change capture data to a Flume source database.">Using the Flume Handler</a></p>
+</div>
+</div>
+</div>
+<a id="GADBD442"></a>
+<div class="sect3"><a id="GUID-A57176E8-7C30-4B62-97B5-5DABDE0DC265"></a>
+<h3 id="GADBD-GUID-A57176E8-7C30-4B62-97B5-5DABDE0DC265" class="sect3"><span class="enumeration_section">6.6.1</span> Avro Flume Source</h3>
+<div>
+<div class="section">
+<p>The following is a sample configuration for an Avro Flume source from the Flume Agent configuration file:</p>
+<pre dir="ltr">
+client.type = default
+hosts = h1
+hosts.h1 = host_ip:host_port
+batch-size = 100
+connect-timeout = 20000
+request-timeout = 20000
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-28C37117-3746-431A-AE25-04E54ACBA31B">Example Flume Source Configuration</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD443"></a>
+<div class="props_rev_3"><a id="GUID-8DE4F297-614B-445C-A319-093D3A29F118"></a>
+<h3 id="GADBD-GUID-8DE4F297-614B-445C-A319-093D3A29F118" class="sect3"><span class="enumeration_section">6.6.2</span> Thrift Flume Source</h3>
+<div>
+<div class="section">
+<p>The following is a sample configuration for an Avro Flume source from the Flume Agent configuration file:</p>
+<pre dir="ltr">
+client.type = thrift
+hosts = h1
+hosts.h1 = host_ip:host_port
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-28C37117-3746-431A-AE25-04E54ACBA31B">Example Flume Source Configuration</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD444"></a>
+<div class="props_rev_3"><a id="GUID-DD59F911-5BA1-4C1C-845C-29BD6E0E1693"></a>
+<h2 id="GADBD-GUID-DD59F911-5BA1-4C1C-845C-29BD6E0E1693" class="sect2"><span class="enumeration_section">6.7</span> Advanced Features</h2>
+<div>
+<div class="section">
+<p>You may choose to implement the following advanced features of the Flume Handler:</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-230516C3-5C7E-40C6-B2EE-BC8A8574F266">Schema Propagation</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-24028618-D5D5-4AD3-80C2-7E15B5A8A5A2">Security</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-19344CBF-30AB-433A-A4EA-49A0DEB4EB30">Fail Over Functionality</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-A440852A-A32F-4C7A-8B12-8D5D5DA3A6B4">Load Balancing Functionality</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A" title="Learn how to use the Flume Handler to stream change capture data to a Flume source database.">Using the Flume Handler</a></p>
+</div>
+</div>
+</div>
+<a id="GADBD445"></a>
+<div class="props_rev_3"><a id="GUID-230516C3-5C7E-40C6-B2EE-BC8A8574F266"></a>
+<h3 id="GADBD-GUID-230516C3-5C7E-40C6-B2EE-BC8A8574F266" class="sect3"><span class="enumeration_section">6.7.1</span> Schema Propagation</h3>
+<div>
+<div class="section">
+<p>The Flume Handler can propagate schemas to Flume. This feature is currently only supported for the Avro Row and Operation formatters. To enable this feature, set the following property:</p>
+<pre dir="ltr">
+gg.handler.<span class="italic">name</span>.propagateSchema=true
+</pre>
+<p>The Avro Row or Operation Formatters generate Avro schemas on a just-in-time basis. Avro schemas are generated the first time an operation for a table is encountered. A metadata change event results in the schema reference being for a table being cleared, and a new schema is generated the next time an operation is encountered for that table.</p>
+<p>When schema propagation is enabled, the Flume Handler propagates schemas in an Avro Event when they are encountered.</p>
+<p>Default Flume Schema Event headers for Avro include the following information:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">SCHEMA_EVENT</code>: true</p>
+</li>
+<li>
+<p><code class="codeph">GENERIC_WRAPPER</code>: true or false</p>
+</li>
+<li>
+<p><code class="codeph">TABLE_NAME</code>: The table name as seen in the trail</p>
+</li>
+<li>
+<p><code class="codeph">SCHEMA_NAME</code>: The catalog name (if available) and the schema name</p>
+</li>
+<li>
+<p><code class="codeph">SCHEMA_HASH</code>: The hash code of the Avro schema</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-DD59F911-5BA1-4C1C-845C-29BD6E0E1693">Advanced Features</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD446"></a>
+<div class="props_rev_3"><a id="GUID-24028618-D5D5-4AD3-80C2-7E15B5A8A5A2"></a>
+<h3 id="GADBD-GUID-24028618-D5D5-4AD3-80C2-7E15B5A8A5A2" class="sect3"><span class="enumeration_section">6.7.2</span> Security</h3>
+<div>
+<div class="section">
+<p>Kerberos authentication for the Oracle GoldenGate for Big Data Flume Handler connection to the Flume source is possible. This feature is supported only in Flume 1.6.0 and later using the Thrift Flume source. You can enable it by changing the configuration of the Flume source in the Flume Agent configuration file.</p>
+<p>The following is an example of the Flume source configuration from the Flume Agent configuration file that shows how to enable Kerberos authentication. You must provide Kerberos principal name of the client and the server. The path to a Kerberos <code class="codeph">keytab</code> file must be provided so that the password of the client principal can be resolved at runtime. For information on how to administer Kerberos, on Kerberos principals and their associated passwords, and about the creation of a Kerberos <code class="codeph">keytab</code> file, see the Kerberos documentation.</p>
+<pre dir="ltr">
+client.type = thrift
+hosts = h1
+hosts.h1 =host_ip:host_port
+kerberos=true
+client-principal=flumeclient/client.example.org@EXAMPLE.ORG
+client-keytab=/tmp/flumeclient.keytab
+server-principal=flume/server.example.org@EXAMPLE.ORG
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-DD59F911-5BA1-4C1C-845C-29BD6E0E1693">Advanced Features</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD447"></a>
+<div class="props_rev_3"><a id="GUID-19344CBF-30AB-433A-A4EA-49A0DEB4EB30"></a>
+<h3 id="GADBD-GUID-19344CBF-30AB-433A-A4EA-49A0DEB4EB30" class="sect3"><span class="enumeration_section">6.7.3</span> Fail Over Functionality</h3>
+<div>
+<div class="section">
+<p>It is possible to configure the Flume Handler so that it fails over when the primary Flume source becomes unavailable. This feature is currently supported only in Flume 1.6.0 and later using the Avro Flume source. It is enabled with Flume source configuration in the Flume Agent configuration file. The following is a sample configuration for enabling fail over functionality:</p>
+<pre dir="ltr">
+client.type=default_failover
+hosts=h1 h2 h3
+hosts.h1=host_ip1:host_port1
+hosts.h2=host_ip2:host_port2
+hosts.h3=host_ip3:host_port3
+max-attempts = 3
+batch-size = 100
+connect-timeout = 20000
+request-timeout = 20000
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-DD59F911-5BA1-4C1C-845C-29BD6E0E1693">Advanced Features</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD448"></a>
+<div class="props_rev_3"><a id="GUID-A440852A-A32F-4C7A-8B12-8D5D5DA3A6B4"></a>
+<h3 id="GADBD-GUID-A440852A-A32F-4C7A-8B12-8D5D5DA3A6B4" class="sect3"><span class="enumeration_section">6.7.4</span> Load Balancing Functionality</h3>
+<div>
+<div class="section">
+<p>You can configure the Flume Handler so that produced Flume events are load-balanced across multiple Flume sources. This feature is currently supported only in Flume 1.6.0 and later using the Avro Flume source. You can enable it by changing the Flume source configuration in the Flume Agent configuration file. The following is a sample configuration for enabling load balancing functionality:</p>
+<pre dir="ltr">
+client.type = default_loadbalance
+hosts = h1 h2 h3
+hosts.h1 = host_ip1:host_port1
+hosts.h2 = host_ip2:host_port2
+hosts.h3 = host_ip3:host_port3
+backoff = false
+maxBackoff = 0
+host-selector = round_robin
+batch-size = 100
+connect-timeout = 20000
+request-timeout = 20000
+</pre></div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-DD59F911-5BA1-4C1C-845C-29BD6E0E1693">Advanced Features</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD428"></a>
+<div class="props_rev_3"><a id="GUID-06757D87-A23A-4B11-A5DB-74A13912E504"></a>
+<h2 id="GADBD-GUID-06757D87-A23A-4B11-A5DB-74A13912E504" class="sect2"><span class="enumeration_section">6.8</span> Troubleshooting the Flume Handler</h2>
+<div>
+<div class="section">
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-9E0B8569-DFF8-43E6-A4BD-40A1810F49FD">Java Classpath</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-398E5E2D-0252-4CF6-84A6-E4AEC1FBFC5A">Flume Flow Control Issues</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-468A6170-5E35-4B2B-A994-B57CB8604497">Flume Agent Configuration File Not Found</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-42118FC2-D7EF-48CA-ADC6-71A5627CF7F3">Flume Connection Exception</a><br /></li>
+<li class="ulchildlink"><a href="using-flume-handler.htm#GUID-DD41EAC1-3408-4726-9D83-31E94871B3D2">Other Failures</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-74F65F52-7ED9-4E66-8F94-3706392F7B6A" title="Learn how to use the Flume Handler to stream change capture data to a Flume source database.">Using the Flume Handler</a></p>
+</div>
+</div>
+</div>
+<a id="GADBD429"></a>
+<div class="props_rev_3"><a id="GUID-9E0B8569-DFF8-43E6-A4BD-40A1810F49FD"></a>
+<h3 id="GADBD-GUID-9E0B8569-DFF8-43E6-A4BD-40A1810F49FD" class="sect3"><span class="enumeration_section">6.8.1</span> Java Classpath</h3>
+<div>
+<div class="section">
+<p>Issues with the Java classpath are common. A <code class="codeph">ClassNotFoundException</code> in the Oracle GoldenGate Java <code class="codeph">log4j</code> log file indicates a classpath problem. You can use the Java <code class="codeph">log4j</code> log file to troubleshoot this issue. Setting the log level to <code class="codeph">DEBUG</code> allows for logging of each of the JARs referenced in the <code class="codeph">gg.classpath</code> object to be logged to the log file. This way, you can make sure that all of the required dependency JARs are resolved. For more information, see <a href="using-flume-handler.htm#GUID-53081475-7487-48C8-A801-AC581ABA38EC">Classpath Configuration</a>.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-06757D87-A23A-4B11-A5DB-74A13912E504">Troubleshooting the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD430"></a>
+<div class="props_rev_3"><a id="GUID-398E5E2D-0252-4CF6-84A6-E4AEC1FBFC5A"></a>
+<h3 id="GADBD-GUID-398E5E2D-0252-4CF6-84A6-E4AEC1FBFC5A" class="sect3"><span class="enumeration_section">6.8.2</span> Flume Flow Control Issues</h3>
+<div>
+<div class="section">
+<p>In some situations, the Flume Handler may write to the Flume source faster than the Flume sink can dispatch messages. When this happens, the Flume Handler works for a while, but when Flume can no longer accept messages, it will abend. The cause that is logged in the Oracle GoldenGate Java log file may probably be an <code class="codeph">EventDeliveryException</code>, indicating that the Flume Handler was unable to send an event. Check the Flume log for the exact cause of the problem. You may be able to re-configure the Flume channel to increase capacity or increase the Java heap size if the Flume Agent is experiencing an <code class="codeph">OutOfMemoryException</code>. This may not solve the problem. If the Flume Handler can push data to the Flume source faster than messages are dispatched by the Flume sink, then any change may only extend the period the Flume Handler can run before failing.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-06757D87-A23A-4B11-A5DB-74A13912E504">Troubleshooting the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD431"></a>
+<div class="props_rev_3"><a id="GUID-468A6170-5E35-4B2B-A994-B57CB8604497"></a>
+<h3 id="GADBD-GUID-468A6170-5E35-4B2B-A994-B57CB8604497" class="sect3"><span class="enumeration_section">6.8.3</span> Flume Agent Configuration File Not Found</h3>
+<div>
+<div class="section">
+<p>If the Flume Agent configuration file is not in the classpath,, Flume Handler abends at startup. The result is usually a <code class="codeph">ConfigException</code> that reports the issue as an error loading the Flume producer properties. Check the <code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name</code></span>. <code class="codeph">RpcClientProperites</code> configuration file to make sure that the naming of the Flume Agent properties file is correct. Check the <span>Oracle GoldenGate</span> <code class="codeph">gg.classpath</code> properties to make sure that the classpath contains the directory containing the Flume Agent properties file. Also, check the classpath to ensure that the path to the Flume Agent properties file does not end with a wildcard <code class="codeph">(*)</code> character.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-06757D87-A23A-4B11-A5DB-74A13912E504">Troubleshooting the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD432"></a>
+<div class="props_rev_3"><a id="GUID-42118FC2-D7EF-48CA-ADC6-71A5627CF7F3"></a>
+<h3 id="GADBD-GUID-42118FC2-D7EF-48CA-ADC6-71A5627CF7F3" class="sect3"><span class="enumeration_section">6.8.4</span> Flume Connection Exception</h3>
+<div>
+<div class="section">
+<p>The Flume Handler terminates abnormally at start up if it cannot connect to the Flume source. The root cause of this problem may probably be reported as an <code class="codeph">IOExeption</code> in the Oracle GoldenGate Java <code class="codeph">log4j</code>, file indicating a problem connecting to Flume at a given host and port. Make sure that the following are both true:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The Flume Agent process is running</p>
+</li>
+<li>
+<p>The Flume agent configuration file that the Flume Handler is accessing contains the correct host and port.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-06757D87-A23A-4B11-A5DB-74A13912E504">Troubleshooting the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GADBD433"></a>
+<div class="props_rev_3"><a id="GUID-DD41EAC1-3408-4726-9D83-31E94871B3D2"></a>
+<h3 id="GADBD-GUID-DD41EAC1-3408-4726-9D83-31E94871B3D2" class="sect3"><span class="enumeration_section">6.8.5</span> Other Failures</h3>
+<div>
+<div class="section">
+<p>Review the contents of the Oracle GoldenGate Java <code class="codeph">log4j</code> file to identify any other issues.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-flume-handler.htm#GUID-06757D87-A23A-4B11-A5DB-74A13912E504">Troubleshooting the Flume Handler</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment64">
+<tr>
+<td class="cellalignment74">
+<table class="cellalignment69">
+<tr>
+<td class="cellalignment68"><a href="using-file-writer-handler.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment68"><a href="using-hbase-handler.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment76">
+<table class="cellalignment67">
+<tr>
+<td class="cellalignment68"><a href="http://docs.oracle.com/goldengate/bd123210/gg-bd/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment68"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment68"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

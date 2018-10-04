@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>PURGEDDLHISTORY | PURGEDDLHISTORYALT</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-09-07T12:04:07Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81608-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="sourcedb.htm" title="Previous" type="text/html" />
+<link rel="Next" href="purgeoldextracts-extract-and-replicat.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6"></a> <span id="PAGE" style="display:none;">44/356</span> <!-- End Header -->
+<a id="GWURF594"></a>
+<h1 id="GWURF-GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6" class="sect1"><span class="enumeration_section">2.18</span> PURGEDDLHISTORY | PURGEDDLHISTORYALT</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Manager</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">PURGEDDLHISTORY</code> and <code class="codeph">PURGEDDLHISTORYALT</code> parameters to control the size of the DDL history tables that support DDL capture. These tables are created in an Oracle database to support trigger-based DDL capture.</p>
+<p>These parameters cause Manager to purge rows that are not needed any more. You can specify the maximum and minimum amount of time to keep a row, based on the last modification date. Both maximum and minimum rules must be specified; otherwise Manager does not have a complete criteria for when to delete the row. For example, <code class="codeph">MINKEEPHOURS 3</code> used with <code class="codeph">MAXKEEPHOURS 5</code> specifies to keep rows that have not been modified in the past three hours, but to delete them when they have not been modified for at least five hours.</p>
+<p>These parameters require a logon to be specified with the <code class="codeph">USERID</code> or <code class="codeph">USERIDALIAS</code> parameter.</p>
+<div class="infoboxnotewarn" id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-539A35A9-F92D-4379-BC86-9DE9156DD481">
+<p class="notep1">WARNING:</p>
+<p>Use caution when purging the history tables. They are critical to the integrity of the DDL synchronization processes. Premature purges are non-recoverable through Oracle GoldenGate. To prevent any possibility of permanent DDL data loss, make regular backups of the Oracle GoldenGate DDL schema.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Default</p>
+<p>Purge every hour</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+PURGEDDLHISTORY | PURGEDDLHISTORYALT
+{, <span class="italic">max_rule</span>}
+[, <span class="italic">min_rule</span>]
+[, <span class="italic">frequency</span>]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-0F3273F0-0F63-4684-9FDF-44A2E383A67C"><!-- --></a><code class="codeph">PURGEDDLHISTORY</code></dt>
+<dd>
+<p>Purges the DDL history table. This table tracks DDL operations. To determine the name of the history table to purge, Oracle GoldenGate first looks for a name specified with the <code class="codeph">DDLTABLE</code> parameter in the <code class="codeph">GLOBALS</code> file. If that parameter does not exist, Oracle GoldenGate uses the default name of <code class="codeph">GGS_DDL_HIST</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-AC7E3573-46B9-4092-9131-C9A6F972CF17"><!-- --></a><code class="codeph">PURGEDDLHISTORYALT</code></dt>
+<dd>
+<p>Purges the internal DDL history table. This table tracks partitioned object IDs that are associated with the object ID of a table. To determine the name of the internal history table to purge, Oracle GoldenGate first looks for a name specified with the <code class="codeph">DDLTABLE</code> parameter in the <code class="codeph">GLOBALS</code> file and appends <code class="codeph">_ALT</code> to it. If that parameter does not exist, Oracle GoldenGate uses the default name of <code class="codeph">GGS_DDL_HIST_ALT</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-0A064CF2-3950-4EFA-9253-67DA6C47492A"><!-- --></a><span class="italic"><code class="codeph">max_rule</code></span></dt>
+<dd>
+<p>Required. Can be one of the following to set the maximum amount of time to keep rows.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-F06BF31C-21B8-402A-A782-6612AF7D5EC4"><!-- --></a><code class="codeph">MAXKEEPHOURS</code> <span class="italic"><code class="codeph">n</code></span></dt>
+<dd>
+<p>Purges if the row has not been modified for <span class="italic"><code class="codeph">n</code></span> number of hours. The minimum is 1 and the maximum is 1000.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-E290349B-4DC7-44F2-97F8-A5BFACB468F0"><!-- --></a><code class="codeph">MAXKEEPDAYS</code> <code class="codeph">n</code></dt>
+<dd>
+<p>Purges if the row has not been modified for <span class="italic"><code class="codeph">n</code></span> number of days. The minimum is 1 and the maximum is 365.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-03B2A5B6-BA94-4623-898E-480824BAF6AB"><!-- --></a><span class="italic"><code class="codeph">min_rule</code></span></dt>
+<dd>
+<p>Can be one of the following to set the minimum amount of time to keep rows.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-EBDE2E30-4D1E-4CF7-888D-19E94AC8AB0A"><!-- --></a><code class="codeph">MINKEEPHOURS</code> <span class="italic"><code class="codeph">n</code></span></dt>
+<dd>
+<p>Keeps an unmodified row for at least the specified number of hours. The minimum is 1 and the maximum is 1000.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-AD942287-139F-45EA-8C2A-2A218DC70915"><!-- --></a><code class="codeph">MINKEEPDAYS</code> <span class="italic"><code class="codeph">n</code></span></dt>
+<dd>
+<p>Keeps an unmodified row for at least the specified number of days. The minimum is 1 and the maximum is 365.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-DBBF5298-F41F-4226-9BED-0E292A458043"><!-- --></a><span class="italic"><code class="codeph">frequency</code></span></dt>
+<dd>
+<p>Sets the frequency with which to purge DDL history. The default interval at which Manager evaluates potential maintenance tasks is 10 minutes, as specified with the <code class="codeph">CHECKMINUTES</code> parameter. At that interval, Manager evaluates the <code class="codeph">PURGEDDLHISTORY</code> or <code class="codeph">PURGEDDLHISTORYALT</code> frequency and conducts the purge at the specified <span class="italic"><code class="codeph">frequency</code></span>.</p>
+<p><span class="italic"><code class="codeph">frequency</code></span> can be one of the following:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-38C8808F-1933-4689-9064-1C7FBC2DA9A1"><!-- --></a><code class="codeph">FREQUENCYMINUTES</code> <span class="italic"><code class="codeph">n</code></span></dt>
+<dd>
+<p>Sets the frequency, in minutes, with which to purge DDL history. The default purge frequency is 60 minutes. The minimum is 1 and the maximum is 360.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-39D17CBD-3A7D-479B-B120-7B6E2F5879E6__GUID-0576C480-1056-49A1-B15E-A8E1C231C5CC"><!-- --></a><code class="codeph">FREQUENCYHOURS</code> <span class="italic"><code class="codeph">n</code></span></dt>
+<dd>
+<p>Sets the frequency, in hours, at which to purge DDL history.</p>
+<p>See <span class="q">"<a href="checkminutes.htm#GUID-0C7CA97F-E7AC-4A0C-BADF-C7AD158F4981">CHECKMINUTES</a>"</span> for more information about controlling the interval between Manager maintenance checks. The minimum is 1 and the maximum is 24.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Example</p>
+<p>The following example keeps all rows that have not been modified in the past three days and deletes them when they have not been modified for at least five days. The purge frequency is 30 minutes.</p>
+<pre dir="ltr">
+PURGEDDLHISTORY MINKEEPDAYS 3, MAXKEEPDAYS 5, FREQUENCYMINUTES 30
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment350">
+<tr>
+<td class="cellalignment357">
+<table class="cellalignment355">
+<tr>
+<td class="cellalignment354"><a href="sourcedb.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment354"><a href="purgeoldextracts-extract-and-replicat.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment359">
+<table class="cellalignment353">
+<tr>
+<td class="cellalignment354"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment354"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment354"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

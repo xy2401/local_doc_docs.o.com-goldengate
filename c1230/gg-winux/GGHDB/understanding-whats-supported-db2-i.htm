@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Understanding What's Supported for IBM DB2 for i</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-09-07T08:20:49Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Heterogeneous Databases" />
+<meta name="dcterms.identifier" content="E88786-08" />
+<meta name="dcterms.isVersionOf" content="GGHDB" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-oracle-goldengate-db2-i.htm" title="Previous" type="text/html" />
+<link rel="Next" href="preparing-system-oracle-goldengate2.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGHDB.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-3760E8B8-DD16-46D5-B5F6-323571AFA7E7"></a> <span id="PAGE" style="display:none;">10/37</span> <!-- End Header -->
+<h1 id="GGHDB-GUID-3760E8B8-DD16-46D5-B5F6-323571AFA7E7" class="sect1"><span class="enumeration_chapter">4</span> Understanding What's Supported for IBM DB2 for i</h1>
+<div>
+<p>With Oracle GoldenGate on DB2 for i, you can replicate data to and from similar or dissimilar supported DB2 for i versions, or you can replicate data between a DB2 for i database and a database of another type. Oracle GoldenGate on DB2 for i supports the filtering, mapping, and transformation of data unless otherwise noted in this documentation.</p>
+<p>Oracle GoldenGate for DB2 for i runs directly on a DB2 for i source system to capture data from the transaction journals for replication to a target system. To apply data to a target DB2 for i database, Oracle GoldenGate can run directly on the DB2 for i target system or on a remote Windows or Linux system. If installed on a remote system, Replicat delivers the data by means of an ODBC connection, and no Oracle GoldenGate software is installed on the DB2 for i target.</p>
+<div class="infobox-note" id="GUID-3760E8B8-DD16-46D5-B5F6-323571AFA7E7__GUID-B04AEC97-EE01-4BB1-9BAD-451A64797462">
+<p class="notep1">Note:</p>
+<p>The DB2 for i platform uses one or more <span class="bold">journals</span> to keep a record of transaction change data. For consistency of terminology in the supporting administrative and reference Oracle GoldenGate documentation, the terms "log" or "transaction log" may be used interchangeably with the term "journal" where the use of the term "journal" is not explicitly required.</p>
+</div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="understanding-whats-supported-db2-i.htm#GUID-12CEC8BF-5F09-4461-A514-140C1B4990A5">Supported DB2 for i Data Types</a><br /></li>
+<li class="ulchildlink"><a href="understanding-whats-supported-db2-i.htm#GUID-8A3F5D41-9095-430D-83C9-5799E7EFC843">Non-Supported DB2 for i Data Types</a><br /></li>
+<li class="ulchildlink"><a href="understanding-whats-supported-db2-i.htm#GUID-0D7AC7E5-5ECF-427B-BAC6-08160632E27F">Supported Objects and Operations for DB2 for i</a><br /></li>
+<li class="ulchildlink"><a href="understanding-whats-supported-db2-i.htm#GUID-780603AE-76A7-47F8-9853-ECE1EFEE3C34">Non-Supported Objects and Operations for DB2 for i</a><br /></li>
+<li class="ulchildlink"><a href="understanding-whats-supported-db2-i.htm#GUID-1CD1B7E3-FA90-4A72-8CC5-5C0D9C052F7B">Oracle GoldenGate Parameters Not Supported for DB2 for i</a><br /></li>
+<li class="ulchildlink"><a href="understanding-whats-supported-db2-i.htm#GUID-FCB50797-BAD7-4AC5-A779-58E25FB78576">Supported Object Naming Conventions</a><br /></li>
+<li class="ulchildlink"><a href="understanding-whats-supported-db2-i.htm#GUID-67527EF2-63C0-4483-A065-2FA6DC56DE84">Supported Character Sets</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="using-oracle-goldengate-db2-i.htm" title="This part describes tasks for configuring and running Oracle GoldenGateon a DB2 for i database.&nbsp;">Using Oracle GoldenGate with IBM DB2 for i</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-12CEC8BF-5F09-4461-A514-140C1B4990A5"></a>
+<h2 id="GGHDB-GUID-12CEC8BF-5F09-4461-A514-140C1B4990A5" class="sect2"><span class="enumeration_section">4.1</span> Supported DB2 for i Data Types</h2>
+<div>
+<p>Oracle GoldenGate supports all DB2 for i data types, except those listed in <a href="understanding-whats-supported-db2-i.htm#GUID-8A3F5D41-9095-430D-83C9-5799E7EFC843">Non-Supported DB2 for i Data Types</a>.</p>
+<div class="section">
+<p class="subhead2">Limitations of support</p>
+<p>The Extract process fully supports the capture and apply of <code class="codeph">TIMESTAMP(0)</code> through <code class="codeph">TIMESTAMP(6)</code>. Extract also captures <code class="codeph">TIMESTAMP(7)</code> through <code class="codeph">TIMESTAMP(12)</code>, but it truncates the data to microseconds (maximum of six digits of fractional time) and issues a warning to the error log. Replicat truncates timestamp data from other sources to microseconds when applying it to <code class="codeph">TIMESTAMP(7)</code> through <code class="codeph">TIMESTAMP(12)</code> in a DB2 for i target.</p>
+<p>Oracle GoldenGate supports timestamp data from 0001/01/03:00:00:00.000000 to 9999/12/31:23:59:59.999999. If a timestamp is converted from GMT to local time, these limits also apply to the resulting timestamp. Depending on the time zone, conversion may add or subtract hours, which can cause the timestamp to exceed the lower or upper supported limit.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-whats-supported-db2-i.htm#GUID-3760E8B8-DD16-46D5-B5F6-323571AFA7E7">Understanding What's Supported for IBM DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-8A3F5D41-9095-430D-83C9-5799E7EFC843"></a>
+<h2 id="GGHDB-GUID-8A3F5D41-9095-430D-83C9-5799E7EFC843" class="sect2"><span class="enumeration_section">4.2</span> Non-Supported DB2 for i Data Types</h2>
+<div>
+<p>Oracle GoldenGate does not support the following DB2 for i data types:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">XML</code></p>
+</li>
+<li>
+<p><code class="codeph">DATALINK</code></p>
+</li>
+<li>
+<p><code class="codeph">DECFLOAT</code></p>
+</li>
+<li>
+<p>User-defined types</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-whats-supported-db2-i.htm#GUID-3760E8B8-DD16-46D5-B5F6-323571AFA7E7">Understanding What's Supported for IBM DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-0D7AC7E5-5ECF-427B-BAC6-08160632E27F"></a>
+<h2 id="GGHDB-GUID-0D7AC7E5-5ECF-427B-BAC6-08160632E27F" class="sect2"><span class="enumeration_section">4.3</span> Supported Objects and Operations for DB2 for i</h2>
+<div>
+<p>Oracle GoldenGate supports the following DB2 for i objects and operations.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Extraction and replication of DML operations .</p>
+</li>
+<li>
+<p>Tables with the maximum row length supported by the database.</p>
+</li>
+<li>
+<p>Tables that contain up to the maximum number of columns that is supported by the database, up to the maximum supported column size.</p>
+</li>
+<li>
+<p><code class="codeph">DELETE FROM</code> with no <code class="codeph">WHERE</code> clause SQL statements and <code class="codeph">Clear Physical File Member</code> (<code class="codeph">CLRPFM</code>)</p>
+</li>
+<li>
+<p>Base tables underlying Materialized Query Tables, but not the MQTs themselves. The target database automatically maintains the content of the MQT based on the changes that are applied to the base tables by Replicat.</p>
+</li>
+<li>
+<p>Both Library (Native) names including members, and SQL names are allowed.</p>
+</li>
+<li>
+<p>Partitioned tables</p>
+</li>
+<li>
+<p>Limitations on Automatic Heartbeat Table support are as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The <code class="codeph">ADD HEARTBEATTABLE</code> command creates a new file called <code class="codeph">ogghbfreq&iquest;</code> in the Oracle GoldenGate build folder. Do not delete this file because the <code class="codeph">pase</code> heartbeat program reads the frequency values from it.</p>
+</li>
+<li>
+<p>There is an extra executable in the Oracle GoldenGate build folder named <code class="codeph">ogghb</code>.</p>
+</li>
+<li>
+<p>An extra process named <code class="codeph">ogghb</code> starts running from the time the <code class="codeph">ADD HEARTBEATTABLE</code> command is given and runs until you disable the heartbeat with the <code class="codeph">DELETE HEARTBEATTABLE</code> command. This process automatically restarts even if it is killed. To remove this process from the system, use the <code class="codeph">DELETE HEARTBEATTABLE</code> command.</p>
+</li>
+<li>
+<p>When using the <code class="codeph">ALTER HEARTBEATTABLE</code> command to change the heartbeat frequency with the <code class="codeph">PURGE_FREQUENCY</code> or <code class="codeph">RETENTION_TIME</code> options, it takes approximately 60 + older 'frequency') seconds to be implemented.</p>
+</li>
+<li>
+<p>There is an initial delay of 30 seconds between <code class="codeph">ADD HEARTBEATTABLE</code> and the first record is updated in the heartbeat seed table.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-whats-supported-db2-i.htm#GUID-3760E8B8-DD16-46D5-B5F6-323571AFA7E7">Understanding What's Supported for IBM DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-780603AE-76A7-47F8-9853-ECE1EFEE3C34"></a>
+<h2 id="GGHDB-GUID-780603AE-76A7-47F8-9853-ECE1EFEE3C34" class="sect2"><span class="enumeration_section">4.4</span> Non-Supported Objects and Operations for DB2 for i</h2>
+<div>
+<p>Oracle GoldenGate does not support the following objects or operations for DB2 for i.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>DDL operations</p>
+</li>
+<li>
+<p>Schema, table or column names that have trailing spaces.</p>
+</li>
+<li>
+<p>Multiple instances of a database</p>
+</li>
+<li>
+<p>The Multi-Journal feature does not support multi-journal sync of a transaction across multiple journals.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-whats-supported-db2-i.htm#GUID-3760E8B8-DD16-46D5-B5F6-323571AFA7E7">Understanding What's Supported for IBM DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-1CD1B7E3-FA90-4A72-8CC5-5C0D9C052F7B"></a>
+<h2 id="GGHDB-GUID-1CD1B7E3-FA90-4A72-8CC5-5C0D9C052F7B" class="sect2"><span class="enumeration_section">4.5</span> Oracle GoldenGate Parameters Not Supported for DB2 for i</h2>
+<div>
+<p>This section lists some of the Oracle GoldenGate configuration parameters that are not supported for the DB2 for i platform. For full descriptions of Oracle GoldenGate parameters and the databases they support, see <a class="olink GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB" target="_blank" href="../GWURF/oracle-goldengate-parameters.htm#GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB">Oracle GoldenGate Parameters</a>.</p>
+<ul class="simple" style="list-style-type: none;padding-left:0;">
+<li><code class="codeph">BATCHSQL</code> (not supported on V5R4 and i6.1 only)</li>
+<li><code class="codeph">BR</code></li>
+<li><code class="codeph">ASCIITOEBCDIC</code> and <code class="codeph">EBCDICTOASCII</code></li>
+<li><code class="codeph">BINARYCHARS</code></li>
+<li><code class="codeph">LOBMEMORY</code></li>
+<li><code class="codeph">TRAILCHARSETEBCDIC</code></li>
+<li>Any encryption options that use AES encryption</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-whats-supported-db2-i.htm#GUID-3760E8B8-DD16-46D5-B5F6-323571AFA7E7">Understanding What's Supported for IBM DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-FCB50797-BAD7-4AC5-A779-58E25FB78576"></a>
+<h2 id="GGHDB-GUID-FCB50797-BAD7-4AC5-A779-58E25FB78576" class="sect2"><span class="enumeration_section">4.6</span> Supported Object Naming Conventions</h2>
+<div>
+<p>Oracle GoldenGate supports SQL naming conventions and also supports native file system names in the format of <span class="italic"><code class="codeph">library/file(member)</code></span>.</p>
+<p>For native (system) names, Oracle GoldenGate supports the normal DB2 for i naming rules for wildcarding, which allows <code class="codeph">*ALL</code> or a partial name with a trailing asterisk (*) wildcard. For example:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">library</code></span><code class="codeph">/*all(*all)</code></p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">library</code></span><code class="codeph">/a*(a*)</code></p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">library</code></span><code class="codeph">/abcde*</code></p>
+</li>
+</ul>
+<p>Oracle GoldenGate does not allow wildcarding for library names.</p>
+<p>The member name is optional and may be left off. In that case, data for all of the members will be extracted, but only the library and file names will be captured and included in the records that are written to the trail. The result is that the data will appear to have come from only one member on the source, and you should be aware that this could cause integrity conflicts on the target if there are duplicate keys across members. To include the member name in the trail records, include the member explicitly or though a wildcarded member specification.</p>
+<p>For SQL names, only the first member in the underlying native file is extracted in accordance with the normal operation of SQL on an DB2 for i system. For SQL names, Oracle GoldenGate supports the wildcarding of table names, but not schema names. For instructions on wildcarding SQL names, see <a class="olink GWUAD192" target="_blank" href="../GWUAD/getting-started-oracle-goldengate-process-interfaces.htm#GWUAD192">Specifying Object Names in Oracle GoldenGate Input</a> in <cite><span><cite>Administering Oracle GoldenGate</cite></span></cite>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-whats-supported-db2-i.htm#GUID-3760E8B8-DD16-46D5-B5F6-323571AFA7E7">Understanding What's Supported for IBM DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-67527EF2-63C0-4483-A065-2FA6DC56DE84"></a>
+<h2 id="GGHDB-GUID-67527EF2-63C0-4483-A065-2FA6DC56DE84" class="sect2"><span class="enumeration_section">4.7</span> Supported Character Sets</h2>
+<div>
+<p>The default behavior of a DB2 for I Extract is to convert all character data to Unicode. The overhead of the performance of the conversion to UTF-8 for the text data has been substantially reduced. However, if you want to send data in its native character set you can use the <code class="codeph">CHARSET</code> and <code class="codeph">COLCHARSET</code> parameters to override the default behavior as follows. See <a class="olink GWURF-GUID-2FD112E3-6A98-47B6-9262-7576A404FF71" target="_blank" href="../GWURF/charset.htm#GWURF-GUID-2FD112E3-6A98-47B6-9262-7576A404FF71">CHARSET</a> and <a class="olink GWURF-GUID-2C44A634-D0D7-4945-BC8E-CF965C29222C" target="_blank" href="../GWURF/colcharset.htm#GWURF-GUID-2C44A634-D0D7-4945-BC8E-CF965C29222C">COLCHARSET</a> in <cite><span><cite>Reference for Oracle GoldenGate</cite></span></cite></p>
+<p>When <code class="codeph">COLCHARSET PASSTHRU</code> is provided for a particular column, that column is not converted into Unicode, and its source character set is provided in the trail metadata, so that Replicat can correctly process the trail data in the native character set of the column improving performance on the source side. To enable the trail to contain multiple character sets, the columns should be configured in <code class="codeph">PASSTRHU</code> mode. For example:</p>
+<pre dir="ltr">
+TABLE GGSCHEMA.TABLE1, CHARSET(PASSTHRU);  
+TABLE GGSCHEMA.TABLE2, COLCHARSET(PASSTHRU, <span class="italic">COL1</span>, <span class="italic">COL2</span>, <span class="italic">COL3</span>);
+</pre>
+<p>Where <code class="codeph"><span class="codeinlineitalic">COL1</span></code>, <code class="codeph"><span class="codeinlineitalic">COL2</span></code>, <code class="codeph"><span class="codeinlineitalic">COL3</span></code> are <code class="codeph">CHAR</code> or <code class="codeph">VARCHAR</code> fields with a valid CCSID.</p>
+<div class="p">For a CCSID 65535 character field (equivalent to a <code class="codeph">BINARY</code> or <code class="codeph">CHAR FOR BIT DATA</code> field), you can specify a column character set override with the valid character set of the column. The field will no longer been seen as a binary field by the Oracle GoldenGate processes and is seen as a normal character field. The data is converted to UTF8, and you cannot use the <code class="codeph">PASSTHRU</code> capability if a <code class="codeph">COLCHARSET</code> is specified to provide a specific character encoding for a binary field. The conversion to UTF-8 makes it possible for this type of override to be compatible with HP NonStop or any other platform that requires essentially ASCII compatible data from the source. The default behavior for a CCSID 65535 <code class="codeph">CHAR</code> or <code class="codeph">VARCHAR</code> field is not to convert the field and bind it as binary. For example:
+<pre dir="ltr">
+TABLE GGSCHEMA.TABLE3, COLCHARSET(IBM037, <span class="italic">COL1</span>, <span class="italic">COL2</span>);
+</pre></div>
+<p>Where <span class="italic">COL1</span> and <span class="italic">COL2</span> are <code class="codeph">CHAR</code> or <code class="codeph">VARCHAR</code> fields with CCSID 65535.</p>
+<p>You can set a column character override for any <code class="codeph">CHAR</code>, <code class="codeph">CLOB</code>, or <code class="codeph">VARCHAR</code> column with a valid character set (not CCSID 655350 when the data contained in the column has a different character set than what you intended. For example, if there is a <code class="codeph">CHAR</code> column with CCSID set as 1047, and the data contained in it is actually in CCSID 37, you can set a column override CCSID for the column in the Extract or DEFGEN parameter file so that when it processed, the processes recognize that the data is actually in CCSID 37 and not in CCSID 1047. The data is treated as CCSID 37, but converted to UTF8.</p>
+<p>You cannot override the <code class="codeph">CHARSET</code> and use <code class="codeph">PASSTHRU</code> together. For example:</p>
+<pre dir="ltr">
+TABLE GGSCHEMA.TABLE4, COLCHARSET(IBM037, COL1);
+</pre>
+<p>Where <span class="italic">COL1</span> is a <code class="codeph">CHAR</code> or <code class="codeph">VARCHAR</code> field defined with CCSID 1047 and the data is actually in CCSID 37.</p>
+<p>If the column character set of a source column is not a valid character set supported by Oracle GoldenGate ICU and you specify <code class="codeph">COLCHAR SETPASSTHRU</code> in the Extract or DEFGEN parameter file, then the <code class="codeph">PASSTHRU</code> behavior is ignored, and the column data is converted to Unicode. This ensures that the data is convertible on the Replicat. Since the data has no ICU representation, there is no way to indicate what character set the data is really in.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-whats-supported-db2-i.htm#GUID-3760E8B8-DD16-46D5-B5F6-323571AFA7E7">Understanding What's Supported for IBM DB2 for i</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment114">
+<tr>
+<td class="cellalignment121">
+<table class="cellalignment119">
+<tr>
+<td class="cellalignment118"><a href="using-oracle-goldengate-db2-i.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment118"><a href="preparing-system-oracle-goldengate2.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment123">
+<table class="cellalignment117">
+<tr>
+<td class="cellalignment118"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment118"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment118"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

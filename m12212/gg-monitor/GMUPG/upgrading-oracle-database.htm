@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Upgrading the Oracle Database</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter describes the tasks you perform to upgrade Oracle GoldenGate Monitor with an Oracle Database." />
+<meta name="dcterms.created" content="2017-11-28T05:04:47Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Upgrading to Oracle GoldenGate Monitor 12.2.1.2" />
+<meta name="dcterms.identifier" content="E85754-02" />
+<meta name="dcterms.isVersionOf" content="GMUPG" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="creating-non-sysdba-user.htm" title="Previous" type="text/html" />
+<link rel="Next" href="upgrading-sql-server.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GMUPG.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-223114C6-9F6E-42A7-AF76-50C0C0C38396"></a> <span id="PAGE" style="display:none;">13/15</span> <!-- End Header -->
+<a id="GMUPG114"></a><a id="GMUPG113"></a>
+<h1 id="GMUPG-GUID-223114C6-9F6E-42A7-AF76-50C0C0C38396" class="sect1"><span class="enumeration_chapter">10</span> Upgrading the Oracle Database</h1>
+<div>
+<div><span>This chapter describes the tasks you perform to upgrade Oracle GoldenGate Monitor with an Oracle Database.</span></div>
+<p>This chapter includes the following sections:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><a href="upgrading-oracle-database.htm#GUID-2BDF5651-95F2-4D63-A10B-497F93A1F2EF">Creating the Required 12.2.1 Schema Using RCU for 11g Upgrades</a></p>
+</li>
+<li>
+<p><a href="upgrading-oracle-database.htm#GUID-047A03E1-5F1E-446A-830C-9533FE21F754">Upgrade Readiness Check</a></p>
+</li>
+<li>
+<p><a href="upgrading-oracle-database.htm#GUID-8DB4EAD2-D917-4D79-8FF8-A63B23B71B3C">Schema Upgrade Instructions</a></p>
+</li>
+<li>
+<p><a href="upgrading-oracle-database.htm#GUID-129681CB-8155-4E94-B3FE-489D8CB5CC90" title="After applying the Oracle GoldenGate Monitor patch 12.2.1.2.171115 (PS2 BP3), optionally, you can execute a table re-partition script to optimize the history purging feature. After the script execution is completed, it reduces the time needed to purge historical data by using the Oracle GoldenGate Monitor server user interface. However, significant amount of time may be needed for script execution depending of amount of existing data.">Next Step: Perform Post-Upgrade Tasks</a></p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-223114C6-9F6E-42A7-AF76-50C0C0C38396__GUID-8651D497-F2CA-428F-8AC1-8C090EA97633">
+<p class="notep1">Note:</p>
+<p>This upgrade supports only the latest version of Oracle 11g R3 and Oracle 12<span class="italic">c</span> R1 database software releases. For current database support information for Oracle GoldenGate Monitor 12<span class="italic">c</span> (12.2.1), see <a class="olink GMINS119" target="_blank" href="../GMINS/preparing-install.htm#GMINS119">"Platform Support"</a> in <span class="italic"><span>Installing and Configuring Oracle GoldenGate Monitor</span></span>.</p>
+</div>
+</div>
+<a id="GMUPG116"></a>
+<div class="props_rev_3"><a id="GUID-2BDF5651-95F2-4D63-A10B-497F93A1F2EF"></a>
+<h2 id="GMUPG-GUID-2BDF5651-95F2-4D63-A10B-497F93A1F2EF" class="sect2">Creating the Required 12.2.1 Schema Using RCU for 11g Upgrades</h2>
+<div>
+<div class="section">
+<p>This section is only applicable to 11g upgrades. It is <span class="italic">not</span> applicable to 12c upgrades because the required schema already exists.</p>
+<div class="infobox-note" id="GUID-2BDF5651-95F2-4D63-A10B-497F93A1F2EF__GUID-B442B7F6-FC13-4A23-B6B1-2F6FFDF6F14E">
+<p class="notep1">Note:</p>
+<p>Before running RCU for Oracle 12<span class="italic">c</span> databases, ensure the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The character set is AL32UTF8. You <span class="italic">must</span> do this because the default character set is not supported by RCU.</p>
+</li>
+<li>
+<p>You are using a plug-able database. By default, a container database will enable in Oracle 12<span class="italic">c</span>, so RCU supports only plug-able database, not container database.</p>
+</li>
+</ul>
+</div>
+<p>To create the 12.2.1 database schema, run the Repository Creation Utility, which is part of the product installation. To launch RCU, navigate to <code class="codeph">ORACLE_HOME/oracle_common/bin</code> and enter:</p>
+<p>For Linux or UNIX:</p>
+<pre dir="ltr">
+$ ./rcu
+</pre>
+<p>For Windows:</p>
+<pre dir="ltr">
+C:\ rcu.bat
+</pre>
+<p>RCU will open, displaying the Welcome screen.</p>
+<p>Navigate the RCU screens as instructed in the following table to update the database.</p>
+<div class="infobox-note" id="GUID-2BDF5651-95F2-4D63-A10B-497F93A1F2EF__GUID-2C0D912A-D922-4524-9900-D6E2D0935630">
+<p class="notep1">Note:</p>
+<p>Some of the RCU items that this procedure instructs you to select might already be selected by default. If an item on a screen is already selected and the instructions below tell you to select it, be careful not to <span class="italic">deselect</span> it.</p>
+</div>
+<div class="tblformal" id="GUID-2BDF5651-95F2-4D63-A10B-497F93A1F2EF__GUID-9E53ADD0-1462-4E51-832E-1E523E4E7EBA">
+<table class="cellalignment78" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen.">
+<thead>
+<tr class="cellalignment69">
+<th class="cellalignment79" id="d3654e135">Screen</th>
+<th class="cellalignment80" id="d3654e138">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e143" headers="d3654e135">
+<p>Welcome</p>
+</td>
+<td class="cellalignment82" headers="d3654e143 d3654e138">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e153" headers="d3654e135">
+<p>Create Repository</p>
+</td>
+<td class="cellalignment82" headers="d3654e153 d3654e138">
+<ol>
+<li>
+<p>Select <span class="bold">System Load and Product Load</span>.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e171" headers="d3654e135">
+<p>Database Connection Details</p>
+</td>
+<td class="cellalignment82" headers="d3654e171 d3654e138">
+<ol>
+<li>
+<p>Enter the <span>Oracle GoldenGate Monitor</span> database details.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e189" headers="d3654e135">
+<p>Select Components</p>
+</td>
+<td class="cellalignment82" headers="d3654e189 d3654e138">
+<ol>
+<li>
+<p>Under the AS Common Services node, select the following schemata:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">Audit Services</span></p>
+</li>
+<li>
+<p><span class="bold">Audit Services Append</span></p>
+</li>
+<li>
+<p><span class="bold">Audit Services Viewer</span></p>
+</li>
+<li>
+<p><span class="bold">Oracle Platform Security Services</span></p>
+</li>
+</ul>
+<p><span class="bold">Note:</span> Do not select the <span class="bold">Monitor Server</span> schema in this step.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+<p>A progress window appears, checking off each schema as its prerequisites are met.</p>
+</li>
+<li>
+<p>Click <span class="bold">OK</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e236" headers="d3654e135">
+<p>Schema Passwords</p>
+</td>
+<td class="cellalignment82" headers="d3654e236 d3654e138">
+<ol>
+<li>
+<p>Enter the necessary password, if it's not already there, and confirm it.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e251" headers="d3654e135">
+<p>Map Tablespaces</p>
+</td>
+<td class="cellalignment82" headers="d3654e251 d3654e138">
+<p>Click <span class="bold">Next</span>.</p>
+<p>Schema creation for the selected services will commence.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e263" headers="d3654e135">
+<p>Summary</p>
+</td>
+<td class="cellalignment82" headers="d3654e263 d3654e138">
+<p>Review the schema information and click <span class="bold">Create</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e273" headers="d3654e135">
+<p>Creation Summary</p>
+</td>
+<td class="cellalignment82" headers="d3654e273 d3654e138">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+</div>
+<a id="GMUPG136"></a>
+<div class="props_rev_3"><a id="GUID-047A03E1-5F1E-446A-830C-9533FE21F754"></a>
+<h2 id="GMUPG-GUID-047A03E1-5F1E-446A-830C-9533FE21F754" class="sect2">Upgrade Readiness Check</h2>
+<div>
+<div class="section">
+<p>Before beginning an upgrade, you must use the UA to perform an upgrade readiness check. The UA runs a read-only check on various database contents including the schema version, required tables, and columns. If the schema version is already at the upgraded or latest version of Oracle GoldenGate Monitor or there are unexpected or missing tables or columns found, the readiness test will fail. If a failure occurs, the UA provides the test details and any exceptions in the UA logs, and the readiness test results are provided in the <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">/oracle_common/upgrade/logs/postreadiness.txt</code> file. Like RCU, UA is included in the product installation.</p>
+<p>Use one of the following sections to perform your readiness check:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><a href="upgrading-oracle-database.htm#GUID-BC837B10-2704-4000-AFF6-67669B12F4E1">Performing an 11g Readiness Check</a></p>
+</li>
+<li>
+<p><a href="upgrading-oracle-database.htm#GUID-0840585F-D767-4D67-AFD3-77C8FDE22818">Performing a 12.1.3 Domain Readiness Check</a></p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<a id="GMUPG137"></a>
+<div class="props_rev_3"><a id="GUID-BC837B10-2704-4000-AFF6-67669B12F4E1"></a>
+<h3 id="GMUPG-GUID-BC837B10-2704-4000-AFF6-67669B12F4E1" class="sect3">Performing an 11g Readiness Check</h3>
+<div>
+<div class="section">
+<p>On your existing 11g Oracle GoldenGate Monitor server, navigate to <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">/oracle_common/upgrade/bin</code> and enter:</p>
+<p>For Linux or UNIX:</p>
+<pre dir="ltr">
+$ ./ua -readiness
+</pre>
+<p>For Windows:</p>
+<pre dir="ltr">
+C:\ ua.bat -readiness
+</pre>
+<p>Navigate the UA screens as instructed in the following table to upgrade your server.</p>
+<div class="tblformal" id="GUID-BC837B10-2704-4000-AFF6-67669B12F4E1__GUID-2CB0DD84-5BB0-4E0C-8DF4-FC181F6C57DC">
+<table class="cellalignment78" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen.">
+<thead>
+<tr class="cellalignment69">
+<th class="cellalignment79" id="d3654e362">Screen</th>
+<th class="cellalignment80" id="d3654e365">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e370" headers="d3654e362">
+<p>Welcome</p>
+</td>
+<td class="cellalignment82" headers="d3654e370 d3654e365">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e380" headers="d3654e362">
+<p>Schemas</p>
+</td>
+<td class="cellalignment82" headers="d3654e380 d3654e365">
+<p>Ensure Schemas is selects and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e390" headers="d3654e362">
+<p>Available Components</p>
+</td>
+<td class="cellalignment82" headers="d3654e390 d3654e365">
+<ol>
+<li>
+<p>Select <span class="bold"><span>Oracle GoldenGate Monitor</span>.</span></p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e409" headers="d3654e362">
+<p>OGGMON Schema</p>
+</td>
+<td class="cellalignment82" headers="d3654e409 d3654e365">
+<ol>
+<li>
+<p>Enter the <span>Oracle GoldenGate Monitor</span> schema name and password.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e427" headers="d3654e362">
+<p>Readiness Summary</p>
+</td>
+<td class="cellalignment82" headers="d3654e427 d3654e365">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e437" headers="d3654e362">
+<p>Readiness Check</p>
+</td>
+<td class="cellalignment82" headers="d3654e437 d3654e365">
+<p>Click <span class="bold">Continue</span>. You can use the View Readiness Report button to view your results.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e447" headers="d3654e362">
+<p>Readiness Success</p>
+</td>
+<td class="cellalignment82" headers="d3654e447 d3654e365">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+</div>
+<a id="GMUPG138"></a>
+<div class="props_rev_3"><a id="GUID-2B71FC2B-3111-49EF-B185-00FF5BE89BE0"></a>
+<h3 id="GMUPG-GUID-2B71FC2B-3111-49EF-B185-00FF5BE89BE0" class="sect3">Performing a 12.1.3 Schema Readiness Check</h3>
+<div>
+<div class="section">
+<p>On your existing Oracle GoldenGate Monitor server, navigate to <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">/oracle_common/upgrade/bin</code> and enter:</p>
+<p>For Linux or UNIX:</p>
+<pre dir="ltr">
+$ ./ua -readiness
+</pre>
+<p>For Windows:</p>
+<pre dir="ltr">
+C:\ ua.bat -readiness
+</pre>
+<p>Navigate the UA screens as instructed in the following table to upgrade your server.</p>
+<div class="tblformal" id="GUID-2B71FC2B-3111-49EF-B185-00FF5BE89BE0__GUID-17A8251D-4CBB-425F-8849-2B12FE879E60">
+<table class="cellalignment78" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen.">
+<thead>
+<tr class="cellalignment69">
+<th class="cellalignment79" id="d3654e499">Screen</th>
+<th class="cellalignment80" id="d3654e502">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e507" headers="d3654e499">
+<p>Welcome</p>
+</td>
+<td class="cellalignment82" headers="d3654e507 d3654e502">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e517" headers="d3654e499">
+<p>WebLogic Components</p>
+</td>
+<td class="cellalignment82" headers="d3654e517 d3654e502">
+<p>Ensure <span class="bold">WebLogic Component Configurations - offline checks only</span> is selected and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e530" headers="d3654e499">
+<p>Component List</p>
+</td>
+<td class="cellalignment82" headers="d3654e530 d3654e502">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e540" headers="d3654e499">
+<p>Readiness Summary</p>
+</td>
+<td class="cellalignment82" headers="d3654e540 d3654e502">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e550" headers="d3654e499">
+<p>Readiness Check</p>
+</td>
+<td class="cellalignment82" headers="d3654e550 d3654e502">
+<p>Click <span class="bold">Continue</span>. You can use the View Readiness Report button to view your results.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e560" headers="d3654e499">
+<p>Readiness Success</p>
+</td>
+<td class="cellalignment82" headers="d3654e560 d3654e502">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+</div>
+<a id="GMUPG139"></a>
+<div class="props_rev_3"><a id="GUID-0840585F-D767-4D67-AFD3-77C8FDE22818"></a>
+<h3 id="GMUPG-GUID-0840585F-D767-4D67-AFD3-77C8FDE22818" class="sect3">Performing a 12.1.3 Domain Readiness Check</h3>
+<div>
+<div class="section">
+<p>On your existing Oracle GoldenGate Monitor server, navigate to <span class="italic"><code class="codeph">WEBLOGIC_HOME</code></span><code class="codeph">/oracle_common/upgrade/bin</code> and enter:</p>
+<div class="infobox-note" id="GUID-0840585F-D767-4D67-AFD3-77C8FDE22818__GUID-1F3A0740-7802-474D-84F6-9225CAADC0DB">
+<p class="notep1">Note:</p>
+<p>Ensure that you go to your Oracle WebLogic home directory <span class="italic">not</span> your Oracle home directory.</p>
+</div>
+<p>For Linux or UNIX:</p>
+<pre dir="ltr">
+$ ./ua -readiness
+</pre>
+<p>For Windows:</p>
+<pre dir="ltr">
+C:\ ua.bat -readiness
+</pre>
+<p>Navigate the UA screens as instructed in the following table to upgrade your server.</p>
+<div class="tblformal" id="GUID-0840585F-D767-4D67-AFD3-77C8FDE22818__GUID-E1402874-5B8C-4F06-9A52-0316F1698850">
+<table class="cellalignment78" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen.">
+<thead>
+<tr class="cellalignment69">
+<th class="cellalignment79" id="d3654e619">Screen</th>
+<th class="cellalignment80" id="d3654e622">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e627" headers="d3654e619">
+<p>Welcome</p>
+</td>
+<td class="cellalignment82" headers="d3654e627 d3654e622">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e637" headers="d3654e619">
+<p>WebLogic Components</p>
+</td>
+<td class="cellalignment82" headers="d3654e637 d3654e622">
+<p>Ensure <span class="bold">WebLogic Component Configurations - offline checks only</span> is selected and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e650" headers="d3654e619">
+<p>Component List</p>
+</td>
+<td class="cellalignment82" headers="d3654e650 d3654e622">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e660" headers="d3654e619">
+<p>Readiness Summary</p>
+</td>
+<td class="cellalignment82" headers="d3654e660 d3654e622">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e670" headers="d3654e619">
+<p>Readiness Check</p>
+</td>
+<td class="cellalignment82" headers="d3654e670 d3654e622">
+<p>Click <span class="bold">Continue</span>. You can use the View Readiness Report button to view your results.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e680" headers="d3654e619">
+<p>Readiness Success</p>
+</td>
+<td class="cellalignment82" headers="d3654e680 d3654e622">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" --></div>
+</div>
+</div>
+<a id="GMUPG115"></a>
+<div class="props_rev_3"><a id="GUID-8DB4EAD2-D917-4D79-8FF8-A63B23B71B3C"></a>
+<h2 id="GMUPG-GUID-8DB4EAD2-D917-4D79-8FF8-A63B23B71B3C" class="sect2">Schema Upgrade Instructions</h2>
+<div>
+<div class="section">
+<p>Upgrading <span>Oracle GoldenGate Monitor Server</span> for Oracle databases is a two-stage process:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li><span><a href="upgrading-oracle-database.htm#GUID-2BDF5651-95F2-4D63-A10B-497F93A1F2EF">Creating the Required 12.2.1 Schema Using RCU for 11g Upgrades</a></span></li>
+<li><span><a href="upgrading-oracle-database.htm#GUID-6D679735-1BB4-4C5B-8AEA-8182F7DA8435">Upgrade the Server and Schema by Running UA</a></span></li>
+</ol>
+<div class="section">
+<div class="infobox-note" id="GUID-8DB4EAD2-D917-4D79-8FF8-A63B23B71B3C__GUID-57BF6CA4-E84C-4104-913C-7FE127B2A918">
+<p class="notep1">Note:</p>
+<p>Ensure that the existing Monitor server is stopped before you proceeding with the following steps.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<a id="GMUPG118"></a>
+<div class="props_rev_3"><a id="GUID-6D679735-1BB4-4C5B-8AEA-8182F7DA8435"></a>
+<h3 id="GMUPG-GUID-6D679735-1BB4-4C5B-8AEA-8182F7DA8435" class="sect3">Upgrade the Server and Schema by Running UA</h3>
+<div>
+<div class="section">
+<div class="infobox-note" id="GUID-6D679735-1BB4-4C5B-8AEA-8182F7DA8435__GUID-32BE6694-052C-4BF1-A9F2-E78F48D3B537">
+<p class="notep1">Note:</p>
+<p>Ensure that the existing <span>Oracle GoldenGate Monitor Server</span> 11g pointed to the schema you are going to upgrade is stopped before commencing with this procedure.</p>
+</div>
+<p>With the repository created, you next run UA to upgrade the database to version 12<span class="italic">c</span> (12.2.1). Navigate to <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">/oracle_common/upgrade/bin</code> and enter:</p>
+<p>For Linux or UNIX:</p>
+<pre dir="ltr">
+$ ./ua
+</pre>
+<p>For Windows:</p>
+<pre dir="ltr">
+C:\ ua.bat
+</pre>
+<p>The UA Welcome screen appears.</p>
+<p>Use one of the following sections to perform your schema upgrade:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p><a href="upgrading-oracle-database.htm#GUID-32129AFC-60C6-45A3-8498-67AC7BC16B2B">Upgrading an 11g Schema</a></p>
+</li>
+<li>
+<p><a href="upgrading-oracle-database.htm#GUID-92CA55AC-FD6A-433E-8E1C-C482A14D9502">Upgrading 12.1.3</a></p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+<a id="GMUPG141"></a><a id="GMUPG142"></a><a id="GMUPG140"></a>
+<div class="props_rev_3"><a id="GUID-32129AFC-60C6-45A3-8498-67AC7BC16B2B"></a>
+<h4 id="GMUPG-GUID-32129AFC-60C6-45A3-8498-67AC7BC16B2B" class="sect4">Upgrading an 11g Schema</h4>
+<div>
+<div class="section">
+<p class="subhead3">Upgrading the Server</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Navigate the UA screens as instructed in the following table to upgrade your server.</p>
+<div class="tblformal" id="GUID-32129AFC-60C6-45A3-8498-67AC7BC16B2B__GUID-23A76BD4-C309-4C16-86A5-5563366FC9B5">
+<table class="cellalignment78" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen.">
+<thead>
+<tr class="cellalignment69">
+<th class="cellalignment79" id="d3654e812">Screen</th>
+<th class="cellalignment80" id="d3654e815">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e820" headers="d3654e812">
+<p>Welcome</p>
+</td>
+<td class="cellalignment82" headers="d3654e820 d3654e815">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e830" headers="d3654e812">
+<p>Schemas</p>
+</td>
+<td class="cellalignment82" headers="d3654e830 d3654e815">
+<p>Ensure <span class="bold">Schemas</span> is selects and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e843" headers="d3654e812">
+<p>Available Components</p>
+</td>
+<td class="cellalignment82" headers="d3654e843 d3654e815">
+<ol>
+<li>
+<p>Select <span class="bold"><span>Oracle GoldenGate Monitor</span>.</span></p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e862" headers="d3654e812">
+<p>Prerequisites</p>
+</td>
+<td class="cellalignment82" headers="d3654e862 d3654e815">
+<ol>
+<li>
+<p>Select all three prerequisites.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e877" headers="d3654e812">
+<p>OGGMON Schema</p>
+</td>
+<td class="cellalignment82" headers="d3654e877 d3654e815">
+<ol>
+<li>
+<p>Enter the <span>Oracle GoldenGate Monitor</span> schema name and password.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e895" headers="d3654e812">
+<p>OGGMON Schema Prefix</p>
+</td>
+<td class="cellalignment82" headers="d3654e895 d3654e815">
+<ol>
+<li>
+<p>Enter the same schema prefix you used when creating the STB schema in RCU.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e910" headers="d3654e812">
+<p>Examine</p>
+</td>
+<td class="cellalignment82" headers="d3654e910 d3654e815">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e920" headers="d3654e812">
+<p>Upgrade Summary</p>
+</td>
+<td class="cellalignment82" headers="d3654e920 d3654e815">
+<p>Click <span class="bold">Upgrade</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e930" headers="d3654e812">
+<p>Upgrade Progress</p>
+</td>
+<td class="cellalignment82" headers="d3654e930 d3654e815">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e940" headers="d3654e812">
+<p>Upgrade Success</p>
+</td>
+<td class="cellalignment82" headers="d3654e940 d3654e815">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>The <code class="codeph">/ua_timestamp.log,ua_timestamp.out</code> files are generated at <code class="codeph">$oracle_common/upgrade/</code><code class="codeph">logs</code> under the 12g <span class="italic"><code class="codeph">ORACLE_HOME</code></span>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Upgrading the <span>Oracle GoldenGate Monitor Server</span> Configuration</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>The UA updates the Monitor Server configuration files to the latest 12.2.1 configuration by maintaining your existing set property values. It creates a <code class="codeph">oggmon.properties</code> file in the <span class="italic"><code class="codeph">domain_name</code></span><code class="codeph">/config/monitorserver/cfg/</code> directory, with an encrypted password entry that is used in JMX communication between Monitor Server and Agent.</p>
+<p>Navigate to <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">/oracle_common/upgrade/bin</code> and enter:</p>
+<p>For Linux or UNIX:</p>
+<pre dir="ltr">
+$ ./ua
+</pre>
+<p>For Windows:</p>
+<pre dir="ltr">
+C:\ ua.bat
+</pre>
+<p>Navigate the UA screens as instructed in the following table to upgrade your server.</p>
+<p>The UA Welcome screen appears.</p>
+<div class="tblformal" id="GUID-32129AFC-60C6-45A3-8498-67AC7BC16B2B__GUID-B0B51AAF-FED7-4088-BAF3-E987CEF69417">
+<table class="cellalignment78" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen.">
+<thead>
+<tr class="cellalignment69">
+<th class="cellalignment79" id="d3654e1009">Screen</th>
+<th class="cellalignment80" id="d3654e1012">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1017" headers="d3654e1009">
+<p>Welcome</p>
+</td>
+<td class="cellalignment82" headers="d3654e1017 d3654e1012">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1027" headers="d3654e1009">
+<p>Schemas</p>
+</td>
+<td class="cellalignment82" headers="d3654e1027 d3654e1012">
+<p>Ensure <span class="bold">Schemas</span> is selects and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1040" headers="d3654e1009">
+<p>WebLogic Components</p>
+</td>
+<td class="cellalignment82" headers="d3654e1040 d3654e1012">
+<ol>
+<li>
+<p>Select <span class="bold">WebLogic Component Configurations</span> and enter the domain directory to be upgraded.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1058" headers="d3654e1009">
+<p>Component List</p>
+</td>
+<td class="cellalignment82" headers="d3654e1058 d3654e1012">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1068" headers="d3654e1009">
+<p>Prerequisites</p>
+</td>
+<td class="cellalignment82" headers="d3654e1068 d3654e1012">
+<ol>
+<li>
+<p>Select all three prerequisites.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1083" headers="d3654e1009">
+<p>OGGMON Schema</p>
+</td>
+<td class="cellalignment82" headers="d3654e1083 d3654e1012">
+<ol>
+<li>
+<p>Enter or select the OGGMON schema connect string, and the DBA and schema user names and passwords.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1098" headers="d3654e1009">
+<p>OGG Monitor Installed Version</p>
+</td>
+<td class="cellalignment82" headers="d3654e1098 d3654e1012">
+<ol>
+<li>
+<p>Select <span class="bold">OGG Monitor 11g</span>.</p>
+</li>
+<li>
+<p>Enter the directory that contains your 11g configuration files.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1119" headers="d3654e1009">
+<p>Examine</p>
+</td>
+<td class="cellalignment82" headers="d3654e1119 d3654e1012">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1129" headers="d3654e1009">
+<p>Upgrade Summary</p>
+</td>
+<td class="cellalignment82" headers="d3654e1129 d3654e1012">
+<p>Click <span class="bold">Upgrade</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1139" headers="d3654e1009">
+<p>Upgrade Progress</p>
+</td>
+<td class="cellalignment82" headers="d3654e1139 d3654e1012">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1149" headers="d3654e1009">
+<p>Upgrade Success</p>
+</td>
+<td class="cellalignment82" headers="d3654e1149 d3654e1012">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>This completes the <span>Oracle GoldenGate Monitor Server</span> for Oracle database upgrade process.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GMUPG144"></a><a id="GMUPG145"></a><a id="GMUPG146"></a><a id="GMUPG143"></a>
+<div class="props_rev_3"><a id="GUID-92CA55AC-FD6A-433E-8E1C-C482A14D9502"></a>
+<h4 id="GMUPG-GUID-92CA55AC-FD6A-433E-8E1C-C482A14D9502" class="sect4">Upgrading 12.1.3</h4>
+<div>
+<div class="section">
+<p>Use this section to upgrade your 12.1.3 schema, WebLogic domain, and <span>Oracle GoldenGate Monitor Server</span>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Upgrading the Server</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Navigate the UA screens as instructed in the following table to upgrade your server.</p>
+<div class="tblformal" id="GUID-92CA55AC-FD6A-433E-8E1C-C482A14D9502__GUID-DCECE54D-24C8-4127-8CE9-ABAD1CF1F902">
+<table class="cellalignment78" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen.">
+<thead>
+<tr class="cellalignment69">
+<th class="cellalignment79" id="d3654e1202">Screen</th>
+<th class="cellalignment80" id="d3654e1205">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1210" headers="d3654e1202">
+<p>Welcome</p>
+</td>
+<td class="cellalignment82" headers="d3654e1210 d3654e1205">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1220" headers="d3654e1202">
+<p>Schemas</p>
+</td>
+<td class="cellalignment82" headers="d3654e1220 d3654e1205">
+<p>Ensure <span class="bold">Schemas</span> is selects and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1233" headers="d3654e1202">
+<p>Available Components</p>
+</td>
+<td class="cellalignment82" headers="d3654e1233 d3654e1205">
+<ol>
+<li>
+<p>Select <span class="bold"><span>Oracle GoldenGate Monitor</span></span> and Oracle Platform Security Services. Oracle Audit Services is automatically selected.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1252" headers="d3654e1202">
+<p>Domain Directory</p>
+</td>
+<td class="cellalignment82" headers="d3654e1252 d3654e1205">
+<p>Enter the directory for the domain you are upgrading or browse for it, then click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1262" headers="d3654e1202">
+<p>Prerequisites</p>
+</td>
+<td class="cellalignment82" headers="d3654e1262 d3654e1205">
+<ol>
+<li>
+<p>Select all three prerequisites.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1277" headers="d3654e1202">
+<p>IAU Schema</p>
+</td>
+<td class="cellalignment82" headers="d3654e1277 d3654e1205">
+<ol>
+<li>
+<p>Enter or select the IAU schema connect string, and the DBA and schema user names and passwords.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1292" headers="d3654e1202">
+<p>OPSS Schema</p>
+</td>
+<td class="cellalignment82" headers="d3654e1292 d3654e1205">
+<ol>
+<li>
+<p>Enter or select the OPSS schema connect string, and the DBA and schema user names and passwords.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1307" headers="d3654e1202">
+<p>OGGMON Schema</p>
+</td>
+<td class="cellalignment82" headers="d3654e1307 d3654e1205">
+<ol>
+<li>
+<p>Enter or select the OGGMON schema connect string, and the DBA and schema user names and passwords.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1322" headers="d3654e1202">
+<p>Examine</p>
+</td>
+<td class="cellalignment82" headers="d3654e1322 d3654e1205">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1332" headers="d3654e1202">
+<p>Upgrade Summary</p>
+</td>
+<td class="cellalignment82" headers="d3654e1332 d3654e1205">
+<p>Click <span class="bold">Upgrade</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1342" headers="d3654e1202">
+<p>Upgrade Progress</p>
+</td>
+<td class="cellalignment82" headers="d3654e1342 d3654e1205">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1353" headers="d3654e1202">
+<p>Upgrade Success</p>
+</td>
+<td class="cellalignment82" headers="d3654e1353 d3654e1205">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>The <code class="codeph">/ua_timestamp.log,ua_timestamp.out</code> files are generated at <code class="codeph">$oracle_common/upgrade/</code><code class="codeph">logs</code> under the 12g <span class="italic"><code class="codeph">ORACLE_HOME</code></span>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Upgrading the WebLogic Domain</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Next, you must update the existing 12.1.3 WebLogic domain configuration to a 12.2.1 domain. Navigate to <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">/wlserver/common/bin</code> and enter:</p>
+<p>For Linux or UNIX:</p>
+<pre dir="ltr">
+$ ./reconfig.sh
+</pre>
+<p>For Windows:</p>
+<pre dir="ltr">
+C:\ reconfig.bat
+</pre>
+<p>The Fusion Middleware Reconfiguration Wizard opens, displaying the Select Domain screen.</p>
+<p>Navigate the wizard screens as instructed in the following table to upgrade your domain.</p>
+<div class="tblformal" id="GUID-92CA55AC-FD6A-433E-8E1C-C482A14D9502__GUID-A66C9288-65D7-486C-8DD1-7708A838A581">
+<table class="cellalignment78" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen.">
+<thead>
+<tr class="cellalignment69">
+<th class="cellalignment79" id="d3654e1408">Screen</th>
+<th class="cellalignment80" id="d3654e1411">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1416" headers="d3654e1408">
+<p>Select Domain</p>
+</td>
+<td class="cellalignment82" headers="d3654e1416 d3654e1411">
+<p>Enter the directory for the domain you are upgrading or browse for it, then click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1426" headers="d3654e1408">
+<p>Setup Progress</p>
+</td>
+<td class="cellalignment82" headers="d3654e1426 d3654e1411">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1436" headers="d3654e1408">
+<p>Domain Mode and JDK</p>
+</td>
+<td class="cellalignment82" headers="d3654e1436 d3654e1411">
+<p>Enter your JDK directory or browse for it, then click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1446" headers="d3654e1408">
+<p>Database Configuration Type</p>
+</td>
+<td class="cellalignment82" headers="d3654e1446 d3654e1411">
+<ol>
+<li>
+<p>Click <span class="bold">Get RCU Configuration</span> to retrieve your database configuration and ensure that it successfully connects.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1464" headers="d3654e1408">
+<p>Component Datasources</p>
+</td>
+<td class="cellalignment82" headers="d3654e1464 d3654e1411">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1474" headers="d3654e1408">
+<p>JDBC Test</p>
+</td>
+<td class="cellalignment82" headers="d3654e1474 d3654e1411">
+<ol>
+<li>
+<p>Select all connections.</p>
+</li>
+<li>
+<p>Click <span class="bold">Test Selected Connections</span>.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1495" headers="d3654e1408">
+<p>Advanced Configuration</p>
+</td>
+<td class="cellalignment82" headers="d3654e1495 d3654e1411">
+<p>Do not select anything.</p>
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1507" headers="d3654e1408">
+<p>Configuration Summary</p>
+</td>
+<td class="cellalignment82" headers="d3654e1507 d3654e1411">
+<p>Click <span class="bold">Reconfig</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1517" headers="d3654e1408">
+<p>Reconfiguration Progress</p>
+</td>
+<td class="cellalignment82" headers="d3654e1517 d3654e1411">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1527" headers="d3654e1408">
+<p>Reconfiguration Success</p>
+</td>
+<td class="cellalignment82" headers="d3654e1527 d3654e1411">
+<p>Click <span class="bold">Finish</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">Upgrading the <span>Oracle GoldenGate Monitor Server</span> Configuration</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>The UA updates the Monitor Server configuration files to the latest 12.2.1 configuration by maintaining your existing set property values. It creates a <code class="codeph">oggmon.properties</code> file in the <span class="italic"><code class="codeph">domain_name</code></span><code class="codeph">/config/monitorserver/cfg/</code> directory, with an encrypted password entry that is used in JMX communication between Monitor Server and Agent.</p>
+<p>Navigate to <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">/oracle_common/upgrade/bin</code> and enter:</p>
+<p>For Linux or UNIX:</p>
+<pre dir="ltr">
+$ ./ua
+</pre>
+<p>For Windows:</p>
+<pre dir="ltr">
+C:\ ua.bat
+</pre>
+<p>Navigate the UA screens as instructed in the following table to upgrade your server.</p>
+<p>The UA Welcome screen appears.</p>
+<div class="tblformal" id="GUID-92CA55AC-FD6A-433E-8E1C-C482A14D9502__GUID-180D6C86-4F94-4272-BE1F-160D23A9EBC4">
+<table class="cellalignment78" summary="Two-column table. In the left-hand column is the name of a screen. In the right-hand column are instructions for using that screen.">
+<thead>
+<tr class="cellalignment69">
+<th class="cellalignment79" id="d3654e1582">Screen</th>
+<th class="cellalignment80" id="d3654e1585">Upgrade Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1590" headers="d3654e1582">
+<p>Welcome</p>
+</td>
+<td class="cellalignment82" headers="d3654e1590 d3654e1585">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1600" headers="d3654e1582">
+<p>Schemas</p>
+</td>
+<td class="cellalignment82" headers="d3654e1600 d3654e1585">
+<p>Ensure <span class="bold">Schemas</span> is selects and click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1613" headers="d3654e1582">
+<p>WebLogic Components</p>
+</td>
+<td class="cellalignment82" headers="d3654e1613 d3654e1585">
+<ol>
+<li>
+<p>Select <span class="bold">WebLogic Component Configurations</span> and enter the domain directory to be upgraded.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1631" headers="d3654e1582">
+<p>Component List</p>
+</td>
+<td class="cellalignment82" headers="d3654e1631 d3654e1585">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1641" headers="d3654e1582">
+<p>Prerequisites</p>
+</td>
+<td class="cellalignment82" headers="d3654e1641 d3654e1585">
+<ol>
+<li>
+<p>Select all three prerequisites.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1656" headers="d3654e1582">
+<p>OGG Monitor Installed Version</p>
+</td>
+<td class="cellalignment82" headers="d3654e1656 d3654e1585">
+<ol>
+<li>
+<p>Select <span class="bold">OGG Monitor 12.1.3</span>.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1674" headers="d3654e1582">
+<p>OGGMON Schema</p>
+</td>
+<td class="cellalignment82" headers="d3654e1674 d3654e1585">
+<ol>
+<li>
+<p>Enter or select the OGGMON schema connect string, and the DBA and schema user names and passwords.</p>
+</li>
+<li>
+<p>Click <span class="bold">Next</span>.</p>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1689" headers="d3654e1582">
+<p>Examine</p>
+</td>
+<td class="cellalignment82" headers="d3654e1689 d3654e1585">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1699" headers="d3654e1582">
+<p>Upgrade Summary</p>
+</td>
+<td class="cellalignment82" headers="d3654e1699 d3654e1585">
+<p>Click <span class="bold">Upgrade</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1709" headers="d3654e1582">
+<p>Upgrade Progress</p>
+</td>
+<td class="cellalignment82" headers="d3654e1709 d3654e1585">
+<p>Click <span class="bold">Next</span>.</p>
+</td>
+</tr>
+<tr class="cellalignment69">
+<td class="cellalignment81" id="d3654e1719" headers="d3654e1582">
+<p>Upgrade Success</p>
+</td>
+<td class="cellalignment82" headers="d3654e1719 d3654e1585">
+<p>Click <span class="bold">Close</span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>This completes the <span>Oracle GoldenGate Monitor Server</span> for Oracle database and domain upgrade process.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+</div>
+<a id="GMUPG127"></a>
+<div class="props_rev_3"><a id="GUID-129681CB-8155-4E94-B3FE-489D8CB5CC90"></a>
+<h2 id="GMUPG-GUID-129681CB-8155-4E94-B3FE-489D8CB5CC90" class="sect2">Next Step: Perform Post-Upgrade Tasks</h2>
+<div>
+<div class="section">
+<p>With the upgrade process complete for your database type, you next need to perform certain post-upgrade tasks, which are described in <a href="performing-upgrade-tasks.htm#GUID-19512206-2FA2-4E1D-96AC-F323415AAE89" title="This chapter describes the tasks required once you have updated Oracle GoldenGate Monitor to the 12c (12.2.1) release.">Performing Post-Upgrade Tasks</a>.</p>
+</div>
+<!-- class="section" --></div>
+<div class="sect3"><a id="GUID-7039EE05-4FFF-42F0-BA3F-F873D23F05E9"></a>
+<h3 id="GMUPG-GUID-7039EE05-4FFF-42F0-BA3F-F873D23F05E9" class="sect3">Applying the <span>Oracle GoldenGate Monitor</span> Patch</h3>
+<div>
+<p>After applying the <span>Oracle GoldenGate Monitor</span> patch 12.2.1.2.171115 (PS2 BP3), optionally, you can execute a table re-partition script to optimize the history purging feature. After the script execution is completed, it reduces the time needed to purge historical data by using the <span>Oracle GoldenGate Monitor</span> server user interface. However, significant amount of time may be needed for script execution depending of amount of existing data.</p>
+<div class="section">To apply the patch:</div>
+<!-- class="section" -->
+<ol>
+<li><span>Stop the <span>Oracle GoldenGate Monitor</span> Server.</span></li>
+<li><span>Apply patch 12.2.1.2.171115 (PS2 BP3) if you have not yet applied it.</span></li>
+<li><span>Run the following script as <code class="codeph">SYSDBA</code> user and enter the <span>Oracle GoldenGate Monitor</span> Repository User Name when asked for parameter 1 &ndash; <code>&lt;ORACLE_HOME&gt;/oggmon/plugins/upgrade/scripts/grant_permission_oracle.sql</code>.</span></li>
+<li><span>Run the following script as Monitor Repository User &ndash; <code class="codeph">&lt;ORACLE_HOME&gt;/oggmon/plugins/upgrade/scripts/oracle_partitions.sql</code>.</span></li>
+<li><span>Start the <span>Oracle GoldenGate Monitor</span> Server.</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment68">
+<tr>
+<td class="cellalignment75">
+<table class="cellalignment73">
+<tr>
+<td class="cellalignment72"><a href="creating-non-sysdba-user.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment72"><a href="upgrading-sql-server.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment77">
+<table class="cellalignment71">
+<tr>
+<td class="cellalignment72"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment72"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

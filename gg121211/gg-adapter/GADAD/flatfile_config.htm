@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Configuring the Flat File Adapter</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1023" />
+<meta name="description" content="This chapter explains how to configure the Oracle GoldenGate Adapter for writing flat files by setting user exit parameters and file writer properties." />
+<meta name="dcterms.created" content="2015-04-08T9:18:57Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Application Adapters Administering Oracle GoldenGate Adapters" />
+<meta name="dcterms.identifier" content="E61853-01" />
+<meta name="dcterms.isVersionOf" content="GADAD" />
+<link rel="Start" href="../../index.htm" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="flatfile_part.htm" title="Previous" type="text/html" />
+<link rel="Next" href="flatfile_using.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E61853-01.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="E61853-01.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="E61853-01.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">10/28</span> <!-- End Header -->
+<div id="GADAD424" class="chapter"><a id="BABHAJAH"></a>
+<h1 class="chapter"><span class="secnum">5</span> Configuring the Flat File Adapter</h1>
+<p><a id="GADAD425"></a>This chapter explains how to configure the Oracle GoldenGate Adapter for writing flat files by setting user exit parameters and file writer properties.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#BABHHDIE">Configuring the Adapter for Writing Flat Files</a></p>
+</li>
+<li>
+<p><a href="#BABCFBEA">Recommended Data Integration Approach</a></p>
+</li>
+<li>
+<p><a href="#BABHGFHI">Producing Data Files</a></p>
+</li>
+</ul>
+<a id="BABHHDIE"></a>
+<div id="GADAD426" class="sect1">
+<h2 class="sect1"><span class="secnum">5.1</span> Configuring the Adapter for Writing Flat Files</h2>
+<p>Figure <a href="#i1013569">Section 5.1, "Typical Configuration For Writing Flat Files,"</a> shows a typical configuration for an Oracle GoldenGate Application Adapters that is writing flat files. Transactions are captured from the source database by a Primary Extract process that writes the data to an Oracle GoldenGate trail. A Data Pump Extract is then used to send the transactions to a trail that will be read by the Adapter Extract. The user exit library that is associated with the Adapter Extract writes the data to flat files that have been formatted for a third party application.</p>
+<p>To configure the source database system:</p>
+<pre>
+GGSCI &gt; ADD EXTRACT pump, EXTTRAILSOURCE dirdat/aa
+GGSCI &gt; ADD RMTTRAIL dirdat/bb, EXTRACT pump, MEGABYTES 20
+</pre>
+<p>To configure the data integration:</p>
+<pre>
+GGSCI &gt; ADD EXTRACT ffwriter, EXTTRAILSOURCE dirdat/bb
+</pre>
+<p>The sample process names and trail names used above can be replaced with any valid name. Process names must be 8 characters or less, trail names must be two characters.</p>
+<div id="GADAD427" class="figure">
+<p class="titleinfigure"><a id="i1013569"></a>Figure 5-1 Typical Configuration For Writing Flat Files</p>
+<img width="590" height="574" src="img/gffad_jd_002_config.gif" alt="Description of Figure 5-1 follows" /><br />
+<a id="sthref34" href="img_text/gffad_jd_002_config.htm">Description of "Figure 5-1 Typical Configuration For Writing Flat Files"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<div id="GADAD428" class="sect2"><a id="sthref35"></a>
+<h3 class="sect2"><span class="secnum">5.1.1</span> User Exit Extract Parameters</h3>
+<p>The user exit Extract parameters (<code>ffwriter.prm</code>) are as follows:</p>
+<div class="inftblhruleinformal">
+<table class="cellalignment13" title="Typical User Exit Extract Parameters" summary="This two-column table lists and describes the typical user exit parameters." dir="ltr">
+<thead>
+<tr class="cellalignment2">
+<th class="cellalignment14" id="r1c1-t2">Parameter</th>
+<th class="cellalignment14" id="r1c2-t2">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r2c1-t2" headers="r1c1-t2">
+<pre>
+EXTRACT FFWRITER 
+</pre></td>
+<td class="cellalignment8" headers="r2c1-t2 r1c2-t2">All Extract parameter files start with the Extract name. In this case it is the user exit's file writer name.</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r3c1-t2" headers="r1c1-t2">
+<pre>
+SOURCEDEFS dirdef/hr_ora.def
+</pre></td>
+<td class="cellalignment8" headers="r3c1-t2 r1c2-t2">A source definitions file to determine trail contents.</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r4c1-t2" headers="r1c1-t2">
+<pre>
+CUSEREXIT flatfilewriter.dll CUSEREXIT
+PASSTHRU, INCLUDEUPDATEBEFORES,
+PARAMS ffwriter.properties 
+</pre></td>
+<td class="cellalignment8" headers="r4c1-t2 r1c2-t2">The <code>CUSEREXIT</code> parameter options:
+<ul>
+<li>
+<p><code>flatfilewriter.dll</code> is the name of the user exit .dll or .so library.</p>
+</li>
+<li>
+<p><code>CUSEREXIT</code> is the name of the user exit routine that will be invoked (case sensitive).</p>
+</li>
+<li>
+<p><code>PASSTHRU</code> specifies that the Extract process does not need to write a trail.</p>
+</li>
+<li>
+<p><code>INCLUDEUPDATEBEFORES</code> allows both the before and after image to be included in the output. It is also required for consistency purposes and transaction tracking.</p>
+</li>
+<li>
+<p><code>PARAMS</code> allows you to specify the name of the user exit properties file.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment8" id="r5c1-t2" headers="r1c1-t2">
+<pre>
+TABLE HR.*;
+</pre></td>
+<td class="cellalignment8" headers="r5c1-t2 r1c2-t2">Specifies a list of tables to process.</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect2" -->
+<div id="GADAD429" class="sect2"><a id="sthref36"></a>
+<h3 class="sect2"><span class="secnum">5.1.2</span> User Exit Properties</h3>
+<p>The user exit reads properties from the file identified in <code>CUSEREXIT</code> <code>PARAMS</code>. The default is to read from <code>ffwriter.properties</code>.</p>
+<p>The properties file contains details of how the user exit should operate. For more information on individual properties see <a href="flatfile_properties.htm#g1044619">Chapter 8, "Flat File Properties."</a></p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="BABCFBEA"></a>
+<div id="GADAD430" class="sect1">
+<h2 class="sect1"><span class="secnum">5.2</span> Recommended Data Integration Approach</h2>
+<p>To take best advantage of the micro-batch capabilities, customers should do the following in their data integration tool:</p>
+<ol>
+<li>
+<p>Wait on the control file</p>
+</li>
+<li>
+<p>Read list of files to process from the control file</p>
+</li>
+<li>
+<p>Rename the control file</p>
+</li>
+<li>
+<p>Iterate over the comma-delimited list of files read from the control file</p>
+</li>
+<li>
+<p>Process each data file, deleting the data file when complete</p>
+</li>
+<li>
+<p>Delete the renamed control file</p>
+</li>
+</ol>
+<p>On startup, the data integration tool should check for the renamed control file to see if it needs to recover from previously failed processing</p>
+<p>When the control file is renamed, the user exit will write a new one on the first file rollover, which will contain the list of files for the next batch.</p>
+<p>If the user exit has been configured to also output a summary file, the data integration tool can optionally also read that summary file and cross-check the number of operations it has processed with the data in the summary file for each processed data file.</p>
+</div>
+<!-- class="sect1" -->
+<a id="BABHGFHI"></a>
+<div id="GADAD431" class="sect1">
+<h2 class="sect1"><span class="secnum">5.3</span> Producing Data Files</h2>
+<p>Data files are produced by configuring a <span class="italic">writer</span> in the user exit properties. A single user exit properties file can have multiple writers, which allows for the generation of multiple differently formatted output data files for the same input data.</p>
+<p>Writers are added by name to the <code>goldengate.flatfilewriter.writers</code> property. For example:</p>
+<pre>
+goldengate.flatfilewriter.writers=dsvwriter,diffswriter,binarywriter
+</pre>
+<p>The remainder of the properties file contains detailed properties for each of the named writers where the properties are prefixed by the writers name. For example:</p>
+<pre>
+dsvwriter.files.onepertable=true
+binarywriter.files.onepertable=false
+binarywriter.files.oneperopcode=true
+</pre>
+<p>Each writer can output all the data to a single (rolling) data file, or produce one (rolling) data file per input table or operation type. This is controlled by the <code>files.onepertable</code> and <code>files.oneperopcode</code> properties as shown in the example above.</p>
+<p>The data written by each writer can be in one of two output formats controlled by the mode property. This can either be:</p>
+<ul>
+<li>
+<p>DSV &ndash; Delimiter Separated Values</p>
+</li>
+<li>
+<p>LDV &ndash; Length Delimited Values</p>
+</li>
+</ul>
+<p>For example:</p>
+<pre>
+dsvwriter.mode=dsv
+binarywriter.mode=ldv
+</pre>
+<p>When data files are first written to disk, they have a temporary extension. Once the file meets rollover criteria, the extension is switched to the rolled extension. If control files are used, the final file name is added to the list in the control file, creating the control file if necessary. Also, if a file level statistics summary is being generated, it will be created upon rollover of the file.</p>
+<p>The output directory (for data files and control files separately), temporary extension, rolled extension, control extension and statistical summary extension can all be configured through properties. For output configuration details see <a href="flatfile_properties.htm#i1016630">Section 8.2.2, "Output File Properties."</a></p>
+<p>Each data file that is written follows a naming convention which depends on the output style. For files written one per table, the name includes the table name, for example:</p>
+<pre>
+MY.TABLE_2013-08-03_11:30:00_data.dsv
+</pre>
+<p>For files written with all data in one file, the name does not include the table name, for example:</p>
+<pre>
+output_2013-08-03_11:30:00_data.dsv
+</pre>
+<p>In addition to the basic data contents, additional <span class="italic">metadata columns</span> can be added to the output data to aid in data consumption. This includes the schema (owner) and table information, source commit timestamp, Oracle GoldenGate read position and more. For a detailed description of metadata columns see <a href="flatfile_properties.htm#i1016619">Section 8.2.4.8, "Metadata Columns."</a></p>
+<p>The contents of the data file depend on the mode, the input data, and the various properties determining which (if any) metadata columns are added, whether column names are included, whether before images are included etc. For full details of all properties governing the output data see section <a href="flatfile_properties.htm#i1018254">Section 8.2.4, "Data Content Properties."</a></p>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8">
+<table class="cellalignment6">
+<tr>
+<td class="cellalignment5"><a href="flatfile_part.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment5"><a href="flatfile_using.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="../../index.htm"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

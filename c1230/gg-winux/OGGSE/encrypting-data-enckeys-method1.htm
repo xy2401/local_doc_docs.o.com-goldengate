@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Encrypting Data with the ENCKEYS Method</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="To use this method of data encryption, you configure Oracle GoldenGate to generate an encryption key and store the key in a local ENCKEYS file." />
+<meta name="dcterms.created" content="2018-05-10T07:33:56Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Securing the Oracle GoldenGate Environment" />
+<meta name="dcterms.identifier" content="E91326-01" />
+<meta name="dcterms.isVersionOf" content="OGGSE" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="encrypting-data-master-key-and-wallet-method.htm" title="Previous" type="text/html" />
+<link rel="Next" href="managing-identities-credential-store.htm" title="Next" type="text/html" />
+<link rel="alternate" href="OGGSE.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-C8E42442-ACE7-4812-A32D-ACB1F047185B"></a> <span id="PAGE" style="display:none;">18/24</span> <!-- End Header -->
+<h1 id="OGGSE-GUID-C8E42442-ACE7-4812-A32D-ACB1F047185B" class="sect1"><span class="enumeration_chapter">9</span> Encrypting Data with the ENCKEYS Method</h1>
+<div>
+<p>To use this method of data encryption, you configure <span>Oracle GoldenGate</span> to generate an encryption key and store the key in a local <code class="codeph">ENCKEYS</code> file.</p>
+<p id="GUID-C8E42442-ACE7-4812-A32D-ACB1F047185B__TOUSETHISMETHODOFDATAENCRYPTIONYOUC-46AD27BB">This method makes use of a permanent key that can only be changed by regenerating the algorithm, see <a href="populating-enckeys-file-encryption-keys.htm#GUID-1253659E-EB9B-489D-90A3-B049B489B2A2" title="Learn how to use an ENCKEYS file.">Populating an ENCKEYS File with Encryption Keys</a>.</p>
+<p id="GUID-C8E42442-ACE7-4812-A32D-ACB1F047185B__THEENCKEYSFILEMUSTBESECUREDTHROUGHT-46AD2BF9">The <code class="codeph">ENCKEYS</code> file must be secured through the normal method of assigning file permissions in the operating system.</p>
+<p id="GUID-C8E42442-ACE7-4812-A32D-ACB1F047185B__THISPROCEDUREGENERATESANAESENCRYPTI-46AD306A">This procedure generates an AES encryption key and provides instructions for storing it in the <code class="codeph">ENCKEYS</code> file.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="encrypting-data-enckeys-method1.htm#GUID-82DF56DF-456D-4246-BDC2-DA1AC9AA6EEA">Encrypting the Data with the ENCKEYS Method</a><br /></li>
+<li class="ulchildlink"><a href="encrypting-data-enckeys-method1.htm#GUID-523C3766-9112-42CA-8C19-F2FF7D4178F5">Decrypting the Data with the ENCKEYS Method</a><br /></li>
+<li class="ulchildlink"><a href="encrypting-data-enckeys-method1.htm#GUID-A9852F86-D5EF-4C36-81C9-33A95CC86276">Examples of Data Encryption using the ENCKEYS Method</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="securing-oracle-goldengate.htm" title="Use this part to secure your CA and MA environments.">Securing Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-82DF56DF-456D-4246-BDC2-DA1AC9AA6EEA"></a>
+<h2 id="OGGSE-GUID-82DF56DF-456D-4246-BDC2-DA1AC9AA6EEA" class="sect2"><span class="enumeration_section">9.1</span> Encrypting the Data with the ENCKEYS Method</h2>
+<div>
+<ol id="GUID-82DF56DF-456D-4246-BDC2-DA1AC9AA6EEA__GENERATEANENCRYPTIONKEYANDSTOREITIN-46AE895A">
+<li class="stepexpand"><span>Generate an encryption key and store it in the <code class="codeph">ENCKEYS</code> file, see <a href="populating-enckeys-file-encryption-keys.htm#GUID-1253659E-EB9B-489D-90A3-B049B489B2A2" title="Learn how to use an ENCKEYS file.">Populating an ENCKEYS File with Encryption Keys</a>. Make certain to copy the finished <code class="codeph">ENCKEYS</code> file to the Oracle GoldenGate installation directory on any intermediary systems and all target systems.</span></li>
+<li class="stepexpand"><span>In the following parameter files, add the following:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>To encrypt trail data: In the parameter file of the primary Extract group and the data pump, add an <code class="codeph">ENCRYPTTRAIL</code> parameter before any parameter that specifies a trail or file that you want to be encrypted. Parameters that specify trails or files are <code class="codeph">EXTTRAIL</code>, <code class="codeph">RMTTRAIL</code>, <code class="codeph">EXTFILE</code>, and <code class="codeph">RMTFILE</code>. The syntax is one of the following:</p>
+<pre dir="ltr">
+ENCRYPTTRAIL {AES128 | AES192 | AES256 | BLOWFISH}  
+</pre>
+<pre dir="ltr">
+ENCRYPTTRAIL AES192, KEYNAME <span class="italic">keyname</span>
+</pre></li>
+<li>
+<p>To encrypt data across TCP/IP: In the <code class="codeph">RMTHOSTOPTIONS</code> parameter in the parameter file of the data pump (or the primary Extract, if no pump is being used), add the <code class="codeph">ENCRYPT</code> option with the <code class="codeph">KEYWORD</code> clause. The syntax is one of the following:</p>
+<pre dir="ltr">
+RMTHOSTOPTIONS <span class="italic">host</span>, MGRPORT <span class="italic">port</span>, ENCRYPT {AES128 | AES192 | AES256 | BLOWFISH} KEYNAME <span class="italic">keyname</span>
+</pre>
+<pre dir="ltr">
+RMTHOSTOPTIONS ENCRYPT {AES128 | AES192 | AES256 | BLOWFISH} KEYNAME <span class="italic">keyname</span>
+</pre></li>
+</ul>
+<p>Where:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">RMTHOSTOPTIONS</code> is used for passive Extract, see <a href="populating-enckeys-file-encryption-keys.htm#GUID-1253659E-EB9B-489D-90A3-B049B489B2A2" title="Learn how to use an ENCKEYS file.">Populating an ENCKEYS File with Encryption Keys</a>.</p>
+</li>
+<li>
+<p><code class="codeph">ENCRYPTTRAIL</code> without options uses AES128 as the default for all database types except the iSeries, z/OS, and NonStop platforms, where <code class="codeph">BLOWFISH</code> is the default.</p>
+</li>
+<li>
+<p><code class="codeph">AES128</code> encrypts with the AES-128 encryption algorithm. Not supported for iSeries, z/OS, and NonStop platforms.</p>
+</li>
+<li>
+<p><code class="codeph">AES192</code> encrypts with AES-192 encryption algorithm. Not supported for iSeries, z/OS, and NonStop platforms.</p>
+</li>
+<li>
+<p><code class="codeph">AES256</code> encrypts with AES-256 encryption algorithm. Not supported for iSeries, z/OS, and NonStop platforms.</p>
+</li>
+<li>
+<p><code class="codeph">BLOWFISH</code> uses Blowfish encryption with a 64-bit block size and a variable-length key size from 32 bits to 128 bits. Use AES if supported for the platform. Use <code class="codeph">BLOWFISH</code> for backward compatibility with earlier Oracle GoldenGate versions, and for DB2 z/OS and DB2 for i. AES is not supported on those platforms.</p>
+</li>
+<li>
+<p><code class="codeph">KEYNAME</code> <span class="italic"><code class="codeph">keyname</code></span> specifies the logical look-up name of an encryption key in the <code class="codeph">ENCKEYS</code> file. Not an option of <code class="codeph">ENCRYPTTRAIL</code>.</p>
+<div class="infobox-note" id="GUID-82DF56DF-456D-4246-BDC2-DA1AC9AA6EEA__GUID-F3AC3654-3681-4507-8E72-15AA47994614">
+<p class="notep1">Note:</p>
+<p><code class="codeph">RMTHOST</code> is used unless the Extract is in a passive configuration.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>If using a static Collector with data encrypted over TCP/IP, append the following parameters in the Collector startup string:</span>
+<div>
+<pre dir="ltr">
+-KEYNAME <span class="italic">keyname</span>
+-ENCRYPT <span class="italic">algorithm</span>
+</pre>
+<p>The specified key name and algorithm must match those specified with the <code class="codeph">KEYNAME</code> and <code class="codeph">ENCRYPT</code> options of <code class="codeph">RMTHOST</code>.</p>
+</div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="encrypting-data-enckeys-method1.htm#GUID-C8E42442-ACE7-4812-A32D-ACB1F047185B" title="To use this method of data encryption, you configure Oracle GoldenGate to generate an encryption key and store the key in a local ENCKEYS file.">Encrypting Data with the ENCKEYS Method</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-523C3766-9112-42CA-8C19-F2FF7D4178F5"></a>
+<h2 id="OGGSE-GUID-523C3766-9112-42CA-8C19-F2FF7D4178F5" class="sect2"><span class="enumeration_section">9.2</span> Decrypting the Data with the ENCKEYS Method</h2>
+<div>
+<div class="section">
+<p>Data that is encrypted over TCP/IP connections is decrypted automatically at the destination before it is written to a trail, unless trail encryption also is specified.</p>
+<p>Data that is encrypted in the trail remains encrypted unless the <code class="codeph">DECRYPTTRAIL</code> parameter is used. <code class="codeph">DECRYPTTRAIL</code> is required by Replicat before it can apply encrypted data to the target. A data pump passes encrypted data untouched to the output trail, unless the <code class="codeph">DECRYPTTRAIL</code> and <code class="codeph">ENCRYPTTRAIL</code> parameters are used. If the data pump must perform work on the data, decrypt and encrypt the data as follows.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To Decrypt Data for Processing by a Data Pump</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>Add the <code class="codeph">DECRYPTTRAIL</code> parameter to the parameter file of the data pump. The decryption algorithm and key must match the ones that were used to encrypt the trail, see <a href="encrypting-data-enckeys-method1.htm#GUID-82DF56DF-456D-4246-BDC2-DA1AC9AA6EEA">Encrypting the Data with the ENCKEYS Method</a>.</p>
+<pre dir="ltr">
+DECRYPTTRAIL {AES128 | AES192 | AES256 | BLOWFISH}
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To Encrypt Data After Processing by a Data Pump</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>To encrypt data before the data pump writes it to an output trail or file, use the <code class="codeph">ENCRYPTTRAIL</code> parameter before the parameters that specify those trails or files. Parameters that specify trails or files are <code class="codeph">EXTTRAIL</code>, <code class="codeph">RMTTRAIL</code>, <code class="codeph">EXTFILE</code>, and <code class="codeph">RMTFILE</code>. The <code class="codeph">ENCRYPTTRAIL</code> parameter and the trail or file specifications must occur after the <code class="codeph">DECRYPTTRAIL</code> parameter.</p>
+<div class="infobox-note" id="GUID-523C3766-9112-42CA-8C19-F2FF7D4178F5__GUID-9510DC2D-83FD-49A6-A96D-B763520D943C">
+<p class="notep1">Note:</p>
+<p>The algorithm specified with <code class="codeph">ENCRYPTTRAIL</code> can vary from trail to trail. For example, you can use AES 128 to encrypt a local trail and AES 256 to encrypt a remote trail.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">To Decrypt Data for Processing by Replicat</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>If a trail that Replicat reads is encrypted, add a <code class="codeph">DECRYPTTRAIL</code> parameter statement to the Replicat parameter file. The decryption algorithm and key must match the ones that were used to encrypt the trail.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="encrypting-data-enckeys-method1.htm#GUID-C8E42442-ACE7-4812-A32D-ACB1F047185B" title="To use this method of data encryption, you configure Oracle GoldenGate to generate an encryption key and store the key in a local ENCKEYS file.">Encrypting Data with the ENCKEYS Method</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-A9852F86-D5EF-4C36-81C9-33A95CC86276"></a>
+<h2 id="OGGSE-GUID-A9852F86-D5EF-4C36-81C9-33A95CC86276" class="sect2"><span class="enumeration_section">9.3</span> Examples of Data Encryption using the ENCKEYS Method</h2>
+<div>
+<div class="section">
+<p>The following example shows how to turn encryption on and off for different trails or files. In this example, Extract writes to two local trails, only one of which must be encrypted.</p>
+<p>In the Extract configuration, trail <code class="codeph">bb</code> is the non-encrypted trail, so its <code class="codeph">EXTTRAIL</code> parameter is placed before the <code class="codeph">ENCRYPTTRAIL</code> parameter that encrypts trail <code class="codeph">aa</code>. Alternatively, you can use the <code class="codeph">NOENCRYPTTRAIL</code> parameter before the <code class="codeph">EXTTRAIL</code> parameter that specifies trail <code class="codeph">bb</code> and then use the <code class="codeph">ENCRYPTTRAIL</code> parameter before the <code class="codeph">EXTTRAIL</code> parameter that specifies trail <code class="codeph">aa</code>.</p>
+<div class="figure" id="GUID-A9852F86-D5EF-4C36-81C9-33A95CC86276__GUID-4DD4C796-F08E-4AC6-9B23-0EA61CF1D7C1"><img width="510" height="272" src="img/oggse_pb_002a.png" alt="Description of oggse_pb_002a.png follows" title="Description of oggse_pb_002a.png follows" /><br />
+<a href="img_text/oggse_pb_002a.htm">Description of the illustration oggse_pb_002a.png</a></div>
+<!-- class="figure" -->
+<p>In this example, the encrypted data must be decrypted so that data pump <code class="codeph">1pump</code> can perform work on it. Therefore, the <code class="codeph">DECRYPTTRAIL</code> parameter is used in the parameter file of the data pump. To re-encrypt the data for output, the <code class="codeph">ENCRYPTTRAIL</code> parameter must be used after <code class="codeph">DECRYPTTRAIL</code> but before the output trail specification(s). If the data pump did not have to perform work on the data, the <code class="codeph">DECRYPTTRAIL</code> and <code class="codeph">ENCRYPTTRAIL</code> parameters could have been omitted to retain encryption all the way to Replicat.</p>
+</div>
+<!-- class="section" -->
+<div class="example" id="GUID-A9852F86-D5EF-4C36-81C9-33A95CC86276__GUID-BF8A1791-4C2A-47AC-8567-27276AD93589">
+<p class="titleinexample">Example 9-1 Extract Parameter File</p>
+<pre dir="ltr">
+EXTRACT capt
+USERIDALIAS ogg
+DISCARDFILE /ogg/capt.dsc, PURGE
+-- Do not encrypt this trail.
+EXTTRAIL /ogg/dirdat/bb
+TABLE SALES.*;
+-- Encrypt this trail with AES-192.
+ENCRYPTTRAIL AES192
+EXTTRAIL /ogg/dirdat/aa
+TABLE FIN.*;
+</pre></div>
+<!-- class="example" -->
+<div class="example" id="GUID-A9852F86-D5EF-4C36-81C9-33A95CC86276__GUID-37C6782E-FCA9-474E-9569-EF4DF50B4C63">
+<p class="titleinexample">Example 9-2 Data Pump 1 Parameter File</p>
+<pre dir="ltr">
+EXTRACT 1pump
+USERIDALIAS ogg
+DISCARDFILE /ogg/1pmp.dsc, PURGE
+-- Decrypt the trail this pump reads. Use encryption key mykey1.
+DECRYPTTRAIL AES192
+-- Encrypt the trail this pump writes to, using AES-192.
+RMTHOSTOPTIONS myhost1, MGRPORT 7809
+ENCRYPTTRAIL AES192
+RMTTRAIL /ogg/dirdat/cc
+TABLE FIN.*;
+</pre></div>
+<!-- class="example" -->
+<div class="example" id="GUID-A9852F86-D5EF-4C36-81C9-33A95CC86276__GUID-0540A21E-AFFD-447A-B524-1CA23F85E29B">
+<p class="titleinexample">Example 9-3 Data pump 2 Parameter File</p>
+<pre dir="ltr">
+EXTRACT 2pump
+USERIDALIAS ogg
+DISCARDFILE /ogg/2pmp.dsc, PURGE
+RMTHOST myhost2, MGRPORT 7809
+RMTTRAIL /ogg/dirdat/dd
+TABLE SALES.*;
+</pre></div>
+<!-- class="example" -->
+<div class="example" id="GUID-A9852F86-D5EF-4C36-81C9-33A95CC86276__GUID-761DDC58-58A5-4780-8BDD-1C11C56110A8">
+<p class="titleinexample">Example 9-4 Replicat1 (on myhost1) Parameter File</p>
+<pre dir="ltr">
+REPLICAT 1deliv
+USERIDALIAS ogg
+ASSUMETARGETDEFS
+DISCARDFILE /ogg/1deliv.dsc, PURGE
+-- Decrypt the trail this Replicat reads. Use encryption key mykey2.
+DECRYPTTRAIL AES192
+MAP FIN.*, TARGET FIN.*;
+</pre></div>
+<!-- class="example" -->
+<div class="example" id="GUID-A9852F86-D5EF-4C36-81C9-33A95CC86276__GUID-E418DE56-3AA1-4193-A6BE-DA20B91FAE4B">
+<p class="titleinexample">Example 9-5 Replicat 2 (on myhost2) parameter file</p>
+<pre dir="ltr">
+REPLICAT 2deliv
+USERIDALIAS ogg
+ASSUMETARGETDEFS
+DISCARDFILE /ogg/2deliv.dsc, PURGE
+MAP SALES.*, TARGET SALES.*;
+</pre></div>
+<!-- class="example" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="encrypting-data-enckeys-method1.htm#GUID-C8E42442-ACE7-4812-A32D-ACB1F047185B" title="To use this method of data encryption, you configure Oracle GoldenGate to generate an encryption key and store the key in a local ENCKEYS file.">Encrypting Data with the ENCKEYS Method</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment238">
+<tr>
+<td class="cellalignment249">
+<table class="cellalignment243">
+<tr>
+<td class="cellalignment242"><a href="encrypting-data-master-key-and-wallet-method.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment242"><a href="managing-identities-credential-store.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment251">
+<table class="cellalignment241">
+<tr>
+<td class="cellalignment242"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment242"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment242"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

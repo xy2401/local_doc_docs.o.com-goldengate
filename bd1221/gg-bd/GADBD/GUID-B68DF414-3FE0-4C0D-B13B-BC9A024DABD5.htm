@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Hive Metadata Provider</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2016-06-08T07:49:17Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Integrating Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E65148-03" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="GUID-F90702A9-0FFB-42D2-9261-89E2BB952C65.htm" title="Previous" type="text/html" />
+<link rel="Next" href="GUID-0923A020-5800-4B8F-8EFA-05AF9061629B.htm" title="Next" type="text/html" />
+<link rel="alternate" href="E65148-03.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="E65148-03.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="E65148-03.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
+                    <script>var w=window;if(w.performance||w.mozPerformance||w.msPerformance||w.webkitPerformance){var d=document;AKSB=w.AKSB||{},AKSB.q=AKSB.q||[],AKSB.mark=AKSB.mark||function(e,_){AKSB.q.push(["mark",e,_||(new Date).getTime()])},AKSB.measure=AKSB.measure||function(e,_,t){AKSB.q.push(["measure",e,_,t||(new Date).getTime()])},AKSB.done=AKSB.done||function(e){AKSB.q.push(["done",e])},AKSB.mark("firstbyte",(new Date).getTime()),AKSB.prof={custid:"322179",ustr:"",originlat:"0",clientrtt:"1",ghostip:"23.212.3.15",ipv6:false,pct:"10",clientip:"45.78.37.67",requestid:"29b3cf21",region:"32996",protocol:"",blver:14,akM:"dsca",akN:"ae",akTT:"O",akTX:"1",akTI:"29b3cf21",ai:"206465",ra:"false",pmgn:"",pmgi:"",pmp:"",qc:""},function(e){var _=d.createElement("script");_.async="async",_.src=e;var t=d.getElementsByTagName("script"),t=t[t.length-1];t.parentNode.insertBefore(_,t)}(("https:"===d.location.protocol?"https:":"http:")+"//ds-aksb-a.akamaihd.net/aksb.min.js")}</script>
+                    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr"><a id="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5"></a> <span id="PAGE" style="display:none;">11/15</span> <!-- End Header --><a id="GADBD586"></a>
+<h1 id="GADBD-GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5" class="sect1"><span class="enumeration_section">7.2</span> Hive Metadata Provider</h1>
+<div>
+<p>The Hive Metadata Provider is used to retrieve the table metadata from a Hive metastore. The metadata will be retrieved from Hive for every target table mapped in the Replicat properties file using the <code>COLMAP</code> syntax. The retrieved target metadata will be used by Replicat for the column mapping functionality.</p>
+<p>This sections contains the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-26B08DED-3F72-4908-BA20-1DDE0533194E">Detailed Functionality</a></p>
+</li>
+<li>
+<p><a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-1F60E8D7-F8D9-4BA5-82F0-6499DA504034">Runtime Prerequisites</a></p>
+</li>
+<li>
+<p><a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-878B8590-AACE-49BF-A367-88C0A16B4A44">Classpath Configuration</a></p>
+</li>
+<li>
+<p><a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-F8FF91E9-ACF0-42F9-9DAE-A7C6833DB549">Hive Metadata Provider Configuration</a></p>
+</li>
+<li>
+<p><a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-D9AE0617-12FC-4B9A-BF15-BE929B5C94CF">Sample Configuration</a></p>
+</li>
+<li>
+<p><a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-1C45DFF2-5247-4784-875A-C2C0F18D23B0">Security</a></p>
+</li>
+<li>
+<p><a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-98187D5F-3EF3-44F7-B513-C66196DF930D">Metadata Change Event</a></p>
+</li>
+<li>
+<p><a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-1F284EFF-8A92-4EA6-8AA0-5641C0CEB7F3">Limitations</a></p>
+</li>
+<li>
+<p><a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-97EA18DB-4FBC-405B-86E0-ADAB9ACC3EAB">Common Pitfalls</a></p>
+</li>
+<li>
+<p><a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-BC62F29D-179D-4B8C-A440-AB7469C34BB5">Troubleshooting</a></p>
+</li>
+</ul>
+</div>
+<a id="GADBD588"></a><a id="GADBD589"></a><a id="GADBD587"></a>
+<div class="props_rev_3"><a id="GUID-26B08DED-3F72-4908-BA20-1DDE0533194E"></a>
+<h2 id="GADBD-GUID-26B08DED-3F72-4908-BA20-1DDE0533194E" class="sect2"><span class="enumeration_section">7.2.1</span> Detailed Functionality</h2>
+<div>
+<div class="section">
+<p>The Hive Metadata Provider uses both Hive JDBC and HCatalog interfaces to retrieve metadata from the Hive metastore. For each table mapped in <code>Replicat.prm</code> file, a corresponding table should be created in Hive.</p>
+<p>The default Hive configuration starts an embedded/local metastore Derby database. Apache Derby is designed to be an embedded database and only allows a single connection. The single connection limitation of the Derby Database as the Hive Metastore implementation means that it will not function when working with the Oracle GoldenGate for Big Data Hive Metadata Provider. To overcome this limitation Hive should be configured with a remote metastore database. More information on configuring Hive with remote metastore database can found at:</p>
+<p><a href="https://cwiki.apache.org/confluence/display/Hive/AdminManual+MetastoreAdmin#AdminManualMetastoreAdmin-RemoteMetastoreDatabase" target="_blank"><code>https://cwiki.apache.org/confluence/display/Hive/AdminManual+MetastoreAdmin#AdminManualMetastoreAdmin-RemoteMetastoreDatabase</code></a></p>
+<p>Hive does not support Primary Key semantics, so the metadata retrieved from Hive metastore will not include any Primary Key definition. Replicat's <code>KEYCOLS</code> configuration syntax should instead be used to define primary keys when the Hive Metadata Provider is used.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2"><code>KEYCOLS</code></p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p>The Replicat mapping configuration syntax <code>KEYCOLS</code> must be used to define primary keys in the target schema. The Oracle GoldenGate HBase Handler requires primary keys. Therefore, setting primary keys in the target schema is required when Replicat mapping is employed with HBase as the target. Additionally, the output of the Avro Formatters includes an Array field to hold the primary column names. Therefore, if Replicat mapping is employed with the Avro Formatters users should consider using <code>KEYCOLS</code> to identify the primary key columns.</p>
+<p>Examples of configuring <code>KEYCOLS</code> will be discussed in <a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-D9AE0617-12FC-4B9A-BF15-BE929B5C94CF">Sample Configuration</a>.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead2">Supported Hive Data types:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>BIGINT</p>
+</li>
+<li>
+<p>BINARY</p>
+</li>
+<li>
+<p>BOOLEAN</p>
+</li>
+<li>
+<p>CHAR</p>
+</li>
+<li>
+<p>DATE</p>
+</li>
+<li>
+<p>DECIMAL</p>
+</li>
+<li>
+<p>DOUBLE</p>
+</li>
+<li>
+<p>FLOAT</p>
+</li>
+<li>
+<p>INT</p>
+</li>
+<li>
+<p>SMALLINT</p>
+</li>
+<li>
+<p>STRING</p>
+</li>
+<li>
+<p>TIMESTAMP</p>
+</li>
+<li>
+<p>TINYINT</p>
+</li>
+<li>
+<p>VARCHAR</p>
+</li>
+</ul>
+<p>For more information on Hive data types, see <a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types" target="_blank"><code>https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types</code></a>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD590"></a>
+<div class="props_rev_3"><a id="GUID-1F60E8D7-F8D9-4BA5-82F0-6499DA504034"></a>
+<h2 id="GADBD-GUID-1F60E8D7-F8D9-4BA5-82F0-6499DA504034" class="sect2"><span class="enumeration_section">7.2.2</span> Runtime Prerequisites</h2>
+<div>
+<div class="section">
+<ol>
+<li>
+<p>Configuring Hive with a Remote Metastore Database</p>
+<p>A list of supported databases that can be used to configure remote Hive metastore can be found at <a href="https://cwiki.apache.org/confluence/display/Hive/AdminManual+MetastoreAdmin#AdminManualMetastoreAdmin-SupportedBackendDatabasesforMetastore" target="_blank"><code>https://cwiki.apache.org/confluence/display/Hive/AdminManual+MetastoreAdmin#AdminManualMetastoreAdmin-SupportedBackendDatabasesforMetastore</code></a>. In the following example, a MySQL database is configured as the Hive metastore. Configure the following properties in the <code>${HIVE_HOME}/conf/hive-site.xml</code> Hive configuration file.</p>
+<div class="infobox-note" id="GUID-1F60E8D7-F8D9-4BA5-82F0-6499DA504034__GUID-ADE3F1F6-982B-4034-8C9E-17EFB6A78AB7">
+<p class="notep1">Note:</p>
+<p>The <code>ConnectionURL</code> and driver class used in this example are specific to MySQL database. Change the values appropriately if any database other than MySQL is chosen.</p>
+</div>
+<pre dir="ltr">
+&lt;property&gt;
+         &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;        
+         &lt;value&gt;jdbc:mysql://<span class="italic">MYSQL_DB_IP</span>:<span class="italic">MYSQL_DB_PORT</span>/<span class="italic">DB_NAME</span>?createDatabaseIfNotExist=false&lt;/value&gt;
+ &lt;/property&gt;
+ 
+ &lt;property&gt;
+        &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;
+        &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;
+ &lt;/property&gt;
+ 
+ &lt;property&gt;
+          &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;
+     &lt;value&gt;<span class="italic">MYSQL_CONNECTION_USERNAME</span>&lt;/value&gt;
+ &lt;/property&gt;
+ 
+ &lt;property&gt;
+         &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;
+         &lt;value&gt;<span class="italic">MYSQL_CONNECTION_PASSWORD</span>&lt;/value&gt;
+ &lt;/property&gt;
+</pre>
+<p>The list of parameters to be configured in the <code>hive-site.xml</code> file for a remote metastore can be found at <a href="https://cwiki.apache.org/confluence/display/Hive/AdminManual+MetastoreAdmin#AdminManualMetastoreAdmin-RemoteMetastoreDatabase" target="_blank"><code>https://cwiki.apache.org/confluence/display/Hive/AdminManual+MetastoreAdmin#AdminManualMetastoreAdmin-RemoteMetastoreDatabase</code></a>.</p>
+<div class="infobox-note" id="GUID-1F60E8D7-F8D9-4BA5-82F0-6499DA504034__GUID-08030351-8E6B-457B-AE50-ED4350D7120D">
+<p class="notep1">Note:</p>
+<p>MySQL jdbc connector jar should be added in the Hive classpath that is,</p>
+<ol>
+<li>
+<p>In <span class="italic"><code>HIVE_HOME</code></span><code>/lib/</code> directory. <span class="italic"><code>DB_NAME</code></span> should be replaced by a valid database name created in MySQL.</p>
+</li>
+<li>
+<p>Start the Hive Server:</p>
+<p><span class="italic"><code>HIVE_HOME</code></span><code>/bin/hiveserver2/bin/hiveserver2</code></p>
+</li>
+<li>
+<p>Start the Hive Remote Metastore Server:</p>
+<p><span class="italic"><code>HIVE_HOME</code></span><code>/bin/hive --service metastore</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD591"></a>
+<div class="props_rev_3"><a id="GUID-878B8590-AACE-49BF-A367-88C0A16B4A44"></a>
+<h2 id="GADBD-GUID-878B8590-AACE-49BF-A367-88C0A16B4A44" class="sect2"><span class="enumeration_section">7.2.3</span> Classpath Configuration</h2>
+<div>
+<div class="section">
+<p>You must configure two things in the <code>gg.classpath</code> configuration variable in order for the Oracle GoldenGate for Big Data Hive Metadata Provider to connect to Hive and run. The first is the <code>hive-site.xml</code> file and the second are the Hive and HDFS client jars. The client jars must match the version of Hive that the Oracle GoldenGate for Big Data Hive Metadata Provider is connecting.</p>
+<ol>
+<li>
+<p>Create <code>hive-site.xml</code> file with the following properties:</p>
+<pre dir="ltr">
+&lt;configuration&gt;
+&lt;!-- Mandatory Property --&gt; 
+&lt;property&gt;
+&lt;name&gt;hive.metastore.uris&lt;/name&gt;
+&lt;value&gt;thrift://<span class="italic">HIVE_SERVER_HOST_IP</span>:9083&lt;/value&gt;
+&lt;property&gt;
+ 
+&lt;!-- Optional Property. Default value is 5 --&gt;
+&lt;property&gt;
+&lt;name&gt;hive.metastore.connect.retries&lt;/name&gt;
+&lt;value&gt;3&lt;/value&gt;
+&lt;/property&gt;
+ 
+&lt;!-- Optional Property. Default value is 1 --&gt;
+&lt;property&gt;
+&lt;name&gt;hive.metastore.client.connect.retry.delay&lt;/name&gt;
+&lt;value&gt;10&lt;/value&gt;
+&lt;/property&gt;
+ 
+&lt;!-- Optional Property. Default value is 600 seconds --&gt;
+&lt;property&gt;
+&lt;name&gt;hive.metastore.client.socket.timeout&lt;/name&gt;
+&lt;value&gt;50&lt;/value&gt;
+&lt;/property&gt;
+
+ &lt;/configuration&gt;
+</pre>
+<div class="infobox-note" id="GUID-878B8590-AACE-49BF-A367-88C0A16B4A44__GUID-AA8533BE-986D-46FE-9FC2-18DECEFFC577">
+<p class="notep1">Note:</p>
+<p>For example, if the <code>hive-site.xml</code> file is created in <code>/home/user/oggadp/dirprm</code> directory, then <code>gg.classpath</code> entry will look like <code>gg.classpath=/home/user/oggadp/dirprm/</code></p>
+</div>
+</li>
+<li>
+<p>The default location of the Hive and HDFS client jars are the following directories:</p>
+<pre dir="ltr">
+<span class="italic">HIVE_HOME</span>/hcatalog/share/hcatalog/*
+<span class="italic">HIVE_HOME</span>/lib/*
+<span class="italic">HIVE_HOME</span>/hcatalog/share/webhcat/java-client/*
+<span class="italic">HADOOP_HOME</span>/share/hadoop/common/*
+<span class="italic">HADOOP_HOME</span>/share/hadoop/common/lib/*
+<span class="italic">HADOOP_HOME</span>/share/hadoop/mapreduce/*
+</pre>
+<p>Configure the <code>gg.classpath</code> exactly as shown in the preceding example. Creating a path to the <code>hive-site.xml</code> should simply contain the path with no wild card appended. The inclusion of the * wildcard in the path to the <code>hive-site.xml</code> file will cause it not to be picked up. Conversely, creating a path to the dependency jars should include the * wild card character in order to include all of the jar files in that directory in the associated classpath. Do not use <code>*.jar.</code></p>
+</li>
+</ol>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD592"></a>
+<div class="props_rev_3"><a id="GUID-F8FF91E9-ACF0-42F9-9DAE-A7C6833DB549"></a>
+<h2 id="GADBD-GUID-F8FF91E9-ACF0-42F9-9DAE-A7C6833DB549" class="sect2"><span class="enumeration_section">7.2.4</span> Hive Metadata Provider Configuration</h2>
+<div>
+<div class="section">
+<p>The configuration properties of the Hive Metadata Provider are detailed in this section.</p>
+</div>
+<!-- class="section" -->
+<div class="tblformal" id="GUID-F8FF91E9-ACF0-42F9-9DAE-A7C6833DB549__GUID-C30F24BE-80E3-4DB5-A6D0-5692F16F22EB">
+<hr />
+<table class="cellalignment145" summary="metadata provider -2">
+<thead align="left">
+<tr>
+<th class="cellalignment165" id="d29617e396">Property</th>
+<th class="cellalignment166" id="d29617e400">Required/Optional</th>
+<th class="cellalignment167" id="d29617e407">Legal Values</th>
+<th class="cellalignment159" id="d29617e411">Default</th>
+<th class="cellalignment168" id="d29617e415">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellalignment165" id="d29617e421" headers="d29617e396">
+<p><code>gg.mdp.type</code></p>
+</td>
+<td class="cellalignment166" headers="d29617e421 d29617e400">
+<p>Required</p>
+</td>
+<td class="cellalignment167" headers="d29617e421 d29617e407">
+<p><code>hive</code></p>
+</td>
+<td class="cellalignment159" headers="d29617e421 d29617e411">
+<p>-</p>
+</td>
+<td class="cellalignment168" headers="d29617e421 d29617e415">
+<p>Selects Hive Metadata Provider</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment165" id="d29617e439" headers="d29617e396">
+<p><code>gg.mdp.connectionUrl</code></p>
+</td>
+<td class="cellalignment166" headers="d29617e439 d29617e400">
+<p>Required</p>
+</td>
+<td class="cellalignment167" headers="d29617e439 d29617e407">
+<p>Format without Kerberos Authentication:</p>
+<p>j<code>dbc:hive2://</code><span class="italic"><code>HIVE_SERVER_IP:HIVE_JDBC_PORT/HIVE_DB</code></span></p>
+<p>Format with Kerberos Authentication:</p>
+<p><code>jdbc:hive2://</code><span class="italic"><code>HIVE_SERVER_IP:HIVE_JDBC_PORT/HIVE_DB;</code></span> <code>principal=user/FQDN@MY.REALM</code></p>
+</td>
+<td class="cellalignment159" headers="d29617e439 d29617e411">
+<p>-</p>
+</td>
+<td class="cellalignment168" headers="d29617e439 d29617e415">
+<p>JDBC Connection URL of Hive Server</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment165" id="d29617e475" headers="d29617e396">
+<p><code>gg.mdp.driverClassName</code></p>
+</td>
+<td class="cellalignment166" headers="d29617e475 d29617e400">
+<p>Required</p>
+</td>
+<td class="cellalignment167" headers="d29617e475 d29617e407">
+<p><code>org.apache.hive.jdbc.HiveDriver</code></p>
+</td>
+<td class="cellalignment159" headers="d29617e475 d29617e411">
+<p>-</p>
+</td>
+<td class="cellalignment168" headers="d29617e475 d29617e415">
+<p>Fully qualified Hive JDBC Driver class name.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment165" id="d29617e493" headers="d29617e396">
+<p><code>gg.mdp.userName</code></p>
+</td>
+<td class="cellalignment166" headers="d29617e493 d29617e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment167" headers="d29617e493 d29617e407">
+<p>Valid username</p>
+</td>
+<td class="cellalignment159" headers="d29617e493 d29617e411">
+<p>""</p>
+</td>
+<td class="cellalignment168" headers="d29617e493 d29617e415">
+<p>Username to connect to Hive Database. <code>userName</code> property is not required when Kerberos Authentication is used. The Kerberos principal should be specified in the connection url as specified in <code>connectionUrl</code> property's legal values.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment165" id="d29617e516" headers="d29617e396">
+<p><code>gg.mdp.password</code></p>
+</td>
+<td class="cellalignment166" headers="d29617e516 d29617e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment167" headers="d29617e516 d29617e407">
+<p>Valid Password</p>
+</td>
+<td class="cellalignment159" headers="d29617e516 d29617e411">
+<p>""</p>
+</td>
+<td class="cellalignment168" headers="d29617e516 d29617e415">
+<p>Password to connect to Hive Database</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment165" id="d29617e533" headers="d29617e396">
+<p><code>gg.mdp.charset</code></p>
+</td>
+<td class="cellalignment166" headers="d29617e533 d29617e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment167" headers="d29617e533 d29617e407">
+<p>Valid character set</p>
+</td>
+<td class="cellalignment159" headers="d29617e533 d29617e411">
+<p>UTF-8</p>
+</td>
+<td class="cellalignment168" headers="d29617e533 d29617e415">
+<p>Specifies the character set of the column with character data type. This is used to convert the source data from trail file to the correct target charset.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment165" id="d29617e551" headers="d29617e396">
+<p><code>gg.mdp.nationalCharset</code></p>
+</td>
+<td class="cellalignment166" headers="d29617e551 d29617e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment167" headers="d29617e551 d29617e407">
+<p>Valid character set</p>
+</td>
+<td class="cellalignment159" headers="d29617e551 d29617e411">
+<p>UTF-8</p>
+</td>
+<td class="cellalignment168" headers="d29617e551 d29617e415">
+<p>Specifies the character set of the column with character data type. This is used to convert the source data from trail file to the correct target charset.</p>
+<p>For example, Indicates character set of columns like <code>NCHAR</code>, <code>NVARCHAR</code> in case of Oracle Database.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment165" id="d29617e576" headers="d29617e396">
+<p><code>gg.mdp.authType</code></p>
+</td>
+<td class="cellalignment166" headers="d29617e576 d29617e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment167" headers="d29617e576 d29617e407">
+<p>kerberos</p>
+</td>
+<td class="cellalignment159" headers="d29617e576 d29617e411">
+<p>none</p>
+</td>
+<td class="cellalignment168" headers="d29617e576 d29617e415">&nbsp;</td>
+</tr>
+<tr>
+<td class="cellalignment165" id="d29617e592" headers="d29617e396">
+<p><code>gg.mdp.kerberosKeytabFile</code></p>
+</td>
+<td class="cellalignment166" headers="d29617e592 d29617e400">
+<p>Optional (Required if <code>authType=kerberos</code>)</p>
+</td>
+<td class="cellalignment167" headers="d29617e592 d29617e407">
+<p>Relative or absolute path to a Kerberos keytab file.</p>
+</td>
+<td class="cellalignment159" headers="d29617e592 d29617e411">
+<p>-</p>
+</td>
+<td class="cellalignment168" headers="d29617e592 d29617e415">
+<p>The keytab file allows Hive to access a password to perform kinit operation for Kerberos security.</p>
+</td>
+</tr>
+<tr>
+<td class="cellalignment165" id="d29617e612" headers="d29617e396">
+<p><code>gg.mdp.kerberosPrincipal</code></p>
+</td>
+<td class="cellalignment166" headers="d29617e612 d29617e400">
+<p>Optional (Required if <code>authType=kerberos</code>)</p>
+</td>
+<td class="cellalignment167" headers="d29617e612 d29617e407">
+<p>A legal Kerberos principal name(<code>user/FQDN@MY.REALM</code>)</p>
+</td>
+<td class="cellalignment159" headers="d29617e612 d29617e411">
+<p>-</p>
+</td>
+<td class="cellalignment168" headers="d29617e612 d29617e415">
+<p>The Kerberos principal name for Kerberos authentication.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr /></div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<a id="GADBD593"></a>
+<div class="props_rev_3"><a id="GUID-D9AE0617-12FC-4B9A-BF15-BE929B5C94CF"></a>
+<h2 id="GADBD-GUID-D9AE0617-12FC-4B9A-BF15-BE929B5C94CF" class="sect2"><span class="enumeration_section">7.2.5</span> Sample Configuration</h2>
+<div>
+<div class="section">
+<p>This section provides an example for configuring the Hive Metadata Provider.</p>
+<p>Consider a source with following table:</p>
+<pre dir="ltr">
+TABLE GG.TCUSTMER {
+     CUST_CODE VARCHAR(4)   PRIMARY KEY,
+     NAME VARCHAR(100),
+     CITY VARCHAR(200),
+     STATE VARCHAR(200)}
+</pre>
+<p>The example maps the column <code>CUST_CODE</code> <code>(GG.TCUSTMER)</code> in the source to <code>CUST_CODE2</code> <code>(GG_HIVE.TCUSTMER_HIVE)</code> on the target and column <code>CITY</code> <code>(GG.TCUSTMER</code>) in the source to <code>CITY2</code> <code>(GG_HIVE.TCUSTMER_HIVE)</code>on the target.</p>
+<p>Mapping configuration in the <code>Replicat.prm</code> file:</p>
+<pre dir="ltr">
+MAP GG.TCUSTMER, TARGET GG_HIVE.TCUSTMER_HIVE, COLMAP(USEDEFAULTS, CUST_CODE2=CUST_CODE, CITY2=CITY) KEYCOLS(CUST_CODE2); 
+</pre>
+<p>The mapping definition for this example is:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Source schema <code>GG</code> is mapped to target schema <code>GG_HIVE</code></p>
+</li>
+<li>
+<p>Source column <code>CUST_CODE</code> is mapped to target column <code>CUST_CODE2</code></p>
+</li>
+<li>
+<p>Source column <code>CITY</code> is mapped to target column <code>CITY2</code></p>
+</li>
+<li>
+<p><code>USEDEFAULTS</code> specifies that rest of the columns names are same on both source and target (<code>NAME</code> and <code>STATE</code> columns).</p>
+</li>
+<li>
+<p><code>KEYCOLS</code> is used to specify that <code>CUST_CODE2</code> should be treated as primary key.</p>
+</li>
+</ul>
+<p>Since primary keys cannot be specified in Hive DDL, <code>KEYCOLS</code> is used to specify the primary keys.</p>
+<p>Create schema and tables in Hive for the preceding example:</p>
+<div class="infobox-note" id="GUID-D9AE0617-12FC-4B9A-BF15-BE929B5C94CF__GUID-94E8FF10-AA6C-4A60-BDA1-D69D1BAA004A">
+<p class="notep1">Note:</p>
+<p>You can choose any schema name and are not restricted to the <code>gg_hive schema</code> name. The Hive schema can be pre-existing or newly created. You do this by modifying the connection URL (<code>gg.mdp.connectionUrl</code>) in the Java Adapter properties file and the mapping configuration in the Replicat <code>.prm</code> file. Once the schema name is changed, the connection URL (<code>gg.mdp.connectionUrl</code>) and mapping in Replicat <code>.prm</code> file should be updated.</p>
+</div>
+<p>To start the Hive CLI type the following command:</p>
+<p><span class="italic"><code>HIVE_HOME</code></span><code>/bin/hive</code></p>
+<p>To create a schema, <code>GG_HIVE</code>, in Hive, use the following command:</p>
+<pre dir="ltr">
+hive&gt; create schema gg_hive;
+OK
+Time taken: 0.02 seconds
+</pre>
+<p>To create a table <code>TCUSTMER_HIVE</code> in <code>GG_HIVE</code> database type the following command:</p>
+<pre dir="ltr">
+hive&gt; CREATE EXTERNAL TABLE `TCUSTMER_HIVE`(
+    &gt;   "CUST_CODE2" VARCHAR(4),
+    &gt;   "NAME" VARCHAR(30),
+    &gt;   "CITY2" VARCHAR(20),
+    &gt;   "STATE" STRING);
+OK
+Time taken: 0.056 seconds
+</pre>
+<p>Configuration in <code>.properties</code> file can be like the following:</p>
+<pre dir="ltr">
+gg.mdp.type=hive
+gg.mdp.connectionUrl=jdbc:hive2://&lt;HIVE_SERVER_IP&gt;:10000/gg_hive
+gg.mdp.driverClassName=org.apache.hive.jdbc.HiveDriver
+</pre>
+<p>Following is the sample output using delimited text formatter with ";" as delimiter for the preceding example.</p>
+<pre dir="ltr">
+I;GG_HIVE.TCUSTMER_HIVE;2015-10-07T04:50:47.519000;cust_code2;WILL;name;BG SOFTWARE CO;city2;SEATTLE;state;WA
+</pre>
+<p>A sample Replicat configuration file, Java Adapter properties file, and a Hive create table SQL script are included with the installation, and located at:</p>
+<p><span class="italic"><code>GoldenGate_install_directory</code></span><code>/AdapterExamples/big-data/metadata_provider/hive</code></p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD594"></a>
+<div class="props_rev_3"><a id="GUID-1C45DFF2-5247-4784-875A-C2C0F18D23B0"></a>
+<h2 id="GADBD-GUID-1C45DFF2-5247-4784-875A-C2C0F18D23B0" class="sect2"><span class="enumeration_section">7.2.6</span> Security</h2>
+<div>
+<div class="section">
+<p>The Hive server can be secured using Kerberos Authentication. Refer to the Hive documentation for your specific Hive release for instructions on how to secure the Hive server. The Oracle GoldenGate for Big Data Hive Metadata Provider can connect to Kerberos secured Hive server.</p>
+<p>The HDFS <code>core-site.xml</code> and <code>hive-site.xml</code> should be in handler's classpath.</p>
+<p>Following properties should be enabled in <code>core-site.xml</code>:</p>
+<pre dir="ltr">
+&lt;property&gt;
+&lt;name&gt;hadoop.security.authentication&lt;/name&gt;
+&lt;value&gt;kerberos&lt;/value&gt; 
+&lt;/property&gt;
+ 
+&lt;property&gt; 
+&lt;name&gt;hadoop.security.authorization&lt;/name&gt; 
+&lt;value&gt;true&lt;/value&gt; 
+&lt;/property&gt;
+</pre>
+<p>Following properties should be enabled in <code>hive-site.xml</code></p>
+<pre dir="ltr">
+&lt;property&gt;
+&lt;name&gt;hive.metastore.sasl.enabled&lt;/name&gt;
+&lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+ 
+&lt;property&gt;
+&lt;name&gt;hive.metastore.kerberos.keytab.file&lt;/name&gt;
+&lt;value&gt;/path/to/keytab&lt;/value&gt; &lt;!-- Change this value --&gt;
+&lt;/property&gt;
+ 
+&lt;property&gt;
+&lt;name&gt;hive.metastore.kerberos.principal&lt;/name&gt;
+&lt;value&gt;Kerberos Principal&lt;/value&gt; &lt;!-- Change this value --&gt;
+&lt;/property&gt;
+ 
+&lt;property&gt;
+   &lt;name&gt;hive.server2.authentication&lt;/name&gt;
+    &lt;value&gt;KERBEROS&lt;/value&gt;
+&lt;/property&gt;
+ 
+&lt;property&gt;
+   &lt;name&gt;hive.server2.authentication.kerberos.principal&lt;/name&gt;
+    &lt;value&gt;Kerberos Principal&lt;/value&gt; &lt;!-- Change this value --&gt;
+&lt;/property&gt;
+ 
+&lt;property&gt;
+    &lt;name&gt;hive.server2.authentication.kerberos.keytab&lt;/name&gt;
+    &lt;value&gt;/path/to/keytab&lt;/value&gt; &lt;!-- Change this value --&gt;
+&lt;/property&gt;
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD595"></a>
+<div class="props_rev_3"><a id="GUID-98187D5F-3EF3-44F7-B513-C66196DF930D"></a>
+<h2 id="GADBD-GUID-98187D5F-3EF3-44F7-B513-C66196DF930D" class="sect2"><span class="enumeration_section">7.2.7</span> Metadata Change Event</h2>
+<div>
+<div class="section">
+<p>Tables in Hive metastore should be updated/altered/created manually if there is a change in source database tables. You may wish to abort or suspend the Replicat process in the case of a metadata change event. The Replicat process can be aborted by adding the following to the Replicat configuration file (<code>.prm</code> file).</p>
+<p><code>DDL INCLUDE ALL, EVENTACTIONS (ABORT)</code></p>
+<p>Alternatively, the Replicat process can be suspended by adding the following to the Replication configuration file (<code>.prm</code> file).</p>
+<p><code>DDL INCLUDE ALL, EVENTACTIONS (SUSPEND)</code></p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD596"></a>
+<div class="props_rev_3"><a id="GUID-1F284EFF-8A92-4EA6-8AA0-5641C0CEB7F3"></a>
+<h2 id="GADBD-GUID-1F284EFF-8A92-4EA6-8AA0-5641C0CEB7F3" class="sect2"><span class="enumeration_section">7.2.8</span> Limitations</h2>
+<div>
+<div class="section">
+<p>Columns with binary data type cannot be used as primary key.</p>
+<p>The source to target mapping defined in the Replicat configuration file is static. Oracle GoldenGate 12.2 supports DDL propagation and source schema evolution for Oracle Databases as the replication source. However, evolution of the source schemas may be problematic the static mapping configured in the Replicat configuration file.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD597"></a>
+<div class="props_rev_3"><a id="GUID-97EA18DB-4FBC-405B-86E0-ADAB9ACC3EAB"></a>
+<h2 id="GADBD-GUID-97EA18DB-4FBC-405B-86E0-ADAB9ACC3EAB" class="sect2"><span class="enumeration_section">7.2.9</span> Common Pitfalls</h2>
+<div>
+<div class="section">
+<p>The most common problems encountered are the Java classpath issues. Oracle Hive Metadata Provider requires certain Hive and HDFS client libraries to be resolved in its classpath as a prerequisite.</p>
+<p>The required client jar directories are listed in <a href="GUID-B68DF414-3FE0-4C0D-B13B-BC9A024DABD5.htm#GUID-878B8590-AACE-49BF-A367-88C0A16B4A44">Classpath Configuration</a>. Hive and HDFS client jars do not ship with Oracle GoldenGate for Big Data product. The client jars should be the same version as the Hive version to which Hive Metadata Provider is connecting.</p>
+<p>In order to establish a connection to the Hive server, the <code>hive-site.xml</code> file must be in the classpath.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<a id="GADBD598"></a>
+<div class="props_rev_3"><a id="GUID-BC62F29D-179D-4B8C-A440-AB7469C34BB5"></a>
+<h2 id="GADBD-GUID-BC62F29D-179D-4B8C-A440-AB7469C34BB5" class="sect2"><span class="enumeration_section">7.2.10</span> Troubleshooting</h2>
+<div>
+<div class="section">
+<p>The Replicat process will abend with a <span class="italic">"Table metadata resolution exception"</span> if the mapped target table does not exist in Hive.</p>
+<p>For example, consider the following mapping:</p>
+<pre dir="ltr">
+MAP GG.TCUSTMER, TARGET GG_HIVE.TCUSTMER_HIVE, COLMAP(USEDEFAULTS, CUST_CODE2=CUST_CODE, CITY2=CITY) KEYCOLS(CUST_CODE2);
+
+</pre>
+<p>The preceding mapping requires a table called <code>TCUSTMER_HIVE</code> to be created in schema <code>GG_HIVE</code> in the Hive metastore. Failure to create the <code>GG_HIVE.TCUSTMER_HIVE</code> table in Hive will result in following exception:</p>
+<pre dir="ltr">
+ERROR [main) - Table Metadata Resolution Exception
+Unable to retrieve table matadata. Table : GG_HIVE.TCUSTMER_HIVE
+NoSuchObjectException(message:GG_HIVE.TCUSTMER_HIVE table not found)
+</pre></div>
+<!-- class="section" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment135">
+<tr>
+<td class="cellalignment142">
+<table class="cellalignment140">
+<tr>
+<td class="cellalignment139"><a href="GUID-F90702A9-0FFB-42D2-9261-89E2BB952C65.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment139"><a href="GUID-0923A020-5800-4B8F-8EFA-05AF9061629B.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2016, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment144">
+<table class="cellalignment138">
+<tr>
+<td class="cellalignment139"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment139"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

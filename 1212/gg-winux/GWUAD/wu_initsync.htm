@@ -1,0 +1,1816 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>16 Instantiating Oracle GoldenGate with an Initial Load</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Merged Version 1028" />
+<meta name="description" content="This chapter describes running an initial data load to instantiate the replication environment." />
+<meta name="dcterms.created" content="2014-11-11T22:58:6Z" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Oracle&reg; GoldenGate Administering Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E29388-06" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Index" href="index.htm" title="Index" type="text/html" />
+<link rel="Prev" href="wu_errorhandling.htm" title="Previous" type="text/html" />
+<link rel="Next" href="wu_customcode.htm" title="Next" type="text/html" />
+<link rel="alternate" href="../GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="../GWUAD.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="../GWUAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Skip Headers</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns"><div id="BREADCRUMBS"><a href="http://docs.oracle.com">Home</a> / <a href="../../index.html">Middleware</a> / <a href="../index.html">Oracle GoldenGate for Windows and UNIX</a>
+</div>
+
+<span id="PAGE" style="display:none;">19/30</span>
+<!-- End Header -->
+<div id="GWUAD546" class="chapter"><a id="i1019467"></a>
+<h1 class="chapter"><span class="secnum">16</span> Instantiating Oracle GoldenGate with an Initial Load</h1>
+<p><a id="GWUAD547"></a>This chapter describes running an initial data load to instantiate the replication environment.</p>
+<p>This chapter includes the following sections:</p>
+<ul>
+<li>
+<p><a href="#BCGDIGHG">Overview of the Initial-Load Procedure</a></p>
+</li>
+<li>
+<p><a href="#i1049363">Loading Data with a Database Utility</a></p>
+</li>
+<li>
+<p><a href="#BCGGIBED">Loading data with Oracle Data Pump</a></p>
+</li>
+<li>
+<p><a href="#i1058997">Loading Data from File to Replicat</a></p>
+</li>
+<li>
+<p><a href="#i1042761">Loading Data from File to Database Utility</a></p>
+</li>
+<li>
+<p><a href="#i1043171">Loading Data with an Oracle GoldenGate Direct Load</a></p>
+</li>
+<li>
+<p><a href="#i1026585">Loading Data with a Direct Bulk Load to SQL*Loader</a></p>
+</li>
+<li>
+<p><a href="#i1041613">Loading Data with Teradata Load Utilities</a></p>
+</li>
+</ul>
+<a id="BCGDIGHG"></a>
+<div id="GWUAD548" class="sect1">
+<h2 class="sect1"><span class="secnum">16.1</span> Overview <a id="sthref792"></a>of <a id="sthref793"></a>the Initial-Load Procedure<a id="sthref794"></a><a id="sthref795"></a><a id="sthref796"></a><a id="sthref797"></a><a id="sthref798"></a></h2>
+<p>You can use Oracle GoldenGate to:</p>
+<ul>
+<li>
+<p>Perform a standalone batch load to <a id="sthref799"></a>populate database tables for migration or other purposes.</p>
+</li>
+<li>
+<p>Load data into database tables as part of an initial synchronization run in preparation for change synchronization with Oracle GoldenGate.</p>
+</li>
+</ul>
+<a id="BCGCBICA"></a>
+<div id="GWUAD549" class="sect2">
+<h3 class="sect2"><span class="secnum">16.1.1</span> Improving the Performance of an Initial Load</h3>
+<p>For all initial load methods except those performed with a database utility, you can load large databases more quickly by using parallel Oracle GoldenGate processes. To use parallel processing, take the following steps.</p>
+<ol>
+<li>
+<p>Follow the directions in this chapter for creating an initial-load Extract and an initial-load Replicat for each set of parallel processes that you want to use.</p>
+</li>
+<li>
+<p>With the <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> parameters, specify a different set of tables for each pair of Extract-Replicat processes, or you can use the <code dir="ltr">SQLPREDICATE</code> option of <code dir="ltr">TABLE</code> to partition the <a id="sthref800"></a>rows of large tables among the different Extract processes.</p>
+</li>
+</ol>
+<p>For all initial load methods, testing has shown that using the <code dir="ltr">TCPBUFSIZE</code> option in the <code dir="ltr">RMTHOST</code> parameter produced three times faster throughput than loads performed without it. Do not use this parameter if the target system is NonStop.</p>
+</div>
+<!-- class="sect2" -->
+<a id="i999984"></a>
+<div id="GWUAD550" class="sect2">
+<h3 class="sect2"><span class="secnum">16.1.2</span> Prerequisites for Initial Load</h3>
+<p>Verify that you meet the following prerequisites for executing an initial load.</p>
+<div id="GWUAD551" class="sect3"><a id="sthref801"></a>
+<h4 class="sect3"><span class="secnum">16.1.2.1</span> Disable DDL Processing</h4>
+<p>Before executing an initial load, disable DDL extraction and replication. DDL processing is controlled by the <code dir="ltr">DDL</code> parameter in the Extract and Replicat parameter files.</p>
+</div>
+<!-- class="sect3" -->
+<div id="GWUAD552" class="sect3"><a id="sthref802"></a>
+<h4 class="sect3"><span class="secnum">16.1.2.2</span> Prepare the Target Tables</h4>
+<p>The following are suggestions that can make the load go faster and help you to avoid errors.</p>
+<ul>
+<li>
+<p><span class="bold">Data:</span> Make certain that the target tables are empty. Otherwise, there may be duplicate-row errors or conflicts between existing rows and rows that are being loaded.</p>
+</li>
+<li>
+<p><span class="bold">Constraints:</span> Disable foreign-key constraints and check constraints. Foreign-key constraints can cause errors, and check constraints can slow down the loading process. Constraints can be reactivated after the load concludes successfully.</p>
+</li>
+<li>
+<p><span class="bold">Indexes:</span> Remove indexes from the target tables. Indexes are not necessary for inserts. They will slow down the loading process significantly. For each row that is inserted into a table, the database will update every index on that table. You can add back the indexes after the load is finished.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+A primary index is required for all applications that access DB2 for z/OS target tables. You can delete all other indexes from the target tables, except for the primary index.</div>
+</li>
+<li>
+<p><span class="bold">Keys:</span> For Oracle GoldenGate to reconcile the replicated incremental data changes with the results of the load, each target table must have a primary or unique key. If you cannot create a key through your application, use the <code dir="ltr"><a id="sthref803"></a>KEYCOLS</code> option of the <code dir="ltr">TABLE</code> and <code dir="ltr">MAP</code> parameters to specify columns as a substitute key for Oracle GoldenGate's purposes. A key helps identify which row to process. If you cannot create keys, the source database must be quiesced for the load.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect3" -->
+<div id="GWUAD553" class="sect3"><a id="sthref804"></a>
+<h4 class="sect3"><span class="secnum">16.1.2.3</span> Configure the Manager Process</h4>
+<p>On the source and target systems, configure and start a Manager process. One Manager can be used for the initial-load processes and the change-synchronization processes. See <a href="wu_manager.htm#i1033185">Chapter 3, "Configuring Manager and Network Communications"</a> for more information.</p>
+</div>
+<!-- class="sect3" -->
+<a id="i1023458"></a>
+<div id="GWUAD554" class="sect3">
+<h4 class="sect3"><span class="secnum">16.1.2.4</span> Create a Data-definitions File</h4>
+<p>A data-definitions file is required if the source and target databases have dissimilar definitions. Oracle GoldenGate uses this file to convert the data to the format required by the target database. See <a href="wu_data_definitions.htm#g1086762">Chapter 13, "Associating Replicated Data with Metadata"</a> for more information.</p>
+</div>
+<!-- class="sect3" -->
+<div id="GWUAD555" class="sect3"><a id="sthref805"></a>
+<h4 class="sect3"><span class="secnum">16.1.2.5</span> Create Change-synchronization Groups</h4>
+<p>To prepare for the capture and replication of transactional changes during the initial load, create online Extract and Replicat groups. You will start these groups during the load procedure. See <a href="wu_changesync.htm#i999929">Section 14, "Configuring Online Change Synchronization"</a> for more information.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+If the load is performed from a quiet source database and <span class="italic">will not</span> be followed by continuous change synchronization, you can omit these groups.</div>
+<p>Do not start the Extract or Replicat groups until instructed to do so in the initial-load instructions. Change synchronization keeps track of transactional changes while the load is being applied, and then the target tables are reconciled with those changes.</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The first time that Extract starts in a new Oracle GoldenGate configuration, any open transactions will be skipped. Only transactions that begin after Extract starts are captured.</div>
+</div>
+<!-- class="sect3" -->
+<div id="GWUAD556" class="sect3"><a id="sthref806"></a>
+<h4 class="sect3"><span class="secnum">16.1.2.6</span> Sharing Parameters between Process Groups</h4>
+<p>Some of the parameters that you use in a change-synchronization parameter file also are required in an initial-load Extract and initial-load Replicat parameter file. You can copy those parameters from one parameter file to another, or you can store them in a central file and use the <code dir="ltr">OBEY</code> parameter in each parameter file to retrieve them. Alternatively, you can create an Oracle GoldenGate macro for the shared parameters and then call the macro from each parameter file with the <code dir="ltr">MACRO</code> parameter.</p>
+<p>See <a href="wu_gettingstarted.htm#i1073864">Chapter 4, "Getting Started with the Oracle GoldenGate Process Interfaces"</a> for more information about using <code dir="ltr">OBEY</code> and using macros.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="i1049363"></a>
+<div id="GWUAD557" class="sect1">
+<h2 class="sect1"><span class="secnum">16.2</span> Loading Data with a <a id="sthref807"></a><a id="sthref808"></a><a id="sthref809"></a><a id="sthref810"></a>Database Utility</h2>
+<p>To use a database copy utility to establish the target data, you start a change-synchronization Extract group to extract ongoing data changes while the database utility makes and applies a static copy of the data. When the copy is finished, you start the change-synchronization Replicat group to re-synchronize rows that were changed while the copy was being applied. From that point forward, both Extract and Replicat continue running to maintain data synchronization. This method does not involve any special initial-load Extract or Replicat processes.</p>
+<img width="1429" height="345" src="img/initsync_copyutil.jpg" alt="Description of initsync_copyutil.jpg follows" /><br />
+<a id="sthref811" href="img_text/initsync_copyutil.htm">Description of the illustration initsync_copyutil.jpg</a><br />
+<br />
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The objects and data types being loaded in this method must be supported by Oracle GoldenGate for your database and also by the database utility that is being used. For items that are supported for your database, see the Oracle GoldenGate installation and configuration documentation for that database. For items that are supported by the database utility, see the database vendor's documentation.</div>
+<ol>
+<li>
+<p>Make certain that you have addressed the requirements in <a href="#i999984">Section 16.1.2, "Prerequisites for Initial Load."</a></p>
+</li>
+<li>
+<p>On the source and target systems, run GGSCI and start the Manager process.</p>
+<pre dir="ltr">
+START MANAGER
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+In a Windows cluster, start the Manager resource from the Cluster Administrator.</div>
+</li>
+<li>
+<p>On the source system, start change extraction.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group </span>
+</pre>
+<p>Where:</p>
+<p><code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the Extract group.</p>
+</li>
+<li>
+<p>(Oracle, if replicating sequences) Issue the <code dir="ltr">DBLOGIN</code> command as the user who has <code dir="ltr">EXECUTE</code> privilege on <code dir="ltr">update.Sequence</code>.</p>
+<pre dir="ltr">
+GGSCI&gt; DBLOGIN USERID <span class="italic">DBLOGINuser</span>, PASSWORD <span class="italic">password [encryption_options]</span>
+</pre></li>
+<li>
+<p>(Oracle, if replicating sequences) Issue the following command to update each source sequence and generate redo. From the redo, Replicat performs initial synchronization of the sequences on the target. You can use an asterisk wildcard for any or all characters in the name of a sequence (but not the owner).</p>
+<pre dir="ltr">
+FLUSH SEQUENCE <span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">sequence</span>
+</pre></li>
+<li>
+<p>On the source system, start making the copy.</p>
+</li>
+<li>
+<p>Wait until the copy is finished and record the time of completion.</p>
+</li>
+<li>
+<p>View the Replicat parameter file to make certain that the <code dir="ltr">HANDLECOLLISIONS</code> parameter is listed. If not, add the parameter to the file.</p>
+<div class="infobox-note">
+<p class="notep1">Caution:</p>
+Do not use the <code dir="ltr">VIEW PARAMS</code> or <code dir="ltr">EDIT PARAMS</code> command to view or edit an existing parameter file that is in a character set other than that of the local operating system (such as one where the <code dir="ltr">CHARSET</code> option was used to specify a different character set). View the parameter file from outside GGSCI if this is the case; otherwise, the contents may become corrupted..</div>
+</li>
+<li>
+<p>On the target system, start change replication.</p>
+<pre dir="ltr">
+START REPLICAT <span class="codeinlineitalic">group</span>
+</pre>
+<p>Where:</p>
+<p><code dir="ltr"><span class="codeinlineitalic">group</span></code> is the name of the Replicat group.</p>
+</li>
+<li>
+<p>On the target system, issue the following command to verify the status of change replication.</p>
+<pre dir="ltr">
+INFO REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Continue to issue the <code dir="ltr">INFO REPLICAT</code> command until you have verified that change replication has posted all of the change data that was generated during the initial load. Reference the time of completion that you recorded. For example, if the copy stopped at 12:05, make sure change replication has posted data up to that point.</p>
+</li>
+<li>
+<p>On the target system, issue the following command to turn off the <code dir="ltr">HANDLECOLLISIONS</code> parameter and disable the initial-load error handling.</p>
+<pre dir="ltr">
+SEND REPLICAT <span class="codeinlineitalic">group</span>, NOHANDLECOLLISIONS
+</pre></li>
+<li>
+<p>On the target system, edit the Replicat parameter file to remove the <code dir="ltr">HANDLECOLLISIONS</code> parameter. This prevents <code dir="ltr">HANDLECOLLISIONS</code> from being enabled again the next time Replicat starts.</p>
+<div class="infobox-note">
+<p class="notep1">Caution:</p>
+Do not use the <code dir="ltr">VIEW PARAMS</code> or <code dir="ltr">EDIT PARAMS</code> command to view or edit an existing parameter file that is in a character set other than that of the local operating system (such as one where the <code dir="ltr">CHARSET</code> option was used to specify a different character set). View the parameter file from outside GGSCI if this is the case; otherwise, the contents may become corrupted.</div>
+</li>
+<li>
+<p>Save and close the parameter file.</p>
+<p>From this point forward, Oracle GoldenGate continues to synchronize data changes.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="BCGGIBED"></a>
+<div id="GWUAD1009" class="sect1">
+<h2 class="sect1"><span class="secnum">16.3</span> Loading data with Oracle Data Pump</h2>
+<p>This method uses the Oracle Data Pump utility to establish the target data. After you apply the copy to the target, you record the SCN at which the copy stopped. You then start Extract, data pumps, and Replicat at the specified SCN. Transactions that were included in the copy are skipped to avoid collisions from integrity violations. From the process start point, Oracle GoldenGate maintains data synchronization. No initial-load Oracle GoldenGate processes are required for this method.</p>
+<p>To perform instantiation with Oracle Data Pump, see My Oracle Support document 1276058.1. To obtain this document, do the following:</p>
+<ol>
+<li>
+<p>Go to http://support.oracle.com.</p>
+</li>
+<li>
+<p>Under <span class="gui-object-title">Sign In</span>, select your language and then log in with your Oracle Single Sign-On (SSO).</p>
+</li>
+<li>
+<p>On the <span class="gui-object-title">Dashboard</span>, expand the <span class="gui-object-title">Knowledge Base</span> heading.</p>
+</li>
+<li>
+<p>Under <span class="gui-object-title">Enter Search Terms</span>, paste or type the document ID of <code dir="ltr">1276058.1</code> and then click <span class="gui-object-action">Search</span>.</p>
+</li>
+<li>
+<p>In the search results, select <span class="gui-object-action">Oracle GoldenGate Best Practices: Instantiation from an Oracle Source Database [Article ID 1276058.1]</span>.</p>
+</li>
+<li>
+<p>Click the link under <span class="gui-object-title">Attachments</span> to open the article.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="i1058997"></a>
+<div id="GWUAD558" class="sect1">
+<h2 class="sect1"><span class="secnum">16.4</span> Loading Data from File to <a id="sthref812"></a><a id="sthref813"></a>Replicat</h2>
+<p>To use Replicat to establish the target data, you use an initial-load Extract to extract source records from the source tables and write them to an extract file in canonical format. From the file, an initial-load Replicat loads the data using the database interface. During the load, the change-synchronization groups extract and replicate incremental changes, which are then reconciled with the results of the load.</p>
+<p>During the load, the records are applied to the target database one record at a time, so this method is considerably slower than any of the other initial load methods. This method permits data transformation to be done on either the source or target system.</p>
+<img width="1434" height="348" src="img/initsyncreplicat.jpg" alt="Description of initsyncreplicat.jpg follows" /><br />
+<a id="sthref814" href="img_text/initsyncreplicat.htm">Description of the illustration initsyncreplicat.jpg</a><br />
+<br />
+<p class="subhead2"><a id="GWUAD1114"></a>To load data from file to Replicat</p>
+<ol>
+<li>
+<p>Make certain that you have addressed the requirements in <a href="#i999984">Section 16.1.2, "Prerequisites for Initial Load."</a></p>
+</li>
+<li>
+<p>On the source and target systems, run GGSCI and start Manager.</p>
+<pre dir="ltr">
+START MANAGER
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+In a Windows cluster, start the Manager resource from the Cluster Administrator.</div>
+</li>
+<li>
+<p>On the source system, issue the following command to create an initial-load Extract parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">initial-load_Extract</span>
+</pre></li>
+<li>
+<p>Enter the parameters listed in <a href="#g1096490">Table 16-1</a> in the order shown, starting a new line for each parameter statement. The following is a sample initial-load Extract parameter file for loading data from file to Replicat.</p>
+<pre dir="ltr">
+SOURCEISTABLE
+SOURCEDB mydb, USERIDALIAS ogg
+RMTHOSTOPTIONS ny4387, MGRPORT 7888, ENCRYPT AES 192 KEYNAME mykey
+ENCRYPTTRAIL AES192
+RMTFILE /ggs/dirdat/initld, MEGABYTES 2, PURGE
+TABLE hr.*;
+TABLE sales.*;
+</pre>
+<div id="GWUAD559" class="tblhruleformalwide"><p class="titleintable"><a id="sthref815"></a><a id="g1096490"></a>Table 16-1 Initial-load Extract <a id="sthref816"></a>Parameters</p>
+<table class="cellalignment160" title="Initial-load Extract Parameters" summary="This table describes initial-load Extract parameters.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t10">Parameter</th>
+<th class="cellalignment161" id="r1c2-t10">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t10" headers="r1c1-t10">
+<pre dir="ltr">
+SOURCEISTABLE<a id="sthref817"></a>
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t10 r1c2-t10">
+<p>Designates Extract as an initial load process extracting records directly from the source tables.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t10" headers="r1c1-t10">
+<pre dir="ltr">
+[SOURCEDB <span class="codeinlineitalic">dsn</span> | <span class="codeinlineitalic">catalog</span>]
+[, USERIDALIAS <a id="sthref818"></a><span class="codeinlineitalic">alias, options</span> |
+, USERID <span class="codeinlineitalic">user</span>, <span class="codeinlineitalic">options</span>]
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t10 r1c2-t10">
+<p>Specifies database connection information.</p>
+<p><code dir="ltr">SOURCEDB</code> specifies the source data source name (DSN) or SQL/MX catalog. See <a class="olink GWURF649" href="../../gg-winux/GWURF/gg_parameters149.htm#GWURF649"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information.</p>
+<p><code dir="ltr">USERID</code> and <code dir="ltr">USERIDALIAS</code> specify database <a id="sthref819"></a>credentials if required. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t10" headers="r1c1-t10">
+<pre dir="ltr">
+RMTHOSTOPTIONS <span class="codeinlineitalic">hostname</span>,
+MGRPORT <span class="codeinlineitalic">portnumber</span>
+[, ENCRYPT <span class="codeinlineitalic">algorithm</span> KEYNAME <span class="codeinlineitalic">keyname</span>]
+</pre></td>
+<td class="cellalignment157" headers="r4c1-t10 r1c2-t10">
+<p>Specifies the target system, the port where Manager is running, and optional encryption of data across TCP/IP.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t10" headers="r1c1-t10">
+<pre dir="ltr">
+ENCRYPTTRAIL <span class="codeinlineitalic">algorithm</span>
+</pre></td>
+<td class="cellalignment157" headers="r5c1-t10 r1c2-t10">
+<p>Encrypts the data in the remote file. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t10" headers="r1c1-t10">
+<pre dir="ltr">
+RMTFILE <span class="codeinlineitalic">path</span>,
+[MAXFILES <span class="codeinlineitalic">number</span>, MEGABYTES <span class="codeinlineitalic">n</span>]
+</pre>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the file.</p>
+</li>
+<li>
+<p><code dir="ltr">MAXFILES</code> creates a series of files that are aged as needed. Use if the file could exceed the operating system's file size limitations.</p>
+</li>
+<li>
+<p><code dir="ltr">MEGABYTES</code> designates the size of each file.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r6c1-t10 r1c2-t10">
+<p>Specifies the extract file to which the load data will be written. Oracle GoldenGate creates this file during the load. Checkpoints are not maintained with <code dir="ltr">RMTFILE</code>.</p>
+<p>Note that the size of an extract file cannot exceed 2GB.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t10" headers="r1c1-t10">
+<pre dir="ltr">
+TABLE [<span class="codeinlineitalic">container</span>. | <span class="codeinlineitalic">catalog.</span>]owner.<span class="codeinlineitalic">object</span>;
+</pre></td>
+<td class="cellalignment157" headers="r7c1-t10 r1c2-t10">
+<p>Specifies the fully qualified name of an object or a fully qualified wildcarded specification for multiple objects. If the database is an Oracle multitenant container database or a SQL/MX database, the object name must include the name of the container or catalog unless <code dir="ltr">SOURCECATALOG</code> is used.</p>
+<p>See <a href="wu_gettingstarted.htm#i1074957">Section 4.5, "Specifying Object Names in Oracle GoldenGate Input"</a> for guidelines for specifying object names in parameter files.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r8c1-t10" headers="r1c1-t10">
+<p><code dir="ltr">CATALOGEXCLUDE</code></p>
+<p><code dir="ltr">SCHEMAEXCLUDE</code></p>
+<p><code dir="ltr">TABLEEXCLUDE</code></p>
+<p><code dir="ltr">EXCLUDEWILDCARDOBJECTSONLY</code></p>
+</td>
+<td class="cellalignment157" headers="r8c1-t10 r1c2-t10">
+<p>Parameters that can be used in conjunction with one another to exclude specific objects from a wildcard specification in the associated <code dir="ltr">TABLE</code> statement. See <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any appropriate optional Extract parameters listed in the <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Save and close the parameter file.</p>
+</li>
+<li id="i1000200">
+<p>On the target system, issue the following command to create an initial-load Replicat parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">initial-load_Replicat</span>
+</pre></li>
+<li>
+<p>Enter the parameters listed in <a href="#g1096515">Table 16-2</a> in the order shown, starting a new line for each parameter statement. The following is a sample initial-load Replicat parameter file for loading data from file to Replicat.</p>
+<pre dir="ltr">
+SPECIALRUN
+END RUNTIME
+TARGETDB mydb, USERIDALIAS ogg
+EXTFILE /ggs/dirdat/initld
+SOURCEDEFS /ggs/dirdef/source_defs
+MAP hr.*, TARGET hr.*;
+MAP sales.*, TARGET hr.*;
+</pre>
+<div id="GWUAD560" class="tblhruleformalwide"><p class="titleintable"><a id="sthref820"></a><a id="g1096515"></a>Table 16-2 Initial-load Replicat <a id="sthref821"></a>parameters</p>
+<table class="cellalignment160" title=" Initial-load Replicat parameters" summary="This table describes initial-load Replicat parameters.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t11">Parameter</th>
+<th class="cellalignment161" id="r1c2-t11">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+<a id="sthref822"></a>SPECIALRUN
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t11 r1c2-t11">
+<p>Implements the initial-load Replicat as a one-time run that does not use checkpoints.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+END RUNTIME
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t11 r1c2-t11">
+<p>Directs the initial-load Replicat to terminate when the load is finished.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+[TARGETDB <span class="codeinlineitalic">dsn</span> | <span class="codeinlineitalic">catalog</span>]
+[, USERIDALIAS <a id="sthref823"></a><span class="codeinlineitalic">alias, options</span> |
+, USERID <span class="codeinlineitalic">user</span>, <span class="codeinlineitalic">options</span>]
+</pre></td>
+<td class="cellalignment157" headers="r4c1-t11 r1c2-t11">
+<p>Specifies database connection information.</p>
+<p><code dir="ltr">TARGETDB</code> specifies the target datasource name (DSN) or SQL/MX catalog. See <a class="olink GWURF694" href="../../gg-winux/GWURF/gg_parameters164.htm#GWURF694"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information.</p>
+<p><code dir="ltr">USERID</code> and <code dir="ltr">USERIDALIAS</code> specify database <a id="sthref824"></a>credentials if required. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+EXTFILE <span class="codeinlineitalic">path</span>
+</pre>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the file.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r5c1-t11 r1c2-t11">
+<p>Specifies the input extract file specified with the Extract parameter <code dir="ltr">RMTFILE</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+{SOURCEDEFS <span class="codeinlineitalic">file</span>} |
+ASSUMETARGETDEFS
+</pre>
+<ul>
+<li>
+<p>Use <code dir="ltr">SOURCEDEFS</code> if the source and target tables have different definitions. Specify the relative or fully qualified name of the source-definitions file generated by DEFGEN.</p>
+</li>
+<li>
+<p>Use <code dir="ltr">ASSUMETARGETDEFS</code> if the source and target tables have the same definitions.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r6c1-t11 r1c2-t11">
+<p>Specifies how to interpret data definitions.</p>
+<p>For more information about data definitions files, see <a href="wu_data_definitions.htm#g1086762">Chapter 13, "Associating Replicated Data with Metadata."</a></p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t11" headers="r1c1-t11">
+<p><code dir="ltr">SOURCECATALOG</code></p>
+</td>
+<td class="cellalignment157" headers="r7c1-t11 r1c2-t11">
+<p>Specifies a default source Oracle container or source SQL/MX catalog for subsequent <code dir="ltr">MAP</code> statements. Enables the use of two-part names (<code dir="ltr"><span class="codeinlineitalic">schema.object</span></code>) where three-part names otherwise would be required for those databases. You can use multiple instances of this parameter to specify different default containers or catalogs for different sets of <code dir="ltr">MAP</code> parameters.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r8c1-t11" headers="r1c1-t11">
+<pre dir="ltr">
+MAP [<span class="codeinlineitalic">container</span>. | <span class="codeinlineitalic">catalog</span>.]<span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">object</span>,
+TARGET <span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">object</span>[, DEF <span class="codeinlineitalic">template</span>]
+;
+</pre></td>
+<td class="cellalignment157" headers="r8c1-t11 r1c2-t11">
+<p>Specifies a relationship between a source object or objects and a target object or objects. <code dir="ltr">MAP</code> specifies the source object, and <code dir="ltr">TARGET</code> specifies the target object.</p>
+<p>For the source object, specify the fully qualified name of the object or a fully qualified wildcarded specification for multiple objects. For an Oracle multitenant container database or a SQL/MX database, the source object name must include the name of the container or catalog unless <code dir="ltr">SOURCECATALOG</code> is used.</p>
+<p>For the target object, specify only the <code dir="ltr"><span class="codeinlineitalic">owner.object</span></code> components of the name, regardless of the database. Replicat can only connect to one Oracle container or SQL/MX catalog. Use a separate Replicat process for each container or catalog to which you want to load data.</p>
+<p>See <a href="wu_gettingstarted.htm#i1074957">Section 4.5, "Specifying Object Names in Oracle GoldenGate Input"</a> for guidelines for specifying object names in parameter files.</p>
+<p>The <code dir="ltr">DEF</code> option specifies a definitions template. For more information about data definitions, see <a href="wu_data_definitions.htm#g1086762">Section 13, "Associating Replicated Data with Metadata"</a>. See <a class="olink GWURF546" href="../../gg-winux/GWURF/gg_parameters160.htm#GWURF546"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information and options for the <code dir="ltr">MAP</code> parameter.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r9c1-t11" headers="r1c1-t11">
+<p><code dir="ltr">CATALOGEXCLUDE</code></p>
+<p><code dir="ltr">SCHEMAEXCLUDE</code></p>
+<p><code dir="ltr">MAPEXCLUDE</code></p>
+<p><code dir="ltr">EXCLUDEWILDCARDOBJECTSONLY</code></p>
+</td>
+<td class="cellalignment157" headers="r9c1-t11 r1c2-t11">
+<p>Parameters that can be used in conjunction with one another to exclude specific source objects from a wildcard specification in the associated <code dir="ltr">MAP</code> statement. See <a class="olink GWURF" href="../../gg-winux/GWURF/toc.htm"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any appropriate optional Replicat parameters listed in the <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
+<li>
+<p>View the Replicat parameter file to make certain that the <code dir="ltr">HANDLECOLLISIONS</code> parameter is listed. If not, add the parameter to the file.</p>
+</li>
+<li>
+<p>On the source system, start change extraction.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>(Oracle, if replicating sequences) Issue the <code dir="ltr">DBLOGIN</code> command as the user who has <code dir="ltr">EXECUTE</code> privilege on <code dir="ltr">update.Sequence</code>.</p>
+<pre dir="ltr">
+GGSCI&gt; DBLOGIN USERID <span class="italic">DBLOGINuser</span>, PASSWORD <span class="codeinlineitalic">password</span> [<span class="codeinlineitalic">encryption_options</span>]
+</pre></li>
+<li>
+<p>(Oracle, if replicating sequences) Issue the following command to update each source sequence and generate redo. From the redo, Replicat performs initial synchronization of the sequences on the target. You can use an asterisk wildcard for any or all characters in the name of a sequence (but not the owner).</p>
+<pre dir="ltr">
+FLUSH SEQUENCE <span class="codeinlineitalic">owner.sequence</span>
+</pre></li>
+<li>
+<p>From the directory where Oracle GoldenGate is installed on the source system, start the initial-load Extract.</p>
+<p>UNIX and Linux:</p>
+<pre dir="ltr">
+$ /<span class="codeinlineitalic">GGS directory</span>/extract paramfile dirprm/<span class="codeinlineitalic">initial-load_Extract</span>.prm reportfile <span class="codeinlineitalic">path</span>
+</pre>
+<p>Windows:</p>
+<pre dir="ltr">
+C:\&gt; <span class="codeinlineitalic">GGS directory</span>\extract paramfile dirprm\<span class="codeinlineitalic">initial-load_Extract</span>.prm reportfile <span class="codeinlineitalic">path</span>
+</pre>
+<p>Where:</p>
+<p><code dir="ltr"><span class="codeinlineitalic">initial-load_Extract</span></code> is the name of the initial-load Extract that you used when creating the parameter file, and <code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the Extract report file.</p>
+</li>
+<li>
+<p>Verify the progress and results of the initial extraction by viewing the Extract report file using the operating system's standard method for viewing files.</p>
+</li>
+<li>
+<p>Wait until the initial extraction is finished.</p>
+</li>
+<li>
+<p>On the target system, start the initial-load Replicat.</p>
+<p>UNIX and Linux:</p>
+<pre dir="ltr">
+$ /<span class="codeinlineitalic">GGS directory</span>/replicat paramfile dirprm/<span class="codeinlineitalic">initial-load_Replicat</span>.prm reportfile <span class="codeinlineitalic">path</span>
+</pre>
+<p>Windows:</p>
+<pre dir="ltr">
+C:\&gt; <span class="codeinlineitalic">GGS directory</span>\replicat paramfile dirprm\<span class="codeinlineitalic">initial-load_Replicat</span>.prm reportfile <span class="codeinlineitalic">path</span>
+</pre>
+<p>Where:</p>
+<p><code dir="ltr"><span class="codeinlineitalic">initial-load_Replicat</span></code> is the name of the initial-load Replicat that you used when creating the parameter file, and <code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the Replicat report file.</p>
+</li>
+<li>
+<p>When the initial-load Replicat is finished running, verify the results by viewing the Replicat report file using the operating system's standard method for viewing files.</p>
+</li>
+<li>
+<p>On the target system, start change replication.</p>
+<pre dir="ltr">
+START REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>On the target system, issue the following command to verify the status of change replication.</p>
+<pre dir="ltr">
+INFO REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Continue to issue the <code dir="ltr">INFO REPLICAT</code> command until you have verified that Replicat posted all of the change data that was generated during the initial load. For example, if the initial-load Extract stopped at 12:05, make sure Replicat posted data up to that point.</p>
+</li>
+<li>
+<p>On the target system, issue the following command to turn off the <code dir="ltr">HANDLECOLLISIONS</code> parameter and disable the initial-load error handling.</p>
+<pre dir="ltr">
+SEND REPLICAT <span class="codeinlineitalic">group</span>, NOHANDLECOLLISIONS
+</pre></li>
+<li>
+<p>On the target system, edit the Replicat parameter file to remove the <code dir="ltr">HANDLECOLLISIONS</code> parameter. This prevents <code dir="ltr">HANDLECOLLISIONS</code> from being enabled again the next time Replicat starts.</p>
+<div class="infobox-note">
+<p class="notep1">Caution:</p>
+Do not use the <code dir="ltr">VIEW PARAMS</code> or <code dir="ltr">EDIT PARAMS</code> command to view or edit an existing parameter file that is in a character set other than that of the local operating system (such as one where the <code dir="ltr">CHARSET</code> option was used to specify a different character set). View the parameter file from outside GGSCI if this is the case; otherwise, the contents may become corrupted.</div>
+</li>
+<li>
+<p>Save and close the parameter file.</p>
+<p>From this point forward, Oracle GoldenGate continues to synchronize data changes.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="i1042761"></a>
+<div id="GWUAD561" class="sect1">
+<h2 class="sect1"><span class="secnum">16.5</span> Loading Data from File to <a id="sthref825"></a><a id="sthref826"></a>Database Utility</h2>
+<p>To use a database bulk-load utility, you use an initial-load Extract to extract source records from the source tables and write them to an extract file in external ASCII format. The file can be read by <a id="sthref827"></a>Oracle's SQL*Loader, Microsoft's BCP, DTS, or <a id="sthref828"></a>SQL Server Integration Services (SSIS) utility, or IBM's Load Utility (<code dir="ltr">LOADUTIL</code>).</p>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+The objects and data types being loaded in this method must be supported by Oracle GoldenGate for your database and also by the database utility that is being used. For items that are supported for your database, see the Oracle GoldenGate installation and configuration documentation for that database. For items that are supported by the database utility, see the database vendor's documentation.</div>
+<p>During the load, the change-synchronization groups extract and replicate incremental changes, which are then reconciled with the results of the load. As part of the load procedure, Oracle GoldenGate uses the initial-load Replicat to create run and control files required by the database utility.</p>
+<p>Any data transformation must be performed by the initial-load Extract on the source system because the control files are generated dynamically and cannot be pre-configured with transformation rules.</p>
+<img width="1426" height="446" src="img/initsyncbulk.jpg" alt="Description of initsyncbulk.jpg follows" /><br />
+<a id="sthref829" href="img_text/initsyncbulk.htm">Description of the illustration initsyncbulk.jpg</a><br />
+<br />
+<p class="subhead2"><a id="GWUAD1115"></a>To load data from file to database utility</p>
+<ol>
+<li>
+<p>Make certain to satisfy <a href="#i999984">"Prerequisites for Initial Load"</a>.</p>
+</li>
+<li>
+<p>On the source and target systems, run GGSCI and start Manager.</p>
+<pre dir="ltr">
+START MANAGER
+</pre></li>
+<li>
+<p>On the source system, issue the following command to create an initial-load Extract parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">initial-load_Extract</span>
+</pre></li>
+<li>
+<p>Enter the parameters listed in <a href="#CIHHHDJH">Table 16-3</a> in the order shown, starting a new line for each parameter statement. The following is a sample initial-load Extract parameter file for loading data from file to database utility.</p>
+<pre dir="ltr">
+SOURCEISTABLE
+SOURCEDB mydb, USERIDALIAS ogg
+RMTHOSTOPTIONS ny4387, MGRPORT 7888, ENCRYPT AES 192 KEYNAME mykey
+ENCRYPTTRAIL AES192
+FORMATASCII, SQLLOADER
+RMTFILE /ggs/dirdat/initld, MEGABYTES 2, PURGE
+TABLE hr.*;
+TABLE sales.*;
+</pre>
+<div id="GWUAD562" class="tblhruleformalwide"><p class="titleintable"><a id="sthref830"></a><a id="CIHHHDJH"></a>Table 16-3 Initial-load Extract <a id="sthref831"></a>Parameters</p>
+<table class="cellalignment160" title="Initial-load Extract Parameters" summary="This table describes initial-load Extract parameters.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t14">Parameter</th>
+<th class="cellalignment161" id="r1c2-t14">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t14" headers="r1c1-t14">
+<pre dir="ltr">
+SOURCEISTABLE<a id="sthref832"></a>
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t14 r1c2-t14">
+<p>Designates Extract as an initial load process that extracts records directly from the source tables.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t14" headers="r1c1-t14">
+<pre dir="ltr">
+[SOURCEDB <span class="codeinlineitalic">dsn</span>]
+[, USERIDALIAS <a id="sthref833"></a><span class="codeinlineitalic">alias, options</span> |
+, USERID <span class="codeinlineitalic">user</span>, <span class="codeinlineitalic">options</span>]
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t14 r1c2-t14">
+<p>Specifies database connection information.</p>
+<p><code dir="ltr">SOURCEDB</code> specifies the source datasource name (DSN). See <a class="olink GWURF649" href="../../gg-winux/GWURF/gg_parameters149.htm#GWURF649"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information.</p>
+<p><code dir="ltr">USERID</code> and <code dir="ltr">USERIDALIAS</code> specify database <a id="sthref834"></a>credentials if required. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t14" headers="r1c1-t14">
+<pre dir="ltr">
+RMTHOSTOPTIONS <span class="codeinlineitalic">hostname</span>,
+MGRPORT <span class="codeinlineitalic">portnumber</span>
+[, ENCRYPT <span class="codeinlineitalic">algorithm</span> KEYNAME <span class="codeinlineitalic">keyname</span>]
+[, PARAMS - E -d <span class="codeinlineitalic">defs_file</span>]
+</pre>
+<ul>
+<li>
+<p><code dir="ltr">-E</code> converts ASCII to EBCDIC.</p>
+</li>
+<li>
+<p><code dir="ltr">-d</code> <code dir="ltr"><span class="codeinlineitalic">defs_file</span></code> specifies the source definitions file.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r4c1-t14 r1c2-t14">
+<p>Specifies the target system, the port where Manager is running, and optional encryption of data across TCP/IP.</p>
+<p>The <code dir="ltr">PARAMS</code> clause is necessary when loading with IBM's Load Utility, because Oracle GoldenGate will need to refer to the source definitions file.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t14" headers="r1c1-t14">
+<pre dir="ltr">
+ENCRYPTTRAIL <span class="codeinlineitalic">algorithm</span>
+</pre></td>
+<td class="cellalignment157" headers="r5c1-t14 r1c2-t14">
+<p>Encrypts the data in the remote file. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t14" headers="r1c1-t14">
+<pre dir="ltr">
+FORMATASCII, {BCP | SQLLOADER}
+</pre>
+<ul>
+<li>
+<p><code dir="ltr">BCP</code> is used for BCP, DTS, or SSIS.</p>
+</li>
+<li>
+<p><code dir="ltr">SQLLOADER</code> is used for Oracle SQL*Loader or IBM Load Utility.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r6c1-t14 r1c2-t14">
+<p>Directs output to be formatted as ASCII text rather than the default canonical format. This parameter must be listed before <code dir="ltr">RMTFILE</code>. For information about limitations and options, see <a class="olink GWURF497" href="../../gg-winux/GWURF/gg_parameters065.htm#GWURF497"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t14" headers="r1c1-t14">
+<pre dir="ltr">
+RMTFILE <span class="codeinlineitalic">path</span>,
+[MAXFILES <span class="codeinlineitalic">number</span>, MEGABYTES <span class="codeinlineitalic">n</span>]
+</pre>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the file</p>
+</li>
+<li>
+<p><code dir="ltr">MAXFILES</code> creates a series of files that are aged as needed. Use if the file could exceed the operating system's file size limitations.</p>
+</li>
+<li>
+<p><code dir="ltr">MEGABYTES</code> designates the size of each file, up to 2MB.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r7c1-t14 r1c2-t14">
+<p>Specifies the extract file to which the load data will be written. Oracle GoldenGate creates this file during the load. Checkpoints are not maintained with <code dir="ltr">RMTFILE</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r8c1-t14" headers="r1c1-t14">
+<pre dir="ltr">
+TABLE [<span class="codeinlineitalic">container</span>.]owner.<span class="codeinlineitalic">object</span>;
+</pre></td>
+<td class="cellalignment157" headers="r8c1-t14 r1c2-t14">
+<p>Specifies the fully qualified name of an object or a fully qualified wildcarded specification for multiple objects. If the database is an Oracle multitenant container database, the object name must include the name of the container unless <code dir="ltr">SOURCECATALOG</code> is used. See <a href="wu_gettingstarted.htm#i1074957">Section 4.5, "Specifying Object Names in Oracle GoldenGate Input"</a> for guidelines for specifying object names in parameter files.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r9c1-t14" headers="r1c1-t14">
+<p><code dir="ltr">CATALOGEXCLUDE</code></p>
+<p><code dir="ltr">SCHEMAEXCLUDE</code></p>
+<p><code dir="ltr">TABLEEXCLUDE</code></p>
+<p><code dir="ltr">EXCLUDEWILDCARDOBJECTSONLY</code></p>
+</td>
+<td class="cellalignment157" headers="r9c1-t14 r1c2-t14">
+<p>Parameters that can be used in conjunction with one another to exclude specific objects from a wildcard specification in the associated <code dir="ltr">TABLE</code> statement. See <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any appropriate optional Extract parameters listed in <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Save and close the parameter file.</p>
+</li>
+<li>
+<p>On the target system, issue the following command to create an initial-load Replicat parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">initial-load_Replicat</span>
+</pre></li>
+<li>
+<p>Enter the parameters listed in <a href="#g1096562">Table 16-4</a> in the order shown, starting a new line for each parameter statement. The following is a sample initial-load Replicat parameter file for loading data from file to database utility.</p>
+<pre dir="ltr">
+GENLOADFILES sqlldr.tpl
+USERIDALIAS ogg
+EXTFILE /ggs/dirdat/initld
+SOURCEDEFS /ggs/dirdef/source_defs
+MAP hr.*, TARGET hr.*;
+MAP sales.*, TARGET hr.*;
+</pre>
+<div id="GWUAD563" class="tblhruleformalwide"><p class="titleintable"><a id="sthref835"></a><a id="g1096562"></a>Table 16-4 Initial-load Replicat<a id="sthref836"></a> Parameters</p>
+<table class="cellalignment160" title=" Initial-load Replicat Parameters" summary="This table describes initial-load Replicat parameters.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t15">Parameter</th>
+<th class="cellalignment161" id="r1c2-t15">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t15" headers="r1c1-t15">
+<pre dir="ltr">
+<a id="sthref837"></a>GENLOADFILES <span class="codeinlineitalic">template</span>
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t15 r1c2-t15">
+<p>Generates run and control files for the database utility. For instructions on using this parameter, see <a class="olink GWURF504" href="../../gg-winux/GWURF/gg_parameters069.htm#GWURF504"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t15" headers="r1c1-t15">
+<pre dir="ltr">
+[TARGETDB <span class="codeinlineitalic">dsn</span> | <span class="codeinlineitalic">container</span>]
+[, USERIDALIAS <a id="sthref838"></a><span class="codeinlineitalic">alias, options</span> |
+, USERID <span class="codeinlineitalic">user</span>, <span class="codeinlineitalic">options</span>]
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t15 r1c2-t15">
+<p>Specifies database connection information.</p>
+<p><code dir="ltr">TARGETDB</code> specifies the target datasource name (DSN) or Oracle container. See <a class="olink GWURF694" href="../../gg-winux/GWURF/gg_parameters164.htm#GWURF694"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information.</p>
+<p><code dir="ltr">USERID</code> and <code dir="ltr">USERIDALIAS</code> specify database <a id="sthref839"></a>credentials if required. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t15" headers="r1c1-t15">
+<pre dir="ltr">
+EXTFILE <span class="codeinlineitalic">path</span> |
+EXTTRAIL <span class="codeinlineitalic">path</span>
+</pre>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the file</p>
+</li>
+<li>
+<p>Use <code dir="ltr">EXTTRAIL</code> only if you used the <code dir="ltr">MAXFILES</code> option of the <code dir="ltr">RMTFILE</code> parameter in the Extract parameter file.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r4c1-t15 r1c2-t15">
+<p>Specifies the extract file specified with the Extract parameter <code dir="ltr">RMTFILE</code>.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t15" headers="r1c1-t15">
+<pre dir="ltr">
+{SOURCEDEFS <span class="codeinlineitalic">path</span>} |
+ASSUMETARGETDEFS
+</pre>
+<ul>
+<li>
+<p>Use <code dir="ltr">SOURCEDEFS</code> if the source and target tables have different definitions. Specify the relative or fully qualified name of the source-definitions file generated by DEFGEN.</p>
+</li>
+<li>
+<p>Use <code dir="ltr">ASSUMETARGETDEFS</code> if the source and target tables have the same definitions.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r5c1-t15 r1c2-t15">
+<p>Specifies how to interpret data definitions. For more information about data definitions files, see <a href="wu_data_definitions.htm#g1086762">Chapter 13, "Associating Replicated Data with Metadata."</a></p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t15" headers="r1c1-t15">
+<p><code dir="ltr">SOURCECATALOG</code></p>
+</td>
+<td class="cellalignment157" headers="r6c1-t15 r1c2-t15">
+<p>Specifies a default source Oracle container in a multitenant container database for subsequent <code dir="ltr">MAP</code> statements. Enables the use of two-part names (<code dir="ltr"><span class="codeinlineitalic">schema.object</span></code>) where three-part names otherwise would be required. You can use multiple instances of this parameter to specify different default containers for different sets of <code dir="ltr">MAP</code> parameters.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t15" headers="r1c1-t15">
+<pre dir="ltr">
+MAP [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">object</span>,
+TARGET <span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">object</span>[, DEF <span class="codeinlineitalic">template</span>]
+;
+</pre></td>
+<td class="cellalignment157" headers="r7c1-t15 r1c2-t15">
+<p>Specifies a relationship between a source object or objects and a target object or objects. <code dir="ltr">MAP</code> specifies the source object, and <code dir="ltr">TARGET</code> specifies the target object.</p>
+<p>For the source object, specify the fully qualified name of the object or a fully qualified wildcarded specification for multiple objects. For an Oracle multitenant container database, the source object name must include the name of the container unless <code dir="ltr">SOURCECATALOG</code> is used.</p>
+<p>For the target object, specify only the <code dir="ltr"><span class="codeinlineitalic">owner.object</span></code> components of the name, regardless of the database. Replicat can only connect to one Oracle container. Use a separate Replicat process for each container to which you want to load data.</p>
+<p>See <a href="wu_gettingstarted.htm#i1074957">Section 4.5, "Specifying Object Names in Oracle GoldenGate Input"</a> for guidelines for specifying object names in parameter files.</p>
+<p>The <code dir="ltr">DEF</code> option specifies a definitions template. For more information about data definitions, see <a href="wu_data_definitions.htm#g1086762">Section 13, "Associating Replicated Data with Metadata"</a>.See <a class="olink GWURF546" href="../../gg-winux/GWURF/gg_parameters160.htm#GWURF546"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information and options for the <code dir="ltr">MAP</code> parameter.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r8c1-t15" headers="r1c1-t15">
+<p><code dir="ltr">CATALOGEXCLUDE</code></p>
+<p><code dir="ltr">SCHEMAEXCLUDE</code></p>
+<p><code dir="ltr">MAPEXCLUDE</code></p>
+<p><code dir="ltr">EXCLUDEWILDCARDOBJECTSONLY</code></p>
+</td>
+<td class="cellalignment157" headers="r8c1-t15 r1c2-t15">
+<p>Parameters that can be used in conjunction with one another to exclude specific source objects from a wildcard specification in the associated <code dir="ltr">MAP</code> statement. See <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any appropriate optional Replicat parameters listed in <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Save and close the parameter file.</p>
+</li>
+<li>
+<p>View the Replicat parameter file to make certain that the <code dir="ltr">HANDLECOLLISIONS</code> parameter is listed. If not, add the parameter to the file.</p>
+</li>
+<li>
+<p>On the source system, start change extraction.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>(Oracle, if replicating sequences) Issue the <code dir="ltr">DBLOGIN</code> command as the user who has <code dir="ltr">EXECUTE</code> privilege on <code dir="ltr">update.Sequence</code>.</p>
+<pre dir="ltr">
+GGSCI&gt; DBLOGIN USERID <span class="italic">DBLOGINuser</span>, PASSWORD <span class="codeinlineitalic">password</span> [<span class="codeinlineitalic">encryption_options</span>]
+</pre></li>
+<li>
+<p>(Oracle, if replicating sequences) Issue the following command to update each source sequence and generate redo. From the redo, Replicat performs initial synchronization of the sequences on the target. You can use an asterisk wildcard for any or all characters in the name of a sequence (but not the owner).</p>
+<pre dir="ltr">
+FLUSH SEQUENCE <span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">sequence</span>
+</pre></li>
+<li>
+<p>From the directory where Oracle GoldenGate is installed on the source system, start the initial-load Extract.</p>
+<p>UNIX and Linux:</p>
+<pre dir="ltr">
+$ /<span class="codeinlineitalic">GGS directory</span>/extract paramfile dirprm/<span class="codeinlineitalic">initial-load_Extract</span>.prm reportfile <span class="codeinlineitalic">path</span>
+</pre>
+<p>Windows:</p>
+<pre dir="ltr">
+C:\&gt; <span class="codeinlineitalic">GGS directory</span>\extract paramfile dirprm\<span class="codeinlineitalic">initial-load_Extract</span>.prm reportfile <span class="codeinlineitalic">path</span>
+</pre>
+<p>Where:</p>
+<p><code dir="ltr"><span class="codeinlineitalic">initial-load_Extract</span></code> is the name of the initial-load Extract that you used when creating the parameter file, and <code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the Extract report file.</p>
+</li>
+<li>
+<p>Verify the progress and results of the initial extraction by viewing the Extract report file using the operating system's standard method for viewing files.</p>
+</li>
+<li>
+<p>Wait until the initial extraction is finished.</p>
+</li>
+<li>
+<p>On the target system, start the initial-load Replicat.</p>
+<p>UNIX and Linux:</p>
+<pre dir="ltr">
+$ /<span class="codeinlineitalic">GGS directory</span>/replicat paramfile dirprm/<span class="codeinlineitalic">initial-load_Replicat</span>.prm reportfile <span class="codeinlineitalic">path</span>
+</pre>
+<p>Windows:</p>
+<pre dir="ltr">
+C:\&gt; <span class="codeinlineitalic">GGS directory</span>\replicat paramfile dirprm\<span class="codeinlineitalic">initial-load_Replicat</span>.prm reportfile <span class="codeinlineitalic">path</span>
+</pre>
+<p>Where:</p>
+<p><code dir="ltr"><span class="codeinlineitalic">initial-load_Replicat</span></code> is the name of the initial-load Replicat that you used when creating the parameter file, and <code dir="ltr"><span class="codeinlineitalic">path</span></code> is the relative or fully qualified name of the Replicat report file.</p>
+</li>
+<li>
+<p>When the initial-load Replicat is finished running, verify the results by viewing the Replicat report file using the operating system's standard method for viewing files.</p>
+</li>
+<li>
+<p>Using the ASCII-formatted extract files and the run and control files created by the initial-load Replicat, load the data with the database utility.</p>
+</li>
+<li>
+<p>Wait until the load into the target tables is complete.</p>
+</li>
+<li>
+<p>On the target system, start change replication.</p>
+<pre dir="ltr">
+START REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>On the target system, issue the following command to verify the status of change replication.</p>
+<pre dir="ltr">
+INFO REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Continue to issue the <code dir="ltr">INFO REPLICAT</code> command until you have verified that Replicat posted all of the change data that was generated during the initial load. For example, if the initial-load Extract stopped at 12:05, make sure Replicat posted data up to that point.</p>
+</li>
+<li>
+<p>On the target system, issue the following command to turn off the <code dir="ltr">HANDLECOLLISIONS</code> parameter and disable the initial-load error handling.</p>
+<pre dir="ltr">
+SEND REPLICAT <span class="codeinlineitalic">group</span>, NOHANDLECOLLISIONS
+</pre></li>
+<li>
+<p>On the target system, edit the Replicat parameter file to remove the <code dir="ltr">HANDLECOLLISIONS</code> parameter. This prevents <code dir="ltr">HANDLECOLLISIONS</code> from being enabled again the next time Replicat starts.</p>
+<div class="infobox-note">
+<p class="notep1">Caution:</p>
+Do not use the <code dir="ltr">VIEW PARAMS</code> or <code dir="ltr">EDIT PARAMS</code> command to view or edit an existing parameter file that is in a character set other than that of the local operating system (such as one where the <code dir="ltr">CHARSET</code> option was used to specify a different character set). View the parameter file from outside GGSCI if this is the case; otherwise, the contents may become corrupted..</div>
+</li>
+<li>
+<p>Save and close the parameter file.</p>
+<p>From this point forward, Oracle GoldenGate continues to synchronize data changes.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="i1043171"></a>
+<div id="GWUAD564" class="sect1">
+<h2 class="sect1"><span class="secnum">16.6</span> Loading Data with an Oracle GoldenGate <a id="sthref840"></a><a id="sthref841"></a><a id="sthref842"></a>Direct Load</h2>
+<p>To use an Oracle GoldenGate direct load, you run an Oracle GoldenGate initial-load Extract to extract the source records and send them directly to an initial-load Replicat <span class="italic">task</span>. A task is started dynamically by the Manager process and does not require the use of a Collector process or file. The initial-load Replicat task delivers the load in large blocks to the target database. Transformation and mapping can be done by Extract, Replicat, or both. During the load, the change-synchronization groups extract and replicate incremental changes, which are then reconciled with the results of the load.</p>
+<img width="1409" height="348" src="img/initsync_dirload.jpg" alt="Description of initsync_dirload.jpg follows" /><br />
+<a id="sthref843" href="img_text/initsync_dirload.htm">Description of the illustration initsync_dirload.jpg</a><br />
+<br />
+<p>To control which port is used by Replicat, and to speed up the search and bind process, use the <code dir="ltr"><a id="sthref844"></a>DYNAMICPORTLIST</code> parameter in the Manager parameter file. Manager passes the list of port numbers that are specified with this parameter to the Replicat task process. Replicat first searches for a port from this list, and only if no ports are available from the list<a id="sthref845"></a> does Replicat begin scanning in ascending order from the default Manager port number until it finds an available port.</p>
+<p>This method supports standard character, numeric, and datetime data types, as well as <code dir="ltr">CLOB</code>, <code dir="ltr">NCLOB</code>, <code dir="ltr">BLOB</code>, <code dir="ltr">LONG</code>, <code dir="ltr">XML</code>, and user-defined datatypes (<code dir="ltr">UDT</code>) embedded with the following attributes: <code dir="ltr">CHAR</code>, <code dir="ltr">NCHAR</code>, <code dir="ltr">VARCHAR</code>, <code dir="ltr">NVARCHAR</code>, <code dir="ltr">RAW</code>, <code dir="ltr">NUMBER</code>, <code dir="ltr">DATE</code>, <code dir="ltr">FLOAT</code>, <code dir="ltr">TIMESTAMP</code>, <code dir="ltr">CLOB</code>, <code dir="ltr">BLOB</code>, <code dir="ltr">XML</code>, and <code dir="ltr">UDT</code>. Character sets are converted between source and target where applicable.</p>
+<p>This method supports Oracle internal tables, but does not convert between the source and target character sets during the load.</p>
+<p class="subhead2"><a id="GWUAD1116"></a>To load data with an Oracle GoldenGate direct load</p>
+<ol>
+<li>
+<p>Make certain to satisfy <a href="#i999984">"Prerequisites for Initial Load"</a>.</p>
+</li>
+<li>
+<p>On the source and target systems, run GGSCI and start Manager.</p>
+<pre dir="ltr">
+START MANAGER
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+In a Windows cluster, start the Manager resource from the Cluster Administrator.</div>
+</li>
+<li id="i1065376">
+<p>On the source, issue the following command to create the initial-load Extract.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="codeinlineitalic">initial-load_Extract</span>, SOURCEISTABLE<a id="sthref846"></a>
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">initial-load_Extract</span></code> is the name of the initial-load Extract, up to eight characters.</p>
+</li>
+<li>
+<p><code dir="ltr">SOURCEISTABLE</code> designates Extract as an initial-load process that reads complete records directly from the source tables. Do not use any of the other <code dir="ltr">ADD EXTRACT</code> service options or datasource arguments.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>On the source system, issue the following command to create an initial-load Extract parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">initial-load_Extract</span>
+</pre></li>
+<li>
+<p>Enter the parameters listed in <a href="#CIHHHAFF">Table 16-5</a> in the order shown, starting a new line for each parameter statement. The following is a sample initial-load Extract parameter file for an Oracle GoldenGate direct load.</p>
+<pre dir="ltr">
+EXTRACT initext
+SOURCEDB mydb, USERIDALIAS ogg
+RMTHOSTOPTIONS ny4387, MGRPORT 7888, ENCRYPT AES 192 KEYNAME mykey
+RMTTASK REPLICAT, GROUP initrep
+TABLE hr.*;
+TABLE sales.*;
+</pre>
+<div id="GWUAD565" class="tblhruleformalwide"><p class="titleintable"><a id="sthref847"></a><a id="CIHHHAFF"></a>Table 16-5 Initial-load Extract <a id="sthref848"></a>Parameters for Oracle GoldenGate Direct Load</p>
+<table class="cellalignment160" title="Initial-load Extract Parameters for Oracle GoldenGate Direct Load" summary="This table describes initial-load Extract parameters for Oracle GoldenGate direct load.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t18">Parameter</th>
+<th class="cellalignment161" id="r1c2-t18">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+EXTRACT <span class="codeinlineitalic">initial-load_Extract</span>
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t18 r1c2-t18">
+<p>Specifies the initial-load Extract.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+[SOURCEDB <span class="codeinlineitalic">dsn</span> | <span class="codeinlineitalic">catalog</span>]
+[, USERIDALIAS <a id="sthref849"></a><span class="codeinlineitalic">alias, options</span> |
+, USERID <span class="codeinlineitalic">user</span>, <span class="codeinlineitalic">options</span>]
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t18 r1c2-t18">
+<p>Specifies database connection information.</p>
+<p><code dir="ltr">SOURCEDB</code> specifies the source datasource name (DSN) or SQL/MX catalog. See <a class="olink GWURF649" href="../../gg-winux/GWURF/gg_parameters149.htm#GWURF649"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information.</p>
+<p><code dir="ltr">USERID</code> and <code dir="ltr">USERIDALIAS</code> specify database <a id="sthref850"></a>credentials if required. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+RMTHOSTOPTIONS <span class="codeinlineitalic">hostname</span>,
+MGRPORT <span class="codeinlineitalic">portnumber</span>
+[, ENCRYPT <span class="codeinlineitalic">algorithm</span> KEYNAME <span class="codeinlineitalic">keyname</span>]
+</pre></td>
+<td class="cellalignment157" headers="r4c1-t18 r1c2-t18">
+<p>Specifies the target system, the port where Manager is running, and optional encryption of data across TCP/IP.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+RMTTASK replicat,
+GROUP <span class="codeinlineitalic">initial-load_Replicat</span>
+</pre>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">initial-load_Replicat</span></code> is the name of the initial-load Replicat group</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r5c1-t18 r1c2-t18">
+<p>Directs Manager on the target system to dynamically start the initial-load Replicat as a one-time task.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t18" headers="r1c1-t18">
+<pre dir="ltr">
+TABLE [<span class="codeinlineitalic">container</span>. | <span class="codeinlineitalic">catalog.</span>]<span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">object</span>;
+</pre></td>
+<td class="cellalignment157" headers="r6c1-t18 r1c2-t18">
+<p>Specifies the fully qualified name of an object or a fully qualified wildcarded specification for multiple objects. If the database is an Oracle multitenant database or a SQL/MX database, the object name must include the name of the container or catalog unless <code dir="ltr">SOURCECATALOG</code> is used. See <a href="wu_gettingstarted.htm#i1074957">Section 4.5, "Specifying Object Names in Oracle GoldenGate Input"</a> for guidelines for specifying object names in parameter files.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t18" headers="r1c1-t18">
+<p><code dir="ltr">CATALOGEXCLUDE</code></p>
+<p><code dir="ltr">SCHEMAEXCLUDE</code></p>
+<p><code dir="ltr">TABLEEXCLUDE</code></p>
+<p><code dir="ltr">EXCLUDEWILDCARDOBJECTSONLY</code></p>
+</td>
+<td class="cellalignment157" headers="r7c1-t18 r1c2-t18">
+<p>Parameters that can be used in conjunction with one another to exclude specific objects from a wildcard specification in the associated <code dir="ltr">TABLE</code> statement. See <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any appropriate optional Extract parameters listed in <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
+<li id="i1000560">
+<p>On the target system, issue the following command to create the initial-load Replicat task.</p>
+<pre dir="ltr">
+ADD REPLICAT <span class="codeinlineitalic">initial-load_Replicat</span>, <a id="sthref851"></a>SPECIALRUN
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">initial-load_Replicat</span></code> is the name of the initial-load Replicat task.</p>
+</li>
+<li>
+<p><code dir="ltr">SPECIALRUN</code> identifies the initial-load Replicat as a one-time run, not a continuous process.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>On the target system, issue the following command to create an initial-load Replicat parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">initial-load_Replicat</span>
+</pre></li>
+<li>
+<p>Enter the parameters listed in <a href="#g1096543">Table 16-6</a> in the order shown, starting a new line for each parameter statement. The following is a sample initial-load Replicat parameter file for an Oracle GoldenGate direct load.</p>
+<pre dir="ltr">
+REPLICAT initrep
+TARGETDB mydb, USERIDALIAS ogg
+SOURCEDEFS /ggs/dirdef/source_defs
+MAP hr.*, TARGET hr.*;
+MAP sales.*, TARGET hr.*;
+</pre>
+<div id="GWUAD566" class="tblhruleformalwide"><p class="titleintable"><a id="sthref852"></a><a id="g1096543"></a>Table 16-6 Initial-load Replicat parameters for<a id="sthref853"></a> Oracle GoldenGate Direct Load</p>
+<table class="cellalignment160" title=" Initial-load Replicat parameters for Oracle GoldenGate Direct Load" summary="This table describes initial-load Replicat parameters for Oracle GoldenGate direct load.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t19">Parameter</th>
+<th class="cellalignment161" id="r1c2-t19">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t19" headers="r1c1-t19">
+<pre dir="ltr">
+REPLICAT <span class="codeinlineitalic">initial-load_Replicat</span>
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t19 r1c2-t19">
+<p>Specifies the initial-load Replicat task to be started by Manager. Use the name that you specified when you created the initial-load Replicat.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t19" headers="r1c1-t19">
+<pre dir="ltr">
+[TARGETDB <span class="codeinlineitalic">dsn</span> | <span class="codeinlineitalic">container</span> | <span class="codeinlineitalic">catalog</span>]
+[, USERIDALIAS <a id="sthref854"></a><span class="codeinlineitalic">alias, options</span> |
+, USERID <span class="codeinlineitalic">user</span>, <span class="codeinlineitalic">options</span>]
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t19 r1c2-t19">
+<p>Specifies database connection information.</p>
+<p><code dir="ltr">TARGETDB</code> specifies the target datasource name (DSN), Oracle container, or SQL/MX catalog. See <a class="olink GWURF694" href="../../gg-winux/GWURF/gg_parameters164.htm#GWURF694"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information.</p>
+<p><code dir="ltr">USERID</code> and <code dir="ltr">USERIDALIAS</code> specify database <a id="sthref855"></a>credentials if required. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t19" headers="r1c1-t19">
+<pre dir="ltr">
+{SOURCEDEFS <span class="codeinlineitalic">full_pathname</span>} |
+ASSUMETARGETDEFS
+</pre>
+<ul>
+<li>
+<p>Use <code dir="ltr">SOURCEDEFS</code> if the source and target tables have different definitions. Specify the source-definitions file generated by DEFGEN.</p>
+</li>
+<li>
+<p>Use <code dir="ltr">ASSUMETARGETDEFS</code> if the source and target tables have the same definitions.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r4c1-t19 r1c2-t19">
+<p>Specifies how to interpret data definitions. For more information about data definitions files, see <a href="wu_data_definitions.htm#g1086762">Chapter 13, "Associating Replicated Data with Metadata."</a></p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t19" headers="r1c1-t19">
+<p><code dir="ltr">SOURCECATALOG</code></p>
+</td>
+<td class="cellalignment157" headers="r5c1-t19 r1c2-t19">
+<p>Specifies a default source Oracle container or a source SQL/MX catalog for subsequent <code dir="ltr">MAP</code> statements. Enables the use of two-part names (<code dir="ltr"><span class="codeinlineitalic">schema.object</span></code>) where three-part names otherwise would be required for those databases. You can use multiple instances of this parameter to specify different default containers or catalogs for different sets of <code dir="ltr">MAP</code> parameters.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t19" headers="r1c1-t19">
+<pre dir="ltr">
+MAP [<span class="codeinlineitalic">container</span>. | <span class="codeinlineitalic">catalog</span>.]<span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">object</span>,
+TARGET <span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">object</span>[, DEF <span class="codeinlineitalic">template</span>]
+;
+</pre></td>
+<td class="cellalignment157" headers="r6c1-t19 r1c2-t19">
+<p>Specifies a relationship between a source object or objects and a target object or objects. <code dir="ltr">MAP</code> specifies the source object, and <code dir="ltr">TARGET</code> specifies the target object.</p>
+<p>For the source object, specify the fully qualified name of the object or a fully qualified wildcarded specification for multiple objects. For an Oracle multitenant container database or a SQL/MX database, the source object name must include the name of the container or catalog unless <code dir="ltr">SOURCECATALOG</code> is used.</p>
+<p>For the target object, specify only the <code dir="ltr"><span class="codeinlineitalic">owner.object</span></code> components of the name, regardless of the database. Replicat can only connect to one Oracle container or SQL/MX catalog. Use a separate Replicat process for each container or catalog to which you want to load data.</p>
+<p>See <a href="wu_gettingstarted.htm#i1074957">Section 4.5, "Specifying Object Names in Oracle GoldenGate Input"</a> for guidelines for specifying object names in parameter files.</p>
+<p>The <code dir="ltr">DEF</code> option specifies a definitions template. For more information about data definitions, see <a href="wu_data_definitions.htm#g1086762">Section 13, "Associating Replicated Data with Metadata"</a>.See <a class="olink GWURF546" href="../../gg-winux/GWURF/gg_parameters160.htm#GWURF546"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information and options for the <code dir="ltr">MAP</code> parameter.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t19" headers="r1c1-t19">
+<p><code dir="ltr">CATALOGEXCLUDE</code></p>
+<p><code dir="ltr">SCHEMAEXCLUDE</code></p>
+<p><code dir="ltr">MAPEXCLUDE</code></p>
+<p><code dir="ltr">EXCLUDEWILDCARDOBJECTSONLY</code></p>
+</td>
+<td class="cellalignment157" headers="r7c1-t19 r1c2-t19">
+<p>Parameters that can be used in conjunction with one another to exclude specific source objects from a wildcard specification in the associated <code dir="ltr">MAP</code> statement. See <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any appropriate optional Replicat parameters listed in <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Save and close the parameter file.</p>
+</li>
+<li>
+<p>On the source system, start change extraction.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>View the Replicat parameter file to make certain that the <code dir="ltr">HANDLECOLLISIONS</code> parameter is listed. If not, add the parameter to the file.</p>
+</li>
+<li>
+<p>(Oracle, if replicating sequences) Issue the <code dir="ltr">DBLOGIN</code> command as the user who has <code dir="ltr">EXECUTE</code> privilege on <code dir="ltr">update.Sequence</code>.</p>
+<pre dir="ltr">
+GGSCI&gt; DBLOGIN USERID <span class="italic">DBLOGINuser</span>, PASSWORD <span class="codeinlineitalic">password</span> [<span class="codeinlineitalic">encryption_options</span>]
+</pre></li>
+<li>
+<p>(Oracle, if replicating sequences) Issue the following command to update each source sequence and generate redo. From the redo, Replicat performs initial synchronization of the sequences on the target. You can use an asterisk wildcard for any or all characters in the name of a sequence (but not the owner).</p>
+<pre dir="ltr">
+FLUSH SEQUENCE <span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">sequence</span>
+</pre></li>
+<li>
+<p>On the source system, start the initial-load Extract.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">initial-load_Extract</span>
+</pre>
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+Do not start the initial-load Replicat. The Manager process starts it automatically and terminates it when the load is finished.</div>
+</li>
+<li>
+<p>On the target system, issue the following command to find out if the load is finished. Wait until the load is finished before going to the next step.</p>
+<pre dir="ltr">
+VIEW REPORT <span class="codeinlineitalic">initial-load_Replicat</span>
+</pre></li>
+<li>
+<p>On the target system, start change replication.</p>
+<pre dir="ltr">
+START REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>On the target system, issue the following command to verify the status of change replication.</p>
+<pre dir="ltr">
+INFO REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Continue to issue the <code dir="ltr">INFO REPLICAT</code> command until you have verified that Replicat posted all of the change data that was generated during the initial load. For example, if the initial-load Extract stopped at 12:05, make sure Replicat posted data up to that point.</p>
+</li>
+<li>
+<p>On the target system, issue the following command to turn off the <code dir="ltr">HANDLECOLLISIONS</code> parameter and disable the initial-load error handling.</p>
+<pre dir="ltr">
+SEND REPLICAT <span class="codeinlineitalic">group</span>, NOHANDLECOLLISIONS
+</pre></li>
+<li>
+<p>On the target system, edit the Replicat parameter file to remove the <code dir="ltr">HANDLECOLLISIONS</code> parameter. This prevents <code dir="ltr">HANDLECOLLISIONS</code> from being enabled again the next time Replicat starts.</p>
+<div class="infobox-note">
+<p class="notep1">Caution:</p>
+Do not use the <code dir="ltr">VIEW PARAMS</code> or <code dir="ltr">EDIT PARAMS</code> command to view or edit an existing parameter file that is in a character set other than that of the local operating system (such as one where the <code dir="ltr">CHARSET</code> option was used to specify a different character set). View the parameter file from outside GGSCI if this is the case; otherwise, the contents may become corrupted.</div>
+</li>
+<li>
+<p>Save and close the parameter file. From this point forward, Oracle GoldenGate continues to synchronize data changes.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="i1026585"></a>
+<div id="GWUAD567" class="sect1">
+<h2 class="sect1"><span class="secnum">16.7</span> Loading Data <a id="sthref856"></a>with a Direct Bulk Load to SQL*Loader<a id="sthref857"></a><a id="sthref858"></a><a id="sthref859"></a><a id="sthref860"></a></h2>
+<p>To use Oracle's SQL*Loader utility to establish the target data, you run an Oracle GoldenGate initial-load Extract to extract the source records and send them directly to an initial-load Replicat <span class="italic">task</span>. A task is a process that is started dynamically by the Manager process and does not require the use of a Collector process or file. The initial-load Replicat task interfaces with the API of SQL*Loader to load data as a direct-path bulk load. Data mapping and transformation can be done by either the initial-load Extract or initial-load Replicat, or both. During the load, the change-synchronization groups extract and replicate incremental changes, which are then reconciled with the results of the load.</p>
+<p>To control which port is used by Replicat, and to speed up the search and bind process, use the <code dir="ltr">DYNAMICPORTLIST</code> parameter in the Manager parameter file. Manager passes the list of port numbers that are specified with this parameter to the Replicat task process. Replicat first searches for a port from this list, and only if no ports are available from the list does Replicat begin scanning in ascending order from the default Manager port number until it finds an available port.</p>
+<p>This method supports standard character, numeric, and datetime data types, as well as <code dir="ltr">CLOB</code>, <code dir="ltr">NCLOB</code>, <code dir="ltr">BLOB</code>, <code dir="ltr">LONG</code>, <code dir="ltr">XML</code>, and user-defined datatypes (<code dir="ltr">UDT</code>) embedded with the following attributes: <code dir="ltr">CHAR</code>, <code dir="ltr">NCHAR</code>, <code dir="ltr">VARCHAR</code>, <code dir="ltr">NVARCHAR</code>, <code dir="ltr">RAW</code>, <code dir="ltr">NUMBER</code>, <code dir="ltr">DATE</code>, <code dir="ltr">FLOAT</code>, <code dir="ltr">TIMESTAMP</code>, <code dir="ltr">CLOB</code>, <code dir="ltr">BLOB</code>, <code dir="ltr">XML</code>, and <code dir="ltr">UDT</code>. <code dir="ltr">VARRAYS</code> are not supported. Character sets are converted between source and target where applicable.</p>
+<p>This method supports Oracle internal tables, but does not convert between the source and target character sets during the load.</p>
+<img width="1409" height="342" src="img/initsync_dirbulk.jpg" alt="Description of initsync_dirbulk.jpg follows" /><br />
+<a id="sthref861" href="img_text/initsync_dirbulk.htm">Description of the illustration initsync_dirbulk.jpg</a><br />
+<br />
+<p class="subhead2"><a id="GWUAD1117"></a>To load data with a direct bulk load to SQL*Loader</p>
+<ol>
+<li>
+<p>Make certain that you have addressed the requirements in <a href="#i999984">"Prerequisites for Initial Load"</a>.</p>
+</li>
+<li>
+<p>Grant <code dir="ltr">LOCK ANY TABLE</code> to the Replicat database user on the target Oracle database.</p>
+</li>
+<li>
+<p>On the source and target systems, run GGSCI and start Manager.</p>
+<pre dir="ltr">
+START MANAGER
+</pre></li>
+<li id="i1000661">
+<p>On the source system, issue the following command to create the initial-load Extract.</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="codeinlineitalic">initial-load_Extract</span>, SOURCEISTABLE<a id="sthref862"></a>
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">initial-load_Extract</span></code> is the name of the initial-load Extract, up to eight characters.</p>
+</li>
+<li>
+<p><code dir="ltr">SOURCEISTABLE</code> designates Extract as an initial-load process that reads complete records directly from the source tables. Do not use any of the other <code dir="ltr">ADD EXTRACT</code> service options or datasource arguments.</p>
+</li>
+</ul>
+</li>
+<li id="i1000667">
+<p>On the source system, issue the following command to create an initial-load Extract parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">initial-load_Extract</span>
+</pre></li>
+<li>
+<p>Enter the parameters listed in <a href="#g1096609">Table 16-7</a> in the order shown, starting a new line for each parameter statement. The following is a sample initial-load Extract parameter file for a direct bulk load to SQL*Loader.</p>
+<pre dir="ltr">
+EXTRACT initext
+SOURCEDB mydb, USERIDALIAS ogg
+RMTHOSTOPTIONS ny4387, MGRPORT 7888, ENCRYPT AES 192 KEYNAME mykey
+RMTTASK REPLICAT, GROUP initrep
+TABLE hr.*;
+TABLE sales.*;
+</pre>
+<div id="GWUAD568" class="tblhruleformalwide"><p class="titleintable"><a id="sthref863"></a><a id="g1096609"></a>Table 16-7 Initial-load Extract<a id="sthref864"></a> Parameters for a Direct Bulk Load to SQL*Loader</p>
+<table class="cellalignment160" title=" Initial-load Extract Parameters for a Direct Bulk Load to SQL*Loader" summary="This table describes initial-load Extract parameters for direct bulk load to SQL*Loader.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t22">Parameter</th>
+<th class="cellalignment161" id="r1c2-t22">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t22" headers="r1c1-t22">
+<pre dir="ltr">
+EXTRACT <span class="codeinlineitalic">initial-load_Extract</span>
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t22 r1c2-t22">
+<p>Specifies the initial-load Extract.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t22" headers="r1c1-t22">
+<pre dir="ltr">
+[, USERIDALIAS <a id="sthref865"></a><span class="codeinlineitalic">alias, options</span> |
+, USERID <span class="codeinlineitalic">user</span>, <span class="codeinlineitalic">options</span>]
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t22 r1c2-t22">
+<p>Specifies database connection information.</p>
+<p><code dir="ltr">USERID</code> and <code dir="ltr">USERIDALIAS</code> specify database <a id="sthref866"></a>credentials if required. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t22" headers="r1c1-t22">
+<pre dir="ltr">
+RMTHOSTOPTIONS <span class="italic">hostname</span>,
+MGRPORT <span class="italic">portnumber</span>
+[, ENCRYPT <span class="italic">algorithm</span> KEYNAME <span class="italic">keyname</span>]
+</pre></td>
+<td class="cellalignment157" headers="r4c1-t22 r1c2-t22">
+<p>Specifies the target system, the port where Manager is running, and optional encryption of data across TCP/IP.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t22" headers="r1c1-t22">
+<pre dir="ltr">
+RMTTASK replicat,
+GROUP <span class="codeinlineitalic">initial-load_Replicat</span>
+</pre>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">initial-load_Replicat</span></code> is the name of the initial-load Replicat group.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r5c1-t22 r1c2-t22">
+<p>Directs Manager on the target system to dynamically start the initial-load Replicat as a one-time task.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t22" headers="r1c1-t22">
+<pre dir="ltr">
+TABLE [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">object</span>;
+</pre></td>
+<td class="cellalignment157" headers="r6c1-t22 r1c2-t22">
+<p>Specifies the fully qualified name of an object or a fully qualified wildcarded specification for multiple objects. If the database is an Oracle multitenant container database, the object name must include the name of the container unless <code dir="ltr">SOURCECATALOG</code> is used. See <a href="wu_gettingstarted.htm#i1074957">Section 4.5, "Specifying Object Names in Oracle GoldenGate Input"</a> for guidelines for specifying object names in parameter files.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t22" headers="r1c1-t22">
+<p><code dir="ltr">CATALOGEXCLUDE</code></p>
+<p><code dir="ltr">SCHEMAEXCLUDE</code></p>
+<p><code dir="ltr">TABLEEXCLUDE</code></p>
+<p><code dir="ltr">EXCLUDEWILDCARDOBJECTSONLY</code></p>
+</td>
+<td class="cellalignment157" headers="r7c1-t22 r1c2-t22">
+<p>Parameters that can be used in conjunction with one another to exclude specific objects from a wildcard specification in the associated <code dir="ltr">TABLE</code> statement. See <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any appropriate optional parameters.</p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
+<li id="i1000727">
+<p>On the target system, issue the following command to create the initial-load Replicat.</p>
+<pre dir="ltr">
+ADD REPLICAT <span class="codeinlineitalic">initial-load_Replicat</span>, <a id="sthref867"></a>SPECIALRUN
+</pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code dir="ltr"><span class="codeinlineitalic">initial-load_Replicat</span></code> is the name of the initial-load Replicat task.</p>
+</li>
+<li>
+<p><code dir="ltr">SPECIALRUN</code> identifies the initial-load Replicat as a one-time task, not a continuous process.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>On the target system, issue the following command to create an initial-load Replicat parameter file.</p>
+<pre dir="ltr">
+EDIT PARAMS <span class="codeinlineitalic">initial-load_Replicat</span>
+</pre></li>
+<li>
+<p>Enter the parameters listed in <a href="#g1096631">Table 16-8</a> in the order shown, starting a new line for each parameter statement. The following is a sample initial-load Replicat parameter file for a direct load to SQL*Loader.</p>
+<pre dir="ltr">
+REPLICAT initrep
+USERIDALIAS ogg
+BULKLOAD
+SOURCEDEFS /ggs/dirdef/source_defs
+MAP hr.*, TARGET hr.*;
+MAP sales.*, TARGET hr.*;
+</pre>
+<div id="GWUAD569" class="tblhruleformalwide"><p class="titleintable"><a id="sthref868"></a><a id="g1096631"></a>Table 16-8 Initial-load Replicat <a id="sthref869"></a>Parameters for Direct Load to SQL*Loader</p>
+<table class="cellalignment160" title=" Initial-load Replicat Parameters for Direct Load to SQL*Loader" summary="This table describes initial-load Replicat parameters for direct bulk load to SQL*Loader.">
+<thead>
+<tr class="cellalignment151">
+<th class="cellalignment161" id="r1c1-t23">Parameter</th>
+<th class="cellalignment161" id="r1c2-t23">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r2c1-t23" headers="r1c1-t23">
+<pre dir="ltr">
+REPLICAT <span class="codeinlineitalic">initial-load_Replicat</span>
+</pre></td>
+<td class="cellalignment157" headers="r2c1-t23 r1c2-t23">
+<p>Specifies the initial-load Replicat task to be started by Manager. Use the name that you specified when you created the initial-load Replicat.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r3c1-t23" headers="r1c1-t23">
+<pre dir="ltr">
+[TARGETDB <span class="codeinlineitalic">container</span>]
+[, USERIDALIAS <a id="sthref870"></a><span class="codeinlineitalic">alias, options</span> |
+, USERID <span class="codeinlineitalic">user</span>, <span class="codeinlineitalic">options</span>]
+</pre></td>
+<td class="cellalignment157" headers="r3c1-t23 r1c2-t23">
+<p>Specifies database connection information.</p>
+<p><code dir="ltr">TARGETDB</code> specifies the target Oracle container. See <a class="olink GWURF649" href="../../gg-winux/GWURF/gg_parameters149.htm#GWURF649"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information.</p>
+<p><code dir="ltr">USERID</code> and <code dir="ltr">USERIDALIAS</code> specify database <a id="sthref871"></a>credentials if required. See <a href="wu_security.htm#e999929">Chapter 11, "Configuring Oracle GoldenGate Security"</a> for more information about security options.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r4c1-t23" headers="r1c1-t23">
+<pre dir="ltr">
+<a id="sthref872"></a>BULKLOAD
+</pre></td>
+<td class="cellalignment157" headers="r4c1-t23 r1c2-t23">
+<p>Directs Replicat to interface directly with the Oracle SQL*Loader interface. See <a class="olink GWURF649" href="../../gg-winux/GWURF/gg_parameters149.htm#GWURF649"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r5c1-t23" headers="r1c1-t23">
+<pre dir="ltr">
+{SOURCEDEFS <span class="codeinlineitalic">full_pathname</span>} |
+ASSUMETARGETDEFS
+</pre>
+<ul>
+<li>
+<p>Use <code dir="ltr">SOURCEDEFS</code> if the source and target tables have different definitions. Specify the source-definitions file generated by DEFGEN.</p>
+</li>
+<li>
+<p>Use <code dir="ltr">ASSUMETARGETDEFS</code> if the source and target tables have the same definitions.</p>
+</li>
+</ul>
+</td>
+<td class="cellalignment157" headers="r5c1-t23 r1c2-t23">
+<p>Specifies how to interpret data definitions. For more information about data definitions files, see <a href="wu_data_definitions.htm#g1086762">Chapter 13, "Associating Replicated Data with Metadata."</a></p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r6c1-t23" headers="r1c1-t23">
+<p><code dir="ltr">SOURCECATALOG</code></p>
+</td>
+<td class="cellalignment157" headers="r6c1-t23 r1c2-t23">
+<p>Specifies a default source Oracle container for subsequent <code dir="ltr">MAP</code> statements. Enables the use of two-part names (<code dir="ltr"><span class="codeinlineitalic">schema.object</span></code>) where three-part names otherwise would be required. You can use multiple instances of this parameter to specify different default containers for different sets of <code dir="ltr">MAP</code> parameters.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r7c1-t23" headers="r1c1-t23">
+<pre dir="ltr">
+MAP [<span class="codeinlineitalic">container</span>.]<span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">object</span>,
+TARGET <span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">object</span>[, DEF <span class="codeinlineitalic">template</span>]
+;
+</pre></td>
+<td class="cellalignment157" headers="r7c1-t23 r1c2-t23">
+<p>Specifies a relationship between a source object or objects and a target object or objects. <code dir="ltr">MAP</code> specifies the source object, and <code dir="ltr">TARGET</code> specifies the target object.</p>
+<p>For the source object, specify the fully qualified name of the object or a fully qualified wildcarded specification for multiple objects. For an Oracle multitenant container database, the source object name must include the name of the container unless <code dir="ltr">SOURCECATALOG</code> is used.</p>
+<p>For the target object, specify only the <code dir="ltr"><span class="codeinlineitalic">owner.object</span></code> components of the name, regardless of the database. Replicat can only connect to one Oracle container. Use a separate Replicat process for each container to which you want to load data.</p>
+<p>See <a href="wu_gettingstarted.htm#i1074957">Section 4.5, "Specifying Object Names in Oracle GoldenGate Input"</a> for guidelines for specifying object names in parameter files.</p>
+<p>The <code dir="ltr">DEF</code> option specifies a definitions template. For more information about data definitions, see <a href="wu_data_definitions.htm#g1086762">Section 13, "Associating Replicated Data with Metadata"</a>. See <a class="olink GWURF546" href="../../gg-winux/GWURF/gg_parameters160.htm#GWURF546"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for more information and options for the <code dir="ltr">MAP</code> parameter.</p>
+</td>
+</tr>
+<tr class="cellalignment151">
+<td class="cellalignment157" id="r8c1-t23" headers="r1c1-t23">
+<p><code dir="ltr">CATALOGEXCLUDE</code></p>
+<p><code dir="ltr">SCHEMAEXCLUDE</code></p>
+<p><code dir="ltr">MAPEXCLUDE</code></p>
+<p><code dir="ltr">EXCLUDEWILDCARDOBJECTSONLY</code></p>
+</td>
+<td class="cellalignment157" headers="r8c1-t23 r1c2-t23">
+<p>Parameters that can be used in conjunction with one another to exclude specific source objects from a wildcard specification in the associated <code dir="ltr">MAP</code> statement. See <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a> for details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformalwide" --></li>
+<li>
+<p>Enter any appropriate optional Replicat parameters listed in <a class="olink GWURF394" href="../../gg-winux/GWURF/gg_parameters.htm#GWURF394"><span class="italic">Reference for Oracle GoldenGate for Windows and UNIX</span></a>.</p>
+</li>
+<li>
+<p>Save and close the parameter file.</p>
+</li>
+<li>
+<p>On the source system, start change extraction.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>View the Replicat parameter file to make certain that the <code dir="ltr">HANDLECOLLISIONS</code> parameter is listed. If not, add the parameter to the file.</p>
+</li>
+<li>
+<p>(Oracle, if replicating sequences) Issue the <code dir="ltr">DBLOGIN</code> command as the user who has <code dir="ltr">EXECUTE</code> privilege on <code dir="ltr">update.Sequence</code>.</p>
+<pre dir="ltr">
+GGSCI&gt; DBLOGIN USERID <span class="italic">DBLOGINuser</span>, PASSWORD <span class="codeinlineitalic">password</span> [<span class="codeinlineitalic">encryption_options</span>]
+</pre></li>
+<li>
+<p>(Oracle, if replicating sequences) Issue the following command to update each source sequence and generate redo. From the redo, Replicat performs initial synchronization of the sequences on the target. You can use an asterisk wildcard for any or all characters in the name of a sequence (but not the owner).</p>
+<pre dir="ltr">
+FLUSH SEQUENCE <span class="codeinlineitalic">owner</span>.<span class="codeinlineitalic">sequence</span>
+</pre></li>
+<li>
+<p>On the source system, start the initial-load Extract.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">initial-load_Extract</span>
+</pre>
+<div class="infobox-note">
+<p class="notep1">Caution:</p>
+Do not start the initial-load Replicat. The Manager process starts it automatically and terminates it when the load is finished.</div>
+</li>
+<li>
+<p>On the target system, issue the following command to determine when the load is finished. Wait until the load is finished before proceeding to the next step.</p>
+<pre dir="ltr">
+VIEW REPORT <span class="codeinlineitalic">initial-load_Extract</span>
+</pre></li>
+<li>
+<p>On the target system, start change replication.</p>
+<pre dir="ltr">
+START REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>On the target system, issue the following command to verify the status of change replication.</p>
+<pre dir="ltr">
+INFO REPLICAT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Continue to issue the <code dir="ltr">INFO REPLICAT</code> command until you have verified that Replicat posted all of the change data that was generated during the initial load. For example, if the initial-load Extract stopped at 12:05, make sure Replicat posted data up to that point.</p>
+</li>
+<li>
+<p>On the target system, issue the following command to turn off the <code dir="ltr">HANDLECOLLISIONS</code> parameter and disable the initial-load error handling.</p>
+<pre dir="ltr">
+SEND REPLICAT <span class="codeinlineitalic">group</span>, NOHANDLECOLLISIONS
+</pre></li>
+<li>
+<p>On the target system, edit the Replicat parameter file to remove the <code dir="ltr">HANDLECOLLISIONS</code> parameter. This prevents <code dir="ltr">HANDLECOLLISIONS</code> from being enabled again the next time Replicat starts.</p>
+<div class="infobox-note">
+<p class="notep1">Caution:</p>
+Do not use the <code dir="ltr">VIEW PARAMS</code> or <code dir="ltr">EDIT PARAMS</code> command to view or edit an existing parameter file that is in a character set other than that of the local operating system (such as one where the <code dir="ltr">CHARSET</code> option was used to specify a different character set). View the parameter file from outside GGSCI if this is the case; otherwise, the contents may become corrupted..</div>
+</li>
+<li>
+<p>Save and close the parameter file.</p>
+<p>From this point forward, Oracle GoldenGate continues to synchronize data changes.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="i1041613"></a>
+<div id="GWUAD570" class="sect1">
+<h2 class="sect1"><span class="secnum">16.8</span> Loading Data with <a id="sthref873"></a><a id="sthref874"></a><a id="sthref875"></a><a id="sthref876"></a>Teradata Load Utilities</h2>
+<p>The preferred methods for synchronizing two Teradata databases is to use any of the Teradata data load utilities. The recommended utility is MultiLoad.</p>
+<p>This procedure requires Extract and Replicat change-synchronization groups to be available and properly configured for Teradata replication. For more information, see <a href="wu_changesync.htm#i999929">Chapter 14, "Configuring Online Change Synchronization."</a></p>
+<p>If you are using multiple Extract and Replicat groups, perform each step for all of them as appropriate.</p>
+<p class="subhead2"><a id="GWUAD1118"></a>To load data with a Teradata load utility</p>
+<ol>
+<li>
+<p>Create the scripts that are required by the utility.</p>
+</li>
+<li>
+<p>Start the primary Extract group(s).</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">group</span>
+</pre></li>
+<li>
+<p>Start the data pump(s), if used.</p>
+<pre dir="ltr">
+START EXTRACT <span class="codeinlineitalic">data_pump</span> 
+</pre></li>
+<li>
+<p>Open the Replicat parameter file(s) for editing.</p>
+<div class="infobox-note">
+<p class="notep1">Caution:</p>
+Do not use the <code dir="ltr">VIEW PARAMS</code> or <code dir="ltr">EDIT PARAMS</code> command to view or edit an existing parameter file that is in a character set other than that of the local operating system (such as one where the <code dir="ltr">CHARSET</code> option was used to specify a different character set). View the parameter file from outside GGSCI if this is the case; otherwise, the contents may become corrupted..</div>
+</li>
+<li>
+<p>Add the following parameters to the Replicat parameter file(s):</p>
+<pre dir="ltr">
+END RUNTIME
+HANDLECOLLISIONS
+</pre>
+<ul>
+<li>
+<p><code dir="ltr">END RUNTIME</code> directs Replicat to terminate normally when it reads an Oracle GoldenGate trail record that has a timestamp that is the same as, or after, the time that Replicat was started.</p>
+</li>
+<li>
+<p><code dir="ltr">HANDLECOLLISIONS</code> directs Replicat to overwrite duplicate records and ignore missing ones, as a means of resolving errors that occur from collisions between transactional changes and the results of the copy.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Save and close the Replicat parameter file(s).</p>
+</li>
+<li>
+<p>Start the load utility.</p>
+</li>
+<li>
+<p>When the load completes on the target, start the Replicat process(es).</p>
+</li>
+<li>
+<p>When each Replicat process stops, remove the <code dir="ltr">HANDLECOLLISIONS</code> and <code dir="ltr">END RUNTIME</code> parameters from the parameter file.</p>
+</li>
+<li>
+<p>Restart the Replicat process(es). The two databases are now synchronized, and Oracle GoldenGate will keep them current through replication.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="chapter" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment150">
+<tr>
+<td class="cellalignment157"><table class="cellalignment155">
+<tr>
+<td class="cellalignment154"><a href="wu_errorhandling.htm"><img width="24" height="24" src="../../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+
+<td class="cellalignment154"><a href="wu_customcode.htm"><img width="24" height="24" src="../../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table></td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment159">
+<table class="cellalignment153">
+<tr>
+<td class="cellalignment154"><a href="../../index.html"><img width="24" height="24" src="../../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment154"><a href="toc.htm"><img width="24" height="24" src="../../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment154"><a href="index.htm"><img width="24" height="24" src="../../dcommon/gifs/index.gif" alt="Go to Index" /><br />
+<span class="icon">Index</span></a></td>
+<td class="cellalignment154"><a href="../../dcommon/html/feedback.htm"><img width="24" height="24" src="../../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

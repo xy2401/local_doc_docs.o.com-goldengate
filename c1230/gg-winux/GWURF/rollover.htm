@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>ROLLOVER</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-09-07T12:04:07Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81608-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="rmttrail.htm" title="Previous" type="text/html" />
+<link rel="Next" href="schemaexclude.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-22BB5687-8233-46F8-8EF8-631FAD8989FA"></a> <span id="PAGE" style="display:none;">207/356</span> <!-- End Header -->
+<a id="GWURF641"></a><a id="GWURF642"></a><a id="GWURF640"></a>
+<h1 id="GWURF-GUID-22BB5687-8233-46F8-8EF8-631FAD8989FA" class="sect1"><span class="enumeration_section">6.138</span> ROLLOVER</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">ROLLOVER</code> parameter to specify the interval at which trail files are aged and new ones are created. <code class="codeph">ROLLOVER</code> is global and applies to all trails defined with <code class="codeph">RMTTRAIL</code> or <code class="codeph">RMTFILE</code> statements in a parameter file.</p>
+<p>Use <code class="codeph">ROLLOVER</code> to create trail files that represent distinct periods of time (for example, each day). It facilitates continuous processing while providing a means for organizing the output. It also provides a means for organizing batch runs by deactivating one file and starting another for the next run.</p>
+<p>Files roll over between transactions, not in the middle of one, ensuring data integrity. Checkpoints are recorded when files roll over to ensure that previous files are no longer required for processing.</p>
+<p>Rollover occurs only if the rollover conditions are satisfied during the run. For example, if <code class="codeph">ROLLOVER ON TUESDAY</code> is specified, and data extraction starts on Tuesday, the rollover does not occur until the next Tuesday (unless more precise <code class="codeph">ROLLOVER</code> rules are specified). You can specify up to 30 rollover rules.</p>
+<p>Either the <code class="codeph">AT</code> or <code class="codeph">ON</code> option is required. Both options can be used together, and in any order. Using <code class="codeph">AT</code> without <code class="codeph">ON</code> creates a new trail file at the specified time every day.</p>
+<p>A trail sequence number can be incremented from 000001 through 999999, and then the sequence numbering starts over at 000000.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Default</p>
+<p>Roll over when the default file size is reached or the size specified with the <code class="codeph">MEGABYTES</code> option of the <code class="codeph">ADD RMTTRAIL</code> or <code class="codeph">ADD EXTTRAIL</code> command is reached.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+ROLLOVER {AT <span class="italic">hh:mi</span> | ON <span class="italic">day</span> | AT <span class="italic">hh:mi</span> ON <span class="italic">day</span>} [REPORT]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-22BB5687-8233-46F8-8EF8-631FAD8989FA__GUID-3EB26A69-3DE0-49AC-83DD-CB4093501156"><!-- --></a><code class="codeph">AT</code> <span class="italic"><code class="codeph">hh:mi</code></span></dt>
+<dd>
+<p>The time of day to age the file.</p>
+<p>Valid values:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">hh</code> is based on a 24-hour clock, with valid values of 1 through 23.</p>
+</li>
+<li>
+<p><code class="codeph">mi</code> accepts values from 00 through 59.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-22BB5687-8233-46F8-8EF8-631FAD8989FA__GUID-71DE3056-8D3C-4C18-A108-C9F149FE914C"><!-- --></a><code class="codeph">ON</code> <span class="italic"><code class="codeph">day</code></span></dt>
+<dd>
+<p>The day of the week to age the file.</p>
+<p>Valid values:</p>
+<pre dir="ltr">
+SUNDAY
+MONDAY
+TUESDAY
+WEDNESDAY
+THURSDAY
+FRIDAY
+SATURDAY
+</pre>
+<p>The values are not case-sensitive.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-22BB5687-8233-46F8-8EF8-631FAD8989FA__GUID-33144342-4532-40E9-8A93-1B4125D9D181"><!-- --></a><code class="codeph">REPORT</code></dt>
+<dd>
+<p>Generates a report for the number of records extracted from each table since the last report was generated. The report represents the number of records output to the corresponding trail unless other reports are generated by means of the <code class="codeph">REPORT</code> parameter.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-22BB5687-8233-46F8-8EF8-631FAD8989FA__GUID-BF41B12A-AF13-42F9-808B-E580AD08408E"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following ages trails every day at 3:00 p.m.</p>
+<pre dir="ltr">
+ROLLOVER AT 15:00
+</pre></dd>
+<dt class="dlterm"><a id="GUID-22BB5687-8233-46F8-8EF8-631FAD8989FA__GUID-750B7971-6D30-4BFF-A0DD-E1C16A3313F2"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following ages trails every Sunday at 8:00 a.m.</p>
+<pre dir="ltr">
+ROLLOVER AT 08:00 ON SUNDAY
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment350">
+<tr>
+<td class="cellalignment357">
+<table class="cellalignment355">
+<tr>
+<td class="cellalignment354"><a href="rmttrail.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment354"><a href="schemaexclude.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment359">
+<table class="cellalignment353">
+<tr>
+<td class="cellalignment354"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment354"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment354"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

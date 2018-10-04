@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>DATE</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="compute.htm" title="Previous" type="text/html" />
+<link rel="Next" href="datediff.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872"></a> <span id="PAGE" style="display:none;">377/459</span> <!-- End Header -->
+<a id="GWURF771"></a><a id="GWURF772"></a><a id="GWURF773"></a><a id="GWURF774"></a><a id="GWURF775"></a><a id="GWURF776"></a><a id="GWURF777"></a><a id="GWURF778"></a><a id="GWURF779"></a><a id="GWURF770"></a>
+<h1 id="GWURF-GUID-66A0C065-5B09-42E8-8333-ADD48E91C872" class="sect1"><span class="enumeration_section">5.11</span> DATE</h1>
+<div>
+<div class="section">
+<p>Use the <code class="codeph">@DATE</code> function to return dates and times in a variety of formats to the target column based on the format passed into the source column. <code class="codeph">@DATE</code> converts virtually any type of input into a valid SQL date. <code class="codeph">@DATE</code> also can be used to extract portions of a date column or to compute a numeric timestamp column based on a date.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+@DATE ('<span class="italic">output_descriptor</span>', '<span class="italic">input_descriptor</span>', <span class="italic">source_column</span>
+[, '<span class="italic">input_descriptor</span>', <span class="italic">source_column</span>] [, ...])
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-0F80ED63-1EC5-4F7B-B13B-367CEE254F74"><!-- --></a><span class="italic"><code class="codeph">'output_descriptor'</code></span></dt>
+<dd>
+<p>The output of the function. The valid value is a string that is composed of date descriptors and optional literal values, such as spaces or colons, that are required by the target column. Date descriptors can be strung together as needed. See <a href="date.htm#GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__BABDJIDG" title="This table describes the date descriptors.">Table 5-7</a> for descriptions of date descriptors. The format descriptor must match the <code class="codeph">date/time/timestamp</code> format for the target. Oracle GoldenGate overrides the specified format to make it correct, if necessary.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-9ABCC949-AA59-4BB7-870C-FC5BDB9335BF"><!-- --></a><span class="italic"><code class="codeph">'input_descriptor'</code></span></dt>
+<dd>
+<p>The source input. The valid value is a string that is composed of date descriptors and optional literal values, such as spaces or colons. Date descriptors can be strung together as needed. The following are examples:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Descriptor string <code class="codeph">'YYYYMMDD</code>' indicates that the source column specified with <span class="italic"><code class="codeph">source_column</code></span> contains (in order) a four-digit year (<code class="codeph">YYYY</code>), month (<code class="codeph">MM</code>), and day (<code class="codeph">DD</code>).</p>
+</li>
+<li>
+<p>Descriptor string <code class="codeph">'DD/MM/YY</code>' indicates that the source column specified with <span class="italic"><code class="codeph">source_column</code></span> contains the day, a slash, the month, a slash, and the two digit year.</p>
+</li>
+</ul>
+<p>See <a href="date.htm#GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__BABDJIDG" title="This table describes the date descriptors.">Table 5-7</a> for date descriptions.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-70E68F17-8FB5-41B8-B2E8-51B4C8C65F3D"><!-- --></a><span class="italic"><code class="codeph">source_column</code></span></dt>
+<dd>
+<p>The name of the numeric or character source column that supplies the input specified with <span class="italic"><code class="codeph">input_descriptor</code></span>.</p>
+</dd>
+</dl>
+<div class="tblformal" id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__BABDJIDG">
+<p class="titleintable">Table 5-7 Date Descriptors</p>
+<table class="cellalignment463" title="Date Descriptors" summary="This table describes the date descriptors.">
+<thead>
+<tr class="cellalignment454">
+<th class="cellalignment487" id="d141689e140">Descriptor</th>
+<th class="cellalignment488" id="d141689e143">Description</th>
+<th class="cellalignment489" id="d141689e146">Valid for...</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e151" headers="d141689e140">
+<pre dir="ltr">
+CC
+</pre></td>
+<td class="cellalignment491" headers="d141689e151 d141689e143">
+<p>Century</p>
+</td>
+<td class="cellalignment492" headers="d141689e151 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e161" headers="d141689e140">
+<pre dir="ltr">
+YY
+</pre></td>
+<td class="cellalignment491" headers="d141689e161 d141689e143">
+<p>Two-digit year</p>
+</td>
+<td class="cellalignment492" headers="d141689e161 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e171" headers="d141689e140">
+<pre dir="ltr">
+YYYY
+</pre></td>
+<td class="cellalignment491" headers="d141689e171 d141689e143">
+<p>Four-digit year</p>
+</td>
+<td class="cellalignment492" headers="d141689e171 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e181" headers="d141689e140">
+<pre dir="ltr">
+MM
+</pre></td>
+<td class="cellalignment491" headers="d141689e181 d141689e143">
+<p>Numeric month</p>
+</td>
+<td class="cellalignment492" headers="d141689e181 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e191" headers="d141689e140">
+<pre dir="ltr">
+MMM
+</pre></td>
+<td class="cellalignment491" headers="d141689e191 d141689e143">
+<p>Alphanumeric month, such as <code class="codeph">APR</code>, <code class="codeph">OCT</code></p>
+</td>
+<td class="cellalignment492" headers="d141689e191 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e206" headers="d141689e140">
+<pre dir="ltr">
+DD
+</pre></td>
+<td class="cellalignment491" headers="d141689e206 d141689e143">
+<p>Numeric day of month</p>
+</td>
+<td class="cellalignment492" headers="d141689e206 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e216" headers="d141689e140">
+<pre dir="ltr">
+DDD
+</pre></td>
+<td class="cellalignment491" headers="d141689e216 d141689e143">
+<p>Numeric day of the year, such as <code class="codeph">001</code> or <code class="codeph">365</code></p>
+</td>
+<td class="cellalignment492" headers="d141689e216 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e231" headers="d141689e140">
+<pre dir="ltr">
+DOW0
+</pre></td>
+<td class="cellalignment491" headers="d141689e231 d141689e143">
+<p>Numeric day of the week (Sunday = <code class="codeph">0</code>)</p>
+</td>
+<td class="cellalignment492" headers="d141689e231 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e244" headers="d141689e140">
+<pre dir="ltr">
+DOW1
+</pre></td>
+<td class="cellalignment491" headers="d141689e244 d141689e143">
+<p>Numeric day of the week (Sunday = <code class="codeph">1</code>)</p>
+</td>
+<td class="cellalignment492" headers="d141689e244 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e257" headers="d141689e140">
+<pre dir="ltr">
+DOWA
+</pre></td>
+<td class="cellalignment491" headers="d141689e257 d141689e143">
+<p>Alphanumeric day of the week, such as <code class="codeph">SUN</code>, <code class="codeph">MON</code>, <code class="codeph">TUE</code></p>
+</td>
+<td class="cellalignment492" headers="d141689e257 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e275" headers="d141689e140">
+<pre dir="ltr">
+HH
+</pre></td>
+<td class="cellalignment491" headers="d141689e275 d141689e143">
+<p>Hour</p>
+</td>
+<td class="cellalignment492" headers="d141689e275 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e286" headers="d141689e140">
+<pre dir="ltr">
+MI
+</pre></td>
+<td class="cellalignment491" headers="d141689e286 d141689e143">
+<p>Minute</p>
+</td>
+<td class="cellalignment492" headers="d141689e286 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e296" headers="d141689e140">
+<pre dir="ltr">
+SS
+</pre></td>
+<td class="cellalignment491" headers="d141689e296 d141689e143">
+<p>Seconds</p>
+</td>
+<td class="cellalignment492" headers="d141689e296 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e306" headers="d141689e140">
+<pre dir="ltr">
+JTSLCT
+</pre></td>
+<td class="cellalignment491" headers="d141689e306 d141689e143">
+<p>Use for a Julian timestamp that is already local time, or to keep local time when converting to a Julian timestamp.</p>
+</td>
+<td class="cellalignment492" headers="d141689e306 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e316" headers="d141689e140">
+<pre dir="ltr">
+JTSGMT
+</pre></td>
+<td class="cellalignment491" headers="d141689e316 d141689e143">
+<p>Julian timestamp, the same as <code class="codeph">JTS.</code></p>
+</td>
+<td class="cellalignment492" headers="d141689e316 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e328" headers="d141689e140">
+<pre dir="ltr">
+JTS
+</pre></td>
+<td class="cellalignment491" headers="d141689e328 d141689e143">
+<p>Julian timestamp. <code class="codeph">JUL</code> and <code class="codeph">JTS</code> produce numbers you can use in numeric expressions. The unit is microseconds. On a Windows machine, the value will be padded with zeros (0) because the granularity of the Windows timestamp is milliseconds.</p>
+</td>
+<td class="cellalignment492" headers="d141689e328 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e344" headers="d141689e140">
+<pre dir="ltr">
+JUL
+</pre></td>
+<td class="cellalignment491" headers="d141689e344 d141689e143">
+<p>Julian day. <code class="codeph">JUL</code> and <code class="codeph">JTS</code> produce numbers you can use in numeric expressions.</p>
+</td>
+<td class="cellalignment492" headers="d141689e344 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e360" headers="d141689e140">
+<pre dir="ltr">
+TTS
+</pre></td>
+<td class="cellalignment491" headers="d141689e360 d141689e143">
+<p>NonStop 48-bit timestamp</p>
+</td>
+<td class="cellalignment492" headers="d141689e360 d141689e146">
+<p>Input</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e370" headers="d141689e140">
+<pre dir="ltr">
+PHAMIS
+</pre></td>
+<td class="cellalignment491" headers="d141689e370 d141689e143">
+<p><code class="codeph">PHAMIS</code> application date format</p>
+</td>
+<td class="cellalignment492" headers="d141689e370 d141689e146">
+<p>Input</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e382" headers="d141689e140">
+<pre dir="ltr">
+FFFFFF
+</pre></td>
+<td class="cellalignment491" headers="d141689e382 d141689e143">
+<p>Fraction (up to microseconds)</p>
+</td>
+<td class="cellalignment492" headers="d141689e382 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e392" headers="d141689e140">
+<pre dir="ltr">
+STRATUS
+</pre></td>
+<td class="cellalignment491" headers="d141689e392 d141689e143">
+<p><code class="codeph">STRATUS</code> application timestamp</p>
+</td>
+<td class="cellalignment492" headers="d141689e392 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+<tr class="cellalignment454">
+<td class="cellalignment490" id="d141689e404" headers="d141689e140">
+<pre dir="ltr">
+CDATE
+</pre></td>
+<td class="cellalignment491" headers="d141689e404 d141689e143">
+<p>C timestamp in seconds since the Epoch</p>
+</td>
+<td class="cellalignment492" headers="d141689e404 d141689e146">
+<p>Input/Output</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-ECC5C1CC-956D-4ED9-9B9A-38526E713B02"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>In an instance where a two-digit year is supplied, but a four-digit year is required in the output, several options exist to obtain the correct century.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The century can be hard coded, as in:</p>
+<pre dir="ltr">
+'CC', 19 or 'CC', 20
+</pre></li>
+<li>
+<p>The <code class="codeph">@IF</code> function can be used to set a condition, as in:</p>
+<pre dir="ltr">
+'CC', @IF (YY &gt; 70, 19, 20)
+</pre>
+<p>This causes the century to be set to 19 when the year is greater than 70; otherwise the century is set to 20.</p>
+</li>
+<li>
+<p>The system can calculate the century automatically. If the year is less than 50, the system calculates a century of 20; otherwise, a century of 19 is calculated.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-66F8C704-3CCA-4562-8B23-9C88DEABC41E"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following converts year, month and day columns into a date.</p>
+<pre dir="ltr">
+date_col = @DATE ('YYYY-MM-DD', 'YY', date1_yy, 'MM', date1_mm, 'DD', date1_dd)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-F8A4A037-55E1-4AEA-9D61-6325D25BD8B0"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following converts a date and time, defaulting seconds to zero.</p>
+<pre dir="ltr">
+date_col = @DATE ('YYYY-MM-DD HH:MI:00', 'YYMMDD', date1, 'HHMI', time1)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-B870FD18-CCED-4A67-B086-C124BB79E606"><!-- --></a>Example 4&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following converts a numeric column stored as <code class="codeph">YYYYMMDDHHMISS</code> to a SQL date.</p>
+<pre dir="ltr">
+datetime_col = @DATE ('YYYY-MM-DD HH:MI:SS', 'YYYYMMDDHHMISS', numeric_date)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-DDF698ED-E0FE-44F0-A24E-B5077DFF8E66"><!-- --></a>Example 5&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following converts a numeric column stored as <code class="codeph">YYYYMMDDHHMISS</code> to a Julian timestamp.</p>
+<pre dir="ltr">
+julian_ts_col = @DATE ('JTS', 'YYYYMMDDHHMISS', numeric_date)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-F2DB696B-2AD7-4C65-A6A8-DF7469037492"><!-- --></a>Example 6&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following converts a Julian timestamp column to two separate columns: a datetime column in the format <code class="codeph">YYYY-MM-DD HH:MI:SS</code> and a fraction column that holds the microseconds portion of the timestamp.</p>
+<pre dir="ltr">
+datetime_col = @DATE ('YYYY-MM-DD HH:MI:SS', 'JTS', jts_field), fraction_col = @DATE ('FFFFFF', 'JTS', jts_field)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-74C55AE1-CA04-4521-A3DE-96EAFFB6CF26"><!-- --></a>Example 7&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following produces the time at which an order is filled. The inner <code class="codeph">@DATE</code> expression changes the <code class="codeph">order_taken</code> column into a Julian timestamp, then adds the <code class="codeph">order_minutes</code> column converted into microseconds to this timestamp. The expression is passed back as a new Julian timestamp to the outer <code class="codeph">@DATE</code> expression, which converts it back to a more readable date and time.</p>
+<pre dir="ltr">
+order_filled = @DATE ('YYYY-MM-DD HH:MI:SS', 'JTS', @DATE ('JTS',
+'YYMMDDHHMISS', order_taken) + order_minutes * 60 * 1000000)
+</pre></dd>
+<dt class="dlterm"><a id="GUID-66A0C065-5B09-42E8-8333-ADD48E91C872__GUID-C0AE9E3F-4FB2-4F64-81CB-A9E0FB17671E"><!-- --></a>Example 8&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following does a full calculation of times. It goes from a source date column named <code class="codeph">dt</code> to a target column named <code class="codeph">dt5</code> that is to be converted to the date + 5 hours. The calculation also goes from a source timestamp column named <code class="codeph">ts</code> to a target column named <code class="codeph">ts5</code> that is to be converted to the timestamp + 5 hours.</p>
+<pre dir="ltr">
+MAP scratch.t4, TARGET scratch.t4_copy,
+COLMAP ( USEDEFAULTS,
+dt5 = @DATE ('YYYY-MM-DD HH:MI:SS', 'JTS',
+@COMPUTE (@DATE ('JTS', 'YYYY-MM-DD HH:MI:SS', dt) + 18000000000 ) ),
+ts5 = @DATE ('YYYY-MM-DD HH:MI:SS.FFFFFF', 'JTS',
+@COMPUTE ( @DATE ('JTS', 'YYYY-MM-DD HH:MI:SS.FFFFFF', ts) + 18000000000 ) )
+) ;
+</pre></dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="compute.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="datediff.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

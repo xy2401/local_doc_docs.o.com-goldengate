@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Understanding Oracle GoldenGate for HP NonStop</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="keywords" content="Oracle GoldenGate, processing options, architecture, Oracle GoldenGate, architecture, Extract, about, Logger, TCP/IP, Collector process, Collector, trails, Replicat, Manager, Syncfile, checkpoints, integrity, data, data, integrity, parameters, Oracle GoldenGate, overview, Reader, Coordinator, after-images, about, before-images, about, distributed network transactions, transactions, distributed, file, data, extracting from, GGSCI, using, commands, GoldenGate (GGSCI)" />
+<meta name="dcterms.created" content="2018-06-07T00:11:41Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate for HP NonStop (Guardian)" />
+<meta name="dcterms.identifier" content="E57712-04" />
+<meta name="dcterms.isVersionOf" content="GNSAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2014, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="preface.htm" title="Previous" type="text/html" />
+<link rel="Next" href="planning-configuration.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GNSAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-E7CE828D-B77C-4411-B448-97D445D49FC7"></a> <span id="PAGE" style="display:none;">4/15</span> <!-- End Header -->
+<a id="GNSAD111"></a><a id="GNSAD110"></a>
+<h1 id="GNSAD-GUID-E7CE828D-B77C-4411-B448-97D445D49FC7" class="sect1"><span class="enumeration_chapter">1</span> Understanding <span>Oracle GoldenGate</span> for HP NonStop</h1>
+<div>
+<p>This topic describes the capabilities of <span>Oracle GoldenGate</span> for HP NonStop to manipulate data at the transactions level and to replicate selected data to a variety of heterogeneous applications and platforms. It introduces both the configuration and the features of <span>Oracle GoldenGate</span> for HP NonStop.</p>
+<p>This topic includes the following sections:</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-DA51912D-6950-4DCA-8914-DA7585AB6784">Oracle GoldenGate Overview</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-C0672C26-4F68-4C89-A9FD-B69F158FDF3E">Oracle GoldenGate Architecture</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-A11D62AB-DE91-466C-B877-DF9730118B5A">Oracle GoldenGate Processing</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-B85A5A33-48F8-459C-A16D-CBC56B503D31">Oracle GoldenGate Commands</a><br /></li>
+</ul>
+</div>
+<a id="GNSAD112"></a>
+<div class="props_rev_3"><a id="GUID-DA51912D-6950-4DCA-8914-DA7585AB6784"></a>
+<h2 id="GNSAD-GUID-DA51912D-6950-4DCA-8914-DA7585AB6784" class="sect2">Oracle GoldenGate Overview</h2>
+<div>
+<p>Oracle GoldenGate for HP NonStop has modular architecture that gives you the flexibility to extract and replicate selected data records and transactional changes across a variety of heterogeneous applications and platforms.</p>
+<p>You can configure Oracle GoldenGate for HP NonStop to manage data from multiple, heterogeneous sources and targets. Oracle GoldenGate for HP NonStop contains features that enables your business to manage data at the transaction level across the enterprise.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-10455138-A851-4731-812A-A757C0B36640">Oracle GoldenGate Configuration</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-F3200BF7-BBCE-451F-B5E7-A982467E0504">Oracle GoldenGate Features</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-E7CE828D-B77C-4411-B448-97D445D49FC7">Understanding Oracle GoldenGate for HP NonStop</a></p>
+</div>
+</div>
+</div>
+<a id="GNSAD113"></a>
+<div class="props_rev_3"><a id="GUID-10455138-A851-4731-812A-A757C0B36640"></a>
+<h3 id="GNSAD-GUID-10455138-A851-4731-812A-A757C0B36640" class="sect3">Oracle GoldenGate Configuration</h3>
+<div>
+<p><a id="d2541e121" class="indexterm-anchor"></a>Oracle GoldenGate offers flexibility in configuring your transaction management system, supporting both homogeneous and heterogeneous data replication. This lets you configure Oracle GoldenGate to capture and deliver data to best suit your operating environment. Options include:</p>
+<ol>
+<li>
+<p>One-to-one, from a single source to a single target</p>
+<div class="figure" id="GUID-10455138-A851-4731-812A-A757C0B36640__GUID-2A38356E-9933-4789-8182-63314C691563"><img width="323" height="72" src="img/intro_one_to_one.gif" alt="Description of intro_one_to_one.gif follows" title="Description of intro_one_to_one.gif follows" /><br />
+<a href="img_text/intro_one_to_one.htm">Description of the illustration intro_one_to_one.gif</a></div>
+<!-- class="figure" --></li>
+<li>
+<p>One-to-many, from a single source to multiple targets</p>
+<div class="figure" id="GUID-10455138-A851-4731-812A-A757C0B36640__GUID-893A44E4-DE45-4EBF-BB15-2D5856AE655E"><img width="418" height="171" src="img/intro_one_to_many.gif" alt="Description of intro_one_to_many.gif follows" title="Description of intro_one_to_many.gif follows" /><br />
+<a href="img_text/intro_one_to_many.htm">Description of the illustration intro_one_to_many.gif</a></div>
+<!-- class="figure" --></li>
+<li>
+<p>Many-to-one, from multiple sources to a single target</p>
+<div class="figure" id="GUID-10455138-A851-4731-812A-A757C0B36640__GUID-46718AA7-E8D9-4710-8535-AAF6CCD14DB6"><img width="418" height="174" src="img/intro_many_to_one.gif" alt="Description of intro_many_to_one.gif follows" title="Description of intro_many_to_one.gif follows" /><br />
+<a href="img_text/intro_many_to_one.htm">Description of the illustration intro_many_to_one.gif</a></div>
+<!-- class="figure" --></li>
+<li>
+<p>Bi-directional, between a single source and a single target</p>
+<div class="figure" id="GUID-10455138-A851-4731-812A-A757C0B36640__GUID-16861CFF-B1F1-49F3-9D48-7CBEA0EAB5A7"><img width="327" height="72" src="img/intro_bidirectional.gif" alt="Description of intro_bidirectional.gif follows" title="Description of intro_bidirectional.gif follows" /><br />
+<a href="img_text/intro_bidirectional.htm">Description of the illustration intro_bidirectional.gif</a></div>
+<!-- class="figure" --></li>
+</ol>
+<p>In doing so, the following business needs can be met:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Change synchronization, supporting both online and batch change synchronization for Transaction Management Facility (TMF)-enabled and non-TMF-enabled applications.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Online change synchronization continuously processes incremental data changes.</p>
+</li>
+<li>
+<p>Batch change synchronization processes change records that are generated during specific periods of time.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Initial load, extracting complete records directly from a source file or table, then loading them into the target. You can use initial load to populate the target and to synchronize the source and target for change synchronization.</p>
+</li>
+<li>
+<p>Data distribution, sending extracted records to more than one target.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-DA51912D-6950-4DCA-8914-DA7585AB6784">Oracle GoldenGate Overview</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD114"></a>
+<div class="props_rev_3"><a id="GUID-F3200BF7-BBCE-451F-B5E7-A982467E0504"></a>
+<h3 id="GNSAD-GUID-F3200BF7-BBCE-451F-B5E7-A982467E0504" class="sect3">Oracle GoldenGate Features</h3>
+<div>
+<p>Oracle GoldenGate features let you select, map, and transform data so it can be used for a variety of applications. You can configure Oracle GoldenGate to integrate and convert data by selecting data based on filtering criteria. You can implement custom logic so Oracle GoldenGate works seamlessly with your own applications.</p>
+<p>For example, you can configure the activities of Oracle GoldenGate by:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Configuring data selection to deliver only required records, filter records to extract specific column data, and control which types of operations are extracted</p>
+</li>
+<li>
+<p>Mapping named source files and tables to the target when the target has similar formats but different file or table names</p>
+</li>
+<li>
+<p>Splitting single rows into multiple rows and combining rows from different tables to a single table</p>
+</li>
+<li>
+<p>Implementing data transformations to:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Convert dates from one format to another</p>
+</li>
+<li>
+<p>Perform arithmetic calculations</p>
+</li>
+<li>
+<p>Transform DML operations, such as converting delete operations into insert operations on the target table</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>You can also configure Oracle GoldenGate to run your custom programs and frequently-used routines with user exits, macros, and obey files. These features increase the flexibility of Oracle GoldenGate by:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Inserting user exits to call your applications and/or custom data management logic</p>
+</li>
+<li>
+<p>Using macros to implement multiple uses of a statement, consolidate multiple commands, and call other macros</p>
+</li>
+<li>
+<p>Automating frequently-used routines by using the <code class="codeph">OBEY</code> command, which instructs Oracle GoldenGate to process parameters specified in another parameter file.</p>
+</li>
+</ul>
+<p>The modular architecture of Oracle GoldenGate lets you implement just the components you need. These components are introduced in the next section.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-DA51912D-6950-4DCA-8914-DA7585AB6784">Oracle GoldenGate Overview</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD115"></a>
+<div class="props_rev_3"><a id="GUID-C0672C26-4F68-4C89-A9FD-B69F158FDF3E"></a>
+<h2 id="GNSAD-GUID-C0672C26-4F68-4C89-A9FD-B69F158FDF3E" class="sect2">Oracle GoldenGate Architecture</h2>
+<div>
+<p>Oracle GoldenGate processes data by capturing records from a <a id="d2541e282" class="indexterm-anchor"></a>data source, housing it temporarily, then delivering it to a data target. Each of these steps is handled by a modular component of Oracle GoldenGate.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-E7CE828D-B77C-4411-B448-97D445D49FC7">Understanding Oracle GoldenGate for HP NonStop</a></p>
+</div>
+</div>
+</div>
+<a id="GNSAD116"></a>
+<div class="sect3"><a id="GUID-91FC7907-3616-49A7-865D-27766D64F213"></a>
+<h3 id="GNSAD-GUID-91FC7907-3616-49A7-865D-27766D64F213" class="sect3">Oracle GoldenGate Components</h3>
+<div>
+<p>Oracle GoldenGate for HP NonStop consists of the following components:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Extract, for extracting and processing records from Transaction Monitoring Facility (TMF)-enabled applications</p>
+</li>
+<li>
+<p>Logger, for extracting and processing records from non-TMF-enabled applications</p>
+</li>
+<li>
+<p>Collector, for facilitating the transmittal of records between local and remote systems</p>
+</li>
+<li>
+<p>Oracle GoldenGate trails, for transmitting change records from the source to the target</p>
+</li>
+<li>
+<p>Replicat, for processing and replicating records to a target</p>
+</li>
+<li>
+<p>Oracle GoldenGate Manager, for controlling, monitoring, and reporting on Oracle GoldenGate processing.</p>
+</li>
+<li>
+<p>Checkpoint groups, for helping maintain data integrity by tracking where, on the source, processing starts and stops</p>
+</li>
+<li>
+<p>Parameters, for compiling instructions for Extract, Replicat, Manager, and utilities</p>
+</li>
+<li>
+<p>Reader, for monitoring Oracle GoldenGate trails for distributed network transactions and communicating status information to the Coordinator</p>
+</li>
+<li>
+<p>Coordinator, for tracking distributed network transactions to coordinate processing across multiple nodes</p>
+</li>
+</ul>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-30B96BF7-9BB6-47D4-9667-2A4899A062E7">Extract</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-5F171476-D246-41CA-88ED-A6CD63F23466">Logger</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-1B8837ED-7F7D-4E5F-AEB1-E695FBAB378C">Collector</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-8F971FE8-BFE1-481D-B404-16A77C51A868">Trails</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-7AB2B221-1BFB-4BC1-802F-C88BD507ABA5">Replicat</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-163044C8-4B98-40C3-95EE-1A8E7CBB672D">Manager</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-060FEF3B-E2C9-4E0E-AABE-F2D141647C94">Syncfile</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-2C2AA021-C4C7-478D-A8A9-75535AAE5FAC">Processing Groups</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-6DE8C0EA-DE7D-46E8-BE67-A4E732E12499">Checkpoints</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-E26FDD94-F4B2-436A-BE1E-6D76D5AFF711">Parameters</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-A70EE573-9C13-4A44-A134-8C6E49A2FE6A">Reader</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-2DC8B539-6320-41F0-8474-C63CCDAC9483">Coordinator</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-C0672C26-4F68-4C89-A9FD-B69F158FDF3E">Oracle GoldenGate Architecture</a></p>
+</div>
+</div>
+</div>
+<a id="GNSAD117"></a>
+<div class="props_rev_3"><a id="GUID-30B96BF7-9BB6-47D4-9667-2A4899A062E7"></a>
+<h4 id="GNSAD-GUID-30B96BF7-9BB6-47D4-9667-2A4899A062E7" class="sect4">Extract</h4>
+<div>
+<p>Extract extracts source data from the TMF audit trail and writes it to one or more files, called Oracle GoldenGate trails. Multiple Extracts can operate on different sources at the same time. For example, one Extract could continuously extract data changes from a database and stream them to an up-to-date decision-support database, while another Extract performs batch extracts from other tables for periodic reporting. Or, two Extract processes can extract and transmit in parallel to two Replicat processes to minimize target latency when the databases are large.</p>
+<p>Use Extract for:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Initial load</p>
+</li>
+<li>
+<p>Change synchronization for TMF-enabled applications</p>
+</li>
+<li>
+<p>Transmitting change records between Logger (non-TMF) over TCP/IP to a remote target</p>
+</li>
+<li>
+<p>Data distribution</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD118"></a>
+<div class="props_rev_3"><a id="GUID-5F171476-D246-41CA-88ED-A6CD63F23466"></a>
+<h4 id="GNSAD-GUID-5F171476-D246-41CA-88ED-A6CD63F23466" class="sect4">Logger</h4>
+<div>
+<p>Logger performs data extracts when a NonStop source is non-TMF. Logger requires GGSLIB, an intercept library, that binds the Oracle GoldenGate application to the user's NonStop application. When the application performs an Enscribe operation (such as <code class="codeph">WRITE</code>), GGSLIB intercepts it and sends the record to Logger. Logger writes the records to a log trail which is read by Replicat.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD119"></a>
+<div class="props_rev_3"><a id="GUID-1B8837ED-7F7D-4E5F-AEB1-E695FBAB378C"></a>
+<h4 id="GNSAD-GUID-1B8837ED-7F7D-4E5F-AEB1-E695FBAB378C" class="sect4">Collector</h4>
+<div>
+<p>When data is transmitted over a TCP/IP connection, the Collector resides on the target system and receives incoming records. Each Replicat group has a dedicated Collector process that terminates when the group's Extract process terminates.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD120"></a>
+<div class="props_rev_3"><a id="GUID-8F971FE8-BFE1-481D-B404-16A77C51A868"></a>
+<h4 id="GNSAD-GUID-8F971FE8-BFE1-481D-B404-16A77C51A868" class="sect4">Trails</h4>
+<div>
+<p>Extract and Logger create trails to transmit data from the source to the target. An Oracle GoldenGate trail can contain a sequence of files or a single flat file. Generally, an Oracle GoldenGate trail is used during online change synchronization and an Oracle GoldenGate file is used for one-time tasks, such as initial data load or certain batch processes.</p>
+<p>All trail file<a id="d2541e583" class="indexterm-anchor"></a><a id="d2541e587" class="indexterm-anchor"></a> names begin with the same two characters, which you specify when you create the trail. As files are created, the name is appended with a six-digit number that increments sequentially from 000000 to 999999. When the sequence number reaches 999999, the numbering starts over at 000000.</p>
+<p>There are two kinds of Oracle GoldenGate trails:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Local trails. Local trails are transmitted to another NonStop system over Expand and read by Replicat. Local trails can also reside on the source and be used as a data source for Extract.</p>
+</li>
+<li>
+<p>Remote trails. Remote trails are transmitted to the target over TCP/IP and read by Replicat on the remote target.</p>
+</li>
+</ul>
+<p>Each record in an Oracle GoldenGate trail includes the data, a header with transaction information, an identifier of the record source, and other items. Trails are unstructured for best performance and are collected into transactions, which process in a continuous stream. Transaction identifiers indicate the first and last records in each transaction. Transactions<a id="d2541e603" class="indexterm-anchor"></a> are written in commit order, which guarantees that:<a id="d2541e608" class="indexterm-anchor"></a><a id="d2541e612" class="indexterm-anchor"></a></p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Each record has been committed in the original database</p>
+</li>
+<li>
+<p>All records in the original transaction are together in the output</p>
+</li>
+<li>
+<p>Inserts, updates, and deletes are presented, per record key, in the order in which they were applied</p>
+</li>
+</ul>
+<p>To maximize throughput and minimize I/O load, extracted data is written to, and read from, the trail in large blocks. By default, Oracle GoldenGate writes data to the <a id="d2541e626" class="indexterm-anchor"></a>trail in a proprietary format which allows data to be exchanged rapidly and accurately among heterogeneous databases. However, data can also be written in external ASCII, XML, or other formats compatible with different applications.</p>
+<div class="section">
+<p class="subhead3">Enabling Trail Recovery (FAR)</p>
+<p>By default, Extract operates in an append mode. If there is a process failure, then a recovery marker is written to the trail and the Extract appends recovery data to the file. This is done to retain a history of all prior data recovery purposes. In an append mode, the Extract initialization determines the identity of the last complete transaction that was written to the trail at startup time.</p>
+<p>With that information, Extract ends recovery when the commit record for that transaction is encountered in the data source; then it begins a new data capture with the next committed transaction that qualifies for extraction and then begins appending the new data to the trail. A data pump or Replicat starts reading again from that recovery point.</p>
+<p>Overwrite mode is another version of Extract recovery that was used in versions of Oracle GoldenGate prior to version 10.0. In these versions, Extract overwrites the existing transaction data in the trail after the last write-checkpoint position, instead of appending the new data. The first transaction that is written is the first one that qualifies for extraction after the last read checkpoint position in the data source. This behavior can be controlled manually with the <code class="codeph">FORMAT RELEASE option on EXTTRAIL/RMTTRAIL</code> parameter.</p>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD121"></a>
+<div class="props_rev_3"><a id="GUID-7AB2B221-1BFB-4BC1-802F-C88BD507ABA5"></a>
+<h4 id="GNSAD-GUID-7AB2B221-1BFB-4BC1-802F-C88BD507ABA5" class="sect4">Replicat</h4>
+<div>
+<p>Replicat reads data from Oracle GoldenGate trails that were created by Extract or Logger. You can run multiple instances of Replicat to read multiple Oracle GoldenGate trails. Replicat supports a high volume of replication activity on the target platform, transferring data in blocks rather than a single record at a time. SQL operations are compiled once and performed many times, and small <a id="d2541e677" class="indexterm-anchor"></a>transactions can be grouped into larger transactions to improve performance.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD122"></a>
+<div class="props_rev_3"><a id="GUID-163044C8-4B98-40C3-95EE-1A8E7CBB672D"></a>
+<h4 id="GNSAD-GUID-163044C8-4B98-40C3-95EE-1A8E7CBB672D" class="sect4">Manager</h4>
+<div>
+<p>Oracle GoldenGate is managed by the Manager. Manager is responsible for starting and stopping Extract, Replicat, and their dependent subprocesses, such as Collector. Extract and Replicat checkpoints give Manager information about what resources are required at a particular time. No other Oracle GoldenGate processes will run if Manager is stopped.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD123"></a>
+<div class="props_rev_3"><a id="GUID-060FEF3B-E2C9-4E0E-AABE-F2D141647C94"></a>
+<h4 id="GNSAD-GUID-060FEF3B-E2C9-4E0E-AABE-F2D141647C94" class="sect4">Syncfile</h4>
+<div>
+<p>Syncfile lets you schedule and manage file duplication when you want to copy files in their entirety. This is a common requirement for maintaining a secondary Oracle GoldenGate instance that may see frequent database changes, but infrequent configuration file changes. However, Syncfile can copy any type of file, database or not, according to a schedule set by you. This makes it suitable for other off-hours, small scale copying tasks.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD124"></a>
+<div class="props_rev_3"><a id="GUID-2C2AA021-C4C7-478D-A8A9-75535AAE5FAC"></a>
+<h4 id="GNSAD-GUID-2C2AA021-C4C7-478D-A8A9-75535AAE5FAC" class="sect4">Processing Groups</h4>
+<div>
+<p>To differentiate among multiple Extract or Replicat processes on a system, you define processing <a id="d2541e776" class="indexterm-anchor"></a><a id="d2541e780" class="indexterm-anchor"></a>groups. A processing group consists of a process (either Extract, Replicat, or Syncfile), its parameter file, its checkpoint file (if applicable), and any other files associated with the process. For example, to replicate two sets of data in parallel, you would create two Replicat groups. You might name one group <code class="codeph">GGSDEL1</code> and the other <code class="codeph">GGSDEL2</code>. Groups are defined by the <code class="codeph">ADD EXTRACT</code> and <code class="codeph">ADD REPLICAT</code> commands in GGSCI.</p>
+<p>A <a id="d2541e799" class="indexterm-anchor"></a>group name can contain up to eight characters and is not case-sensitive. All files and checkpoints relating to a group share that name. Any time you issue a command to control or view processing, you supply a group name or multiple group names with a wildcard.</p>
+<p>You can use numbers in group names, but it is best to avoid placing numbers at the end. Oracle GoldenGate appends a numeric value of 0 to 9 to group names to create report file names. In an instance with Replicats <code class="codeph">REP1</code> and <code class="codeph">REP11</code>, for example, a report file will be created for <code class="codeph">REP1</code> with the name <code class="codeph">REP11</code>. This can cause confusion.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD125"></a>
+<div class="props_rev_3"><a id="GUID-6DE8C0EA-DE7D-46E8-BE67-A4E732E12499"></a>
+<h4 id="GNSAD-GUID-6DE8C0EA-DE7D-46E8-BE67-A4E732E12499" class="sect4">Checkpoints</h4>
+<div>
+<p>Checkpoints are used to store the current read and write position of a process. They ensure that data changes marked for synchronization are extracted, and they prevent redundant extracts. Checkpoints provide fault tolerance by preventing the loss of data if the system, the network, or an Oracle GoldenGate process must be restarted. For advanced synchronization configurations, checkpoints enable multiple Extract or Replicat processes to read from the same set of trails.</p>
+<p>Checkpoints work with inter-process acknowledgments to prevent messages from being lost in the network. Oracle GoldenGate has a proprietary guaranteed-message delivery technology.</p>
+<p>The Extract process checkpoints its position in the data source and in the trail. The Replicat process checkpoints its position in the trail. The checkpoint position is a combination of the sequence number of the trail file and the Relative Byte Address (RBA) of the trail.</p>
+<p>The read checkpoint is always synchronized with the write checkpoint. Thus, if Oracle GoldenGate must re-read data that was already sent to the target system (for example, after a process failure), checkpoints enable accurate overwriting of the old data to the point where new transactions start and Oracle GoldenGate can resume processing.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD126"></a>
+<div class="props_rev_3"><a id="GUID-E26FDD94-F4B2-436A-BE1E-6D76D5AFF711"></a>
+<h4 id="GNSAD-GUID-E26FDD94-F4B2-436A-BE1E-6D76D5AFF711" class="sect4">Parameters</h4>
+<div>
+<p>Parameters manage all Oracle GoldenGate components and utilities, allowing you to customize your data management environment to suit your needs. For example:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The Manager parameter file contains instructions for controlling all other Oracle GoldenGate processes.</p>
+</li>
+<li>
+<p>The Logger parameter file contains instructions for capturing data from non-TMF applications.</p>
+</li>
+<li>
+<p>The Extract parameter file contains instructions for selecting, mapping, and transforming TMF data, and sending trails to Replicat.</p>
+</li>
+<li>
+<p>The Replicat parameter file contains instructions for selecting, mapping, and transforming data to the target.</p>
+</li>
+<li>
+<p>The Global parameter file contains instructions that can be applied globally to Oracle GoldenGate processing.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD127"></a>
+<div class="props_rev_3"><a id="GUID-A70EE573-9C13-4A44-A134-8C6E49A2FE6A"></a>
+<h4 id="GNSAD-GUID-A70EE573-9C13-4A44-A134-8C6E49A2FE6A" class="sect4">Reader</h4>
+<div>
+<p>A Reader on each node scans the local Oracle GoldenGate trail for distributed transactions. When one is found, the Reader gathers local transaction information and sends it to the Coordinator process.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD128"></a>
+<div class="props_rev_3"><a id="GUID-2DC8B539-6320-41F0-8474-C63CCDAC9483"></a>
+<h4 id="GNSAD-GUID-2DC8B539-6320-41F0-8474-C63CCDAC9483" class="sect4">Coordinator</h4>
+<div>
+<p>The Coordinator process receives information from each replicating node on the status of the distributed network transactions that are being processed. The transaction is not committed until the Coordinator has been notified that all of the updates have been received on their destination nodes. If any node has a failure, the changes are not applied.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-91FC7907-3616-49A7-865D-27766D64F213">Oracle GoldenGate Components</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD129"></a>
+<div class="props_rev_3"><a id="GUID-A11D62AB-DE91-466C-B877-DF9730118B5A"></a>
+<h2 id="GNSAD-GUID-A11D62AB-DE91-466C-B877-DF9730118B5A" class="sect2">Oracle GoldenGate Processing</h2>
+<div>
+<p><a id="d2541e1005" class="indexterm-anchor"></a>Oracle GoldenGate for NonStop processes data in a variety of ways, depending on your organization's needs and operating environment. This section introduces the primary ways Oracle GoldenGate captures and delivers data, including:</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-6936EEF1-324D-4E05-BA9E-A9DC071E35E4">Initial Data Synchronization</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-871A3D78-ED8C-41E8-B810-5F0EFA06811D">Capturing Data Changes from TMF Applications</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-ABD2460E-0D64-4677-8C1D-9576B54D0D52">Capturing Data Changes from Non-TMF applications</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-E943BDBD-8ADE-4780-84A5-C810510B68AA">Using Extract for Data Distribution</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-CD1FD22C-BB36-4298-A33C-83DBFDC5738E">Batch Processing</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-B1B3D1DD-53EF-4819-BB98-4D72F3427246">Capturing Directly from Files</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-62A6861D-A774-4BB2-A890-0BA1C6BCB1CF">Custom Event Processing</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-E7CE828D-B77C-4411-B448-97D445D49FC7">Understanding Oracle GoldenGate for HP NonStop</a></p>
+</div>
+</div>
+</div>
+<a id="GNSAD130"></a>
+<div class="props_rev_3"><a id="GUID-6936EEF1-324D-4E05-BA9E-A9DC071E35E4"></a>
+<h3 id="GNSAD-GUID-6936EEF1-324D-4E05-BA9E-A9DC071E35E4" class="sect3">Initial Data Synchronization</h3>
+<div>
+<p>Run <a id="d2541e1080" class="indexterm-anchor"></a>initial data synchronization to synchronize the source and target databases. This process can be run while your transaction system is operational because Oracle GoldenGate will not lock data when it captures and delivers records. With Oracle GoldenGate, your options for loading data include:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Extracting data to a file and sending it to Replicat to apply to the target</p>
+</li>
+<li>
+<p>Using Oracle GoldenGate direct load</p>
+</li>
+<li>
+<p>Using Oracle GoldenGate direct bulk load when the target is Oracle</p>
+</li>
+</ul>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-919C4757-E3E7-4AE7-BBBF-1E29B4A611BA">File to Replicat</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-C92EA201-A75C-424F-BBFB-214DDCE45417">Direct Load</a><br /></li>
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-1E0B70E8-6890-4BC4-A280-9720AB81FA60">Direct Bulk Load</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-A11D62AB-DE91-466C-B877-DF9730118B5A">Oracle GoldenGate Processing</a></p>
+</div>
+</div>
+</div>
+<a id="GNSAD132"></a><a id="GNSAD131"></a>
+<div class="props_rev_3"><a id="GUID-919C4757-E3E7-4AE7-BBBF-1E29B4A611BA"></a>
+<h4 id="GNSAD-GUID-919C4757-E3E7-4AE7-BBBF-1E29B4A611BA" class="sect4">File to Replicat</h4>
+<div>
+<p>You can queue your data in one, or many, Oracle GoldenGate files before loading your target for the first time. This lets you perform initial data synchronization while your transaction system remains online.</p>
+<div class="figure" id="GUID-919C4757-E3E7-4AE7-BBBF-1E29B4A611BA__GUID-1B08784C-F915-41F9-B775-29B84016C1D5">
+<p class="titleinfigure">Figure 1-1 File to Replicat Processing Flow</p>
+<img width="495" height="66" src="img/intro_queuing_data.gif" alt="Description of Figure 1-1 follows" title="Description of Figure 1-1 follows" /><br />
+<a href="img_text/intro_queuing_data.htm">Description of "Figure 1-1 File to Replicat Processing Flow"</a></div>
+<!-- class="figure" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-6936EEF1-324D-4E05-BA9E-A9DC071E35E4">Initial Data Synchronization</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD134"></a><a id="GNSAD133"></a>
+<div class="props_rev_3"><a id="GUID-C92EA201-A75C-424F-BBFB-214DDCE45417"></a>
+<h4 id="GNSAD-GUID-C92EA201-A75C-424F-BBFB-214DDCE45417" class="sect4">Direct Load</h4>
+<div>
+<p>Using Oracle GoldenGate direct load lets you extract data directly from source tables and send it in large blocks directly to Replicat, which writes data to its final target. This method is particularly effective for source data that does not require transformation (such as initial data loads).</p>
+<div class="figure" id="GUID-C92EA201-A75C-424F-BBFB-214DDCE45417__GUID-82122524-D1CE-490B-B5A0-9D6ED4FC1B98">
+<p class="titleinfigure">Figure 1-2 Direct Load Processing Flow</p>
+<img width="453" height="66" src="img/intro_direct_load.gif" alt="Description of Figure 1-2 follows" title="Description of Figure 1-2 follows" /><br />
+<a href="img_text/intro_direct_load.htm">Description of "Figure 1-2 Direct Load Processing Flow "</a></div>
+<!-- class="figure" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-6936EEF1-324D-4E05-BA9E-A9DC071E35E4">Initial Data Synchronization</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD136"></a><a id="GNSAD135"></a>
+<div class="props_rev_3"><a id="GUID-1E0B70E8-6890-4BC4-A280-9720AB81FA60"></a>
+<h4 id="GNSAD-GUID-1E0B70E8-6890-4BC4-A280-9720AB81FA60" class="sect4">Direct Bulk Load</h4>
+<div>
+<p>If you are replicating from NonStop to Oracle, you can use Oracle GoldenGate direct bulk load. Using direct bulk load lets you extract data directly from source tables and send it in a large block to the delivery process. Replicat then communicates directly to SQL*Loader. Using Replicat lets you perform additional data transformation before loading the data. The direct bulk load method is the fastest technique available when using Oracle GoldenGate.</p>
+<div class="figure" id="GUID-1E0B70E8-6890-4BC4-A280-9720AB81FA60__GUID-AC3BEDBB-718C-4285-81F6-2DBF14F58873">
+<p class="titleinfigure">Figure 1-3 Direct Bulk Load Processing Flow</p>
+<img width="563" height="66" src="img/intro_bulkload_data.gif" alt="Description of Figure 1-3 follows" title="Description of Figure 1-3 follows" /><br />
+<a href="img_text/intro_bulkload_data.htm">Description of "Figure 1-3 Direct Bulk Load Processing Flow "</a></div>
+<!-- class="figure" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-6936EEF1-324D-4E05-BA9E-A9DC071E35E4">Initial Data Synchronization</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD138"></a><a id="GNSAD137"></a>
+<div class="props_rev_3"><a id="GUID-871A3D78-ED8C-41E8-B810-5F0EFA06811D"></a>
+<h3 id="GNSAD-GUID-871A3D78-ED8C-41E8-B810-5F0EFA06811D" class="sect3">Capturing Data Changes from TMF Applications</h3>
+<div>
+<p>TMF audit trails provide the central resource for retrieving database changes in TMF-enabled applications. Changes to TMF-enabled Enscribe files and SQL tables are recorded in TMF audit trails for transaction integrity and recoverability. The following figure shows the <a id="d2541e1249" class="indexterm-anchor"></a>processing flow for TMF-audited applications.</p>
+<div class="infobox-note" id="GUID-871A3D78-ED8C-41E8-B810-5F0EFA06811D__GUID-5A584E8B-A786-453E-A7B5-CCEF130D37C8">
+<p class="notep1">Note:</p>
+<p>Because Oracle GoldenGate uses these audit trails for extract processing, plan and manage TMF-related activities carefully. The Oracle GoldenGate GGSCI and Manager tools provide optional audit management capabilities.</p>
+</div>
+<p>The Extract and <a id="d2541e1259" class="indexterm-anchor"></a>Audserv work together to retrieve and process database changes for TMF applications. When started, Extract starts an Audserv process, which returns database changes from TMF audit trails. Audserv reads audit trails from their original location on disk, from a disk or tape dump, or from a user-specified alternative location. Audserv also determines the location of all required audit. Audserv can only areturn changes to tables or files if the user has read access.</p>
+<div class="figure" id="GUID-871A3D78-ED8C-41E8-B810-5F0EFA06811D__GUID-5E652BF2-7221-4BA8-8117-29C5B56BBA85">
+<p class="titleinfigure">Figure 1-4 TMF Audited Process Flow</p>
+<img width="510" height="275" src="img/intro_tmf_flow.gif" alt="Description of Figure 1-4 follows" title="Description of Figure 1-4 follows" /><br />
+<a href="img_text/intro_tmf_flow.htm">Description of "Figure 1-4 TMF Audited Process Flow "</a></div>
+<!-- class="figure" -->
+<p>Database changes include insert, update or delete operations, along with transaction information. Insert and update records are <span class="italic">after-images</span>, or the format of the database record after the operation completes; delete records returned are <span class="italic">before-images</span>. Before-images for <a id="d2541e1277" class="indexterm-anchor"></a>updates can also be returned.</p>
+<p>Extract saves each image in memory until an associated transaction commit record is received. If the transaction aborts, the associated records are discarded. Committed records can be sent to one or more user-designated extract files.</p>
+<p>Audserv automatically excludes audit associated with SQL/MP and SQL/MX catalogs (file codes 564, 564, 565, 572, and 585).</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-8990B18B-844C-410B-B6B7-663A5A099CD1">Capturing Changes for Distributed Network Transactions</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-A11D62AB-DE91-466C-B877-DF9730118B5A">Oracle GoldenGate Processing</a></p>
+</div>
+</div>
+</div>
+<a id="GNSAD140"></a><a id="GNSAD139"></a>
+<div class="props_rev_3"><a id="GUID-8990B18B-844C-410B-B6B7-663A5A099CD1"></a>
+<h4 id="GNSAD-GUID-8990B18B-844C-410B-B6B7-663A5A099CD1" class="sect4">Capturing Changes for Distributed Network Transactions</h4>
+<div>
+<p>In a multi-node environment a single transaction can update files across different nodes. Oracle GoldenGate includes processes to coordinate these network transactions so an outage on one of the nodes will not result in a partially updated transaction.</p>
+<p>The central process is called the <a id="d2541e1331" class="indexterm-anchor"></a>Coordinator. It receives information from each replicating node on the status of the changes being processed. The transaction is not committed until the Coordinator has been notified that all of the updates have been received on their destination nodes. If any node has a failure, the changes are not applied.</p>
+<p><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-8990B18B-844C-410B-B6B7-663A5A099CD1__I966183">Figure 1-5</a> illustrates the processing flow for a transaction across two nodes. An order from a customer, for example, can add information to the customer account file on the <code class="codeph">\A</code> and the customer order file on <code class="codeph">\B</code>, and these files can each be replicated to backup nodes.</p>
+<div class="figure" id="GUID-8990B18B-844C-410B-B6B7-663A5A099CD1__I966183">
+<p class="titleinfigure">Figure 1-5 Processing Flow for Distributed Network Transactions</p>
+<img width="323" height="506" src="img/intro_network_trans.gif" alt="Description of Figure 1-5 follows" title="Description of Figure 1-5 follows" /><br />
+<a href="img_text/intro_network_trans.htm">Description of "Figure 1-5 Processing Flow for Distributed Network Transactions "</a></div>
+<!-- class="figure" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-871A3D78-ED8C-41E8-B810-5F0EFA06811D">Capturing Data Changes from TMF Applications</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD142"></a><a id="GNSAD141"></a>
+<div class="props_rev_3"><a id="GUID-ABD2460E-0D64-4677-8C1D-9576B54D0D52"></a>
+<h3 id="GNSAD-GUID-ABD2460E-0D64-4677-8C1D-9576B54D0D52" class="sect3">Capturing Data Changes from Non-TMF applications</h3>
+<div>
+<p>Many Enscribe applications do not use the NonStop <a id="d2541e1378" class="indexterm-anchor"></a>TMF audit facility. Oracle GoldenGate provides an alternative method for capturing non-TMF-audited database changes. Figure 5 displays the processing flow.</p>
+<div class="figure" id="GUID-ABD2460E-0D64-4677-8C1D-9576B54D0D52__GUID-5C137574-74F8-4A67-9571-38967B318B16">
+<p class="titleinfigure">Figure 1-6 Oracle GoldenGate Processing Flow&mdash;Non-TMF Applications</p>
+<img width="438" height="63" src="img/intro_nontmf_flow.gif" alt="Description of Figure 1-6 follows" title="Description of Figure 1-6 follows" /><br />
+<a href="img_text/intro_nontmf_flow.htm">Description of "Figure 1-6 Oracle GoldenGate Processing Flow&mdash;Non-TMF Applications "</a></div>
+<!-- class="figure" -->
+<p>The Oracle GoldenGate Software intercept library (<a id="d2541e1390" class="indexterm-anchor"></a>GGSLIB) is a group of functions with the same names as Guardian operating system procedures. GGSLIB is bound to Guardian, acting as an interface between application programs and NonStop.</p>
+<p>For example, when an application calls a Guardian function such as <code class="codeph">WRITE</code>, GGSLIB performs it instead of Guardian. The application is unaware of the substitution and performs, from an application programming standpoint, exactly as it did before.</p>
+<p>If the function succeeds, it sends its data to Logger, which writes it to an Oracle GoldenGate log trail. Log trails are available for Extract and Replicat processing, which perform formatting, distribution, and delivery steps.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-A11D62AB-DE91-466C-B877-DF9730118B5A">Oracle GoldenGate Processing</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD500"></a><a id="GNSAD499"></a>
+<div class="props_rev_3"><a id="GUID-E943BDBD-8ADE-4780-84A5-C810510B68AA"></a>
+<h3 id="GNSAD-GUID-E943BDBD-8ADE-4780-84A5-C810510B68AA" class="sect3">Using Extract for Data Distribution</h3>
+<div>
+<p>Extract can retrieve data from custom-created files or from trails created by Extract or Logger&mdash;in this sense, distributing data. Applications can take advantage of the data movement, formatting, conversion, and other features of Oracle GoldenGate without reading the data directly from TMF audit trails or the database.</p>
+<div class="figure" id="GUID-E943BDBD-8ADE-4780-84A5-C810510B68AA__GUID-D00B8FDC-A254-4BE9-BF77-42E99EFA830D">
+<p class="titleinfigure">Figure 1-7 Extract as Data Distributor</p>
+<img width="504" height="203" src="img/intro_data_distributor.gif" alt="Description of Figure 1-7 follows" title="Description of Figure 1-7 follows" /><br />
+<a href="img_text/intro_data_distributor.htm">Description of "Figure 1-7 Extract as Data Distributor "</a></div>
+<!-- class="figure" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-A11D62AB-DE91-466C-B877-DF9730118B5A">Oracle GoldenGate Processing</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD145"></a>
+<div class="props_rev_3"><a id="GUID-CD1FD22C-BB36-4298-A33C-83DBFDC5738E"></a>
+<h3 id="GNSAD-GUID-CD1FD22C-BB36-4298-A33C-83DBFDC5738E" class="sect3">Batch Processing</h3>
+<div>
+<p>When capturing incremental data changes in real-time is not appropriate, you can run <a id="d2541e1463" class="indexterm-anchor"></a>batch processing. Batch runs process data generated during a specific time frame, defined by a begin and end time. Many Oracle GoldenGate operations, such as record selection, mapping, and field conversions can be performed during batch processing.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-A11D62AB-DE91-466C-B877-DF9730118B5A">Oracle GoldenGate Processing</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD146"></a>
+<div class="props_rev_3"><a id="GUID-B1B3D1DD-53EF-4819-BB98-4D72F3427246"></a>
+<h3 id="GNSAD-GUID-B1B3D1DD-53EF-4819-BB98-4D72F3427246" class="sect3">Capturing Directly from Files</h3>
+<div>
+<p>In some situations, Extract can read directly from a file rather than from the log trail; however, the following conditions must be true:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The file or sequence of files is <a id="d2541e1505" class="indexterm-anchor"></a>entry-sequenced.</p>
+</li>
+<li>
+<p>Only inserts occur against the files&mdash;no updates or deletes.</p>
+</li>
+<li>
+<p>Records are inserted only at the <span class="italic">end of the file.</span></p>
+</li>
+</ul>
+<p>Use this feature when:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The method of logging is non-TMF-enabled.</p>
+</li>
+<li>
+<p>The files are <a id="d2541e1527" class="indexterm-anchor"></a>BASE24 <code class="codeph">TLFX</code> or <code class="codeph">PTLFX.</code></p>
+</li>
+<li>
+<p>The input files meet the conditions described above.</p>
+</li>
+<li>
+<p>You want to "trickle" the batch file contents throughout the day, rather than all at once at the end of the day.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-A11D62AB-DE91-466C-B877-DF9730118B5A">Oracle GoldenGate Processing</a></p>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD147"></a>
+<div class="props_rev_3"><a id="GUID-62A6861D-A774-4BB2-A890-0BA1C6BCB1CF"></a>
+<h3 id="GNSAD-GUID-62A6861D-A774-4BB2-A890-0BA1C6BCB1CF" class="sect3">Custom Event Processing</h3>
+<div>
+<p>Oracle GoldenGate user exits make it possible to incorporate custom processing needs. A common application of user exits is <a id="d2541e1568" class="indexterm-anchor"></a>database event triggering. For example, a user exit might contain code to page a supervisor when an account balance falls below a certain threshold. User exits reside outside the mainstream application&mdash;you can add, change, or remove them with almost no impact on the application.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-A11D62AB-DE91-466C-B877-DF9730118B5A">Oracle GoldenGate Processing</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a id="GNSAD148"></a>
+<div class="props_rev_3"><a id="GUID-B85A5A33-48F8-459C-A16D-CBC56B503D31"></a>
+<h2 id="GNSAD-GUID-B85A5A33-48F8-459C-A16D-CBC56B503D31" class="sect2">Oracle GoldenGate Commands</h2>
+<div>
+<p>GGSCI is the command-line interface that lets you interface with all Oracle GoldenGate components. Throughout this guide, you will see GGSCI commands described; they are your primary tools for configuring, operating, managing, and troubleshooting your data management environment.</p>
+<p>Output from the Oracle GoldenGate GGSCI interface supports up to 1024 processing groups, including Extract, Coordinator, Syncfile, and Replicat groups. At the supported level, all groups can be controlled and viewed in full with the GGSCI commands, such as <code class="codeph">INFO</code> and <code class="codeph">STATUS</code> commands. Beyond that supported level, group information is not displayed and errors can occur. Oracle GoldenGate recommends keeping the combined number of processing groups at 1024 or below in order to manage your environment effectively.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-A2B6AA58-0608-4537-A1D5-7C79C0AFBDB6">To Start GGSCI</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-E7CE828D-B77C-4411-B448-97D445D49FC7">Understanding Oracle GoldenGate for HP NonStop</a></p>
+</div>
+</div>
+</div>
+<a id="GNSAD150"></a><a id="GNSAD149"></a>
+<div class="props_rev_3"><a id="GUID-A2B6AA58-0608-4537-A1D5-7C79C0AFBDB6"></a>
+<h3 id="GNSAD-GUID-A2B6AA58-0608-4537-A1D5-7C79C0AFBDB6" class="sect3">To Start GGSCI</h3>
+<div>
+<p>Before you can start GGSCI, you must navigate to the Oracle GoldenGate installation location. When you are in the correct subvolume, enter <code class="codeph">RUN GGSCI</code>. Your prompt will change to a GGSCI prompt. For example:</p>
+<div class="example" id="GUID-A2B6AA58-0608-4537-A1D5-7C79C0AFBDB6__GUID-FDC1C502-AE30-4057-9CBE-32C683F16F84">
+<p class="titleinexample">Example 1-1 Starting GGSCI</p>
+<pre dir="ltr">
+TACL&gt; VOLUME $DATA.GGS 
+TACL&gt; RUN GGSCI 
+GGSCI&gt; 
+</pre>
+<p>After you have the GGSCI command prompt, enter GGSCI commands on the command line as needed. With GGSCI commands, you can edit parameter files, add groups, view reports, and communicate with running processes. For more information, see <a class="olink GNSRF-GUID-DECBD91E-5CDB-4E74-AFC7-5F0102AFAAD2" target="_blank" href="../GNSRF/GUID-DECBD91E-5CDB-4E74-AFC7-5F0102AFAAD2.htm#GNSRF-GUID-DECBD91E-5CDB-4E74-AFC7-5F0102AFAAD2">GGSCI Commands</a> .</p>
+</div>
+<!-- class="example" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="understanding-oracle-goldengate-hp-nonstop.htm#GUID-B85A5A33-48F8-459C-A16D-CBC56B503D31">Oracle GoldenGate Commands</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment191">
+<tr>
+<td class="cellalignment228">
+<table class="cellalignment196">
+<tr>
+<td class="cellalignment195"><a href="preface.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment195"><a href="planning-configuration.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2014, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment230">
+<table class="cellalignment194">
+<tr>
+<td class="cellalignment195"><a href="http://docs.oracle.com/goldengate/ns1221/gg-nsk/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment195"><a href="../nav/portal_booklist.htm"><img width="24" height="24" src="../dcommon/gifs/booklist.gif" alt="Go to Book List" /><br />
+<span class="icon">Book List</span></a></td>
+<td class="cellalignment195"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment195"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

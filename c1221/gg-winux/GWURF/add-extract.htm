@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>ADD EXTRACT</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="stop-manager.htm" title="Previous" type="text/html" />
+<link rel="Next" href="alter-extract.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-D9611110-A8D6-4118-837E-BF1900262666"></a> <span id="PAGE" style="display:none;">15/459</span> <!-- End Header -->
+<a id="GWURF123"></a><a id="GWURF124"></a><a id="GWURF125"></a><a id="GWURF126"></a><a id="GWURF127"></a><a id="GWURF128"></a><a id="GWURF129"></a><a id="GWURF130"></a><a id="GWURF131"></a><a id="GWURF132"></a><a id="GWURF1078"></a><a id="GWURF1203"></a><a id="GWURF1214"></a><a id="GWURF1220"></a><a id="GWURF122"></a>
+<h1 id="GWURF-GUID-D9611110-A8D6-4118-837E-BF1900262666" class="sect1"><span class="enumeration_section">1.7</span> ADD EXTRACT</h1>
+<div>
+<div class="section">
+<p>Use <code class="codeph">ADD EXTRACT</code> to create an Extract group. Unless a <code class="codeph">SOURCEISTABLE</code> task or an alias Extract is specified, <code class="codeph">ADD EXTRACT</code> creates an online group that uses checkpoints so that processing continuity is maintained from run to run.</p>
+<p>For DB2 for i, this command establishes a global start point for all journals and is a required first step. After issuing the <code class="codeph">ADD EXTRACT</code> command, you can then optionally position any given journal at a specific journal sequence number by using the <code class="codeph">ALTER EXTRACT</code> command with an appropriate journal option.</p>
+<p>For Informix, this command initializes the position in the Informix logical log to capture the CDC record. When the first DML is processed, the Informix CDC record is contained in the logical log. Each record in the log is associated with a position, which is called LSN (Log Sequence Number). Only when initialization is complete will it be able to honor the positioning based on the LSN. The very first time you add an Extract, you <span class="italic">must</span> ensure that the has initialization completed (the duration depends on number of tables in your Extract parameter file) using the <code class="codeph">INFO EXTRACT</code> command. Then ensure that the LSN number displayed matches the LSN displayed as the first record processed in the Extract report file. For example, if the LSN number returned by <code class="codeph">INFO EXTRACT</code> is <code class="codeph">LSN: 892:0X1235018</code>, then the message in the report file must be <code class="codeph">Position of first record processed LSN: 892:0X1235018, Apr 16, 2014 2:56:58 AM</code>. When the initial Extract log positioning is complete, you can issue a stop or kill command <span class="italic">though not before</span>; doing so before results in any capture restart always starting from the EOF position of the database logs.</p>
+<p>Oracle GoldenGate supports up to 5,000 concurrent Extract and Replicat groups per instance of Oracle GoldenGate Manager. At the supported level, all groups can be controlled and viewed in full with GGSCI commands such as the <code class="codeph">INFO</code> and <code class="codeph">STATUS</code> commands. Oracle GoldenGate recommends keeping the combined number of Extract and Replicat groups at the default level of 300 or below in order to manage your environment effectively.</p>
+<p>This command cannot exceed 500 bytes in size for all keywords and input, including any text that you enter for the <code class="codeph">DESC</code> option.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax for a Regular, Passive, or Data Pump Extract</p>
+<pre dir="ltr">
+ADD EXTRACT <span class="italic">group_name</span>
+{, SOURCEISTABLE |
+    , TRANLOG [<span class="italic">bsds_name           </span> | LRI_<span class="italic">number</span>] |
+    , INTEGRATED TRANLOG |
+    , VAM |
+    , EXTFILESOURCE <span class="italic">file_name</span> |
+    , EXTTRAILSOURCE <span class="italic">trail_name</span> |
+    , VAMTRAILSOURCE <span class="italic">VAM_trail_name</span>}
+[, BEGIN {NOW | <span class="italic">yyyy-mm-dd[ hh:mi:[ss[.cccccc]]]</span>} |
+[, EXTSEQNO <span class="italic">sequence_number</span>, EXTRBA <span class="italic">relative_byte_address</span> |
+[, EOF |
+[, LSN <span class="italic">value</span> |
+[, EXTRBA <span class="italic">relative_byte_address</span> |
+[, EOF | LSN <span class="italic">value</span> |
+[, PAGE <span class="italic">data_page</span>, ROW <span class="italic">row</span>_ID |
+[, SEQNO <span class="italic">sequence_number</span>
+[, SCN <span class="italic">value</span>]
+[, THREADS <span class="italic">n</span>]
+[, PASSIVE]
+[, PARAMS <span class="italic">file_name</span>]
+[, REPORT <span class="italic">file_name</span>]
+[, DESC '<span class="italic">description</span>']
+[, CPU <span class="italic">number</span>]
+[, PRI <span class="italic">number</span>]
+[, HOMETERM <span class="italic">device_name</span>]
+[, PROCESSNAME <span class="italic">process_name</span>]
+[, SOCKSPROXY {<span class="italic">host_name</span> | <span class="italic">IP_address</span>}[:<span class="italic">port</span>] [PROXYCSALIAS <span class="italic">credential_store_alias</span> [PROXYCSDOMAIN <span class="italic">credential_store_domain</span>]]]
+[, RMTNAME <span class="italic">passive_Extract_name</span>]
+[, DESC '<span class="italic">description</span>']
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<dl>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-5FA1FAA3-F430-42B4-BA43-CE16E1B0FA8E"><!-- --></a><span class="italic"><span class="bold"><code class="codeph">group_name</code></span></span></dt>
+<dd>
+<p>The name of the Extract group. The name of an Extract group can contain up to eight characters. See <a class="olink GWUAD978" target="_blank" href="../GWUAD/configuring-online-change-synchronization.htm#GWUAD978"><span class="italic"><span id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GWUAD"><cite>Administering Oracle GoldenGate for Windows and UNIX</cite></span></span></a> for group naming conventions.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-DEB7BD9E-ADC9-4585-B804-725AB17F02F9"><!-- --></a><code class="codeph">SOURCEISTABLE</code></dt>
+<dd>
+<p>Creates an Extract task that extracts entire records from the database for an initial load using the Oracle GoldenGate direct load method or the direct bulk load to SQL*Loader method. If <code class="codeph">SOURCEISTABLE</code> is not specified, <code class="codeph">ADD EXTRACT</code> creates an online change-synchronization process, and one of the other data source options must be specified. When using <code class="codeph">SOURCEISTABLE</code>, do not specify any service options. Task parameters must be specified in the parameter file.</p>
+<p>For more information about initial load methods, see <a class="olink GWUAD546" target="_blank" href="../GWUAD/instantiating-oracle-goldengate-initial-load.htm#GWUAD546"><span class="italic"><span><cite>Administering Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-19B87D87-DF80-474D-BF58-8469B5890FD7"><!-- --></a><code class="codeph">TRANLOG [</code><span class="italic"><span class="bold"><code class="codeph">bsds_name</code></span></span> | <code class="codeph">LRI_</code><span class="italic"><code class="codeph">NUMBER</code></span>]</dt>
+<dd>
+<p>Specifies the transaction log as the data source. Use this option for all databases except Informix and Teradata. <code class="codeph">TRANLOG</code> requires the <code class="codeph">BEGIN</code> option.</p>
+<p>(DB2 on z/OS) You can use the <span class="italic"><code class="codeph">bsds_name</code></span> option for DB2 on a z/OS system to specify the Bootstrap Data Set file name of the transaction log, though it is not required and is not used. You do not need to change existing <code class="codeph">TRANLOG</code> parameters.</p>
+<p>(DB2 LUW) You can use the <code class="codeph">LRI_</code><span class="italic"><code class="codeph">NUMBER</code></span> option for DB2 LUW systems to specify the LRI record value for the checkpoint transaction log.</p>
+<p>(Oracle) As of Oracle Standard or Enterprise Edition 11.2.0.3, this mode is known as <span class="italic">classic capture</span> mode. Extract reads the Oracle redo logs directly. See <code class="codeph">INTEGRATED TRANLOG</code> for an alternate configuration.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-EE62BFD2-3243-46E1-A407-37DA97D0519F"><!-- --></a><code class="codeph">INTEGRATED TRANLOG</code></dt>
+<dd>
+<p>(Oracle) Adds this Extract in integrated capture mode. In this mode, Extract integrates with the database logmining server, which passes logical change records (LCRs) directly to Extract. Extract does not read the redo log. Before using <code class="codeph">INTEGRATED TRANLOG</code>, use the <code class="codeph">REGISTER EXTRACT</code> command. For information about integrated capture, see <a class="olink GIORA554" target="_blank" href="../GIORA/choosing-capture-and-apply-modes.htm#GIORA554"><span class="italic"><span id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GIORA"><cite>Installing and Configuring Oracle GoldenGate for Oracle Database</cite></span></span></a>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-AD3C806D-055B-45BC-A9DF-E18ED97606F3"><!-- --></a><code class="codeph">VAM</code></dt>
+<dd>
+<p>(Informix, MySQL, and Teradata) Specifies that the Extract API known as the <span class="italic">Vendor Access Module</span> (VAM) will be used to transfer change data to Extract.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-6F37D9A4-48B1-434B-95F2-EF5910BEBBE2"><!-- --></a><code class="codeph">EXTFILESOURCE</code> <span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p>Specifies an extract file as the data source. Use this option with a secondary Extract group (data pump) that acts as an intermediary between a primary Extract group and the target system.</p>
+<p>For <span class="italic"><code class="codeph">file_name</code></span>, specify the relative or fully qualified path name of the file, for example <code class="codeph">dirdat\extfile</code> or <code class="codeph">c:\ggs\dirdat\extfile</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-99E2B997-83A7-4F42-A35C-C5AF3A9A3C3F"><!-- --></a><code class="codeph">EXTTRAILSOURCE</code> <span class="italic"><code class="codeph">trail_name</code></span></dt>
+<dd>
+<p>Specifies a trail as the data source. Use this option with a secondary Extract group (data pump) that acts as an intermediary between a primary Extract group and the target system.</p>
+<p>For <span class="italic"><code class="codeph">trail_name</code></span>, specify the relative or fully qualified path name of the trail, for example <code class="codeph">dirdat\aa</code> or <code class="codeph">c:\ggs\dirdat\aa</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-5326522E-BCB9-45DF-9827-81756FB04D8E"><!-- --></a><code class="codeph">VAMTRAILSOURCE</code> <span class="italic"><code class="codeph">VAM_trail_nam</code></span>e</dt>
+<dd>
+<p>(Teradata) Specifies a VAM trail. Use this option when using Teradata maximum protection mode.</p>
+<p>For <span class="italic"><code class="codeph">VAM_trail_name</code></span>, specify the relative or fully qualified path name of the VAM trail to which the primary Extract group is writing. Use a VAM-sort Extract group to read the VAM trail and send the data to the target system.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-A728D5EF-D50A-4BC4-B390-98F6466BDBF8"><!-- --></a><code class="codeph">BEGIN {NOW |</code> <span class="italic"><code class="codeph">yyyy-mm-dd[ hh:mi:[ss[.cccccc]]]</code></span>}</dt>
+<dd>
+<p>Specifies a timestamp in the data source at which to begin processing.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-2BA65610-59BB-470F-AF4D-9E1E70E24DA5"><!-- --></a><code class="codeph">NOW</code></dt>
+<dd>
+<p>For all databases except DB2 LUW, <code class="codeph">NOW</code> specifies the time at which the <code class="codeph">ADD EXTRACT</code> command is issued.</p>
+<p>For DB2 LUW, <code class="codeph">NOW</code> specifies the time at which <code class="codeph">START EXTRACT</code> takes effect. It positions to the first record that <span class="italic">approximately</span> matches the date and time. This is because the only log records that contain timestamps are the commit and abort transaction records, so the starting position can only be calculated relative to those timestamps. This is a limitation of the API that is used by Oracle GoldenGate.</p>
+<p>Do not use <code class="codeph">NOW</code> for a data pump Extract except to bypass data that was captured to the trail prior to the <code class="codeph">ADD EXTRACT</code> statement.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-A15E125C-CAF1-400E-9743-47102E551EA4"><!-- --></a><span class="italic"><code class="codeph">yyyy-mm-dd[ hh:mi:[ss[.cccccc]]]</code></span></dt>
+<dd>
+<p>A date and time (timestamp) in the given form. For an Oracle Extract in integrated mode, the timestamp value must be greater than the timestamp at which the Extract was registered with the database.</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Positioning by timestamp in a SQL Server transaction log is affected by the following characteristics of SQL Server:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>The timestamps recorded in the SQL Server transaction log use a 3.3333 microsecond (ms) granularity. This level of granularity may not allow positioning by time between two transactions, if the transactions began in the same 3.3333 ms time interval.</p>
+</li>
+<li>
+<p>Timestamps are not recorded in every SQL Server log record, but only in the records that begin and commit the transaction, as well as some others that do not contain data.</p>
+</li>
+<li>
+<p>SQL Server timestamps are not from the system clock, but instead are from an internal clock that is specific to the individual processors in use. This clock updates several times a second, but between updates it could get out of sync with the system clock. This further reduces the precision of positioning by time.</p>
+</li>
+<li>
+<p>Timestamps recorded for log backup files may not precisely correspond to times recorded inside the backup (however this imprecision is less than a second).</p>
+</li>
+</ul>
+<p>Positioning to an LSN is precise.</p>
+</li>
+<li>
+<p>Positioning by timestamp in a Sybase transaction log is affected by the following characteristics of Sybase:</p>
+<p>Sybase only records timestamps in <code class="codeph">BEGIN</code> and <code class="codeph">COMMIT</code> records. Regardless of the actual timestamp that is specified, the start position will be the first record of the transaction that starts closest to, or at, the specified timestamp. The Extract report will display the following positions:</p>
+<p><span class="bold">Positioning To</span>: This is the specified begin time, for example:</p>
+<pre dir="ltr">
+Positioning to begin time Jan 1, 2011 12:13:33 PM.
+</pre>
+<p><span class="bold">Positioned To</span>: If the specified timestamp is less than, or equal to, the timestamp of the transaction log that contains the <code class="codeph">BEGIN</code> or <code class="codeph">COMMIT</code> record, <code class="codeph">Positioned To Page</code> is displayed as in this example:</p>
+<pre dir="ltr">
+2011-01-01 12:13:39  INFO    OGG-01516  Positioned to
+Page #: 0004460243
+Row #: 00111, Jan 1, 2011 12:13:38 PM.
+</pre>
+<p><span class="bold">First Record Position</span>: This is the position of the first valid record at, or after, the <code class="codeph">Positioned To</code> position, as in this example:</p>
+<pre dir="ltr">
+2011-01-01 12:13:39  INFO OGG-01517  Position of first record processed
+Page #: 0004460243
+Row #: 00111, Jan 1, 2011 12:13:38 PM.
+</pre></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-9361F493-B759-48E7-8BC8-B573CCC833A5"><!-- --></a><code class="codeph">EXTSEQNO</code> <span class="italic"><code class="codeph">sequence_number</code></span>, <code class="codeph">EXTRBA</code> <span class="italic"><code class="codeph">relative_byte_address</code></span></dt>
+<dd>
+<p>Valid for a primary Extract in classic capture mode for Oracle, a primary Extract for NonStop SQL/MX, and a data pump Extract. Not supported for an Oracle Extract in integrated mode. Specifies either of the following:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>sequence number of an Oracle redo log and RBA within that log at which to begin capturing data.</p>
+</li>
+<li>
+<p>the NonStop SQL/MX TMF audit trail sequence number and relative byte address within that file at which to begin capturing data. Together these specify the location in the TMF Master Audit Trail (MAT).</p>
+</li>
+<li>
+<p>the file in a trail in which to begin capturing data (for a data pump). Specify the sequence number, but not any zeroes used for padding. For example, if the trail file is <code class="codeph">c:\ggs\dirdat\aa000026</code>, you would specify <code class="codeph">EXTSEQNO 26</code>. By default, processing begins at the beginning of a trail unless this option is used.</p>
+</li>
+</ul>
+<p>Contact Oracle Support before using this option. For more information, go to <a href="http://support.oracle.com." target="_blank"><code class="codeph">http://support.oracle.com.</code></a></p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-16392F17-787B-48E4-BF7A-4471655E518D"><!-- --></a><code class="codeph">EXTRBA</code> <span class="italic"><code class="codeph">relative_byte_address</code></span></dt>
+<dd>
+<p>Valid for DB2 on z/OS. Specifies the relative byte address within a transaction log at which to begin capturing data. The required format is <code class="codeph">0X</code><span class="italic"><code class="codeph">nnn</code></span>, where <span class="italic"><code class="codeph">nnn</code></span> is a 1 to 20 digit hexadecimal number (the first character is the digit zero, and the second character can be upper or lower case letter <code class="codeph">x</code>).</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-FC7CC22A-01E9-405B-96A6-0F980DB412BA"><!-- --></a><code class="codeph">EOF</code></dt>
+<dd>
+<p>Valid for SQL Server and DB2 for i. Configures processing to start at the end of the log files (or journals) that the next record will be written to. Any active transactions will not be captured.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__CHDFDJAE"><!-- --></a><code class="codeph">LSN</code> <span class="italic"><code class="codeph">value</code></span></dt>
+<dd>
+<p>Valid for Informix and SQL Server. Specifies the LSN in a transaction log at which to start capturing data. The specified LSN should exist in a log backup or the online log. An alias for this option is <code class="codeph">EXTLSN</code>.</p>
+<p>For SQL Server, an LSN is composed of one of these, depending on how the database returns it:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Colon separated hex string (<code class="codeph">8:8:4</code>) padded with leading zeroes and <code class="codeph">0X</code> prefix, as in <code class="codeph">0X00000d7e:0000036b:01bd</code></p>
+</li>
+<li>
+<p>Colon separated decimal string (<code class="codeph">10:10:5</code>) padded with leading zeroes, as in <code class="codeph">0000003454:0000000875:00445</code></p>
+</li>
+<li>
+<p>Colon separated hex string with <code class="codeph">0X</code> prefix and without leading zeroes, as in <code class="codeph">0Xd7e:36b:1bd</code></p>
+</li>
+<li>
+<p>Colon separated decimal string without leading zeroes, as in <code class="codeph">3454:875:445</code></p>
+</li>
+<li>
+<p>Decimal string, as in <code class="codeph">3454000000087500445</code></p>
+</li>
+</ul>
+<p>In the preceding, the first value is the virtual log file number, the second is the segment number within the virtual log, and the third is the entry number.</p>
+<p>You can find the LSN for named transactions by using a query like:</p>
+<pre dir="ltr">
+select [Current LSN], [Transaction Name], [Begin Time]
+  from fn_dblog(null, null)
+ where Operation = 'LOP_BEGIN_XACT'
+   and [Begin Time] &gt;= <span class="italic">'time</span>'
+</pre>
+<p>The time format that you should use in the query should be similar to '2015/01/30 12:00:00.000' and not '2015-01-30 12:00:00.000'.</p>
+<p>You can determine the time that a particular transaction started, then find the relevant LSN, and then position between two transactions with the same begin time.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-0A5381BC-1CE2-40E2-A46C-8D908450C83B"><!-- --></a><code class="codeph">EOF | LSN</code> <span class="italic"><code class="codeph">value</code></span></dt>
+<dd>
+<p>Valid for DB2 LUW. Specifies a start position in the transaction logs when Extract starts.</p>
+<dl>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-301A5F68-926B-45B1-A364-251F95786EC8"><!-- --></a><code class="codeph">EOF</code></dt>
+<dd>
+<p>Configures processing to start at the active LSN in the log files. The active LSN is the position at the end of the log files that the next record will be written to. Any active transactions will not be captured.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-DCFC95DE-BC46-4DCD-9B48-240FB3AEE96C"><!-- --></a><code class="codeph">LSN</code> <span class="italic"><code class="codeph">value</code></span></dt>
+<dd>
+<p>Configures processing to start at an exact LSN if a valid log record exists there. If one does not exist, Extract will abend. Note that, although Extract might position to a given LSN, that LSN might not necessarily be the first one that Extract will process. There are numerous record types in the log files that Extract ignores, such as DB2 internal log records. Extract will report the actual starting LSN to the Extract report file.</p>
+</dd>
+</dl>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-46CB1F2A-37ED-4644-92D8-8ADCF05E00BC"><!-- --></a><code class="codeph">PAGE</code> <span class="italic"><code class="codeph">data_page</code></span><code class="codeph">, ROW</code> <span class="italic"><code class="codeph">row_ID</code></span></dt>
+<dd>
+<p>Valid for Sybase. Specifies a data page and row that together define a start position in a Sybase transaction log. Because the start position must be the first record of the transaction that starts closest to, or at, the specified <code class="codeph">PAGE</code> and <code class="codeph">ROW</code>, the Extract report will display the following positions:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">Positioning To</span> is the position of the record that is specified with <code class="codeph">PAGE</code> and <code class="codeph">ROW</code>.</p>
+</li>
+<li>
+<p><span class="bold">Positioned To</span> is the position where the first <code class="codeph">BEGIN</code> record is found at, or after, the <code class="codeph">Positioning To</code> position.</p>
+</li>
+<li>
+<p><span class="bold">First Record Position</span> is the position of the first valid record at, or after, the <code class="codeph">Positioned To</code> position.</p>
+</li>
+</ul>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-FAEA22B0-018F-4535-A6B2-8D3694D064C0"><!-- --></a><code class="codeph">SEQNO</code> <span class="italic"><code class="codeph">sequence_number</code></span></dt>
+<dd>
+<p>Valid for DB2 for i. Starts capture at, or just after, a system sequence number, which is a decimal number up to 20 digits in length.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-FD92A438-8C4F-44CA-8EC0-6F3F9FE335FF"><!-- --></a><code class="codeph">SCN</code> <span class="italic"><code class="codeph">value</code></span></dt>
+<dd>
+<p>Valid for Oracle. Starts Extract at the transaction in the redo log that has the specified Oracle system change number (SCN). This option is valid for Extract both in classic capture and integrated modes. For Extract in integrated mode, the SCN value must be greater than the SCN at which the Extract was registered with the database. For more information, see <a href="register-extract.htm#GUID-5E42DB9E-EFDF-40C0-89D7-88413496B8A3">REGISTER EXTRACT</a>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-90B51F09-9F1B-4F53-B102-F8E2718F6B45"><!-- --></a><code class="codeph">PARAMS</code> <span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p>Specifies the full path name of an Extract parameter file in a location other than the default of <code class="codeph">dirprm</code> within the Oracle GoldenGate directory.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-9866D1C8-A988-4A9D-B912-924B396E4F59"><!-- --></a><code class="codeph">REPORT</code> <span class="italic"><code class="codeph">file_name</code></span></dt>
+<dd>
+<p>Specifies the full path name of an Extract report file in a location other than the default of <code class="codeph">dirrpt</code> within the Oracle GoldenGate directory.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-06E8B749-5A34-4722-9E8F-A80F9EA3411E"><!-- --></a><code class="codeph">THREADS</code> <span class="italic"><code class="codeph">n</code></span></dt>
+<dd>
+<p>Valid for Oracle classic capture mode. Specifies the number of producer threads that Extract maintains to read redo logs.</p>
+<p>Required in an Oracle RAC configuration to specify the number of producer threads. These are the Extract threads that read the different redo logs on the various RAC nodes. The value must be the same as the number of nodes from which you want to capture redo data.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-D56DF68E-C84D-4C84-A27E-04C9171214E7"><!-- --></a><code class="codeph">PASSIVE</code></dt>
+<dd>
+<p>Specifies that this Extract group runs in passive mode and can only be started and stopped by starting or stopping an alias Extract group on the target system. Source-target connections will be established not by this group, but by the alias Extract from the target.</p>
+<p>This option can be used for a regular Extract group or a data-pump Extract group. It should only be used by whichever Extract on the source system is the one that will be sending the data across the network to a remote trail on the target.</p>
+<p>For instructions on how to configure passive and alias Extract groups, see <a class="olink GWUAD384" target="_blank" href="../GWUAD/configuring-oracle-goldengate-security.htm#GWUAD384"><span class="italic"><span><cite>Administering Oracle GoldenGate for Windows and UNIX</cite></span></span></a>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-86FF70D9-D23D-4C54-A8E4-0A97853646F2"><!-- --></a><code class="codeph">DESC '</code><span class="italic"><code class="codeph">description</code></span><code class="codeph">'</code></dt>
+<dd>
+<p>Specifies a description of the group, such as <code class="codeph">'Extracts account_tab on Serv1</code>'. Enclose the description within single quotes. You may use the abbreviated keyword <code class="codeph">DESC</code> or the full word <code class="codeph">DESCRIPTION</code>.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-5EFBAF50-3544-45AB-AF85-172E7084CE53"><!-- --></a><code class="codeph">CPU</code> <span class="italic"><code class="codeph">number</code></span></dt>
+<dd>
+<p>Valid for SQL/MX. Specifies the number of the CPU to be used for the process. Valid values are numbers <code class="codeph">0</code> - <code class="codeph">15</code> and <code class="codeph">-1</code> is default, which is assigned 1 higher than the last Manager started.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-71B6B8A4-688B-4742-A239-3E2D32EE6049"><!-- --></a><code class="codeph">PRI</code> <span class="italic"><code class="codeph">number</code></span></dt>
+<dd>
+<p>Valid for SQL/MX. Specifies the Extract process priority. Valid values are numbers are <code class="codeph">1</code> - <code class="codeph">199</code> and <code class="codeph">-1</code> is the default, and is the same as the manager process priority.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-0AF3375B-D6CA-48A1-9E14-F026BB19263E"><!-- --></a><code class="codeph">HOMETERM</code> <span class="italic"><code class="codeph">device_name</code></span></dt>
+<dd>
+<p>Valid for SQL/MX. Specifies the name of the device to be used and must be a terminal or process. It can be entered in either Guardian <code class="codeph">$</code> or OSS <code class="codeph">/G/</code><span class="italic"><code class="codeph">xxxxx</code></span> form. The default is <code class="codeph">$zhome</code> or the current session <code class="codeph">HOMETERM</code> when <code class="codeph">$zhome</code> is not defined.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-9BAF5DA1-C3B4-4E04-9FEF-5ABA20535AC1"><!-- --></a><code class="codeph">PROCESSNAME</code> <span class="italic"><code class="codeph">process_name</code></span></dt>
+<dd>
+<p>Valid for SQL/MX. Specifies the name of the process as alphanumeric string up to five characters and can be entered in either Guardian <code class="codeph">$</code> or OSS <code class="codeph">/G/</code><span class="italic"><code class="codeph">xxxxx</code></span> form. The default is a system generated process name.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-B3FB0B8F-662F-4D3F-B801-779846ACAEA4"><!-- --></a><code class="codeph">SOCKSPROXY</code> {<span class="italic"><code class="codeph">host_name</code></span> | <span class="italic"><code class="codeph">IP_address</code></span>}[:<span class="italic"><code class="codeph">port</code></span>] [<code class="codeph">PROXYCSALIAS</code> <span class="italic"><code class="codeph">credential_store_alias</code></span> [<code class="codeph">PROXYCSDOMAIN</code> <span class="italic"><code class="codeph">credential_store_domain</code></span>]</dt>
+<dd>
+<p>Use for an alias Extract. Specifies the DNS host name or IP address of the proxy server. You can use either one to define the host though you must use the IP address if your DNS server is unreachable. If you are using an IP address, use either an IPv6 or IPv4 mapped address, depending on the stack of the destination system. You must specify the <code class="codeph">PROXYCSALIAS</code>. In addition, you can specify the port to use, and the credential store domain.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-4F756549-72E2-46F0-932E-4228172D4AFE"><!-- --></a><code class="codeph">RMTNAME</code> <span class="italic"><code class="codeph">passive_extract_name</code></span></dt>
+<dd>
+<p>Use for an alias Extract. Specifies the passive Extract name, if different from that of the alias Extract.</p>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-3DFFC734-9388-4E56-A566-8D56220CF686"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following creates an Extract group named <code class="codeph">finance</code> that extracts database changes from the transaction logs. Extraction starts with records generated at the time when the group was created with <code class="codeph">ADD EXTRACT</code>.</p>
+<pre dir="ltr">
+ADD EXTRACT finance, TRANLOG, BEGIN NOW
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-8E0E9AA1-92FB-466C-9A59-03A44C18B99D"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following creates an Extract group named <code class="codeph">finance</code> that extracts database changes from Oracle RAC logs. Extraction starts with records generated at the time when the group was created. There are four RAC instances, meaning there will be four Extract threads.</p>
+<pre dir="ltr">
+ADD EXTRACT finance, TRANLOG, BEGIN NOW, THREADS 4
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-C05760D1-94ED-4549-8A05-CDEED5DF3607"><!-- --></a>Example 3&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following creates an Extract group named <code class="codeph">finance</code> that extracts database changes from the transaction logs. Extraction starts with records generated at 8:00 on January 21, 2011.</p>
+<pre dir="ltr">
+ADD EXTRACT finance, TRANLOG, BEGIN 2011-01-21 08:00
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-07D5E31E-AC8B-4AAD-8E46-95F008D710A4"><!-- --></a>Example 4&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following creates an integrated capture Extract group.</p>
+<pre dir="ltr">
+ADD EXTRACT finance, INTEGRATED TRANLOG, BEGIN NOW
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-709A5AA6-FB1E-41C7-9BA8-30CAE6AC244B"><!-- --></a>Example 5&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following creates an Extract group named <code class="codeph">finance</code> that interfaces with a Teradata TAM in either maximum performance or maximum protection mode. No <code class="codeph">BEGIN</code> point is used for Teradata sources.</p>
+<pre dir="ltr">
+ADD EXTRACT finance, VAM
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-FE61D12D-8439-4204-9FE0-C0ABF99F71E8"><!-- --></a>Example 6&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following creates a VAM-sort Extract group named <code class="codeph">finance</code>. The process reads from the VAM trail <code class="codeph">/ggs/dirdat/vt</code>.</p>
+<pre dir="ltr">
+ADD EXTRACT finance, VAMTRAILSOURCE dirdat/vt
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-63659994-394A-4661-BCF7-CC171EFCB46C"><!-- --></a>Example 7&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following creates a data-pump Extract group named <code class="codeph">finance</code>. It reads from the Oracle GoldenGate trail <code class="codeph">c:\ggs\dirdat\lt</code>.</p>
+<pre dir="ltr">
+ADD EXTRACT finance, EXTTRAILSOURCE dirdat\lt
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-A4775B12-35F3-4C14-8F3D-B9566E873B06"><!-- --></a>Example 8&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following creates an initial-load Extract named <code class="codeph">load</code>.</p>
+<pre dir="ltr">
+ADD EXTRACT load, SOURCEISTABLE
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-E0D4D3C0-1995-41BC-ABC5-66208F9785C6"><!-- --></a>Example 9&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following creates a passive Extract group named <code class="codeph">finance</code> that extracts database changes from the transaction logs.</p>
+<pre dir="ltr">
+ADD EXTRACT finance, TRANLOG, BEGIN NOW, PASSIVE
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-1146545C-4B6D-415B-93E5-5F7D942E06D1"><!-- --></a>Example 10&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following creates an alias Extract group named <code class="codeph">financeA.</code> The alias Extract is associated with a passive extract named <code class="codeph">finance</code> on source system <code class="codeph">sysA</code>. The Manager on that system is using port 7800.</p>
+<pre dir="ltr">
+ADD EXTRACT financeA, RMTHOST sysA, MGRPORT 7800, RMTNAME finance
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-C6C568DE-9D97-4412-B0F7-AAA1F5BF2090"><!-- --></a>Example 11&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following examples create and position Extract at a specific Oracle system change number (SCN) in the redo log.</p>
+<pre dir="ltr">
+ADD EXTRACT finance TRANLOG SCN 123456
+ADD EXTRACT finance INTEGRATED TRANLOG SCN 123456
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-6368CB5A-6B79-43D6-BD3C-904BC7FEE154"><!-- --></a>Example 12&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following example creates an alias Extract specifying the host to use.</p>
+<pre dir="ltr">
+ADD EXTRACT apmp desc "alias extract" RMTHOST lc01abc MGRPORT 7813 RMTNAME 
+ppmp SOCKSPROXY lc02def:3128 PROXYCSALIAS proxyAlias 
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-8746D658-3D1D-4F87-A7FB-BDDE272680FC"><!-- --></a>Example 13&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following example creates an Extract on a SQL/MX system.</p>
+<pre dir="ltr">
+ADD EXTRACT ext exttcp, CPU 3, PRI 148, HOMETERM $ZTN0.#PTHBP32,  PROCESSNAME $ext1
+</pre></dd>
+<dt class="dlterm"><a id="GUID-D9611110-A8D6-4118-837E-BF1900262666__GUID-145C595C-6F91-45BA-86DB-DCD4161DC0F7"><!-- --></a>Example 14&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following example creates an Extract on a DB2 LUW system.</p>
+<p><code class="codeph">ADD EXTRACT extcust, TRANLOG LRI 8066.322711</code></p>
+</dd>
+</dl>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="stop-manager.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="alter-extract.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

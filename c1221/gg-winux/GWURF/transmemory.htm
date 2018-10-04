@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>TRANSMEMORY</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="dcterms.created" content="2018-07-19T03:21:52Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Reference for Oracle GoldenGate for Windows and UNIX" />
+<meta name="dcterms.identifier" content="E66350-08" />
+<meta name="dcterms.isVersionOf" content="GWURF" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="transactiontimeout.htm" title="Previous" type="text/html" />
+<link rel="Next" href="trimspaces-notrimspaces.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWURF.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4"></a> <span id="PAGE" style="display:none;">322/459</span> <!-- End Header -->
+<a id="GWURF721"></a><a id="GWURF722"></a><a id="GWURF720"></a>
+<h1 id="GWURF-GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4" class="sect1"><span class="enumeration_section">3.189</span> TRANSMEMORY</h1>
+<div>
+<div class="section">
+<p class="subhead1">Valid For</p>
+<p>Extract for DB2 on z/OS</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Description</p>
+<p>Use the <code class="codeph">TRANSMEMORY</code> parameter to control the amount of memory and temporary disk space available for caching uncommitted transaction data. Because Oracle GoldenGate sends only committed transactions to the target database, it requires sufficient system memory to store transaction data on the source system until either a commit or rollback indicator is received.</p>
+<p>This parameter is for use with a DB2 database on z/OS database. For all other databases, use the <code class="codeph"><a href="cachemgr.htm#GUID-B910F3D9-E41C-4335-AC0A-442435481A19">CACHEMGR</a></code> parameter.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">About Memory Management With TRANSMEMORY</p>
+<p><code class="codeph">TRANSMEMORY</code> enables you to tune the Oracle GoldenGate transaction cache size and define a temporary location on disk for storing data that exceeds the size of the cache. Options are available for defining the total cache size, the per-transaction memory size, the initial and incremental memory allocation, and disk storage space.</p>
+<p>Transactions are added to the memory pool specified by <code class="codeph">RAM</code>, and each is flushed to disk when <code class="codeph">TRANSRAM</code> is reached. An initial amount of memory is allocated to each transaction based on <code class="codeph">INITTRANSRAM</code> and is increased by the amount specified by <code class="codeph">RAMINCREMENT</code> as needed, up to the maximum set with <code class="codeph">TRANSRAM</code>. Consequently, the value for <code class="codeph">TRANSRAM</code> should be evenly divisible by the sum of (<code class="codeph">INITTRANSRAM + RAMINCREMENT</code>).</p>
+<p>To view current <code class="codeph">TRANSMEMORY</code> settings, use the <code class="codeph">VIEW REPORT</code> command in GGSCI.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Special z/OS Considerations</p>
+<p>On a z/OS system, the <code class="codeph">RAM</code> option not only controls the total virtual memory allocation for all cached transactions, but also controls the size of the heap memory that is allocated during startup. The large default value prevents fragmentation within the virtual memory pool, but in some installations it could cause virtual memory to be wasted, especially if the applications primarily generate small transactions. Allocating a large amount of heap memory also can cause Extract to be unresponsive at startup until z/OS completes the allocation.</p>
+<p>On z/OS, set <code class="codeph">RAM</code> just large enough to hold enough transaction activity without affecting the performance of Extract. If set too low, it can cause Extract to write transaction data to disk, causing Extract to run more slowly and to consume disk space. You might need to do some testing to determine the optimal value.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Default</p>
+<p>None</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Syntax</p>
+<pre dir="ltr">
+TRANSMEMORY
+[RAM <span class="italic">size</span>]
+[TRANSRAM <span class="italic">size</span>]
+[TRANSALLSOURCES <span class="italic">size</span>]
+[INITTRANSRAM <span class="italic">size</span>]
+[RAMINCREMENT <span class="italic">size</span>]
+[DIRECTORY (<span class="italic">directory</span>, <span class="italic">max_size</span>, <span class="italic">max_file_size</span>)]
+</pre>
+<dl>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-3EC85437-8B77-45A6-8B49-66CABA862757"><!-- --></a><code class="codeph">RAM</code> <span class="italic"><code class="codeph">size</code></span></dt>
+<dd>
+<p>Specifies the total amount of memory to use for all cached transactions. On z/OS this also is the initial amount of memory to allocate <span class="italic">per transaction</span>. The default is 200 megabytes. The value can be specified in bytes or in terms of gigabytes, megabytes, or kilobytes in any of the following forms:</p>
+<p><code class="codeph">GB | MB | KB | G | M | K | gb | mb | kb | g | m | k</code></p>
+</dd>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-E068B702-7478-4FAB-B822-65430DFED264"><!-- --></a><code class="codeph">TRANSRAM</code> <span class="italic"><code class="codeph">size</code></span></dt>
+<dd>
+<p>Specifies the total amount of memory to use for a single transaction. The default is 50 megabytes. The value can be specified in bytes or in terms of gigabytes, megabytes, or kilobytes in any of the following forms:</p>
+<p><code class="codeph">GB | MB | KB | G | M | K | gb | mb | kb | g | m | k</code></p>
+<p><code class="codeph">TRANSRAM</code> should be evenly divisible by both <code class="codeph">INITTRANSRAM</code> and <code class="codeph">RAMINCREMENT</code> for optimal results.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-BF37A9EB-4F37-4DB9-BBEF-BB1A61EBCFDC"><!-- --></a><code class="codeph">TRANSALLSOURCES</code> <span class="italic"><code class="codeph">size</code></span></dt>
+<dd>
+<p>Specifies the total amount of memory and disk space to use for a single transaction. The default is 50% of total available memory (memory and disk). The value can be specified in bytes or in terms of gigabytes, megabytes, or kilobytes in any of the following forms:</p>
+<p><code class="codeph">GB | MB | KB | G | M | K | gb | mb | kb | g | m | k</code></p>
+</dd>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-0CECCE2F-7636-4794-BC7D-AFDFF6BAD91E"><!-- --></a><code class="codeph">INITTRANSRAM</code> <span class="italic"><code class="codeph">size</code></span></dt>
+<dd>
+<p>(NonStop system only) Specifies the initial amount of memory to allocate for a transaction. The default is 500 kilobytes. The value can be specified in bytes or in terms of gigabytes, megabytes, or kilobytes in any of the following forms:</p>
+<p><code class="codeph">GB | MB | KB | G | M | K | gb | mb | kb | g | m | k</code></p>
+</dd>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-C3A917FA-3973-46D4-B6FE-E4A58D1E535D"><!-- --></a><code class="codeph">RAMINCREMENT</code> <span class="italic"><code class="codeph">size</code></span></dt>
+<dd>
+<p>Specifies the amount of memory to increment when a transaction requires more memory. The default is 500 kilobytes. The value can be specified in bytes or in terms of gigabytes, megabytes, or kilobytes in any of the following forms:</p>
+<p><code class="codeph">GB | MB | KB | G | M | K | gb | mb | kb | g | m | k</code></p>
+</dd>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-411223B0-0979-41DE-8D3C-0D938C5B08A5"><!-- --></a><code class="codeph">DIRECTORY (</code><span class="italic"><code class="codeph">directory, max_size, max_file_size</code></span><code class="codeph">)</code></dt>
+<dd>
+<p>Specifies temporary disk storage for transaction data when its size exceeds the maximum specified with <code class="codeph">TRANSRAM</code>. You can specify <code class="codeph">DIRECTORY</code> more than once.</p>
+<p>The directory size specified with <span class="italic"><code class="codeph">max_size</code></span> and the file size specified with <span class="italic"><code class="codeph">max_file_size</code></span> must be greater than the size of the memory specified with <code class="codeph">RAM</code>.</p>
+<p>The names of the files that are created take one of the following formats, depending on the process type:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="italic"><code class="codeph">group_trans_</code></span><code class="codeph">00001.mem</code> takes the name of the group and indicates that an online process created the file.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">PID_trans_</code></span><code class="codeph">00001.mem</code> takes the name of a process ID (PID) and indicates that a one-time process (specified with the <code class="codeph">SPECIALRUN</code> parameter) created the file.</p>
+</li>
+<li>
+<p><span class="italic"><code class="codeph">group_thread#_</code></span><code class="codeph">00001.mem</code> takes a group name and a thread number, indicating that a threaded Extract created the file.</p>
+</li>
+</ul>
+<dl>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-BFC6A7FE-3C12-4C08-A492-E58FAD307805"><!-- --></a><span class="italic"><code class="codeph">directory</code></span></dt>
+<dd>
+<p>The fully qualified path name of a directory. The default is the <code class="codeph">dirtmp</code> sub-directory of the Oracle GoldenGate directory.</p>
+</dd>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-799BEED8-D601-4F28-B82D-96FDEC7ACD5B"><!-- --></a><span class="italic"><code class="codeph">max_size</code></span></dt>
+<dd>
+<p>The maximum size of all files in the directory. The default is 2 gigabytes. If the space specified is not available, then 75% of available disk space is used. Values can be specified in bytes or in terms of gigabytes, megabytes, or kilobytes in any of the following forms:</p>
+<pre dir="ltr">
+GB | MB | KB | G | M | K | gb | mb | kb | g | m | k
+</pre></dd>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-9025E60A-D599-4FB3-B770-7A1D93F187D9"><!-- --></a><span class="italic"><code class="codeph">max_file_size</code></span></dt>
+<dd>
+<p>The maximum size of each file in the directory. The default is 200 megabytes. Values can be specified in bytes or in terms of gigabytes, megabytes, or kilobytes in any of the following forms:</p>
+<pre dir="ltr">
+GB | MB | KB | G | M | K | gb | mb | kb | g | m | k
+</pre></dd>
+</dl>
+</dd>
+</dl>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Examples</p>
+<dl>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-D3C71F0F-1BA7-4E79-8DD3-176B5951BF15"><!-- --></a>Example 1&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following example allows per-transaction memory to be incremented ten times before data is flushed to disk, once for the initial allocation specified with <code class="codeph">INITTRANSRAM</code> and then nine more times as permitted by <code class="codeph">RAMINCREMENT</code>.</p>
+<pre dir="ltr">
+TRANSMEMORY DIRECTORY(c:\test\dirtmp, 3000000000,
+300000000), RAM 8000K, TRANSRAM 1000K, INITTRANSRAM 100K,
+RAMINCREMENT 100K
+</pre></dd>
+<dt class="dlterm"><a id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-A831AF07-7CAD-4C15-8DF9-F4335605D55C"><!-- --></a>Example 2&nbsp;&nbsp;&nbsp;</dt>
+<dd>
+<p>The following is the same as the preceding example, but with the addition of a second directory.</p>
+<pre dir="ltr">
+TRANSMEMORY DIRECTORY(c:\test\dirtmp, 3000000000,
+300000000), DIRECTORY (c:\test\dirtmp2, 1000000000,
+5000000), RAM 8000K, TRANSRAM 1000K, INITTRANSRAM 100K,
+RAMINCREMENT 100K
+</pre></dd>
+</dl>
+<div class="infobox-note" id="GUID-F9AFB260-6D80-4067-AB16-BEDBB97EB8F4__GUID-2DDC0703-2EAB-4CFA-8DA3-DDC9540263B8">
+<p class="notep1">Note:</p>
+<p>In the previous examples, the parameter specification spans multiple lines because of space constraints. In an actual parameter file, multi-line parameter specifications must contain an ampersand (&amp;) at the end of each line.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment453">
+<tr>
+<td class="cellalignment460">
+<table class="cellalignment458">
+<tr>
+<td class="cellalignment457"><a href="transactiontimeout.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment457"><a href="trimspaces-notrimspaces.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment462">
+<table class="cellalignment456">
+<tr>
+<td class="cellalignment457"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment457"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

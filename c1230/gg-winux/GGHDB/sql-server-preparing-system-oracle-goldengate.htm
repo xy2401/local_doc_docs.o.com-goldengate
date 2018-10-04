@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Preparing the System for Oracle GoldenGate</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter contains steps to take so that the database with which Oracle GoldenGate interacts is correctly configured to support Oracle GoldenGate capture and delivery. Some steps apply only to a source system, some only to a target, and some to both." />
+<meta name="dcterms.created" content="2018-09-07T08:20:49Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Using Oracle GoldenGate for Heterogeneous Databases" />
+<meta name="dcterms.identifier" content="E88786-08" />
+<meta name="dcterms.isVersionOf" content="GGHDB" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="understanding-whats-supported-sql-server.htm" title="Previous" type="text/html" />
+<link rel="Next" href="preparing-database-oracle-goldengate-classic-capture.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GGHDB.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-5A25569B-4167-4EB7-B4E7-205114300703"></a> <span id="PAGE" style="display:none;">25/37</span> <!-- End Header -->
+<h1 id="GGHDB-GUID-5A25569B-4167-4EB7-B4E7-205114300703" class="sect1"><span class="enumeration_chapter">16</span> Preparing the System for Oracle GoldenGate</h1>
+<div>
+<div><span>This chapter contains steps to take so that the database with which Oracle GoldenGate interacts is correctly configured to support Oracle GoldenGate capture and delivery. Some steps apply only to a source system, some only to a target, and some to both.</span></div>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-C4D742C8-C562-4E34-9755-AEE46EEDC921">Configuring a Database Connection</a><br /></li>
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-B8634668-CFAE-4371-AF19-DBC941C97C50">Preparing Tables for Processing</a><br /></li>
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-67F8F582-AF2C-4850-A767-9888BDD37F49">Globalization Support</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="18.1using-oracle-goldengate-sql-server.htm" title="With Oracle GoldenGate for SQL Server, you can capture transactional data from user tables of supported SQL Server versions and replicate the data to a SQL Server database or other supported Oracle GoldenGate targets, such as an Oracle Database or Big Data target.">Using Oracle GoldenGate with SQL Server</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-C4D742C8-C562-4E34-9755-AEE46EEDC921"></a>
+<h2 id="GGHDB-GUID-C4D742C8-C562-4E34-9755-AEE46EEDC921" class="sect2"><span class="enumeration_section">16.1</span> Configuring a Database Connection</h2>
+<div>
+<p>This section contains instructions for setting up the Extract and Replicat connections to a SQL Server database.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-6C0434CD-D6A2-42A1-A71E-D13CED988E06">Configuring an Extract Database Connection</a><br /></li>
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-8ACF97BF-8B30-427A-88DD-CA48BF4A17F7">Configuring a Replicat Database Connection</a><br /></li>
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-5F6AC826-0AE7-48BD-9417-8A3137375DF0">Configuring an ODBC Connection</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-5A25569B-4167-4EB7-B4E7-205114300703" title="This chapter contains steps to take so that the database with which Oracle GoldenGate interacts is correctly configured to support Oracle GoldenGate capture and delivery. Some steps apply only to a source system, some only to a target, and some to both.">Preparing the System for Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-6C0434CD-D6A2-42A1-A71E-D13CED988E06"></a>
+<h3 id="GGHDB-GUID-6C0434CD-D6A2-42A1-A71E-D13CED988E06" class="sect3"><span class="enumeration_section">16.1.1</span> Configuring an Extract Database Connection</h3>
+<div>
+<p>Extract connects to a source SQL Server database through an ODBC (Open Database Connectivity) connection. To create this connection, you set up a data source name (DSN) through the Data Sources (ODBC) control panel. See <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-5F6AC826-0AE7-48BD-9417-8A3137375DF0">Configuring an ODBC Connection</a> for instructions.</p>
+<p>When using Transport Layer Security (TLS) 1.2 in your database environment, include the following parameter in Extract to force it to use a supported connection protocol:</p>
+<pre dir="ltr">
+DBOPTIONS DRIVER SQLNCLI11
+</pre></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-C4D742C8-C562-4E34-9755-AEE46EEDC921">Configuring a Database Connection</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-8ACF97BF-8B30-427A-88DD-CA48BF4A17F7"></a>
+<h3 id="GGHDB-GUID-8ACF97BF-8B30-427A-88DD-CA48BF4A17F7" class="sect3"><span class="enumeration_section">16.1.2</span> Configuring a Replicat Database Connection</h3>
+<div>
+<p>Replicat can connect to the target database to perform DML operations in the following ways:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Through ODBC.</p>
+</li>
+<li>
+<p>Through OLE DB. This is the default and provides slightly better performance than using ODBC.</p>
+</li>
+<li>
+<p>Through OLE DB as the SQL Server replication user. <code class="codeph">NOT FOR REPLICATION</code> must be set on <code class="codeph">IDENTITY</code> columns, foreign key constraints, and triggers.</p>
+<div class="infobox-note" id="GUID-8ACF97BF-8B30-427A-88DD-CA48BF4A17F7__GUID-AA8C5D7A-B31F-449C-912D-303D333B26AD">
+<p class="notep1">Note:</p>
+<p>Because Replicat always uses ODBC to query for metadata, you must configure a target ODBC connection.</p>
+</div>
+</li>
+</ul>
+<p>Before you select a method to use, review the following guidelines and procedures to evaluate the advantages and disadvantages of each.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-9C642CBB-0627-4608-81E7-B6F75E19676C">Using ODBC or Default OLE DB</a><br /></li>
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-6DBFBE60-521B-49AA-B8C8-B61FA3DBEB8E">Using OLE DB with USEREPLICATIONUSER</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-C4D742C8-C562-4E34-9755-AEE46EEDC921">Configuring a Database Connection</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-9C642CBB-0627-4608-81E7-B6F75E19676C"></a>
+<h4 id="GGHDB-GUID-9C642CBB-0627-4608-81E7-B6F75E19676C" class="sect4"><span class="enumeration_section">16.1.2.1</span> Using ODBC or Default OLE DB</h4>
+<div>
+<div class="section">
+<p>If Replicat connects through ODBC or through the default OLE DB connection, the following limitations apply:</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p>To keep <code class="codeph">IDENTITY</code> columns identical on source and target when using ODBC or default OLE DB, Replicat creates special operations in its transaction to ensure that the seeds are incremented on the target. These steps may reduce delivery performance.</p>
+</li>
+<li>
+<p>You must adjust or disable triggers and constraints on the target tables to eliminate the potential for redundant operations.</p>
+</li>
+</ul>
+<p>To use Replicat with either ODBC or OLE DB, follow these steps:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>To use ODBC exclusively, include the <code class="codeph">DBOPTIONS</code> parameter with the <code class="codeph">USEODBC</code> option in the Replicat parameter file. (To use the default OLE DB connection, no parameter is required.)</span></li>
+<li class="stepexpand"><span>Disable triggers and constraints on the target tables. See <a href="preparing-system-oracle-goldengate1.htm#GUID-404795D4-E272-49C6-8957-EEA007F4B269">Disabling Triggers and Cascade Constraints</a>.</span></li>
+<li class="stepexpand"><span>To use <code class="codeph">IDENTITY</code> columns in a bidirectional SQL Server configuration, define the <code class="codeph">IDENTITY</code> columns to have an increment value equal to the number of servers in the configuration, with a different seed value for each one. For example, a two-server installation would be as follows:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Sys1 sets the seed value at 1 with an increment of 2.</p>
+</li>
+<li>
+<p>Sys2 sets the seed value at 2 with an increment of 2.</p>
+</li>
+</ul>
+<p>A three-server installation would be as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Sys1 sets the seed value at 1 with an increment of 3.</p>
+</li>
+<li>
+<p>Sys2 sets the seed value at 2 with an increment of 3.</p>
+</li>
+<li>
+<p>Sys3 sets the seed value at 3 with an increment of 3.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Configure an ODBC data source. See <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-5F6AC826-0AE7-48BD-9417-8A3137375DF0">Configuring an ODBC Connection</a>.</span></li>
+</ol>
+<div class="section">
+<div class="infobox-note" id="GUID-9C642CBB-0627-4608-81E7-B6F75E19676C__GUID-A4B1E87D-0D1C-4775-8C76-B9C81D1AF9AB">
+<p class="notep1">Note:</p>
+<p>OLE DB uses the ODBC connection settings to derive connection information for OLE DB together with information on which driver to use.</p>
+</div>
+</div>
+<!-- class="section" --></div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-8ACF97BF-8B30-427A-88DD-CA48BF4A17F7">Configuring a Replicat Database Connection</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-6DBFBE60-521B-49AA-B8C8-B61FA3DBEB8E"></a>
+<h4 id="GGHDB-GUID-6DBFBE60-521B-49AA-B8C8-B61FA3DBEB8E" class="sect4"><span class="enumeration_section">16.1.2.2</span> Using OLE DB with <code class="codeph">USEREPLICATIONUSER</code></h4>
+<div>
+<div class="section">
+<p>If Replicat connects as the SQL Server replication user through OLE DB with the <code class="codeph">USEREPLICATIONUSER</code> option, and <code class="codeph">NOT FOR REPLICATION</code> is enabled for <code class="codeph">IDENTITY</code>, triggers, and foreign key constraints, the following benefits and limitations apply.</p>
+</div>
+<!-- class="section" -->
+<div class="section">
+<ul style="list-style-type: disc;">
+<li>
+<p><code class="codeph">IDENTITY</code> seeds are not incremented when Replicat performs an insert. For SQL Server bidirectional configurations, stagger the seed and increment values like the example in Step 3 of the previous section.</p>
+</li>
+<li>
+<p>Triggers are disabled for the Replicat user automatically on the target to prevent redundant operations. However triggers fire on the target for other users.</p>
+</li>
+<li>
+<p>Foreign key constraints are not enforced on the target for Replicat transactions. <code class="codeph">CASCADE</code> updates and deletes are not performed. These, too, prevent redundant operations.</p>
+</li>
+<li>
+<p><code class="codeph">CHECK</code> constraints are not enforced on the target for Replicat transactions. Even though these constraints are enforced on the source before data is captured, consider whether their absence on the target could cause data integrity issues.</p>
+<div class="infobox-note" id="GUID-6DBFBE60-521B-49AA-B8C8-B61FA3DBEB8E__GUID-17E5E664-F36C-4C8F-B68F-E0DF8F824ED4">
+<p class="notep1">Note:</p>
+<p>Normal <code class="codeph">IDENTITY</code>, trigger, and constraint functionality remains in effect for any users other than the Replicat replication user.</p>
+</div>
+</li>
+</ul>
+<p>To use Replicat with <code class="codeph">USEREPLICATIONUSER</code>, follow these steps:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>In SQL Server Management Studio (or other interface) set the <code class="codeph">NOT FOR REPLICATION</code> flag on the following objects. For active-passive configurations, set it only on the passive database. For active-active configurations, set it on both databases.</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p>Foreign key constraints</p>
+</li>
+<li>
+<p>Check constraints</p>
+</li>
+<li>
+<p><code class="codeph">IDENTITY</code> columns</p>
+</li>
+<li>
+<p>Triggers (requires textual changes to the definition; see the SQL Server documentation for more information.)</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Partition <code class="codeph">IDENTITY</code> values for bidirectional configurations.</span></li>
+<li class="stepexpand"><span>In the Replicat <code class="codeph">MAP</code> statements, map the source tables to appropriate targets, and map the child tables that the source tables reference with triggers or foreign-key cascade constraints. Triggered and cascaded child operations are replicated by Oracle GoldenGate, so the referenced tables must be mapped to appropriate targets to preserve data integrity. Include the same parent and child source tables in the Extract <code class="codeph">TABLE</code> parameters.</span>
+<div>
+<div class="infobox-note" id="GUID-6DBFBE60-521B-49AA-B8C8-B61FA3DBEB8E__GUID-187E5452-3E97-4605-870F-EF067609A55D">
+<p class="notep1">Note:</p>
+<p>If referenced tables are omitted from the <code class="codeph">MAP</code> statements, no errors alert you to integrity violations, such as if a row gets inserted into a table that contains a foreign key to a non-replicated table.</p>
+</div>
+</div>
+</li>
+<li class="stepexpand"><span>In the Replicat parameter file, include the <code class="codeph">DBOPTIONS</code> parameter with the <code class="codeph">USEREPLICATIONUSER</code> option.</span></li>
+<li class="stepexpand"><span>Configure an ODBC data source. See <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-5F6AC826-0AE7-48BD-9417-8A3137375DF0">Configuring an ODBC Connection</a>.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-8ACF97BF-8B30-427A-88DD-CA48BF4A17F7">Configuring a Replicat Database Connection</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-5F6AC826-0AE7-48BD-9417-8A3137375DF0"></a>
+<h3 id="GGHDB-GUID-5F6AC826-0AE7-48BD-9417-8A3137375DF0" class="sect3"><span class="enumeration_section">16.1.3</span> Configuring an ODBC Connection</h3>
+<div>
+<div class="section">
+<p>Follow these instructions to create a SQL Server system data source name (DSN) for a source SQL Server database and for a target SQL Server database. A DSN stores information about how to connect to a SQL Server database through ODBC (Open Database Connectivity).</p>
+<div class="infobox-note" id="GUID-5F6AC826-0AE7-48BD-9417-8A3137375DF0__GUID-4E4B642A-DBD1-4182-8645-924D68DC9E08">
+<p class="notep1">Note:</p>
+<p>Even when using OLE DB as the apply connection method, Replicat always uses ODBC to query the target database for metadata. Therefore Replicat always requires a DSN.</p>
+</div>
+</div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead3">To create a SQL Server DSN</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>To run the ODBC client, select <span class="bold">Control Panel</span>, select <span class="bold">Administrative Tools</span>, and then select <span class="bold">Data Sources (ODBC)</span>.</span></li>
+<li class="stepexpand"><span>In the ODBC Data Source Administrator dialog box of the ODBC client, select the System DSN tab, and then click <span class="bold">Add</span>.</span></li>
+<li class="stepexpand"><span>Under Create New Data Source, select the correct SQL Server driver for the edition, and then click <span class="bold">Finish</span>. The Create a New Data Source to SQL Server wizard appears.</span></li>
+<li class="stepexpand"><span>Supply the following, and then click <span class="bold">Next</span>:</span>
+<div>
+<ul style="list-style-type: disc;">
+<li>
+<p><span class="bold">Name</span>: Can be of your choosing. In a Windows cluster, use one name across all nodes in the cluster.</p>
+</li>
+<li>
+<p><span class="bold">Description</span>: (Optional) Type a description of this data source.</p>
+</li>
+<li>
+<p><span class="bold">Server</span>: Select the SQL Server instance name.</p>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>For login authentication, do one of the following, and then click <span class="bold">Next</span>:</span>
+<ol>
+<li><span>Select <span class="bold">With Integrated Windows Authentication</span> for <span>Oracle GoldenGate</span> to use Windows authentication.</span></li>
+<li><span>To use database credentials, select <span class="bold">With SQL Server authentication using a login ID and password entered by the user</span>, and supply the login information.</span></li>
+</ol>
+</li>
+<li class="stepexpand"><span>If the default database is not set to the one that Oracle GoldenGate will connect to, click <span class="bold">Change the default database to</span>, and then select the correct name. Set the other settings to use ANSI. Click <span class="bold">Next</span>.</span></li>
+<li class="stepexpand"><span>Leave the next page set to the defaults. Click <span class="bold">Finish</span>.</span></li>
+<li class="stepexpand"><span>Click <span class="bold">Test Data Source</span> to test the connection.</span></li>
+<li class="stepexpand"><span>If the test is successful, close the confirmation box and the Create a New Data Source box.</span></li>
+<li class="stepexpand"><span>Repeat this procedure on each SQL Server source and target system.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-C4D742C8-C562-4E34-9755-AEE46EEDC921">Configuring a Database Connection</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-B8634668-CFAE-4371-AF19-DBC941C97C50"></a>
+<h2 id="GGHDB-GUID-B8634668-CFAE-4371-AF19-DBC941C97C50" class="sect2"><span class="enumeration_section">16.2</span> Preparing Tables for Processing</h2>
+<div>
+<p>The table attributes in the following sections must be addressed in your Oracle GoldenGate environment.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-62164D06-C70D-4977-A43A-77CBDF48FA2A">Disabling Triggers and Cascade Constraints on the Target</a><br /></li>
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-299C1451-50E7-49CC-87C6-BFA995C52249">Assigning Row Identifiers</a><br /></li>
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-28A10D76-3855-40E9-9D68-FE1E38592EF7">Improving IDENTITY Replication with Array Processing</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-5A25569B-4167-4EB7-B4E7-205114300703" title="This chapter contains steps to take so that the database with which Oracle GoldenGate interacts is correctly configured to support Oracle GoldenGate capture and delivery. Some steps apply only to a source system, some only to a target, and some to both.">Preparing the System for Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-62164D06-C70D-4977-A43A-77CBDF48FA2A"></a>
+<h3 id="GGHDB-GUID-62164D06-C70D-4977-A43A-77CBDF48FA2A" class="sect3"><span class="enumeration_section">16.2.1</span> Disabling Triggers and Cascade Constraints on the Target</h3>
+<div>
+<p>In an environment where SQL Server is the target, consider triggers and cascade constraints that may repeat an operation that occurred on the source. For example, if the source has an insert trigger on TableA that inserts a record into TableB, and <span>Oracle GoldenGate</span> is configured to capture and deliver both TableA and TableB, the insert trigger on the target table, TableA, must be disabled. Otherwise, Replicat inserts into TableA, and the trigger fires and insert into TableB. Replicat will then try to insert into TableB, and then terminate abnormally.</p>
+<div class="p">When a trigger or cascade constraint repeats an operation that occurred on the source, you do not have to disable the trigger or constraint when the following conditions are both true:
+<ul style="list-style-type: disc;">
+<li>
+<p>You use the <code class="codeph">DBOPTIONS USEREPLICATIONUSER</code> parameter in Replicat.</p>
+</li>
+<li>
+<p>You use OLE DB connection for Replicat. The use of the OLE DB connection is the default configuration. Note that the trigger, constraint, or <code class="codeph">IDENTITY</code> property must have <code class="codeph">NOT FOR REPLICATION</code> enabled.</p>
+</li>
+</ul>
+</div>
+<p>In the following scenario, disable the triggers and constraints on the target:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Uni-directional replication where all tables on the source are replicated.</p>
+</li>
+</ul>
+<p>In the following scenarios, enable the triggers and constraints on the target:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Uni-directional replication where tables affected by a trigger or cascade operation are not replicated, and the only application that loads these tables is using a trigger or cascade operation.</p>
+</li>
+<li>
+<p>Uni-directional or -bi-directional replication where all tables on the source are replicated. In this scenario, set the target table cascade constraints and triggers to enable <code class="codeph">NOT FOR REPLICATION</code>, and use the <code class="codeph">DBOPTIONS USEREPLICATIONUSER</code> parameter in Replicat.</p>
+</li>
+</ul>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-B8634668-CFAE-4371-AF19-DBC941C97C50">Preparing Tables for Processing</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-299C1451-50E7-49CC-87C6-BFA995C52249"></a>
+<h3 id="GGHDB-GUID-299C1451-50E7-49CC-87C6-BFA995C52249" class="sect3"><span class="enumeration_section">16.2.2</span> Assigning Row Identifiers</h3>
+<div>
+<p><span>Oracle GoldenGate</span> requires unique row identifiers on the source and target tables to locate the correct target rows for replicated updates and deletes. Source tables can have any kind of key listed in <a href="preparing-your-database-and-system-oracle-goldengate.htm#GUID-C6CA001F-E118-4DE5-AE8A-E406224E130B">How Oracle GoldenGate Determines the Kind of Row Identifier to Use</a>, except for tables of a SQL Server Standard Edition instance, which require a primary key. If there is no primary key identified on a table that has fixed-length columns, the length of one of the fixed-length columns must be below 3800 bytes.</p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-975CAD53-D8BF-4186-997B-F6D6F22DA93E">How Oracle GoldenGate Determines the Kind of Row Identifier to Use</a><br /></li>
+<li class="ulchildlink"><a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-C5C3439C-9B5F-48AB-BDE0-C2ECE56EED22">Using KEYCOLS to Specify a Custom Key</a><br /></li>
+</ul>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-B8634668-CFAE-4371-AF19-DBC941C97C50">Preparing Tables for Processing</a></p>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-975CAD53-D8BF-4186-997B-F6D6F22DA93E"></a>
+<h4 id="GGHDB-GUID-975CAD53-D8BF-4186-997B-F6D6F22DA93E" class="sect4"><span class="enumeration_section">16.2.2.1</span> How Oracle GoldenGate Determines the Kind of Row Identifier to Use</h4>
+<div>
+<div class="section">
+<p>Unless a <code class="codeph">KEYCOLS</code> clause is used in the <code class="codeph">TABLE</code> or <code class="codeph">MAP</code> statement, Oracle GoldenGate selects a row identifier to use in the following order of priority:</p>
+</div>
+<!-- class="section" -->
+<ol>
+<li class="stepexpand"><span>Primary key (required for tables of a Standard Edition instance).</span></li>
+<li class="stepexpand"><span>First unique key alphanumerically that does not contain a timestamp or non-materialized computed column.</span></li>
+<li class="stepexpand"><span>If neither of these key types exist , <span>Oracle GoldenGate</span> constructs a pseudokey of all columns that the database allows to be used in a unique key, excluding those that are not supported by Oracle GoldenGate in a key or those that are excluded from the Oracle GoldenGate configuration. For SQL Server, <span>Oracle GoldenGate</span> requires the row data in target tables that do not have a primary key to be less than 8000 bytes.</span>
+<div>
+<div class="infobox-note" id="GUID-975CAD53-D8BF-4186-997B-F6D6F22DA93E__GUID-B385E4AA-51A0-4E5A-AA02-E659099B07EB">
+<p class="notep1">Note:</p>
+<p>If there are types of keys on a table or if there are no keys at all on a table, <span>Oracle GoldenGate</span> logs a message to the report file. Constructing a key from all of the columns impedes the performance of Oracle GoldenGate on the source system. On the target, this key causes Replicat to use a larger, less efficient <code class="codeph">WHERE</code> clause.</p>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-299C1451-50E7-49CC-87C6-BFA995C52249">Assigning Row Identifiers</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-C5C3439C-9B5F-48AB-BDE0-C2ECE56EED22"></a>
+<h4 id="GGHDB-GUID-C5C3439C-9B5F-48AB-BDE0-C2ECE56EED22" class="sect4"><span class="enumeration_section">16.2.2.2</span> Using <code class="codeph">KEYCOLS</code> to Specify a Custom Key</h4>
+<div>
+<p>If a table does not have an applicable row identifier, or if you prefer that identifiers are not used, you can define a substitute key, providing that the table has columns that always contain unique values. You define this substitute key by including a <code class="codeph">KEYCOLS</code> clause within the Extract <code class="codeph">TABLE</code> parameter and the Replicat <code class="codeph">MAP</code> parameter. The specified key overrides any existing primary or unique key that Oracle GoldenGate finds. For more information, see <a class="olink GWURF" target="_blank" href="../GWURF/toc.htm"><span class="italic"><span id="GUID-C5C3439C-9B5F-48AB-BDE0-C2ECE56EED22__GWURF"><cite>Reference for Oracle GoldenGate</cite></span></span></a>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-299C1451-50E7-49CC-87C6-BFA995C52249">Assigning Row Identifiers</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-28A10D76-3855-40E9-9D68-FE1E38592EF7"></a>
+<h3 id="GGHDB-GUID-28A10D76-3855-40E9-9D68-FE1E38592EF7" class="sect3"><span class="enumeration_section">16.2.3</span> Improving <code class="codeph">IDENTITY</code> Replication with Array Processing</h3>
+<div>
+<p>Because only one table per session can have <code class="codeph">IDENTITY_INSERT</code> set to <code class="codeph">ON</code>, Replicat must continuously toggle <code class="codeph">IDENTITY_INSERT</code> when it applies <code class="codeph">IDENTITY</code> data to multiple tables in a session. To improve the performance of Replicat in this situation, use the <code class="codeph">BATCHSQL</code> parameter. <code class="codeph">BATCHSQL</code> causes Replicat to use array processing instead of applying SQL statements one at a time.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-B8634668-CFAE-4371-AF19-DBC941C97C50">Preparing Tables for Processing</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-67F8F582-AF2C-4850-A767-9888BDD37F49"></a>
+<h2 id="GGHDB-GUID-67F8F582-AF2C-4850-A767-9888BDD37F49" class="sect2"><span class="enumeration_section">16.3</span> Globalization Support</h2>
+<div>
+<p><span>Oracle GoldenGate</span> provides globalization support that lets it process data in its native language encoding. The <span>Oracle GoldenGate</span> apply process (Replicat) can convert data from one character set to another when the data is contained in character column types. For more information, see <a class="olink GWUAD-GUID-D7CC4F7A-D659-4415-B91D-DDC476C7DD9F" target="_blank" href="../GWUAD/oracle-goldengate-globalization-support.htm#GWUAD-GUID-D7CC4F7A-D659-4415-B91D-DDC476C7DD9F"><span id="GUID-67F8F582-AF2C-4850-A767-9888BDD37F49__GWUAD"><cite>Administering Oracle GoldenGate</cite></span></a>.</p>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink">
+<p><strong>Parent topic:</strong> <a href="sql-server-preparing-system-oracle-goldengate.htm#GUID-5A25569B-4167-4EB7-B4E7-205114300703" title="This chapter contains steps to take so that the database with which Oracle GoldenGate interacts is correctly configured to support Oracle GoldenGate capture and delivery. Some steps apply only to a source system, some only to a target, and some to both.">Preparing the System for Oracle GoldenGate</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment114">
+<tr>
+<td class="cellalignment121">
+<table class="cellalignment119">
+<tr>
+<td class="cellalignment118"><a href="understanding-whats-supported-sql-server.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment118"><a href="preparing-database-oracle-goldengate-classic-capture.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment123">
+<table class="cellalignment117">
+<tr>
+<td class="cellalignment118"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment118"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment118"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

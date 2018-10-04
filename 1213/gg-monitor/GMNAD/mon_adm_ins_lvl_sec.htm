@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<title>Understanding Instance Level Security</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.24" />
+<meta name="description" content="This chapter describes how to implement instance-level security in Oracle GoldenGate Monitor 12c (12.1.3). It contains the following sections:" />
+<meta name="dcterms.created" content="2014-08-01T14:32:59Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="GoldenGate Administering Oracle GoldenGate Monitor" />
+<meta name="dcterms.identifier" content="E48290-03" />
+<meta name="dcterms.isVersionOf" content="GMNAD" />
+<link rel="Start" href="../../index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Index" href="index.htm" title="Index" type="text/html" />
+<link rel="Prev" href="mon_adm_ssl.htm" title="Previous" type="text/html" />
+<link rel="Next" href="mon_adm_params.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GMNAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="alternate" href="GMNAD.epub" title="ePub version" type="application/epub+zip" />
+<link rel="alternate" href="GMNAD.mobi" title="Mobipocket version" type="application/x-mobipocket-ebook" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a>
+<header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<span id="PAGE" style="display:none;">10/13</span> <!-- End Header --><a id="CHDGHFAH"></a><a id="GMNAD403"></a>
+<h1 class="chapter"><span class="secnum">6</span> Understanding Instance Level Security</h1>
+<p><a id="GMNAD404"></a>This chapter describes how to implement instance-level security in Oracle GoldenGate Monitor 12<span class="italic">c</span> (12.1.3). It contains the following sections:</p>
+<ul>
+<li>
+<p><a href="#CHDDCDCD">Section 6.1, "Overview"</a></p>
+</li>
+<li>
+<p><a href="#CHDJIIJD">Section 6.2, "Instance Access Rules"</a></p>
+</li>
+<li>
+<p><a href="#CHDEEDHH">Section 6.3, "Instance Access Behavior"</a></p>
+</li>
+<li>
+<p><a href="#CHDECHDH">Section 6.4, "User Instance Matrix"</a></p>
+</li>
+</ul>
+<a id="CHDDCDCD"></a><a id="GMNAD405"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">6.1</span> Overview</h2>
+<p>In addition to the current functional level of security, instance level security is available in Oracle Golden Gate Monitor 12.1.3 (12c) in order to restrict individual user access to different hosts/instances.</p>
+</div>
+<!-- class="sect1" -->
+<a id="CHDJIIJD"></a><a id="GMNAD406"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">6.2</span> Instance Access Rules</h2>
+<p>The following instance access rules apply:</p>
+<ul>
+<li>
+<p>A Super Administrator will always have access to all the Oracle GoldenGate agent instances, and can always assign instances directly to users belongs to Operator/Power Operator and Administrator roles.</p>
+</li>
+<li>
+<p>Administrators are not authorized to make any changes on the instances mapped to Super Administrators &amp; other Administrators. Administrators can map and un-map the instances (that is, instances that are accessible by the current logged in Administrator) only for Operator and Power Operators.</p>
+</li>
+<li>
+<p>Administrators and Operators/Power Operators can have shared instance access; that is, multiple users can have access to common/same instances from the instance pool; for example, Pool [1,2,3,4,5] Ad1 --&gt;[1,2,3], Ad2--&gt;[3,4,5]</p>
+</li>
+<li>
+<p>A Super Administrator will always have the full/combined set of instances accessible to Operator/Power Operators, which are granted from different Administrators.A Super Administrator can override the instances assigned to Operator/Power Operators by an Administrator; for example: A user logs in as a Super Administrator and clicks on the user Opr1. The Super Administrator should see that only instances 1, 2, 3, 4,5 are enabled because the user Admin2 has access to instances 3,4,5 and had previously assigned 3,4,5 instance access to user Opr1.</p>
+</li>
+<li>
+<p>Administrators can reassign the instances deleted by the Super Administrator to Operators/Power Operators, provided the Administrator has access to those instances.</p>
+</li>
+<li>
+<p>If the Administrator gets deleted, the instances assigned to any Operator or Power Operators will remain as is. In the absence of a deleted Administrator, the instances owned by Operators or Power Operators will be administrated by the Super Administrator.</p>
+</li>
+<li>
+<p>A user can be assigned multiple roles. Oracle GoldenGate Monitor will consider the highest role for that user; for example, Admin1 can be both a Super Administrator and an Administrator.</p>
+</li>
+</ul>
+<p class="subhead2"><a id="GMNAD407"></a>Role Assignment Example</p>
+<p>The following scenario shows how the preceding rules are applied during role/instance assignment. The roles used in this example are:</p>
+<ul>
+<li>
+<p>SA: Super Admin</p>
+</li>
+<li>
+<p>JI: Jagent Instance</p>
+</li>
+<li>
+<p>Ad1, Ad2: Administrators</p>
+</li>
+<li>
+<p>Opr1, Opr2: Operators</p>
+</li>
+<li>
+<p>PowerOpr1,PowerOpr2: Power Operators.</p>
+</li>
+</ul>
+<p>The available Oracle GoldenGate agent Instances are: {1, 2, 3, 4, 5}</p>
+<p>These steps illustrate how roles are assigned specific instances:</p>
+<ol>
+<li>
+<p>SA: Has access to JI 1,2,3,4,5</p>
+</li>
+<li>
+<p>SA: Assigns JI 1,2,3 to Ad1</p>
+</li>
+<li>
+<p>SA: Assigns JI 3,4,5 to Ad2</p>
+</li>
+<li>
+<p>Ad1: Assigns JI 1,2,3 to Opr1</p>
+</li>
+<li>
+<p>Ad2: Assigns JI 3,4,5 to Opr1</p>
+</li>
+<li>
+<p>Ad1: Assigns JI 1,2,3 to PowerOpr1</p>
+</li>
+<li>
+<p>Ad2: Assigns JI 3,4,5 to PowerOpr1</p>
+</li>
+</ol>
+</div>
+<!-- class="sect1" -->
+<a id="CHDEEDHH"></a><a id="GMNAD408"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">6.3</span> Instance Access Behavior</h2>
+<p>When the user tries to access the instance that are not assigned to that him or her, the user will see a message saying that he or she does not have access to the instance. The same behavior applies on the solutions/Views that are part of a specific instance.</p>
+</div>
+<!-- class="sect1" -->
+<a id="CHDECHDH"></a><a id="GMNAD409"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1"><span class="secnum">6.4</span> User Instance Matrix</h2>
+<div class="inftblhruleinformalwide">
+<table class="cellalignment36" summary="Five-column table explainiung user roles" dir="ltr">
+<thead>
+<tr class="cellalignment25">
+<th class="cellalignment37" id="r1c1-t2">Logged In User</th>
+<th class="cellalignment37" id="r1c2-t2">EDIT USER Instance Enabled/Disabled</th>
+<th class="cellalignment37" id="r1c3-t2">EDIT USER Instance Enabled/Disabled</th>
+<th class="cellalignment37" id="r1c4-t2">EDIT USER Instance Enabled/Disabled</th>
+<th class="cellalignment37" id="r1c5-t2">EDIT USER Instance Enabled/Disabled</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment25">
+<td class="cellalignment31" id="r2c1-t2" headers="r1c1-t2">
+<p>Logged in as Super Administrator</p>
+</td>
+<td class="cellalignment31" headers="r2c1-t2 r1c2-t2">
+<p>Super Administrator Instance(s) Disabled</p>
+</td>
+<td class="cellalignment31" headers="r2c1-t2 r1c3-t2">
+<p>Administrator Instance(s) Enabled</p>
+</td>
+<td class="cellalignment31" headers="r2c1-t2 r1c4-t2">
+<p>Operator Instance(s) Enabled</p>
+</td>
+<td class="cellalignment31" headers="r2c1-t2 r1c5-t2">
+<p>Power Operator Instance(s) Enabled</p>
+</td>
+</tr>
+<tr class="cellalignment25">
+<td class="cellalignment31" id="r3c1-t2" headers="r1c1-t2">
+<p>Logged in as Administrator</p>
+</td>
+<td class="cellalignment31" headers="r3c1-t2 r1c2-t2">
+<p>Super Administrator Instance(s) Disabled</p>
+</td>
+<td class="cellalignment31" headers="r3c1-t2 r1c3-t2">
+<p>Administrator Instance(s) Disabled</p>
+</td>
+<td class="cellalignment31" headers="r3c1-t2 r1c4-t2">
+<p>Operator Instance(s) Enabled</p>
+</td>
+<td class="cellalignment31" headers="r3c1-t2 r1c5-t2">
+<p>Power Operator Instance(s) Enabled</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformalwide" -->
+<div class="infobox-note">
+<p class="notep1">Note:</p>
+<p>Instance level security is not available for Alerts generations. Users can create alerts for the instance objects that are not accessible by that user.</p>
+</div>
+</div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment24">
+<tr>
+<td class="cellalignment31">
+<table class="cellalignment29">
+<tr>
+<td class="cellalignment28"><a href="mon_adm_ssl.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment28"><a href="mon_adm_params.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2011, 2014,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment33">
+<table class="cellalignment27">
+<tr>
+<td class="cellalignment28"><a href="../../index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment28"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment28"><a href="index.htm"><img width="24" height="24" src="../dcommon/gifs/index.gif" alt="Go to Index" /><br />
+<span class="icon">Index</span></a></td>
+<td class="cellalignment28"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

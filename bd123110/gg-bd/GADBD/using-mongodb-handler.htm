@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Using the MongoDB Handler</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="This chapter explains the MongoDB Handler and includes examples so that you can understand this functionality." />
+<meta name="dcterms.created" content="2017-09-08T08:33:14Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Integrating Oracle GoldenGate for Big Data" />
+<meta name="dcterms.identifier" content="E89478-02" />
+<meta name="dcterms.isVersionOf" content="GADBD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="using-kinesis-handler.htm" title="Previous" type="text/html" />
+<link rel="Next" href="using-metadata-provider.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GADBD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-084CCCD6-8D13-43C0-A6C4-4D2AC8B8FA86"></a> <span id="PAGE" style="display:none;">14/24</span> <!-- End Header -->
+<h1 id="GADBD-GUID-084CCCD6-8D13-43C0-A6C4-4D2AC8B8FA86" class="sect1"><span class="enumeration_chapter">11</span> Using the MongoDB Handler</h1>
+<div>
+<p>This chapter explains the MongoDB Handler and includes examples so that you can understand this functionality.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-24E3098C-607F-4A57-BCBC-580BC02F9294">Overview</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-FC8E7998-887A-4E9B-A9D8-0CC91431D23D">Detailed Functionality</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-EA5E7FF6-5577-420B-9091-935F766571B1">Setting Up and Running the MongoDB Handler</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-E9E36AEC-40E6-4CC3-A2FD-4E1308B2DB05">Sample Configuration</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-24E3098C-607F-4A57-BCBC-580BC02F9294"></a>
+<h2 id="GADBD-GUID-24E3098C-607F-4A57-BCBC-580BC02F9294" class="sect2"><span class="enumeration_section">11.1</span> Overview</h2>
+<div>
+<div class="section">
+<p>MongoDB is an open-source document database that provides high performance, high availability, and automatic scaling.</p>
+<p>See the MongoDB website for more information:</p>
+<p><a href="https://www.mongodb.com/" target="_blank">https://www.mongodb.com/</a></p>
+<p>You can use the MongoDB Handler to replicate the transactional data from Oracle GoldenGate trail to a target MongoDB database.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-FC8E7998-887A-4E9B-A9D8-0CC91431D23D"></a>
+<h2 id="GADBD-GUID-FC8E7998-887A-4E9B-A9D8-0CC91431D23D" class="sect2"><span class="enumeration_section">11.2</span> Detailed Functionality</h2>
+<div>
+<div class="section">
+<p>The MongoDB Handler takes operations from the source trail file and creates corresponding documents in the target MongoDB database.</p>
+<p>A <span class="bold">record</span> in MongoDB is a <span class="bold">Binary JSON (BSON) document</span>, which is a data structure composed of field and value pairs. A BSON data structure is a binary representation of JSON documents. MongoDB documents are similar to JSON objects. The values of fields may include other documents, arrays, and arrays of documents.</p>
+<p>A <span class="bold">collection</span> is a grouping of MongoDB documents and is the equivalent of an RDBMS table. In MongoDB, databases hold collections of documents. Collections do not enforce a schema. MongoDB documents within a collection can have different fields.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-02840170-CDF6-427E-A9BA-DC006391D67F">Document Key Column</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-E67655DE-2354-4161-BF47-3BC9F2B83D52">Primary Key Update Operation</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-136216A5-D2B2-4248-B14D-A9795059FBCA">MongoDB Trail Data Types</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-02840170-CDF6-427E-A9BA-DC006391D67F"></a>
+<h3 id="GADBD-GUID-02840170-CDF6-427E-A9BA-DC006391D67F" class="sect3"><span class="enumeration_section">11.2.1</span> Document Key Column</h3>
+<div>
+<div class="section">
+<p>MongoDB databases require every document (row) to have a column named <code class="codeph">_id</code> whose value should be unique in a collection (table). This is similar to a primary key for RDBMS tables. If a document does not contain a top-level <code class="codeph">_id</code> column during an insert, the MongoDB driver adds this column.</p>
+<p>The MongoDB Handler builds custom <code class="codeph">_id</code> field values for every document based on the primary key column values in the trail record. This custom <code class="codeph">_id</code> is built using all the key column values concatenated by a <code class="codeph">:</code> (colon) separator. For example:</p>
+<code class="codeph">KeyColValue1:KeyColValue2:KeyColValue3</code>
+<p>The MongoDB Handler enforces uniqueness based on these custom <code class="codeph">_id</code> values. This means that every record in the trail must be unique based on the primary key columns values. Existence of non-unique records for the same table results in a MongoDB Handler failure and in Replicat abending with a duplicate key error.</p>
+<p>The behavior of the <code class="codeph">_id</code> field is:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>By default, MongoDB creates a unique index on the column during the creation of a collection.</p>
+</li>
+<li>
+<p>It is always the first column in a document.</p>
+</li>
+<li>
+<p>It may contain values of any BSON data type except an array.</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-E67655DE-2354-4161-BF47-3BC9F2B83D52"></a>
+<h3 id="GADBD-GUID-E67655DE-2354-4161-BF47-3BC9F2B83D52" class="sect3"><span class="enumeration_section">11.2.2</span> Primary Key Update Operation</h3>
+<div>
+<div class="section">MongoDB databases do not allow the&nbsp;<code class="codeph">_id</code> column to be modified. This means a primary key update operation record in the trail needs special handling. The MongoDB Handler converts a primary key update operation into a combination of a <code class="codeph">DELETE</code> (with old key) and an <code class="codeph">INSERT</code> (with new key). To perform the <code class="codeph">INSERT</code>, a complete before-image of the update operation in trail is recommended. You can generate the trail to populate a complete before image for update operations by enabling the Oracle GoldenGate <code class="codeph">GETUPDATEBEFORES</code> and <code class="codeph">NOCOMPRESSUPDATES</code> parameters, see <a class="olink GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB" target="_blank" href="http://www.oracle.com/pls/topic/lookup?ctx=E89481-01&amp;id=GWURF-GUID-2E0A4248-E8DA-4561-A77F-46206E6F1ECB"><span id="GUID-E67655DE-2354-4161-BF47-3BC9F2B83D52__GWURF"><cite>Reference for Oracle GoldenGate for Windows and UNIX</cite></span></a>.</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-136216A5-D2B2-4248-B14D-A9795059FBCA"></a>
+<h3 id="GADBD-GUID-136216A5-D2B2-4248-B14D-A9795059FBCA" class="sect3"><span class="enumeration_section">11.2.3</span> MongoDB Trail Data Types</h3>
+<div>
+<div class="section">
+<p>The MongoDB Handler supports delivery to the BSON data types as follows:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>32-bit integer</p>
+</li>
+<li>
+<p>64-bit integer</p>
+</li>
+<li>
+<p>Double</p>
+</li>
+<li>
+<p>Date</p>
+</li>
+<li>
+<p>String</p>
+</li>
+<li>
+<p>Binary data</p>
+</li>
+</ul>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-EA5E7FF6-5577-420B-9091-935F766571B1"></a>
+<h2 id="GADBD-GUID-EA5E7FF6-5577-420B-9091-935F766571B1" class="sect2"><span class="enumeration_section">11.3</span> Setting Up and Running the MongoDB Handler</h2>
+<div>
+<div class="section">
+<p>Instructions for configuring the MongoDB Handler components and running the handler are described in the following sections.</p>
+<p><span class="bold">Topics:</span></p>
+</div>
+<!-- class="section" --></div>
+<div>
+<ul class="ullinks">
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-C573C90B-2720-4838-9CDD-47BF1749F237">Classpath Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-9297A658-B7F5-4A85-91F4-F1F113094E0F">MongoDB Handler Configuration</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-78783AD6-2EC7-44B0-8494-0A0023532699">Connecting and Authenticating</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-37E9FAE8-120D-4FA7-A796-B8866812F108">Using Bulk Write</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-B6AFA955-290F-48F5-9FD7-86AA433A901A">Using Write Concern</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-94883880-3FD2-4060-B274-2DD07E6AD15C">Using Three-Part Table Names</a><br /></li>
+<li class="ulchildlink"><a href="using-mongodb-handler.htm#GUID-E7660FB7-ADEB-495C-91A0-C6D5EBA9F44F">Using Undo Handling</a><br /></li>
+</ul>
+</div>
+<div class="props_rev_3"><a id="GUID-C573C90B-2720-4838-9CDD-47BF1749F237"></a>
+<h3 id="GADBD-GUID-C573C90B-2720-4838-9CDD-47BF1749F237" class="sect3"><span class="enumeration_section">11.3.1</span> Classpath Configuration</h3>
+<div>
+<div class="section">
+<p>The MongoDB Java Driver is required for Oracle GoldenGate for Big Data to connect and stream data to MongoDB. The recommended version of MongoDB Java Driver is 3.2.2. The MongoDB Java Driver is not included in the packaging of Oracle GoldenGate for Big Data so you must download the driver from:</p>
+<p><a href="http://mongodb.github.io/mongo-java-driver/?_ga=1.46714471.1147990895.1476731155" target="_blank">https://docs.mongodb.com/ecosystem/drivers/java/#download-upgrade</a></p>
+<p>Select &ldquo;mongo-java-driver" and the "3.2.2" version to download the recommended driver JAR file.</p>
+<p>You must configure the <code class="codeph">gg.classpath</code> variable to load the MongoDB Java Driver JAR at runtime. For example: <code class="codeph">gg.classpath=/home/mongodb/mongo-java-driver-3.2.2.jar</code></p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-9297A658-B7F5-4A85-91F4-F1F113094E0F"></a>
+<h3 id="GADBD-GUID-9297A658-B7F5-4A85-91F4-F1F113094E0F" class="sect3"><span class="enumeration_section">11.3.2</span> MongoDB Handler Configuration</h3>
+<div>
+<div class="section">
+<p>The following are the configurable values for the MongoDB Handler. These properties are located in the Java Adapter properties file (not in the Replicat properties file).</p>
+</div>
+<!-- class="section" -->
+<div class="tblformal" id="GUID-9297A658-B7F5-4A85-91F4-F1F113094E0F__GUID-2F0D04A3-FC62-428E-A3AC-44349A09933F">
+<p class="titleintable">Table 11-1 MongoDB Handler Configuration Properties</p>
+<table class="cellalignment77" title="MongoDB Handler Configuration Properties" summary="Two column table describing the MongoDB Handler Configuration">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment87" id="d36406e397">Properties</th>
+<th class="cellalignment88" id="d36406e400">Required/ Optional</th>
+<th class="cellalignment89" id="d36406e403">Legal Values</th>
+<th class="cellalignment90" id="d36406e406">Default</th>
+<th class="cellalignment91" id="d36406e409">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e414" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">type</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e414 d36406e400">
+<p>Required</p>
+</td>
+<td class="cellalignment94" headers="d36406e414 d36406e403">
+<p><code class="codeph">mongodb</code></p>
+</td>
+<td class="cellalignment95" headers="d36406e414 d36406e406">
+<p>None</p>
+</td>
+<td class="cellalignment96" headers="d36406e414 d36406e409">
+<p>Selects the MongoDB Handler for use with Replicat.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e437" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">bulkWrite</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e437 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e437 d36406e403">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment95" headers="d36406e437 d36406e406">
+<p><code class="codeph">true</code></p>
+</td>
+<td class="cellalignment96" headers="d36406e437 d36406e409">
+<p>Set to <code class="codeph">true</code>, the handler caches operations until a commit transaction event is received. When committing the transaction event, all the cached operations are written out to the target MongoDB database, which provides improved throughput.</p>
+<p>Set to <code class="codeph">false</code>, there is no caching within the handler and operations are immediately written to the MongoDB database.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e472" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name</code></span><code class="codeph">.WriteConcern</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e472 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e472 d36406e403">
+<p><code class="codeph">{&ldquo;w&rdquo;: &ldquo;<span class="codeinlineitalic">value</span>&rdquo; , &ldquo;wtimeout&rdquo;: &ldquo;<span class="codeinlineitalic">number</span>&rdquo; }</code></p>
+</td>
+<td class="cellalignment95" headers="d36406e472 d36406e406">
+<p>None</p>
+</td>
+<td class="cellalignment96" headers="d36406e472 d36406e409">
+<p>Sets the required write concern for all the operations performed by the MongoDB Handler.</p>
+<p>The property value is in JSON format and can only accept keys as <code class="codeph">&ldquo;w&rdquo;</code> and <code class="codeph">&ldquo;wtimeout&rdquo;</code>.</p>
+<p>For more information about write concerns, see <a href="https://docs.mongodb.com/manual/reference/write-concern/" target="_blank">https://docs.mongodb.com/manual/reference/write-concern/</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e515" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">username</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e515 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e515 d36406e403">
+<p>A legal username string.</p>
+</td>
+<td class="cellalignment95" headers="d36406e515 d36406e406">
+<p>None</p>
+</td>
+<td class="cellalignment96" headers="d36406e515 d36406e409">
+<p>Sets the authentication username to be used. Use with the <code class="codeph">AuthenticationMechanism</code> property.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e540" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">password</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e540 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e540 d36406e403">
+<p>A legal password string.</p>
+</td>
+<td class="cellalignment95" headers="d36406e540 d36406e406">
+<p>None</p>
+</td>
+<td class="cellalignment96" headers="d36406e540 d36406e409">
+<p>Sets the authentication password to be used. Use with the <code class="codeph">AuthenticationMechanism</code> property.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e565" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">ServerAddressList</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e565 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e565 d36406e403">
+<p><code class="codeph">IP:PORT</code> with multiple port values delimited by a comma</p>
+</td>
+<td class="cellalignment95" headers="d36406e565 d36406e406">
+<p>None</p>
+</td>
+<td class="cellalignment96" headers="d36406e565 d36406e409">
+<p>Enables the connection to a list of Replicat set members or a list of MongoDB databases.</p>
+<p>This property accepts a comma separated list of <code class="codeph">[hostnames:port]</code>. For example, <code class="codeph">localhost1:27017,localhost2:27018,localhost3:27019</code>.</p>
+<p>For more information, see <a href="http://api.mongodb.com/java/3.0/com/mongodb/MongoClient.html#MongoClient-java.util.List-java.util.List-com.mongodb.MongoClientOptions-" target="_blank">http://api.mongodb.com/java/3.0/com/mongodb/MongoClient.html#MongoClient-java.util.List-java.util.List-com.mongodb.MongoClientOptions-</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e603" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">AuthenticationMechanism</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e603 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e603 d36406e403">
+<p>Comma separated list of authentication mechanism</p>
+</td>
+<td class="cellalignment95" headers="d36406e603 d36406e406">
+<p>None</p>
+</td>
+<td class="cellalignment96" headers="d36406e603 d36406e409">
+<p>Sets the authentication mechanism which is a process of verifying the identity of a client. The input would be a comma separated list of various authentication options. For example, <code class="codeph">GSSAPI,MONGODB_CR,MONGODB_X509,PLAIN,SCRAM_SHA_1</code>.</p>
+<p>For more information about authentication options, see <a href="http://api.mongodb.com/java/3.0/com/mongodb/MongoCredential.html" target="_blank">http://api.mongodb.com/java/3.0/com/mongodb/MongoCredential.html</a>,</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e634" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">source</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e634 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e634 d36406e403">
+<p>Valid authentication source</p>
+</td>
+<td class="cellalignment95" headers="d36406e634 d36406e406">
+<p>None</p>
+</td>
+<td class="cellalignment96" headers="d36406e634 d36406e409">
+<p>Sets the source of the user name, typically the name of the database where the user is defined. Use with the <code class="codeph">AuthenticationMechanism</code> property.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e659" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">clientURI</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e659 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e659 d36406e403">
+<p>Valid MongoDB client URI</p>
+</td>
+<td class="cellalignment95" headers="d36406e659 d36406e406">
+<p>None</p>
+</td>
+<td class="cellalignment96" headers="d36406e659 d36406e409">
+<p>Sets the MongoDB client URI. A client URI can also be used to set other MongoDB connection properties, such as authentication and <code class="codeph">WriteConcern</code>. For example, <code class="codeph">mongodb://localhost:27017/</code></p>
+<p>For more details about the format of the client URI, see <a href="http://api.mongodb.com/java/3.0/com/mongodb/MongoClientURI.html" target="_blank">http://api.mongodb.com/java/3.0/com/mongodb/MongoClientURI.html</a></p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e691" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">Host</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e691 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e691 d36406e403">
+<p>Valid MongoDB server name or IP address</p>
+</td>
+<td class="cellalignment95" headers="d36406e691 d36406e406">
+<p>None</p>
+</td>
+<td class="cellalignment96" headers="d36406e691 d36406e409">
+<p>Sets the MongoDB database hostname to connect to based on a (single) MongoDB node see <a href="http://api.mongodb.com/java/3.0/com/mongodb/MongoClient.html#MongoClient-java.lang.String-" target="_blank">http://api.mongodb.com/java/3.0/com/mongodb/MongoClient.html#MongoClient-java.lang.String-</a>.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e717" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">Port</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e717 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e717 d36406e403">
+<p>Valid MongoDB port</p>
+</td>
+<td class="cellalignment95" headers="d36406e717 d36406e406">
+<p>None</p>
+</td>
+<td class="cellalignment96" headers="d36406e717 d36406e409">
+<p>Sets the MongoDB database instance port number. Use with the <code class="codeph">Host</code> property.</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment92" id="d36406e743" headers="d36406e397">
+<p><code class="codeph">gg.handler.</code><span class="italic"><code class="codeph">name.</code></span><code class="codeph">CheckMaxRowSizeLimit</code></p>
+</td>
+<td class="cellalignment93" headers="d36406e743 d36406e400">
+<p>Optional</p>
+</td>
+<td class="cellalignment94" headers="d36406e743 d36406e403">
+<p><code class="codeph">true</code> | <code class="codeph">false</code></p>
+</td>
+<td class="cellalignment95" headers="d36406e743 d36406e406">
+<p><code class="codeph">false</code></p>
+</td>
+<td class="cellalignment96" headers="d36406e743 d36406e409">
+<p>Set to <code class="codeph">true</code>, the handler always checks the size of the BSON document inserted or modified to be within the limits defined by MongoDB database. Calculating the size involves the use of a default codec to generate a <code class="codeph">RawBsonDocument</code> leading to a small degradation in the throughput of the MongoDB Handler.</p>
+<p>If the size of the document exceeds the MongoDB limit, an exception occurs and Replicat abends.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-78783AD6-2EC7-44B0-8494-0A0023532699"></a>
+<h3 id="GADBD-GUID-78783AD6-2EC7-44B0-8494-0A0023532699" class="sect3"><span class="enumeration_section">11.3.3</span> Connecting and Authenticating</h3>
+<div>
+<div class="section">
+<p>You can use various connection and authentication properties which can be configured in the handler properties file. When multiple connection properties are specified, the MongoDB Handler chooses the properties based on the following priority order:</p>
+<dl>
+<dt class="dlterm"><a id="GUID-78783AD6-2EC7-44B0-8494-0A0023532699__GUID-781F4AD8-BF18-40D1-BD63-6C80D9CD8E36"><!-- --></a>Priority 1:</dt>
+<dd>
+<pre dir="ltr">
+AuthentictionMechanism
+UserName
+Password
+Source
+Write Concern
+</pre></dd>
+<dt class="dlterm"><a id="GUID-78783AD6-2EC7-44B0-8494-0A0023532699__GUID-C078C52B-E554-4DD6-A38F-C43D1DD333AC"><!-- --></a>Priority 2:</dt>
+<dd>
+<pre dir="ltr">
+ServerAddressList
+AuthentictionMechanism
+UserName
+Password
+Source
+</pre></dd>
+<dt class="dlterm"><a id="GUID-78783AD6-2EC7-44B0-8494-0A0023532699__GUID-81990555-E081-4CBD-AC28-F90968787EBD"><!-- --></a>Priority 3:</dt>
+<dd>
+<pre dir="ltr">
+clientURI
+</pre></dd>
+<dt class="dlterm"><a id="GUID-78783AD6-2EC7-44B0-8494-0A0023532699__GUID-0F59EA34-2430-429F-A071-7D1F2EFFE295"><!-- --></a>Priority 4:</dt>
+<dd>
+<pre dir="ltr">
+Host
+Port
+</pre></dd>
+<dt class="dlterm"><a id="GUID-78783AD6-2EC7-44B0-8494-0A0023532699__GUID-EC2D5391-F4EF-49F8-A239-5E2B234103B9"><!-- --></a>Priority 5:</dt>
+<dd>
+<pre dir="ltr">
+Host
+</pre></dd>
+</dl>
+<p>If none of the connection and authentication properties are specified, the handler tries to connect to <code class="codeph">localhost</code> on port <code class="codeph">27017</code>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-37E9FAE8-120D-4FA7-A796-B8866812F108"></a>
+<h3 id="GADBD-GUID-37E9FAE8-120D-4FA7-A796-B8866812F108" class="sect3"><span class="enumeration_section">11.3.4</span> Using Bulk Write</h3>
+<div>
+<div class="section">
+<p>The MongoDB Handler uses the <code class="codeph">GROUPTRANSOPS</code> parameter to retrieve the batch size. A batch of trail records are converted to a batch of MongoDB documents then written in one request to the database.</p>
+<p>You can enable bulk write for better apply throughput using the <code class="codeph">BulkWrite</code> handler property . By default, this is enabled and this is the recommended setting for the best performance of the handler..</p>
+<p>You use the <code class="codeph">gg.handler.<span class="codeinlineitalic">handler</span>.BulkWrite=<span class="codeinlineitalic">true | false</span></code> property to enable or disable bulk write. The Oracle GoldenGate for Big Data default property, <code class="codeph">gg.handler.<span class="codeinlineitalic">handler</span>.mode=<code class="codeph">op | tx</code></code>, is <span class="italic">not</span> used in the MongoDB Handler.</p>
+<p>Oracle recommends that you use bulk write.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-B6AFA955-290F-48F5-9FD7-86AA433A901A"></a>
+<h3 id="GADBD-GUID-B6AFA955-290F-48F5-9FD7-86AA433A901A" class="sect3"><span class="enumeration_section">11.3.5</span> Using Write Concern</h3>
+<div>
+<div class="section">
+<p>Write concern describes the level of acknowledgement requested from MongoDB for write operations to a standalone MongoDB, replica sets, and sharded-clusters. With sharded clusters, mongos instances will pass the write concern on to the shards.</p>
+<p>Use the following configuration:</p>
+<pre dir="ltr">
+w: <span class="italic">value</span>
+wtimeout: <span class="italic">number</span>
+</pre>
+<p><a href="https://docs.mongodb.com/manual/reference/write-concern/" target="_blank">https://docs.mongodb.com/manual/reference/write-concern/</a></p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-94883880-3FD2-4060-B274-2DD07E6AD15C"></a>
+<h3 id="GADBD-GUID-94883880-3FD2-4060-B274-2DD07E6AD15C" class="sect3"><span class="enumeration_section">11.3.6</span> Using Three-Part Table Names</h3>
+<div>
+<div class="section">
+<p>An Oracle GoldenGate trail may have data for sources that support three-part table names, such as <code class="codeph"><span class="codeinlineitalic">Catalog.Schema.Table</span></code>. MongoDB only supports two-part names, such as <code class="codeph"><span class="codeinlineitalic">DBName.Collection</span></code>. To support the mapping of source three-part names to MongoDB two-part names, the source <code class="codeph"><span class="codeinlineitalic">Catalog</span></code> and <code class="codeph"><span class="codeinlineitalic">Schema</span></code> is concatenated with an underscore delimiter to construct the Mongo <code class="codeph"><span class="codeinlineitalic">DBName</span></code>.</p>
+<p>For example, <code class="codeph"><span class="codeinlineitalic">Catalog.Schema.Table</span></code> would become <code class="codeph"><span class="codeinlineitalic">catalog1_schema1.table1</span></code>.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+<div class="props_rev_3"><a id="GUID-E7660FB7-ADEB-495C-91A0-C6D5EBA9F44F"></a>
+<h3 id="GADBD-GUID-E7660FB7-ADEB-495C-91A0-C6D5EBA9F44F" class="sect3"><span class="enumeration_section">11.3.7</span> Using Undo Handling</h3>
+<div>
+<div class="section">
+<p>The MongoDB Handler can recover from bulk write errors using a lightweight undo engine. This engine does not provide the functionality provided by typical RDBMS undo engines, rather the best effort to assist you in error recovery. The error recovery works well when there are primary violations or any other bulk write error where the MongoDB database is able to provide information about the point of failure through the <code class="codeph">BulkWriteException</code>.</p>
+<p><a href="using-mongodb-handler.htm#GUID-E7660FB7-ADEB-495C-91A0-C6D5EBA9F44F__GUID-CC15BA0B-A606-4DD8-9390-5E1476DABF09" title="Two column table describing the undo handling requirements.">Table 11-2</a>lists the requirements to make the best use of this functionality.</p>
+<div class="tblformal" id="GUID-E7660FB7-ADEB-495C-91A0-C6D5EBA9F44F__GUID-CC15BA0B-A606-4DD8-9390-5E1476DABF09">
+<p class="titleintable">Table 11-2 Undo Handling Requirements</p>
+<table class="cellalignment77" title="Undo Handling Requirements" summary="Two column table describing the undo handling requirements.">
+<thead>
+<tr class="cellalignment62">
+<th class="cellalignment78" rowspan="1" colspan="1" id="d36406e1000">Operation to Undo</th>
+<th class="cellalignment78" rowspan="1" colspan="1" id="d36406e1003">Require Full Before Image in the Trail?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d36406e1008" headers="d36406e1000">
+<p><code class="codeph">INSERT</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d36406e1008 d36406e1003">
+<p>No</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d36406e1016" headers="d36406e1000">
+<p><code class="codeph">DELETE</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d36406e1016 d36406e1003">
+<p>Yes</p>
+</td>
+</tr>
+<tr class="cellalignment62">
+<td class="cellalignment62" rowspan="1" colspan="1" id="d36406e1024" headers="d36406e1000">
+<p><code class="codeph">UPDATE</code></p>
+</td>
+<td class="cellalignment62" rowspan="1" colspan="1" headers="d36406e1024 d36406e1003">
+<p>No (Before image of fields in the <code class="codeph">SET</code> clause.)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>If there are errors during undo operations, it may be not possible to get the MongoDB collections to a consistent state so you would have to do a manual reconciliation of data.</p>
+</div>
+<!-- class="section" --></div>
+</div>
+</div>
+<div class="props_rev_3"><a id="GUID-E9E36AEC-40E6-4CC3-A2FD-4E1308B2DB05"></a>
+<h2 id="GADBD-GUID-E9E36AEC-40E6-4CC3-A2FD-4E1308B2DB05" class="sect2"><span class="enumeration_section">11.4</span> Sample Configuration</h2>
+<div>
+<div class="section">
+<p>The following is sample configuration for the MongoDB Handler from the Java Adapter properties file:</p>
+<pre dir="ltr">
+gg.handlerlist=mongodb
+gg.handler.mongodb.type=mongodb
+
+#The following handler properties are optional.
+#Please refer to the Oracle GoldenGate for BigData documentation
+#for details about the configuration.
+#gg.handler.mongodb.clientURI=mongodb://localhost:27017/
+#gg.handler.mongodb.Host=&lt;MongoDBServer address&gt;
+#gg.handler.mongodb.Port=&lt;MongoDBServer port&gt;
+#gg.handler.mongodb.WriteConcern={ w: &lt;value&gt;, wtimeout: &lt;number&gt; }
+#gg.handler.mongodb.AuthenticationMechanism=GSSAPI,MONGODB_CR,MONGODB_X509,PLAIN,SCRAM_SHA_1
+#gg.handler.mongodb.UserName=&lt;Authentication username&gt;
+#gg.handler.mongodb.Password=&lt;Authentication password&gt;
+#gg.handler.mongodb.Source=&lt;Authentication source&gt;
+#gg.handler.mongodb.ServerAddressList=localhost1:27017,localhost2:27018,localhost3:27019,...
+#gg.handler.mongodb.BulkWrite=&lt;false|true&gt;
+#gg.handler.mongodb.CheckMaxRowSizeLimit=&lt;true|false&gt;
+
+goldengate.userexit.timestamp=utc
+goldengate.userexit.writers=javawriter
+javawriter.stats.display=TRUE
+javawriter.stats.full=TRUE
+gg.log=log4j
+gg.log.level=INFO
+gg.report.time=30sec
+
+#Path to MongoDB Java driver.
+# maven co-ordinates
+# &lt;dependency&gt;
+# &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
+# &lt;artifactId&gt;mongo-java-driver&lt;/artifactId&gt;
+# &lt;version&gt;3.2.2&lt;/version&gt;
+# &lt;/dependency&gt;
+gg.classpath=/path/to/mongodb/java/driver/mongo-java-driver-3.2.2.jar
+javawriter.bootoptions=-Xmx512m -Xms32m -Djava.class.path=.:ggjava/ggjava.jar:./dirprm
+</pre></div>
+<!-- class="section" --></div>
+</div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment61">
+<tr>
+<td class="cellalignment79">
+<table class="cellalignment66">
+<tr>
+<td class="cellalignment65"><a href="using-kinesis-handler.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment65"><a href="using-metadata-provider.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2015, 2017, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment81">
+<table class="cellalignment64">
+<tr>
+<td class="cellalignment65"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment65"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>

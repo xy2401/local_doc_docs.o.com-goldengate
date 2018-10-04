@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="UTF-8" />
+<title>Loading Data from File to Replicat in Microservices Architecture</title>
+<meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)" />
+<meta name="description" content="By following the steps provided in this topic, data can be precisely replicated from a source to a target database with zero data loss using a combination of file-based initial load&nbsp;and change data capture (CDC) processes." />
+<meta name="dcterms.created" content="2018-09-07T14:17:29Z" />
+<meta name="robots" content="all" />
+<meta name="dcterms.title" content="Fusion Middleware Administering Oracle GoldenGate" />
+<meta name="dcterms.identifier" content="E81607-07" />
+<meta name="dcterms.isVersionOf" content="GWUAD" />
+<meta name="dcterms.rights" content="Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved." />
+<link rel="Start" href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html" title="Home" type="text/html" />
+<link rel="Copyright" href="../dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+
+<script type="application/javascript"  src="../dcommon/js/headfoot.js"></script>
+<script type="application/javascript"  src="../nav/js/doccd.js" charset="UTF-8"></script>
+<link rel="Contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="Prev" href="2-administering-oracle-goldengate-microservices-architecture.htm" title="Previous" type="text/html" />
+<link rel="Next" href="supported-character-sets.htm" title="Next" type="text/html" />
+<link rel="alternate" href="GWUAD.pdf" title="PDF version" type="application/pdf" />
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+<link rel="stylesheet" href="../dcommon/css/fusiondoc.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/header.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/footer.css">
+<link rel="stylesheet" type="text/css"  href="../dcommon/css/fonts.css">
+<link rel="stylesheet" href="../dcommon/css/foundation.css">
+<link rel="stylesheet" href="../dcommon/css/codemirror.css">
+<link rel="stylesheet" type="text/css" title="Default" href="../nav/css/html5.css">
+<link rel="stylesheet" href="../dcommon/css/respond-480-tablet.css">
+<link rel="stylesheet" href="../dcommon/css/respond-768-laptop.css">
+<link rel="stylesheet" href="../dcommon/css/respond-1140-deskop.css">
+<script type="application/javascript" src="../dcommon/js/modernizr.js"></script>
+<script type="application/javascript" src="../dcommon/js/codemirror.js"></script>
+<script type="application/javascript" src="../dcommon/js/jquery.js"></script>
+<script type="application/javascript" src="../dcommon/js/foundation.min.js"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-552992c80ef99c8d" async="async"></script>
+<script type="application/javascript" src="../dcommon/js/jqfns.js"></script>
+<script type="application/javascript" src="../dcommon/js/ohc-inline-videos.js"></script>
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../dcommon/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<link rel="stylesheet"  href="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7"  type="text/css" media="screen" />
+<script type="text/javascript" src="../dcommon/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body>
+<a href="#BEGIN" class="accessibility-top skipto" tabindex="0">Go to main content</a><header><!--
+<div class="zz-skip-header"><a id="top" href="#BEGIN">Go to main content</a>--></header>
+<div class="row" id="CONTENT">
+<div class="IND large-9 medium-8 columns" dir="ltr">
+<a id="BEGIN" name="BEGIN"></a>
+<a id="GUID-B9FD6A97-9CA0-456D-9489-A7683B04F5DE"></a> <span id="PAGE" style="display:none;">25/30</span> <!-- End Header -->
+<h1 id="GWUAD-GUID-B9FD6A97-9CA0-456D-9489-A7683B04F5DE" class="sect1"><span class="enumeration_chapter">20</span> Loading Data from File to Replicat in Microservices Architecture</h1>
+<div>
+<p>By following the steps provided in this topic, data can be precisely replicated from a source to a target database with zero data loss using a combination of file-based initial load&nbsp;and change data capture (CDC) processes.</p>
+<div class="p">In <a href="instantiating-oracle-goldengate-initial-load.htm#GUID-68357BC7-E793-4565-8E56-6935C9413104">Loading Data from File to Replicat</a>, the initial load process is implemented using files. However, <span>Microservices Architecture</span> uses a different approach. The process of creating and running a replication solution constitutes:
+<ul style="list-style-type: disc;">
+<li>
+<p>Initial Load: Used to copy the existing contents of one or more tables from the source to the target database.</p>
+</li>
+<li>
+<p>Change Data Capture: Used to copy transactional changes from the source to the target database.</p>
+</li>
+</ul>
+<div class="infobox-note" id="GUID-B9FD6A97-9CA0-456D-9489-A7683B04F5DE__GUID-2E416C92-6058-4126-901E-B67571BA5F08">
+<p class="notep1">Note:</p>
+<span>MA</span> doesn&rsquo;t support loading data with an Oracle GoldenGate direct load.</div>
+<img width="766" height="403" src="img/gwuad_dt_026_file-replicat.png" alt="Process for Loading Data from File to Replicat in Microservices Architecture" title="Process for Loading Data from File to Replicat in Microservices Architecture" /></div>
+<p>File-based initial load process is the preferred method for performing data replication in <span>MA</span>. It&rsquo;s key components are:</p>
+<ul style="list-style-type: disc;">
+<li>
+<p>Initial Load Extract and Replicat: Replicates the existing content of the database tables.</p>
+</li>
+<li>
+<p>Primary Extract and Replicat: Replicates change data from the database tables.</p>
+</li>
+<li>
+<p>Distribution Paths: Transfers trail files to the target system.</p>
+</li>
+</ul>
+<p>Before you begin, make sure that the database credential alias is created.</p>
+<div class="infobox-note" id="GUID-B9FD6A97-9CA0-456D-9489-A7683B04F5DE__GUID-2ED0525C-0A34-40F9-9B80-54D999329D6E">
+<p class="notep1">Important:</p>
+This topic demonstrates the steps for initial load processing using the AdminClient. However, you can also use curl to perform these steps.</div>
+<div class="section">
+<p class="subhead1">Step 1: Creating a Primary Extract</p>
+<div class="p">Precise instantiation is used to replicate database resources correctly from the source to the target database. The primary Extract is started first to initiate change data capture early. Precise instantiation is based on the following assumptions:
+<div class="infobox-note" id="GUID-B9FD6A97-9CA0-456D-9489-A7683B04F5DE__GUID-9D272A1E-E83D-4755-A42D-359AE76E5B6A">
+<p class="notep1">Note:</p>
+For precise instantiation to work, the instantiation SCN must come after the registration SCN.</div>
+<ul style="list-style-type: disc;">
+<li>
+<p>The primary Extract is started. It is responsible for change data capture and noting it&rsquo;s registration SCN.</p>
+</li>
+<li>
+<p>The database is monitored. The database waits for the oldest open transaction&rsquo;s SCN to come after the registration SCN. This is the instantiation SCN.</p>
+</li>
+<li>
+<p>The instantiation SCN is used when creating the initial load Extract and Replicat processes.</p>
+</li>
+<li>
+<p>The instantiation SCN is used to create the primary Replicat, once the initial load replication is complete.</p>
+</li>
+</ul>
+</div>
+<p>To begin, create and start the primary Extract <code class="codeph">EXTPRIM</code> from the AdminClient, as shown in the following example:</p>
+<pre dir="ltr">
+OGG (not connected) 1&gt; connect https://phoenix.oggdevops.us:9100 as oggadmin password oggadmin !
+Using default deployment 'Phoenix'
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix) 2&gt; dblogin useridalias oggadmin
+Successfully logged into database.
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 3&gt; add extract EXTPRIM integrated tranlog begin now
+2018-03-16T13:37:07Z  INFO    OGG-08100  EXTRACT (Integrated) added.
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 4&gt; register extract EXTPRIM database
+2018-03-16T13:37:30Z  INFO    OGG-02003  Extract EXTPRIM successfully registered with database at SCN 1608891.
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 5&gt; edit params EXTPRIM
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 6&gt; view params EXTPRIM
+--
+--  E X T P R I M . p r m
+--  Primary Extract Parameter File
+--
+Extract     EXTPRIM
+UseridAlias oggadmin
+ExtTrail    AA
+Table       user01.*;
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 7&gt; add exttrail AA extract EXTPRIM
+2018-03-16T13:37:55Z  INFO    OGG-08100  EXTTRAIL added.
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 8&gt; start extract EXTPRIM
+2018-03-16T13:38:02Z  INFO    OGG-00975  EXTRACT EXTPRIM starting
+2018-03-16T13:38:02Z  INFO    OGG-15426  EXTRACT EXTPRIM started
+</pre>
+<p>In this example, <code class="codeph">oggadmin</code> is the database credential alias.</p>
+<p>After creating the primary Extract, retrieve the SCN registration number. Run the <code class="codeph">REGISTER EXTRACT</code> command in the AdminClient. The following example retrieves an SCN value of 1608891.</p>
+<pre dir="ltr">
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 4&gt; register extract EXTPRIM database
+2018-03-16T13:37:30Z  INFO    OGG-02003  Extract EXTPRIM successfully registered with database at SCN 1608891.
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Step 2: Determining the Instantiation SCN</p>
+<p>The Administration Server exposes an endpoint that returns details of all active transactions and the current database SCN. The PL/SQL query to retrieve this data is:</p>
+<pre dir="ltr">
+-- Query for active transactions
+--
+Select T.START_SCN, T.STATUS TSTATUS, T.START_DATE,
+       S.SID, S.SERIAL#, S.INST_ID, S.USERNAME, S.OSUSER, S.STATUS SSTATUS, S.LOGON_TIME
+  From gv$transaction T
+ Inner
+ Join gv$session S
+ on S.SADDR = T.SES_ADDR
+
+Union All
+
+--
+-- Query for current status
+--
+Select current_scn, 'CURRENT', CURRENT_DATE,
+       NULL, NULL, NULL, 'SYS', NULL, NULL, NULL
+ from v$database
+
+Order by 1;
+</pre>
+<p>The results of this query can be used to determine the instantiation SCN. The results for this specific query are:</p>
+<div class="tblformal" id="GUID-B9FD6A97-9CA0-456D-9489-A7683B04F5DE__GUID-684A5B8E-0525-4A50-9CB9-862A579DD81F">
+<table class="cellalignment45" summary="Query results for instantiation SCN">
+<tbody>
+<tr class="cellalignment2">
+<td class="cellalignment2" id="d72277e121">1538916</td>
+<td class="cellalignment2" headers="d72277e121">ACTIVE</td>
+<td class="cellalignment2" headers="d72277e121">2018-03-16 18:10:31.0</td>
+<td class="cellalignment2" headers="d72277e121">3865</td>
+<td class="cellalignment2" headers="d72277e121">9176</td>
+<td class="cellalignment2" headers="d72277e121">1</td>
+<td class="cellalignment2" headers="d72277e121">GGADMIN</td>
+<td class="cellalignment2" headers="d72277e121">oracle</td>
+<td class="cellalignment2" headers="d72277e121">INACTIVE</td>
+<td class="cellalignment2" headers="d72277e121">2018-03-16 18:10:26.0</td>
+</tr>
+<tr class="cellalignment2">
+<td class="cellalignment2" id="d72277e142">1540555</td>
+<td class="cellalignment2" headers="d72277e142">CURRENT</td>
+<td class="cellalignment2" headers="d72277e142">2018-03-16 18:21:50.0</td>
+<td class="cellalignment2" headers="d72277e142">&nbsp;</td>
+<td class="cellalignment2" headers="d72277e142">&nbsp;</td>
+<td class="cellalignment2" headers="d72277e142">&nbsp;</td>
+<td class="cellalignment2" headers="d72277e142">SYS</td>
+<td class="cellalignment2" headers="d72277e142">&nbsp;</td>
+<td class="cellalignment2" headers="d72277e142">&nbsp;</td>
+<td class="cellalignment2" headers="d72277e142">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- class="inftblhruleinformal" -->
+<p>The SCN used to instantiate the initial load Extract is obtained using SQL*Plus. In the following example, the SQL query uses the instantiation SCN value as <code class="codeph">1624963</code>, which is the oldest SCN of all open transactions that are also past the registration SCN of <code class="codeph">1608891</code>.</p>
+<pre dir="ltr">
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 14&gt; shell echo 'Select MIN(START_SCN) From gv$transaction;' | ${ORACLE_HOME}/bin/sqlplus -S / as sysdba
+
+MIN(START_SCN)
+--------------
+       1624963
+</pre>
+<p>If there are no open transactions, then this SQL query returns an empty result. A detailed query that takes into account the situation where there are no open transactions is:</p>
+<pre dir="ltr">
+Select MIN(SCN) as INSTANTIATION_SCN
+  From (Select MIN(START_SCN) as SCN
+          From gv$transaction
+         Union All
+        Select current_scn
+          From gv$database);
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Step 3: Creating and Starting the Initial Load Replicat</p>
+<p>Before you begin this step, make sure that the checkpoint table <code class="codeph">oggadmin.checkpoints</code>, already exists on the target system. The initial load Replicat is responsible for populating the target database. Run the following command on the AdminClient to create and start the initial load Replicat (<code class="codeph">REPINIT</code>):</p>
+<pre dir="ltr">
+OGG (not connected) 1&gt; connect https://dallas.oggdevops.us:9100 as oggadmin password oggadmin !
+Using default deployment 'Dallas'
+
+OGG (https://dallas.oggdevops.us:9100 Dallas) 2&gt; dblogin useridalias oggadmin
+Successfully logged into database.
+
+OGG (https://dallas.oggdevops.us:9100 Dallas as oggadmin) 3&gt; add checkpointtable oggadmin.checkpoints
+ADD "oggadmin.checkpoints" succeeded.
+
+OGG (https://dallas.oggdevops.us:9100 Dallas as oggadmin) 4&gt; add replicat REPINIT exttrail DD checkpointtable oggadmin.checkpoints
+2018-03-16T13:56:41Z  INFO    OGG-08100  REPLICAT added.
+
+OGG (https://dallas.oggdevops.us:9100 Dallas as oggadmin) 5&gt; edit params REPINIT
+
+OGG (https://dallas.oggdevops.us:9100 Dallas as oggadmin) 6&gt; view params REPINIT
+--
+--  R E P I N I T . p r m
+--  File-Based Initial Load Replicat Parameter File
+--
+Replicat    REPINIT
+UseridAlias oggadmin
+Map         user01.*
+  Target    user01.*;
+
+OGG (https://dallas.oggdevops.us:9100 Dallas as oggadmin) 7&gt; start replicat REPINIT
+2018-03-16T13:58:21Z  INFO    OGG-00975  REPLICAT REPINIT starting
+2018-03-16T13:58:21Z  INFO    OGG-15426  REPLICAT REPINIT started
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Step 4: Creating and starting the Initial Load Extract</p>
+<p>Using the instantiation SCN that you retrieved (<code class="codeph">1624963</code>), the initial load Extract is created to write contents of the database tables to the trail.</p>
+<p>Create and start the initial load extract, <code class="codeph">EXTINIT</code>.</p>
+<pre dir="ltr">
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 15&gt; add extract EXTINIT sourceistable
+2018-03-16T14:08:38Z  INFO    OGG-08100  EXTRACT added.
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 16&gt; edit params EXTINIT
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 17&gt; view params EXTINIT
+--
+--  E X T I N I T . p r m
+--  File-Based Initial Load Extract Parameter File
+--
+Extract     EXTINIT
+UseridAlias oggadmin
+ExtFile     CC Megabytes 2000 Purge
+Table       user01.*, SQLPredicate "As Of SCN 1609723";
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix as oggadmin) 18&gt; start extract EXTINIT
+2018-03-16T14:13:42Z  INFO    OGG-00975  EXTRACT EXTINIT starting
+2018-03-16T14:13:42Z  INFO    OGG-15426  EXTRACT EXTINIT started
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Step 5: Creating the Distribution Paths</p>
+<p>Create two distribution paths (<code class="codeph">AABB</code> and <code class="codeph">CCDD</code>) for copying the local trails to the remote host&nbsp;from the AdminClient:</p>
+<pre dir="ltr">
+OGG (https://phoenix.oggdevops.us:9100 Phoenix) 15&gt; add distpath AABB source trail://phoenix.oggdevops.us:9102/services/v2/sources?trail=AA target wss://dallas.oggdevops.us:9103/services/v2/targets?trail=BB
+2018-03-16T17:28:27Z  INFO    OGG-08511  The path 'AABB' has been added.
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix) 16&gt; add distpath CCDD source trail://phoenix.oggdevops.us:9102/services/v2/sources?trail=CC target wss://dallas.oggdevops.us:9103/services/v2/targets?trail=DD
+2018-03-16T17:28:35Z  INFO    OGG-08511  The path 'CCDD' has been added.
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix) 17&gt; start distpath AABB
+2018-03-16T17:28:42Z  INFO    OGG-08513  The path 'AABB' has been started.
+
+OGG (https://phoenix.oggdevops.us:9100 Phoenix) 18&gt; start distpath CCDD
+2018-03-16T17:28:47Z  INFO    OGG-08513  The path 'CCDD' has been started.
+</pre></div>
+<!-- class="section" -->
+<div class="section">
+<p class="subhead1">Step 6: Creating the Primary Replicat REPPRIM</p>
+<p>Once the initial load Extract and Replicat complete, they can be deleted. Then, the primary Replicat process is created on the remote host for applying change data to the target database.</p>
+<p>Use the AdminClient to create the primary Replicat process.</p>
+<div class="infobox-note" id="GUID-B9FD6A97-9CA0-456D-9489-A7683B04F5DE__GUID-4C8BEC17-5ED3-4BA3-9A0D-95743E0628CC">
+<p class="notep1">Note:</p>
+The primary Replicat is started at the instantiation SCN.</div>
+<pre dir="ltr">
+OGG (https://dallas.oggdevops.us:9100 Dallas as oggadmin) 12&gt; add replicat REPPRIM exttrail BB checkpointtable oggadmin.checkpoints
+2018-03-16T17:37:46Z  INFO    OGG-08100  REPLICAT added.
+
+OGG (https://dallas.oggdevops.us:9100 Dallas as oggadmin) 13&gt; edit params REPPRIM
+
+OGG (https://dallas.oggdevops.us:9100 Dallas as oggadmin) 14&gt; view params REPPRIM
+--
+--  R E P P R I M . p r m
+--  Replicat Parameter File
+--
+Replicat    REPPRIM
+UseridAlias oggadmin
+Map         user01.*
+  Target    user01.*;
+
+OGG (https://dallas.oggdevops.us:9100 Dallas as oggadmin) 15&gt; start replicat REPPRIM atcsn 1624963
+2018-03-16T17:38:10Z  INFO    OGG-00975  REPLICAT REPPRIM starting
+2018-03-16T17:38:10Z  INFO    OGG-15426  REPLICAT REPPRIM started
+</pre></div>
+<!-- class="section" --></div>
+</div>
+<!-- class="ind" --><!-- Start Footer -->
+</div>
+<!-- add extra wrapper close div-->
+<footer><!--
+<hr />
+<table class="cellalignment1">
+<tr>
+<td class="cellalignment8">
+<table class="cellalignment6">
+<tr>
+<td class="cellalignment5"><a href="2-administering-oracle-goldengate-microservices-architecture.htm"><img width="24" height="24" src="../dcommon/gifs/leftnav.gif" alt="Go to previous page" /><br />
+<span class="icon">Previous</span></a></td>
+<td class="cellalignment5"><a href="supported-character-sets.htm"><img width="24" height="24" src="../dcommon/gifs/rightnav.gif" alt="Go to next page" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="cellalignment-copyrightlogo"><img width="144" height="18" src="../dcommon/gifs/oracle.gif" alt="Oracle" /><br />
+Copyright&nbsp;&copy;&nbsp;2013, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.<br />
+<a href="../dcommon/html/cpyr.htm">Legal Notices</a></td>
+<td class="cellalignment10">
+<table class="cellalignment4">
+<tr>
+<td class="cellalignment5"><a href="http://docs.oracle.com/goldengate/c1230/gg-winux/index.html"><img width="24" height="24" src="../dcommon/gifs/doclib.gif" alt="Go to Documentation Home" /><br />
+<span class="icon">Home</span></a></td>
+<td class="cellalignment5"><a href="toc.htm"><img width="24" height="24" src="../dcommon/gifs/toc.gif" alt="Go to Table of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td class="cellalignment5"><a href="../dcommon/html/feedback.htm"><img width="24" height="24" src="../dcommon/gifs/feedbck2.gif" alt="Go to Feedback page" /><br />
+<span class="icon">Contact Us</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+--></footer>
+<noscript>
+<p>Scripting on this page enhances content navigation, but does not change the content in any way.</p>
+</noscript>
+</body>
+</html>
